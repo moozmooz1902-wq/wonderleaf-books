@@ -110,3 +110,66 @@ The slogan grid already built (`pod/ebay/data/slogan_designs.json`, 3,119 design
 sits exactly in the themes reading 0–5% here, and costs £0 to render on black.
 
 **More of the current catalogue will not sell. Different catalogue will.**
+
+---
+
+# Wall art retitle — done, plus a bigger finding
+
+## The retitle
+
+`pod/retitle/retitle_wallart.py`, run against the real 424,117 rows:
+
+| | Before | After |
+|---|---|---|
+| Mean title length | 67.4 | **78.3** |
+| In the 70–80 band | 41% | **100%** |
+| Over 80 chars | 0 | **0** |
+| Characters reclaimed | — | **4,601,909** |
+
+**A correction to my own earlier advice:** I said strip the generator's style and
+palette vocabulary. That would have been a serious mistake here. There are only
+**3,122 distinct subjects** across 424,117 listings — style and palette are the
+*only* thing separating them. Stripping both collapses the catalogue into 3,122
+identical titles.
+
+They are kept and **relabelled** instead: `Watercolour Loose` → `Watercolour`,
+`Farmhouse Rustic` → `Farmhouse`, `Cream And Cream` → `Cream`. Recipe unchanged,
+label made searchable. Colour is kept in full — décor buyers do search
+"sage green wall art".
+
+**Honesty constraint:** these are unframed A4 paper prints, so no title claims
+Canvas, Framed or Ready to Hang, whatever their search volume.
+
+## The bigger finding: the catalogue is 10× larger than the products in it
+
+| | |
+|---|---|
+| Listings | 424,117 |
+| Distinct titles **already live** | **45,015 — so 89% are duplicates today** |
+| Distinct subjects | 3,122 |
+| Distinct (subject, colour, style) products | **43,483** |
+| Mean listings per product | **9.8** |
+| Worst case | **234 listings of one product** |
+
+Those 9.8 are **re-rolls of the same prompt with a different seed**. No title can
+tell them apart because there is nothing to tell apart. One title is live 176
+times.
+
+This is very likely a primary cause of the zero sales. eBay clusters and
+suppresses near-duplicate listings, and 176 copies of one title compete against
+each other rather than against the market.
+
+**No amount of retitling fixes this.** The uniqueness ceiling from the title text
+is 10%.
+
+## Two files produced
+
+| File | Rows | What it does |
+|---|---|---|
+| `wallart_revise_titles.csv` | 424,117 | Retitles everything. Better language, +10.9 chars each. Safe, reversible, keeps listing age. |
+| `wallart_end_rerolls.csv` | 380,486 | Ends the seed re-rolls, keeping the **oldest** listing of each of 43,631 products — oldest carries the most ranking equity. |
+
+Run the retitle first and measure. The cull is the bigger and more
+uncomfortable move, so it deserves its own decision — but a clean 43,631-product
+catalogue will almost certainly outperform a 424,117-listing one that eBay reads
+as duplicate flooding.
