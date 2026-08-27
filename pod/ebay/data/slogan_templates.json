@@ -1,0 +1,763 @@
+{
+ "_meta": {
+  "purpose": "The joke-template bank. THE central finding of the overnight research: UK eBay slogan tees are not written one at a time - a small set of reusable joke frames is applied across every hobby, trade and role. Proven by observing the SAME frames across unrelated searches.",
+  "evidence": {
+   "cheaper_than_therapy": [
+    "Fishing Cheaper Than Therapy",
+    "Gardening is Cheaper than Therapy",
+    "Gardening Gardener Cheaper Than Therapy"
+   ],
+   "warning_talking_about": [
+    "Warning May Start Talking About Fishing",
+    "Warning May Start Talking About Gardening"
+   ],
+   "godfather_pun": [
+    "The Rodfather (fishing)",
+    "The Gardenfather (gardening)",
+    "THE DOGFATHER (dogs)",
+    "The Cat Father (cats)"
+   ],
+   "eat_sleep_repeat": [
+    "Eat Sleep Fish Routine",
+    "Eat Sleep Gardening Repeat",
+    "Eat Sleep Train Repeat",
+    "Eat Sleep Game Repeat",
+    "Eat Sleep Ride"
+   ],
+   "evolution_of": [
+    "Fishing Evolution Of",
+    "Evolution of a Gardener",
+    "Evolution Of Electrician",
+    "Motorbike Evolution",
+    "Golf Evolution",
+    "Rock Climbing Evolution"
+   ],
+   "problem_solved": [
+    "Fishing Problem Solved",
+    "Problem Solved Allotment Gardening"
+   ]
+  },
+  "slot_contract": "A template lists `requires`. It is only composed for a subject that supplies EVERY required slot. This prevents the grammatical garbage a naive cross-product produces.",
+  "ip_tiers": "R0 safe generic | R1 screen the exact phrase before listing | R2 parody of a protected title - use the pun form only, never the original",
+  "version": "1.0",
+  "suits_contract": "A template also declares which KINDS of subject it reads well on. Slot-filling alone produced 'My Cage Thinks I'm Cool' and 'Pallets Because People Are Rubbish'."
+ },
+ "templates": [
+  {
+   "id": "t_therapy_cheaper",
+   "pattern": "{Activity} Is Cheaper Than Therapy",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "wry",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_therapy_my",
+   "pattern": "{Activity} Is My Therapy",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "sincere",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_therapy_dont_need",
+   "pattern": "I Don't Need Therapy I Just Need {Activity}",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "wry",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_warning_talk",
+   "pattern": "Warning May Spontaneously Start Talking About {Activity}",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "wry",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_godfather",
+   "pattern": "The {FatherPun}",
+   "requires": [
+    "FatherPun"
+   ],
+   "tone": "pun",
+   "ip_tier": "R2",
+   "note": "Pun form only. Never use the film title itself.",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_eat_sleep",
+   "pattern": "Eat Sleep {Verb} Repeat",
+   "requires": [
+    "Verb"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_evolution",
+   "pattern": "Evolution Of A {Agent}",
+   "requires": [
+    "Agent"
+   ],
+   "tone": "visual",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_problem_solved",
+   "pattern": "{Activity} Problem Solved",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_forecast",
+   "pattern": "Weekend Forecast {Gerund} With A Chance Of Drinking",
+   "requires": [
+    "Gerund"
+   ],
+   "tone": "wry",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_rather_be",
+   "pattern": "I'd Rather Be {Gerund}",
+   "requires": [
+    "Gerund"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_murder_wrong",
+   "pattern": "{Gerund} Because Murder Is Wrong",
+   "requires": [
+    "Gerund"
+   ],
+   "tone": "dark",
+   "ip_tier": "R0",
+   "suits": [
+    "activity"
+   ]
+  },
+  {
+   "id": "t_looking_awesome",
+   "pattern": "You're Looking At An Awesome {Agent}",
+   "requires": [
+    "Agent"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_trust_me",
+   "pattern": "Trust Me I'm A {Agent}",
+   "requires": [
+    "Agent"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_definition",
+   "pattern": "{Agent} Dictionary Definition",
+   "requires": [
+    "Agent"
+   ],
+   "tone": "visual",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_worlds_best",
+   "pattern": "World's Best {Agent}",
+   "requires": [
+    "Agent"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_man_myth",
+   "pattern": "{Agent} The Man The Myth The Legend",
+   "requires": [
+    "Agent"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_grumpy_club",
+   "pattern": "Grumpy Old {AgentPlural} Club",
+   "requires": [
+    "AgentPlural"
+   ],
+   "tone": "wry",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_cant_fix",
+   "pattern": "If A {Agent} Can't Fix It No One Can",
+   "requires": [
+    "Agent"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "trade"
+   ]
+  },
+  {
+   "id": "t_imagine_without",
+   "pattern": "Imagine Life Without {Activity}",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_hourly_rates",
+   "pattern": "{Agent} Hourly Rates Watching Me £20 Helping Me £40",
+   "requires": [
+    "Agent"
+   ],
+   "tone": "visual",
+   "ip_tier": "R0",
+   "suits": [
+    "trade"
+   ]
+  },
+  {
+   "id": "t_care_label",
+   "pattern": "{Agent} Care Instructions Do Not Iron Do Not Bleach",
+   "requires": [
+    "Agent"
+   ],
+   "tone": "visual",
+   "ip_tier": "R0",
+   "suits": [
+    "trade",
+    "activity"
+   ]
+  },
+  {
+   "id": "t_easily_distracted",
+   "pattern": "Easily Distracted By {Plural}",
+   "requires": [
+    "Plural"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "creature",
+    "activity",
+    "vehicle"
+   ]
+  },
+  {
+   "id": "t_left_my",
+   "pattern": "I Left My {Noun} To Be Here",
+   "requires": [
+    "Noun"
+   ],
+   "tone": "wry",
+   "ip_tier": "R0",
+   "suits": [
+    "creature",
+    "vehicle"
+   ]
+  },
+  {
+   "id": "t_peace_love",
+   "pattern": "Peace Love {Plural}",
+   "requires": [
+    "Plural"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "creature",
+    "activity"
+   ]
+  },
+  {
+   "id": "t_because_people",
+   "pattern": "{Plural} Because People Are Rubbish",
+   "requires": [
+    "Plural"
+   ],
+   "tone": "dark",
+   "ip_tier": "R0",
+   "suits": [
+    "creature"
+   ]
+  },
+  {
+   "id": "t_thinks_im_cool",
+   "pattern": "My {Noun} Thinks I'm Cool",
+   "requires": [
+    "Noun"
+   ],
+   "tone": "warm",
+   "ip_tier": "R0",
+   "suits": [
+    "creature",
+    "vehicle"
+   ]
+  },
+  {
+   "id": "t_heartbeat",
+   "pattern": "{Activity} Heartbeat ECG Pulse Line",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "visual",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature"
+   ]
+  },
+  {
+   "id": "t_more_less_drama",
+   "pattern": "More {Plural} Less Drama",
+   "requires": [
+    "Plural"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "creature",
+    "activity"
+   ]
+  },
+  {
+   "id": "t_not_grumpy",
+   "pattern": "I'm Not Always Grumpy Sometimes I'm {Gerund}",
+   "requires": [
+    "Gerund"
+   ],
+   "tone": "wry",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_googled",
+   "pattern": "I Googled My Symptoms Turns Out I Just Need {Activity}",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "wry",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_retirement_plan",
+   "pattern": "My Retirement Plan Is {Gerund}",
+   "requires": [
+    "Gerund"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_spare_time",
+   "pattern": "Things I Do In My Spare Time {Gerund}",
+   "requires": [
+    "Gerund"
+   ],
+   "tone": "visual",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_this_is_my",
+   "pattern": "This Is My {Activity} T-Shirt",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_never_underestimate",
+   "pattern": "Never Underestimate An Old Man With A {Object}",
+   "requires": [
+    "Object"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "trade",
+    "vehicle"
+   ]
+  },
+  {
+   "id": "t_calling",
+   "pattern": "{Activity} Is Calling And I Must Go",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_born_forced",
+   "pattern": "Born To {Verb} Forced To Work",
+   "requires": [
+    "Verb"
+   ],
+   "tone": "wry",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_not_retired",
+   "pattern": "I'm Not Retired I'm A Full Time {Agent}",
+   "requires": [
+    "Agent"
+   ],
+   "tone": "warm",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_two_titles",
+   "pattern": "I Have Two Titles {Agent} And Legend",
+   "requires": [
+    "Agent"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_awesome_looks",
+   "pattern": "This Is What An Awesome {Agent} Looks Like",
+   "requires": [
+    "Agent"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_squad",
+   "pattern": "{Activity} Squad",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_powered_by",
+   "pattern": "Powered By {Activity} And Strong Tea",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "warm",
+   "ip_tier": "R0",
+   "suits": [
+    "activity"
+   ]
+  },
+  {
+   "id": "t_talk_dirty",
+   "pattern": "Talk {Activity} To Me",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "wry",
+   "ip_tier": "R0",
+   "suits": [
+    "activity"
+   ]
+  },
+  {
+   "id": "t_all_i_need",
+   "pattern": "All I Need Is {Activity} And Maybe Three People",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "wry",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_instructor",
+   "pattern": "{Activity} Instructor Lessons £5 Advice Free",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "visual",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_addict",
+   "pattern": "Certified {Activity} Addict No Cure Required",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "wry",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_soul_soothes",
+   "pattern": "{Activity} Soothes The Soul Sarcasm Does The Rest",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "wry",
+   "ip_tier": "R0",
+   "suits": [
+    "activity"
+   ]
+  },
+  {
+   "id": "t_property_of",
+   "pattern": "Property Of The {Activity} Department",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "visual",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_est_since",
+   "pattern": "{Agent} Established Since Day One",
+   "requires": [
+    "Agent"
+   ],
+   "tone": "visual",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_legend_at",
+   "pattern": "Absolute Legend At {Gerund}",
+   "requires": [
+    "Gerund"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  },
+  {
+   "id": "t_no_such_thing",
+   "pattern": "There's No Such Thing As Too Much {Activity}",
+   "requires": [
+    "Activity"
+   ],
+   "tone": "flat",
+   "ip_tier": "R0",
+   "suits": [
+    "activity",
+    "creature",
+    "vehicle",
+    "trade"
+   ]
+  }
+ ]
+}

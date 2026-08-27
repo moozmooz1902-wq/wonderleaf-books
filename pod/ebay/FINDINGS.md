@@ -185,3 +185,101 @@ in the order I'd fix them:
 `pod/samples/`) and I'll diff them against this corpus rather than inferring.
 
 The build that follows from all of this is in [`README.md`](README.md).
+
+---
+
+# Overnight round 2 — market-wide research
+
+Round 1 studied three stores. Round 2 widened to the whole UK marketplace: **480
+further titles** across biker, skull/gothic, Viking, birthday, fishing, gardening,
+trades, rude-slogan and dog searches, plus a visual read of competitor artwork.
+Corpus in [`../research/ebay_corpus/`](../research/ebay_corpus/).
+
+## Finding 7 — Slogan tees are a JOKE-TEMPLATE grid
+
+This is the biggest finding of the night and it was invisible in the title data
+until unrelated categories were compared side by side. **The same joke frames are
+applied across every hobby, trade and role:**
+
+| Frame | Fishing | Gardening | Trades | Pets |
+|---|---|---|---|---|
+| *X cheaper than therapy* | "Fishing Cheaper Than Therapy" | "Gardening is Cheaper than Therapy" | — | — |
+| *Warning may start talking about X* | "…About Fishing" | "…About Gardening" | — | — |
+| *The X-father* | "The **Rod**father" | "The **Garden**father" | — | "The **Dog**father" / "The **Cat** Father" |
+| *Eat sleep X repeat* | "Eat Sleep Fish" | "Eat Sleep Gardening Repeat" | — | — |
+| *Evolution of a X* | "Fishing Evolution Of" | "Evolution of a Gardener" | "Evolution Of Electrician" | — |
+| *X problem solved* | "Fishing Problem Solved" | "Problem Solved Allotment Gardening" | — | — |
+| *Trust me I'm a X* | — | — | "Trust Me I'm an Electrician" | — |
+| *X dictionary definition* | — | — | "ELECTRICIAN Dictionary Definition" | — |
+| *Hourly rates* | — | — | "HOURLY RATES ELECTRICIAN", "Labour Rates" | — |
+
+So the slogan catalogue is a grid too:
+
+```
+JOKE TEMPLATE  ×  SUBJECT  =  SLOGAN
+SLOGAN  ×  GARMENT  ×  STORE  =  LISTINGS
+```
+
+**50 templates × 93 subjects → 3,119 slogans → 362,985 listings across 7 stores.**
+All pure typography, so on black garments they cost nothing to produce.
+
+Two guards stop this becoming garbage, both learned the hard way while building it:
+
+- **Slot contract** — a template declares which word forms it needs; a subject
+  supplies them. Without it: *"Grumpy Old Fishings Club"*.
+- **Kind contract** — a template also declares which *kinds* of subject it reads
+  on (activity / creature / vehicle / trade). Without it: *"My Cage Thinks I'm
+  Cool"*, *"Pallets Because People Are Rubbish"*, *"Tractors Is Cheaper Than
+  Therapy"*. This gate removed 532 combinations that slot-filling alone allowed.
+
+## Finding 8 — A third axis: SYMBOL × RENDER TREATMENT
+
+The Viking search exposed a seller running a different multiplication:
+
+```
+Valknut Symbol · Valknut Symbol Detailed · Charcoal Valknut · Valknut Frozen
+Valknut Double Exposure · Valknut Symbol Paper Charcoal · Detailed Valknut Symbol
+Aegishjalmur · Detailed Aegishjalmur · Aegishjalmur Candlelit · …with Runes
+Triquetra · Detailed Triquetra · Charcoal Triquetra · Triquetra Torn Paper Greyscale
+Fenrir Wolf · Fenrir Wolf with Runes · Fenrir Wolf Greyscale · Fenrir Wolf in Flames
+```
+
+~10 Norse symbols × ~10 render treatments (Detailed, Charcoal, Frozen, Greyscale,
+Candlelit, Double Exposure, Torn Paper, with Runes, in Flames, in a Storm) = ~100
+designs from 10 subjects.
+
+**This axis is purpose-built for AI image generation** — same subject, different
+style prompt. It is how to scale the *illustrated* half of the catalogue the way
+templates scale the typographic half.
+
+Their title format also differs: `{Symbol} {Treatment} Mens Womens T-Shirt Viking
+Norse Odin Valhalla Nordic Runes Gift` — "Mens Womens" hedges both audiences, and
+a long keyword tail fills the 80 characters.
+
+## Finding 9 — One listing can carry many designs
+
+The competitor image I opened was not one design. It was a **contact sheet of 14
+skull designs** plus a tee mockup — the buyer picks the design from a dropdown.
+
+One listing, fourteen designs. Sales, feedback and search history concentrate on a
+single listing instead of being spread across fourteen, and on eBay a listing with
+400 sales outranks fourteen with 30 each. **Deliberate rank concentration.**
+
+Worth testing against the wide grid: fewer, harder-ranking listings may beat more,
+weaker ones.
+
+## Finding 10 — Their mockups are a template, not photography
+
+Consistent across every listing sampled: flat-lay, no model, no lifestyle shot,
+garment fills a square frame, plain white background, 1600×1600. Cheap and
+endlessly repeatable — and reproducible in code.
+
+## What this produced
+
+| | |
+|---|---|
+| Slogan designs | **3,119** (50 templates × 93 subjects, gated) |
+| Listings, 7 stores | **362,985** — 0 over 80 chars, 0 duplicate titles |
+| Generation time | **~9 seconds** |
+| Artwork | Rendered locally at 4500×5400 transparent PNG, ~1s each |
+| Cost | **£0** — typography needs no image model |
