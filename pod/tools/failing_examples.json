@@ -1,0 +1,155 @@
+[
+  {
+    "_comment": "TYPICAL OLD-PIPELINE ROW. Looks complete. Fails six gates. This is what 100,000 of our listings look like.",
+    "concept_id": "bad_generic_cat_poster",
+    "product_class": "poster",
+    "demand": {
+      "query": "cat",
+      "cluster": "animals",
+      "adjacent": ["cat poster", "cat art", "cute cat"],
+      "evidence": "qualitative",
+      "est_monthly_volume": null,
+      "competition": "high"
+    },
+    "angle": {
+      "audience": "cat lovers",
+      "insider_vocab": ["cat"],
+      "emotional_job": "cute",
+      "specificity_rung": 0
+    },
+    "visual": {
+      "palette": [],
+      "composition": "",
+      "typography": "",
+      "texture": "",
+      "avoid": [],
+      "reads_at_250px_via": "",
+      "render_prompt": "a beautiful highly detailed 8k cute cat poster, masterpiece, trending on artstation, professional, intricate"
+    },
+    "production": {
+      "target_platforms": ["redbubble", "displate"],
+      "aspect_ratio": "16:9",
+      "px": [1024, 1024],
+      "colour_mode": "RGB",
+      "format": "JPEG"
+    },
+    "metadata": {
+      "redbubble": {
+        "title": "Cute Cat Poster Cat Art Cat Lover Gift Cat Print Funny Cat Wall Art Kitten Decor",
+        "tags": ["cat", "cats", "cute", "kitten", "animal", "pet", "funny", "art", "poster", "gift"],
+        "description": "Cute Cat Poster Cat Art Cat Lover Gift Cat Print Funny Cat Wall Art Kitten Decor"
+      }
+    },
+    "ip": {},
+    "dedup": {}
+  },
+
+  {
+    "_comment": "IP FAILURE. Trademark in the tags even though the artwork is original, plus a style-of claim.",
+    "concept_id": "bad_fandom_tee",
+    "product_class": "tshirt",
+    "demand": {
+      "query": "anime gaming shirt",
+      "cluster": "fandom",
+      "adjacent": ["anime shirt", "gamer tee", "manga art", "otaku gift", "japan anime",
+                   "gaming gift", "anime lover", "kawaii shirt"],
+      "evidence": "bestseller_page",
+      "est_monthly_volume": 30000,
+      "competition": "high"
+    },
+    "angle": {
+      "audience": "anime and gaming fans everywhere",
+      "insider_vocab": ["anime", "gamer", "otaku"],
+      "emotional_job": "fandom_shrine",
+      "specificity_rung": 1
+    },
+    "visual": {
+      "layout_id": "tl_character_caption",
+      "palette": ["#FF0000", "#000000"],
+      "composition": "character centred",
+      "typography": "bold anime font",
+      "texture": "clean",
+      "avoid": ["blurry"],
+      "reads_at_250px_via": "the character",
+      "render_prompt": "official Pokemon and Naruto inspired character in the style of Studio Ghibli, fan art"
+    },
+    "production": {
+      "target_platforms": ["amazon_merch"],
+      "aspect_ratio": "5:6",
+      "px": [2000, 2400],
+      "colour_mode": "sRGB",
+      "format": "PNG",
+      "background": "opaque"
+    },
+    "metadata": {
+      "amazon_merch": {
+        "title": "Official Anime Gaming Shirt Inspired by Naruto Pokemon Zelda Fan Art Gift for Anime Lovers and Gamers Everywhere",
+        "bullets": ["Great gift"],
+        "description": "Anime shirt",
+        "backend_search_terms": "naruto pokemon zelda marvel disney anime gamer"
+      }
+    },
+    "ip": {"tier": "R4"},
+    "dedup": {"hard_key": "tl_character_caption|?|character"}
+  },
+
+  {
+    "_comment": "NEAR-DUPLICATE. Same design as the concept above it in the batch, one word changed. The colourway-flooding pattern.",
+    "concept_id": "bad_duplicate_mushroom",
+    "product_class": "poster",
+    "demand": {
+      "query": "vintage mushroom print set",
+      "cluster": "botanical_herbarium_fungi",
+      "adjacent": [
+        "antique mycology plate", "fungi wall art set of 3", "cottagecore mushroom decor",
+        "woodland kitchen print", "amanita muscaria illustration", "forest foraging art",
+        "sage green botanical print", "neutral gallery wall set", "herbarium specimen print"
+      ],
+      "evidence": "keyword_tool",
+      "est_monthly_volume": 40000,
+      "competition": "medium"
+    },
+    "angle": {
+      "audience": "home decorators furnishing a neutral kitchen or bathroom who want a matching set",
+      "insider_vocab": ["herbarium", "latin binomial", "plate number"],
+      "emotional_job": "room_decor",
+      "specificity_rung": 3
+    },
+    "visual": {
+      "style_id": "ps_botanical_plate",
+      "palette_id": "pal_herbarium",
+      "palette": ["#F3EEE2", "#6B7A4F", "#8C6A47"],
+      "subject": "the same fly agaric specimen, recoloured blue",
+      "subject_lemma": "mushroom",
+      "composition": "single centred specimen floating on aged cream paper with wide margins",
+      "typography": "copperplate italic for the latin binomial",
+      "texture": "aged paper with light foxing",
+      "avoid": ["modern flat vector", "neon colour", "photographic rendering"],
+      "reads_at_250px_via": "the specimen silhouette",
+      "render_prompt": "antique botanical plate illustration, single centred fly agaric specimen on aged cream paper, engraved linework, blue colourway"
+    },
+    "production": {
+      "target_platforms": ["etsy"],
+      "aspect_ratio": "2:3",
+      "px": [4000, 6000],
+      "colour_mode": "sRGB",
+      "format": "PNG",
+      "background": "opaque",
+      "ratio_exports": ["2:3"]
+    },
+    "metadata": {
+      "etsy": {
+        "title": "Vintage Mushroom Print Set of 3, Blue Botanical Herbarium Wall Art, Kitchen Decor, Digital Download",
+        "tags": [
+          "fungi art print", "mycology poster", "woodland decor", "cottagecore kitchen",
+          "forest foraging art", "neutral gallery wall", "antique plate print",
+          "muted earth tones", "farmhouse wall art", "printable art set",
+          "amanita illustration", "moody botanical art", "boho nature print"
+        ],
+        "description": "Three specimen studies in the manner of a field herbarium, recoloured in blue."
+      }
+    },
+    "ip": {"tier": "R0"},
+    "dedup": {"hard_key": "ps_botanical_plate|pal_herbarium|mushroom"}
+  }
+]

@@ -1,0 +1,127 @@
+{
+  "_meta": {
+    "purpose": "The scoring and kill rules enforced by tools/validate_concept.py. Gates are ordered; a concept that fails a hard gate is killed, not repaired by loosening the gate.",
+    "calibration": "Target gate_pass_rate of 20-40%. If the validator passes almost everything, the validator is broken, not the batch.",
+    "version": "1.0"
+  },
+  "gates": [
+    {
+      "id": "G0",
+      "name": "Demand anchor",
+      "weight": 25,
+      "hard": true,
+      "checks": [
+        {"id": "g0_query_present", "rule": "demand.query is a non-empty string of 2-6 words", "kill": true},
+        {"id": "g0_not_generic", "rule": "demand.query is not a single generic noun and is not in the generic_noun_denylist", "kill": true},
+        {"id": "g0_adjacent", "rule": "demand.adjacent has at least 8 distinct phrases", "kill": true},
+        {"id": "g0_evidence", "rule": "demand.evidence is one of the allowed evidence types", "kill": true},
+        {"id": "g0_volume", "rule": "demand.est_monthly_volume >= 1000, OR the adjacent long-tail phrases carry documented volume summing to >= 1000, OR evidence type is 'qualitative' with a stated source", "kill": false, "score": 10},
+        {"id": "g0_competition", "rule": "demand.competition is not 'high' unless angle.differentiator is populated", "kill": true}
+      ]
+    },
+    {
+      "id": "G1",
+      "name": "Angle / specificity",
+      "weight": 20,
+      "hard": true,
+      "checks": [
+        {"id": "g1_audience", "rule": "angle.audience is specific - not 'everyone', not a bare demographic bucket", "kill": true},
+        {"id": "g1_vocab", "rule": "angle.insider_vocab has at least 3 entries drawn from the target community's own language", "kill": true},
+        {"id": "g1_job", "rule": "angle.emotional_job is exactly one of the allowed values", "kill": true},
+        {"id": "g1_ladder", "rule": "angle.specificity_rung >= 2 on the niche's specificity ladder", "kill": true}
+      ]
+    },
+    {
+      "id": "G2",
+      "name": "Visual DNA",
+      "weight": 20,
+      "hard": true,
+      "checks": [
+        {"id": "g2_style", "rule": "visual.style_id (poster) or visual.layout_id (tshirt) resolves to a real entry in the library", "kill": true},
+        {"id": "g2_palette", "rule": "visual.palette has 1-6 hex values, or resolves to a palette id", "kill": true},
+        {"id": "g2_axes", "rule": "composition, typography and texture are all non-empty", "kill": true},
+        {"id": "g2_avoid", "rule": "visual.avoid has at least 3 negative constraints", "kill": true},
+        {"id": "g2_thumbnail", "rule": "visual.reads_at_250px_via names what carries the design at thumbnail size", "kill": true},
+        {"id": "g2_no_slop_padding", "rule": "render prompt contains none of the slop_padding_terms", "kill": true},
+        {"id": "g2_font_count", "rule": "at most 3 type families named", "kill": false, "score": 5}
+      ]
+    },
+    {
+      "id": "G3",
+      "name": "Production",
+      "weight": 10,
+      "hard": true,
+      "checks": [
+        {"id": "g3_ratio", "rule": "production.aspect_ratio is in the target platform's allowed set", "kill": true},
+        {"id": "g3_px", "rule": "production.px meets or exceeds the platform minimum", "kill": true},
+        {"id": "g3_transparency", "rule": "apparel products declare background 'transparent'", "kill": true},
+        {"id": "g3_edge_buffer", "rule": "production.edge_buffer_px >= platform minimum where the platform sets one", "kill": true},
+        {"id": "g3_garment_contrast", "rule": "apparel concepts declare garment_safe as 'both', or supply two exports", "kill": false, "score": 5}
+      ]
+    },
+    {
+      "id": "G4",
+      "name": "Metadata",
+      "weight": 15,
+      "hard": true,
+      "checks": [
+        {"id": "g4_title_len", "rule": "title length within the platform's min/max", "kill": true},
+        {"id": "g4_tag_count", "rule": "tag count equals the platform's slot count exactly", "kill": true},
+        {"id": "g4_tag_len", "rule": "every tag within the platform's per-tag character limit", "kill": true},
+        {"id": "g4_tag_phrases", "rule": "at least 60% of tags are multi-word phrases", "kill": true},
+        {"id": "g4_tag_not_title", "rule": "no tag's token set is a subset of the title's token set", "kill": true},
+        {"id": "g4_desc_not_title", "rule": "description does not contain the title verbatim", "kill": true},
+        {"id": "g4_colour_word", "rule": "decor-market poster titles contain a colour word", "kill": false, "score": 5},
+        {"id": "g4_relationship_word", "rule": "gift-intent concepts contain a relationship word in the title", "kill": false, "score": 5}
+      ]
+    },
+    {
+      "id": "G5",
+      "name": "IP clearance",
+      "weight": 10,
+      "hard": true,
+      "checks": [
+        {"id": "g5_denylist", "rule": "no shipped text matches any R4 pattern in ip_risk_rules.json", "kill": true},
+        {"id": "g5_tier", "rule": "ip.tier is set and is not R4", "kill": true},
+        {"id": "g5_screened", "rule": "ip.screened_against[] is populated for tiers R1 and R2", "kill": true},
+        {"id": "g5_pd_verified", "rule": "tier R3 concepts declare a verified open-access source", "kill": true}
+      ]
+    },
+    {
+      "id": "G6",
+      "name": "Dedup",
+      "weight": 0,
+      "hard": true,
+      "checks": [
+        {"id": "g6_hard_key", "rule": "(style_id|layout_id, palette_id, subject_lemma) is unique across the batch and the live catalogue", "kill": true},
+        {"id": "g6_title_trigram", "rule": "normalised title trigram overlap <= 0.6 against every existing concept", "kill": true},
+        {"id": "g6_colourway", "rule": "colourways, garment colours and sizes are product options, never separate concepts", "kill": true}
+      ]
+    }
+  ],
+  "pass_threshold": 80,
+  "generic_noun_denylist": [
+    "cat", "dog", "space", "nature", "flowers", "flower", "motivation", "motivational", "funny", "cute", "love", "art", "abstract", "vintage", "retro", "aesthetic", "minimalist", "quote", "gift", "gifts", "shirt", "tshirt", "t-shirt", "poster", "print", "wall art", "design", "cool", "beautiful", "animals", "music", "gaming", "gamer", "anime", "travel", "summer", "christmas", "birthday", "mom", "dad", "nurse", "teacher", "fishing", "hiking", "coffee", "beer", "yoga"
+  ],
+  "slop_padding_terms": [
+    "highly detailed", "8k", "4k", "ultra realistic", "hyperrealistic", "masterpiece", "trending on artstation", "award winning", "professional", "stunning", "beautiful", "intricate", "octane render", "unreal engine", "cinematic lighting", "best quality", "hd", "sharp focus", "very detailed"
+  ],
+  "allowed_emotional_jobs": [
+    "identity_flag", "in_group_joke", "gift_for_relationship", "room_decor", "fandom_shrine", "milestone_marker", "values_statement", "nostalgia_hit"
+  ],
+  "allowed_evidence_types": [
+    "marketplace_autocomplete", "bestseller_page", "keyword_tool", "pinterest_trending", "seasonal_calendar", "sales_history", "qualitative"
+  ],
+  "colour_words": [
+    "beige", "sage", "sage green", "green", "terracotta", "cream", "black and white", "black", "white", "blue", "navy", "muted", "neutral", "earthy", "pink", "blush", "gold", "brown", "rust", "ochre", "mustard", "burnt orange", "orange", "red", "purple", "grey", "gray", "monochrome", "pastel", "warm", "dark", "indigo", "teal", "chrome", "aqua"
+  ],
+  "relationship_words": [
+    "mom", "mum", "dad", "mother", "father", "grandma", "grandpa", "nana", "gigi", "mimi", "papa", "pawpaw", "wife", "husband", "sister", "brother", "daughter", "son", "aunt", "uncle", "friend", "coworker", "boss", "teacher", "girlfriend", "boyfriend", "bonus mom", "bonus dad", "stepmom", "stepdad", "for her", "for him", "gift for"
+  ],
+  "batch_composition_targets": {
+    "evergreen": 0.5,
+    "seasonal": 0.2,
+    "style_led_sets": 0.2,
+    "trend_probes": 0.1
+  }
+}

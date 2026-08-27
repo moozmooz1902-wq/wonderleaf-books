@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wonderleaf.local/pod/concept.schema.json",
+  "title": "POD Concept",
+  "description": "One validated product concept. This - not a file, and not a metadata row - is the unit of work. A concept fans out to several platform variants and product types.",
+  "type": "object",
+  "required": ["concept_id", "product_class", "demand", "angle", "visual", "production", "metadata", "ip", "dedup"],
+  "additionalProperties": false,
+  "properties": {
+    "concept_id": {"type": "string", "pattern": "^[a-z0-9_-]{6,64}$"},
+    "product_class": {"enum": ["poster", "tshirt"]},
+    "batch_role": {"enum": ["evergreen", "seasonal", "style_led_set", "trend_probe"]},
+    "set_family": {
+      "type": ["object", "null"],
+      "description": "Populated when this concept is one print in a gallery-wall family. Members share one palette and one style; only the subject differs.",
+      "required": ["family_id", "member_index", "member_count"],
+      "properties": {
+        "family_id": {"type": "string"},
+        "member_index": {"type": "integer", "minimum": 1},
+        "member_count": {"type": "integer", "minimum": 2}
+      }
+    },
+
+    "demand": {
+      "type": "object",
+      "required": ["query", "cluster", "adjacent", "evidence", "competition"],
+      "additionalProperties": false,
+      "properties": {
+        "query": {"type": "string", "description": "The exact primary search phrase a buyer types. 2-6 words."},
+        "cluster": {"type": "string", "description": "The family of related phrases this belongs to."},
+        "adjacent": {"type": "array", "minItems": 8, "maxItems": 30, "items": {"type": "string"}, "description": "Sibling phrases. These become the tags."},
+        "evidence": {"enum": ["marketplace_autocomplete", "bestseller_page", "keyword_tool", "pinterest_trending", "seasonal_calendar", "sales_history", "qualitative"]},
+        "evidence_note": {"type": "string"},
+        "est_monthly_volume": {"type": ["integer", "null"], "minimum": 0},
+        "competition": {"enum": ["low", "medium", "high"]},
+        "competing_results_est": {"type": ["integer", "null"]},
+        "niche_id": {"type": "string", "description": "Reference into poster_niches.json or tshirt_niches.json"}
+      }
+    },
+
+    "angle": {
+      "type": "object",
+      "required": ["audience", "insider_vocab", "emotional_job", "specificity_rung"],
+      "additionalProperties": false,
+      "properties": {
+        "audience": {"type": "string", "description": "Who exactly buys this. Not 'everyone', not a demographic bucket."},
+        "insider_vocab": {"type": "array", "minItems": 3, "items": {"type": "string"}},
+        "emotional_job": {"enum": ["identity_flag", "in_group_joke", "gift_for_relationship", "room_decor", "fandom_shrine", "milestone_marker", "values_statement", "nostalgia_hit"]},
+        "specificity_rung": {"type": "integer", "minimum": 0, "maximum": 4, "description": "Position on the niche's specificity ladder. Must be >= 2."},
+        "differentiator": {"type": "string", "description": "Required when competition is 'high'. What makes this listing not the other 400,000."}
+      }
+    },
+
+    "visual": {
+      "type": "object",
+      "required": ["palette", "composition", "typography", "texture", "avoid", "reads_at_250px_via", "render_prompt"],
+      "properties": {
+        "style_id": {"type": "string", "description": "Poster: reference into poster_style_dna.json"},
+        "layout_id": {"type": "string", "description": "T-shirt: reference into tshirt_layout_archetypes.json"},
+        "palette_id": {"type": "string"},
+        "palette": {"type": "array", "minItems": 1, "maxItems": 6, "items": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"}},
+        "subject": {"type": "string"},
+        "subject_lemma": {"type": "string", "description": "Normalised subject noun, used for the dedup key."},
+        "composition": {"type": "string"},
+        "typography": {"type": "string"},
+        "texture": {"type": "string"},
+        "text_slots": {"type": "object", "description": "T-shirt only. Filled slots from the archetype's text_slots."},
+        "avoid": {"type": "array", "minItems": 3, "items": {"type": "string"}},
+        "reads_at_250px_via": {"type": "string"},
+        "render_prompt": {"type": "string", "description": "The assembled positive prompt. Must contain no slop_padding_terms."},
+        "negative_prompt": {"type": "string"}
+      }
+    },
+
+    "production": {
+      "type": "object",
+      "required": ["target_platforms", "aspect_ratio", "px", "colour_mode", "format"],
+      "properties": {
+        "target_platforms": {"type": "array", "minItems": 1, "items": {"enum": ["redbubble", "displate", "amazon_merch", "etsy", "society6", "teepublic"]}},
+        "aspect_ratio": {"type": "string"},
+        "px": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "integer"}},
+        "dpi": {"type": "integer"},
+        "colour_mode": {"const": "sRGB"},
+        "format": {"enum": ["PNG", "JPEG", "WEBP", "AVIF"]},
+        "background": {"enum": ["transparent", "opaque"]},
+        "edge_buffer_px": {"type": "integer"},
+        "garment_safe": {"enum": ["light", "dark", "both"], "description": "T-shirt only."},
+        "ratio_exports": {"type": "array", "items": {"type": "string"}, "description": "Etsy printables: every ratio family shipped as its own regenerated file, never a crop of one master."},
+        "ink_count": {"type": "integer", "minimum": 1, "maximum": 6}
+      }
+    },
+
+    "metadata": {
+      "type": "object",
+      "description": "One entry per platform. Never generate metadata for all platforms in a single model call - the limits conflict and the model averages them into something that violates all of them.",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["title", "description"],
+        "properties": {
+          "title": {"type": "string"},
+          "tags": {"type": "array", "items": {"type": "string"}},
+          "description": {"type": "string"},
+          "brand": {"type": "string"},
+          "bullets": {"type": "array", "maxItems": 2, "items": {"type": "string"}},
+          "backend_search_terms": {"type": "string"},
+          "attributes": {"type": "object"},
+          "collection": {"type": "string"}
+        }
+      }
+    },
+
+    "ip": {
+      "type": "object",
+      "required": ["tier"],
+      "properties": {
+        "tier": {"enum": ["R0", "R1", "R2", "R3", "R4"]},
+        "screened_against": {"type": "array", "items": {"type": "string"}, "description": "Required for R1 and R2. e.g. ['USPTO 2026-08-27', 'EUIPO 2026-08-27']"},
+        "screen_date": {"type": "string"},
+        "public_domain_source": {"type": "string", "description": "Required for R3. Must be a verified open-access source."},
+        "notes": {"type": "string"}
+      }
+    },
+
+    "dedup": {
+      "type": "object",
+      "required": ["hard_key"],
+      "properties": {
+        "hard_key": {"type": "string", "description": "style_or_layout_id|palette_id|subject_lemma"},
+        "title_normalised": {"type": "string"}
+      }
+    },
+
+    "review": {
+      "type": "object",
+      "description": "Populated after publication. Drives the day-30/day-60 promote-or-cull decision.",
+      "properties": {
+        "published_at": {"type": "string"},
+        "sales_30d": {"type": "integer"},
+        "sales_60d": {"type": "integer"},
+        "verdict": {"enum": ["promote_cluster", "hold", "cull"]}
+      }
+    }
+  }
+}

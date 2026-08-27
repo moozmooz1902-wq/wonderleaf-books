@@ -1,0 +1,217 @@
+{
+  "_meta": {
+    "purpose": "Demand-side data for t-shirt concepts. `specificity_ladder` is the core tool: never generate at rung 0. `insider_vocab` supplies the belonging signal that makes a design convert.",
+    "ip_risk": "R0 safe | R1 phrase check needed | R2 vibe-only, adjacent to protected IP | R4 forbidden",
+    "version": "1.0"
+  },
+  "niches": [
+    {
+      "id": "nb_occupation",
+      "name": "Occupation / Profession",
+      "rank": 1,
+      "audience": "Working professionals buying for themselves, plus family buying gifts for them",
+      "emotional_job": ["identity_flag", "gift_for_relationship", "in_group_joke"],
+      "specificity_ladder": [
+        "nurse (rung 0 - dead)",
+        "ER nurse",
+        "ICU night shift nurse",
+        "new grad ICU nurse first year"
+      ],
+      "sub_niches": ["nurse (highest earning)", "teacher", "firefighter", "electrician", "welder", "HVAC tech", "paramedic", "vet tech", "dental hygienist", "truck driver", "chef", "barber", "social worker", "librarian", "accountant in tax season"],
+      "insider_vocab": ["night shift", "charting", "12-hour", "code brown", "on call", "apprentice hours", "journeyman", "shop vac", "IEP season", "parent-teacher week"],
+      "gifting_windows": ["Nurses Week (May)", "Teacher Appreciation (May)", "graduation (May-June)", "Christmas", "work anniversary"],
+      "layout_fit": ["tl_stacked_lockup", "tl_circle_crest", "tl_specimen_chart", "tl_arched_illustration", "tl_pocket_plus_back"],
+      "saturation": "high at rung 0, medium at rung 2, low at rung 3",
+      "ip_risk": "R1",
+      "notes": "Gift buyers search the RELATIONSHIP plus the JOB: 'gift for nurse daughter'. Title must carry both."
+    },
+    {
+      "id": "nb_pets",
+      "name": "Pet Breed",
+      "rank": 2,
+      "audience": "Breed-specific owners; a genuinely obsessive, repeat-buying audience",
+      "emotional_job": ["identity_flag", "gift_for_relationship"],
+      "specificity_ladder": [
+        "dog lover (rung 0 - dead)",
+        "dog mom",
+        "dachshund mom",
+        "reactive dachshund owner in training"
+      ],
+      "sub_niches": ["golden retriever", "dachshund", "French bulldog", "border collie", "greyhound/whippet", "cattle dog", "ragdoll cat", "orange cat", "black cat", "bearded dragon", "axolotl", "cockatiel", "rat owner"],
+      "insider_vocab": ["zoomies", "reactive dog", "sploot", "loaf", "velcro dog", "counter surfer", "the orange one has one brain cell"],
+      "gifting_windows": ["Christmas", "birthdays", "adoption anniversary", "Mother's Day (pet parent angle)"],
+      "layout_fit": ["tl_character_caption", "tl_arched_illustration", "tl_retro_sunset_badge", "tl_specimen_chart"],
+      "saturation": "high for top-5 breeds, low-medium for rarer breeds and specific behaviours",
+      "ip_risk": "R0",
+      "notes": "Breed-plus-behaviour beats breed alone. Rarer animals face far thinner competition than popular breeds."
+    },
+    {
+      "id": "nb_humour",
+      "name": "Humour / Sarcasm",
+      "rank": 3,
+      "audience": "Self-purchase and gifting; the widest reach of any niche",
+      "emotional_job": ["in_group_joke", "identity_flag", "gift_for_relationship"],
+      "specificity_ladder": [
+        "funny shirt (rung 0 - dead)",
+        "sarcastic shirt",
+        "I'm not arguing I'm just explaining why I'm right",
+        "the same joke told in the vocabulary of one specific subculture"
+      ],
+      "sub_niches": ["deadpan one-liners", "introvert humour", "dad jokes", "workplace sarcasm", "anti-social pleasantries", "absurdist non-sequitur", "faux-brand irony"],
+      "insider_vocab": ["depends on the subculture - always draw from the target community's own phrasing"],
+      "gifting_windows": ["Christmas", "Father's Day", "Secret Santa (Nov-Dec)", "birthdays"],
+      "layout_fit": ["tl_distressed_oneliner", "tl_faux_brand", "tl_stacked_lockup", "tl_vintage_ad_parody"],
+      "saturation": "very high for generic humour, medium for subculture-specific",
+      "ip_risk": "R1 — HIGH. Short phrases are exactly what gets registered as trademarks. Screen every phrase.",
+      "notes": "Insider, niche-specific humour outlasts generic funny. Meme trends decay fast - recency matters, and verify the joke isn't already well-executed on page one."
+    },
+    {
+      "id": "nb_family",
+      "name": "Family Identity & Roles",
+      "rank": 4,
+      "audience": "Relationship-driven gifting - almost entirely bought by someone else",
+      "emotional_job": ["gift_for_relationship", "milestone_marker"],
+      "specificity_ladder": [
+        "best dad (rung 0 - dead)",
+        "girl dad",
+        "girl dad of three",
+        "first Christmas as a bonus dad"
+      ],
+      "sub_niches": ["dad", "mom", "nana/grandma variants", "papa/pops variants", "bonus mom/dad (step-parent)", "big sister promotion", "new mom", "boy mom / girl dad", "aunt/uncle"],
+      "insider_vocab": ["bonus mom", "gigi", "mimi", "pawpaw", "promoted to big sister", "tired as a mother"],
+      "gifting_windows": ["Mother's Day", "Father's Day", "Christmas", "new-baby announcements (year-round)", "Grandparents Day (Sept)"],
+      "layout_fit": ["tl_stacked_lockup", "tl_varsity_athletic", "tl_arched_illustration", "tl_circle_crest"],
+      "saturation": "high for mom/dad, low-medium for regional grandparent names and step-parent roles",
+      "ip_risk": "R1",
+      "notes": "Regional grandparent naming (Gigi, Mimi, Pawpaw, Nonna, Yiayia, Abuela) is a large under-served long tail. Load 8-10 weeks before each gifting window."
+    },
+    {
+      "id": "nb_hobby",
+      "name": "Hobbies & Subcultures",
+      "rank": 5,
+      "audience": "Enthusiasts who display their activity as an identity flag; loyal repeat buyers",
+      "emotional_job": ["identity_flag", "in_group_joke"],
+      "specificity_ladder": [
+        "hiking (rung 0 - dead)",
+        "backpacking",
+        "trad climbing",
+        "fly tying for winter steelhead"
+      ],
+      "sub_niches": ["bouldering / trad climbing", "fly fishing / fly tying", "mechanical keyboards", "tabletop wargaming", "birding", "vinyl collecting", "sourdough baking", "gravel cycling", "van life", "metal detecting", "astrophotography", "3D printing", "crochet", "bonsai", "disc golf"],
+      "insider_vocab": ["crash pad", "sending it", "beta", "tactile switches", "hot-swap", "kitting out", "lifer bird", "the levain", "hydration percentage", "chasing PBs"],
+      "gifting_windows": ["Christmas", "birthdays", "season openers"],
+      "layout_fit": ["tl_specimen_chart", "tl_retro_sunset_badge", "tl_circle_crest", "tl_faux_brand", "tl_distressed_oneliner"],
+      "saturation": "LOW-MEDIUM — the thinnest competition available. Highest priority lane.",
+      "ip_risk": "R0 for the activity; R1 for gear-brand references (never use them)",
+      "notes": "Real subculture vocabulary is the whole point - 'bouldering' over 'hiking'. Outsiders won't recognise the term, which is precisely what makes it convert."
+    },
+    {
+      "id": "nb_regional",
+      "name": "State / Regional Pride",
+      "rank": 6,
+      "audience": "Residents, expats, and tourists",
+      "emotional_job": ["identity_flag", "nostalgia_hit"],
+      "specificity_ladder": [
+        "USA (rung 0 - dead)",
+        "Texas",
+        "Hill Country Texas",
+        "Appalachian Trail section hiker"
+      ],
+      "sub_niches": ["Texas", "Tennessee", "Colorado", "the South generally", "small-town pride", "regional food identity", "trail and river names", "coastal towns"],
+      "insider_vocab": ["y'all", "the 512", "up north", "PNW", "hill country", "the lake"],
+      "gifting_windows": ["Christmas", "summer tourism (Jun-Aug)", "state days"],
+      "layout_fit": ["tl_varsity_athletic", "tl_retro_sunset_badge", "tl_circle_crest", "tl_arched_illustration"],
+      "saturation": "high for state names, low for specific towns, trails and rivers",
+      "ip_risk": "R1 — NEVER use university, team, or club names or colours in a varsity lockup. Invent the wordmark."
+    },
+    {
+      "id": "nb_mindset",
+      "name": "Motivational / Mindset",
+      "rank": 7,
+      "audience": "Fitness, endurance, and self-improvement communities",
+      "emotional_job": ["identity_flag", "values_statement"],
+      "specificity_ladder": ["be positive (rung 0 - dead)", "do hard things", "zone 2 only", "5am club marathon block week 14"],
+      "sub_niches": ["endurance running", "lifting", "hyrox/crossfit-style", "cold exposure", "discipline over motivation", "recovery"],
+      "insider_vocab": ["zone 2", "taper week", "PR", "the pain cave", "deload", "negative split"],
+      "gifting_windows": ["January", "race season", "Christmas"],
+      "layout_fit": ["tl_distressed_oneliner", "tl_knockout_negative", "tl_stacked_lockup"],
+      "saturation": "high for generic motivation, low-medium for sport-specific training vocabulary",
+      "ip_risk": "R1 — many fitness slogans and brand names are registered. Screen every phrase."
+    },
+    {
+      "id": "nb_mental_health",
+      "name": "Mental Health & Neurodivergence",
+      "rank": 8,
+      "audience": "Younger, expressive audience - strongest on Redbubble",
+      "emotional_job": ["identity_flag", "values_statement"],
+      "specificity_ladder": ["mental health matters (rung 0 - dead)", "anxiety awareness", "autistic burnout", "the exact feeling, in original wording"],
+      "sub_niches": ["ADHD executive function", "autistic burnout", "social battery", "quiet self-acceptance", "therapy-speak (used sincerely, not ironically)"],
+      "insider_vocab": ["object permanence", "task paralysis", "masking", "spoons", "social battery at 4%", "body doubling"],
+      "gifting_windows": ["year-round; awareness months"],
+      "layout_fit": ["tl_distressed_oneliner", "tl_y2k_pixel", "tl_faux_brand", "tl_knockout_negative"],
+      "saturation": "medium",
+      "ip_risk": "R1",
+      "notes": "Be specific and sincere rather than cliché. The exact feeling in original wording beats the slogan everyone has already done."
+    },
+    {
+      "id": "nb_gaming_vibe",
+      "name": "Gaming & Anime VIBE (no names)",
+      "rank": 9,
+      "audience": "Gamers and anime fans; enormous demand, entirely closed to named IP",
+      "emotional_job": ["in_group_joke", "identity_flag", "nostalgia_hit"],
+      "specificity_ladder": ["gamer (rung 0 - dead)", "retro gaming", "retro JRPG energy", "the specific feeling of grinding a turn-based random encounter at 2am"],
+      "sub_niches": ["retro JRPG nostalgia", "soulslike difficulty humour", "cozy farming-sim aesthetic", "speedrunner community", "tabletop RPG party roles", "16-bit pixel nostalgia", "shonen training-arc energy", "magical-girl transformation aesthetic"],
+      "insider_vocab": ["grinding", "random encounter", "you died", "no-hit run", "frame perfect", "crit fail", "nat 20", "the tutorial boss"],
+      "gifting_windows": ["Christmas", "birthdays"],
+      "layout_fit": ["tl_y2k_pixel", "tl_specimen_chart", "tl_vintage_ad_parody", "tl_faux_brand", "tl_character_caption"],
+      "saturation": "high",
+      "ip_risk": "R2 — VIBE ONLY. No franchise, character, studio, or item names anywhere, including tags and backend terms.",
+      "notes": "Design the vibe of a genre or community without any protected name, character, or logo. This is the single highest-volume lane that a POD seller can legally occupy."
+    },
+    {
+      "id": "nb_music_scene",
+      "name": "Music Scene Aesthetics (no band names)",
+      "rank": 10,
+      "audience": "Genre and scene loyalists; deep identity attachment",
+      "emotional_job": ["identity_flag", "nostalgia_hit"],
+      "specificity_ladder": ["music lover (rung 0 - dead)", "indie music", "90s shoegaze", "the visual language of a 1993 shoegaze 7-inch sleeve"],
+      "sub_niches": ["90s shoegaze", "underground techno", "sad-girl indie", "old-school punk", "70s dub", "midwest emo", "jungle/DnB flyer aesthetic"],
+      "insider_vocab": ["the wall of sound", "warehouse", "flyer", "B-side", "twinkly guitar"],
+      "gifting_windows": ["festival season", "Christmas"],
+      "layout_fit": ["tl_distressed_oneliner", "tl_repeat_pattern_strip", "tl_faux_brand", "tl_stacked_lockup"],
+      "saturation": "medium",
+      "ip_risk": "R2 — band names, logos, album art and lyrics are all protected. Design the FEEL of a scene only.",
+      "notes": "Lean on typography and mood. A genre's flyer aesthetic is not owned by anyone; a band's logo is."
+    },
+    {
+      "id": "nb_social",
+      "name": "Values & Community Statements",
+      "rank": 11,
+      "audience": "People buying a public statement of belonging",
+      "emotional_job": ["values_statement", "identity_flag"],
+      "specificity_ladder": ["be kind (rung 0 - dead)", "support local", "support your local farmer", "community-specific terminology"],
+      "sub_niches": ["support local trades and makers", "library and literacy advocacy", "conservation and rewilding", "public transit advocacy", "repair culture"],
+      "insider_vocab": ["drawn from the specific community; avoid obvious clichés"],
+      "gifting_windows": ["year-round"],
+      "layout_fit": ["tl_circle_crest", "tl_knockout_negative", "tl_distressed_oneliner"],
+      "saturation": "medium",
+      "ip_risk": "R1 — many campaign slogans are registered. Trademark-check every phrase.",
+      "notes": "Non-divisive framing sells far more broadly than partisan framing."
+    },
+    {
+      "id": "nb_seasonal",
+      "name": "Seasonal & Holiday",
+      "rank": 12,
+      "audience": "Gift buyers on a deadline",
+      "emotional_job": ["gift_for_relationship", "milestone_marker"],
+      "specificity_ladder": ["merry christmas (rung 0 - dead)", "funny christmas shirt", "first christmas as a nana", "matching family christmas pyjama shirt for a family of five"],
+      "sub_niches": ["first-Christmas milestones", "matching family sets", "Halloween costume-substitute tees", "Valentine's for niche relationships", "St Patrick's regional variants", "back-to-school teacher sets"],
+      "insider_vocab": ["varies by holiday"],
+      "gifting_windows": ["LOAD 8-10 WEEKS BEFORE THE DATE - this is the single most important rule in this niche"],
+      "layout_fit": ["tl_stacked_lockup", "tl_arched_illustration", "tl_vintage_ad_parody", "tl_character_caption"],
+      "saturation": "very high in-season, low if you list early",
+      "ip_risk": "R1",
+      "notes": "Amazon and Etsy both need ranking runway. A Christmas design listed in November has already lost."
+    }
+  ]
+}

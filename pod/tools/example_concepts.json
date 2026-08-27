@@ -1,0 +1,502 @@
+[
+  {
+    "concept_id": "pos_mushroom_herbarium_01",
+    "product_class": "poster",
+    "batch_role": "style_led_set",
+    "set_family": {
+      "family_id": "fam_herbarium_fungi",
+      "member_index": 1,
+      "member_count": 3
+    },
+    "demand": {
+      "query": "vintage mushroom print set",
+      "cluster": "botanical_herbarium_fungi",
+      "adjacent": [
+        "antique mycology plate",
+        "fungi wall art set of 3",
+        "cottagecore mushroom decor",
+        "woodland kitchen print",
+        "amanita muscaria illustration",
+        "forest foraging art",
+        "sage green botanical print",
+        "neutral gallery wall set",
+        "herbarium specimen print",
+        "moody farmhouse kitchen art",
+        "printable mushroom art",
+        "boho nature print set"
+      ],
+      "evidence": "keyword_tool",
+      "evidence_note": "Botanical & nature prints ~40k/mo on Etsy; fungi sub-cluster verified via autocomplete depth",
+      "est_monthly_volume": 40000,
+      "competition": "medium",
+      "competing_results_est": 2400,
+      "niche_id": "nb_botanical"
+    },
+    "angle": {
+      "audience": "home decorators furnishing a neutral kitchen or bathroom who already own one botanical print and want a matching set",
+      "insider_vocab": [
+        "herbarium",
+        "latin binomial",
+        "plate number",
+        "specimen"
+      ],
+      "emotional_job": "room_decor",
+      "specificity_rung": 3
+    },
+    "visual": {
+      "style_id": "ps_botanical_plate",
+      "palette_id": "pal_herbarium",
+      "palette": [
+        "#F3EEE2",
+        "#6B7A4F",
+        "#8C6A47",
+        "#A8433C",
+        "#3B3B33"
+      ],
+      "subject": "a single fly agaric specimen with cap, stipe and a small inset spore-print detail",
+      "subject_lemma": "mushroom",
+      "composition": "single centred specimen floating on aged cream paper, stipe cut cleanly, small inset detail lower right, wide margins on all four sides",
+      "typography": "copperplate italic for the latin binomial and plate number, bottom-centre, nothing else",
+      "texture": "aged paper with light foxing and a faint plate impression line",
+      "avoid": [
+        "modern flat vector",
+        "neon colour",
+        "photographic rendering",
+        "decorative frame",
+        "busy background"
+      ],
+      "reads_at_250px_via": "the specimen silhouette against flat cream",
+      "render_prompt": "antique botanical plate illustration, single centred fly agaric specimen on aged cream paper, fine engraved linework with muted watercolour wash, handwritten latin binomial and plate number, subtle foxing, herbarium aesthetic, palette Herbarium strictly limited to #F3EEE2 #6B7A4F #8C6A47 #A8433C #3B3B33"
+    },
+    "production": {
+      "target_platforms": [
+        "etsy",
+        "redbubble"
+      ],
+      "aspect_ratio": "2:3",
+      "px": [
+        4000,
+        6000
+      ],
+      "dpi": 300,
+      "colour_mode": "sRGB",
+      "format": "PNG",
+      "background": "opaque",
+      "edge_buffer_px": 200,
+      "ratio_exports": [
+        "2:3",
+        "3:4",
+        "4:5",
+        "11:14",
+        "1:1.414"
+      ]
+    },
+    "metadata": {
+      "etsy": {
+        "title": "Vintage Mushroom Print Set of 3, Sage Green Botanical Herbarium Wall Art, Kitchen Decor, Digital Download",
+        "tags": [
+          "fungi art print",
+          "mycology poster",
+          "woodland decor",
+          "cottagecore kitchen",
+          "forest foraging art",
+          "neutral gallery wall",
+          "antique plate print",
+          "muted earth tones",
+          "farmhouse wall art",
+          "printable art set",
+          "amanita illustration",
+          "moody botanical art",
+          "boho nature print"
+        ],
+        "description": "Three hand-finished specimen studies drawn in the manner of a nineteenth-century field herbarium, each on softly aged paper with its Latin name and plate number lettered by hand. Sized for a gallery wall above a kitchen counter or a bathroom shelf, and warm enough to sit beside oak, brass and linen. Files arrive in five ratio families so you can print to whatever frame you already own.",
+        "attributes": {
+          "colour": "green",
+          "orientation": "portrait",
+          "style": "vintage",
+          "room": "kitchen"
+        }
+      },
+      "redbubble": {
+        "title": "Sage Green Vintage Mushroom Herbarium Print",
+        "tags": [
+          "vintage botanical mushroom wall art",
+          "antique mycology plate illustration",
+          "cottagecore mushroom foraging print",
+          "woodland fungi art print",
+          "muted earth tone kitchen decor",
+          "neutral gallery wall print set",
+          "amanita muscaria illustration",
+          "herbarium specimen study",
+          "farmhouse kitchen wall decor",
+          "dark academia botanical art",
+          "forest foraging aesthetic",
+          "moody vintage nature print",
+          "boho neutral home decor",
+          "scientific plate illustration",
+          "sage green wall art set"
+        ],
+        "description": "A field-guide specimen study for people who like their walls a little bit scholarly. Muted greens and rust on aged paper, hand-lettered Latin name, and enough negative space to hang beside two more without the wall shouting. Works above a kitchen counter, a reading chair, or a very small mushroom-related obsession."
+      }
+    },
+    "ip": {
+      "tier": "R0",
+      "notes": "Original illustration in a public-domain genre. No named source work reproduced."
+    },
+    "dedup": {
+      "hard_key": "ps_botanical_plate|pal_herbarium|mushroom"
+    }
+  },
+  {
+    "concept_id": "pos_red_moon_torii_01",
+    "product_class": "poster",
+    "batch_role": "evergreen",
+    "demand": {
+      "query": "minimalist japanese wall art",
+      "cluster": "japan_minimal_zen",
+      "adjacent": [
+        "red moon japanese print",
+        "zen minimalist poster",
+        "japandi wall art",
+        "black and white japanese art",
+        "torii gate print",
+        "minimalist mountain print",
+        "red and black wall art",
+        "japanese metal poster",
+        "high contrast minimal print",
+        "asian minimalist decor"
+      ],
+      "evidence": "bestseller_page",
+      "evidence_note": "Two original Japan-aesthetic designs charted in Displate's 2025 top 25 against an otherwise licensed field",
+      "est_monthly_volume": null,
+      "competition": "medium",
+      "niche_id": "nb_japan_asia"
+    },
+    "angle": {
+      "audience": "collectors buying a premium metal print for a bedroom or study who want one graphic statement piece rather than a gallery wall",
+      "insider_vocab": [
+        "torii",
+        "bokashi",
+        "negative space",
+        "notan"
+      ],
+      "emotional_job": "room_decor",
+      "specificity_rung": 3
+    },
+    "visual": {
+      "style_id": "ps_minimal_zen",
+      "palette_id": "pal_red_moon",
+      "palette": [
+        "#0D0D0D",
+        "#F5F1E8",
+        "#C1272D"
+      ],
+      "subject": "a torii gate silhouette standing in still water beneath one enormous flat red disc",
+      "subject_lemma": "torii",
+      "composition": "one large flat circle occupying the upper third, torii reduced to pure silhouette on the lower horizon, vast empty cream field between them, nothing else in the frame",
+      "typography": "none",
+      "texture": "flat, with a single subtle paper grain and no gradient anywhere",
+      "avoid": [
+        "detail",
+        "additional elements",
+        "gradients",
+        "any visible text",
+        "reflection highlights"
+      ],
+      "reads_at_250px_via": "the red disc against cream - engineered for the thumbnail grid",
+      "render_prompt": "extreme minimalist poster, three colours only, one large flat red circle, pure black torii silhouette on a still water horizon, vast negative space, zen composition, no gradients, palette Red Moon strictly limited to #0D0D0D #F5F1E8 #C1272D"
+    },
+    "production": {
+      "target_platforms": [
+        "displate"
+      ],
+      "aspect_ratio": "1:1.4",
+      "px": [
+        4000,
+        5600
+      ],
+      "dpi": 300,
+      "colour_mode": "sRGB",
+      "format": "PNG",
+      "background": "opaque",
+      "edge_buffer_px": 220
+    },
+    "metadata": {
+      "displate": {
+        "title": "Red Moon Over the Water Gate",
+        "tags": [
+          "minimalist japanese",
+          "torii gate",
+          "red and black",
+          "zen composition",
+          "high contrast minimal",
+          "japandi decor"
+        ],
+        "description": "Three colours, one horizon, and a great deal of quiet. A torii reduced to its silhouette under a single flat disc of red, built so it still reads from the far side of the room.",
+        "collection": "Quiet Japan"
+      }
+    },
+    "ip": {
+      "tier": "R0"
+    },
+    "dedup": {
+      "hard_key": "ps_minimal_zen|pal_red_moon|torii"
+    }
+  },
+  {
+    "concept_id": "tee_flytying_chart_01",
+    "product_class": "tshirt",
+    "batch_role": "evergreen",
+    "demand": {
+      "query": "fly tying shirt",
+      "cluster": "flyfishing_flytying",
+      "adjacent": [
+        "fly tying gift for him",
+        "streamer pattern tee",
+        "trout bum shirt",
+        "fly fisherman christmas gift",
+        "winter steelhead shirt",
+        "vise and hackle shirt",
+        "fly tying bench decor",
+        "euro nymphing shirt",
+        "fly angler apparel",
+        "dry fly pattern chart"
+      ],
+      "evidence": "marketplace_autocomplete",
+      "evidence_note": "Autocomplete depth on Amazon and Etsy; long-tail ecosystem across the adjacent set",
+      "est_monthly_volume": 1400,
+      "competition": "low",
+      "competing_results_est": 900,
+      "niche_id": "nb_hobby"
+    },
+    "angle": {
+      "audience": "anglers who tie their own flies at a home bench through the winter and can name a hackle by feel",
+      "insider_vocab": [
+        "dubbing",
+        "hackle",
+        "vise",
+        "thread wraps",
+        "bead head"
+      ],
+      "emotional_job": "identity_flag",
+      "specificity_rung": 3
+    },
+    "visual": {
+      "layout_id": "tl_specimen_chart",
+      "palette_id": "pal_mono_knockout",
+      "palette": [
+        "#141414"
+      ],
+      "subject": "an exploded technical diagram of a weighted streamer with labelled callouts for each material",
+      "subject_lemma": "streamer_fly",
+      "composition": "single-ink technical diagram centred in the print area, header rule above and footer note below, six labelled callouts on leader lines fanning to the left and right",
+      "typography": "technical mono for the callout labels, letterspaced condensed caps for the header",
+      "texture": "clean line work with a very light press distress across the solid rule lines only",
+      "text_slots": {
+        "chart_title": "ANATOMY OF A WEIGHTED STREAMER",
+        "callout_labels": [
+          "BEAD HEAD",
+          "LEAD WRAPS",
+          "TAIL FIBRES",
+          "DUBBED BODY",
+          "SCHLAPPEN HACKLE",
+          "THREAD HEAD"
+        ],
+        "footer_note": "TIED AT THE BENCH BETWEEN NOVEMBER AND MARCH"
+      },
+      "avoid": [
+        "photographic rendering",
+        "labels too small to resolve",
+        "gear brand names or model numbers",
+        "gradient fills",
+        "more than eight callouts"
+      ],
+      "reads_at_250px_via": "the chart structure and the fly silhouette; labels read as texture at that size",
+      "render_prompt": "t-shirt design, vintage technical specimen chart, single-ink line-art diagram of a weighted streamer fly with six labelled callouts on leader lines, technical monospace labels, header rule and footer note, blueprint aesthetic, transparent background, palette Mono Knockout strictly limited to #141414"
+    },
+    "production": {
+      "target_platforms": [
+        "amazon_merch",
+        "redbubble"
+      ],
+      "aspect_ratio": "5:6",
+      "px": [
+        4500,
+        5400
+      ],
+      "dpi": 300,
+      "colour_mode": "sRGB",
+      "format": "PNG",
+      "background": "transparent",
+      "garment_safe": "both",
+      "ink_count": 1
+    },
+    "metadata": {
+      "amazon_merch": {
+        "title": "Anatomy of a Weighted Streamer Fly Tying Chart Shirt for Anglers",
+        "brand": "Bench Season Supply",
+        "bullets": [
+          "TIE IT, THEN WEAR IT - a single-ink technical chart of a weighted streamer with every material called out by name, drawn for people who own a vise and a drawer of schlappen.",
+          "READS AS A REAL DIAGRAM, NOT A SLOGAN - header rule, leader lines and monospace labels, printed in one ink so it sits properly on any shirt colour you pick."
+        ],
+        "description": "A field-diagram tee for winter bench sessions. Six labelled callouts, one ink, no logos.",
+        "backend_search_terms": "fly tying vise hackle dubbing streamer nymph angler bench winter"
+      },
+      "redbubble": {
+        "title": "Weighted Streamer Fly Tying Anatomy Chart",
+        "tags": [
+          "fly tying bench technical diagram",
+          "streamer pattern anatomy chart",
+          "winter steelhead angler gift",
+          "vise and hackle enthusiast",
+          "dubbing and thread wraps humour",
+          "trout bum single ink tee",
+          "euro nymphing rig diagram",
+          "dry fly pattern illustration",
+          "fly fisherman blueprint print",
+          "bead head material callout",
+          "cold season bench project",
+          "angler technical schematic",
+          "hand tied fly diagram",
+          "river season apparel graphic",
+          "schlappen feather line art"
+        ],
+        "description": "Six callouts, one ink, and no explanation offered to anyone who does not already own a vise. Drawn as a proper technical diagram rather than a slogan, so it holds up close and still reads across a car park."
+      }
+    },
+    "ip": {
+      "tier": "R0",
+      "notes": "No gear brands, no pattern names attributable to a living tier."
+    },
+    "dedup": {
+      "hard_key": "tl_specimen_chart|pal_mono_knockout|streamer_fly"
+    }
+  },
+  {
+    "concept_id": "tee_bonus_dad_lockup_01",
+    "product_class": "tshirt",
+    "batch_role": "seasonal",
+    "demand": {
+      "query": "bonus dad gift shirt",
+      "cluster": "family_stepparent_roles",
+      "adjacent": [
+        "stepdad fathers day gift",
+        "bonus dad birthday present",
+        "step father thank you gift",
+        "bonus dad from stepdaughter",
+        "not a step dad shirt",
+        "blended family gift",
+        "first fathers day as bonus dad",
+        "stepdad appreciation tee",
+        "bonus father christmas gift",
+        "stepdad wedding gift shirt"
+      ],
+      "evidence": "seasonal_calendar",
+      "evidence_note": "Father's Day cluster; step-parent roles are an under-served long tail against a saturated 'best dad' head term",
+      "est_monthly_volume": 2600,
+      "competition": "medium",
+      "competing_results_est": 1800,
+      "niche_id": "nb_family"
+    },
+    "angle": {
+      "audience": "an adult stepchild buying a Father's Day gift for the man who raised them without the title",
+      "insider_vocab": [
+        "bonus dad",
+        "blended family",
+        "stepped up",
+        "the one who showed up"
+      ],
+      "emotional_job": "gift_for_relationship",
+      "specificity_rung": 3
+    },
+    "visual": {
+      "layout_id": "tl_stacked_lockup",
+      "palette_id": "pal_faded_vintage_tee",
+      "palette": [
+        "#2B2B28",
+        "#EFE7D5",
+        "#B5603C"
+      ],
+      "subject": "a four-line typographic lockup, no illustration",
+      "subject_lemma": "bonus_dad_lockup",
+      "composition": "four lines stacked to equal optical width, the second line carrying the weight, hairline rules above and below the third line",
+      "typography": "one condensed bold sans for the emphasis line paired with a light italic serif for the setup and payoff lines",
+      "text_slots": {
+        "line1_setup": "NOT THE ONE WHO",
+        "line2_emphasis": "STARTED IT",
+        "line3_payoff": "the one who stayed for it",
+        "optional_kicker": "BONUS DAD"
+      },
+      "texture": "cracked screen print distress across the solid letterforms only, leaving the hairline rules clean",
+      "avoid": [
+        "centred ragged lines",
+        "clip art additions",
+        "more than three type families",
+        "gradient fills",
+        "pure black on pure white"
+      ],
+      "reads_at_250px_via": "the block shape of the stacked lockup",
+      "render_prompt": "t-shirt graphic, stacked typographic lockup, four lines justified to equal optical width, extreme weight contrast between condensed bold sans and light italic serif, hairline rules, cracked screen print distress, transparent background, palette Faded Vintage Tee strictly limited to #2B2B28 #EFE7D5 #B5603C"
+    },
+    "production": {
+      "target_platforms": [
+        "amazon_merch",
+        "etsy"
+      ],
+      "aspect_ratio": "5:6",
+      "px": [
+        4500,
+        5400
+      ],
+      "dpi": 300,
+      "colour_mode": "sRGB",
+      "format": "PNG",
+      "background": "transparent",
+      "garment_safe": "both",
+      "ink_count": 3
+    },
+    "metadata": {
+      "amazon_merch": {
+        "title": "Bonus Dad Shirt Stepdad Fathers Day Gift From Stepdaughter Son",
+        "brand": "Stayed For It Co",
+        "bullets": [
+          "SAYS THE THING HE NEVER ASKED FOR - a quiet four-line lockup for the man who stepped up without the title, printed in faded vintage inks rather than a loud novelty slogan.",
+          "GIVE IT IN JUNE OR ANY TUESDAY - soft washed colours and a distressed screen-print finish that looks like he has owned it for years, sized across the chest to read from across a room."
+        ],
+        "description": "A restrained Father's Day gift for a bonus dad, stepdad, or blended-family father figure.",
+        "backend_search_terms": "bonus dad stepdad step father blended family fathers day gift stepdaughter stepson"
+      },
+      "etsy": {
+        "title": "Bonus Dad Shirt, Stepdad Fathers Day Gift from Stepdaughter, Vintage Blended Family Tee, Step Father Birthday Present",
+        "tags": [
+          "stepped up not in",
+          "second dad apparel",
+          "retro dad graphic",
+          "distressed tee",
+          "stepson to stepdad",
+          "faded washed tee",
+          "june gifting idea",
+          "quiet sentiment tee",
+          "grown stepchild gift",
+          "not a step in dad",
+          "chosen family gift",
+          "papa bonus figure",
+          "vintage type print"
+        ],
+        "description": "Four lines, no punchline, and nothing that needs explaining at a barbecue. Set in a condensed lockup with soft cracked inks so it reads as something washed a hundred times rather than something ordered last week. For the man who did the work without the paperwork."
+      }
+    },
+    "ip": {
+      "tier": "R1",
+      "screened_against": [
+        "USPTO 2026-08-27",
+        "EUIPO 2026-08-27"
+      ],
+      "screen_date": "2026-08-27",
+      "notes": "Phrase-based design - the wording was checked as an unregistered original construction."
+    },
+    "dedup": {
+      "hard_key": "tl_stacked_lockup|pal_faded_vintage_tee|bonus_dad_lockup"
+    }
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "_meta": {
+    "purpose": "Named palettes with hex values. A concept MUST reference a palette by id or supply its own 3-5 hex list. An unspecified palette is the single biggest cause of generic output.",
+    "rule": "3-5 colours for posters, 1-4 inks for apparel. More than 6 reads as a photograph, not a design.",
+    "version": "1.0"
+  },
+  "palettes": [
+    {"id": "pal_red_moon", "name": "Red Moon", "hex": ["#0D0D0D", "#F5F1E8", "#C1272D"], "mood": "stark, zen, high-drama", "fits": ["ps_minimal_zen", "ps_ukiyoe"], "garment_safe": "both"},
+    {"id": "pal_canyon_dusk", "name": "Canyon Dusk", "hex": ["#1E3A4C", "#D97941", "#E8C87E", "#3F6B52", "#F2E8D5"], "mood": "nostalgic Americana, outdoorsy", "fits": ["ps_wpa_park", "tl_retro_sunset_badge"], "garment_safe": "dark"},
+    {"id": "pal_terracotta_neutral", "name": "Terracotta Neutral", "hex": ["#E7DDD0", "#C08552", "#8A6552", "#D9C5B2", "#5C5248"], "mood": "warm, calm, contemporary interiors", "fits": ["ps_boho_earth", "ps_line_art"], "garment_safe": "light"},
+    {"id": "pal_herbarium", "name": "Herbarium", "hex": ["#F3EEE2", "#6B7A4F", "#8C6A47", "#A8433C", "#3B3B33"], "mood": "scholarly, antique, botanical", "fits": ["ps_botanical_plate", "ps_cottagecore"], "garment_safe": "light"},
+    {"id": "pal_gold_noir", "name": "Gold Noir", "hex": ["#0B0B0F", "#C9A227", "#1F4E5F", "#E6DCC8", "#8C1D18"], "mood": "glamorous, deco, premium", "fits": ["ps_art_deco", "ps_celestial_chart"], "garment_safe": "dark"},
+    {"id": "pal_hokusai_indigo", "name": "Hokusai Indigo", "hex": ["#1B3B6F", "#E8DCC0", "#B23A48", "#7A9E7E", "#2C2C2C"], "mood": "classical Japanese, calm with one shock of red", "fits": ["ps_ukiyoe", "ps_minimal_zen"], "garment_safe": "both"},
+    {"id": "pal_riso_duotone", "name": "Riso Duotone", "hex": ["#FF48B0", "#0078BF", "#FFE800", "#F4F1EA"], "mood": "indie, energetic, zine", "fits": ["ps_risograph"], "garment_safe": "light"},
+    {"id": "pal_cosmic_sherbet", "name": "Cosmic Sherbet", "hex": ["#0B1026", "#E85D2A", "#F2A65A", "#7B4B94", "#EFE3D0"], "mood": "70s sci-fi paperback, awe at scale", "fits": ["ps_retro_futurism"], "garment_safe": "dark"},
+    {"id": "pal_library_oak", "name": "Library Oak", "hex": ["#1C1712", "#4A3B2A", "#8A7355", "#C4B49A", "#6B2B2B"], "mood": "dark academia, candlelit, scholarly", "fits": ["ps_dark_academia"], "garment_safe": "dark", "warning": "Too dark overall for Displate - raise the luminance range for that platform."},
+    {"id": "pal_meadow_butter", "name": "Meadow Butter", "hex": ["#F5EFE0", "#A8B98A", "#E3B23C", "#C97B84", "#6B5B4A"], "mood": "cottagecore, gentle, pastoral", "fits": ["ps_cottagecore", "ps_botanical_plate"], "garment_safe": "light"},
+    {"id": "pal_frutiger_chrome", "name": "Frutiger Chrome", "hex": ["#B7E3F5", "#C9C9D6", "#FF5FA2", "#8AE86B", "#1B1B2F"], "mood": "Y2K, glossy, early-internet optimism", "fits": ["ps_y2k_chrome", "tl_y2k_pixel"], "garment_safe": "dark"},
+    {"id": "pal_single_ink_forest", "name": "Single Ink Forest", "hex": ["#F1EBDD", "#243B2E"], "mood": "craft, folk, handmade", "fits": ["ps_blockprint"], "garment_safe": "both"},
+    {"id": "pal_helvetica_red", "name": "Helvetica Red", "hex": ["#E4002B", "#111111", "#FFFFFF", "#B8B8B8"], "mood": "modernist, confident, graphic", "fits": ["ps_swiss_intl"], "garment_safe": "both"},
+    {"id": "pal_faded_vintage_tee", "name": "Faded Vintage Tee", "hex": ["#2B2B28", "#EFE7D5", "#B5603C", "#D9A441", "#7E8B6B"], "mood": "washed a hundred times, timeless", "fits": ["tl_retro_sunset_badge", "tl_varsity_athletic", "tl_distressed_oneliner"], "garment_safe": "both", "note": "Never pure black on pure white. Off-black #2B2B28 and cream #EFE7D5 are what make it read as vintage."},
+    {"id": "pal_athletic_two_ink", "name": "Athletic Two Ink", "hex": ["#1B2A4A", "#D64545"], "mood": "collegiate, sporting, bold", "fits": ["tl_varsity_athletic", "tl_circle_crest"], "garment_safe": "light"},
+    {"id": "pal_mono_knockout", "name": "Mono Knockout", "hex": ["#141414"], "mood": "works on literally any garment colour", "fits": ["tl_knockout_negative", "tl_distressed_oneliner", "tl_circle_crest"], "garment_safe": "both", "note": "Single-ink designs are the cheapest way to sell across every garment colour without new files."},
+    {"id": "pal_astrolabe", "name": "Astrolabe", "hex": ["#12203A", "#D4AF6A", "#E8E2D0", "#5A6B8C", "#8C1D18"], "mood": "antique science, celestial, premium", "fits": ["ps_celestial_chart"], "garment_safe": "dark"},
+    {"id": "pal_flat_pop", "name": "Flat Pop", "hex": ["#F7C948", "#1D1D1D", "#E4572E", "#F4F1E8", "#3A7CA5"], "mood": "bold, funny, high-visibility", "fits": ["ps_bold_char_humour", "tl_character_caption"], "garment_safe": "both"},
+    {"id": "pal_mucha_bloom", "name": "Mucha Bloom", "hex": ["#5C6B4A", "#C4A377", "#8C3B3B", "#E9E2D0", "#2F3B33"], "mood": "art nouveau, romantic, ornamental", "fits": ["ps_art_nouveau"], "garment_safe": "light"},
+    {"id": "pal_ink_on_bone", "name": "Ink on Bone", "hex": ["#FFFDF7", "#1A1A1A", "#D6A77A"], "mood": "minimal, gallery, calm", "fits": ["ps_line_art"], "garment_safe": "light"}
+  ]
+}

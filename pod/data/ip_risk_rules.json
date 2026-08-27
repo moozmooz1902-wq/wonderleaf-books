@@ -1,0 +1,73 @@
+{
+  "_meta": {
+    "purpose": "Automated first-pass IP screen. Catches obvious hits and high-risk SHAPES. It is not a substitute for a database check - it is the filter that stops the obvious 95% before a human looks at the rest.",
+    "scope": "Screen ALL text that ships: artwork copy, title, tags, description, and backend search terms. Trademark attaches to use in commerce, so a clean image with a franchise name in the tags is still an infringement.",
+    "disclaimer": "Not legal advice.",
+    "version": "1.0"
+  },
+  "risk_tiers": {
+    "R0": {"label": "Original art, original phrasing, generic vocabulary", "action": "ship"},
+    "R1": {"label": "Common phrase that could plausibly be registered", "action": "database check required; record in ip.screened_against[]"},
+    "R2": {"label": "Genre or scene aesthetic adjacent to a franchise", "action": "verify no protected string appears anywhere; ship the vibe only"},
+    "R3": {"label": "Public-domain source", "action": "verify term in selling jurisdictions AND verify the scan's own rights"},
+    "R4": {"label": "Any protected name, logo, character, or likeness", "action": "KILL - never ship"}
+  },
+  "forbidden_categories": [
+    "franchise, film, game, or series names",
+    "character names, real or fictional",
+    "band names, album titles, song lyrics",
+    "company names, product names, logotypes, wordmarks",
+    "registered slogans and catchphrases",
+    "sports teams, leagues, universities, and their colours in a varsity lockup",
+    "living public figures' names and likenesses",
+    "look-alike designs recognisable as a protected property",
+    "'in the style of' a living artist",
+    "operating system chrome, icons, or logotypes",
+    "fashion house names, monograms, and trade dress",
+    "the NPS arrowhead, NASA insignia and wordmark, and tourism-board logos"
+  ],
+  "high_risk_patterns": [
+    {"pattern": "(?i)\\b(in the style of|inspired by)\\s+[A-Z]", "tier": "R4", "reason": "Style-of a named (possibly living) artist"},
+    {"pattern": "(?i)\\b(official|licensed|authentic|genuine)\\b", "tier": "R4", "reason": "False affiliation claim"},
+    {"pattern": "(?i)\\b(fan ?art|fanart|cosplay of|parody of)\\b", "tier": "R4", "reason": "Signals derivative use of protected IP"},
+    {"pattern": "(?i)\\b(university|college|state)\\s+(of\\s+)?[A-Z][a-z]+\\b.*\\b(tigers|eagles|bulldogs|wildcats|lions|bears|hawks|knights)\\b", "tier": "R4", "reason": "Collegiate team identity"},
+    {"pattern": "(?i)\\b(edition|collection|series)\\s+(tm|®|™)", "tier": "R4", "reason": "Trademark symbol implies a registered mark"},
+    {"pattern": "[™®©]", "tier": "R4", "reason": "Trademark or copyright symbol in shipped text"},
+    {"pattern": "(?i)\\b(marvel|disney|pixar|nintendo|pokemon|star wars|harry potter|hogwarts|lord of the rings|tolkien|elden ring|dark souls|cyberpunk 2077|one piece|naruto|dragon ball|call of duty|warhammer|baldur'?s gate|league of legends|arcane|fallout|minecraft|roblox|fortnite|avatar the last airbender|studio ghibli|sanrio|hello kitty|barbie|lego|nike|adidas|supreme|gucci|chanel|louis vuitton|prada|starbucks|coca.?cola|netflix|spotify|playstation|xbox|apple|google|amazon prime)\\b", "tier": "R4", "reason": "Known protected mark"},
+    {"pattern": "(?i)\\b(taylor swift|beatles|nirvana|metallica|pink floyd|queen|acdc|ac/dc|drake|beyonce|kanye|eminem|billie eilish)\\b", "tier": "R4", "reason": "Protected music mark or personal name"},
+    {"pattern": "(?i)\\bnfl|nba|mlb|nhl|fifa|uefa|premier league|olympic\\b", "tier": "R4", "reason": "Sports league mark"}
+  ],
+  "phrase_shapes_requiring_check": [
+    {"shape": "any short declarative slogan of 2-6 words on apparel", "tier": "R1", "reason": "Short phrases are exactly what gets registered as marks"},
+    {"shape": "a faux-brand wordmark plus 'est. YEAR'", "tier": "R1", "reason": "Must verify the invented brand is not a real one"},
+    {"shape": "a place name plus a varsity lockup", "tier": "R1", "reason": "Verify no school, club or team owns that lockup"},
+    {"shape": "a motivational or fitness slogan", "tier": "R1", "reason": "Heavily registered category"}
+  ],
+  "vibe_substitutions": {
+    "a named JRPG": "retro JRPG energy, 16-bit turn-based nostalgia",
+    "a named soulslike": "soulslike difficulty humour, you died again",
+    "a named farming sim": "cozy farming-sim aesthetic",
+    "a named band": "90s shoegaze, underground techno, old-school punk, sad-girl indie, midwest emo",
+    "a named anime": "shonen training-arc energy, magical-girl transformation aesthetic",
+    "a named wizarding school": "dark academia magic school aesthetic",
+    "a named MMO": "raid night guild aesthetic"
+  },
+  "public_domain_sources": {
+    "artists": ["Van Gogh", "Hokusai", "Hiroshige", "Klimt", "Mucha", "Monet", "Vermeer", "Turner", "Audubon", "Redoute", "Haeckel"],
+    "archives": ["US National Park / WPA poster archive", "public-domain maps, star charts and patent drawings", "expired vintage travel, transit and exhibition posters"],
+    "verified_open_access_scans": ["Rijksmuseum", "The Met Open Access", "NYPL Digital Collections", "Smithsonian Open Access", "Library of Congress"],
+    "caveats": [
+      "Verify the term in every jurisdiction you sell into - terms differ between the US, UK and EU.",
+      "A modern photograph or scan of a public-domain work can carry its own rights. Use verified open-access sources.",
+      "Reproduction is legal but undifferentiated. FUSION - a public-domain composition plus one modern motif - is what actually sells."
+    ]
+  },
+  "databases": [
+    {"name": "USPTO TESS", "url": "https://tmsearch.uspto.gov/", "scope": "US"},
+    {"name": "EUIPO", "url": "https://euipo.europa.eu/", "scope": "EU"},
+    {"name": "WIPO Global Brand Database", "url": "https://branddb.wipo.int/", "scope": "international"},
+    {"name": "Amazon Brand Registry", "scope": "required before using any tagline or stylised text on Merch"},
+    {"name": "US Copyright Office", "url": "https://www.copyright.gov/", "scope": "US copyright"}
+  ],
+  "review_cadence": "Re-screen the live catalogue quarterly. Trademarks are registered continuously - a phrase clear today may not be clear in six months."
+}

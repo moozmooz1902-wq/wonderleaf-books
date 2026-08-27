@@ -1,0 +1,192 @@
+{
+  "_meta": {
+    "purpose": "Named t-shirt LOCKUPS. A phrase without a specified lockup returns the generative mean (centred bold text on a blank tee). Every t-shirt concept must reference one `id` via visual.layout_id and fill its text_slots.",
+    "print_spec": {"px": "4500x5400", "dpi": 300, "format": "PNG", "background": "transparent", "colour_mode": "sRGB", "max_mb": 25},
+    "universal_rules": [
+      "2-3 type families maximum",
+      "Must read at 250px thumbnail",
+      "Must work on BOTH light and dark garments (two exports, or a palette that survives both)",
+      "No hairlines, no thin outlines, no subtle gradients - DTG fills in fine detail and bands soft gradients",
+      "2-6 ink colours; more reads as a photo print, not apparel"
+    ],
+    "version": "1.0"
+  },
+  "archetypes": [
+    {
+      "id": "tl_stacked_lockup",
+      "name": "Stacked Type Lockup",
+      "structure": "3-5 lines of text stacked flush-width, each line scaled so all lines share the same optical width. Mixed weights and cases create the rhythm. No illustration required.",
+      "text_slots": ["line1_setup", "line2_emphasis", "line3_payoff", "optional_kicker"],
+      "typography": "One condensed bold sans for the emphasis line, one lighter or italic serif for setup/payoff. Extreme weight contrast between lines.",
+      "colour_rule": "1-2 inks. Emphasis line in the accent, everything else in the base ink.",
+      "best_niches": ["nb_occupation", "nb_family", "nb_mindset", "nb_humour"],
+      "render_cues": "t-shirt graphic, stacked typographic lockup, 4 lines justified to equal optical width, extreme weight contrast between condensed bold sans and light italic serif, two ink colours, transparent background, vector clean",
+      "avoid": ["centred ragged lines", "more than 3 fonts", "decorative background shapes"],
+      "reads_at_250px_via": "the block shape of the lockup"
+    },
+    {
+      "id": "tl_retro_sunset_badge",
+      "name": "Retro Sunset Badge",
+      "structure": "Circle or rounded-rectangle badge. Horizontally striped sunset gradient (as discrete bands, never a smooth gradient) fills the upper half. Silhouetted subject in front. Arched text over the top, straight text across the bottom band.",
+      "text_slots": ["arch_top", "subject_silhouette", "bottom_bar"],
+      "typography": "70s rounded groovy display for the arch; condensed caps for the bottom bar.",
+      "colour_rule": "4-5 inks: cream, burnt orange, mustard, rust, deep teal. Bands are solid - no blending.",
+      "best_niches": ["nb_hobby", "nb_regional", "nb_outdoors", "nb_pets"],
+      "render_cues": "retro 70s t-shirt badge design, circular emblem with horizontal banded sunset in solid stripes, silhouetted mountain and pine subject, arched groovy display type above, condensed caps in bottom bar, burnt orange mustard and cream, distressed screen print texture, transparent background",
+      "avoid": ["smooth gradients", "photographic sunset", "modern sans-serif", "more than 5 inks"],
+      "reads_at_250px_via": "the badge circle + banded colour"
+    },
+    {
+      "id": "tl_arched_illustration",
+      "name": "Arched Text + Illustration",
+      "structure": "Text arched along the top of an invisible circle, illustration centred beneath, optional small straight caption under that.",
+      "text_slots": ["arch_top", "caption_bottom"],
+      "typography": "Heavy slab or bold script for the arch, small letterspaced caps for the caption.",
+      "colour_rule": "2-3 inks.",
+      "best_niches": ["nb_pets", "nb_hobby", "nb_occupation", "nb_regional"],
+      "render_cues": "t-shirt design, bold arched slab serif text above a centred flat illustration, small letterspaced caps caption below, three ink colours, vintage screen print distress, transparent background",
+      "avoid": ["text arching in both directions", "illustration overlapping the text", "gradient fills"],
+      "reads_at_250px_via": "arch silhouette + central illustration mass"
+    },
+    {
+      "id": "tl_circle_crest",
+      "name": "Circle Crest / Emblem",
+      "structure": "Two concentric circles. Text runs around the outer ring (top text reads left-to-right, bottom text reads left-to-right too, never upside down). Central emblem inside. Small stars or dots as separators at the 3 and 9 o'clock positions.",
+      "text_slots": ["ring_top", "ring_bottom", "central_emblem", "optional_est_year"],
+      "typography": "Letterspaced condensed caps in the ring. Anything in the centre.",
+      "colour_rule": "1-2 inks. This archetype is strongest as a single-ink design.",
+      "best_niches": ["nb_occupation", "nb_hobby", "nb_regional", "nb_social"],
+      "render_cues": "vintage circular crest t-shirt design, two concentric rings with letterspaced condensed caps, star separators, central line-art emblem, single ink colour, subtle distress, transparent background",
+      "avoid": ["upside-down bottom text", "more than 2 inks", "thin ring lines under 8px at print size"],
+      "reads_at_250px_via": "the ring form"
+    },
+    {
+      "id": "tl_varsity_athletic",
+      "name": "Vintage Varsity / Athletic",
+      "structure": "Large collegiate block or script wordmark with a heavy offset outline and drop layer. Optional number beneath. Slight upward arch or a straight baseline with a swash tail.",
+      "text_slots": ["wordmark", "optional_number", "optional_small_line"],
+      "typography": "Collegiate slab or a heavy athletic script with a knockout inline.",
+      "colour_rule": "2-3 inks with a hard offset shadow layer. Cracked-ink distress across the fill.",
+      "best_niches": ["nb_regional", "nb_hobby", "nb_family", "nb_occupation"],
+      "render_cues": "vintage varsity athletic t-shirt wordmark, heavy collegiate slab with offset drop layer and knockout inline, large number beneath, cracked screen print distress, three ink colours, transparent background",
+      "avoid": ["real team names or logos", "thin outlines", "gradient fills", "modern geometric sans"],
+      "reads_at_250px_via": "wordmark mass + offset layer",
+      "ip_warning": "HIGH RISK. Never use a real team, school, league, or club name. Invent the place/role wordmark."
+    },
+    {
+      "id": "tl_distressed_oneliner",
+      "name": "Distressed One-Liner",
+      "structure": "A single sentence, set in 2-3 lines, filling 70% of the print width. Heavy distress. No illustration at all.",
+      "text_slots": ["line1", "line2", "optional_line3"],
+      "typography": "One characterful face doing all the work - a chunky 90s condensed, a 70s groovy, or a rough hand-brushed script. Never a neutral system sans.",
+      "colour_rule": "1 ink.",
+      "best_niches": ["nb_humour", "nb_mindset", "nb_mental_health", "nb_social"],
+      "render_cues": "single ink t-shirt typography, one sentence set in three lines filling the print width, characterful chunky condensed 90s face, heavy cracked screen print distress, transparent background",
+      "avoid": ["neutral default sans", "centred with huge margins", "clip art additions"],
+      "reads_at_250px_via": "the text block silhouette - so the face must have personality at small size",
+      "note": "Flat generic quote shirts are losing ground. The typographic personality IS the design here."
+    },
+    {
+      "id": "tl_knockout_negative",
+      "name": "Knockout / Negative Space",
+      "structure": "A solid shape (circle, square, rounded panel) with the type and illustration knocked out of it so the garment colour shows through.",
+      "text_slots": ["knockout_headline", "optional_sub"],
+      "typography": "Heavy weights only - thin type disappears in a knockout at DTG resolution.",
+      "colour_rule": "1 ink, by definition. This is the strongest 'works on any garment colour' archetype.",
+      "best_niches": ["nb_mindset", "nb_humour", "nb_hobby", "nb_occupation"],
+      "render_cues": "t-shirt design, single solid ink panel with heavy sans headline and simple icon knocked out to reveal the garment beneath, bold weights only, high contrast, transparent background",
+      "avoid": ["light font weights", "fine detail in the knockout", "gradients"],
+      "reads_at_250px_via": "the solid panel shape",
+      "note": "Best archetype when you want one file to sell across every garment colour."
+    },
+    {
+      "id": "tl_character_caption",
+      "name": "Character + Caption",
+      "structure": "One illustrated character (animal, object, mascot) with attitude, centred, with a short caption directly beneath in a contrasting face.",
+      "text_slots": ["caption", "optional_kicker"],
+      "typography": "Hand-drawn or chunky display for the caption. Caption ≤ 5 words.",
+      "colour_rule": "3-4 inks, flat, no shading.",
+      "best_niches": ["nb_pets", "nb_humour", "nb_hobby", "nb_gaming_vibe"],
+      "render_cues": "t-shirt design, single flat-illustrated animal character with an exaggerated deadpan expression, bold confident linework, short hand-lettered caption beneath, four flat ink colours, no shading, transparent background",
+      "avoid": ["photographic rendering", "soft airbrush shading", "generic mascot with no attitude", "long captions"],
+      "reads_at_250px_via": "the character's face and silhouette"
+    },
+    {
+      "id": "tl_specimen_chart",
+      "name": "Specimen / Chart Parody",
+      "structure": "A mock scientific, periodic-table, blueprint, or anatomical chart applied to a hobby or profession. Labelled callouts with leader lines. Header rule and small footer note.",
+      "text_slots": ["chart_title", "callout_labels[]", "footer_note"],
+      "typography": "Technical mono or a small letterspaced sans. Everything small and orderly.",
+      "colour_rule": "1-2 inks, usually a single line-art ink.",
+      "best_niches": ["nb_hobby", "nb_occupation", "nb_gaming_vibe", "nb_outdoors"],
+      "render_cues": "t-shirt design, vintage technical specimen chart, single-ink line-art diagram with labelled callouts and leader lines, technical monospace labels, header rule and footer note, blueprint aesthetic, transparent background",
+      "avoid": ["labels too small to read at thumbnail", "more than 8 callouts", "real brand model numbers"],
+      "reads_at_250px_via": "the chart structure - accept that labels are texture at thumbnail size",
+      "note": "Insider vocabulary in the labels is the whole appeal. This archetype rewards deep niche knowledge."
+    },
+    {
+      "id": "tl_pocket_plus_back",
+      "name": "Left-Chest + Full Back",
+      "structure": "A small emblem sized for the left chest, paired with a large related graphic for the back print. Two separate export files.",
+      "text_slots": ["chest_mark", "back_headline", "back_illustration"],
+      "typography": "The chest mark must survive at roughly 3.5 inches wide - simple, heavy, no fine detail.",
+      "colour_rule": "Same palette across both, 2-3 inks.",
+      "best_niches": ["nb_occupation", "nb_hobby", "nb_regional"],
+      "render_cues": "left chest emblem t-shirt design, small simple heavy mark under 3.5 inches, paired full-back graphic in matching palette, two flat ink colours, transparent background",
+      "avoid": ["fine detail in the chest mark", "mismatched palettes between the two prints"],
+      "reads_at_250px_via": "the chest mark's silhouette",
+      "note": "Reads as a real brand rather than a POD graphic. Strong differentiator. Not supported on every platform - check the product's print areas."
+    },
+    {
+      "id": "tl_repeat_pattern_strip",
+      "name": "Horizontal Repeat Strip",
+      "structure": "A single horizontal band of a repeating motif across the chest, with one word or nothing else. Wide and short.",
+      "text_slots": ["optional_single_word"],
+      "typography": "One word maximum, letterspaced, small.",
+      "colour_rule": "1-2 inks.",
+      "best_niches": ["nb_hobby", "nb_pets", "nb_aesthetic"],
+      "render_cues": "t-shirt design, single horizontal repeating motif band across the chest, flat two-ink pattern, one small letterspaced word, minimalist, transparent background",
+      "avoid": ["full-shirt all-over pattern (not supported by standard DTG)", "motifs too small to resolve"],
+      "reads_at_250px_via": "the band rhythm"
+    },
+    {
+      "id": "tl_faux_brand",
+      "name": "Ironic Faux-Brand",
+      "structure": "Mimics the visual grammar of corporate branding - a wordmark, a fake registered mark, a fake tagline, a fake est. year - applied to a mundane or absurd subject. Deadpan execution is essential.",
+      "text_slots": ["fake_wordmark", "fake_tagline", "fake_est_year"],
+      "typography": "Whatever real corporate identity uses - a clean geometric sans or a serious slab. The humour comes from the seriousness of the type.",
+      "colour_rule": "1-2 inks, corporate-restrained.",
+      "best_niches": ["nb_humour", "nb_hobby", "nb_mental_health", "nb_gaming_vibe"],
+      "render_cues": "ironic faux-brand t-shirt design, deadpan corporate wordmark with fake tagline and est. year, clean geometric sans, restrained two-colour corporate palette, no distress, transparent background",
+      "avoid": ["parodying an identifiable real brand's marks, colours, or typeface", "adding jokes to the type itself"],
+      "reads_at_250px_via": "the wordmark",
+      "ip_warning": "HIGH RISK. The joke must be a wholly invented brand. Parodying a recognisable real identity is trademark infringement and trade-dress infringement regardless of intent."
+    },
+    {
+      "id": "tl_y2k_pixel",
+      "name": "Y2K / Early-Internet Pixel",
+      "structure": "A pixel-art motif, a loading bar, a fake dialogue box, or a mock error window, with chunky serif or pixel type. Deliberately low-fidelity.",
+      "text_slots": ["window_title", "body_line", "button_label"],
+      "typography": "Pixel bitmap face plus one chunky serif for contrast.",
+      "colour_rule": "3-5 inks, high-saturation early-web palette.",
+      "best_niches": ["nb_humour", "nb_gaming_vibe", "nb_mental_health", "nb_y2k"],
+      "render_cues": "Y2K t-shirt design, pixel-art dialogue box with loading bar, bitmap pixel type with chunky serif contrast, saturated early-internet palette, deliberate low fidelity, hard pixel edges, transparent background",
+      "avoid": ["anti-aliased pixels", "real OS chrome or logos", "modern flat design"],
+      "reads_at_250px_via": "the window/box shape",
+      "ip_warning": "Never reproduce a real operating system's window chrome, icons, or logotype."
+    },
+    {
+      "id": "tl_vintage_ad_parody",
+      "name": "Vintage Advertisement Pastiche",
+      "structure": "Mimics a 1950s magazine ad or a retro product label for a fictional product tied to the niche. Ornate border, a headline, a starburst price flash, a small body-copy block as texture.",
+      "text_slots": ["headline", "starburst_flash", "product_name", "body_texture"],
+      "typography": "Period display serif, a script accent, and a small condensed body face.",
+      "colour_rule": "3-4 muted inks, halftone dot in the flat areas.",
+      "best_niches": ["nb_humour", "nb_hobby", "nb_occupation", "nb_gaming_vibe"],
+      "render_cues": "1950s magazine advertisement pastiche t-shirt design, fictional product label with ornate border, period display serif headline, starburst price flash, halftone dot texture, four muted inks, aged screen print distress, transparent background",
+      "avoid": ["real historical brands", "real product names", "photographic elements"],
+      "reads_at_250px_via": "the ad layout structure + starburst",
+      "note": "This is the archetype behind Displate's 'Juggernog' retro-soda-label success - but build it around an INVENTED product, not a game's item."
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "_meta": {
+    "purpose": "Hard production and metadata limits per platform. The validator reads these - do not hardcode limits anywhere else.",
+    "verified": "2026-08",
+    "recheck_cadence": "quarterly - platforms change limits without notice",
+    "version": "1.0"
+  },
+  "platforms": {
+    "redbubble": {
+      "display_name": "Redbubble",
+      "product_types": ["poster", "art_print", "canvas", "tshirt", "hoodie", "sticker", "tote", "mug", "phone_case"],
+      "file": {
+        "formats": ["JPEG", "PNG"],
+        "rejected_formats": ["TIFF", "PDF"],
+        "art_print_master_px": [3840, 3840],
+        "multi_product_master_px": [6000, 8000],
+        "max_px": [13500, 13500],
+        "max_mb": 300,
+        "colour_mode": "sRGB",
+        "dpi_note": "DPI metadata is ignored. Redbubble's printers use actual pixel dimensions. Give them as many pixels as the source supports.",
+        "scaling_note": "One uploaded image is auto-fitted to every product. Undersized uploads are centred with white borders, not stretched.",
+        "templates": "Use Redbubble's per-product templates to check the printable area before publishing."
+      },
+      "metadata": {
+        "title": {"min_chars": 20, "max_chars": 50, "target_chars": [40, 50], "rule": "Front-load the strongest keyword. Tight, readable, not stuffed."},
+        "tags": {"count": 15, "max_chars_each": 50, "rule": "Multi-word phrases only. 60% specific long-tail / 40% broader category. Do not duplicate title token sets."},
+        "description": {"rule": "Natural language. Use cases and gift contexts. MUST NOT repeat the title verbatim."}
+      },
+      "ranking_signals": ["specific multi-word phrase tags", "title matching those tags naturally", "description that does not repeat the title"],
+      "ban_triggers": ["tag spamming", "trademarked terms in tags", "same design uploaded across many colourways as separate listings", "scaled near-duplicate designs"],
+      "audience_note": "Young, browse-and-discover, aesthetic-led. Illustration outperforms typography in wall art. Stickers are the volume product."
+    },
+    "displate": {
+      "display_name": "Displate",
+      "product_types": ["metal_poster"],
+      "file": {
+        "formats": ["JPG", "PNG", "WEBP", "AVIF"],
+        "min_short_edge_px": 2900,
+        "min_px": [2880, 4032],
+        "recommended_px": [4000, 5600],
+        "aspect_ratio": "1:1.4",
+        "dpi": 300,
+        "max_mb": 30,
+        "colour_mode": "sRGB",
+        "colour_profile": "embed sRGB; generate from PSD/TIFF and export at highest quality",
+        "edge_buffer_px": 200
+      },
+      "rejection_reasons": [
+        "low-quality, grainy, or blurred images",
+        "manually enlarged or stretched artwork",
+        "filters used to mask poor quality",
+        "very dark overall compositions",
+        "bad-quality scans",
+        "text or important content within 200px of any edge",
+        "a frame or border drawn inside the composition",
+        "essential elements cut off on upload",
+        "near-duplicate uploads",
+        "copyright, moral rights, or publicity rights violations"
+      ],
+      "resubmission": "Rejected or removed artwork is blocked from resubmission as a duplicate. Get it right the first time.",
+      "metadata": {
+        "title": {"rule": "Evocative and specific. Name the feeling, not just the subject. No published character limit."},
+        "tags": {"rule": "Subject + style + mood + colour."},
+        "collection": {"rule": "Group families of work. Collections are a browse surface."}
+      },
+      "market_note": "Top sellers are overwhelmingly LICENSED IP (Star Wars, Marvel, anime, major game franchises). Unlicensed sellers should target the open categories: Cars, Nature & Landscapes, Space, Floral, Japanese & Asian, Inspirational, Travel, Cute, Animals."
+    },
+    "amazon_merch": {
+      "display_name": "Amazon Merch on Demand",
+      "product_types": ["tshirt", "hoodie", "sweatshirt", "tank", "popsocket", "tote"],
+      "file": {
+        "formats": ["PNG"],
+        "px": [4500, 5400],
+        "dpi": 300,
+        "background": "transparent",
+        "colour_mode": "sRGB",
+        "max_mb": 25,
+        "warning": "A white background prints as a visible white rectangle on the garment. Transparency is mandatory."
+      },
+      "metadata": {
+        "title": {"max_chars": 75, "enforced": true, "rule": "Hard limit enforced since 2026-07-27. Over-limit titles get flagged and progressively replaced with an AI-generated rewrite; brand-registered sellers get a 14-day review window."},
+        "brand": {"rule": "Treat as a keyword slot, not a vanity name."},
+        "bullets": {"count": 2, "min_chars": 10, "max_chars": 255, "rule": "Only the first ~1,000 bytes across all bullets is indexed. ~67% of shoppers are on mobile where each bullet truncates at 70-80 chars, so the first 80 characters of bullets 1 and 2 carry almost all the weight. Structure: Result -> Feature -> Proof. Capitalise the first 2-4 words as a visual anchor."},
+        "backend_search_terms": {"rule": "Never include brand or competitor names. This is a named trademark violation actively reported by rights-holders."}
+      },
+      "demand_thresholds": {
+        "min_root_monthly_searches": 1000,
+        "max_competing_results_for_low_barrier": 2000,
+        "saturation_signal": "If more than 5 of the top 10 listings are established brands with 500+ reviews, or heavily optimised Merch sellers, treat the niche as saturated."
+      }
+    },
+    "etsy": {
+      "display_name": "Etsy",
+      "product_types": ["printable_download", "physical_print", "framed_print", "tshirt"],
+      "file": {
+        "printable_ratios": ["2:3", "3:4", "4:5", "11:14", "1:1.414"],
+        "printable_sizes_in": {
+          "2:3": ["12x18", "20x30", "24x36"],
+          "3:4": ["18x24", "30x40"],
+          "4:5": ["8x10", "16x20"],
+          "11:14": ["11x14"],
+          "1:1.414": ["A4", "A3", "A2", "A1"]
+        },
+        "dpi": 300,
+        "colour_mode": "sRGB",
+        "delivery_note": "Ship every ratio family as a separate file. Do not crop one master - regenerate per ratio so the composition survives."
+      },
+      "metadata": {
+        "title": {"max_chars": 140, "rule": "First ~40 characters carry the ranking and display weight. Must contain a COLOUR word for decor, and a RELATIONSHIP word for gifts."},
+        "tags": {"count": 13, "max_chars_each": 20, "rule": "Use all 13. Fill the 20 characters - multi-word phrases only. Spaces count. Do NOT repeat words already in the title."},
+        "description": {"rule": "Natural language supporting the title, not repeating it."},
+        "attributes": {"rule": "Fill every structured attribute - colour, orientation, style, room."}
+      },
+      "demand_reference": {
+        "abstract_art_prints": {"monthly_searches": 90000, "price_usd": [10, 35]},
+        "minimalist_quote_prints": {"monthly_searches": 50000, "price_usd": [5, 18]},
+        "botanical_nature_prints": {"monthly_searches": 40000, "price_usd": [8, 25]},
+        "boho_earthy_prints": {"monthly_searches": 35000, "price_usd": [10, 30]},
+        "vintage_retro_posters": {"monthly_searches": 30000, "price_usd": [8, 25]},
+        "nursery_wall_art": {"note": "highest average order value - multi-print set purchases", "price_usd": [10, 30]}
+      },
+      "set_behaviour": "Multi-print sets carry the highest AOV. Design in families of three sharing one palette."
+    },
+    "society6": {
+      "display_name": "Society6",
+      "product_types": ["art_print", "canvas", "framed_print", "tapestry", "home_goods"],
+      "file": {"colour_mode": "sRGB", "note": "Large master file; style-led decor audience similar to Etsy's."},
+      "metadata": {"rule": "Style and colour led. Same decor search grammar as Etsy."}
+    },
+    "teepublic": {
+      "display_name": "TeePublic",
+      "product_types": ["tshirt", "hoodie", "sticker", "poster", "mug"],
+      "file": {"formats": ["PNG"], "px": [4500, 5400], "background": "transparent", "colour_mode": "sRGB"},
+      "metadata": {"rule": "Owned by the same group as Redbubble; apply Redbubble's phrase-tag discipline."}
+    }
+  },
+  "aspect_ratio_reference": {
+    "2:3": {"sizes_in": ["12x18", "20x30", "24x36", "40x60"], "note": "Dominant US poster ratio - movie and concert posters"},
+    "3:4": {"sizes_in": ["18x24", "30x40"], "note": "18x24 is the commercial framing standard, heavily favoured in modern interiors"},
+    "4:5": {"sizes_in": ["8x10", "16x20"], "note": "Frame-friendly; matches Instagram portrait"},
+    "11:14": {"sizes_in": ["11x14"], "note": "Very common ready-made frame size"},
+    "1:1.414": {"sizes_in": ["A4", "A3", "A2", "A1"], "note": "ISO A-series - required for non-US buyers; A2 and A1 most common"},
+    "1:1.4": {"sizes_in": ["Displate"], "note": "Close to but NOT identical with A-series - generate separately"},
+    "1:1": {"sizes_in": ["square"], "note": "Redbubble art-print master canvas at 3840x3840"}
+  }
+}
