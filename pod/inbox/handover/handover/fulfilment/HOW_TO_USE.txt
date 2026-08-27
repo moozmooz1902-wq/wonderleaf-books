@@ -1,0 +1,335 @@
+FIRST TIME ON THIS MAC?  ->  read "SETUP ON A NEW MAC.txt"
+
+That covers the macOS security block, which stops the launcher the first
+time on every new computer. It is two minutes and only ever done once.
+
+WHAT THIS TOOL PRODUCES
+=======================
+One numbered folder per order:
+
+    print/
+      orders.txt      which folder is which custom label
+      1/
+        1.png         artwork on transparency — this is what gets printed
+        1_SHIRT.jpg   how it looks on the t-shirt
+      2/
+        2.png
+        2_SHIRT.jpg
+
+Folders are numbered in the order the labels were pasted. orders.txt at the
+top maps every number back to its custom label, so nothing is lost by not
+putting the label in the filename.
+
+The two files, and nothing else:
+
+    NAME.png        the artwork on transparency, untouched — this is what
+                    gets printed
+    NAME_SHIRT.jpg  how it looks on the t-shirt — the same picture the eBay
+                    listing uses, so it matches what the customer saw
+
+The shirt image is fetched from Cloudflare, not rebuilt, so there is nothing
+extra to install and it is identical to the listing. If a design has no
+mockup stored (an older one, or one never processed), the tool falls back to
+the artwork flattened on black.
+
+No halftone. No white underbase. No CMYK/spot TIFF. No solid mask. Nothing
+is added to the picture.
+
+The files go to the designer, who builds the white plate and decides which
+artwork needs one. Anything this tool added would be work he has to undo
+first, so it adds nothing.
+
+Open the PNG in Preview and it will look patchy — macOS draws transparency
+as white and the design's dark areas are deliberately absent, because the
+shirt shows through there. That is correct, not a fault. Judge it by the
+_SHIRT.jpg.
+
+
+IF YOU EVER NEED THE OLD BEHAVIOUR
+----------------------------------
+The switches are still in the window, just turned off. From the command
+line:
+
+    python3 order.py GR-0330615 --halftone      # halftone screen
+    python3 order.py GR-0330615 --white         # white underbase plate
+
+Leave them off unless the designer asks.
+
+
+PRINT TOOL
+==========
+
+A window. Paste your eBay custom labels, press the button, get print files.
+No Terminal.
+
+
+FIRST TIME ON A MAC
+-------------------
+1. Unzip everything into one folder, e.g. Documents/tshirt-orders.
+   Keep the files together.
+
+2. Double-click "Print Tool.command".
+
+3. macOS blocks it the first time:
+       "Apple could not verify this is free of malware"
+   Click DONE.
+
+4. Open  System Settings  ->  Privacy & Security
+   Scroll to the bottom. You will see:
+       "Print Tool.command was blocked"
+   Click  OPEN ANYWAY  and enter your password.
+
+5. Double-click it again. The window opens.
+
+Steps 3 and 4 happen once per Mac. The first run also installs two Python
+libraries, about a minute.
+
+If nothing happens at all when you double-click, the file lost its runnable
+flag in the zip. Once, in Terminal:
+
+    chmod +x ~/Documents/tshirt-orders/"Print Tool.command"
+
+
+USING IT
+--------
+1. Paste the custom labels into the box. One per line, or several on a line
+   separated by spaces or commas.
+
+2. Press "Make Print Files".
+
+3. The folder opens on its own when it finishes. Default is
+   Desktop/Print Files — press "Change folder" to put it elsewhere.
+
+
+WHAT YOU GET
+------------
+   01_GR-0490874.tif            <- SEND THIS TO THE PRINTER
+   01_GR-0490874.png            colour artwork, transparent background
+   01_GR-0490874_WHITE.png      the white underbase, ready made
+   01_GR-0490874_PREVIEW.jpg    on black, for checking only — do NOT print
+
+THE .tif IS THE ONE THAT MATTERS
+
+A sample file the designer produced was examined: CMYK with a fifth channel
+holding the white plate, stored inverted, and choked in from the colour edge.
+That is exactly what this now writes — same structure, same channel order,
+same convention, at 300dpi instead of 72.
+
+So the .tif can go straight to the printer. No Photoshop, no hand-selecting
+the smoky edges, no waiting on the designer.
+
+To turn it on, once:
+
+    pip3 install tifffile imagecodecs
+
+
+The other files are there if they are wanted:
+
+  If their RIP builds its own underbase (most do), send the colour .png
+  only. Tick "White ink" in the RIP and ignore the _WHITE file.
+
+  If someone has been making the white layer by hand in Photoshop, send
+  BOTH files. The _WHITE one is that layer, built from the artwork itself —
+  no hand-selecting, nothing missed, and already choked so it cannot show
+  around the edges.
+
+Numbered in the order you pasted them, matching your picking list.
+
+
+WHY THE PNG LOOKS WRONG ON SCREEN
+---------------------------------
+Open the .png and it looks patchy. That is correct.
+
+The background is transparent, and Preview shows transparency as WHITE. The
+design is made for a BLACK shirt, so its dark areas are deliberately absent —
+the garment shows through instead of being printed. Against white that reads
+as holes; against black it reads as the design.
+
+The _PREVIEW.jpg is the same artwork on black, which is how it will actually
+look. Check that one.
+
+
+PRINTING
+--------
+    transparent PNG  ->  RIP adds the white underbase  ->  print
+
+1. Open the .png in your RIP software
+2. Enable White Ink / Underbase — the RIP builds it from the transparency
+3. Print to film, powder, cure, press as normal
+
+Do not flatten the file or add a background. The transparency is what tells
+the RIP where to lay white ink and where to leave the shirt bare.
+
+
+THE WHITE UNDERBASE
+-------------------
+On a black shirt the printer lays white first, then colour on top. Without
+it the colours vanish into the fabric.
+
+That white layer is what a designer would otherwise build by hand: select
+the artwork, put a white shape behind it. Soft or smoky edges make that
+selection almost impossible to do cleanly, which is where it goes wrong.
+
+The tool now builds it automatically from the artwork's own transparency,
+so it matches exactly. It is also CHOKED — pulled in about 0.17mm from the
+colour edge — so it cannot show as a pale halo if the film and shirt are a
+fraction out of register on the press.
+
+
+THE SOLID MASK IS NOW OFF BY DEFAULT
+------------------------------------
+The first attempt at the opacity problem replaced the soft transparency with
+a hard mask: find everything above a brightness threshold, treat it as one
+solid shape, soften only the outer boundary.
+
+It worked, but it had two costs. Dark areas inside the design became solid
+ink instead of letting the shirt through. And where a generation left faint
+haze across the whole frame, that whole square became solid — which is where
+the boxy prints came from.
+
+Halftone has since made it unnecessary. Halftone turns every pixel into
+either full ink or nothing, so the output is completely opaque either way.
+Measured on the same artwork:
+
+    with the mask     edge-cut 15%   ink 39%
+    without           edge-cut  3%   ink 31%
+
+So the mask was adding 8% more ink and five times more boxy edges, for a
+benefit halftone already provides. It is left in the window as an option but
+switched off.
+
+
+"NOT ENOUGH OPACITY" — FIXED
+----------------------------
+An earlier version derived the transparency from image brightness, which
+looked right on screen but printed badly. On dark artwork only about 43% of
+the design was fully opaque; the rest sat at partial transparency, so the RIP
+laid down a thin dithered white underbase and the colours printed weak.
+
+The tool now finds the subject, makes it SOLID, and softens only the true
+edge. About 98% of the design is now fully opaque. It looks the same on the
+shirt but the white underbase lays down properly.
+
+The "Solid print" tick box controls this. Leave it ON. Untick it only if your
+RIP handles partial transparency well and you specifically want a softer,
+more dissolved edge.
+
+
+"SMOKY EDGES DO NOT STICK" — THE HALFTONE OPTION
+------------------------------------------------
+This is the proper fix, and it is what experienced DTF printers do.
+
+Two facts about DTF:
+  1. it cannot print semi-transparent ink at all
+  2. the adhesive powder needs a minimum dot size to grip — roughly a
+     quarter of a millimetre
+
+So a soft fade has nowhere to go. The printer either lays a hazy white
+box behind it, or the fine specks carry too little glue and come away in
+the wash, leaving a dusty speckle round the design.
+
+Halftoning converts the fade into a pattern of SOLID dots that grow and
+shrink with the intended opacity. Every dot is large enough to hold powder,
+and from normal viewing distance the eye blends them into a smooth
+gradient. Newspapers have done this for a century.
+
+    before   1.9% of the artwork at partial opacity
+    after    0.0% — every pixel is either full ink or nothing
+
+It also removes the white halo, because there are no semi-transparent
+pixels left to trigger a partial white underbase. And it uses less ink
+overall, so the print feels softer and breathes rather than sitting on the
+shirt like a plastic patch.
+
+Set at 28 LPI with a 45 degree screen, which is the middle of the 25-35
+range the DTF trade recommends. The cutoff is worked out from dot size:
+anything that would print smaller than 0.25mm is dropped rather than
+printed as dust.
+
+Leave "Halftone edge" ON.
+
+
+THE OLDER HARD EDGE OPTION
+--------------------------
+DTF adhesive powder only holds where there is enough ink. A soft, feathered
+edge has thin coverage, so barely any powder sticks there and it peels after
+a few washes. That is what the printer means.
+
+"Hard edge" cuts the boundary clean instead of fading it, leaving about a
+pixel of anti-aliasing so it is not jagged.
+
+    soft edge   1.9% of the artwork too thin to hold powder
+    hard edge   0.5%
+
+All of that 1.9% sits on the perimeter, which is exactly where peeling
+starts, so it matters more than the number suggests.
+
+This was the first attempt: cut the boundary clean instead of fading it.
+It works, but it throws the fade away. Halftone keeps the fade AND makes it
+printable, so use that instead. Hard edge is left in only for a printer who
+specifically asks for a hard cut.
+
+
+FLAT GREY SLABS — A GENERATION FAULT
+------------------------------------
+Occasionally the generator leaves a solid grey rectangle in the artwork: a
+panel or frame it hallucinated, perfectly even, with no texture. It is not
+part of the design, but nothing downstream can tell — it carries enough ink,
+so it prints.
+
+One design in a twelve-design sample had them. The tool now warns:
+
+    [4] GR-0619705 - done   ** 33% flat grey - check for a slab artefact
+
+If you see that, open the _PREVIEW.jpg. If there is a grey slab in it, do not
+print that design — end the eBay listing and pick another. It is a fault in
+the artwork itself, not something the print settings can fix.
+
+
+BEFORE A BIG BATCH
+------------------
+Press ONE shirt and look at two things:
+
+  - do the edges fade softly into the shirt, or is there a hard line?
+  - is there a white halo around the artwork?
+
+The artwork fades at the edges by design. Most RIPs handle that; some
+threshold it into a hard cut. If the edges come out hard or haloed, say so
+and the file can be adjusted to suit your RIP.
+
+
+THE SQUARE EDGE — FIXED
+-----------------------
+Some generations leave a faint haze right out to the frame edge rather than
+fading to true black. The tool used a fixed brightness threshold, so that
+haze counted as artwork, printed solid, filled the corners, and the design
+came out as a square block.
+
+Two changes:
+
+  The threshold is now measured from each image's own border instead of
+  being fixed, so flat background haze is dropped while genuine smoke and
+  flames are kept.
+
+  The outermost band is tapered, so artwork that runs off the frame fades
+  out instead of being cut dead in a straight line.
+
+On the skull-and-flames test this took corner ink from 67% to 0% while
+keeping the flames.
+
+
+THE DARK RING — FIXED
+---------------------
+An earlier version applied a heavy radial fade to keep designs from printing
+as a square. It was cutting the artwork down to 57% at the mid-edge, which
+read as a dark ring closing in on the design, and the halftone then turned
+that band into visible dots.
+
+Tested against real artwork it turned out to make no difference to the shape
+at all — the subject mask already follows the artwork's own outline. So it
+now touches the outer corners only and leaves the design alone.
+
+
+PRINT WIDTH
+-----------
+9.6 inches by default, set in the window. Change it for a different platen.

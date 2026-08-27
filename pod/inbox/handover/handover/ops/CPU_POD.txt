@@ -1,0 +1,66 @@
+RUNNING POSTRUN ON A CHEAP CPU POD
+==================================
+Generation needs GPUs. Building print files and mockups does not — it is
+pure CPU work. Leaving it on an 8-GPU pod costs about $2.70/hour for
+hardware sitting idle.
+
+A CPU pod does the same job for a fraction of that.
+
+
+POD SETTINGS
+------------
+    RunPod -> Deploy -> CPU
+    Instance       CPU3C or CPU5C, 16-32 vCPU
+    Template       RunPod PyTorch or any Ubuntu image
+    Container disk 30 GB
+    Volume disk    50 GB   (only a working buffer is needed)
+
+Roughly $0.20-0.40/hour instead of $2.70. The same job costs a few dollars
+rather than forty.
+
+
+SETUP
+-----
+    cd /workspace
+    python3 -m venv venv --system-site-packages
+    source venv/bin/activate
+    pip install -q -U pip
+    pip install -q pillow numpy scipy
+
+    apt-get update -qq && apt-get install -y -qq unzip
+    curl https://rclone.org/install.sh | bash
+
+Then the seven rclone config lines, exactly as on a GPU pod.
+
+Upload BATCH2.zip and extract — you only need these files:
+
+    postrun.py  dtf.py  photo_mockup.py  blank.png  graphics.py
+
+
+RUN IT
+------
+    export R2_REMOTE=r2:tshirt-mockups/art
+    nohup ./venv/bin/python postrun.py --watch 300 > postrun.log 2>&1 &
+
+It reads what is in R2, processes anything without a mockup, uploads the
+results, and then keeps watching for more. Nothing on the pod matters — it
+is all read from and written back to Cloudflare.
+
+Check with:
+
+    tail -1 postrun.log
+
+Set --workers to about twice the vCPU count if it seems slow.
+
+
+DOING BOTH AT ONCE, NEXT TIME
+-----------------------------
+Start the CPU pod at the same time as the GPU pod, with --watch. Mockups
+then keep pace with generation and there is no backlog at the end.
+
+Without --watch, postrun EXITS the moment it clears its queue. That is what
+happened on this batch: it stopped early, generation ran on for hours, and
+180,000 designs were left to process afterwards on an idle GPU pod.
+
+The GPU pod can be terminated as soon as generation finishes. The CPU pod
+carries on by itself.
