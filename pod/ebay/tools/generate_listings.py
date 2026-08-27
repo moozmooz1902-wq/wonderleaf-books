@@ -49,11 +49,14 @@ APPAREL = MATRIX["apparel_products"]
 WALL_ART = MATRIX["wall_art_products"]
 
 # Per-store keyword bias so the same design+product in two stores is not byte-identical.
+# One bias set per store, so the same design+garment is not byte-identical across
+# shopfronts. Kept gender-neutral: a "Ladies" token on a "Mens T-Shirt" suffix
+# contradicts itself, and eBay buyers read the whole title.
 STORE_BIAS = [
     ["Gift", "Present", "Unisex"],
     ["Top", "Tee", "Novelty"],
-    ["Mens", "Quality", "New"],
-    ["Ladies", "Cotton", "Casual"],
+    ["Quality", "New", "Cotton"],
+    ["Casual", "Everyday", "Comfy"],
     ["Birthday", "Xmas", "Idea"],
     ["UK", "Fast Post", "Premium"],
     ["Adult", "Classic", "Fit"],
@@ -158,12 +161,41 @@ def compatible(design, product):
 
 # --------------------------------------------------------------- row emitters
 
+UNDIFFERENTIABLE = []   # design+product pairs whose stem leaves no room to vary by store
+
+DISTINGUISHERS = ["Ideal Gift", "Great Gift", "Soft Feel", "Crew Neck", "Ringspun",
+                  "Printed", "Graphic", "Slogan", "Design", "Christmas Gift",
+                  "Birthday Gift", "Fathers Day", "Present Idea", "Cool", "Retro Style"]
+
+
+def _distinguish(title, stem, suffix, keywords, used):
+    """Guarantee a design+garment gets a DIFFERENT title in every store.
+
+    Same title in seven shopfronts is exactly what duplicate detection looks for.
+    If the greedy packer lands on a title already used for this design+garment,
+    swap in an unused distinguisher until it is unique.
+    """
+    if title not in used:
+        used.add(title)
+        return title
+    for extra in DISTINGUISHERS:
+        alt = pack_title(stem, suffix, [extra] + list(keywords))
+        if alt not in used:
+            used.add(alt)
+            return alt
+    # Stem+suffix already fills the 80 chars, so no padding fits and every store
+    # would get a byte-identical title. Skip the row rather than ship a duplicate -
+    # a shorter stem is the real fix, and the run report surfaces the count.
+    return None
+
+
 def apparel_rows(designs, stores):
     """designs: iterable of dicts with design_id, stem, theme, ip_tier, extra_keywords."""
     seen = set()
     for d in designs:
         theme = THEMES.get(d.get("theme"), {})
         kw = list(d.get("extra_keywords", [])) + list(theme.get("keyword_bank", []))
+        per_design_titles = set()
         for product in APPAREL:
             if not compatible(d, product):
                 continue
@@ -173,6 +205,11 @@ def apparel_rows(designs, stores):
                     continue
                 seen.add(key)
                 title = pack_title(d["stem"], product["suffix"], STORE_BIAS[s % len(STORE_BIAS)] + kw)
+                title = _distinguish(title, d["stem"], product["suffix"],
+                                     STORE_BIAS[s % len(STORE_BIAS)] + kw, per_design_titles)
+                if title is None:
+                    UNDIFFERENTIABLE.append((d["design_id"], product["id"]))
+                    continue
                 axes, n = variations_for(product)
                 yield {
                     "sku": sku(*key),
@@ -401,6 +438,10 @@ def main():
     print(f"{n:,} listings -> {a.out}")
     print(f"  titles in the 70-80 band: {band:,} ({band/max(1,n):.0%})")
     print(f"  titles over 80 chars:     {over}  <- must be 0")
+    if UNDIFFERENTIABLE:
+        pairs = {p[0] for p in UNDIFFERENTIABLE}
+        print(f"  skipped (stem too long to vary across stores): {len(UNDIFFERENTIABLE):,} rows "
+              f"across {len(pairs):,} designs - shorten those stems to reclaim them")
 
 
 if __name__ == "__main__":
