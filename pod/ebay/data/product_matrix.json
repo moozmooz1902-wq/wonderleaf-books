@@ -1,0 +1,54 @@
+{
+  "_meta": {
+    "purpose": "The multiplication grid. LISTINGS = DESIGNS x PRODUCTS x STORES. Size and colour are VARIATIONS INSIDE a listing, never separate listings - that distinction is what keeps the grid inside eBay's duplicate-listing policy.",
+    "source": "Reverse-engineered from 600 live titles across t-shirt-junky, love_tshirts and canvasartshop, 2026-08-27.",
+    "ebay_title_limit": 80,
+    "title_target_band": [70, 80],
+    "version": "1.0"
+  },
+
+  "apparel_products": [
+    {"id": "tee_std",      "suffix": "Mens T-Shirt 100% Cotton",     "observed": 100, "price_gbp": [9.99, 13.99],  "variation_axes": ["size", "colour"], "sizes": ["S","M","L","XL","2XL","3XL"], "colours": ["Black","White","Navy","Charcoal","Red","Royal Blue","Bottle Green","Maroon","Sand","Military Green"]},
+    {"id": "tee_teetop",   "suffix": "Mens Cotton T-Shirt Tee Top",   "observed": 67,  "price_gbp": [9.99, 13.99],  "variation_axes": ["size", "colour"], "sizes": ["S","M","L","XL","2XL","3XL"], "colours": ["Black","White","Navy","Charcoal","Red","Royal Blue"]},
+    {"id": "vest",         "suffix": "Mens Vest Tank Top",            "observed": 57,  "price_gbp": [9.49, 12.99],  "variation_axes": ["size", "colour"], "sizes": ["S","M","L","XL","2XL"],       "colours": ["Black","White","Navy","Charcoal","Red"]},
+    {"id": "tee_light",    "suffix": "Mens Light Cotton T-Shirt",     "observed": 19,  "price_gbp": [8.99, 12.48],  "variation_axes": ["size", "colour"], "sizes": ["S","M","L","XL","2XL","3XL"], "colours": ["White","Sand","Sky","Light Grey","Natural"]},
+    {"id": "kids_tee",     "suffix": "Kids T-Shirt Childrens",        "observed": 13,  "price_gbp": [8.49, 11.49],  "variation_axes": ["size"],           "sizes": ["3-4","5-6","7-8","9-11","12-13"]},
+    {"id": "hoodie",       "suffix": "Mens 80% Cotton Hoodie",        "observed": 12,  "price_gbp": [21.99, 27.99], "variation_axes": ["size", "colour"], "sizes": ["S","M","L","XL","2XL","3XL"], "colours": ["Black","Navy","Charcoal","Bottle Green","Maroon"]},
+    {"id": "sweatshirt",   "suffix": "Mens Sweatshirt Jumper",        "observed": 7,   "price_gbp": [18.99, 24.99], "variation_axes": ["size", "colour"], "sizes": ["S","M","L","XL","2XL"],       "colours": ["Black","Navy","Charcoal","Grey"]},
+    {"id": "womens_wide",  "suffix": "Womens Wider Cut T-Shirt",      "observed": 5,   "price_gbp": [9.99, 13.99],  "variation_axes": ["size", "colour"], "sizes": ["8","10","12","14","16","18"], "colours": ["Black","White","Navy","Pink","Red"]},
+    {"id": "baseball_tee", "suffix": "Mens S/S Baseball T-Shirt",     "observed": 2,   "price_gbp": [12.99, 16.99], "variation_axes": ["size", "colour"], "sizes": ["S","M","L","XL","2XL"],       "colours": ["White/Black","White/Navy","White/Red"]},
+    {"id": "kids_tee_bg",  "suffix": "Kids T-Shirt Boys Girls",       "observed": 2,   "price_gbp": [8.49, 11.49],  "variation_axes": ["size"],           "sizes": ["3-4","5-6","7-8","9-11","12-13"]},
+    {"id": "apron",        "suffix": "Cotton Apron 100% Organic",     "observed": 2,   "price_gbp": [12.99, 15.99], "variation_axes": ["colour"],         "colours": ["Black","Natural","Navy"]},
+    {"id": "ringer_tee",   "suffix": "Mens Ringer T-Shirt",           "observed": 2,   "price_gbp": [12.49, 15.99], "variation_axes": ["size", "colour"], "sizes": ["S","M","L","XL","2XL"],       "colours": ["White/Black","White/Red","White/Navy"]},
+    {"id": "vneck",        "suffix": "Mens V-Neck Cotton T-Shirt",    "observed": 2,   "price_gbp": [10.49, 13.99], "variation_axes": ["size", "colour"], "sizes": ["S","M","L","XL","2XL"],       "colours": ["Black","White","Navy","Grey"]},
+    {"id": "kids_sweat",   "suffix": "Kids Sweatshirt Jumper",        "observed": 1,   "price_gbp": [16.99, 21.99], "variation_axes": ["size"],           "sizes": ["3-4","5-6","7-8","9-11","12-13"]},
+    {"id": "womens_petite","suffix": "Womens Petite Cut T-Shirt",     "observed": 1,   "price_gbp": [9.99, 13.99],  "variation_axes": ["size", "colour"], "sizes": ["8","10","12","14","16"],      "colours": ["Black","White","Navy","Pink"]},
+    {"id": "longsleeve",   "suffix": "Mens Long Sleeve T-Shirt",      "observed": 1,   "price_gbp": [14.99, 18.99], "variation_axes": ["size", "colour"], "sizes": ["S","M","L","XL","2XL"],       "colours": ["Black","White","Navy","Charcoal"]},
+    {"id": "kids_hoodie",  "suffix": "Childrens Kids Hoodie",         "observed": 1,   "price_gbp": [18.99, 23.99], "variation_axes": ["size"],           "sizes": ["3-4","5-6","7-8","9-11","12-13"]}
+  ],
+
+  "wall_art_products": [
+    {"id": "framed_poster",  "suffix_pool": ["FRAMED WALL ART POSTER PRINT 4 SIZES", "ART FRAMED POSTER PICTURE PRINT ARTWORK", "FRAMED ART POSTER PAINTING PRINT 4 SIZES", "FRAMED WALL ARTWORK POSTER PRINT 4 SIZES", "FRAMED WALL ART PICTURE PRINT"], "observed": 95, "price_gbp": [7.99, 39.99], "role": "entry / traffic driver - the low anchor pulls the 'from £7.99' badge", "variation_axes": ["size", "frame_colour"], "sizes": ["A4","A3","A2","A1"], "frame_colour": ["Black","White","Oak","Walnut"]},
+    {"id": "canvas",         "suffix_pool": ["CANVAS WALL ART PRINT ARTWORK", "CANVAS WALL ARTWORK PICTURE PRINT", "CANVAS WALL ART PICTURE PRINT", "CANVAS WALL ART PAINTING PRINT ARTWORK"], "observed": 118, "price_gbp": [14.99, 59.99], "role": "core margin", "variation_axes": ["size"], "sizes": ["12x8in","20x14in","30x20in","40x28in","47x32in"]},
+    {"id": "canvas_deep",    "suffix_pool": ["CANVAS WALL ART 30MM DEEP FRAMED PRINT", "CANVAS WALL ART PICTURE 30MM DEEP FRAMED"], "observed": 11, "price_gbp": [14.99, 39.99], "role": "upsell", "variation_axes": ["size"], "sizes": ["12x8in","20x14in","30x20in","40x28in"]},
+    {"id": "float_canvas",   "suffix_pool": ["FLOAT EFFECT CANVAS WALL ART PRINT", "FLOAT EFFECT CANVAS WALL ART PIC PRINT"], "observed": 11, "price_gbp": [24.99, 49.99], "role": "premium", "variation_axes": ["size"], "sizes": ["16x12in","24x18in","32x24in","40x30in"]},
+    {"id": "street_canvas",  "suffix_pool": ["CANVAS STREET WALL ART PRINT ARTWORK", "CANVAS STREET ART PRINT ARTWORK"], "observed": 5, "price_gbp": [14.99, 39.99], "role": "graffiti / urban sub-brand", "variation_axes": ["size"], "sizes": ["12x8in","20x14in","30x20in","40x28in"]}
+  ],
+
+  "store_rotation": {
+    "note": "One design library, several storefronts. The library is the asset; the stores are distribution and account-risk hedging. Observed: t-shirt-junky and love_tshirts share 12% of stems on a 5% sample.",
+    "rules": [
+      "Never list the identical design+product pair twice within ONE store - that is the duplicate-listing violation.",
+      "The same design+product MAY appear in different stores, but vary the title's keyword padding per store so the listings are not byte-identical.",
+      "Give each store a slight theme bias so they do not compete head-on in the same search."
+    ]
+  },
+
+  "policy_guardrails": [
+    "Size and colour are VARIATIONS within a single multi-variation listing. Splitting them into separate listings is the classic eBay duplicate-listing breach.",
+    "Different garment type = genuinely different item = separate listing is fine.",
+    "Different print format (poster vs canvas vs float) = genuinely different item = separate listing is fine.",
+    "Keep titles under 80 characters. Over-length titles are truncated and the tail never indexes.",
+    "Do not keyword-stuff brand names into titles or item specifics - eBay's VeRO programme is the fastest route to account restriction."
+  ]
+}

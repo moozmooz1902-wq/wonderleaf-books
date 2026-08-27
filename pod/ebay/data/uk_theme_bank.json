@@ -1,0 +1,125 @@
+{
+  "_meta": {
+    "purpose": "The UK eBay theme bank, measured from 400 live tee titles across t-shirt-junky and love_tshirts. `share` is the observed proportion of the catalogue. `keyword_bank` supplies the padding tokens that fill an eBay title to the 70-80 character band.",
+    "warning": "This is NOT the US Etsy/Amazon market. The buyer here skews male, 35-65, British. Nurse/dachshund-mom/boho-arch niches do not map onto this audience.",
+    "version": "1.0"
+  },
+  "themes": [
+    {
+      "id": "uk_funny_slogan", "name": "Funny / rude slogan", "share": 0.20,
+      "audience": "Self-purchase and gag gift; stag dos, birthdays, Secret Santa",
+      "keyword_bank": ["Funny","Mens","Slogan","Joke","Rude","Sarcastic","Novelty","Humour","Offensive","Unisex","Tee Top","Gift","Present"],
+      "observed_examples": ["Sarcasm T-Shirt Mens Funny Slogan The Elements Of My Personality Sarcastic Joke","Sons of Arthritis Funny Biker Motorcycle","I Found This Humerus Funny Slogan Humorous","Part Cotton Part Cat Hair Funny"],
+      "ip_tier": "R1", "note": "Highest-share theme. Short phrases are the most trademark-exposed content in the catalogue - screen every one."
+    },
+    {
+      "id": "uk_biker", "name": "Biker / motorcycle", "share": 0.15,
+      "audience": "UK motorcyclists 35-65; cafe racer, chopper and classic-bike culture",
+      "keyword_bank": ["Biker","Motorbike","Motorcycle","Cafe Racer","Chopper","Custom Bike","Rider","Superbike","Motocross","MotoX","Classic","Enthusiast","Mens","Funny","Skull","Top"],
+      "observed_examples": ["Cafe Racer Biker Motorbike Motorcycle","BIKER T-SHIRT Motorbike Motorcycle Cafe Racer Chopper Bike Mens Funny Skull Top","Sons of Arthritis Funny Biker Motorcycle","Retirement Plan Biker Motorcycle Motorbike"],
+      "ip_tier": "R0", "note": "Never use a real marque - Harley, Triumph, Kawasaki, Yamaha are all live marks. Describe the machine, not the brand."
+    },
+    {
+      "id": "uk_music", "name": "Music & scene", "share": 0.14,
+      "audience": "Gig-goers, record collectors, scene loyalists across ska, punk, northern soul, reggae, metal",
+      "keyword_bank": ["Music","Guitar","Rock","Punk","Reggae","Ska","2 Tone","Northern Soul","Motown","MOD","Scooter","Vinyl","Band","Drummer","DJ","Heavy Metal","Acoustic","Bass","Mens"],
+      "observed_examples": ["Cant Stop 2-Tone British SKA 2Tone","Northern Soul Keep The Faith Mens Music Vest Dance Motown MOD Scooter","Guitar Reflection Guitarist Bass Acoustic","Anarchy in the UK Punk Music Rock"],
+      "ip_tier": "R2", "note": "Design the SCENE, never the band. 'Northern Soul', '2-Tone Ska', 'Anarchy in the UK' are cultural movements; band names, logos and lyrics are not."
+    },
+    {
+      "id": "uk_skull_gothic", "name": "Skull / gothic", "share": 0.12,
+      "audience": "Overlaps heavily with biker and metal; also Halloween and tattoo culture",
+      "keyword_bank": ["Skull","Gothic","Goth","Grim Reaper","Demon","Tattoo","Tribal","Death","Heavy Metal","Rock","Biker","Sugar Skull","Day of the Dead","Raven","Crow","Mens"],
+      "observed_examples": ["Gothic Skull and Crow With Arch and Moon","Skull T-Shirt Mens Biker Tattoo Tribal Viking Demon Gym Heavy Metal Rock Death","Los Muertow Sugar Skull Day of the Dead","Moon & Crow Gothic Goth Vikings Skull Raven"],
+      "ip_tier": "R0", "note": "Highest cross-sell theme - stacks with biker, Viking and metal. Cheap to generate, deep demand."
+    },
+    {
+      "id": "uk_flags", "name": "Flags & nationality", "share": 0.10,
+      "audience": "Patriots, diaspora communities, football fans, tourists",
+      "keyword_bank": ["Flag","Union Jack","Britain","British","Great Britain","UK","Distressed","Torn","Curled","Love","Day","Football","Roots","Grown","Mens"],
+      "observed_examples": ["Distressed Union Jack Flag Great Britain","If This Flag Offends You Union Jack Britain","Torn Morocco Flag Moroccan Day Football","British Grown Jamaican Roots Jamaica Flag"],
+      "ip_tier": "R0",
+      "note": "THE PUREST GRID THEME IN THE CATALOGUE. One flag treatment x ~200 countries x 4 variants (Torn / Curled / Love / Distressed) x 17 garments = 13,600 listings from ONE piece of art. This is how they scale, in plain sight."
+    },
+    {
+      "id": "uk_animals", "name": "Animals & pets", "share": 0.08,
+      "audience": "Pet owners and wildlife enthusiasts; breed-specific converts hardest",
+      "keyword_bank": ["Dog","Cat","Wolf","Dragon","Elephant","Frog","Tiger","Gorilla","Highland Cow","Panther","Funny","Lover","Mum","Dad","Mens"],
+      "observed_examples": ["A French Bulldog on a Skateboard","German Shepherd Montage For Dog Lovers","Nordic Wolf Viking","A Highland Cow Drawing"],
+      "ip_tier": "R0", "note": "Breed-specific beats generic, same as every other market. Highland cow is a distinctly strong UK motif."
+    },
+    {
+      "id": "uk_retro_tv", "name": "Retro British TV & film", "share": 0.08,
+      "audience": "Nostalgia buyers 45-70; 70s/80s British television",
+      "keyword_bank": ["Retro","TV","Programme","Show","Movie","Film","Classic","70's","80's","90's","Cult","Vintage","Mens","Funny","Unisex"],
+      "observed_examples": ["MONKEY MAGIC T-SHIRT Mens Retro TV Show 70's 80's Martial Arts Chinese Fantasy","THE OLD GREY WHISTLE TEST T-Shirt Mens Retro Music TV Programme Show Vinyl Lp","FORK HANDLES T-Shirt FOUR CANDLES - Mens Funny Two Ronnies Sketch Show","TISWAS T-Shirt Mens Funny Retro Classic TV Programme Show"],
+      "ip_tier": "R4",
+      "note": "DO NOT COPY THIS ONE. Monkey Magic, The Prisoner, Tiswas, The Old Grey Whistle Test, Dukes of Hazzard, Only Fools and Horses are all live rights. The competitors are carrying real exposure here. If you want the nostalgia demand, build era aesthetics - '1970s British Saturday morning', 'analogue TV test card' - not titles."
+    },
+    {
+      "id": "uk_viking", "name": "Viking / Norse", "share": 0.06,
+      "audience": "Norse mythology, gym culture, tattoo culture, historical reenactment",
+      "keyword_bank": ["Viking","Norse","Odin","Thor","Valhalla","Valknut","Ragnar","Yggdrasil","Nordic","Vegvisir","Raven","Celtic","Runic","Warrior","Mythology","Mens"],
+      "observed_examples": ["Odins Celtic Raven Viking Thor Ragnar Norse","Viking Symbol Vegvisir Grey Gym","Son of Odin Valhalla Viking Norse Mythology","Dragons North Viking Valhalla Thor Odin"],
+      "ip_tier": "R0", "note": "Rune and symbol names (Vegvisir, Valknut, Yggdrasil, Mjolnir) are a free long-tail keyword grid."
+    },
+    {
+      "id": "uk_birthday", "name": "Birthday & milestone age", "share": 0.04,
+      "audience": "Gift buyers; the single most mechanical grid in the catalogue",
+      "keyword_bank": ["Birthday","Year Old","Vintage Year","Premium","Legend","Limited Edition","Birth of Legends","Aged to Perfection","Banger","Level Up","Funny","Mens","Gift"],
+      "observed_examples": ["47th Birthday T-Shirt Mens 1979 Funny Premium Legend Since 47 Year old Top","60 Year Old Banger Birthday 60th Year Old","Vintage Year 61st Birthday 1965","Birth of Legends 53rd Birthday 1973"],
+      "ip_tier": "R0",
+      "note": "PURE GRID. ~8 phrasings x 80 ages (18-98) x auto-computed birth year x 17 garments = 10,880 listings from 8 templates. Regenerate the birth year every January or the whole grid goes stale."
+    },
+    {
+      "id": "uk_military", "name": "Military & aviation", "share": 0.04,
+      "audience": "Veterans, aviation enthusiasts, remembrance buyers",
+      "keyword_bank": ["Spitfire","RAF","Royal Air Force","WWII","Battle of Britain","Parachute Regiment","Para","Fighter Plane","British","Hurricane","Templar","Knights","Mens"],
+      "observed_examples": ["Supermarine Spitfire Infopic","HAWKER HURRICANE T-SHIRT Flying Legend Battle of Britain RAF WWII Tee Top","Death From Above Para 1 2 4 Parachute Regiment","British RAF Fighters Royal Air Force Planes"],
+      "ip_tier": "R1", "note": "Aircraft types are generic; unit insignia, regimental badges and the RAF roundel are protected. Draw the aeroplane, not the badge."
+    },
+    {
+      "id": "uk_spiritual", "name": "Religion & spiritual", "share": 0.04,
+      "audience": "Christian, pagan, Buddhist and yoga buyers; also atheist-humour buyers",
+      "keyword_bank": ["Jesus","Christian","Christianity","Cross","Buddha","Mandala","Yoga","Meditation","Pagan","Celtic","Atheist","Egyptian","God","Spiritual","Mens"],
+      "observed_examples": ["Jesus is Calling Christian Christianity","Mandala Buddha Art","A Pagan Celtic Cross","Atheism a Non Profit Organisation Atheist"],
+      "ip_tier": "R0"
+    },
+    {
+      "id": "uk_outdoors", "name": "Fishing & outdoors", "share": 0.04,
+      "audience": "Anglers, divers, hikers, campers - loyal repeat buyers",
+      "keyword_bank": ["Fishing","Fisherman","Angler","Scuba","Diving","Diver","Hiking","Trekking","Camping","Sailing","Hunting","Funny","Legend","Fathers Day","Mens"],
+      "observed_examples": ["Worlds Best Fisherman Fathers Day Fishing","SCUBA DIVING T-SHIRT Mens Funny Diver Dive Equipment Flippers Mask Regulator Sea","Sloth Hiking Team Funny Trekking Walking","Retirement Plan Sailing Sailor Boat Funny"],
+      "ip_tier": "R0"
+    },
+    {
+      "id": "uk_gym", "name": "Gym & martial arts", "share": 0.04,
+      "audience": "Lifters, MMA and combat-sports practitioners",
+      "keyword_bank": ["Gym","Training","Top","MMA","Bodybuilding","Weightlifting","Boxing","Muay Thai","Spartan","Helmet","SPQR","Krav Maga","Fighting","Mens"],
+      "observed_examples": ["Gym T-Shirt Mens Training Top Tee Bodybuilding Weightlifting","Spartan Helmet Gym MMA Bodybuilding","Eat Sleep Train Repeat Gym Training Top","Jeet Kune Do Academy MMA Martial Arts"],
+      "ip_tier": "R1"
+    },
+    {
+      "id": "uk_family", "name": "Family & occasion", "share": 0.03,
+      "audience": "Relationship gift buyers - Father's Day is the peak",
+      "keyword_bank": ["Fathers Day","Grandad","Uncle","Dad","Mum","Niece","Daughter","Anniversary","Wedding","Funny","Favourite","Legend","Gift","Mens"],
+      "observed_examples": ["Rules for Dating My Daughter Fathers Day","Grandad Is My Favourite Funny Fathers Day","Fathers Day No 1 Uncle Man Myth Legend","21 Year Wedding Anniversary 21st Marriage"],
+      "ip_tier": "R0", "note": "Load 8-10 weeks before Father's Day, Christmas and Grandparents Day."
+    },
+    {
+      "id": "uk_awareness", "name": "LGBT & awareness", "share": 0.02,
+      "audience": "Identity and cause buyers",
+      "keyword_bank": ["LGBT","Gay Pride","Rainbow","Equality","Awareness","Autism","Mental Health","Alzheimers","Ribbon","Love","Peace","Mens","Unisex"],
+      "observed_examples": ["LGBT T-SHIRT Gay Pride all for Love Peace Equality Unisex Top Tee Lesbian","Autism Awareness Autistic Love Accept ASD","Mental Health Awareness Skull Green Ribbon","Rainbow Sheep Funny Gay Pride Day LGBT"],
+      "ip_tier": "R0"
+    }
+  ],
+
+  "grid_themes_ranked": [
+    {"theme": "uk_flags", "designs": 1, "multiplier": "4 treatments x ~200 countries x 17 garments = 13,600", "why": "One flag treatment applied to every nation. Zero incremental art cost."},
+    {"theme": "uk_birthday", "designs": 8, "multiplier": "8 phrasings x 80 ages x 17 garments = 10,880", "why": "Pure string templating; birth year computed from age."},
+    {"theme": "uk_viking", "designs": 20, "multiplier": "20 symbols x 17 garments = 340 per treatment", "why": "Named runes and symbols are a free long-tail keyword grid."},
+    {"theme": "uk_biker", "designs": 200, "multiplier": "200 x 17 = 3,400", "why": "Deepest genuine demand in the UK eBay tee market."},
+    {"theme": "uk_skull_gothic", "designs": 200, "multiplier": "200 x 17 = 3,400", "why": "Stacks with biker, metal and Viking - one motif serves three themes."}
+  ]
+}
