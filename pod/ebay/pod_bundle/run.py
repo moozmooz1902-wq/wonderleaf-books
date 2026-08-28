@@ -66,6 +66,10 @@ def main():
     ap.add_argument("--catalogue", default=os.path.join(HERE, "catalogue.json"))
     ap.add_argument("--workers", type=int, default=os.cpu_count())
     ap.add_argument("--limit", type=int)
+    ap.add_argument("--shard", metavar="I/N",
+                    help="split the catalogue across several pods. Pod 1 runs "
+                         "--shard 1/2, pod 2 runs --shard 2/2. Each takes every "
+                         "Nth design, so no pod repeats another's work.")
     ap.add_argument("--upload", metavar="R2DEST",
                     help="e.g. r2:tshirt-xxx/art  - upload each file and delete "
                          "it locally as soon as it is done. Keeps peak disk near "
@@ -97,6 +101,12 @@ def main():
     designs = json.load(open(a.catalogue))
     if a.limit:
         designs = designs[:a.limit]
+    if a.shard:
+        i, n = (int(x) for x in a.shard.split("/"))
+        if not 1 <= i <= n:
+            sys.exit("--shard must be like 1/2, 2/2 - index within range")
+        designs = designs[i - 1::n]
+        print(f"  shard {i} of {n}: {len(designs):,} designs")
     if already:
         designs = [d for d in designs if d["design_id"] not in already]
     print(f"  {len(designs):,} designs to do, {a.workers} workers")
