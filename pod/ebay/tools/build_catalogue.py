@@ -24,7 +24,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "data"))
 from banks import (RECIPIENTS, GRANDPARENT_NAMES, OCCASIONS, ALL_AGES,
                    MILESTONE_AGES, OCCUPATIONS, DOG_BREEDS, CAT_BREEDS,
-                   HOBBIES, NATIONS, UK_PLACES, pretty)
+                   HOBBIES, NATIONS, UK_PLACES, pretty,
+                   BIKER_SUBJECTS, NORSE_SUBJECTS, GOTHIC_SUBJECTS, MUSIC_SCENES,
+                   MILITARY_SUBJECTS, FOOD_DRINK, UK_PLACES_EXTRA, HOBBIES_EXTRA,
+                   MOTIF_FRAMES)
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from compose_slogans import art_lines, fix_articles
@@ -58,7 +61,9 @@ def pack_title(head, extras=()):
             title = f"{head} {tail}"
             used = {w.lower() for w in title.split()}
             for e in extras:
-                if e.lower() in used:
+                if not e or e.lower() in title.lower():
+                    continue
+                if all(w.lower() in used for w in e.split()):
                     continue
                 if len(title) + 1 + len(e) <= MAX:
                     title += " " + e
@@ -156,7 +161,11 @@ def rec(did, text, theme, cluster, extras=()):
     }
 
 
-def build(year, limit=None):
+GIFT_OCCASIONS = ["Christmas", "Fathers Day", "Mothers Day", "Birthday",
+                  "Retirement", "Anniversary"]
+
+
+def build(year, limit=None, with_occasions=False):
     out, seen = [], set()
 
     def add(r):
@@ -168,8 +177,8 @@ def build(year, limit=None):
 
     # 1. BIRTHDAY - every age is separately searched
     for age in ALL_AGES:
-        frames = BIRTHDAY_FRAMES if age in MILESTONE_AGES else BIRTHDAY_FRAMES[:6]
-        recips = RECIPIENTS if age in MILESTONE_AGES else RECIPIENTS[:10]
+        frames = BIRTHDAY_FRAMES
+        recips = RECIPIENTS if age in MILESTONE_AGES else RECIPIENTS[:14]
         for r_label, _ in recips:
             for i, f in enumerate(frames):
                 add(rec(f"bd_{age}_{r_label.replace(' ','')}_{i}",
@@ -203,7 +212,7 @@ def build(year, limit=None):
                         "uk_animals", "breed", (s, role)))
 
     # 4. HOBBIES
-    for hob in HOBBIES:
+    for hob in HOBBIES + HOBBIES_EXTRA:
         s = pretty(hob)
         for i, f in enumerate(HOBBY_FRAMES):
             if "{r}" in f:
@@ -224,7 +233,7 @@ def build(year, limit=None):
                     "heritage", (s, role)))
 
     # 6. UK PLACES
-    for pl in UK_PLACES:
+    for pl in UK_PLACES + UK_PLACES_EXTRA:
         s = pretty(pl)
         for i, f in enumerate(PLACE_FRAMES):
             add(rec(f"pl_{pl}_{i}", f.format(s=s), "uk_flags", "place", (s,)))
@@ -239,6 +248,54 @@ def build(year, limit=None):
                     f"Best {gp} Ever {occ_label}", "uk_family", "grandparent",
                     (occ_kw,)))
 
+    # 8. IDENTITY MOTIFS - biker, Norse, gothic, music scene, military, food.
+    # 40%+ of competitor catalogues, ~5% of the current one. These take
+    # STATEMENT frames; nobody searches "Valknut Nan".
+    MOTIF_BANKS = [
+        (BIKER_SUBJECTS, "uk_biker", "biker", True),
+        (NORSE_SUBJECTS, "uk_viking", "norse", False),
+        (GOTHIC_SUBJECTS, "uk_skull_gothic", "gothic", False),
+        (MUSIC_SCENES, "uk_music", "music", True),
+        (MILITARY_SUBJECTS, "uk_military", "military", False),
+        (FOOD_DRINK, "uk_funny_slogan", "food_drink", True),
+    ]
+    for bank, theme, cluster, takes_role in MOTIF_BANKS:
+        for tok in bank:
+            s_ = pretty(tok)
+            for i, f in enumerate(MOTIF_FRAMES):
+                add(rec(f"mo_{cluster}_{tok}_{i}", f.format(s=s_), theme, cluster, (s_,)))
+            if takes_role:
+                # "Biker Dad" and "Metalhead Grandad" are real searches;
+                # "Valknut Nan" is not - hence the flag.
+                for role in ["Dad", "Mum", "Grandad", "Nan", "Uncle"]:
+                    for tpl in ("{s} {r}", "Best {s} {r} Ever", "World's Greatest {s} {r}"):
+                        add(rec(f"mo_{cluster}_{tok}_{role}_{abs(hash(tpl))%97}",
+                                tpl.format(s=s_, r=role), theme, cluster, (s_, role)))
+
+    # 9. merge the measured slogan grid (50 joke frames x 93 subjects)
+    try:
+        slog = Path(__file__).resolve().parent.parent / "data" / "slogan_designs.json"
+        if slog.exists():
+            for d in json.loads(slog.read_text()):
+                add(rec(d["design_id"], d["stem"], d.get("theme", "uk_funny_slogan"),
+                        "slogan", ("Funny",)))
+    except Exception as e:
+        print(f"  (slogan grid not merged: {e})", file=sys.stderr)
+
+    # 10. OPTIONAL occasion crossing.
+    # "Christmas gift for a samoyed owner" is a genuine search, and the occasion
+    # goes into the ARTWORK so the image differs too - not a title-only variant.
+    # But these are thinner than the base set: turn on deliberately, not by
+    # default.
+    if with_occasions:
+        base = [d for d in out if d["cluster"] in
+                ("occupation", "hobby", "breed", "grandparent")
+                and d["stem"].lower().startswith(("best ", "world's greatest "))]
+        for d in base:
+            for occ in GIFT_OCCASIONS:
+                add(rec(f"{d['design_id']}_o{occ.replace(' ','')}",
+                        f"{d['stem']} {occ}", d["theme"], d["cluster"], (occ, "Gift")))
+
     if limit:
         out = out[:limit]
     return out
@@ -251,9 +308,12 @@ def main():
     ap.add_argument("--year", type=int, default=2026)
     ap.add_argument("--limit", type=int)
     ap.add_argument("--stats", action="store_true")
+    ap.add_argument("--with-occasions", action="store_true",
+                    help="cross gift frames with Christmas / Fathers Day / etc. "
+                         "Roughly 3x the catalogue, but thinner than the base set.")
     a = ap.parse_args()
 
-    designs = build(a.year, a.limit)
+    designs = build(a.year, a.limit, a.with_occasions)
     Path(a.out).write_text(json.dumps(designs, ensure_ascii=False))
     print(f"  {len(designs):,} designs -> {a.out}")
 

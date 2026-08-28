@@ -202,3 +202,92 @@ if __name__ == "__main__":
         print(f"  {len(bank):4d}  {name}")
     print(f"\n  sample: {[pretty(x) for x in DOG_BREEDS[:6]]}")
     print(f"  sample: {[pretty(x) for x in OCCUPATIONS[:6]]}")
+
+
+# ===========================================================================
+# IDENTITY MOTIFS
+# The themes that are 40%+ of competitor catalogues and ~5% of Wonderleaf's.
+# These take STATEMENT frames, not gift frames - nobody buys a "Valknut Nan".
+# ===========================================================================
+
+BIKER_SUBJECTS = """
+cafe-racer chopper bobber scrambler street-tracker streetfighter naked-bike
+adventure-bike tourer classic-british-bike two-stroke sidecar trials-bike
+enduro supermoto dirt-bike quad-bike trike custom-build rat-bike
+motorcycle-camping green-laning track-day ride-out biker-wave lane-splitting
+winter-riding pillion garage-build spanner-time chain-lube knee-down
+""".split()
+
+NORSE_SUBJECTS = """
+valknut vegvisir yggdrasil mjolnir aegishjalmur huginn-and-muninn fenrir
+jormungandr sleipnir web-of-wyrd triquetra raven-banner longship rune-stone
+valhalla ragnarok bifrost asgard midgard shieldmaiden berserker skald
+norse-raven norse-wolf norse-bear viking-axe viking-helm drinking-horn
+""".split()
+
+GOTHIC_SUBJECTS = """
+sugar-skull grim-reaper raven-skull moth-and-skull anatomical-heart
+death-moth crescent-moon moon-phases black-cat crow tarot-cards crystal-ball
+gothic-cross memento-mori dancing-skeleton skull-and-roses candle-and-skull
+ouija-board haunted-house graveyard-gate bat-silhouette spider-web
+""".split()
+
+MUSIC_SCENES = """
+northern-soul two-tone-ska mod-scene rockabilly psychobilly punk-rock oi-punk
+heavy-metal thrash-metal doom-metal black-metal drum-and-bass jungle
+uk-garage acid-house rave-culture britpop shoegaze madchester dub-reggae
+roots-reggae lovers-rock hardcore-punk grime-scene trip-hop new-wave
+post-punk goth-rock indie-disco soul-weekender vinyl-only
+""".split()
+
+MILITARY_SUBJECTS = """
+spitfire hurricane lancaster-bomber mosquito vulcan-bomber harrier typhoon-jet
+battle-of-britain paratrooper commando royal-marine submariner tank-crew
+artillery-gunner sapper signaller rifleman navy-diver merchant-navy
+remembrance-poppy veteran old-soldier
+""".split()
+
+FOOD_DRINK = """
+real-ale craft-beer cider gin whisky rum espresso flat-white builders-tea
+full-english sunday-roast chip-butty pie-and-mash fish-and-chips curry-night
+kebab bacon-sandwich yorkshire-pudding scotch-egg pork-pie cheese-board
+sourdough barbecue hot-sauce
+""".split()
+
+# Extra UK towns - place pride is a deep, thin-competition long tail
+UK_PLACES_EXTRA = """
+Barnsley Rotherham Doncaster Wakefield Halifax Huddersfield Dewsbury Keighley
+Scunthorpe Grimsby Barrow Carlisle Lancaster Blackpool Southport Warrington
+Widnes Runcorn Crewe Macclesfield Chesterfield Mansfield Worksop Grantham
+Boston Skegness Lowestoft Yarmouth Colchester Chelmsford Basildon Southend
+Luton Watford Slough Reading Swindon Bath Taunton Yeovil Torquay Paignton
+Newquay Penzance Truro Barnstaple Bideford Hereford Shrewsbury Telford
+Walsall Dudley Wolverhampton Solihull Redditch Nuneaton Rugby Banbury
+Aylesbury Guildford Woking Crawley Horsham Eastbourne Hastings Margate
+Ramsgate Dover Folkestone Maidstone Ashford Canterbury Chatham Gillingham
+Motherwell Paisley Ayr Falkirk Kilmarnock Greenock Dunfermline Kirkcaldy
+Merthyr Rhondda Bridgend Llanelli Caerphilly Pontypridd Barry Neath
+""".split()
+
+# Extra hobbies
+HOBBIES_EXTRA = """
+sea-swimming rock-pooling foraging mushroom-hunting wild-food-cooking
+plane-spotting train-spotting bus-spotting canal-boating narrowboat-restoring
+kit-car-building classic-car-restoring engine-rebuilding welding-hobby
+leatherworking bookbinding calligraphy lino-printing screen-printing
+watch-collecting clock-repair radio-amateur electronics-tinkering
+3d-printing arduino-projects raspberry-pi-projects retro-computing
+skateboarding roller-skating ice-skating snowboarding skiing
+archery target-shooting airsoft paintball fencing
+ballroom-dancing line-dancing morris-dancing highland-dancing
+choir-singing brass-band folk-session ukulele bagpipes
+crown-green-bowling pigeon-racing ferreting beagling
+""".split()
+
+MOTIF_FRAMES = [
+    "{s}", "{s} Til I Die", "Property Of The {s} Club", "{s} Legend",
+    "Born For {s}", "{s} Forever", "Live For {s}", "{s} Crew",
+    "Certified {s} Obsessive", "It's A {s} Thing", "{s} Or Nothing",
+    "Keep The {s} Faith", "{s} Since Day One", "Old School {s}",
+    "{s} Never Dies", "In {s} We Trust",
+]
