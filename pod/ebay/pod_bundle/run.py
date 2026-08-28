@@ -88,13 +88,20 @@ def main():
         # Ask R2 what is already there instead. Same idea as rebuild_ledger.py:
         # the bucket is the source of truth, not any local file.
         print("  checking what is already in R2 ...", flush=True)
-        r = subprocess.run(["rclone", "lsf", f"{UPLOAD}/mock"],
-                           capture_output=True, text=True)
-        if r.returncode == 0:
-            already = {ln[:-4] for ln in r.stdout.split() if ln.endswith(".jpg")}
-            print(f"  {len(already):,} designs already done - skipping those")
-        else:
-            print(f"  (could not list R2, starting fresh: {r.stderr.strip()[:120]})")
+        try:
+            r = subprocess.run(["rclone", "lsf", f"{UPLOAD}/mock",
+                                "--retries", "1", "--low-level-retries", "2",
+                                "--contimeout", "15s", "--timeout", "60s"],
+                               capture_output=True, text=True, timeout=600)
+            if r.returncode == 0:
+                already = {ln[:-4] for ln in r.stdout.split() if ln.endswith(".jpg")}
+                print(f"  {len(already):,} designs already done - skipping those")
+            else:
+                print(f"  (could not list R2, starting fresh: {r.stderr.strip()[:120]})")
+        except subprocess.TimeoutExpired:
+            # Resume is an optimisation. Never let it block the render.
+            print("  (listing R2 timed out, starting fresh - nothing is lost,")
+            print("   finished designs will simply be re-uploaded over themselves)")
 
     os.makedirs(ART, exist_ok=True)
     os.makedirs(MOCK, exist_ok=True)

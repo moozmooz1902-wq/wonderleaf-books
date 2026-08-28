@@ -120,8 +120,13 @@ def main():
         return 1
 
     # Listing is only needed so an interrupted run can resume. Warn, do not fail.
-    r = subprocess.run(["rclone", "lsf", f"{dest}/mock"],
-                       capture_output=True, text=True, timeout=60)
+    try:
+        r = subprocess.run(["rclone", "lsf", f"{dest}/mock",
+                            "--retries", "1", "--low-level-retries", "2",
+                            "--contimeout", "15s", "--timeout", "60s"],
+                           capture_output=True, text=True, timeout=90)
+    except subprocess.TimeoutExpired:
+        r = subprocess.CompletedProcess([], 1, "", "timed out")
     if r.returncode != 0 and "directory not found" not in r.stderr:
         print("  [WARN] cannot list the bucket - the render will still work,")
         print("         but an interrupted run will restart from zero instead")
@@ -144,8 +149,12 @@ def main():
                                capture_output=True, text=True, timeout=180)
             if r.returncode != 0:
                 raise RuntimeError("upload failed: " + r.stderr.strip()[:200])
-        r = subprocess.run(["rclone", "lsf", f"{dest}/mock"],
-                           capture_output=True, text=True, timeout=60)
+        try:
+            r = subprocess.run(["rclone", "lsf", f"{dest}/mock", "--retries", "1",
+                                "--low-level-retries", "2", "--timeout", "60s"],
+                               capture_output=True, text=True, timeout=90)
+        except subprocess.TimeoutExpired:
+            r = subprocess.CompletedProcess([], 1, "", "timed out")
         # A bucket-scoped token may not allow listing; the upload above already
         # succeeded, so only treat a listing that WORKS and omits the file as a
         # failure.
