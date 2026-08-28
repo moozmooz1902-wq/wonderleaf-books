@@ -74,18 +74,32 @@ def main():
 
     global UPLOAD
     UPLOAD = a.upload
+    already = set()
     if UPLOAD:
         if not shutil.which("rclone"):
             sys.exit("rclone not found - install it, or drop --upload and use a bigger disk")
         print(f"  uploading to {UPLOAD} and deleting locally as we go")
+        # A terminated pod loses the container disk, so "does the file exist
+        # locally" is useless for resume - everything would re-render from zero.
+        # Ask R2 what is already there instead. Same idea as rebuild_ledger.py:
+        # the bucket is the source of truth, not any local file.
+        print("  checking what is already in R2 ...", flush=True)
+        r = subprocess.run(["rclone", "lsf", f"{UPLOAD}/mock"],
+                           capture_output=True, text=True)
+        if r.returncode == 0:
+            already = {ln[:-4] for ln in r.stdout.split() if ln.endswith(".jpg")}
+            print(f"  {len(already):,} designs already done - skipping those")
+        else:
+            print(f"  (could not list R2, starting fresh: {r.stderr.strip()[:120]})")
 
     os.makedirs(ART, exist_ok=True)
     os.makedirs(MOCK, exist_ok=True)
     designs = json.load(open(a.catalogue))
     if a.limit:
         designs = designs[:a.limit]
-
-    print(f"  {len(designs):,} designs, {a.workers} workers")
+    if already:
+        designs = [d for d in designs if d["design_id"] not in already]
+    print(f"  {len(designs):,} designs to do, {a.workers} workers")
     t0, ok, skip, fail = time.time(), 0, 0, []
     def _init(dest):
         global UPLOAD

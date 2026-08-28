@@ -1,0 +1,72 @@
+=========================================================
+  T-SHIRT RENDER - STEP BY STEP
+=========================================================
+
+Pod: 32 vCPU CPU pod. Container disk 30 GB is plenty.
+Everything streams to R2 as it is made, so nothing is lost
+if the pod is terminated.
+
+
+STEP 1 - unpack
+---------------
+    cd /workspace
+    tar xzf tshirt_pod_bundle.tar.gz
+    cd pod_bundle
+    pip install Pillow numpy scipy
+
+
+STEP 2 - connect R2   (fill in your 3 values)
+---------------------------------------------
+    rclone config create r2 s3
+    rclone config update r2 provider Other
+    rclone config update r2 access_key_id YOUR_KEY
+    rclone config update r2 secret_access_key YOUR_SECRET
+    rclone config update r2 endpoint https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com
+    rclone config update r2 no_check_bucket true
+
+    Check it works (should list without error):
+    rclone ls r2:YOUR-BUCKET --max-depth 1
+
+
+STEP 3 - smoke test, and LOOK at the result
+-------------------------------------------
+    python3 run.py --workers 4 --limit 40
+
+    Open the mock/ folder and look at a few JPEGs.
+    If they look wrong, stop and tell Claude. If they look
+    right, delete them and carry on:
+
+    rm -rf print mock
+
+
+STEP 4 - the real run
+---------------------
+    nohup python3 run.py --workers 32 \
+        --upload r2:YOUR-BUCKET/art > render.log 2>&1 &
+
+    Watch it:
+    tail -f render.log
+
+    nohup means it keeps going if your browser disconnects.
+
+
+IF THE POD IS TERMINATED
+------------------------
+Start a new pod, repeat steps 1 and 2, then run the SAME
+command from step 4. It asks R2 what is already there and
+only does the rest. Nothing is repeated, nothing is lost.
+
+
+WHEN IT FINISHES
+----------------
+Send Claude your bucket's public URL, e.g.
+    https://pub-xxxxxxxx.r2.dev
+and the finished eBay CSV comes back with real image links.
+
+
+TIMING           50,740 designs        91,869 designs
+  32 cores           1.4 h                 2.6 h
+  cost @ $1.28/hr    ~$1.80                ~$3.30
+
+Default is the 50,740 catalogue. For the bigger one add:
+    --catalogue catalogue_full.json
