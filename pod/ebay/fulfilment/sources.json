@@ -1,0 +1,18 @@
+{
+  "_note": "Every store's public R2 bucket. The fulfilment tools read this file at startup, so adding a store means editing THIS file only - no Mac needs updating. Upload it back to the same URL after editing: rclone copyto sources.json r2:tshirt-mockups/sources.json",
+  "_url": "https://pub-19fad43c12d848caa97d6d53a8695d03.r2.dev/sources.json",
+  "sources": [
+    {
+      "name": "tshirt-mockups",
+      "bucket": "tshirt-mockups",
+      "base": "https://pub-19fad43c12d848caa97d6d53a8695d03.r2.dev",
+      "note": "store 1"
+    },
+    {
+      "name": "tshirt-m12k",
+      "bucket": "tshirt-m12k",
+      "base": "https://pub-4b710c8610a84acc8fad1513f48132fd.r2.dev",
+      "note": "store 2, and the 50,740 design batch"
+    }
+  ]
+}
