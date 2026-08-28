@@ -34,7 +34,14 @@ def main():
     def deps():
         import PIL, numpy, scipy
         return f"Pillow {PIL.__version__}, numpy {numpy.__version__}, scipy {scipy.__version__}"
-    step("python packages", deps)
+    if not step("python packages", deps):
+        print(f"         this python is {sys.executable}")
+        print("         install into THIS python:")
+        print(f"           {sys.executable} -m pip install Pillow numpy scipy")
+        print("         if pip refuses with 'externally-managed-environment', add")
+        print("           --break-system-packages")
+        print("         if it says 'No module named pip', first run")
+        print("           apt-get update && apt-get install -y python3-pip")
 
     def fonts():
         d = os.path.join(HERE, "fonts")
@@ -73,14 +80,31 @@ def main():
         print("\n  -> install it:  curl https://rclone.org/install.sh | sudo bash")
         return 1
 
+    remote = bucket.split(":")[0] + ":"
+    name = bucket.split(":", 1)[1]
+
     def bucket_reachable():
         r = subprocess.run(["rclone", "lsf", bucket, "--max-depth", "1"],
                            capture_output=True, text=True, timeout=60)
-        if r.returncode != 0:
-            raise RuntimeError(r.stderr.strip().split("\n")[-1][:200])
-        return f"{bucket} reachable"
+        if r.returncode == 0:
+            return f"{bucket} reachable"
+        # It failed. Work out WHY: can we reach the remote at all?
+        q = subprocess.run(["rclone", "lsf", remote, "--max-depth", "1"],
+                           capture_output=True, text=True, timeout=60)
+        if q.returncode != 0:
+            raise RuntimeError(
+                "cannot reach the remote itself - keys or endpoint are wrong: "
+                + q.stderr.strip().split("\n")[-1][:160])
+        found = [b.rstrip("/") for b in q.stdout.split()]
+        if not name:
+            raise RuntimeError(
+                "no bucket name in the destination - BUCKET was empty. "
+                + f"buckets on this account: {', '.join(found) or 'none'}")
+        raise RuntimeError(
+            f"remote is fine but bucket '{name}' is not there. "
+            + f"buckets on this account: {', '.join(found) or 'none'}")
     if not step("bucket reachable", bucket_reachable):
-        print("\n  -> check the bucket NAME, and that the endpoint / keys are right")
+        print("\n  -> the message above says whether it is the keys or the name")
         return 1
 
     def round_trip():
