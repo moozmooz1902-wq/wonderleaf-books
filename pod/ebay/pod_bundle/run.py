@@ -11,7 +11,7 @@ Resumable: anything already on disk is skipped, so it is safe to re-run.
     python3 run.py --workers 32
     python3 run.py --workers 32 --limit 200      # smoke test first
 """
-import argparse, json, multiprocessing as mp, os, sys, time
+import argparse, json, multiprocessing as mp, os, shutil, subprocess, sys, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -23,6 +23,22 @@ import photo_mockup as pm
 ART = os.path.join(HERE, "print")
 MOCK = os.path.join(HERE, "mock")
 FONTS = os.path.join(HERE, "fonts")
+
+# Set by --upload. When on, each design is pushed to R2 and deleted locally the
+# moment it is finished, so peak disk stays near zero and a 5GB pod is enough.
+UPLOAD = None
+
+
+def _push(local, remote_dir):
+    name = os.path.basename(local)
+    r = subprocess.run(
+        ["rclone", "copyto", "--s3-no-check-bucket", "-q", local,
+         f"{UPLOAD}/{remote_dir}/{name}"],
+        capture_output=True, text=True)
+    if r.returncode == 0:
+        os.remove(local)
+        return True
+    return False
 
 
 def one(d):
@@ -37,6 +53,9 @@ def one(d):
             art.save(png, compress_level=6)
         if not os.path.exists(jpg):
             pm.build(art if art is not None else png, jpg)
+        if UPLOAD:
+            if not (_push(png, "raw") and _push(jpg, "mock")):
+                return f"UPLOAD FAILED {d['design_id']}"
         return "ok"
     except Exception as e:
         return f"FAIL {d['design_id']}: {type(e).__name__} {e}"
@@ -47,7 +66,18 @@ def main():
     ap.add_argument("--catalogue", default=os.path.join(HERE, "catalogue.json"))
     ap.add_argument("--workers", type=int, default=os.cpu_count())
     ap.add_argument("--limit", type=int)
+    ap.add_argument("--upload", metavar="R2DEST",
+                    help="e.g. r2:tshirt-xxx/art  - upload each file and delete "
+                         "it locally as soon as it is done. Keeps peak disk near "
+                         "zero, so a 5GB pod is enough. Requires rclone set up.")
     a = ap.parse_args()
+
+    global UPLOAD
+    UPLOAD = a.upload
+    if UPLOAD:
+        if not shutil.which("rclone"):
+            sys.exit("rclone not found - install it, or drop --upload and use a bigger disk")
+        print(f"  uploading to {UPLOAD} and deleting locally as we go")
 
     os.makedirs(ART, exist_ok=True)
     os.makedirs(MOCK, exist_ok=True)
@@ -57,7 +87,11 @@ def main():
 
     print(f"  {len(designs):,} designs, {a.workers} workers")
     t0, ok, skip, fail = time.time(), 0, 0, []
-    with mp.Pool(a.workers) as pool:
+    def _init(dest):
+        global UPLOAD
+        UPLOAD = dest
+
+    with mp.Pool(a.workers, initializer=_init, initargs=(UPLOAD,)) as pool:
         for i, r in enumerate(pool.imap_unordered(one, designs, chunksize=16), 1):
             if r == "ok":
                 ok += 1
