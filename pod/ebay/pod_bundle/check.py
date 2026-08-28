@@ -80,32 +80,52 @@ def main():
         print("\n  -> install it:  curl https://rclone.org/install.sh | sudo bash")
         return 1
 
-    remote = bucket.split(":")[0] + ":"
-    name = bucket.split(":", 1)[1]
+    name = bucket.split(":", 1)[1] if ":" in bucket else ""
 
-    def bucket_reachable():
-        r = subprocess.run(["rclone", "lsf", bucket, "--max-depth", "1"],
-                           capture_output=True, text=True, timeout=60)
-        if r.returncode == 0:
-            return f"{bucket} reachable"
-        # It failed. Work out WHY: can we reach the remote at all?
-        q = subprocess.run(["rclone", "lsf", remote, "--max-depth", "1"],
-                           capture_output=True, text=True, timeout=60)
-        if q.returncode != 0:
-            raise RuntimeError(
-                "cannot reach the remote itself - keys or endpoint are wrong: "
-                + q.stderr.strip().split("\n")[-1][:160])
-        found = [b.rstrip("/") for b in q.stdout.split()]
+    # NOTE: do not gate on listing the remote ROOT. An R2 token scoped to a
+    # single bucket cannot enumerate buckets and returns 403 there, which says
+    # nothing about whether the bucket itself works. The real test is a write.
+    def bucket_writable():
         if not name:
             raise RuntimeError(
-                "no bucket name in the destination - BUCKET was empty. "
-                + f"buckets on this account: {', '.join(found) or 'none'}")
-        raise RuntimeError(
-            f"remote is fine but bucket '{name}' is not there. "
-            + f"buckets on this account: {', '.join(found) or 'none'}")
-    if not step("bucket reachable", bucket_reachable):
-        print("\n  -> the message above says whether it is the keys or the name")
+                "no bucket name in the destination - $BUCKET was empty. "
+                "Run:  BUCKET=your-bucket-name   then re-run this check")
+        tmp = tempfile.mkdtemp()
+        probe = os.path.join(tmp, "_preflight.txt")
+        open(probe, "w").write("wonderleaf preflight\n")
+        r = subprocess.run(["rclone", "copyto", "--s3-no-check-bucket", probe,
+                            f"{dest}/_preflight.txt"],
+                           capture_output=True, text=True, timeout=120)
+        if r.returncode != 0:
+            err = r.stderr.strip().split("\n")[-1][:200]
+            if "InvalidBucketName" in r.stderr:
+                raise RuntimeError(f"bucket name '{name}' is not valid - "
+                                   "lowercase letters, digits and hyphens only")
+            if "NoSuchBucket" in r.stderr:
+                raise RuntimeError(f"no bucket called '{name}' on this account")
+            if "AccessDenied" in r.stderr or "403" in r.stderr:
+                raise RuntimeError(
+                    f"denied writing to '{name}' - the token is probably "
+                    "read-only, or scoped to a different bucket")
+            raise RuntimeError(err)
+        r = subprocess.run(["rclone", "cat", f"{dest}/_preflight.txt"],
+                           capture_output=True, text=True, timeout=60)
+        if "wonderleaf" not in r.stdout:
+            raise RuntimeError("wrote the probe but could not read it back")
+        subprocess.run(["rclone", "delete", f"{dest}/_preflight.txt"],
+                       capture_output=True, text=True, timeout=60)
+        return f"wrote and read back {dest}/_preflight.txt"
+    if not step("bucket writable", bucket_writable):
+        print("\n  -> fix the bucket name or the token, then re-run this check")
         return 1
+
+    # Listing is only needed so an interrupted run can resume. Warn, do not fail.
+    r = subprocess.run(["rclone", "lsf", f"{dest}/mock"],
+                       capture_output=True, text=True, timeout=60)
+    if r.returncode != 0 and "directory not found" not in r.stderr:
+        print("  [WARN] cannot list the bucket - the render will still work,")
+        print("         but an interrupted run will restart from zero instead")
+        print("         of resuming.  " + r.stderr.strip().split("\n")[-1][:120])
 
     def round_trip():
         import json
@@ -126,7 +146,10 @@ def main():
                 raise RuntimeError("upload failed: " + r.stderr.strip()[:200])
         r = subprocess.run(["rclone", "lsf", f"{dest}/mock"],
                            capture_output=True, text=True, timeout=60)
-        if "_preflight.jpg" not in r.stdout:
+        # A bucket-scoped token may not allow listing; the upload above already
+        # succeeded, so only treat a listing that WORKS and omits the file as a
+        # failure.
+        if r.returncode == 0 and "_preflight.jpg" not in r.stdout:
             raise RuntimeError("uploaded but not visible when listing back")
         return f"design '{d['stem']}' uploaded and read back"
     if step("end-to-end round trip", round_trip):
