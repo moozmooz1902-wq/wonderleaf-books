@@ -28,15 +28,19 @@ STEP 2 - connect R2   (fill in your 3 values)
     rclone ls r2:YOUR-BUCKET --max-depth 1
 
 
-STEP 3 - smoke test, and LOOK at the result
--------------------------------------------
-    python3 run.py --workers 4 --limit 40
+STEP 3 - preflight check  (do this, it takes 30 seconds)
+--------------------------------------------------------
+    python3 check.py r2:YOUR-BUCKET/art
 
-    Open the mock/ folder and look at a few JPEGs.
-    If they look wrong, stop and tell Claude. If they look
-    right, delete them and carry on:
+It verifies packages, fonts, blank, catalogue, rclone and the
+bucket, then renders one design, uploads both files and reads
+them back. If it says ALL CHECKS PASSED, the full run will work.
 
-    rm -rf print mock
+It leaves one test image at
+    r2:YOUR-BUCKET/art/mock/_preflight.jpg
+Open that in your browser to confirm it looks right, then:
+    rclone delete r2:YOUR-BUCKET/art/mock/_preflight.jpg
+    rclone delete r2:YOUR-BUCKET/art/raw/_preflight.png
 
 
 STEP 4 - the real run
