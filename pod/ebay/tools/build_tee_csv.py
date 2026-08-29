@@ -124,6 +124,80 @@ DESC = """<div style="font-family:Arial,Helvetica,sans-serif;max-width:800px;mar
 </div></div>"""
 
 
+# How many listings apart two designs from the same family must be.
+WINDOW = 6
+
+
+def subject_of(d):
+    """oc_bouncer_Nan_6 -> oc_bouncer. The design family, not the variant."""
+    return d["design_id"].rsplit("_", 2)[0]
+
+
+def spread(designs, seed):
+    """
+    Order the catalogue so no theme arrives in a block.
+
+    A plain shuffle is random, not spread: on this catalogue it left 18.9% of
+    listings next to one from the same cluster, with runs of up to 9 in a row.
+    A newly-listed feed carrying nine dog breeds and then nine occupations
+    reads as one seller flooding a category, which is exactly the impression
+    to avoid.
+
+    So each group is dealt out at even intervals across the whole sequence
+    instead. An item that is jth of n in its group is placed at position
+    (j + 0.5) / n, which spaces that group's items n/total apart no matter how
+    big or small the group is. A small jitter - always less than half a slot,
+    so the ordering survives - stops the result from looking mechanically
+    regular.
+
+    Done twice: first on the design family, so eight Bouncer designs never
+    bunch, then on the cluster, so hobby and occupation alternate.
+    """
+    rnd = random.Random(seed)
+
+    def deal(items, key):
+        groups = {}
+        for it in items:
+            groups.setdefault(key(it), []).append(it)
+        placed = []
+        for g in groups.values():
+            n = len(g)
+            for j, it in enumerate(g):
+                pos = (j + 0.5) / n + rnd.uniform(-0.3, 0.3) / n
+                placed.append((pos, rnd.random(), it))
+        placed.sort(key=lambda t: (t[0], t[1]))
+        return [it for _, _, it in placed]
+
+    out = []
+    by_cluster = {}
+    for d in designs:
+        by_cluster.setdefault(d.get("cluster", ""), []).append(d)
+    for cl, items in by_cluster.items():
+        rnd.shuffle(items)
+        by_cluster[cl] = deal(items, subject_of)   # spread families within
+    for cl, items in by_cluster.items():
+        out.extend(items)
+    out = deal(out, lambda d: d.get("cluster", ""))   # then spread clusters
+
+    # Dealing by cluster reshuffles the families back together again: it cut
+    # cluster runs to 2 but still left 5.6% of listings with another from the
+    # same family within five rows - eight Bouncer shirts spread over twenty
+    # is still recognisably one seller filling a niche. So walk the sequence
+    # once and push any early repeat further down, swapping it with the first
+    # later listing that does not clash. Costs a little cluster alternation
+    # (1.8% -> 3.7% adjacent, runs of 4 rather than 2, against 18.9% and runs
+    # of 9 for a plain shuffle) and takes family repeats to 0.03%.
+    for i in range(len(out)):
+        recent = {subject_of(x) for x in out[max(0, i - WINDOW):i]}
+        if subject_of(out[i]) not in recent:
+            continue
+        for k in range(i + 1, min(i + 8 * WINDOW, len(out))):
+            if subject_of(out[k]) not in recent:
+                out[i], out[k] = out[k], out[i]
+                break
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(
         description=__doc__,
@@ -169,7 +243,9 @@ def main():
     # block of birthdays, then a block of dog breeds, which looks like spam in
     # a newly-listed feed and makes any slice taken for another store all one
     # thing.
-    ap.add_argument("--no-shuffle", action="store_true")
+    ap.add_argument("--no-shuffle", action="store_true",
+                    help="upload in catalogue order. Almost never wanted: it "
+                         "arrives as a block of one theme at a time")
     ap.add_argument("--seed", type=int, default=20260829,
                     help="use a different seed per store so each gets its "
                          "own mix")
@@ -184,7 +260,7 @@ def main():
     designs = json.loads(Path(a.catalogue).read_text())
 
     if not a.no_shuffle:
-        random.Random(a.seed).shuffle(designs)
+        designs = spread(designs, a.seed)
     if a.limit:
         designs = designs[:a.limit]
 
