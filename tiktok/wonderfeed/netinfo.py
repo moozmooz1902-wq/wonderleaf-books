@@ -48,6 +48,8 @@ if __name__ == "__main__":
     print("  │  WONDERFEED IS RUNNING                             │")
     print("  └────────────────────────────────────────────────────┘")
     print()
+    print("  Your browser should have opened. If not, use the first link.")
+    print()
     print(f"  On this computer:   {u['this_computer']}")
     if u["other_devices"]:
         print(f"  For your staff:     {u['other_devices']}")
@@ -58,5 +60,9 @@ if __name__ == "__main__":
     else:
         print("  (Could not detect a network address - staff link unavailable.)")
     print()
+    print("  Ignore any line above saying \"External URL\". That is your public")
+    print("  internet address, it will not work, and it should not be shared.")
+    print()
     print("  Keep this window open. Closing it closes the page.")
+    print("  Everything above this line is normal - it is not an error.")
     print()

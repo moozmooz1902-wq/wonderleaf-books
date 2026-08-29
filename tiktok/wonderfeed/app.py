@@ -20,6 +20,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from wonderfeed import listings as listings_mod  # noqa: E402
 from wonderfeed import netinfo  # noqa: E402
+from wonderfeed import ui_products  # noqa: E402
 from wonderfeed.config import ConfigError, ROOT, load_products, load_settings  # noqa: E402
 from wonderfeed.queue import Queue  # noqa: E402
 from wonderfeed.state import State  # noqa: E402
@@ -305,6 +306,9 @@ def main():
                     reverse=True)
 
     with st.sidebar:
+        page = st.radio("Screen", ["▶ Run", "📦 Products & listings"],
+                        label_visibility="collapsed")
+        st.divider()
         st.header("Settings")
         practice = st.toggle(
             "Practice mode", value=st.session_state.get("practice", False),
@@ -345,13 +349,16 @@ def main():
                 st.error("**It stopped with a problem:**")
                 st.code(tail, language=None)
 
-    render_simple(p, status, running, practice, counts, videos)
+    if page.startswith("📦"):
+        ui_products.render(settings)
+    else:
+        render_simple(p, status, running, practice, counts, videos)
+        if advanced:
+            st.divider()
+            render_advanced(p, status, running, counts, videos, settings, products)
 
-    if advanced:
-        st.divider()
-        render_advanced(p, status, running, counts, videos, settings, products)
-
-    if running:
+    if running and not page.startswith("📦"):
+        # Never auto-refresh the Products screen - it would wipe half-typed forms.
         time.sleep(REFRESH_SECONDS)
         st.rerun()
 

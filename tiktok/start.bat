@@ -25,8 +25,8 @@ if not exist .venv (
 if not exist config\settings.yaml copy /y config\settings.example.yaml config\settings.yaml >nul
 if not exist config\products.yaml copy /y config\products.example.yaml config\products.yaml >nul
 
-.venv\Scripts\python -m wonderfeed.netinfo
 start "" http://localhost:8501
+.venv\Scripts\python -m wonderfeed.netinfo
 
-.venv\Scripts\streamlit run wonderfeed/app.py --server.address 0.0.0.0 --server.port 8501 --server.headless true --browser.gatherUsageStats false
+.venv\Scripts\streamlit run wonderfeed/app.py --server.address 0.0.0.0 --server.port 8501 --server.headless true --browser.gatherUsageStats false --logger.level error
 pause

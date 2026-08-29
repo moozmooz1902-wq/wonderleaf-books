@@ -27,11 +27,27 @@ for f in config/settings.yaml config/products.yaml; do
   [ -f "$f" ] || cp "${f%.yaml}.example.yaml" "$f"
 done
 
+PORT=8501
+
 .venv/bin/python -m wonderfeed.netinfo
 
-# 0.0.0.0 so other devices on the same wifi can open it too.
+# Open the browser once the server is up, without blocking the server itself.
+# Kept as a detached subshell so there is nothing to poll, wait on, or clean up.
+(
+  for _ in $(seq 1 60); do
+    if curl -s -o /dev/null "http://localhost:$PORT" 2>/dev/null; then
+      command -v open >/dev/null 2>&1 && open "http://localhost:$PORT" 2>/dev/null && exit 0
+      command -v xdg-open >/dev/null 2>&1 && xdg-open "http://localhost:$PORT" 2>/dev/null && exit 0
+      exit 0
+    fi
+    sleep 1
+  done
+) >/dev/null 2>&1 &
+
+# Foreground, so closing this window closes the app - as the instructions say.
 exec .venv/bin/streamlit run wonderfeed/app.py \
   --server.address 0.0.0.0 \
-  --server.port 8501 \
+  --server.port $PORT \
   --server.headless true \
-  --browser.gatherUsageStats false
+  --browser.gatherUsageStats false \
+  --logger.level error
