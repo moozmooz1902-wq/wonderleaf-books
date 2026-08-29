@@ -208,7 +208,7 @@ def main():
     ap.add_argument("--img-base", required=True,
                     help="public bucket URL, e.g. https://pub-XXXX.r2.dev")
     ap.add_argument("--category", default="15687")
-    ap.add_argument("--shipping", default="2")
+    ap.add_argument("--shipping", default="1")
     ap.add_argument("--returns", default="1")
     ap.add_argument("--payment", default="1")
     # City stays, postcode does not. Plenty of sellers are in Manchester, so a
