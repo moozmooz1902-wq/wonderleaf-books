@@ -24,15 +24,20 @@ SETTINGS
 import numpy as np
 from PIL import Image
 
+# ONE setting, used for everything. 28 LPI sits in the middle of the 25-35
+# range the DTF trade recommends: coarse enough that every dot holds powder,
+# fine enough that the eye blends it at arm's length. Do not tune per design -
+# a single setting is what makes this printable without thinking about it.
 DEFAULT_LPI = 28          # lines per inch
 DEFAULT_ANGLE = 45.0      # degrees
 DPI = 300
 
-# The smallest dot that will reliably hold adhesive powder. Below roughly a
-# quarter of a millimetre the specks carry too little glue: they either fail
-# to transfer or come away in the wash, leaving a dusty speckle around the
-# design. Anything that would print smaller than this is dropped instead.
-MIN_DOT_MM = 0.25
+# The smallest dot kept. Anything finer is dropped rather than printed as
+# dust. Raised from 0.25mm: at a quarter of a millimetre a measurable share of
+# the ink still sat in specks too fine to grip, and those are exactly the ones
+# that come away in the wash. 0.5mm roughly halves that at the same ruling,
+# and costs almost no coverage - the dots it drops were nearly invisible.
+MIN_DOT_MM = 0.50
 
 
 def _threshold_map(shape, lpi=DEFAULT_LPI, angle=DEFAULT_ANGLE, dpi=DPI):
@@ -58,13 +63,21 @@ def _threshold_map(shape, lpi=DEFAULT_LPI, angle=DEFAULT_ANGLE, dpi=DPI):
     return np.clip(d, 0, 1)
 
 
-def min_opacity_for_dot(lpi=DEFAULT_LPI, dpi=DPI, min_mm=MIN_DOT_MM):
+def min_opacity_for_dot(lpi=DEFAULT_LPI, dpi=DPI, min_mm=None):
     """
     The lowest opacity worth printing at this screen ruling.
 
     Below it the dot would be smaller than MIN_DOT_MM and would not hold
     powder, so it is cleared rather than printed as dust.
+
+    min_mm defaults to None rather than to MIN_DOT_MM directly. A default
+    argument is evaluated once, when the function is DEFINED, so writing
+    min_mm=MIN_DOT_MM froze the value at import and setting
+    halftone.MIN_DOT_MM afterwards changed nothing at all - which is why
+    tuning it appeared to have no effect on the output.
     """
+    if min_mm is None:
+        min_mm = MIN_DOT_MM
     cell = dpi / float(lpi)
     min_px = min_mm / 25.4 * dpi
     # radius = sqrt(opacity) * 1.128 * cell / 2, so invert for opacity
@@ -72,7 +85,7 @@ def min_opacity_for_dot(lpi=DEFAULT_LPI, dpi=DPI, min_mm=MIN_DOT_MM):
 
 
 def halftone_alpha(alpha, lpi=DEFAULT_LPI, angle=DEFAULT_ANGLE, dpi=DPI,
-                   solid_above=0.92, clear_below=None):
+                   solid_above=0.92, clear_below=None, min_mm=None):
     """
     Replace partial opacity with solid dots.
 
@@ -84,7 +97,7 @@ def halftone_alpha(alpha, lpi=DEFAULT_LPI, angle=DEFAULT_ANGLE, dpi=DPI,
     Returns a uint8 array containing only 0 and 255.
     """
     if clear_below is None:
-        clear_below = min_opacity_for_dot(lpi, dpi)
+        clear_below = min_opacity_for_dot(lpi, dpi, min_mm)
 
     a = alpha.astype(np.float32) / 255.0
     screen = _threshold_map(a.shape, lpi, angle, dpi)
@@ -105,18 +118,26 @@ def halftone_alpha(alpha, lpi=DEFAULT_LPI, angle=DEFAULT_ANGLE, dpi=DPI,
     return (out * 255).astype(np.uint8)
 
 
-def apply(rgba, lpi=DEFAULT_LPI, angle=DEFAULT_ANGLE, dpi=DPI):
-    """Halftone the alpha channel of an RGBA image."""
+def apply(rgba, lpi=DEFAULT_LPI, angle=DEFAULT_ANGLE, dpi=DPI, min_mm=None):
+    """
+    Halftone the alpha channel of an RGBA image.
+
+    min_mm overrides the smallest dot kept, for a printer whose powder needs
+    more than MIN_DOT_MM to grip.
+    """
     arr = np.asarray(rgba).copy()
-    arr[..., 3] = halftone_alpha(arr[..., 3], lpi, angle, dpi)
+    arr[..., 3] = halftone_alpha(arr[..., 3], lpi, angle, dpi, min_mm=min_mm)
     return Image.fromarray(arr, "RGBA")
 
 
 if __name__ == "__main__":
     import sys
     if len(sys.argv) < 3:
-        raise SystemExit("usage: python3 halftone.py in.png out.png [lpi]")
+        raise SystemExit("usage: python3 halftone.py in.png out.png "
+                         "[lpi] [min dot mm]")
     lpi = float(sys.argv[3]) if len(sys.argv) > 3 else DEFAULT_LPI
+    min_mm = float(sys.argv[4]) if len(sys.argv) > 4 else None
     im = Image.open(sys.argv[1]).convert("RGBA")
-    apply(im, lpi=lpi).save(sys.argv[2])
-    print(f"wrote {sys.argv[2]} at {lpi} LPI")
+    apply(im, lpi=lpi, min_mm=min_mm).save(sys.argv[2])
+    print(f"wrote {sys.argv[2]} at {lpi} LPI, "
+          f"smallest dot {min_mm or MIN_DOT_MM}mm")

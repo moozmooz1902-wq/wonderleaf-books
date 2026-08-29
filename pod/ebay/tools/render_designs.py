@@ -21,7 +21,7 @@ Usage:
     python3 render_designs.py --designs designs.json --fonts ./fonts --out ./art --limit 12 --preview
 """
 
-import argparse, json, random, sys
+import argparse, json, random, sys, zlib
 from functools import lru_cache
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageChops
@@ -83,25 +83,69 @@ def fit_line(fonts_dir, face, text, target_w, max_size=900):
     return size, f
 
 
+# DTF will not print semi-transparent ink. The adhesive powder needs a dot of
+# roughly half a millimetre to grip; anything finer sheds in the shaker and
+# lifts off the shirt after a wash or two. At 300 dpi half a millimetre is
+# about 6 px, so no speck and no hole may be smaller than that.
+MIN_FEATURE_PX = 6
+
+
 def distress(layer, seed, strength=0.30):
-    """Knock speckled holes in the ink so it reads as a worn screen print."""
-    # Build and blur the mask at 1/6 scale, THEN upsample. Blurring a 24-megapixel
-    # image was the single most expensive operation in the renderer.
-    small = Image.effect_noise((W // 6, H // 6), 44).filter(ImageFilter.GaussianBlur(1))
-    cut = int(150 - strength * 90)
-    small = small.point(lambda v: 255 if v > cut else int(v * 1.4))
-    mask = small.resize((W, H), Image.BILINEAR)
-    a = layer.getchannel("A")
-    layer.putalpha(ImageChops.multiply(a, mask))
+    """
+    Knock speckled holes in the ink so it reads as a worn screen print,
+    without leaving semi-transparent ink behind.
+
+    This used to multiply the glyph alpha by a BLURRED GREYSCALE mask, which
+    left most of the ink at partial alpha - on a measured sample only 42% of
+    the inked pixels came out fully opaque. The RIP dithers a thin white
+    underbase under everything below full alpha and the colour then lays down
+    weak and patchy, which is exactly the "not enough opacity" complaint.
+
+    The mask is now hard-thresholded to 0 or 255 and upsampled with NEAREST,
+    so every speck is a whole number of MIN_FEATURE_PX blocks and the ink is
+    either fully there or fully absent. Only the anti-aliased edge of the
+    letterforms stays partial, and that is a pixel or two wide - which is
+    normal for any print file and is what keeps the type from looking jagged.
+    """
+    # Built and blurred at 1/MIN_FEATURE_PX scale, THEN upsampled. Blurring a
+    # 24-megapixel image was the single most expensive step in the renderer.
+    sc = MIN_FEATURE_PX
+    small = (Image.effect_noise((W // sc, H // sc), 44)
+             .filter(ImageFilter.GaussianBlur(1)))
+
+    # Take the cut from the noise's own histogram rather than from a fixed
+    # number. A hard threshold at the old fixed value removed 55% of the
+    # glyph - the soft mask only FADED those pixels, so the same number cuts
+    # far more when it is binary. Working in percentage-of-holes keeps the
+    # amount of wear the same whatever the noise or blur settings are.
+    holes = strength * 0.45
+    hist = small.histogram()
+    target = holes * sum(hist)
+    run = 0
+    cut = 0
+    for v, n in enumerate(hist):
+        run += n
+        if run >= target:
+            cut = v
+            break
+    small = small.point(lambda v: 255 if v > cut else 0)
+    # NEAREST, not BILINEAR: interpolating a binary mask reintroduces the
+    # partial alpha this whole change exists to remove.
+    mask = small.resize((W, H), Image.NEAREST)
+    layer.putalpha(ImageChops.multiply(layer.getchannel("A"), mask))
     return layer
 
 
-def render(design, fonts_dir, distress_on=True):
+def render(design, fonts_dir, distress_on=False):
     lines = design["art"]["lines"]
     emph = design["art"].get("emphasis_line", 0)
     emph_face, body_face = PAIRINGS.get(design.get("tone"), FALLBACK)
 
-    seed = abs(hash(design["design_id"])) % (2 ** 31)
+    # crc32, not hash(). Python randomises string hashing per process, so
+    # hash() gave a design a different accent colour on every re-render - a
+    # print file regenerated later would not match the photo the buyer bought
+    # from. crc32 is stable across processes, machines and versions.
+    seed = zlib.crc32(design["design_id"].encode()) % (2 ** 31)
     accent = ACCENTS[seed % len(ACCENTS)]
 
     # every line scaled to the same optical width - the stacked-lockup look
@@ -183,7 +227,15 @@ def main():
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--preview", action="store_true", help="also write a black-tee mockup JPEG")
     ap.add_argument("--contact-sheet", help="write a grid of the first 12 mockups here")
-    ap.add_argument("--no-distress", action="store_true")
+    # Solid by default. The distressed texture prints badly on DTF: even
+    # made binary it is holes in the ink, and holes are where the powder has
+    # nothing to grip. A design that cannot be made solid goes through
+    # halftone.py instead, which is what that module is for.
+    ap.add_argument("--distress", action="store_true",
+                    help="add the worn-screen-print texture. Off by default: "
+                         "solid ink is what DTF prints reliably")
+    ap.add_argument("--no-distress", action="store_true",
+                    help=argparse.SUPPRESS)   # kept so old commands still run
     ap.add_argument("--compress", type=int, default=6,
                     help="PNG compress_level 1-9. 6 is the size/speed sweet spot; "
                          "1 is ~2x faster and ~60%% larger.")
@@ -196,7 +248,7 @@ def main():
 
     sheet = []
     for i, dsg in enumerate(designs, 1):
-        art = render(dsg, a.fonts, distress_on=not a.no_distress)
+        art = render(dsg, a.fonts, distress_on=a.distress)
         # optimize=True costs 3.9s vs 0.65s at level 6 for a 5% size saving.
         # At catalogue scale that is hours of wall-clock for nothing.
         art.save(out / f"{dsg['design_id']}.png", compress_level=a.compress)
