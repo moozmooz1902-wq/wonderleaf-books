@@ -8,11 +8,15 @@ titles = set(); labels = set(); bad = collections.Counter(); longt = 0
 for fn in files:
     with open(fn, newline="", encoding="utf-8") as fh:
         rows = list(csv.DictReader(fh))
-    group = None
+    group, expect = None, 0
     for r in rows:
         if r[ACTION] == "Add":
-            if group is not None and group != 10:
+            if group is not None and group != expect:
                 bad["parent with wrong child count"] += 1
+            # The parent declares its own sizes, so the expected child count
+            # comes from the file rather than from a constant here.
+            expect = len([x for x in r["RelationshipDetails"]
+                          .replace("Size=", "").split(";") if x])
             group = 0
             tot_parent += 1
             if not r["CustomLabel"]: bad["parent missing CustomLabel"] += 1
@@ -37,7 +41,7 @@ for fn in files:
             if r["ShippingProfileName"]: bad["child has a profile"] += 1
         else:
             bad["row that is neither parent nor variation"] += 1
-    if group is not None and group != 10:
+    if group is not None and group != expect:
         bad["last group in file incomplete"] += 1
 
 print(f"  files            {len(files)}")

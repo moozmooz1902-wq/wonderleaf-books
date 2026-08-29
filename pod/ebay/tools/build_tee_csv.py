@@ -42,15 +42,20 @@ HEADER = [
     "C:Personalisation Instructions", "C:Handmade", "C:Features",
 ]
 
-# Kids start at 3-4 Yrs, adults stop at 2XL: 10 variations per listing. Only
-# the smallest kids size is cheaper. Same ladder as the live listings.
 QTY = 1
-SIZES = [
+
+# Adults only, one price. Halves the rows per listing against the kids+adults
+# ladder, and halves what the catalogue costs against the selling limit.
+ADULT = [("S", 11.99), ("M", 11.99), ("L", 11.99), ("XL", 11.99),
+         ("2XL", 11.99)]
+
+# The full ladder the earlier listings used, kept for a store that wants it.
+# Only the smallest kids size is cheaper.
+ALL_SIZES = [
     ("3-4 Yrs", 8.99),
     ("5-6 Yrs", 11.99), ("7-8 Yrs", 11.99),
     ("9-11 Yrs", 11.99), ("12-13 Yrs", 11.99),
-    ("S", 11.99), ("M", 11.99), ("L", 11.99), ("XL", 11.99), ("2XL", 11.99),
-]
+] + ADULT
 
 # The word a buyer in this family would actually type, for C:Theme. eBay uses
 # item specifics as sidebar filters, so a value nobody searches is a wasted
@@ -140,11 +145,17 @@ def main():
                     help="normally blank: eBay falls back to the account's own "
                          "postcode, which is already right per store")
     ap.add_argument("--brand", default="Unbranded")
-    ap.add_argument("--max-mb", type=float, default=14.0,
-                    help="max size of one output file. File Exchange rejects "
-                         "an oversized upload outright, and the rich "
-                         "description makes ~9 KB per listing, so a row count "
-                         "is the wrong thing to cap on")
+    ap.add_argument("--sizes", choices=("adult", "all"), default="adult",
+                    help="adult = S-2XL at one price (default). all = adds "
+                         "the five kids sizes, doubling both the row count "
+                         "and the selling limit the catalogue consumes")
+    ap.add_argument("--price", type=float, default=11.99,
+                    help="the adult price")
+    ap.add_argument("--max-mb", type=float, default=70.0,
+                    help="max size of one output file. File Exchange takes "
+                         "up to about 100 MB, so 70 leaves headroom while "
+                         "keeping the number of uploads down. Capping on rows "
+                         "is the wrong thing: the rich description dominates")
     ap.add_argument("--rows", type=int, default=1000000,
                     help="secondary cap on data rows per file")
     ap.add_argument("--single", action="store_true",
@@ -164,6 +175,10 @@ def main():
                          "own mix")
     ap.add_argument("--limit", type=int)
     a = ap.parse_args()
+
+    global SIZES
+    SIZES = ([(sz, a.price) for sz, _ in ADULT] if a.sizes == "adult"
+             else ALL_SIZES)
 
     base_url = a.img_base.rstrip("/")
     designs = json.loads(Path(a.catalogue).read_text())
@@ -293,6 +308,7 @@ def main():
     items = listings * (1 if a.single else len(SIZES))
     value = (listings * a.single_price if a.single
              else listings * sum(p for _, p in SIZES))
+    print(f"  sizes: {', '.join(sz for sz, _ in SIZES)}")
     print(f"\n  {listings:,} listings, {listings * per:,} rows, "
           f"{len(files)} file(s)")
     print("  each file is self-contained: a parent and its size rows are "
