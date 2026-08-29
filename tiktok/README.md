@@ -71,6 +71,44 @@ python -m wonderfeed.run --count 7
 python -m wonderfeed.run --product botanical-3set --count 2
 ```
 
+### Angles — the variety engine
+
+One product against thirty angles gives thirty genuinely different videos. The
+same product with three angles gives near-duplicates, which TikTok's duplicate
+detection notices. Don't hand-write them:
+
+```bash
+python -m wonderfeed.angles --product botanical-3set --count 30          # preview
+python -m wonderfeed.angles --product botanical-3set --count 30 --write  # append
+```
+
+It is told what you already have and won't repeat it, so run it again whenever
+a product runs dry.
+
+### Listing rotation — working the 100 cap
+
+```bash
+python -m wonderfeed.listings add --sku WL-001 --product botanical-3set --title "Botanical Trio"
+python -m wonderfeed.listings import --csv seller-center-export.csv
+python -m wonderfeed.listings review
+python -m wonderfeed.listings cull --sku WL-002 --reason "1900 views, 0 units"
+```
+
+`review` sorts every live listing into `KEEP` / `CULL` / `WATCH` / `TOO EARLY`
+and tells you how many slots culling would free. The important distinction:
+
+- **`CULL`** — real traffic, zero units. The listing converts nothing. Free the slot.
+- **`WATCH`** — barely any traffic, zero units. **Not** dead, just untested.
+  Point more videos at it before judging.
+
+Both look like "zero sales" on a Seller Center report and they need opposite
+responses. Thresholds are under `listings:` in `settings.yaml`.
+
+The CSV importer matches Seller Center's headers loosely (`Seller SKU`,
+`Product Views`, `SKU Orders`, `GMV`…) and strips `£` and thousands separators.
+Unknown SKUs are reported rather than silently dropped. Culling here only
+records the decision — you still delist it in Seller Center.
+
 Each video produces three files in `out/`:
 
 | File | What it is |
@@ -114,6 +152,13 @@ with motion off; turn it on only for products already proven to convert.
   exceed ~12s total for this format.
 - `voiceover.mode` — `none` by default. Add a trending sound in-app instead;
   it outperforms TTS narration for this category.
+- **Looking un-AI.** `wonderfeed/realism.py` gives each video a fixed camera,
+  lens, lighting and grade — held constant across its three beats so they read
+  as one shoot — plus rotating framing and two domestic imperfections (a plug
+  socket, a scuffed skirting board, a mug on the side table). It also steers
+  *away* from "hyperrealistic / 8k / ultra-detailed", which push the glossy
+  render look rather than reduce it. Add your own entries to the lists in that
+  file; more variety there means less sameness across a hundred videos.
 - `video.text_bias` — where captions sit in the safe area. `0.18` keeps them
   clear of both TikTok's top bar and the product on the wall.
 

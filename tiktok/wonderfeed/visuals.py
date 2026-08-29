@@ -2,14 +2,7 @@
 
 from pathlib import Path
 
-from . import falclient
-
-STILL_STYLE = (
-    "Photorealistic interior photography, shot on a 35mm lens, natural window "
-    "light, soft shadows, realistic materials and textures, colour-graded warm "
-    "and neutral, vertical 9:16 composition, no text, no watermark, no people's "
-    "faces in focus."
-)
+from . import falclient, realism
 
 PLACEHOLDER_PALETTE = [(214, 206, 194), (226, 219, 208), (198, 190, 178)]
 
@@ -34,14 +27,19 @@ def placeholder_still(index, out_path, settings):
     return out_path
 
 
-def build_stills(brief, product_image_bytes, settings, fal_key, workdir, log=print):
-    """One still per beat, all anchored to the real product photo."""
+def build_stills(brief, product_image_bytes, settings, fal_key, workdir,
+                 seed_text="", log=print):
+    """One still per beat, all anchored to the real product photo.
+
+    `seed_text` fixes the camera/lighting recipe for this video, so the three
+    beats read as one shoot rather than three.
+    """
     reference = falclient.data_url_from_bytes(product_image_bytes)
     endpoint = settings["models"]["still_endpoint"]
     stills = []
     for i, beat in enumerate(brief["beats"]):
         out = Path(workdir) / f"still{i}.jpg"
-        prompt = f"{beat['scene']}. {STILL_STYLE}"
+        prompt = f"{beat['scene']}. {realism.style_tail(seed_text, i)}"
         log(f"  still {i + 1}/3 ...")
         data = falclient.image(endpoint, prompt, reference, fal_key, aspect="9:16", log=log)
         out.write_bytes(data)

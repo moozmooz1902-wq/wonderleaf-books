@@ -91,8 +91,9 @@ def build_one(job, settings, state, keys, out_dir, dry_run, log=print):
             if not image_rel:
                 raise ConfigError(f"Product {product['id']} has no images")
             image_bytes = resolve_path(image_rel).read_bytes()
+            seed_text = f"{product['id']}:{angle}:{room}"
             stills = visuals.build_stills(b, image_bytes, settings, keys["fal"],
-                                          workdir, log=log)
+                                          workdir, seed_text=seed_text, log=log)
 
         # 3. motion (optional)
         clips = [None, None, None]

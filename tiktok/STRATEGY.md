@@ -12,35 +12,50 @@ Written 29 Aug 2026. Grounded in live data pulled from the three accounts you se
 | @incase_studios — "IncaseUK" | 1,961 | 22,800 | 271 | ~5 years | **84** |
 | @renmaigb — "Luxe Art" | 27 | 22 | 68 | ~4 months | **0.3** |
 
-Read that carefully, because it changes the plan:
+**Engagement is a bad proxy for TikTok Shop revenue, and this table proves it.**
+Crush Gallery reports 260,000+ sales against 13 likes per video. Both numbers
+are real and they do not contradict each other: Shop videos convert on product
+intent, not on likes. Someone who taps the pin, buys, and never engages with the
+video leaves no trace in the figures above.
 
-- **Crush Gallery is not crushing it.** 337 videos in six months (~2/day) for 1,496
-  followers and 13 likes per video. That is a volume machine running at close to
-  zero engagement. It may still make money — TikTok Shop conversion doesn't need
-  likes — but nothing here proves it does.
-- **Luxe Art is a failed account.** 68 videos, 22 total likes. This is what
-  spray-and-pray looks like when it doesn't work. Same playbook, no result.
-- **IncaseUK is the only real business** — and it breaks the pattern. Five years
-  old, *custom* designs, 4,250+ completed orders, an Etsy shop and a WhatsApp
-  number in bio. It converts on trust and personalisation, not volume.
+So read the table as *reach and engagement only*:
 
-**Conclusion:** volume is the entry ticket, not the edge. Two of three accounts
-running high-volume generic wall art are flat. Don't copy the account that posts
-most; copy the one that *sells* most, and use automation to hit its cadence
-without its labour cost.
+- **Crush Gallery is the model to copy.** ~2 videos/day for six months, generic
+  modern wall art, low engagement, very high sales. That is a volume-and-catalogue
+  machine, and it works. The lesson is that you do not need a beloved account —
+  you need enough shots on goal against enough listings.
+- **Luxe Art shows the same playbook failing.** 68 videos, 22 likes, and by all
+  appearances no traction. Same category, same approach, no result. The
+  difference between it and Crush Gallery is volume and catalogue depth, so
+  those are the two variables to push hardest.
+- **IncaseUK is a different business** — five years old, custom designs, Etsy and
+  WhatsApp in bio. It converts on trust and personalisation. Worth stealing its
+  *specificity* in the copy, but its model is not yours.
 
-## 2. Your positioning
+**Conclusion:** go wide. Maximum listings, maximum videos, ruthless culling of
+whatever does not sell. Judge everything on units sold, never on likes — the
+metric that would have told you Crush Gallery was failing is the metric that
+is wrong.
 
-Generic "modern wall art" is the losing bucket — it's what Crush Gallery and
-Luxe Art both sell. IncaseUK wins on **specificity**. So:
+## 2. Positioning: wide catalogue, narrow hooks
 
-- Pick **one room and one buyer**, not "home decor". E.g. *rented UK flats,
-  first-time renters, walls you can't drill.*
-- Lead the product on the **constraint you solve**, not the picture:
-  no drilling, fits above a standard 3-seater, arrives in one box, under £30.
-- Sell the **set**, never the single print. The 3-frame trio is the offer —
-  it removes the "what else goes next to it" problem, which is the actual
-  reason blank walls stay blank.
+These pull in opposite directions and both are right, at different levels:
+
+- **Catalogue: go wide.** Every listing is an independent shot on goal, and you
+  have 100 slots. Crush Gallery wins on breadth, not on taste. Fill the slots.
+- **Each individual video: go narrow.** A video that opens on "beautiful wall
+  art" stops nobody. A video that opens on *"renting and not allowed to drill"*
+  stops the person that is true for. Breadth at the shop level, specificity at
+  the video level.
+
+So the offer stays sharp even as the catalogue sprawls:
+
+- Sell the **set**, never the single print. The trio removes the "what goes next
+  to it" problem, which is the actual reason blank walls stay blank.
+- Lead on the **constraint you solve** — no drilling, fits above a standard
+  3-seater, one box, under £30 — not on the picture.
+- Let the angle do the targeting. One product against thirty angles reaches
+  thirty different people without thirty different listings.
 
 ## 3. The video format
 
@@ -127,20 +142,57 @@ Track weekly, not daily. Daily numbers are noise.
 | Click-through to product | >1.5% | <0.5% → the offer or price is wrong, not the video |
 | Conversion | >2% of clicks | low with good CTR → listing/photos problem, not TikTok |
 
-**Kill criteria:** if after 60 videos across ≥8 distinct angles you're under
-500 views median, the *product* is the problem, not the content. Change the
-product before making video 61. Crush Gallery made 337 videos without doing this.
+**Kill criteria:** judge the *listing*, on units sold, using
+`python -m wonderfeed.listings review` (§8). Do not kill on views or likes.
+A listing pulling traffic and converting nothing is dead; a listing with no
+traffic yet has not been tested. Those need opposite responses, which is the
+whole reason that tool exists.
 
-## 8. First 30 days
+## 8. Listing rotation — working the 100 cap
 
-- **Week 1** — Set up TikTok Shop seller/affiliate. Fill `products.yaml` with
-  one product and 15+ angles. Run `--dry-run`, then build 7 real videos.
-  Post 1/day manually so you learn what the app does.
-- **Week 2** — Go to 2/day via the weekly batch. Add a second product.
-- **Week 3** — Read the analytics. Kill the bottom third of angles, write five
-  new ones based on which hooks held watch time.
-- **Week 4** — 3/day. Pin the link comment on everything. Decide product-level
-  keep/kill on the week-1 product using the table in §7.
+The cap is the real constraint on this business. A slot holding a listing that
+has had twenty videos and no sales is costing you a test you cannot run.
 
-Do not scale spend before week 3. The pipeline costs pennies per video; the
-expensive mistake is 300 videos for a product nobody wants.
+**The loop, weekly:**
+
+1. Export product performance from Seller Center to CSV.
+2. `python -m wonderfeed.listings import --csv export.csv`
+3. `python -m wonderfeed.listings review`
+4. Cull what it flags, delist those in Seller Center, list replacements into the
+   freed slots.
+
+**The judgement it applies** — and the distinction that matters most:
+
+| Verdict | Meaning | What to do |
+|---|---|---|
+| `KEEP` | Sold ≥1 unit in the window | Keep feeding it videos |
+| `CULL` | Real traffic, zero units | Dead. The listing converts nothing — free the slot |
+| `WATCH` | Barely any traffic, zero units | **Not** dead. Untested. Point more videos at it |
+| `TOO EARLY` | Under 14 days live | Leave it alone |
+| `NO DATA` | No stats imported | Import a CSV |
+
+`CULL` and `WATCH` look identical on a sales report — both are zero — and they
+need opposite responses. Killing a `WATCH` listing throws away a product you
+never actually tested; keeping a `CULL` listing burns a slot indefinitely. This
+is the single most valuable call the tool makes.
+
+Thresholds live under `listings:` in `settings.yaml`. The default
+`cull_after_videos: 15` says: fifteen videos at a product with nothing to show
+is enough evidence.
+
+## 9. First 30 days
+
+- **Week 1** — TikTok Shop seller/affiliate set up. List 10–15 products to start
+  filling slots. Generate angles in bulk
+  (`python -m wonderfeed.angles --product X --count 30 --write`), then build and
+  post 1–2/day manually so you learn what the app does.
+- **Week 2** — Go to 2–3/day off the weekly batch. Register every listing with
+  `listings add`. Push toward 30+ live listings.
+- **Week 3** — First real cull cycle: import the CSV, run `review`, delist the
+  dead, refill the freed slots. Rewrite angles based on which hooks held watch
+  time.
+- **Week 4** — 3/day, aiming at the cap. Cull weekly from here on. The catalogue,
+  not the account, is the asset you are building.
+
+Do not scale spend before week 3. At ~£0.10/video the content is nearly free;
+the expensive mistake is 300 videos pointed at listings you never culled.

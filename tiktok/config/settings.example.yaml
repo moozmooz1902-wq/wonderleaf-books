@@ -55,3 +55,17 @@ posting:
   # tag to every caption. Leave true unless you are filming real footage.
   ai_disclosure: true
   ai_disclosure_text: "AIgenerated"
+
+listings:
+  # Hard cap on live listings in your shop.
+  cap: 100
+  # Do not judge a listing before it has been live this long.
+  grace_days: 14
+  # Window that `review` totals stats over.
+  review_window_days: 30
+  # Units sold inside the window needed to survive.
+  min_units: 1
+  # Views inside the window that count as "it got a fair shot".
+  min_views: 300
+  # Videos posted at a product with zero units before we call it dead.
+  cull_after_videos: 15
