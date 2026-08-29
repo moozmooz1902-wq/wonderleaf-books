@@ -172,8 +172,13 @@ def main():
         print(f"  {len(fails)} check(s) failed: {', '.join(fails)}")
         return 1
     print("  ALL CHECKS PASSED - safe to start the full run:")
-    print(f"    nohup python3 run.py --workers 16 --upload {dest} > render.log 2>&1 &")
+    print(f"    nohup python3 run.py --workers $(nproc) --upload {dest} "
+          "> render.log 2>&1 &")
     print("    tail -f render.log")
+    # Easy to copy this line, miss that the renderer has changed since the
+    # bucket was filled, and have the run skip all of it.
+    print("\n  If the RENDERER has changed since these files were made, add")
+    print("  --no-resume, or every design will be skipped as already done.")
     return 0
 
 
