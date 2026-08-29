@@ -33,12 +33,23 @@ If you later pass the audit and decide link-free posting is worth it,
 
 ## The desktop app
 
-```bash
-./start.sh          # macOS / Linux  (start.bat on Windows)
+Double-click **`start.bat`** (Windows) or **`Start Wonderfeed.command`** (Mac).
+No terminal. First run installs everything and copies the example configs, then
+prints two addresses:
+
+```
+  On this computer:   http://localhost:8501
+  For your staff:     http://192.168.1.24:8501
 ```
 
-First run installs everything and copies the example configs. Then it opens a
-control panel in your browser:
+The second one is the point: **one machine runs the app and everyone else just
+opens a link** on their own phone or laptop — nothing installed, no terminal.
+It binds to the local network only, so it is not reachable from the internet.
+Same wifi required; don't run it on public wifi.
+
+`HOW-TO-RUN.md` is the version to hand to staff.
+
+The control panel:
 
 - **▶ Play** — starts the worker and leaves it running while you work
 - **⏸ Pause / ⏹ Stop** — Stop finishes the task in flight, then exits cleanly

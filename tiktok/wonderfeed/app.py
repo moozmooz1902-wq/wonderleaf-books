@@ -19,6 +19,7 @@ import streamlit as st
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from wonderfeed import listings as listings_mod  # noqa: E402
+from wonderfeed import netinfo  # noqa: E402
 from wonderfeed.config import ConfigError, ROOT, load_products, load_settings  # noqa: E402
 from wonderfeed.queue import Queue  # noqa: E402
 from wonderfeed.state import State  # noqa: E402
@@ -318,6 +319,13 @@ def main():
         st.divider()
         advanced = st.toggle("Advanced view", value=False)
         st.divider()
+        staff_url = netinfo.urls().get("other_devices")
+        if staff_url:
+            st.caption("**Link for your staff**")
+            st.code(staff_url, language=None)
+            st.caption("They open this on their own phone or laptop. Nothing to "
+                       "install. Same wifi as this computer.")
+            st.divider()
         st.caption("**Ready to run?**")
         for check in readiness(products, practice):
             icon = {True: "✅", False: "⚠️", None: "➖"}[check["ok"]]

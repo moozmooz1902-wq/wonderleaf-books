@@ -1,83 +1,122 @@
 # How to run Wonderfeed
 
-For anyone on the team. You do not need to understand any of the code.
+There are two jobs here. **Setup** happens once, by one person. **Daily use**
+needs no setup, no installing and no terminal.
 
 ---
 
-## Every day: make the videos
+# PART 1 — Setup (one person, once)
 
-1. Open the `tiktok` folder.
-2. Double-click **`start.sh`** (Mac) or **`start.bat`** (Windows).
-   A black window opens — **leave it open**, that is normal.
-3. Your browser opens the Wonderfeed page.
-4. Press the big green **START** button.
-5. That is it. Leave it running and carry on with your work.
+Do this on the computer that will be left running. A laptop is fine.
 
-Videos appear in the **`out`** folder inside `tiktok`, a few minutes apart.
+### 1. Install Python
 
-**To stop:** press the amber **STOP** button. It finishes the video it is on,
-then stops. You can close the laptop at any time — nothing is lost, and pressing
-START again carries on from where it stopped.
+Go to **https://www.python.org/downloads/** and install it.
+
+**On Windows, tick "Add Python to PATH" on the first screen.** If you miss that,
+nothing else works.
+
+### 2. Download Wonderfeed
+
+Open **https://github.com/moozmooz1902-wq/wonderleaf-books/tree/claude/tiktok-jag2gg**
+
+Click the green **Code** button → **Download ZIP** → unzip it.
+
+Inside is a folder called **`tiktok`**. That is the one you want.
+
+### 3. Start it
+
+- **Windows** — double-click **`start.bat`**
+- **Mac** — double-click **`Start Wonderfeed.command`**
+
+The first run takes 2–3 minutes while it installs itself. A black window opens
+and shows something like this:
+
+```
+  On this computer:   http://localhost:8501
+  For your staff:     http://192.168.1.24:8501
+```
+
+**Leave that black window open.** It is the app. Closing it closes the page.
+
+### 4. Send the staff link
+
+Send your team the second address (`http://192.168.1.xx:8501`). That is all they
+ever need. It works on their own phone or laptop with nothing installed.
+
+They must be on **the same wifi** as this computer.
+
+> The link only works inside your own wifi — it is not on the internet, so nobody
+> outside your network can reach it. Do not run this on public wifi.
 
 ---
 
-## Then: post the videos
+# PART 2 — Daily use (everyone)
 
-Do a batch in one sitting. You can schedule 10 days ahead, so one session covers
-most of a week.
+## Making the videos
 
-1. Go to **tiktokstudio.com** on a computer and sign in to the shop account.
+1. Open the link you were sent.
+2. Press the big green **START** button.
+3. That is it. Leave the page and get on with your work.
+
+To stop, press the amber **STOP** button. It finishes the video it is on, then
+stops. Pressing START again carries on from where it left off — nothing is lost,
+even if the computer was turned off.
+
+## Posting the videos
+
+The videos are saved on the computer running the app, in the **`out`** folder
+inside `tiktok`. Do a batch in one sitting — you can schedule 10 days ahead, so
+one session covers most of a week.
+
+1. Go to **tiktokstudio.com** and sign in to the shop account.
 2. Click **Upload** and drag in a video from the `out` folder.
-3. Each video has a matching **`.txt` file** with the same name. Open it.
-   Copy the caption from the top and paste it into TikTok.
-4. Click **Add link → Products** and tag the product the `.txt` file names.
-   *This is the important one — no product tag means no sales.*
-5. Under **More options**, switch on **AI-generated content**.
-6. Choose **Schedule**, pick a date and time, and confirm.
-7. Repeat for the next video.
+3. Each video has a matching **`.txt` file** with the same name. Open it and copy
+   the caption from the top into TikTok.
+4. Click **Add link → Products** and tag the product named in the `.txt` file.
+   **No product tag means no sales. Never skip this.**
+5. Under **More options**, turn on **AI-generated content**.
+6. Choose **Schedule**, pick a date and time, confirm.
 
-**Good posting times (UK):** 7–9am, 12–1pm, 7–10pm. Evenings are best.
-
----
-
-## The sidebar checklist
-
-On the left of the page you will see three lines:
-
-- ✅ means that part is ready
-- ⚠️ means something is missing — the line tells you what
-- ➖ means it is not needed right now
-
-If anything shows ⚠️, send that exact line to whoever set this up. Do not guess.
+**Best times to schedule (UK):** 7–9am, 12–1pm, 7–10pm. Evenings work best.
 
 ---
 
-## Practice mode
+# The sidebar
 
-The **Practice mode** switch in the sidebar makes fake videos with placeholder
-pictures. It costs nothing and is there so you can try the buttons safely.
+On a phone, tap the **»** arrow at the top left to open it.
 
-**Never post a practice video.** They have grey boxes instead of real artwork.
-Turn Practice mode off before making videos you intend to post.
+- ✅ — that part is ready
+- ⚠️ — something is missing, and the line tells you what
+- ➖ — not needed right now
 
----
-
-## If something goes wrong
-
-**The page says "It stopped with a problem"** — screenshot it and send it on.
-
-**The green button does nothing** — check the sidebar for a ⚠️ line. Usually
-means the keys are missing.
-
-**No videos are appearing** — switch on **Advanced view** in the sidebar and
-look at the **Activity log** tab. Send a screenshot of it on.
-
-**You closed the black window** — the videos keep being made anyway. To get the
-page back, double-click `start.sh` / `start.bat` again.
+**If you see ⚠️, send that exact line to whoever set this up. Do not guess.**
 
 ---
 
-## Things to never do
+# Practice mode
+
+The **Practice mode** switch makes fake videos using grey placeholder boxes
+instead of real artwork. It costs nothing and exists so you can press the buttons
+safely and see how it works.
+
+**Never post a practice video.** Turn Practice mode off before making real ones.
+
+---
+
+# If something goes wrong
+
+| What you see | What to do |
+|---|---|
+| "It stopped with a problem" | Screenshot it and send it on |
+| Green button does nothing | Check the sidebar for a ⚠️ line — usually missing keys |
+| Page will not load at all | The computer running it is off, asleep, or on different wifi |
+| No videos appearing | Turn on **Advanced view**, open **Activity log**, send a screenshot |
+| Black window got closed | Videos keep being made. Double-click the start file again to get the page back |
+
+---
+
+# Never do these
 
 - Never post a **Practice mode** video.
 - Never post without **tagging the product**.
