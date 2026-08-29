@@ -2,136 +2,307 @@
 """
 Build the eBay File Exchange CSV for the t-shirt catalogue.
 
-Uses Wonderleaf's EXACT live header from ebay_graphics.py / SPEC section 6, so
-the file uploads against the account as it is configured today.
+Follows the conventions in ebay_graphics.py, which is the code that produced
+the listings currently live on the account. Where the two could differ, this
+file follows the live one - the point is a CSV that uploads against the
+account exactly as it is configured today.
 
-Two modes:
-  --flat        one row per design, C:Size = One Size, buyer types their size in
-                the personalisation box. Matches the store's current setup.
-  --variations  parent + one row per size (default S,M,L,XL,2XL). Keeps the
-                listing inside eBay's size filter, which the flat format is
-                excluded from - that is why the flat store made one sale.
+    python3 build_tee_csv.py \
+        --catalogue catalogue.json \
+        --img-base https://pub-XXXX.r2.dev \
+        --out tshirt_m12k
+
+Writes tshirt_m12k_01.csv, _02.csv ... split so no single file is too large
+for File Exchange to accept.
+
+MODES
+  (default)   parent + one row per size. The listing appears in size-filtered
+              search, which is where most t-shirt buyers narrow down.
+  --single    one row, C:Size = One Size, buyer types the size into the
+              personalisation box. Uses a tenth of the selling limit and is
+              excluded from every size-filtered search.
 """
 
-import argparse, csv, html, json
+import argparse, csv, html, json, os, random, sys
 from pathlib import Path
 
-HEADER = ("Action(SiteID=UK|Country=GB|Currency=GBP|Version=745|CC=UTF-8),CustomLabel,"
-          "*Category,StoreCategory,Relationship,RelationshipDetails,*Title,Subtitle,"
-          "*Description,*ConditionID,PicURL,*Format,*Duration,*StartPrice,*Quantity,"
-          "*Location,PostalCode,ShippingProfileName,ReturnProfileName,"
-          "PaymentProfileName,*C:Size,*C:Colour,C:Brand,*C:Type,*C:Style,C:Department,"
-          "*C:Material,C:Sleeve Length,C:Neckline,C:Fit,C:Pattern,C:Size Type,"
-          "C:Garment Care,C:Occasion,C:Theme,C:Country/Region of Manufacture,"
-          "C:Personalise,C:Personalisation Instructions,C:Handmade,C:Features").split(",")
+ACTION = "*Action(SiteID=UK|Country=GB|Currency=GBP|Version=745|CC=UTF-8)"
+HEADER = [
+    ACTION, "CustomLabel", "*Category", "StoreCategory",
+    "Relationship", "RelationshipDetails", "*Title", "Subtitle",
+    "*Description", "*ConditionID", "PicURL", "*Format", "*Duration",
+    "*StartPrice", "*Quantity", "*Location", "PostalCode",
+    "ShippingProfileName", "ReturnProfileName", "PaymentProfileName",
+    "*C:Size", "*C:Colour", "C:Brand", "*C:Type", "*C:Style", "C:Department",
+    "*C:Material", "C:Sleeve Length", "C:Neckline", "C:Fit", "C:Pattern",
+    "C:Size Type", "C:Garment Care", "C:Occasion", "C:Theme",
+    "C:Country/Region of Manufacture", "C:Personalise",
+    # C:Handmade goes out BLANK on purpose. The personalisation box works
+    # without it, and these are print-on-demand, not handmade.
+    "C:Personalisation Instructions", "C:Handmade", "C:Features",
+]
 
-SIZES = ["S", "M", "L", "XL", "2XL"]
-DESC = (
-    '<div style="font-family:Arial,sans-serif;max-width:700px">'
-    '<h2>{title}</h2>'
-    '<p>Printed in the UK on a black 100% cotton t-shirt, 180gsm, crew neck, '
-    'regular fit. Direct-to-garment print - soft handle, no stiff plastisol feel, '
-    'machine washable.</p>'
-    '<ul><li>Black, 100% cotton, 180gsm</li>'
-    '<li>Crew neck, short sleeve, regular fit</li>'
-    '<li>Machine washable, wash inside out</li>'
-    '<li>Dispatched within one working day from the UK</li></ul>'
-    '<p>{sizeline}</p></div>'
-)
+# Kids start at 3-4 Yrs, adults stop at 2XL: 10 variations per listing. Only
+# the smallest kids size is cheaper. Same ladder as the live listings.
+QTY = 1
+SIZES = [
+    ("3-4 Yrs", 8.99),
+    ("5-6 Yrs", 11.99), ("7-8 Yrs", 11.99),
+    ("9-11 Yrs", 11.99), ("12-13 Yrs", 11.99),
+    ("S", 11.99), ("M", 11.99), ("L", 11.99), ("XL", 11.99), ("2XL", 11.99),
+]
+
+# The word a buyer in this family would actually type, for C:Theme. eBay uses
+# item specifics as sidebar filters, so a value nobody searches is a wasted
+# field.
+THEME = {
+    "birthday": "Birthday", "occupation": "Novelty", "hobby": "Hobby",
+    "breed": "Animals", "slogan": "Novelty", "place": "Novelty",
+    "heritage": "Novelty", "biker": "Biker", "music": "Music",
+    "military": "Military", "food": "Food & Drink", "gothic": "Gothic",
+    "norse": "Viking Norse",
+}
+
+_SZ = [("S", "34-36", "18", "28"), ("M", "38-40", "20", "29"),
+       ("L", "42-44", "22", "30"), ("XL", "46-48", "24", "31"),
+       ("2XL", "50-52", "26", "32")]
+_cell = 'style="padding:6px 9px;border-bottom:1px solid #e5e5e8"'
+_ALT = ' style="background:#fafafb"'
+_rowlist = []
+for _i, (_s, _f, _w, _l) in enumerate(_SZ):
+    _bg = _ALT if _i % 2 else ""
+    _rowlist.append(
+        "<tr" + _bg + ">"
+        "<td " + _cell + "><strong>" + _s + "</strong></td>"
+        "<td " + _cell + ">" + _f + "&quot;</td>"
+        "<td " + _cell + ">" + _w + "&quot;</td>"
+        "<td " + _cell + ">" + _l + "&quot;</td></tr>")
+_ROWS = "\n".join(_rowlist)
+
+DESC = """<div style="font-family:Arial,Helvetica,sans-serif;max-width:800px;margin:0 auto;color:#222;line-height:1.6">
+<div style="background:#111;color:#fff;padding:22px 26px;border-radius:6px 6px 0 0">
+<h1 style="margin:0;font-size:24px">{subject}</h1>
+<p style="margin:6px 0 0;font-size:14px;opacity:.75">Premium Printed <strong>Black</strong> T-Shirt &middot; Mens (Unisex) &middot; UK Sizing</p>
+</div>
+<div style="border:1px solid #e3e3e6;border-top:none;padding:26px;border-radius:0 0 6px 6px">
+
+<p style="font-size:15px">A bold <strong>{subject}</strong> design printed on a soft heavyweight <strong>black</strong> cotton tee. Printed in the UK using a professional direct-to-film process, so the print stays crisp and flexible rather than thick or plasticky &mdash; and it holds up wash after wash.</p>
+
+<h2 style="font-size:17px;border-bottom:2px solid #111;padding-bottom:6px;margin-top:26px">Product Details</h2>
+<ul style="padding-left:20px;font-size:15px">
+<li>Crew Necked T-Shirt</li><li><strong>Colour: Black</strong></li>
+<li>Mens (Unisex)</li><li>Classic Fit</li>
+<li>180gsm heavy cotton</li><li>Age 3-4 Yrs to 2XL</li>
+<li>100% Cotton</li>
+<li>Pre-shrunk jersey knit</li><li>Taped neck and shoulders</li>
+<li>Twin needle sleeve and bottom hems</li><li>Seamless twin needle collar</li>
+<li>Tear away label</li><li>Hard wearing fabric</li>
+</ul>
+<p style="font-size:15px;margin-top:14px">Printed with eco-friendly inks, which are safe on skin and suitable for children.</p>
+
+<h2 style="font-size:17px;border-bottom:2px solid #111;padding-bottom:6px;margin-top:26px">Size Guide</h2>
+<p style="font-size:15px">Measured flat, in inches. Allow up to one inch tolerance.</p>
+<table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px">
+<tr style="background:#111;color:#fff"><th style="padding:7px 9px;text-align:left">Size</th><th style="padding:7px 9px;text-align:left">To Fit Chest</th><th style="padding:7px 9px;text-align:left">Width</th><th style="padding:7px 9px;text-align:left">Length</th></tr>
+{rows}
+</table>
+<p style="font-size:14px;margin-top:14px"><strong>Kids sizes</strong> &mdash; 3-4 Yrs (chest 14&quot;), 5-6 Yrs (15&quot;), 7-8 Yrs (16&quot;), 9-11 Yrs (17&quot;), 12-13 Yrs (18&quot;).</p>
+<p style="font-size:15px"><strong>Fit note:</strong> Mens (Unisex) classic fit. These run a little roomier than high street brands &mdash; if you prefer a slim fit, consider going one size down.</p>
+
+<h2 style="font-size:17px;border-bottom:2px solid #111;padding-bottom:6px;margin-top:26px">Postage &amp; Returns</h2>
+<p style="font-size:15px">Dispatched from the UK with tracked delivery. If anything is not right, get in touch and we will sort it &mdash; returns are straightforward.</p>
+
+<h2 style="font-size:17px;border-bottom:2px solid #111;padding-bottom:6px;margin-top:26px">Care</h2>
+<p style="font-size:15px">Machine wash at 30&deg;C inside out. Do not iron directly on the print. Do not tumble dry on high.</p>
+
+<p style="margin-top:24px;font-size:11px;color:#9a9aa0">{tags}</p>
+</div></div>"""
 
 
 def main():
-    ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--catalogue", required=True)
-    ap.add_argument("--out", required=True)
-    ap.add_argument("--img-base", default="https://REPLACE-WITH-YOUR-R2-BUCKET/mock")
+    ap.add_argument("--out", default="tshirt_ebay",
+                    help="prefix; files are <prefix>_01.csv, _02.csv ...")
+    ap.add_argument("--img-base", required=True,
+                    help="public bucket URL, e.g. https://pub-XXXX.r2.dev")
     ap.add_argument("--category", default="15687")
     ap.add_argument("--shipping", default="2")
     ap.add_argument("--returns", default="1")
     ap.add_argument("--payment", default="1")
-    ap.add_argument("--price", default="11.99")
-    ap.add_argument("--brand", default="Unbranded")
+    # City stays, postcode does not. Plenty of sellers are in Manchester, so a
+    # shared city is not the signal a shared POSTCODE is - the postcode is
+    # specific enough to tie accounts together.
     ap.add_argument("--location", default="Manchester")
-    ap.add_argument("--variations", action="store_true")
+    ap.add_argument("--postcode", default="",
+                    help="normally blank: eBay falls back to the account's own "
+                         "postcode, which is already right per store")
+    ap.add_argument("--brand", default="Unbranded")
+    ap.add_argument("--max-mb", type=float, default=14.0,
+                    help="max size of one output file. File Exchange rejects "
+                         "an oversized upload outright, and the rich "
+                         "description makes ~9 KB per listing, so a row count "
+                         "is the wrong thing to cap on")
+    ap.add_argument("--rows", type=int, default=1000000,
+                    help="secondary cap on data rows per file")
+    ap.add_argument("--single", action="store_true",
+                    help="one row per design, size typed into the "
+                         "personalisation box")
+    ap.add_argument("--single-price", type=float, default=11.99)
+    ap.add_argument("--personalise-text",
+                    default="TYPE SIZE BELOW, CHOOSE: S,M,L,XL,XXL")
+    # Sorted output groups the catalogue by subject, because neighbouring
+    # design ids share one subject. A sorted upload therefore arrives as a
+    # block of birthdays, then a block of dog breeds, which looks like spam in
+    # a newly-listed feed and makes any slice taken for another store all one
+    # thing.
+    ap.add_argument("--no-shuffle", action="store_true")
+    ap.add_argument("--seed", type=int, default=20260829,
+                    help="use a different seed per store so each gets its "
+                         "own mix")
     ap.add_argument("--limit", type=int)
     a = ap.parse_args()
 
+    base_url = a.img_base.rstrip("/")
     designs = json.loads(Path(a.catalogue).read_text())
+
+    if not a.no_shuffle:
+        random.Random(a.seed).shuffle(designs)
     if a.limit:
         designs = designs[:a.limit]
 
-    def base(d, size, rel="", reldet="", title=None, desc=None, pic=None):
+    seen = set()
+    dupes = 0
+
+    def row(d, size, price, rel="", reldet="", desc="", pic="",
+            child=False):
+        """
+        One CSV row, built to match the live listings exactly.
+
+        The shape of a variation group is not a matter of taste - File
+        Exchange rejects or mangles anything else:
+          parent  Action=Add, the CustomLabel, the picture, the description,
+                  NO price and NO quantity, C:Size blank
+          child   Action BLANK, CustomLabel BLANK, no picture, no description,
+                  no profiles, carrying only the size and its price
+        Putting Add and a CustomLabel on the children is what turns one
+        listing into eleven.
+        """
+        kids = "Yrs" in size
         r = dict.fromkeys(HEADER, "")
-        r[HEADER[0]] = "Add"
-        r["CustomLabel"] = d["design_id"]
+        r[ACTION] = "" if child else "Add"
+        r["CustomLabel"] = "" if child else d["design_id"]
         r["*Category"] = a.category
         r["Relationship"] = rel
         r["RelationshipDetails"] = reldet
-        r["*Title"] = title if title is not None else d["title"]
-        r["*Description"] = desc if desc is not None else ""
+        r["*Title"] = d["title"]
+        r["*Description"] = desc
         r["*ConditionID"] = "1000"
-        r["PicURL"] = pic if pic is not None else f"{a.img_base}/{d['design_id']}.jpg"
-        r["*Format"] = "FixedPrice"
-        r["*Duration"] = "GTC"
-        r["*StartPrice"] = a.price
-        r["*Quantity"] = "1"
-        r["*Location"] = a.location
-        r["PostalCode"] = ""          # blank on purpose - a shared postcode links accounts
-        r["ShippingProfileName"] = a.shipping
-        r["ReturnProfileName"] = a.returns
-        r["PaymentProfileName"] = a.payment
+        r["PicURL"] = pic
+        r["*Format"] = "" if child else "FixedPrice"
+        r["*Duration"] = "" if child else "GTC"
+        r["*StartPrice"] = f"{price:.2f}" if price is not None else ""
+        r["*Quantity"] = "" if price is None else str(QTY)
+        r["*Location"] = "" if child else a.location
+        r["PostalCode"] = "" if child else a.postcode
+        r["ShippingProfileName"] = "" if child else a.shipping
+        r["ReturnProfileName"] = "" if child else a.returns
+        r["PaymentProfileName"] = "" if child else a.payment
         r["*C:Size"] = size
         r["*C:Colour"] = "Black"
         r["C:Brand"] = a.brand
         r["*C:Type"] = "T-Shirt"
         r["*C:Style"] = "Graphic Tee"
-        r["C:Department"] = "Men"
-        r["*C:Material"] = "100% Cotton"
+        r["C:Department"] = "Unisex Kids" if kids else "Unisex Adults"
+        r["*C:Material"] = "Cotton"
         r["C:Sleeve Length"] = "Short Sleeve"
         r["C:Neckline"] = "Crew Neck"
         r["C:Fit"] = "Regular"
-        r["C:Pattern"] = "Graphic"
+        r["C:Pattern"] = "No Pattern"
         r["C:Size Type"] = "Regular"
         r["C:Garment Care"] = "Machine Washable"
         r["C:Occasion"] = "Casual"
-        r["C:Theme"] = d.get("cluster", "").title()
+        r["C:Theme"] = THEME.get(d.get("cluster", ""), "Graphic")
         r["C:Country/Region of Manufacture"] = "United Kingdom"
-        r["C:Handmade"] = ""
+        r["C:Personalise"] = "No"
         r["C:Features"] = "Breathable"
         return r
 
-    n_parent = n_child = 0
-    with open(a.out, "w", newline="", encoding="utf-8") as fh:
-        w = csv.DictWriter(fh, fieldnames=HEADER)
-        w.writeheader()
-        for d in designs:
-            t = html.escape(d["title"])
-            if a.variations:
-                desc = DESC.format(title=t, sizeline="Choose your size from the menu above.")
-                w.writerow(base(d, "", rel="", reldet="Size=" + ";".join(SIZES),
-                                desc=desc))
-                n_parent += 1
-                for s in SIZES:
-                    w.writerow(base(d, s, rel="Variation", reldet=f"Size={s}",
-                                    title=d["title"], desc="", pic=""))
-                    n_child += 1
-            else:
-                r = base(d, "One Size",
-                         desc=DESC.format(title=t,
-                                          sizeline="Type your size in the box at checkout: "
-                                                   "S, M, L, XL, XXL."))
-                r["C:Personalise"] = "Yes"
-                r["C:Personalisation Instructions"] = "TYPE SIZE BELOW, CHOOSE: S,M,L,XL,XXL"
-                w.writerow(r)
-                n_parent += 1
+    files, buf, n, nbytes = [], [], 1, 0
+    cap = int(a.max_mb * 1e6)
 
-    print(f"  {n_parent:,} listings" + (f" + {n_child:,} variation rows" if n_child else "")
-          + f" -> {a.out}")
-    if not a.variations:
-        print("  NOTE: C:Size = One Size is excluded from every size-filtered eBay search.")
-        print("        --variations keeps the listing in those results.")
-    print("  Replace --img-base with your real R2 bucket before uploading.")
+    def flush():
+        nonlocal buf, n, nbytes
+        if not buf:
+            return
+        fn = f"{a.out}_{n:02d}.csv"
+        with open(fn, "w", newline="", encoding="utf-8") as fh:
+            w = csv.DictWriter(fh, fieldnames=HEADER)
+            w.writeheader()
+            w.writerows(buf)
+        print(f"  {fn}  {len(buf):,} rows  "
+              f"{os.path.getsize(fn) / 1e6:.1f} MB")
+        files.append(fn)
+        buf, nbytes = [], 0
+        n += 1
+
+    listings = 0
+    for d in designs:
+        t = d["title"]
+        # A duplicate title is not a near-duplicate that eBay might cluster -
+        # it is the SAME listing twice, and it will be rejected or suppressed.
+        # Catch it here rather than after a 300,000 row upload.
+        if t in seen:
+            dupes += 1
+            continue
+        seen.add(t)
+
+        subject = html.escape(d.get("stem", t))
+        tags = html.escape(", ".join(
+            x for x in (d.get("cluster", ""), d.get("theme", "")) if x))
+        desc = DESC.format(subject=subject, rows=_ROWS, tags=tags)
+        pic = f"{base_url}/art/mock/{d['design_id']}.jpg"
+
+        if a.single:
+            # Size is "One Size" deliberately: the field is required by the
+            # category, and a real size there would contradict the box.
+            r = row(d, "One Size", a.single_price, desc=desc, pic=pic)
+            r["C:Personalise"] = "Yes"
+            r["C:Personalisation Instructions"] = a.personalise_text
+            buf.append(r)
+        else:
+            # The parent carries the picture and the description and no price;
+            # the children carry only what differs, which is size and price.
+            buf.append(row(d, "", None,
+                           reldet="Size=" + ";".join(s for s, _ in SIZES),
+                           desc=desc, pic=pic))
+            for size, price in SIZES:
+                buf.append(row(d, size, price, rel="Variation",
+                               reldet=f"Size={size}", child=True))
+        listings += 1
+        # Estimate rather than measure: the description dominates and is the
+        # only field that varies much in size.
+        nbytes += len(desc) + 600 * (1 if a.single else len(SIZES))
+        if nbytes >= cap or len(buf) >= a.rows:
+            flush()
+    flush()
+
+    per = 1 if a.single else 1 + len(SIZES)
+    items = listings * (1 if a.single else len(SIZES))
+    value = (listings * a.single_price if a.single
+             else listings * sum(p for _, p in SIZES))
+    print(f"\n  {listings:,} listings, {listings * per:,} rows, "
+          f"{len(files)} file(s)")
+    print("  each file is self-contained: a parent and its size rows are "
+          "never split across two")
+    if dupes:
+        print(f"  {dupes:,} designs skipped for duplicate titles")
+    print(f"  selling limit used: {items:,} items, £{value:,.0f} of value")
+    if a.single:
+        print("\n  NOTE: C:Size = One Size is excluded from every size-filtered")
+        print("        eBay search. Drop --single to keep the listing in them.")
 
 
 if __name__ == "__main__":
