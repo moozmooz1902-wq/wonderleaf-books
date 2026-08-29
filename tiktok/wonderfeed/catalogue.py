@@ -22,15 +22,22 @@ import sys
 
 import yaml
 
+from . import compliance
 from .config import ConfigError, ROOT, load_settings, secret
 
 # Grounded in what recurs across POD/Etsy/TikTok Shop trend reporting for 2026:
 # botanical and nature, retro and vintage poster styles, identity and role art,
 # faith and affirmation, pets, travel, and humour.
 NICHES = {
-    "cars": "Classic and modern cars, motorbikes, motorsport. Specific models "
-            "and eras, not generic 'car art'. Think the car someone learned to "
-            "drive in, saved for, or still wants.",
+    # HIGH RISK. Vehicle designs are protected by copyright, design right and
+    # trademark - a recognisable model infringes even unnamed and unbadged. So
+    # this niche is steered entirely onto factual and original subjects.
+    "cars": "Motoring culture WITHOUT any identifiable vehicle. Allowed: circuit "
+            "and rally-stage layouts (a track outline is a geographic fact), road "
+            "trip routes, elevation profiles of famous climbs, vintage petrol "
+            "station and garage nostalgia of your own design, generic silhouettes "
+            "not traceable to a model, tools and parts as abstract studies. "
+            "NEVER a marque, model, badge, number plate or recognisable shape.",
     "family": "Family and household: new babies, first homes, blended families, "
               "grandparents, pets as family, house rules, family name and "
               "established-year prints.",
@@ -38,10 +45,18 @@ NICHES = {
                  "and line-art botanical styles.",
     "identity": "Job and vocation pride: nurses, teachers, tradespeople, chefs, "
                 "midwives, firefighters. Specific roles, not 'profession art'.",
-    "music": "Retro concert and album-era posters, instruments, genre scenes, "
-             "vinyl and record-shop culture.",
-    "sport": "Football, rugby, cycling, boxing, running, climbing. Club-neutral "
-             "or city-based to stay clear of licensed marks.",
+    # HIGH RISK. Album covers, band marks and likenesses are all protected.
+    "music": "Music culture WITHOUT any real artist, band or release. Allowed: "
+             "instruments as studies, generic genre scenes, record-shop and "
+             "sound-system culture, abstract waveform and frequency art, original "
+             "typography about listening. NEVER a band name, album cover, logo, "
+             "lyric or performer's likeness.",
+    # HIGH RISK. Club badges, kit designs and player likenesses are protected.
+    "sport": "Sport WITHOUT any club, competition or athlete. Allowed: city and "
+             "ground-neutral typography, marathon and cycling route maps, "
+             "climbing topos, generic silhouettes of a movement, original "
+             "pitch/court geometry. NEVER a badge, kit, competition name, player "
+             "or the word 'official'.",
     "travel": "Cities, coastlines, national parks, retro railway and airline "
               "poster styles, UK destinations.",
     "affirmation": "Calm affirmations, gratitude, mantras, minimalist quotes "
@@ -73,9 +88,13 @@ Each concept must be:
 - A set of THREE prints that hang together and make sense as a trio
 - Sellable at £18-£35 for the set
 - Buildable as a printed poster or framed print (no fabric, no 3D, no lighting)
-- Clear of trademarks: no club badges, band logos, brand marks, film or TV
-  properties, or living people's likenesses. Describe styles and subjects, not
-  licensed marks.
+- **Clear of third-party IP.** This is the hard constraint, not a preference:
+  no brand or marque names, no club badges, no band or album references, no film,
+  TV, game or book properties, no characters, no living people, no song lyrics or
+  in-copyright quotations. Vehicle and product *designs* are protected even when
+  unnamed and unbadged, so do not describe a recognisable one. Prefer subjects
+  that are original, generic, or factual (layouts, routes, coastlines, star
+  charts) - those cannot be owned.
 - Distinct from the others: no two concepts may share the same core subject
 
 For each concept give:
@@ -148,14 +167,24 @@ def generate_niche(niche, count, api_key, settings, seen_ids, log=print):
     if not isinstance(raw, list):
         raise ValueError("model did not return a JSON array")
 
-    out = []
+    out, blocked = [], 0
     for c in raw:
         if isinstance(c, dict):
             c["niche"] = niche
         ok = validate_concept(c, seen_ids)
-        if ok:
-            out.append(ok)
-    log(f"  {niche}: {len(out)}/{count} usable")
+        if not ok:
+            continue
+        verdict, reasons = compliance.screen(ok)
+        if verdict == compliance.Verdict.BLOCK:
+            # Never let an infringing concept reach products.yaml.
+            blocked += 1
+            seen_ids.discard(ok["id"])
+            log(f"    blocked '{ok['id']}': {reasons[0]}")
+            continue
+        ok["ip_review"] = reasons or None
+        out.append(ok)
+    note = f", {blocked} blocked on IP" if blocked else ""
+    log(f"  {niche}: {len(out)}/{count} usable{note}")
     return out
 
 

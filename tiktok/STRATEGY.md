@@ -79,12 +79,56 @@ The right-hand column is what the catalogue generator is instructed to produce.
 It is also why one product supports thirty angles: the buyer is specific enough
 to have thirty different bad days you can open a video on.
 
-**Trademark warning — this is the one that gets shops closed, not just videos
-removed.** Cars, music and sport are the highest-selling niches here *and* the
-most dangerous: club badges, band logos, marque names, film and TV properties
-and living people's likenesses are all off limits. The generator is instructed
-to describe styles and subjects rather than licensed marks, but **check every
-concept before you list it.** A shop suspension costs you all 100 slots at once.
+### Intellectual property — read this before listing anything
+
+This is the one that closes shops rather than removing videos. On TikTok Shop an
+IP complaint costs violation points, listing removal and withheld balance, and a
+pattern of them suspends the seller account — all 100 slots at once. The expected
+cost of one risky listing is far higher than it could ever earn.
+
+**The finding that should change your plan: cars are one of the most dangerous
+niches, not just the badge.** Vehicle designs are protected by copyright, design
+right *and* trademark in the more iconic shapes. A print of a recognisable model
+infringes **even with no name, no badge and no logo on it.** Music is the same
+story — album covers are copyrighted, and a performer's likeness is separately
+protected. Sport carries club badges, kit designs and player likenesses.
+
+So the three niches with the strongest passion-buyer pull are also the three that
+can end the business. They are still in the catalogue, but redirected entirely
+onto subjects nobody can own:
+
+| Instead of | Sell |
+|---|---|
+| A Mk1 Golf GTI print | Circuit and rally-stage **layouts** — a track outline is a geographic fact |
+| A band or album print | Instruments, waveform art, record-shop culture, your own typography |
+| A club or player print | Marathon and cycling **route maps**, climbing topos, city typography |
+| Song lyrics | Words you wrote yourself |
+
+That last row catches people out constantly. A "first dance lyrics" print is
+copyright infringement, and it looks like the most innocent product in the shop.
+
+**Safest sources, in order** (`python -m wonderfeed.compliance --safe-harbours`):
+
+1. **Your own originals, including AI images you prompted yourself** — without
+   naming a living artist or describing a protected design.
+2. **Verified public-domain archives** — Biodiversity Heritage Library,
+   Rijksmuseum, the Met, Smithsonian Open Access, Library of Congress. Vintage
+   botanical plates, old master paintings, antique maps and star charts are a
+   genuine goldmine here: free, gorgeous, and provably out of copyright. One
+   catch — a museum can restrict commercial use through its **terms of service**
+   even where the scan itself carries no copyright, so check the licence per item.
+3. **Licensed stock**, with the licence saved.
+
+**On AI-generated art specifically:** you can sell it. UK law recognises
+computer-generated works, but for a prompt-only image the ownership is uncertain
+and the protection narrow and short — largely untested in court. The practical
+consequence is not that you can't sell it; it's that **you probably can't stop
+anyone copying it.** Design your moat around catalogue breadth and turnover
+rather than around any one image being defensible.
+
+**Screening is automated** — see §7. Nothing reaches `products.yaml` without
+passing it, but a word list plus a model review is a filter, not a lawyer. Look
+at each concept yourself before you list it.
 
 ## 4. The video format
 
@@ -144,7 +188,44 @@ You have three options and they are not equal:
 
 Do (1). Use (3) as a backup on every video regardless — it costs nothing.
 
-## 7. Compliance — the stuff that gets accounts killed
+## 7. Automated IP screening
+
+Every concept is screened before it can reach `products.yaml`, in two passes:
+
+```bash
+python -m wonderfeed.compliance                  # screen products.yaml
+python -m wonderfeed.compliance --deep           # add the Claude review pass
+python -m wonderfeed.compliance --safe-harbours  # where to source artwork
+```
+
+**Pass 1 — blocklist.** Free, instant. Car marques, bands, clubs, franchises,
+brands, living people, plus patterns like `Mk2`, "album cover", "official",
+"lyrics". A `BLOCK` here is hard: the catalogue generator discards the concept
+rather than writing it out.
+
+**Pass 2 — Claude review** (`--deep`, a few pence). Catches what a word list
+cannot: a protected design described without being named — "the wedge-shaped 80s
+supercar with pop-up headlights" trips no keyword but is still infringing. For
+anything it blocks it also suggests a rewrite keeping the same buyer.
+
+Verdicts:
+
+| | Meaning |
+|---|---|
+| `PASS` | Nothing found. Still your call. |
+| `REVIEW` | Something needs a human look — a high-risk niche, or a risky pattern |
+| `BLOCK` | Do not list. Rewrite or drop it. |
+
+Tested against deliberate traps: it blocks a Mk1 Golf GTI concept, an Oasis
+album reference and a Manchester United print; flags a first-dance-lyrics print
+(copyrighted, and it looks innocent); and passes a botanical study. Circuit
+layouts come back `REVIEW` rather than `BLOCK` — correct, since the layout is
+factual but the niche warrants a look.
+
+**It is a filter, not a lawyer.** It reduces how often you have to think about
+this; it does not remove the obligation to look.
+
+## 8. Compliance — the stuff that gets accounts killed
 
 Luxe Art has 27 followers after 68 videos. Accounts in this category do get
 throttled, and the causes are boringly consistent:
@@ -160,7 +241,7 @@ throttled, and the causes are boringly consistent:
   first week, engage from the account like a person, then scale to 3.
 - **One account, one niche.** Mixed-topic accounts don't get a stable audience.
 
-## 8. What to measure, and when to kill
+## 9. What to measure, and when to kill
 
 Track weekly, not daily. Daily numbers are noise.
 
@@ -172,12 +253,12 @@ Track weekly, not daily. Daily numbers are noise.
 | Conversion | >2% of clicks | low with good CTR → listing/photos problem, not TikTok |
 
 **Kill criteria:** judge the *listing*, on units sold, using
-`python -m wonderfeed.listings review` (§9). Do not kill on views or likes.
+`python -m wonderfeed.listings review` (§10). Do not kill on views or likes.
 A listing pulling traffic and converting nothing is dead; a listing with no
 traffic yet has not been tested. Those need opposite responses, which is the
 whole reason that tool exists.
 
-## 9. Listing rotation — working the 100 cap
+## 10. Listing rotation — working the 100 cap
 
 The cap is the real constraint on this business. A slot holding a listing that
 has had twenty videos and no sales is costing you a test you cannot run.
@@ -223,7 +304,7 @@ Other thresholds live under `listings:` in `settings.yaml`. The default
 `cull_after_videos: 15` says: fifteen videos at a product with nothing to show
 is enough evidence, regardless of age.
 
-## 10. First 30 days
+## 11. First 30 days
 
 The goal of month one is a **full shop and a working cull loop**, not a viral
 video.

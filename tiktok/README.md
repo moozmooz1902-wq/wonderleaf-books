@@ -117,6 +117,25 @@ exists in Seller Center: the pipeline refuses to generate visuals without a real
 product photo, because that photo is what keeps the art in the video identical
 to the art you sell.
 
+### IP screening — run this before you list anything
+
+```bash
+python -m wonderfeed.compliance                  # screen products.yaml
+python -m wonderfeed.compliance --deep           # + Claude review (a few pence)
+python -m wonderfeed.compliance --safe-harbours  # where to source artwork safely
+```
+
+Exits non-zero if anything is blocked, so it drops into a pre-listing check.
+`BLOCK` concepts are already discarded during catalogue generation — this catches
+anything you added by hand, and `--deep` catches protected designs described
+without being named.
+
+**The big one:** vehicle designs are protected by copyright, design right and
+trademark, so a recognisable car infringes *even unnamed and unbadged*. Same for
+album covers and player likenesses. The `cars`, `music` and `sport` niches are
+therefore redirected onto things nobody can own — circuit layouts, route maps,
+waveforms, your own typography. See `STRATEGY.md` §3.
+
 ### Listing rotation — working the 100 cap
 
 ```bash
