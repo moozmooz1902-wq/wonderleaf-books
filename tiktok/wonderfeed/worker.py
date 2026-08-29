@@ -52,6 +52,26 @@ def paths(settings):
     }
 
 
+def live_worker_pid(p):
+    """PID of a worker already running, or None.
+
+    The queue is single-writer by design. Two workers racing on it corrupt the
+    ordering and, worse, spend twice the API budget - so this is enforced rather
+    than assumed.
+    """
+    try:
+        pid = int(p["pid"].read_text().strip())
+    except (OSError, ValueError):
+        return None
+    if pid == os.getpid():
+        return None
+    try:
+        os.kill(pid, 0)
+    except OSError:
+        return None  # stale pid file from a crash; safe to take over
+    return pid
+
+
 def worker_config(settings):
     cfg = dict(DEFAULTS)
     cfg.update(settings.get("worker") or {})
@@ -247,6 +267,15 @@ class Worker:
         return True
 
     def run(self, once=False):
+        existing = live_worker_pid(self.p)
+        if existing:
+            msg = (f"Another worker is already running (pid {existing}). "
+                   f"Refusing to start a second one - they would race on the "
+                   f"queue and double your API spend.")
+            print(msg, file=sys.stderr, flush=True)
+            self.write_status(state=f"blocked: worker {existing} already running")
+            return
+
         self.p["pid"].write_text(str(os.getpid()), encoding="utf-8")
         recovered = self.queue.recover()
         if recovered:
@@ -272,7 +301,10 @@ class Worker:
                     break
         finally:
             try:
-                self.p["pid"].unlink()
+                # Only clear the lock if it is still ours.
+                if self.p["pid"].exists() and \
+                        self.p["pid"].read_text().strip() == str(os.getpid()):
+                    self.p["pid"].unlink()
             except OSError:
                 pass
             # Log first: log() rewrites status, so writing "stopped" after it

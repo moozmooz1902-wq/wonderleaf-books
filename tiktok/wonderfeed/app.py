@@ -1,11 +1,10 @@
-"""Wonderfeed desktop control panel.
+"""Wonderfeed control panel.
 
-  streamlit run wonderfeed/app.py
+  ./start.sh          (start.bat on Windows)
 
-Press Play and leave it running in a background tab while you work. The worker
-runs as its own detached process, so closing this page does not stop it, and
-stopping the laptop mid-batch loses nothing: the queue is on disk and the
-interrupted task returns to pending on the next start.
+Designed so someone who has never seen it can run it: one big button, plain
+English, and a setup check that says exactly what is missing before they press
+anything. Everything else is behind an Advanced toggle.
 """
 
 import json
@@ -37,30 +36,28 @@ def worker_pid(p):
     except (OSError, ValueError):
         return None
     try:
-        os.kill(pid, 0)  # signal 0 just tests for existence
+        os.kill(pid, 0)
     except OSError:
         return None
     return pid
 
 
-def missing_keys(dry_run):
-    """Keys the worker will need. Checked here so Play fails loudly, not silently."""
-    if dry_run:
+def missing_keys(practice):
+    if practice:
         return []
-    return [k for k in ("ANTHROPIC_API_KEY", "FAL_KEY") if not os.environ.get(k, "").strip()]
+    return [k for k in ("ANTHROPIC_API_KEY", "FAL_KEY")
+            if not os.environ.get(k, "").strip()]
 
 
-def start_worker(dry_run):
+def start_worker(practice):
     log_path = ROOT / "out" / "worker.log"
     log_path.parent.mkdir(parents=True, exist_ok=True)
     args = [sys.executable, "-m", "wonderfeed.worker"]
-    if dry_run:
+    if practice:
         args.append("--dry-run")
     with log_path.open("a", encoding="utf-8") as log:
-        subprocess.Popen(
-            args, cwd=str(ROOT), stdout=log, stderr=subprocess.STDOUT,
-            start_new_session=True,  # detached: survives this page closing
-        )
+        subprocess.Popen(args, cwd=str(ROOT), stdout=log,
+                         stderr=subprocess.STDOUT, start_new_session=True)
 
 
 def send(p, command):
@@ -76,148 +73,165 @@ def read_status(p):
         return {}
 
 
-# -- UI ------------------------------------------------------------------
+# -- readiness -----------------------------------------------------------
 
 
-def main():
-    st.set_page_config(page_title="Wonderfeed", page_icon="▶", layout="wide")
+def readiness(products, practice):
+    """What is stopping a real run. Plain English, one line each."""
+    checks = []
+    real_gaps = [k for k in ("ANTHROPIC_API_KEY", "FAL_KEY")
+                 if not os.environ.get(k, "").strip()]
+    if practice and real_gaps:
+        # Practice mode does not need keys, but reporting "Ready" would be a lie
+        # that bites the moment someone switches practice mode off.
+        detail = (f"Not needed in practice mode — but {' and '.join(real_gaps)} "
+                  f"must be in `tiktok/.env` before real videos will work")
+        ok = None
+    elif real_gaps:
+        detail = f"Missing {' and '.join(real_gaps)} — add them to `tiktok/.env`"
+        ok = False
+    else:
+        detail = "Ready"
+        ok = True
+    checks.append({"ok": ok, "label": "API keys", "detail": detail})
 
-    try:
-        settings = load_settings()
-        products = load_products()
-    except ConfigError as exc:
-        st.error(f"**Config error**\n\n{exc}")
-        st.stop()
+    with_photo = [p for p in products if p.get("images")]
+    checks.append({
+        "ok": True if with_photo else (None if practice else False),
+        "label": "Product photos",
+        "detail": (f"{len(with_photo)} of {len(products)} products have a photo"
+                   if with_photo else
+                   "No product has a photo yet — add one to `tiktok/assets/` and "
+                   "list it under `images:` in config/products.yaml"),
+    })
 
-    p = paths(settings)
-    p["out"].mkdir(parents=True, exist_ok=True)
-    pid = worker_pid(p)
-    running = pid is not None
-    status = read_status(p)
+    with_link = [p for p in products if p.get("link")]
+    checks.append({
+        "ok": True if with_link else (None if practice else False),
+        "label": "Shop links",
+        "detail": (f"{len(with_link)} of {len(products)} products have a link"
+                   if with_link else
+                   "No product has a TikTok Shop link yet — paste it into "
+                   "config/products.yaml"),
+    })
+    return checks
 
-    st.title("Wonderfeed")
-    st.caption(f"{len(products)} product(s) loaded · output `{p['out']}`")
 
-    # -- controls --------------------------------------------------------
-    c1, c2, c3, c4, c5 = st.columns([1, 1, 1, 1, 3])
-    dry = st.session_state.setdefault("dry_run", False)
+# -- views ---------------------------------------------------------------
 
-    with c1:
-        if st.button("▶  Play", type="primary", disabled=running,
-                     use_container_width=True):
-            gaps = missing_keys(st.session_state["dry_run"])
-            if gaps:
-                st.session_state["start_error"] = (
-                    f"Missing {' and '.join(gaps)}. Put them in `tiktok/.env`:\n\n"
-                    "```\nANTHROPIC_API_KEY=sk-ant-...\nFAL_KEY=...\n```\n"
-                    "Or switch on **Dry run** to watch the loop work for free."
-                )
-            else:
-                st.session_state.pop("start_error", None)
-                start_worker(st.session_state["dry_run"])
-                time.sleep(2.0)
-            st.rerun()
-    with c2:
-        if st.button("⏸  Pause", disabled=not running, use_container_width=True):
-            send(p, {"pause": not (status.get("state") == "paused")})
-            time.sleep(0.5)
-            st.rerun()
-    with c3:
-        if st.button("⏹  Stop", disabled=not running, use_container_width=True):
-            send(p, {"stop": True})
-            time.sleep(0.5)
-            st.rerun()
-    with c4:
-        if st.button("↻  Refill", disabled=not running, use_container_width=True):
-            send(p, {"refill": settings.get("worker", {}).get("refill_batch", 12)})
-            st.rerun()
-    with c5:
-        st.session_state["dry_run"] = st.toggle(
-            "Dry run (no API calls, no spend)", value=dry, disabled=running,
-            help="Builds with placeholder visuals so you can watch the loop work "
-                 "without spending anything.",
-        )
+
+def render_simple(p, status, running, practice, counts, videos):
+    """The whole job in one screen: press the button, collect the videos."""
+    done_today = status.get("done_today", 0)
+    cap = status.get("daily_cap", 24)
 
     if running:
         state = status.get("state", "working")
-        badge = {"paused": "⏸ paused", "stopping": "⏹ stopping"}.get(state, f"● {state}")
-        st.success(f"**Worker running** (pid {pid}) — {badge}"
-                   + ("  ·  DRY RUN" if status.get("dry_run") else ""))
-    else:
-        if st.session_state.get("start_error"):
-            st.error(st.session_state["start_error"])
+        if state == "paused":
+            st.warning("###  ⏸  Paused")
         else:
-            log_file = ROOT / "out" / "worker.log"
-            tail = ""
-            if log_file.exists():
-                lines = log_file.read_text(encoding="utf-8", errors="replace").splitlines()
-                tail = "\n".join(lines[-6:]).strip()
-            # A worker that died on startup leaves an error here and no pid.
-            if tail and ("error" in tail.lower() or "traceback" in tail.lower()):
-                st.error("**The worker stopped with an error.**")
-                st.code(tail, language=None)
-            else:
-                st.info("**Stopped.** Press Play — it picks up exactly where it left off.")
+            current = (status.get("current") or {}).get("label", "")
+            st.success(f"###  ●  Making videos…\n\n"
+                       f"{done_today} made today"
+                       + (f" · now building **{current}**" if current else ""))
+    else:
+        st.info("###  ⏹  Not running\n\nPress the green button to start.")
 
-    # -- counters --------------------------------------------------------
-    counts = status.get("counts") or Queue(p["queue"]).counts()
+    big = st.container()
+    with big:
+        if running:
+            if st.button("■   S T O P", type="secondary", use_container_width=True):
+                send(p, {"stop": True})
+                time.sleep(0.6)
+                st.rerun()
+        else:
+            if st.button("▶   S T A R T", type="primary", use_container_width=True):
+                gaps = missing_keys(practice)
+                if gaps:
+                    st.session_state["start_error"] = (
+                        f"Cannot start: missing {' and '.join(gaps)}.\n\n"
+                        "Add them to the file `tiktok/.env`, or switch on "
+                        "**Practice mode** in the sidebar to try it for free."
+                    )
+                else:
+                    st.session_state.pop("start_error", None)
+                    start_worker(practice)
+                    time.sleep(2.0)
+                st.rerun()
+
+    if st.session_state.get("start_error"):
+        st.error(st.session_state["start_error"])
+
+    st.divider()
+    ready = len(videos)
+    if ready:
+        st.markdown(f"### 📁  {ready} video{'s' if ready != 1 else ''} ready to post")
+        st.caption(f"They are in the folder: `{p['out']}`")
+        with st.expander("What do I do with these?", expanded=(ready > 0 and not running)):
+            st.markdown(
+                "1. Open **TikTok Studio** on a computer (tiktokstudio.com) and "
+                "sign in to the shop account.\n"
+                "2. Click **Upload**, and drag in a video from the folder above.\n"
+                "3. Open the matching **`.txt` file** — it has the caption. "
+                "Copy and paste it in.\n"
+                "4. Click **Add link → Products** and tag the product the "
+                "`.txt` file names.\n"
+                "5. Turn on **AI-generated content** under *More options*.\n"
+                "6. Choose **Schedule**, pick a time, and post.\n\n"
+                "Do a few in one sitting — you can schedule up to 10 days ahead, "
+                "so one session covers the week."
+            )
+    else:
+        st.caption("No finished videos yet. They will appear here.")
+
+
+def render_advanced(p, status, running, counts, videos, settings, products):
     done_today = status.get("done_today", 0)
-    cap = status.get("daily_cap", settings.get("worker", {}).get("daily_cap", 24))
+    cap = status.get("daily_cap", 24)
     k1, k2, k3, k4 = st.columns(4)
     k1.metric("Today", f"{done_today}/{cap}")
     k2.metric("Queued", counts.get("pending", 0))
     k3.metric("Built", counts.get("done", 0))
     k4.metric("Failed", counts.get("failed", 0))
 
-    current = status.get("current")
-    if current and running:
-        st.progress(min(done_today / max(cap, 1), 1.0),
-                    text=f"Building  ·  {current.get('label', '')}")
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        if st.button("⏸ Pause / Resume", disabled=not running, use_container_width=True):
+            send(p, {"pause": status.get("state") != "paused"})
+            time.sleep(0.5)
+            st.rerun()
+    with c2:
+        if st.button("↻ Queue more now", disabled=not running, use_container_width=True):
+            send(p, {"refill": settings.get("worker", {}).get("refill_batch", 12)})
+            st.rerun()
+    with c3:
+        if st.button("↺ Retry failed", disabled=not running, use_container_width=True):
+            send(p, {"retry_failed": True})
+            st.rerun()
 
-    tab_activity, tab_output, tab_analytics = st.tabs(
-        ["Activity", "Finished videos", "Analytics"]
-    )
+    tab_log, tab_videos, tab_analytics = st.tabs(
+        ["Activity log", "Finished videos", "Analytics"])
 
-    with tab_activity:
+    with tab_log:
         log = status.get("log") or []
-        if log:
-            st.code("\n".join(log[-40:]), language=None)
-        else:
-            st.caption("No activity yet. Press Play.")
-        cc1, cc2 = st.columns(2)
-        with cc1:
-            if st.button("Retry failed tasks", disabled=not running):
-                send(p, {"retry_failed": True})
-                st.rerun()
-        with cc2:
-            if st.button("Clear finished tasks", disabled=not running):
-                send(p, {"clear_finished": True})
-                st.rerun()
+        st.code("\n".join(log[-40:]) if log else "Nothing yet.", language=None)
 
-    with tab_output:
-        videos = sorted(p["out"].glob("*.mp4"), key=lambda f: f.stat().st_mtime,
-                        reverse=True)
+    with tab_videos:
         if not videos:
             st.caption("Nothing built yet.")
         for video in videos[:12]:
             sidecar = video.with_suffix(".txt")
             with st.expander(f"{video.name}  ·  {video.stat().st_size // 1024} KB"):
-                col_v, col_t = st.columns([1, 2])
-                with col_v:
+                cv, ct = st.columns([1, 2])
+                with cv:
                     st.video(str(video))
-                with col_t:
+                with ct:
                     if sidecar.exists():
                         st.text(sidecar.read_text(encoding="utf-8"))
-                    st.download_button("Download MP4", video.read_bytes(),
-                                       file_name=video.name, mime="video/mp4",
-                                       key=f"dl-{video.name}")
 
     with tab_analytics:
-        st.markdown("**Which listings are selling** — drives what the worker builds next.")
-        upload = st.file_uploader(
-            "Seller Center CSV export", type=["csv"],
-            help="Product performance export. Updates the verdicts below.",
-        )
+        st.markdown("**Which listings are selling** — this steers what gets built next.")
+        upload = st.file_uploader("Seller Center CSV export", type=["csv"])
         if upload is not None:
             tmp = p["out"] / "_upload.csv"
             tmp.write_bytes(upload.getvalue())
@@ -232,40 +246,102 @@ def main():
                 tmp.unlink(missing_ok=True)
 
         cfg = listings_mod.config(settings)
-        lst = listings_mod.Listings()
-        live = lst.live()
+        live = listings_mod.Listings().live()
         if not live:
-            st.caption("No listings registered yet. Add them with "
-                       "`python -m wonderfeed.listings add`.")
-        else:
-            rows = []
-            for listing in live:
-                verdict, reason, totals, videos = listings_mod.assess(
-                    listing, cfg, State()
-                )
-                rows.append({
-                    "SKU": listing["sku"],
-                    "Product": listing["product_id"],
-                    "Verdict": verdict,
-                    "Days": listings_mod.days_live(listing),
-                    "Videos": videos,
-                    "Views": totals["views"],
-                    "Units": totals["units"],
-                    "Why": reason,
-                })
-            order = {"CULL": 0, "WATCH": 1, "NO DATA": 2, "TOO EARLY": 3, "KEEP": 4}
-            rows.sort(key=lambda r: order.get(r["Verdict"], 9))
-            st.dataframe(rows, use_container_width=True, hide_index=True)
-            culls = [r for r in rows if r["Verdict"] == "CULL"]
-            if culls:
-                st.warning(
-                    f"**{len(culls)} dead listing(s)** — delist these in Seller "
-                    f"Center and free the slots: "
-                    + ", ".join(r["SKU"] for r in culls)
-                )
-                st.caption("The worker already skips culled products when it "
-                           "queues new videos, and gives selling ones double the "
-                           "volume.")
+            st.caption("No listings registered yet.")
+            return
+        rows = []
+        for listing in live:
+            verdict, reason, totals, vids = listings_mod.assess(listing, cfg, State())
+            rows.append({"SKU": listing["sku"], "Product": listing["product_id"],
+                         "Verdict": verdict, "Days": listings_mod.days_live(listing),
+                         "Videos": vids, "Views": totals["views"],
+                         "Units": totals["units"], "Why": reason})
+        order = {"CULL": 0, "WATCH": 1, "NO DATA": 2, "TOO EARLY": 3, "KEEP": 4}
+        rows.sort(key=lambda r: order.get(r["Verdict"], 9))
+        st.dataframe(rows, use_container_width=True, hide_index=True)
+        culls = [r["SKU"] for r in rows if r["Verdict"] == "CULL"]
+        if culls:
+            st.warning(f"**Dead listings — delist these and free the slots:** "
+                       f"{', '.join(culls)}")
+
+
+def main():
+    st.set_page_config(page_title="Wonderfeed", page_icon="▶", layout="centered")
+    st.markdown("""<style>
+      div.stButton > button { height: 5.5rem; font-size: 1.6rem; font-weight: 700;
+                              letter-spacing: .06em; border-radius: 12px; }
+      div.stButton > button p { font-size: 1.6rem; font-weight: 700; }
+      /* START is green, STOP is amber - the on-screen copy names the colour. */
+      div.stButton > button[kind="primary"] {
+          background-color: #17803d; border-color: #17803d; color: #fff; }
+      div.stButton > button[kind="primary"]:hover {
+          background-color: #126430; border-color: #126430; color: #fff; }
+      div.stButton > button[kind="secondary"] {
+          background-color: #b45309; border-color: #b45309; color: #fff; }
+      div.stButton > button[kind="secondary"]:hover {
+          background-color: #92400e; border-color: #92400e; color: #fff; }
+      /* keep the smaller Advanced and sidebar controls normal size */
+      section[data-testid="stSidebar"] div.stButton > button {
+          height: 2.6rem; font-size: 1rem; letter-spacing: normal; }
+    </style>""", unsafe_allow_html=True)
+
+    try:
+        settings = load_settings()
+        products = load_products()
+    except ConfigError as exc:
+        st.title("Wonderfeed")
+        st.error(f"**Setup not finished**\n\n{exc}")
+        st.stop()
+
+    p = paths(settings)
+    p["out"].mkdir(parents=True, exist_ok=True)
+    pid = worker_pid(p)
+    running = pid is not None
+    status = read_status(p)
+    counts = status.get("counts") or Queue(p["queue"]).counts()
+    videos = sorted(p["out"].glob("*.mp4"), key=lambda f: f.stat().st_mtime,
+                    reverse=True)
+
+    with st.sidebar:
+        st.header("Settings")
+        practice = st.toggle(
+            "Practice mode", value=st.session_state.get("practice", False),
+            disabled=running,
+            help="Makes videos with placeholder pictures instead of real ones. "
+                 "Costs nothing. Use it to try the buttons.",
+        )
+        st.session_state["practice"] = practice
+        if practice:
+            st.caption("⚠️ Practice mode: videos use placeholder pictures. "
+                       "Do not post them.")
+        st.divider()
+        advanced = st.toggle("Advanced view", value=False)
+        st.divider()
+        st.caption("**Ready to run?**")
+        for check in readiness(products, practice):
+            icon = {True: "✅", False: "⚠️", None: "➖"}[check["ok"]]
+            st.markdown(f"{icon} **{check['label']}** — {check['detail']}")
+
+    st.title("Wonderfeed")
+    if not running and not videos:
+        st.caption("Press Start. It makes TikTok videos for your products and "
+                   "puts them in a folder for you to post.")
+
+    if not running:
+        log_file = ROOT / "out" / "worker.log"
+        if log_file.exists() and not st.session_state.get("start_error"):
+            tail = "\n".join(log_file.read_text(encoding="utf-8",
+                                                errors="replace").splitlines()[-6:])
+            if "error" in tail.lower() or "traceback" in tail.lower():
+                st.error("**It stopped with a problem:**")
+                st.code(tail, language=None)
+
+    render_simple(p, status, running, practice, counts, videos)
+
+    if advanced:
+        st.divider()
+        render_advanced(p, status, running, counts, videos, settings, products)
 
     if running:
         time.sleep(REFRESH_SECONDS)
