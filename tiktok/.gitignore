@@ -1,0 +1,8 @@
+.venv/
+out/
+config/settings.yaml
+config/products.yaml
+assets/*
+!assets/.gitkeep
+__pycache__/
+*.pyc

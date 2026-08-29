@@ -1,0 +1,57 @@
+# Wonderfeed settings. Copy to config/settings.yaml and edit.
+# Secrets are NEVER stored here - they come from environment variables.
+
+brand:
+  name: "Luxe Leaf Prints"
+  # Shown in the pinned comment / caption CTA when a product has no direct link.
+  handle: "@yourhandle"
+  # British English throughout; keep this true for a UK shop.
+  british_english: true
+
+video:
+  width: 1080
+  height: 1920
+  fps: 30
+  # Three beats = hook / reveal / payoff. Seconds per beat.
+  beat_seconds: [2.5, 3.0, 3.5]
+  # Burned-in caption styling
+  font_size: 62
+  font_colour: "white"
+  stroke_colour: "black"
+  stroke_width: 6
+  # Keep text inside TikTok's safe area (UI covers top ~13% and bottom ~22%)
+  safe_top_pct: 0.15
+  safe_bottom_pct: 0.26
+  # Where the text block sits in the safe band (0 = top, 1 = bottom).
+  text_bias: 0.18
+
+models:
+  # Claude writes the scripts/captions.
+  script_model: "claude-sonnet-4-5"
+  # fal.ai endpoints. Slugs change - check https://fal.ai/models before editing.
+  still_endpoint: "fal-ai/flux-pro/kontext"
+  motion_endpoint: "fal-ai/kling-video/v2.5-turbo/pro/image-to-video"
+  # Set to null to skip motion and ship a Ken Burns pan over the stills instead
+  # (much cheaper: ~£0 vs ~£0.60/video). Good for testing.
+  use_motion: false
+
+voiceover:
+  # one of: none | tts
+  mode: "none"
+  tts_endpoint: "fal-ai/elevenlabs/tts/multilingual-v2"
+  voice: "Rachel"
+
+output:
+  dir: "out"
+  # Keep this many days of finished videos before pruning.
+  keep_days: 30
+
+posting:
+  # How many videos to build per run.
+  per_run: 7
+  # Refuse to reuse a (product, angle) pair within this many days.
+  angle_cooldown_days: 21
+  # TikTok requires AI-generated content to be disclosed. This appends the
+  # tag to every caption. Leave true unless you are filming real footage.
+  ai_disclosure: true
+  ai_disclosure_text: "AIgenerated"

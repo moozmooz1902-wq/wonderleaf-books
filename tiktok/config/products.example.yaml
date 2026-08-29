@@ -1,0 +1,30 @@
+# Your catalogue. Copy to config/products.yaml.
+# One entry per product you can legitimately link on TikTok Shop.
+
+products:
+  - id: "botanical-3set"
+    name: "Botanical Line Art Trio"
+    # The TikTok Shop product URL. Used in the caption/pinned comment and as
+    # the thing you tag when scheduling in TikTok Studio.
+    link: "https://vt.tiktok.com/REPLACE_ME/"
+    price_gbp: 24.99
+    # Local reference image(s) of the actual product. Drives every visual so
+    # the art in the video IS the art you sell. Put files in tiktok/assets/.
+    images:
+      - "assets/botanical-3set.jpg"
+    # Free-text description feeding the script writer.
+    description: >
+      A set of three A3 botanical line-art prints in black on off-white,
+      designed to hang as a horizontal trio above a sofa or bed.
+    # Rooms/contexts this product suits. The pipeline rotates through these.
+    rooms:
+      - "modern living room with a beige linen sofa"
+      - "calm bedroom with white bedding and oak bedside table"
+      - "bright hallway with a console table and dried grasses"
+    # Audience angles to rotate. Keep adding - this is your variety engine.
+    angles:
+      - "renting and cannot drill holes"
+      - "blank wall that has been bare for two years"
+      - "cheap way to make a room look expensive"
+      - "moving into a first flat"
+      - "styling above the sofa without it looking cluttered"
