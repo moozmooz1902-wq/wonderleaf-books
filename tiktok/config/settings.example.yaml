@@ -72,3 +72,13 @@ listings:
   min_views: 300
   # Videos posted at a product with zero units before we call it dead.
   cull_after_videos: 15
+
+worker:
+  # Seconds between polls when idle or paused.
+  poll_seconds: 3
+  # How many tasks to queue when the queue runs dry.
+  refill_batch: 12
+  # Stop building after this many videos in a day. Protects your API spend.
+  daily_cap: 24
+  # Sleep between checks when there is nothing to do.
+  idle_sleep: 20

@@ -31,6 +31,49 @@ If you later pass the audit and decide link-free posting is worth it,
 `wonderfeed/publish.py` has the token-refresh and upload plumbing; only the
 `video.publish` call would need adding.
 
+## The desktop app
+
+```bash
+./start.sh          # macOS / Linux  (start.bat on Windows)
+```
+
+First run installs everything and copies the example configs. Then it opens a
+control panel in your browser:
+
+- **▶ Play** — starts the worker and leaves it running while you work
+- **⏸ Pause / ⏹ Stop** — Stop finishes the task in flight, then exits cleanly
+- **↻ Refill** — queue another batch now
+- **Dry run** — watch the whole loop work with placeholder visuals, no spend
+
+The worker runs as its **own detached process**, so closing the browser tab or
+the terminal does not stop it. Verified: the worker survives the UI being killed.
+
+**It resumes.** The queue is on disk and every state change is written
+immediately, so if you close the laptop mid-batch the interrupted task returns to
+pending and finishes on the next Play. The interrupted attempt is refunded too —
+being shut down is not a failure, and without that, closing the lid twice on the
+same task would exhaust its retries.
+
+The **Analytics** tab is where the loop closes: drop in a Seller Center CSV and
+it shows the `KEEP`/`CULL`/`WATCH` verdicts. The worker reads those directly —
+**it skips products whose listing is marked `CULL`, and gives `KEEP` products
+roughly double the volume.** So selling listings automatically get more videos
+and dead ones stop consuming your API budget.
+
+Keys go in `tiktok/.env` (copy `.env.example`), so Play works without exporting
+anything in a terminal:
+
+```
+ANTHROPIC_API_KEY=sk-ant-...
+FAL_KEY=...
+```
+
+Press Play without them and you get a specific error naming what's missing —
+not a button that silently does nothing.
+
+`daily_cap` under `worker:` in `settings.yaml` caps videos per day (default 24)
+so a forgotten worker can't run up a bill.
+
 ## Setup
 
 ```bash

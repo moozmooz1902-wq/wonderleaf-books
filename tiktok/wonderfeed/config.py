@@ -8,6 +8,32 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 
 
+def load_dotenv(path=None):
+    """Read ROOT/.env into the environment.
+
+    The desktop app is launched by double-clicking a script, which inherits no
+    shell exports, so keys have to come from a file. Existing environment
+    variables always win, so CI secrets are never overridden.
+    """
+    path = Path(path) if path else ROOT / ".env"
+    if not path.exists():
+        return {}
+    loaded = {}
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        key, value = key.strip(), value.strip().strip("'\"")
+        if key and key not in os.environ:
+            os.environ[key] = value
+            loaded[key] = value
+    return loaded
+
+
+load_dotenv()
+
+
 class ConfigError(RuntimeError):
     pass
 
@@ -47,8 +73,9 @@ def secret(name, required=True):
     val = os.environ.get(name, "").strip()
     if not val and required:
         raise ConfigError(
-            f"Environment variable {name} is not set. "
-            f"Export it locally or add it as a GitHub Actions secret."
+            f"{name} is not set. Put it in tiktok/.env as:\n"
+            f"    {name}=your-key-here\n"
+            f"(or export it, or add it as a GitHub Actions secret)"
         )
     return val
 
