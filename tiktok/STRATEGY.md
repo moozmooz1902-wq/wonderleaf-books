@@ -57,7 +57,36 @@ So the offer stays sharp even as the catalogue sprawls:
 - Let the angle do the targeting. One product against thirty angles reaches
   thirty different people without thirty different listings.
 
-## 3. The video format
+## 3. What to sell — filling 100 slots
+
+Twelve niches ship in `wonderfeed/catalogue.py`, drawn from what recurs across
+2026 print-on-demand and Etsy trend reporting: **cars, family, botanical,
+identity, music, sport, travel, affirmation, pets, humour, kids, food.** Your
+two instincts — family and cars — are both in there and both well supported.
+
+**The rule that decides whether a listing sells: identity beats aesthetics.**
+Across print-on-demand, role- and passion-specific designs consistently outsell
+generic ones in the same category. So:
+
+| Weak (a category) | Strong (a buyer) |
+|---|---|
+| "classic car prints" | Mk1 Golf GTI — for the person who actually owned one |
+| "family wall art" | first Father's Day, from the baby's point of view |
+| "nurse art" | NICU nurse, night shift |
+| "botanical prints" | the three plants that survive a north-facing flat |
+
+The right-hand column is what the catalogue generator is instructed to produce.
+It is also why one product supports thirty angles: the buyer is specific enough
+to have thirty different bad days you can open a video on.
+
+**Trademark warning — this is the one that gets shops closed, not just videos
+removed.** Cars, music and sport are the highest-selling niches here *and* the
+most dangerous: club badges, band logos, marque names, film and TV properties
+and living people's likenesses are all off limits. The generator is instructed
+to describe styles and subjects rather than licensed marks, but **check every
+concept before you list it.** A shop suspension costs you all 100 slots at once.
+
+## 4. The video format
 
 Three beats, ~9 seconds. This is what the pipeline generates.
 
@@ -80,7 +109,7 @@ Rules that matter more than the visuals:
   20 products × 1 angle. Angles live in `config/products.yaml` and the pipeline
   refuses to reuse a (product, angle) pair within 21 days.
 
-## 4. Cadence and the posting workflow
+## 5. Cadence and the posting workflow
 
 **The constraint you must design around:** you cannot legally auto-post publicly
 *and* keep the product link. See `README.md` §"Why this doesn't auto-post" for
@@ -103,7 +132,7 @@ covers you.
 **Posting times (UK):** 7–9am, 12–1pm, 7–10pm. Evening is strongest for home
 decor — people scroll on the sofa looking at the wall you're selling to.
 
-## 5. The link problem
+## 6. The link problem
 
 You have three options and they are not equal:
 
@@ -115,7 +144,7 @@ You have three options and they are not equal:
 
 Do (1). Use (3) as a backup on every video regardless — it costs nothing.
 
-## 6. Compliance — the stuff that gets accounts killed
+## 7. Compliance — the stuff that gets accounts killed
 
 Luxe Art has 27 followers after 68 videos. Accounts in this category do get
 throttled, and the causes are boringly consistent:
@@ -131,7 +160,7 @@ throttled, and the causes are boringly consistent:
   first week, engage from the account like a person, then scale to 3.
 - **One account, one niche.** Mixed-topic accounts don't get a stable audience.
 
-## 7. What to measure, and when to kill
+## 8. What to measure, and when to kill
 
 Track weekly, not daily. Daily numbers are noise.
 
@@ -143,12 +172,12 @@ Track weekly, not daily. Daily numbers are noise.
 | Conversion | >2% of clicks | low with good CTR → listing/photos problem, not TikTok |
 
 **Kill criteria:** judge the *listing*, on units sold, using
-`python -m wonderfeed.listings review` (§8). Do not kill on views or likes.
+`python -m wonderfeed.listings review` (§9). Do not kill on views or likes.
 A listing pulling traffic and converting nothing is dead; a listing with no
 traffic yet has not been tested. Those need opposite responses, which is the
 whole reason that tool exists.
 
-## 8. Listing rotation — working the 100 cap
+## 9. Listing rotation — working the 100 cap
 
 The cap is the real constraint on this business. A slot holding a listing that
 has had twenty videos and no sales is costing you a test you cannot run.
@@ -176,23 +205,55 @@ need opposite responses. Killing a `WATCH` listing throws away a product you
 never actually tested; keeping a `CULL` listing burns a slot indefinitely. This
 is the single most valuable call the tool makes.
 
-Thresholds live under `listings:` in `settings.yaml`. The default
+**The one-week rule.** `grace_days` is set to **7**, so a listing is judged
+after a week. That is aggressive, and it is only safe because of the
+`CULL`/`WATCH` split above: a listing with no traffic after a week lands in
+`WATCH`, not `CULL`, so a short window never kills something you simply haven't
+tested yet. It only kills listings that got real traffic and converted nobody —
+and a week of that is enough.
+
+The one case where 7 days is too tight is if you're posting fewer than about two
+videos per listing per week; then most listings sit in `WATCH` forever and the
+window does nothing. At 100 listings and 3 videos/day you are posting roughly
+one video per listing every five days, so expect a lot of `WATCH` early on.
+That is the system telling you the truth: **at 100 listings your bottleneck is
+video volume, not culling.**
+
+Other thresholds live under `listings:` in `settings.yaml`. The default
 `cull_after_videos: 15` says: fifteen videos at a product with nothing to show
-is enough evidence.
+is enough evidence, regardless of age.
 
-## 9. First 30 days
+## 10. First 30 days
 
-- **Week 1** — TikTok Shop seller/affiliate set up. List 10–15 products to start
-  filling slots. Generate angles in bulk
-  (`python -m wonderfeed.angles --product X --count 30 --write`), then build and
-  post 1–2/day manually so you learn what the app does.
-- **Week 2** — Go to 2–3/day off the weekly batch. Register every listing with
-  `listings add`. Push toward 30+ live listings.
-- **Week 3** — First real cull cycle: import the CSV, run `review`, delist the
-  dead, refill the freed slots. Rewrite angles based on which hooks held watch
-  time.
-- **Week 4** — 3/day, aiming at the cap. Cull weekly from here on. The catalogue,
-  not the account, is the asset you are building.
+The goal of month one is a **full shop and a working cull loop**, not a viral
+video.
 
-Do not scale spend before week 3. At ~£0.10/video the content is nearly free;
-the expensive mistake is 300 videos pointed at listings you never culled.
+- **Week 1 — fill the shelves.** Set up TikTok Shop. Generate the catalogue
+  (`python -m wonderfeed.catalogue --count 100 --write`), check every concept
+  for trademark risk (§3), and list as many as you can get through. Register
+  each with `listings add` as you go. Post 1–2 videos/day by hand to learn the
+  app.
+- **Week 2 — get to volume.** Weekly batch on. 2–3 videos/day, spread across
+  listings rather than concentrated on favourites — an untested listing tells
+  you nothing. Keep listing toward the cap.
+- **Week 3 — first cull cycle.** Export the CSV, `listings import`,
+  `listings review`. Delist everything marked `CULL`, replace with new concepts
+  from the unused catalogue. This is the loop you will now run every week.
+- **Week 4 — concentrate.** You should have a handful of `KEEP` listings. Point
+  `--per-product` at those and let the winners take the volume, while new tests
+  fill the slots the culls freed.
+
+Then repeat weekly: import, review, cull, replace, re-point volume at what sells.
+
+Two failure modes to watch for:
+
+- **Spreading too thin.** 100 listings and 3 videos/day means each listing gets
+  a video every ~5 days. That is barely enough to generate signal. If everything
+  sits in `WATCH` after three weeks, cut the catalogue back and give the
+  survivors more shots rather than listing more.
+- **Falling in love with a listing.** If `review` says `CULL`, cull it. The slot
+  is worth more than the idea. Crush Gallery's advantage is almost certainly
+  catalogue breadth plus turnover, not any single design.
+
+At ~£0.10/video the content is nearly free. The expensive mistake is 300 videos
+pointed at listings you never culled.

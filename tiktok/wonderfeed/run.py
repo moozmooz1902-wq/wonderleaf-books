@@ -39,24 +39,44 @@ DRY_BRIEF = {
 }
 
 
-def pick_jobs(products, state, settings, count, only_product=None, rng=random):
-    """Choose (product, angle, room) triples, avoiding recently used pairs."""
+def pick_jobs(products, state, settings, count, only_product=None, rng=random,
+              niche=None, per_product=None):
+    """Choose (product, angle, room) triples, preferring unused angles."""
     cooldown = settings["posting"]["angle_cooldown_days"]
     recent = state.recent_pairs(cooldown)
     pool = [p for p in products if not only_product or p["id"] == only_product]
+    if niche:
+        pool = [p for p in pool if p.get("niche") == niche]
     if not pool:
-        raise ConfigError(f"No product matches id '{only_product}'")
+        raise ConfigError(f"No products match '{only_product or niche}'")
 
-    fresh, stale = [], []
-    for p in pool:
-        for angle in p["angles"]:
-            (stale if (p["id"], angle) in recent else fresh).append((p, angle))
-    rng.shuffle(fresh)
-    rng.shuffle(stale)
-    chosen = (fresh + stale)[:count]
-    if len(chosen) < count:
-        print(f"  note: only {len(chosen)} product/angle combos exist; "
-              f"add more angles to products.yaml to post more per run")
+    def ranked_angles(p):
+        """Unused angles first, so variety is spent before repetition."""
+        fresh = [a for a in p["angles"] if (p["id"], a) not in recent]
+        stale = [a for a in p["angles"] if (p["id"], a) in recent]
+        rng.shuffle(fresh)
+        rng.shuffle(stale)
+        return fresh + stale
+
+    if per_product:
+        # N videos for every product in scope - "more videos for them".
+        chosen = []
+        for p in pool:
+            chosen.extend((p, a) for a in ranked_angles(p)[:per_product])
+        rng.shuffle(chosen)
+        if count:
+            chosen = chosen[:count]
+    else:
+        fresh, stale = [], []
+        for p in pool:
+            for angle in p["angles"]:
+                (stale if (p["id"], angle) in recent else fresh).append((p, angle))
+        rng.shuffle(fresh)
+        rng.shuffle(stale)
+        chosen = (fresh + stale)[:count]
+        if len(chosen) < count:
+            print(f"  note: only {len(chosen)} product/angle combos available; "
+                  f"add angles with `python -m wonderfeed.angles`")
 
     jobs = []
     for p, angle in chosen:
@@ -139,6 +159,9 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description="Build a batch of TikTok videos.")
     ap.add_argument("--count", type=int, default=None, help="how many videos")
     ap.add_argument("--product", help="restrict to one product id")
+    ap.add_argument("--niche", help="restrict to one niche (see catalogue --list-niches)")
+    ap.add_argument("--per-product", type=int,
+                    help="build this many videos for EVERY product in scope")
     ap.add_argument("--dry-run", action="store_true",
                     help="no API calls, placeholder visuals - proves the pipeline")
     ap.add_argument("--seed", type=int, help="deterministic job selection")
@@ -161,14 +184,16 @@ def main(argv=None):
             print(f"Config error: {exc}", file=sys.stderr)
             return 2
 
-    count = args.count or settings["posting"]["per_run"]
+    count = args.count or (0 if args.per_product else settings["posting"]["per_run"])
     out_dir = Path(args.out) if args.out else resolve_path(settings["output"]["dir"])
     state = State()
     rng = random.Random(args.seed) if args.seed is not None else random
 
-    print(f"Building {count} video(s) -> {out_dir}"
+    scope = args.product or args.niche or "all products"
+    print(f"Building {count or 'all matching'} video(s) for {scope} -> {out_dir}"
           f"{'  [DRY RUN]' if args.dry_run else ''}")
-    jobs = pick_jobs(products, state, settings, count, args.product, rng)
+    jobs = pick_jobs(products, state, settings, count, args.product, rng,
+                     niche=args.niche, per_product=args.per_product)
 
     results = []
     for job in jobs:

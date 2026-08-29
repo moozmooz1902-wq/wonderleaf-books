@@ -60,7 +60,10 @@ listings:
   # Hard cap on live listings in your shop.
   cap: 100
   # Do not judge a listing before it has been live this long.
-  grace_days: 14
+  # 7 = your one-week rule. Safe at this length only because a listing with no
+  # traffic lands in WATCH, not CULL - short windows kill untested listings
+  # otherwise. Raise it if you ever post fewer than ~2 videos/day per listing.
+  grace_days: 7
   # Window that `review` totals stats over.
   review_window_days: 30
   # Units sold inside the window needed to survive.

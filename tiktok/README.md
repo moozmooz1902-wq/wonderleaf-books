@@ -69,7 +69,17 @@ python -m wonderfeed.run --count 7
 
 # One product only
 python -m wonderfeed.run --product botanical-3set --count 2
+
+# Everything in one niche, N videos for each product in it
+python -m wonderfeed.run --niche cars --per-product 3
+
+# Cap the total regardless
+python -m wonderfeed.run --niche family --per-product 3 --count 20
 ```
+
+`--per-product` is the "more videos for them" switch: it takes N *distinct*
+angles from every product in scope, so ten products at 3 each gives thirty
+videos with no repeated premise.
 
 ### Angles — the variety engine
 
@@ -84,6 +94,28 @@ python -m wonderfeed.angles --product botanical-3set --count 30 --write  # appen
 
 It is told what you already have and won't repeat it, so run it again whenever
 a product runs dry.
+
+### Filling the shop — catalogue generation
+
+The 100-slot cap is the real constraint, so fill every slot with a *different
+bet*. This generates listing concepts across twelve niches, all as trios:
+
+```bash
+python -m wonderfeed.catalogue --list-niches
+python -m wonderfeed.catalogue --count 100                    # preview
+python -m wonderfeed.catalogue --count 100 --write            # merge into products.yaml
+python -m wonderfeed.catalogue --niche cars --count 12 --write
+python -m wonderfeed.catalogue --count 20 --dry-run --write   # offline placeholders
+```
+
+Write-back merges by `id` and never overwrites an existing product, so re-running
+is safe — it adds what's new and leaves what's there alone.
+
+Each concept arrives with a name, description, three room settings and five
+angles, but with **empty `link` and `images`**. Fill those in once the listing
+exists in Seller Center: the pipeline refuses to generate visuals without a real
+product photo, because that photo is what keeps the art in the video identical
+to the art you sell.
 
 ### Listing rotation — working the 100 cap
 
