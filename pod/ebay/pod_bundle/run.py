@@ -74,12 +74,23 @@ def main():
                     help="e.g. r2:tshirt-xxx/art  - upload each file and delete "
                          "it locally as soon as it is done. Keeps peak disk near "
                          "zero, so a 5GB pod is enough. Requires rclone set up.")
+    ap.add_argument("--no-resume", action="store_true",
+                    help="re-render every design even if it is already in R2, "
+                         "overwriting each file in place. Use this when the "
+                         "RENDERER has changed - resume only knows whether a "
+                         "file exists, not whether it is the current version, "
+                         "so without this a re-render skips the whole "
+                         "catalogue and does nothing. Overwriting in place is "
+                         "safer than emptying the bucket first: the listings "
+                         "keep working throughout.")
     a = ap.parse_args()
 
     global UPLOAD
     UPLOAD = a.upload
     already = set()
-    if UPLOAD:
+    if UPLOAD and a.no_resume:
+        print("  --no-resume: re-rendering everything, overwriting in place")
+    if UPLOAD and not a.no_resume:
         if not shutil.which("rclone"):
             sys.exit("rclone not found - install it, or drop --upload and use a bigger disk")
         print(f"  uploading to {UPLOAD} and deleting locally as we go")
