@@ -48,12 +48,18 @@ def find_columns(fieldnames):
 
 
 def read_listings(path):
-    # Seller Hub exports sometimes carry a preamble line before the header.
+    # Seller Hub exports open with a #INFO line naming the template, before
+    # the real header. It is comma-separated like everything else, so it has
+    # to be recognised by the leading #, not by counting fields.
     with open(path, newline="", encoding="utf-8-sig", errors="replace") as fh:
-        head = fh.readline()
-        fh.seek(0)
-        if "," not in head or len(head.split(",")) < 3:
-            fh.readline()
+        while True:
+            here = fh.tell()
+            line = fh.readline()
+            if not line:
+                raise SystemExit(f"{path}: no header row found")
+            if not line.lstrip().startswith("#"):
+                fh.seek(here)
+                break
         rows = list(csv.DictReader(fh))
     if not rows:
         raise SystemExit(f"{path}: no rows found")

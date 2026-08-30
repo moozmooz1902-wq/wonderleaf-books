@@ -249,6 +249,11 @@ def main():
     ap.add_argument("--seed", type=int, default=20260829,
                     help="use a different seed per store so each gets its "
                          "own mix")
+    ap.add_argument("--exclude", metavar="FILE",
+                    help="text file of design ids already listed, one per "
+                         "line. Uploading Add for a label that is already "
+                         "live creates a SECOND listing of the same design, "
+                         "which is the duplication eBay suppresses")
     ap.add_argument("--limit", type=int)
     a = ap.parse_args()
 
@@ -258,6 +263,12 @@ def main():
 
     base_url = a.img_base.rstrip("/")
     designs = json.loads(Path(a.catalogue).read_text())
+
+    if a.exclude:
+        skip = {ln.strip() for ln in open(a.exclude) if ln.strip()}
+        before = len(designs)
+        designs = [d for d in designs if d["design_id"] not in skip]
+        print(f"  {before - len(designs):,} designs skipped as already listed")
 
     if not a.no_shuffle:
         designs = spread(designs, a.seed)
@@ -321,23 +332,32 @@ def main():
         r["C:Features"] = "Breathable"
         return r
 
-    files, buf, n, nbytes = [], [], 1, 0
+    # Write straight to the file and split on its ACTUAL size. Estimating the
+    # bytes from the description length was 15% pessimistic, which left the
+    # last file a fifth full and cost an extra upload; asking the file how big
+    # it is costs nothing and is exact.
+    files, n = [], 1
     cap = int(a.max_mb * 1e6)
+    fh = None
+    w = None
 
-    def flush():
-        nonlocal buf, n, nbytes
-        if not buf:
-            return
+    def open_next():
+        nonlocal fh, w, n
         fn = f"{a.out}_{n:02d}.csv"
-        with open(fn, "w", newline="", encoding="utf-8") as fh:
-            w = csv.DictWriter(fh, fieldnames=HEADER)
-            w.writeheader()
-            w.writerows(buf)
-        print(f"  {fn}  {len(buf):,} rows  "
-              f"{os.path.getsize(fn) / 1e6:.1f} MB")
+        fh = open(fn, "w", newline="", encoding="utf-8")
+        w = csv.DictWriter(fh, fieldnames=HEADER)
+        w.writeheader()
         files.append(fn)
-        buf, nbytes = [], 0
         n += 1
+
+    def close_current():
+        nonlocal fh
+        if fh is None:
+            return
+        fh.close()
+        fn = files[-1]
+        print(f"  {fn}  {os.path.getsize(fn) / 1e6:.1f} MB")
+        fh = None
 
     listings = 0
     for d in designs:
@@ -356,29 +376,31 @@ def main():
         desc = DESC.format(subject=subject, rows=_ROWS, tags=tags)
         pic = f"{base_url}/art/mock/{d['design_id']}.jpg"
 
+        if fh is None:
+            open_next()
         if a.single:
             # Size is "One Size" deliberately: the field is required by the
             # category, and a real size there would contradict the box.
             r = row(d, "One Size", a.single_price, desc=desc, pic=pic)
             r["C:Personalise"] = "Yes"
             r["C:Personalisation Instructions"] = a.personalise_text
-            buf.append(r)
+            w.writerow(r)
         else:
             # The parent carries the picture and the description and no price;
             # the children carry only what differs, which is size and price.
-            buf.append(row(d, "", None,
+            w.writerow(row(d, "", None,
                            reldet="Size=" + ";".join(s for s, _ in SIZES),
                            desc=desc, pic=pic))
             for size, price in SIZES:
-                buf.append(row(d, size, price, rel="Variation",
+                w.writerow(row(d, size, price, rel="Variation",
                                reldet=f"Size={size}", child=True))
         listings += 1
-        # Estimate rather than measure: the description dominates and is the
-        # only field that varies much in size.
-        nbytes += len(desc) + 600 * (1 if a.single else len(SIZES))
-        if nbytes >= cap or len(buf) >= a.rows:
-            flush()
-    flush()
+        # Split only between listings, never inside one: a parent separated
+        # from its size rows is a listing eBay cannot build.
+        fh.flush()
+        if fh.tell() >= cap or listings % a.rows == 0:
+            close_current()
+    close_current()
 
     per = 1 if a.single else 1 + len(SIZES)
     items = listings * (1 if a.single else len(SIZES))
