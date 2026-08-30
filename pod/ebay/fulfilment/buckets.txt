@@ -1,0 +1,15 @@
+# Every store's PUBLIC R2 bucket URL, one per line.
+#
+# The print tool searches all of them for a custom label, so it does not
+# matter which store an order came from. Add a store by adding a line here
+# and copying this file to each Mac - no other change is needed.
+#
+# The URL is in Cloudflare -> R2 -> the bucket -> Settings -> Public access.
+# It looks like https://pub-<32 hex characters>.r2.dev  (no trailing slash,
+# no /art on the end).
+
+https://pub-19fad43c12d848caa97d6d53a8695d03.r2.dev   # tshirt-mockups
+https://pub-4b710c8610a84acc8fad1513f48132fd.r2.dev   # tshirt-m12k
+
+# https://pub-XXXXXXXX.r2.dev                         # store 3 - add me
+# https://pub-XXXXXXXX.r2.dev                         # store 4 - add me

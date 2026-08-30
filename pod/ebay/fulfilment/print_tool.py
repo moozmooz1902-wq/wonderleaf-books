@@ -298,8 +298,10 @@ def make_underbase(art):
 class App:
     def __init__(self, root):
         self.root = root
-        self.out_dir = os.path.join(os.path.expanduser("~"), "Desktop",
-                                    "Print Files")
+        # A fresh dated folder per run, not one fixed directory. Everything
+        # landed in ~/Desktop/Print Files before, so each batch buried the
+        # last and the numbered folders stopped matching their picking list.
+        self.out_dir = None          # created when the run actually starts
         root.title("T-Shirt Print Files")
         root.geometry("640x600")
         root.configure(bg="#f5f5f7")
@@ -415,7 +417,10 @@ class App:
             self.say("    pip3 install tifffile imagecodecs")
 
     def update_folder_label(self):
-        name = os.path.basename(self.out_dir)
+        # out_dir is None until a run starts, because the folder name carries
+        # the time the batch was made rather than the time the app opened.
+        name = (os.path.basename(self.out_dir) if self.out_dir
+                else "a new dated folder in Downloads")
         self.folder_lbl.config(text=f"saving to: {name}")
 
     def pick_folder(self):
@@ -456,6 +461,8 @@ class App:
                          daemon=True).start()
 
     def run(self, skus, width):
+        if not self.out_dir:
+            self.out_dir = wl_lookup.run_folder()
         os.makedirs(self.out_dir, exist_ok=True)
 
         # index mapping folder number -> custom label, so numbering the
@@ -569,6 +576,7 @@ class App:
             self.root.update_idletasks()
 
         self.say(f"\n{ok} of {len(skus)} ready in {self.out_dir}")
+        self.update_folder_label()
         if ok:
             self.say("")
             if self.tiff.get() and TIFF_OK:

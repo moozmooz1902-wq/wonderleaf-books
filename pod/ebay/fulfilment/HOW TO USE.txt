@@ -1,0 +1,63 @@
+WONDERLEAF PRINT FILES
+======================
+
+TO MAKE PRINT FILES
+    Double-click "Print Tool.command".
+    Paste the custom labels from your orders. Press the button.
+    A folder opens with the files in it.
+
+That is the whole thing. Nothing to install, no Terminal.
+
+The first run on a new Mac takes an extra minute while it installs what it
+needs. After that it opens straight away.
+
+
+WHERE THE FILES GO
+    Downloads > Wonderleaf Print Files > Orders <date> <time>
+
+A NEW folder every run, named with the date and time. Batches can never
+land on top of each other, and the newest is always last in a sorted list.
+It used to write into one fixed folder, which is why orders were getting
+mixed together.
+
+Inside, one numbered folder per order:
+
+    1/1.png          the artwork - THIS is what the printer gets
+    1/1_SHIRT.jpg    how it looks on the shirt - for checking only
+    2/2.png
+    2/2_SHIRT.jpg
+    orders.txt       which folder belongs to which custom label
+
+The .png opens looking white and patchy in Preview. That is correct. It is
+a transparent file made for a BLACK shirt - every dark part is deliberately
+absent so the garment shows through. Judge it by the _SHIRT.jpg.
+
+
+IT SEARCHES EVERY STORE
+    A custom label does not say which store it came from, so the tool looks
+    in all of them at once. It does not matter which store an order is from.
+
+
+ADDING A STORE
+    Open buckets.txt. Add a line:
+
+        https://pub-XXXXXXXX.r2.dev    # what this store is called
+
+    The URL is in Cloudflare > R2 > the bucket > Settings > Public access.
+    Copy buckets.txt to the other Macs. Nothing else to change.
+
+    To see what it searches, and where one label lives:
+
+        python3 order.py --stores
+        python3 wl_lookup.py bd_16_Dad_0
+
+
+IF A LABEL IS NOT FOUND
+    It names the stores it searched. Either the design is in a bucket that
+    is not listed in buckets.txt, or that bucket's public access is switched
+    off in Cloudflare.
+
+
+PUTTING IT ON ANOTHER MAC
+    Copy the whole folder. Keep the files together - the tool needs
+    wl_lookup.py and buckets.txt beside it.

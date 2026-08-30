@@ -33,7 +33,9 @@ import wl_lookup
 ap = argparse.ArgumentParser()
 ap.add_argument("skus", nargs="*", help="e.g. GR-0012345")
 ap.add_argument("--file", help="text file with one SKU per line")
-ap.add_argument("--out", default="print")
+ap.add_argument("--out", default=None,
+                help="where to write. Default is a new dated folder in "
+                     "Downloads, so batches never land on top of each other")
 ap.add_argument("--base", default=None,
                 help="look in this bucket URL first. Normally unnecessary - "
                      "every store is searched automatically")
@@ -65,8 +67,8 @@ if args.stores:
     print("designs are searched for in these stores:\n")
     for st in wl_lookup.sources():
         print(f"  {st.get('name','?'):<20} {st['base']}")
-    print("\nthis list comes from sources.json in R2, so it is the same on")
-    print("every machine. Add a store by editing that one file.")
+    print("\nadd a store by putting its public URL in buckets.txt, next to")
+    print("this script, then copying that file to the other Macs.")
     raise SystemExit
 
 DPI = 300
@@ -106,7 +108,11 @@ if not skus:
     input("\nNo SKUs given. Press Enter to close.")
     raise SystemExit
 
-os.makedirs(args.out, exist_ok=True)
+# A fresh dated folder per run. Everything used to go into "print", so a
+# second batch mixed itself into the first and the numbered folders no
+# longer matched the picking list they were made for.
+OUT = args.out or wl_lookup.run_folder()
+os.makedirs(OUT, exist_ok=True)
 
 
 def locate(label):
@@ -303,7 +309,7 @@ for i, sku in enumerate(skus, 1):
     #
     # orders.txt at the top maps every number back to its custom label, so
     # numbering the folders loses nothing.
-    folder = os.path.join(args.out, str(i))
+    folder = os.path.join(OUT, str(i))
     os.makedirs(folder, exist_ok=True)
     dst = os.path.join(folder, f"{i}.png")
     try:
@@ -368,7 +374,7 @@ for i, sku in enumerate(skus, 1):
 
 # index so a folder number can always be traced back to its order
 try:
-    with open(os.path.join(args.out, "orders.txt"), "w") as fh:
+    with open(os.path.join(OUT, "orders.txt"), "w") as fh:
         fh.write("folder   custom label\n")
         fh.write("------   ------------\n")
         for n, sk in enumerate(skus, 1):
@@ -376,7 +382,7 @@ try:
 except Exception:
     pass
 
-print(f"\n{ok}/{len(skus)} written to {os.path.abspath(args.out)}")
+print(f"\n{ok}/{len(skus)} written to {os.path.abspath(OUT)}")
 print("One folder per order. orders.txt says which folder is which label.")
 print(f"{args.width}in wide at {DPI}dpi, transparent background.")
 print("Numbered in order so they match your picking list.")
@@ -393,7 +399,7 @@ if ok:
     # open the folder so the files are right there
     try:
         if sys.platform == "darwin":
-            os.system(f"open '{os.path.abspath(args.out)}'")
+            os.system(f"open '{os.path.abspath(OUT)}'")
     except Exception:
         pass
 

@@ -52,6 +52,13 @@ FALLBACK = [
      "base": "https://pub-4b710c8610a84acc8fad1513f48132fd.r2.dev"},
 ]
 
+# A plain text file next to this script, one bucket URL per line. Read BEFORE
+# sources.json, so a Mac can be pointed at a new store immediately without
+# anyone having to upload anything to R2 first. Lines starting with # are
+# ignored, so each line can be labelled.
+LOCAL_LIST = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                          "buckets.txt")
+
 EXTS = ("png", "jpg")
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/120.0 Safari/537.36")
@@ -127,19 +134,40 @@ def _save_json(path, data):
 # --------------------------------------------------------------------------
 # where the designs live
 # --------------------------------------------------------------------------
+def _local_sources():
+    """Buckets listed in buckets.txt beside this script."""
+    out = []
+    try:
+        for line in open(LOCAL_LIST):
+            url, _, note = line.partition("#")
+            url = url.strip().rstrip("/")
+            if url.startswith("http"):
+                # The comment after the URL is the store's name, so the
+                # "not found in any store" message names stores a person
+                # recognises rather than a row of hex.
+                out.append({"name": note.strip() or url.split("//")[-1][:18],
+                            "base": url})
+    except Exception:
+        pass
+    return out
+
+
 def sources(refresh=False):
     """
-    Every store's public bucket URL, newest list first.
+    Every store's public bucket URL.
 
-    Fetched from R2 so the list is the same on every machine. Cached on disk
-    so a slow or offline start still works.
+    Three places, in order: buckets.txt beside this script, then sources.json
+    in R2, then the built-in fallback. Anything found locally is searched
+    first and is never overwritten by the remote list, so a store can be added
+    on one machine straight away.
     """
+    local = _local_sources()
     cached = _load_json(SOURCES_CACHE)
     fresh_enough = (cached and not refresh and
                     time.time() - os.path.getmtime(SOURCES_CACHE)
                     < SOURCES_MAX_AGE)
     if fresh_enough:
-        return cached
+        return _merge(local, cached)
 
     body = _get(SOURCES_URL, timeout=10)
     if body:
@@ -151,11 +179,46 @@ def sources(refresh=False):
                 for e in entries:
                     e["base"] = e["base"].rstrip("/")
                 _save_json(SOURCES_CACHE, entries)
-                return entries
+                return _merge(local, entries)
         except Exception:
             pass
 
-    return cached or FALLBACK
+    return _merge(local, cached or FALLBACK)
+
+
+def _merge(*lists):
+    """Concatenate, keeping order and dropping repeats of the same base."""
+    seen, out = set(), []
+    for lst in lists:
+        for e in lst or []:
+            b = e["base"].rstrip("/")
+            if b not in seen:
+                seen.add(b)
+                out.append({**e, "base": b})
+    return out
+
+
+def run_folder(root=None, prefix="Orders"):
+    """
+    A fresh, dated folder for this batch.
+
+    Both tools used to write into one fixed directory - the GUI into
+    ~/Desktop/Print Files - so every batch landed on top of the last one and
+    the numbered folders from different orders got mixed together. The name
+    carries the date and time to the second, so two runs can never collide
+    and the newest batch is obvious in a sorted list.
+    """
+    import datetime
+    root = root or os.path.join(os.path.expanduser("~"), "Downloads",
+                                "Wonderleaf Print Files")
+    stamp = datetime.datetime.now().strftime("%Y-%m-%d  %H-%M-%S")
+    path = os.path.join(root, f"{prefix} {stamp}")
+    n = 2
+    while os.path.exists(path):          # same second, second window open
+        path = os.path.join(root, f"{prefix} {stamp} ({n})")
+        n += 1
+    os.makedirs(path, exist_ok=True)
+    return path
 
 
 def store_names():
