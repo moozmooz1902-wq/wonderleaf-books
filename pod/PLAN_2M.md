@@ -51,9 +51,12 @@ Counting what exists, generously:
 | T-shirts (already built) | | | 50,740 |
 | **Total** | | | **147,592** |
 
-2,000,000 ÷ 147,592 = **13.6 copies of every single product**. That is the
+2,000,000 ÷ 147,592 = 13.6 copies of every product — but only if the
+multiplier is palettes and title wording, which is the
 424,117-listings-for-43,483-products shape that made the wall art store
-worthless. Do not rebuild it.
+worthless. Multiply by **concept** instead and each copy is a different
+picture of the same subject, which is what the winning sellers do. See the
+correction below.
 
 ## The route to ~1,030,000
 
@@ -74,12 +77,23 @@ from seven different sellers. That is a normal search result page, not a
 flood — and it is the only way a seven-store operation reaches seven
 figures without the stores looking like copies of each other.
 
-## Going beyond that: widen the subjects, never the styles
+## CORRECTION, after the research in RESEARCH_WHAT_SELLS.md
 
-The instinct is to add more styles. Resist it. Style 9 of a lion competes
-with styles 1–8 of the same lion, in the same search, from the same seller.
+The section above was written on the assumption that several versions of
+one subject compete with each other. The trading says otherwise and so do
+the search pages: a buyer scrolls until a picture appeals, so the eighth
+lion catches the buyer who did not like the first seven. **Coverage of a
+search beats restraint**, and the ceiling below is far too low.
 
-**Subjects are what scale, and UK places are the proof.**
+What survives from it: the picture has to genuinely differ, and selling
+limit is still the binding resource. What replaces it: **concepts**, not
+palettes. `animal in a suit`, `animal in a bathtub`, `place as a 1930s
+railway poster` — each turns one subject bank into a full catalogue of
+pictures that look nothing like each other. Ten such concepts, all observed
+selling, give **1,805,272 listings across seven stores**. See
+`wallart_concepts.json`.
+
+**Subjects still scale hardest, and UK places are the proof.**
 
     "wall art print a4"      3,900,000 competing listings
     "hebden bridge print"          201 competing listings

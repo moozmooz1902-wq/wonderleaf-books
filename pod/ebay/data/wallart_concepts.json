@@ -1,0 +1,102 @@
+{
+  "_note": "Proven concepts, each taken from a listing observed selling on eBay UK on 30 Aug 2026. A concept is applied ACROSS a whole subject bank, which is what turns 1,100 animals into 1,100 pictures that genuinely differ. See pod/RESEARCH_WHAT_SELLS.md for the evidence.",
+  "concepts": [
+    {
+      "id": "dressed",
+      "name": "Animal in clothes",
+      "evidence": "12 of 60 listings on page 1 of 'animal wall art print'; Retro Hare In A Suit 18+ sold; Dapper Lion 12+ watchers",
+      "banks": ["wildlife", "breeds", "farm", "birds"],
+      "prompt": "oil painting portrait of a {subject} dressed as a {outfit}, {era} style, dark studio background, painterly, dignified",
+      "outfit": ["three piece suit", "tweed suit", "red velvet suit", "military dress uniform", "smoking jacket", "pinstripe gangster suit", "tuxedo and bow tie", "waistcoat and pocket watch"],
+      "era": ["Victorian", "1920s", "Edwardian", "1970s"],
+      "title": "{subject} In A {outfit} Art Print {era} Animal Portrait Wall Art A4 A3",
+      "price": 5.99
+    },
+    {
+      "id": "loo",
+      "name": "Bathroom and toilet humour",
+      "evidence": "8 of 60 listings on page 1; the room is the search term ('bathroom wall art')",
+      "banks": ["wildlife", "farm", "birds"],
+      "prompt": "humorous illustration of a {subject} in a rolltop bathtub with bubbles, {palette}, clean flat vector style",
+      "title": "Funny {subject} Bathroom Wall Art Print Toilet Loo Cloakroom Decor A4 A3",
+      "price": 5.99
+    },
+    {
+      "id": "vogue",
+      "name": "Vogue luxury fashion",
+      "evidence": "Luxury Cheetah Vogue Fashion Poster; Leopard Vogue Luxury Fashion Monochrome",
+      "banks": ["wildlife", "birds"],
+      "prompt": "high fashion magazine cover treatment of a {subject}, {palette}, glossy, editorial, minimal, bold serif masthead",
+      "title": "Luxury {subject} Vogue Wall Art Print Fashion Poster Glam Decor A4 A3",
+      "price": 8.99
+    },
+    {
+      "id": "railway",
+      "name": "Vintage railway travel poster",
+      "evidence": "Vintage Scarborough Railway Travel Poster 27+ sold; Bude 19+ sold; Bognor Regis 6+ sold. 'hebden bridge print' has 201 competitors against 3,900,000 for 'wall art print a4'",
+      "banks": ["uk_places", "world_cities", "landmarks"],
+      "prompt": "1930s British railway travel poster of {subject}, flat screen-print shapes, limited palette, {palette}, art deco lettering space at the base",
+      "title": "{subject} {county} Vintage Railway Travel Poster Print Wall Art A4 A3",
+      "price": 5.99
+    },
+    {
+      "id": "linemap",
+      "name": "Minimal line and map",
+      "evidence": "United Kingdom UK Vintage Map Wall Art Print; I Love London City Skyline",
+      "banks": ["uk_places", "world_cities", "countries"],
+      "prompt": "single continuous line drawing of the {subject} skyline, {palette}, generous white space, minimal",
+      "title": "{subject} Line Art Skyline Print Minimalist Wall Art Poster A4 A3 Gift",
+      "price": 4.99
+    },
+    {
+      "id": "watercolour",
+      "name": "Loose watercolour",
+      "evidence": "Safari Animal Watercolour; Brown Hare Watercolour; Highland Cow Watercolour; Otter Watercolour",
+      "banks": ["wildlife", "breeds", "botanical", "uk_places", "farm", "birds"],
+      "prompt": "loose watercolour painting of a {subject}, wet on wet bleeds, {palette}, white background",
+      "title": "{subject} Watercolour Art Print Wall Art Poster Home Decor A4 A3 Gift",
+      "price": 4.99
+    },
+    {
+      "id": "blueprint",
+      "name": "Blueprint and cutaway",
+      "evidence": "BMW E30 M3 Engineering Cutaway Blueprint; Porsche 911 Cutaway",
+      "banks": ["vehicles", "landmarks", "instruments"],
+      "prompt": "technical cutaway blueprint of a {subject}, white line work on deep blue, annotated, engineering drawing",
+      "title": "{subject} Blueprint Cutaway Print Technical Wall Art Poster A4 A3 Gift",
+      "price": 6.99
+    },
+    {
+      "id": "splash",
+      "name": "Splash and neon",
+      "evidence": "BMW E46 M3 Splash Art; Vibrant Neon Tree Frog Graffiti",
+      "banks": ["wildlife", "vehicles", "sport"],
+      "prompt": "{subject} bursting out of an explosion of {palette} paint splashes, black background, high energy",
+      "title": "{subject} Splash Art Print Neon Wall Art Poster Colourful Decor A4 A3",
+      "price": 5.99
+    },
+    {
+      "id": "botanicalplate",
+      "name": "Vintage botanical plate",
+      "evidence": "Vintage Botanical Wall Art Print Plant Flower; British Garden Birds Watercolour",
+      "banks": ["botanical", "birds", "food_drink"],
+      "prompt": "antique botanical illustration plate of {subject}, aged paper, fine engraved detail, latin name beneath",
+      "title": "{subject} Vintage Botanical Print Antique Plate Wall Art A4 A3 Kitchen",
+      "price": 4.99
+    },
+    {
+      "id": "nursery",
+      "name": "Nursery and kids",
+      "evidence": "Children's Jungle Safari Animal Nursery Bedroom Decor; Cute Happy Smiling Sloth",
+      "banks": ["wildlife", "farm", "birds"],
+      "prompt": "sweet simple nursery illustration of a baby {subject}, soft {palette}, rounded shapes, flat colour",
+      "title": "Cute {subject} Nursery Print Kids Bedroom Wall Art Baby Decor A4 A3",
+      "price": 4.99
+    }
+  ],
+  "palettes": [
+    "sage green and cream", "dusty pink and charcoal", "navy and mustard",
+    "black and white", "terracotta and sand", "teal and copper",
+    "forest green and gold", "monochrome greyscale"
+  ]
+}
