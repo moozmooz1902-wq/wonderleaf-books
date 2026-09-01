@@ -99,9 +99,26 @@ GOOD_TAGS = {
 }
 
 # Words that make a title unsellable however good the picture is.
+# "from the ... series (N245)" is a cigarette card. The Met holds tens of
+# thousands of them and they scored well on tags while being worthless as
+# prints - a 4cm card of a Victorian actress is not wall art.
 BAD_TITLE = re.compile(
     r"^untitled|^\[|fragment|sherd|study for|verso|recto|"
-    r"^plate \d+$|^page \d+|^no\. ?\d+$|unidentified|album leaf",
+    r"^plate \d+$|^page \d+|^no\. ?\d+$|unidentified|album leaf|"
+    r"from the .{0,40}series|\(N\d+\)|\(T\d+\)|trade card|"
+    r"cigarette|tobacco|advertisement|business card|letterhead",
+    re.I)
+
+# eBay UK titles have to be readable to a British buyer. Some Met titles
+# carry the original Japanese or Chinese alongside the English.
+NON_LATIN = re.compile(r"[^\x00-\x7F\u00C0-\u024F]")
+
+# Names that are a firm, not a person. "Goodwin & Company" was being
+# shortened to "Company" and put at the front of the title.
+NOT_A_PERSON = re.compile(
+    r"&|\bcompany\b|\bco\.|\binc\b|\bltd\b|publisher|"
+    r"manufactur|works\b|press\b|studio|factory|firm\b|"
+    r"unknown|anonymous|unidentified|after |attributed",
     re.I)
 
 # Title tail candidates, best keyword first. Nothing here claims a frame,
@@ -114,9 +131,14 @@ MAX_TITLE = 80
 
 def surname(name):
     """'Vincent van Gogh' -> 'Van Gogh'. What a buyer types."""
-    if not name:
+    if not name or NOT_A_PERSON.search(name):
         return ""
     name = re.sub(r"\s*\(.*?\)", "", name).strip()
+    # The strip has to happen on the ARTIST too, not just the title: some
+    # Met records carry the Japanese name, which led a title with 葛飾北秀.
+    name = NON_LATIN.sub("", name).strip()
+    if len(name) < 3:
+        return ""
     parts = name.split()
     if len(parts) < 2:
         return name
@@ -129,8 +151,19 @@ def surname(name):
 
 def clean_title(t):
     t = re.sub(r"\s*\(.*?\)\s*$", "", t or "").strip()
+    t = NON_LATIN.sub("", t)
     t = re.sub(r"\s+", " ", t)
     return t.strip(" ,;:-")
+
+
+def clip(text, n):
+    """Cut to n characters on a word boundary, never mid-word."""
+    if len(text) <= n:
+        return text
+    cut = text[:n]
+    if " " in cut:
+        cut = cut[:cut.rfind(" ")]
+    return cut.strip(" ,;:-")
 
 
 def tag_list(rec):
@@ -194,7 +227,9 @@ def build_title(rec, tags):
     art = surname(rec.get("artistDisplayName"))
     work = clean_title(rec.get("title"))
     head = f"{art} {work}" if art else work
-    head = head[:52].strip(" ,-")
+    # On a word boundary: "Thenot and Colinet Eat Their Evening Meal, fro"
+    # is what a hard character cut produces.
+    head = clip(head, 52)
 
     parts = [head]
     used = len(head)
@@ -234,6 +269,10 @@ def main():
             counts["not wall art"] += 1
             continue
         work = clean_title(rec.get("title"))
+        # A title that was mostly Japanese is now mostly gone.
+        if len(work) < 6:
+            counts["unusable title"] += 1
+            continue
         if not work or BAD_TITLE.search(work):
             counts["unusable title"] += 1
             continue
