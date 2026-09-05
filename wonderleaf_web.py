@@ -35,6 +35,12 @@ DEPLOYMENT (one time, ~20 min):
        FAL_KEY = "fal_..."
        APP_PASSWORD = "wonderleaf2026"
 
+       # Optional - unlocks the eBay Research tools.
+       # Free keys from https://developer.ebay.com/my/keys
+       EBAY_CLIENT_ID = "YourApp-PRD-..."
+       EBAY_CLIENT_SECRET = "PRD-..."
+       EBAY_MARKETPLACE = "EBAY_GB"
+
    - Click "Save"
    - App auto-restarts with keys loaded
 
@@ -446,11 +452,7 @@ def build_pdf(title, story, cover_bytes, illustrations, status):
 # STREAMLIT UI
 # ==========================================================================
 
-def main():
-    st.set_page_config(page_title="Wonderleaf Books", page_icon="🌙", layout="centered")
-
-    check_password()
-
+def book_studio():
     st.title("🌙 Wonderleaf Books")
     st.markdown("Fill in the form and click **Generate**. PDF downloads at the end.")
 
@@ -562,6 +564,39 @@ def main():
             st.error(f"Error: {e}")
             import traceback
             log.write(traceback.format_exc())
+
+
+def main():
+    st.set_page_config(page_title="Wonderleaf", page_icon="🌙", layout="wide")
+
+    check_password()
+
+    with st.sidebar:
+        st.markdown("## 🌙 Wonderleaf")
+        section = st.radio(
+            "Tool",
+            ["Book Studio", "eBay Research"],
+            captions=[
+                "Generate an illustrated picture book",
+                "Research listings, sellers and titles",
+            ],
+            label_visibility="collapsed",
+        )
+        st.divider()
+
+    if section == "Book Studio":
+        book_studio()
+        return
+
+    try:
+        from ebay_research.ui import render as render_ebay_research
+    except ImportError as exc:
+        st.error(
+            "The eBay research tools could not be loaded. Make sure the "
+            f"`ebay_research` package is deployed alongside this app. ({exc})"
+        )
+        return
+    render_ebay_research()
 
 
 if __name__ == "__main__":
