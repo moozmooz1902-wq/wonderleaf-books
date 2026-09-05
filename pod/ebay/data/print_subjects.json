@@ -1,0 +1,255 @@
+{
+  "_note": "Image subjects observed SELLING on eBay UK, taken from listings captured verbatim between 30 Aug and 5 Sep 2026. Every entry below traces to a real listing - see pod/RESEARCH_WHAT_SELLS.md and pod/RESEARCH_COMPETITORS.md for the titles and sold counts. This is the bank to generate from: subject x format, with the words the winning titles use.",
+  "_how_to_read": "format = the treatment applied to the subject. Nearly all volume on eBay UK wall art comes from a small number of formats applied across a large subject list, not from many styles of one subject.",
+
+  "wallart_formats": [
+    {
+      "id": "dressed_animal",
+      "name": "Animal dressed as a person",
+      "strength": "strongest observed - 12 of 60 listings on page 1 of 'animal wall art print'",
+      "observed": [
+        "Gentleman Fox Art Print Fox Wall Art Elegant Animal Wall Art Fox In Suit Poster",
+        "Retro Hare Art Print Vintage Animal Wall Art Rabbit In A Suit Picture Bunny Art",
+        "Gangster Chimp Art Print Vintage Monkey Portrait Animal Wall Art Chimp Poster",
+        "Rhino in Red Suit Art Print Animal Wall Art Rhinoceros Artwork Vintage Portrait",
+        "Elegant Chimpanzee in Suit with Whisky Art Print - Vintage Animal Wall Art Print",
+        "Zebra in Suit Art Print Victorian Style Animal Portrait Colourful Zebra Wall Art",
+        "Badger Art Print Badger In A Suit Funny Animal Picture Vintage Animal Wall Art",
+        "Dapper Lion In A Suit Art Print Lion Wall Art Vintage Animal Portrait Lion Print",
+        "Stag In Tweed Suit Art Print Vintage Deer Portrait Animal Wall Art Stag Print"
+      ],
+      "sold_evidence": "Retro Hare In A Suit 18+ sold; Dapper Lion 12+ watchers",
+      "outfits": ["three piece suit", "tweed suit", "red velvet suit", "smoking jacket", "pinstripe gangster suit", "tuxedo and bow tie", "military dress uniform", "waistcoat and pocket watch", "top hat and monocle"],
+      "props": ["whisky glass", "cigar", "newspaper", "pocket watch", "monocle", "pipe"],
+      "eras": ["Victorian", "Edwardian", "1920s", "1970s"],
+      "title_words": ["Art Print", "Wall Art", "Animal Portrait", "Vintage", "In A Suit", "Gentleman", "Dapper", "Elegant", "Funny", "Picture", "Poster"]
+    },
+    {
+      "id": "bathroom_humour",
+      "name": "Bathroom and toilet humour",
+      "strength": "8 of 60 listings on the same page - the ROOM is the search term",
+      "observed": [
+        "Funny Donkey Wall Art Print Nice Ass Bathroom Humorous Animal Decor",
+        "Funny Elephant Wall Art Print - Nice Trunk - Bathroom Humorous Animal Poster",
+        "Giraffe Bathroom Wall Art Print Animal Decor for Toilet Loo Cloakroom Poster Art",
+        "Gorilla Bathroom Wall Art Print Animal Decor for Toilet Loo Cloakroom Poster Art",
+        "Funny Skunk In A Bath Animal Bathroom Wall Art Print Skunk Gift Poster Artwork",
+        "Wild Animal in the Bathtub Print - Funny Bathroom Wall Art Wildlife Gift",
+        "Funny Lion Toilet Bathroom Art Print - Quirky Animal Wall Decor Print",
+        "Wash Your Hands You Filthy Animal Quote Home Bathroom Funny Wall Art Print"
+      ],
+      "puns": ["Nice Ass (donkey)", "Nice Trunk (elephant)", "Wash Your Hands You Filthy Animal", "Get Your Sh*t Together", "Nice Buns", "Squeaky Clean"],
+      "title_words": ["Bathroom", "Toilet", "Loo", "Cloakroom", "Funny", "Humorous", "Quirky", "Decor", "Wall Art Print", "Gift"]
+    },
+    {
+      "id": "vogue_luxury",
+      "name": "Vogue / luxury fashion treatment",
+      "strength": "present on page 1; the seller flagged this direction independently",
+      "observed": [
+        "Luxury Cheetah Wall Art Print Vogue Fashion Poster Green Animal Decor",
+        "Leopard Vogue Wall Art Print | Luxury Fashion Monochrome Poster"
+      ],
+      "subjects_that_suit": ["cheetah", "leopard", "tiger", "panther", "swan", "flamingo", "peacock", "zebra", "lips", "high heel", "handbag", "perfume bottle", "champagne"],
+      "title_words": ["Luxury", "Vogue", "Fashion", "Glam", "Monochrome", "Designer", "Boutique", "Chic", "Poster", "Wall Art Print"]
+    },
+    {
+      "id": "railway_travel_poster",
+      "name": "1930s railway travel poster of a named place",
+      "strength": "proven and almost unoccupied - a town of 4,500 has 201 competing listings against 3,900,000 for the generic term",
+      "observed": [
+        "Vintage Scarborough British Art Print Railway Travel Poster",
+        "Vintage Bude, Southern Art Railway Travel Poster Print",
+        "Vintage Bognor Regis Art Railway Travel Poster Print",
+        "Hebden Bridge Travel Poster Wall Art Print Holiday Gift",
+        "Vintage Style Railway Poster Hebden Bridge Lancashire A4/A3/A2 Print",
+        "British Travel Poster Print A3 West Yorkshire Hebden Bridge"
+      ],
+      "sold_evidence": "Scarborough 27+ sold; Bude 19+ sold; Bognor Regis 6+ sold",
+      "subject_bank": "uk_places.json - 4,469 UK places with county and country",
+      "title_words": ["Vintage", "Railway", "Travel Poster", "Retro", "British", "Seaside", "Holiday", "Art Print", "Wall Art", "Gift", "county name"]
+    },
+    {
+      "id": "watercolour",
+      "name": "Loose watercolour",
+      "strength": "recurs across every animal and landscape page",
+      "observed": [
+        "Safari Animal Wall Art Prints Tiger Lion Elephant Picture Home Decor Watercolour",
+        "Brown Hare Canvas Wall Art Print Framed Animal Decor Watercolour Picture",
+        "Highland Cow Wall Art Colourful Print Watercolour Cow Painting Animal Art Print",
+        "Otter Watercolour Painting Canvas Print Framed Animal Wall Art Picture",
+        "British Garden Birds Watercolour Print A4 Wildlife Wall Art Unframed",
+        "Fox Abstract Watercolour Canvas Print Framed Animal Wall Art Picture"
+      ],
+      "title_words": ["Watercolour", "Painting", "Colourful", "Abstract", "Wildlife", "Art Print", "Wall Art", "Home Decor"]
+    },
+    {
+      "id": "splash_neon",
+      "name": "Splash art and neon",
+      "observed": [
+        "BMW E46 M3 Poster | Splash Art Car Wall Print A4 A3",
+        "Vibrant Neon Tree Frog Wall Art Graffiti Animal Print Frog Art Print Frog Gift",
+        "COOL ORANGE GLOWING TIGER ANIMAL CANVAS WALL ART PICTURE PRINT"
+      ],
+      "title_words": ["Splash Art", "Neon", "Graffiti", "Vibrant", "Glowing", "Cool", "Colourful"]
+    },
+    {
+      "id": "blueprint_cutaway",
+      "name": "Technical blueprint and cutaway",
+      "observed": [
+        "BMW E30 M3 1986 A4 Print Engineering Cutaway Blueprint Car Wall Art",
+        "Porsche 911 1974 Cutaway car A4 Print inspired wall art"
+      ],
+      "subjects_that_suit": ["cars by body type", "motorbikes", "aircraft", "steam locomotives", "ships", "lighthouses", "cameras", "guitars", "bicycles", "tractors"],
+      "title_words": ["Blueprint", "Cutaway", "Engineering", "Technical", "Patent", "Schematic", "Garage", "Workshop"]
+    },
+    {
+      "id": "public_domain_master",
+      "name": "Out-of-copyright famous painting",
+      "strength": "canvasartshop, 92,000 items sold, sells little else. Demand already exists because people search these by name.",
+      "observed": [
+        "HOKUSAI, THE GREAT WAVE OFF KANAGAWA -FRAMED ART POSTER PAINTING PRINT 4 SIZES",
+        "JOHN WILLIAM WATERHOUSE SIREN FRAMED ART POSTER PAINTING PRINT 4 SIZES",
+        "EDWARD HOPPER, NIGHTHAWKS -ART FRAMED POSTER PICTURE PRINT ARTWORK",
+        "WILLIAM MORRIS 'STRAWBERRY THIEF' PLANT FRAMED WALL ART POSTER PRINT 4 SIZES",
+        "Van Gogh Sunflowers FRAMED WALL ART POSTER PAINTING PRINT 4 SIZES",
+        "J M W TURNER THE BATTLE of TRAFALGAR FRAMED ART POSTER PAINTING PRINT 4 SIZES",
+        "PEOPLE STANDING ABOUT, L.S. LOWRY -FRAMED WALL ARTWORK POSTER PRINT 4 SIZES",
+        "FRANCISCO GOYA, SATURN DEVOURING HIS SON -CANVAS WALL ART PRINT ARTWORK FRAME"
+      ],
+      "sold_evidence": "Hokusai Great Wave 62+ sold",
+      "source": "Met Museum open access, CC0 - 42,579 public domain paintings with images, verified print resolution",
+      "note": "Their titles say FRAMED and CANVAS. Ours cannot - unframed A4 paper, see CLAUDE.md.",
+      "title_words": ["Art Print", "Poster", "Wall Art", "Fine Art", "Painting", "Home Decor", "Picture", "Gift", "A4", "A3"]
+    },
+    {
+      "id": "botanical_plate",
+      "name": "Antique botanical or natural history plate",
+      "observed": [
+        "Vintage Botanical Wall Art Print Plant Flower Print Posters Leaf Home A3 A4",
+        "British Garden Birds Watercolour Print A4 Wildlife Wall Art Unframed",
+        "Cat Breeds Print, Cat Poster, Animal Wall Art, Cat Gift, Cat Home Decor A4, A5"
+      ],
+      "title_words": ["Vintage", "Botanical", "Antique", "Plate", "Plant", "Flower", "Leaf", "Wildlife", "Kitchen", "Home Decor"]
+    },
+    {
+      "id": "nursery",
+      "name": "Nursery and children's",
+      "observed": [
+        "Children's Jungle Safari Animal Wall Art Poster Nursery Bedroom Decor Print",
+        "Cute Happy Smiling Sloth Animal Family Canvas Wall Art Print Home Decor Picture",
+        "Fluffy Baby Penguin Standing on Snow Cute Arctic Animal Print Wall Art",
+        "Snoopy Wall Art Print | A4 or A3 Poster | Kids Bedroom Decor Gift"
+      ],
+      "title_words": ["Nursery", "Kids", "Childrens", "Bedroom", "Cute", "Baby", "Safari", "Jungle", "Decor"]
+    }
+  ],
+
+  "wallart_subjects_observed_selling": {
+    "animals": ["fox", "hare", "rabbit", "chimpanzee", "monkey", "rhino", "zebra", "badger", "lion", "lioness", "stag", "deer", "donkey", "elephant", "giraffe", "gorilla", "skunk", "octopus", "seagull", "raccoon", "highland cow", "otter", "tiger", "cheetah", "leopard", "sloth", "penguin", "hedgehog", "tree frog", "brown hare", "whale", "bear", "wolf", "owl", "swan", "flamingo", "peacock"],
+    "places": ["Paris", "New York", "London", "Rome", "Chicago", "Amsterdam", "Venice", "Manhattan", "Newcastle", "Scarborough", "Bude", "Bognor Regis", "Hebden Bridge", "Torquay", "Big Ben"],
+    "vehicles_generic": ["classic hot hatch", "American muscle car", "JDM rally car", "Le Mans racer", "1960s roadster", "supercar", "cafe racer motorbike", "steam locomotive", "Spitfire", "narrowboat", "tractor"],
+    "vehicles_branded_RISK": ["Nissan Skyline GT-R", "Ferrari LaFerrari", "McLaren P1", "Subaru Impreza WRX STI", "BMW E46 M3", "BMW E30 M3", "Porsche 911", "Porsche 356", "Ford Mustang", "Dodge Charger", "Range Rover", "Renault 5 Turbo", "SAAB 9-3", "MGB GT", "Escort RS Turbo"],
+    "botanical": ["sunflower", "poppy", "rose", "wildflowers", "strawberry thief pattern", "fern", "eucalyptus", "monstera", "olive branch", "lavender", "tomato varieties", "herbs and spices", "pear", "citrus"],
+    "rooms": ["kitchen", "bathroom", "toilet", "cloakroom", "living room", "bedroom", "nursery", "hallway", "home office", "garage", "workshop"],
+    "other": ["world map", "UK vintage map", "constellation", "zodiac sign", "moon phases", "mountains", "coastal", "sea turtle", "surf", "snowboard", "piano keys", "guitar", "rugby ball", "golf", "mojito", "espresso", "cocktail"]
+  },
+
+  "tshirt_formats": [
+    {
+      "id": "image_led_subject",
+      "name": "A picture of a thing, not a slogan",
+      "strength": "this is the difference between our catalogue and theirs - ours is 100% typography",
+      "observed": [
+        "Colourful Fantasy Wolf Face Mens T-Shirt 100% Cotton",
+        "Blue Cosmic Skull Mens T-Shirt 100% Cotton",
+        "A Fierce Fantasy Dragon Mens T-Shirt 100% Cotton",
+        "Steampunk Scorpion Mens Cotton T-Shirt Tee Top",
+        "A French Bulldog on a Skateboard Mens T-Shirt 100% Cotton",
+        "Megalodon Prehistoric White Shark Dinosaur Mens Sweatshirt Jumper",
+        "An Astronaut Cat in Outer Space Mens T-Shirt 100% Cotton",
+        "Gothic Skull and Crow With Arch and Moon Mens T-Shirt 100% Cotton",
+        "Abstract Wolf With the Moon Werewolf Lycan Mens 80% Cotton Hoodie",
+        "Honey Badger Mens T-Shirt 100% Cotton",
+        "A Beagle Dog Mens T-Shirt 100% Cotton",
+        "Ganesha Hindu God Ganapati Elephant Mens T-Shirt 100% Cotton",
+        "A Solar Eclipse Mens Light Cotton T-Shirt",
+        "Jamaica Lion Mens Reggae Vest Jamaican Flag Rastafarian Rasta"
+      ],
+      "sold_evidence": "Jamaica Lion 68+ sold"
+    },
+    {
+      "id": "scene_membership",
+      "name": "Scene and subculture badges",
+      "strength": "these have existing search demand - people search the scene, not the joke",
+      "scenes": ["biker", "cafe racer", "chopper", "skull", "gothic", "Viking and Norse", "pagan and Celtic", "Northern Soul", "2 Tone and ska", "mod and scooter", "punk", "heavy metal", "reggae and Rasta", "Union Jack and patriotic", "gym", "fishing", "cycling", "hunting", "cricket", "military and regiment", "atheism", "autism awareness", "gaming and RPG"],
+      "observed": [
+        "BIKER T-SHIRT Motorbike Motorcycle Cafe Racer Chopper Bike Mens Funny Skull Top",
+        "Skull T-Shirt Mens Biker Tattoo Tribal Viking Demon Gym Heavy Metal Rock Death",
+        "Northern Soul Keep The Faith Mens Music Vest Dance Motown MOD Scooter",
+        "Viking Symbol Vegvisir Grey Gym Mens T-Shirt 100% Cotton",
+        "SPITFIRE T-SHIRT Supermarine WWII British Fighter Battle of Britain RAF Tee Top",
+        "PARA T-Shirt Mens 1 2 3 4 SAS Special Force Marine Parachute Regiment",
+        "Valknut Circle With Viking Text Blue Print Mens Vest Tank Top",
+        "Cant Stop 2-Tone British SKA 2Tone Mens T-Shirt 100% Cotton"
+      ],
+      "sold_evidence": "BIKER skull top 151+ sold"
+    },
+    {
+      "id": "broad_humour",
+      "name": "Broad relatable humour, no niche required",
+      "strength": "the non-IP format with visible sold counts. Our 50,740 have none of this - all ours are niche-targeted.",
+      "observed": [
+        "Undiagnosed But Something Ain't Right Tee Funny Mental Health Graphic T-Shirt",
+        "Everything Hurts and I'm Tired",
+        "I Don't Know How To Act My Age",
+        "I Fix Stuff and I Know Things",
+        "Waiting on Parts",
+        "Hello Darkness My Old Friend Funny Guinness Mens Cotton T-Shirt Tee Top",
+        "I'm Not Old I'm a Classic Motorcycle Biker Mens T-Shirt 100% Cotton",
+        "Retired Definition Funny Retirement Mens Cotton T-Shirt Tee Top",
+        "Rules for Dating My Daughter Fathers Day Mens T-Shirt 100% Cotton"
+      ],
+      "sold_evidence": "Undiagnosed But Something Ain't Right 41+ sold"
+    },
+    {
+      "id": "vintage_year_birthday",
+      "name": "Vintage year birthday",
+      "observed": [
+        "Vintage Year 65th Birthday 1961 Mens T-Shirt 100% Cotton Black",
+        "70th Birthday T-Shirt 1956 Limited Edition Mens Funny 70 Year old Vintage Year",
+        "Retro 59th Birthday Original 1967 Womens Petite Cut T-Shirt",
+        "Birth of Legends 53rd Birthday 1973 Mens Vest Tank Top",
+        "80th Birthday Limited Edition 1946 Cotton Apron 100% Organic",
+        "39th Birthday Limited Edition 1987 Cotton Apron 100% Organic",
+        "50th Birthday Funny 50 Year Old Gift Present For Him Her Funny Rude"
+      ],
+      "note": "The same design runs across every age and every garment. This is where their listing count comes from."
+    }
+  ],
+
+  "garment_types": [
+    {"name": "Mens T-Shirt", "price_seen": "9.48 - 15.99"},
+    {"name": "Vest / Tank Top", "price_seen": "12.47 - 12.49"},
+    {"name": "Hoodie", "price_seen": "23.99 - 25.99"},
+    {"name": "Sweatshirt / Jumper", "price_seen": "20.99 - 23.99"},
+    {"name": "Long Sleeve T-Shirt", "price_seen": "14.49"},
+    {"name": "Kids / Childrens T-Shirt", "price_seen": "8.99"},
+    {"name": "Womens Petite Cut", "price_seen": "8.75"},
+    {"name": "Cotton Apron", "price_seen": "15.47 - 15.99"}
+  ],
+
+  "title_grammar": {
+    "wallart": "{SUBJECT} {FORMAT WORDS} Art Print Wall Art {ROOM or STYLE} Poster A4 A3 Gift",
+    "tshirt": "{SUBJECT} T-Shirt {SYNONYM} {SYNONYM} {SYNONYM} Mens Funny {SYNONYM} Top",
+    "rule": "Lead with the searchable noun. Fill the remaining characters with words that differ per design, never a fixed tail repeated across the catalogue.",
+    "worked_example_theirs": "BIKER T-SHIRT Motorbike Motorcycle Cafe Racer Chopper Bike Mens Funny Skull Top",
+    "worked_example_ours_before": "My Nan Is A Bouncer Mens Womens T-Shirt Funny Novelty Gift Tee Top",
+    "worked_example_ours_after": "Bouncer T-Shirt My Nan Is A Bouncer Doorman Security Gift Mens Funny Work Tee"
+  },
+
+  "do_not_copy": {
+    "note": "Both tee sellers and canvasartshop lean heavily on property. Their sold leaders are often the riskiest listings they run. We match the FORMAT, never the content.",
+    "examples_seen": ["Banksy", "Peaky Blinders", "Jaws", "Spider-Man", "Totoro", "Marvel", "Elvis", "Marilyn Monroe", "50 Cent", "The Warriors", "Mad Max", "Alien / Nostromo", "Monkey Magic", "The Prisoner", "Kurt Cobain", "Pablo Escobar", "The Italian Job", "Bullet Club", "Napoleon Dynamite", "The Sopranos", "Tiswas", "Snoopy", "Disney Cars"],
+    "also_risky": "Car manufacturer names and models. Nearly every car listing found names a marque. Generic body type plus a style is the lower-risk version and the style is what people are buying."
+  }
+}
