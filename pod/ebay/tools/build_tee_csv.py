@@ -23,7 +23,7 @@ MODES
               excluded from every size-filtered search.
 """
 
-import argparse, csv, html, json, os, random, sys
+import argparse, csv, html, json, os, random, re, sys
 from pathlib import Path
 
 ACTION = "*Action(SiteID=UK|Country=GB|Currency=GBP|Version=745|CC=UTF-8)"
@@ -41,6 +41,46 @@ HEADER = [
     # without it, and these are print-on-demand, not handmade.
     "C:Personalisation Instructions", "C:Handmade", "C:Features",
 ]
+
+# --------------------------------------------------------------------------
+# garments
+# --------------------------------------------------------------------------
+# Both high-volume competitors run ONE artwork across all of these, each as a
+# separate listing, because each is a separate search. A hoodie sells at more
+# than twice a tee. We were using one of eight slots, and the cheapest one.
+#
+# Category ids are eBay UK's and MUST be confirmed against the account before
+# a bulk upload - a wrong category fails every row in the file. Only the tee
+# id, 15687, is confirmed from the live listings.
+BODY = {
+    "tee":        ("cotton tee", "Crew Necked T-Shirt", "180gsm heavy cotton",
+                   "100% Cotton"),
+    "hoodie":     ("cotton hoodie", "Drawcord Hood and Kangaroo Pocket",
+                   "280gsm brushed fleece", "80% Cotton 20% Polyester"),
+    "sweatshirt": ("cotton sweatshirt", "Crew Neck Sweatshirt",
+                   "280gsm brushed fleece", "80% Cotton 20% Polyester"),
+    "vest":       ("cotton vest", "Scoop Neck Vest with Cut Away Armholes",
+                   "180gsm heavy cotton", "100% Cotton"),
+    "longsleeve": ("cotton long sleeve tee", "Crew Necked Long Sleeve T-Shirt",
+                   "180gsm heavy cotton", "100% Cotton"),
+    "kids":       ("cotton tee", "Crew Necked T-Shirt", "155gsm cotton",
+                   "100% Cotton"),
+}
+
+GARMENTS = {
+    "tee":        {"noun": "T-Shirt",   "price": 11.99, "category": "15687",
+                   "type": "T-Shirt",   "confirmed": True},
+    "hoodie":     {"noun": "Hoodie",    "price": 23.99, "category": "155183",
+                   "type": "Hoodie",    "confirmed": False},
+    "sweatshirt": {"noun": "Sweatshirt", "price": 21.99, "category": "155183",
+                   "type": "Sweatshirt", "confirmed": False},
+    "vest":       {"noun": "Vest",      "price": 12.49, "category": "15687",
+                   "type": "Vest",      "confirmed": False},
+    "longsleeve": {"noun": "Long Sleeve T-Shirt", "price": 14.49,
+                   "category": "15687", "type": "T-Shirt", "confirmed": False},
+    "kids":       {"noun": "Kids T-Shirt", "price": 8.99, "category": "155201",
+                   "type": "T-Shirt",  "confirmed": False},
+}
 
 QTY = 1
 
@@ -87,18 +127,18 @@ _ROWS = "\n".join(_rowlist)
 DESC = """<div style="font-family:Arial,Helvetica,sans-serif;max-width:800px;margin:0 auto;color:#222;line-height:1.6">
 <div style="background:#111;color:#fff;padding:22px 26px;border-radius:6px 6px 0 0">
 <h1 style="margin:0;font-size:24px">{subject}</h1>
-<p style="margin:6px 0 0;font-size:14px;opacity:.75">Premium Printed <strong>Black</strong> T-Shirt &middot; Mens (Unisex) &middot; UK Sizing</p>
+<p style="margin:6px 0 0;font-size:14px;opacity:.75">Premium Printed <strong>Black</strong> {noun} &middot; Mens (Unisex) &middot; UK Sizing</p>
 </div>
 <div style="border:1px solid #e3e3e6;border-top:none;padding:26px;border-radius:0 0 6px 6px">
 
-<p style="font-size:15px">A bold <strong>{subject}</strong> design printed on a soft heavyweight <strong>black</strong> cotton tee. Printed in the UK using a professional direct-to-film process, so the print stays crisp and flexible rather than thick or plasticky &mdash; and it holds up wash after wash.</p>
+<p style="font-size:15px">A bold <strong>{subject}</strong> design printed on a soft heavyweight <strong>black</strong> {garment_body}. Printed in the UK using a professional direct-to-film process, so the print stays crisp and flexible rather than thick or plasticky &mdash; and it holds up wash after wash.</p>
 
 <h2 style="font-size:17px;border-bottom:2px solid #111;padding-bottom:6px;margin-top:26px">Product Details</h2>
 <ul style="padding-left:20px;font-size:15px">
-<li>Crew Necked T-Shirt</li><li><strong>Colour: Black</strong></li>
+<li>{neckline}</li><li><strong>Colour: Black</strong></li>
 <li>Mens (Unisex)</li><li>Classic Fit</li>
-<li>180gsm heavy cotton</li><li>Age 3-4 Yrs to 2XL</li>
-<li>100% Cotton</li>
+<li>{weight}</li><li>Sizes S to 2XL</li>
+<li>{fabric}</li>
 <li>Pre-shrunk jersey knit</li><li>Taped neck and shoulders</li>
 <li>Twin needle sleeve and bottom hems</li><li>Seamless twin needle collar</li>
 <li>Tear away label</li><li>Hard wearing fabric</li>
@@ -198,6 +238,25 @@ def spread(designs, seed):
     return out
 
 
+def retitle(title, noun):
+    """
+    Swap the garment word so the title matches what is being sold.
+
+    The catalogue's titles all say T-Shirt. Listing that text under a hoodie
+    would be a listing that lies about the product, which is worse than a
+    wasted keyword.
+    """
+    if noun == "T-Shirt":
+        return title
+    out = re.sub(r"\bT-Shirts?\b", noun, title, count=1, flags=re.I)
+    if out == title:                      # no T-Shirt in it - put the noun in
+        out = f"{title} {noun}"
+    # Tee and Top are tee words; they read wrong on a hoodie.
+    out = re.sub(r"\bTee\b", "", out, flags=re.I)
+    out = re.sub(r"\s{2,}", " ", out).strip()
+    return out[:80].strip()
+
+
 def main():
     ap = argparse.ArgumentParser(
         description=__doc__,
@@ -207,7 +266,12 @@ def main():
                     help="prefix; files are <prefix>_01.csv, _02.csv ...")
     ap.add_argument("--img-base", required=True,
                     help="public bucket URL, e.g. https://pub-XXXX.r2.dev")
-    ap.add_argument("--category", default="15687")
+    ap.add_argument("--garment", choices=tuple(GARMENTS), default="tee",
+                    help="which garment. The same artwork listed as a hoodie "
+                         "is a different product in a different search, which "
+                         "is how the competitors reach six figures")
+    ap.add_argument("--category", default=None,
+                    help="overrides the garment's category id")
     ap.add_argument("--shipping", default="1")
     ap.add_argument("--returns", default="1")
     ap.add_argument("--payment", default="1")
@@ -257,6 +321,17 @@ def main():
     ap.add_argument("--limit", type=int)
     a = ap.parse_args()
 
+    g = GARMENTS[a.garment]
+    if a.price == 11.99:                 # left at the default: use the garment's
+        a.price = g["price"]
+    if a.category is None:
+        a.category = g["category"]
+    if not g["confirmed"] and a.category == g["category"]:
+        print(f"  NOTE: category {a.category} for {a.garment} is a best guess.")
+        print("        Confirm it against the account before a bulk upload - "
+              "a wrong")
+        print("        category id fails every row in the file.\n")
+
     global SIZES
     SIZES = ([(sz, a.price) for sz, _ in ADULT] if a.sizes == "adult"
              else ALL_SIZES)
@@ -299,7 +374,7 @@ def main():
         r["*Category"] = a.category
         r["Relationship"] = rel
         r["RelationshipDetails"] = reldet
-        r["*Title"] = d["title"]
+        r["*Title"] = retitle(d["title"], g["noun"])
         r["*Description"] = desc
         r["*ConditionID"] = "1000"
         r["PicURL"] = pic
@@ -315,7 +390,7 @@ def main():
         r["*C:Size"] = size
         r["*C:Colour"] = "Black"
         r["C:Brand"] = a.brand
-        r["*C:Type"] = "T-Shirt"
+        r["*C:Type"] = g["type"]
         r["*C:Style"] = "Graphic Tee"
         r["C:Department"] = "Unisex Kids" if kids else "Unisex Adults"
         r["*C:Material"] = "Cotton"
@@ -373,7 +448,10 @@ def main():
         subject = html.escape(d.get("stem", t))
         tags = html.escape(", ".join(
             x for x in (d.get("cluster", ""), d.get("theme", "")) if x))
-        desc = DESC.format(subject=subject, rows=_ROWS, tags=tags)
+        body, neckline, weight, fabric = BODY[a.garment]
+        desc = DESC.format(subject=subject, rows=_ROWS, tags=tags,
+                           noun=g["noun"], garment_body=body,
+                           neckline=neckline, weight=weight, fabric=fabric)
         pic = f"{base_url}/art/mock/{d['design_id']}.jpg"
 
         if fh is None:
