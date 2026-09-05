@@ -89,6 +89,10 @@ QTY = 1
 ADULT = [("S", 11.99), ("M", 11.99), ("L", 11.99), ("XL", 11.99),
          ("2XL", 11.99)]
 
+# A kids garment sold in S to 2XL is the wrong product in the wrong sizes.
+KIDS_SIZES = [("3-4 Yrs", 8.99), ("5-6 Yrs", 8.99), ("7-8 Yrs", 8.99),
+              ("9-11 Yrs", 8.99), ("12-13 Yrs", 8.99)]
+
 # The full ladder the earlier listings used, kept for a store that wants it.
 # Only the smallest kids size is cheaper.
 ALL_SIZES = [
@@ -238,7 +242,7 @@ def spread(designs, seed):
     return out
 
 
-def retitle(title, noun):
+def retitle(title, noun, kids=False):
     """
     Swap the garment word so the title matches what is being sold.
 
@@ -246,15 +250,27 @@ def retitle(title, noun):
     would be a listing that lies about the product, which is worse than a
     wasted keyword.
     """
-    if noun == "T-Shirt":
+    if noun == "T-Shirt" and not kids:
         return title
     out = re.sub(r"\bT-Shirts?\b", noun, title, count=1, flags=re.I)
     if out == title:                      # no T-Shirt in it - put the noun in
         out = f"{title} {noun}"
     # Tee and Top are tee words; they read wrong on a hoodie.
     out = re.sub(r"\bTee\b", "", out, flags=re.I)
+    if kids:
+        # A children's listing cannot also be a mens and womens listing.
+        out = re.sub(r"\bMens\b|\bWomens\b|\bUnisex\b", "", out, flags=re.I)
+        if not re.search(r"\bkids?\b|\bchildren", out, re.I):
+            out = f"Kids {out}"
+        out = re.sub(r"\bBoys Girls\b", "", out, flags=re.I)
+        out = out + " Boys Girls Childrens"
     out = re.sub(r"\s{2,}", " ", out).strip()
-    return out[:80].strip()
+    # On a word boundary. A hard cut at 80 gave "Boys Girls Chi".
+    if len(out) > 80:
+        out = out[:80]
+        if " " in out:
+            out = out[:out.rfind(" ")]
+    return out.strip(" ,-")
 
 
 def main():
@@ -333,8 +349,11 @@ def main():
         print("        category id fails every row in the file.\n")
 
     global SIZES
-    SIZES = ([(sz, a.price) for sz, _ in ADULT] if a.sizes == "adult"
-             else ALL_SIZES)
+    if a.garment == "kids":
+        SIZES = [(sz, a.price) for sz, _ in KIDS_SIZES]
+    else:
+        SIZES = ([(sz, a.price) for sz, _ in ADULT] if a.sizes == "adult"
+                 else ALL_SIZES)
 
     base_url = a.img_base.rstrip("/")
     designs = json.loads(Path(a.catalogue).read_text())
@@ -374,7 +393,8 @@ def main():
         r["*Category"] = a.category
         r["Relationship"] = rel
         r["RelationshipDetails"] = reldet
-        r["*Title"] = retitle(d["title"], g["noun"])
+        r["*Title"] = retitle(d["title"], g["noun"],
+                              kids=(a.garment == "kids"))
         r["*Description"] = desc
         r["*ConditionID"] = "1000"
         r["PicURL"] = pic
@@ -392,7 +412,9 @@ def main():
         r["C:Brand"] = a.brand
         r["*C:Type"] = g["type"]
         r["*C:Style"] = "Graphic Tee"
-        r["C:Department"] = "Unisex Kids" if kids else "Unisex Adults"
+        r["C:Department"] = ("Unisex Kids"
+                             if kids or a.garment == "kids"
+                             else "Unisex Adults")
         r["*C:Material"] = "Cotton"
         r["C:Sleeve Length"] = "Short Sleeve"
         r["C:Neckline"] = "Crew Neck"
