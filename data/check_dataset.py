@@ -1,6 +1,10 @@
-"""Validate data/designs.jsonl and report how close the dataset is to usable.
+"""Report on dataset health across both stages of the pipeline.
 
-    python data/check_dataset.py
+    python3 data/check_dataset.py
+
+Stage 1 (data/designs.jsonl) comes from tools/ingest.py — the CSV rows plus
+downloaded images. Stage 2 (data/analyzed.jsonl) comes from tools/analyze.py
+— the vision fingerprints.
 """
 
 import json
@@ -8,72 +12,84 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-DATA = Path(__file__).parent / "designs.jsonl"
-IMAGES = Path(__file__).parent / "images"
-
-REQUIRED = ["id", "image_file", "title", "shirt_text", "niche", "label"]
-RECOMMENDED = ["marketplace", "style_tags", "layout", "keywords", "notes"]
+DATA = Path(__file__).parent
+IMAGES = DATA / "images"
 
 
-def main():
-    if not DATA.exists():
-        sys.exit(f"Missing {DATA}")
-
+def load(name):
+    path = DATA / name
     rows, errors = [], []
-    for n, line in enumerate(DATA.read_text().splitlines(), 1):
+    if not path.exists():
+        return rows, errors
+    for n, line in enumerate(path.read_text().splitlines(), 1):
         line = line.strip()
         if not line:
             continue
         try:
-            rows.append((n, json.loads(line)))
+            rows.append(json.loads(line))
         except json.JSONDecodeError as e:
-            errors.append(f"line {n}: bad JSON — {e}")
+            errors.append(f"{name} line {n}: bad JSON — {e}")
+    return rows, errors
 
-    seen_ids = set()
-    for n, row in rows:
-        for field in REQUIRED:
-            if not row.get(field):
-                errors.append(f"line {n}: missing required field '{field}'")
+
+def main():
+    designs, errors = load("designs.jsonl")
+    analyzed, more = load("analyzed.jsonl")
+    errors += more
+
+    if not designs:
+        print("No designs yet.\n")
+        print("  1. Copy data/input_template.csv and fill it with your rows")
+        print("  2. python3 tools/ingest.py your.csv")
+        print("  3. python3 tools/analyze.py")
+        print("  4. python3 tools/distill.py --prompt")
+        return 0
+
+    seen = set()
+    for row in designs:
         rid = row.get("id")
-        if rid in seen_ids:
-            errors.append(f"line {n}: duplicate id '{rid}'")
-        seen_ids.add(rid)
-        if row.get("label") not in ("positive", "negative", None):
-            errors.append(f"line {n}: label must be 'positive' or 'negative'")
+        if rid in seen:
+            errors.append(f"duplicate id {rid}")
+        seen.add(rid)
+        for field in ("id", "image_file", "title"):
+            if not row.get(field):
+                errors.append(f"{rid}: missing '{field}'")
         img = row.get("image_file")
         if img and not (IMAGES / img).exists():
-            errors.append(f"line {n}: image not found — data/images/{img}")
+            errors.append(f"{rid}: image missing — data/images/{img}")
 
-    total = len(rows)
-    print(f"{total} rows\n")
+    total = len(designs)
+    done = {r["id"] for r in analyzed}
+    print(f"{total} designs ingested, {len(done)} analysed\n")
 
     if errors:
         print("PROBLEMS")
-        for e in errors:
+        for e in errors[:25]:
             print(f"  - {e}")
         print()
 
-    if not total:
-        return 1 if errors else 0
-
-    niches = Counter(r.get("niche", "?") for _, r in rows)
+    niches = Counter(r.get("niche") or "(unset)" for r in designs)
     print("PER NICHE (aim for 30-50 in one niche before generating)")
     for niche, count in niches.most_common():
-        bar = "#" * min(count, 50)
         flag = "  <- ready" if count >= 30 else ""
-        print(f"  {count:4d}  {niche:<30} {bar}{flag}")
+        print(f"  {count:4d}  {niche:<30} {'#' * min(count, 40)}{flag}")
     print()
 
-    negatives = sum(1 for _, r in rows if r.get("label") == "negative")
-    scored = sum(1 for _, r in rows if (r.get("performance") or {}).get("gut_score"))
+    with_perf = sum(1 for r in designs if r.get("performance"))
+    negatives = sum(1 for r in designs if r.get("label") == "negative")
     print("COVERAGE")
-    print(f"  performance scored : {scored}/{total}"
-          f"{'  <- the field that matters most' if scored < total else ''}")
-    print(f"  negative examples  : {negatives}/{total}"
+    print(f"  performance data  : {with_perf}/{total}"
+          f"{'  <- the field that decides what the spec learns' if with_perf < total else ''}")
+    print(f"  negative examples : {negatives}/{total}"
           f"{'  <- add some, contrast teaches' if negatives < total * 0.15 else ''}")
-    for field in RECOMMENDED:
-        filled = sum(1 for _, r in rows if r.get(field))
-        print(f"  {field:<18} : {filled}/{total}")
+    print(f"  analysed          : {len(done)}/{total}"
+          f"{'  <- run tools/analyze.py' if len(done) < total else ''}")
+
+    if analyzed:
+        risky = [r for r in analyzed if r.get("ip_risk") in ("possible", "clear")]
+        if risky:
+            print(f"\n  {len(risky)} design(s) flagged for IP risk — "
+                  f"see data/STYLE_SPEC.md")
 
     return 1 if errors else 0
 
