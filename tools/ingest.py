@@ -3,8 +3,11 @@
     python3 tools/ingest.py data/my_designs.csv
 
 Required CSV columns: image_url, title
-Optional: listing_url, marketplace, niche, price, rating, review_count,
-          bsr, label, notes
+Optional: listing_url, marketplace, niche, price, quantity_sold, rating,
+          review_count, bsr, label, notes
+
+Column names are matched loosely, so "Quantity Sold", "qty_sold", "units
+sold" and "sold" all land in the same place.
 
 Images are saved under data/images/ named by content hash, so re-running
 is safe and duplicate artwork collapses to one row.
@@ -14,6 +17,7 @@ import csv
 import hashlib
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -58,6 +62,31 @@ def download(session, url):
     return path, digest
 
 
+ALIASES = {
+    "image_url": ("image", "imageurl", "image link", "imagelink", "img",
+                  "picture", "photo", "image url", "url"),
+    "title": ("listing title", "name", "product title", "product name"),
+    "quantity_sold": ("sold", "qty sold", "qtysold", "units sold", "unitssold",
+                      "quantity", "sales", "total sold", "sold quantity"),
+    "listing_url": ("listing", "product url", "link", "listing link"),
+    "review_count": ("reviews", "review", "num reviews"),
+    "niche": ("category", "audience"),
+}
+
+
+def _alias_map(fieldnames):
+    """Map whatever the seller called their columns onto our field names."""
+    norm = lambda s: re.sub(r"[^a-z0-9]+", " ", (s or "").lower()).strip()
+    out = {}
+    for name in fieldnames:
+        n = norm(name)
+        for canon, alts in ALIASES.items():
+            if n == canon.replace("_", " ") or n in {norm(a) for a in alts}:
+                out[name] = canon
+                break
+    return out
+
+
 def load_existing():
     rows = {}
     if OUT.exists():
@@ -79,7 +108,10 @@ def main(csv_path):
 
     session = _session()
     with open(csv_path, newline="", encoding="utf-8-sig") as fh:
-        for i, entry in enumerate(csv.DictReader(fh), 2):
+        reader = csv.DictReader(fh)
+        alias = _alias_map(reader.fieldnames or [])
+        for i, raw in enumerate(reader, 2):
+            entry = {alias.get(k, k): v for k, v in raw.items() if k}
             url = (entry.get("image_url") or "").strip()
             title = (entry.get("title") or "").strip()
             if not url:
@@ -109,7 +141,7 @@ def main(csv_path):
                     row[field] = value
 
             perf = {}
-            for field in ("rating", "review_count", "bsr"):
+            for field in ("quantity_sold", "rating", "review_count", "bsr"):
                 value = (entry.get(field) or "").strip()
                 if value:
                     perf[field] = value

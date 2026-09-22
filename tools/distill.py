@@ -50,9 +50,14 @@ def score(row):
         bsr = float(str(perf.get("bsr", "")).replace(",", "") or 0)
     except ValueError:
         bsr = 0
+    try:
+        sold = float(str(perf.get("quantity_sold", "")).replace(",", "") or 0)
+    except ValueError:
+        sold = 0
     gut = float(perf.get("gut_score") or 0)
 
-    s = gut * 20 + reviews + (rating * 10 if rating else 0)
+    # Units sold is the strongest signal there is — weight it above the rest.
+    s = sold * 100 + gut * 20 + reviews + (rating * 10 if rating else 0)
     if bsr:
         s += max(0, 1_000_000 - bsr) / 10_000
     return s
