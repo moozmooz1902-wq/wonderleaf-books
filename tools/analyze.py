@@ -36,7 +36,12 @@ Listing title: {title}
 Measured palette (from pixel data, trust this over your own estimate): {palette}
 
 Describe what is ACTUALLY there. Do not flatter the design and do not
-invent detail you cannot see. If the image is not a t-shirt design, set
+invent detail you cannot see.
+
+This design belongs to the person you are working for and it SELLS. The
+goal is to produce more designs in the same family, so be precise about
+which elements are the reusable template and which are the swappable
+subject. If the image is not a t-shirt design, set
 "is_tshirt_design" to false and leave the rest minimal.
 
 The two most important fields are title_formula and slogan_formula. Those
@@ -69,6 +74,11 @@ Return ONLY valid JSON, no preamble:
   "title_formula": "the listing title abstracted into {{SLOTS}}",
   "slogan_formula": "the shirt text abstracted into {{SLOTS}}",
   "keywords_visible": ["search terms this design is clearly targeting"],
+  "design_template": {{
+    "fixed": "what stays constant across siblings of this design - the layout, type treatment, palette and composition rules a new version must keep to look like part of the same family",
+    "variable": "what a sibling design would swap out - the subject, the name, the occasion, the animal, the colourway",
+    "sibling_ideas": ["4 to 8 concrete new designs using the same fixed template with a different variable, named specifically - not 'another animal' but 'Dachshund'"]
+  }},
   "print_complexity": "one of: low, medium, high",
   "ip_risk": "none | possible | clear — flag visible brands, characters or known trademarked phrases",
   "quality_notes": "one blunt line: what makes it work, or why it looks lazy"
