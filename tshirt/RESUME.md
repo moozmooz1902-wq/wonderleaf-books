@@ -9,6 +9,8 @@ The container is ephemeral. Images and the parsed source file are NOT in git
 cd tshirt
 export ANTHROPIC_API_KEY=...          # set in environment settings, not here
 python3 run_full_analysis.py download # ~34 min, rebuilds the 167,695 images
+# Auth: store ONLY x-api-key as an API credential for api.anthropic.com.
+# anthropic-version is sent by the script - it is not a secret.
 python3 run_full_analysis.py submit --sold-only   # the 22,485 that sold, ~$40
 python3 run_full_analysis.py collect  # writes fingerprints.jsonl
 ```

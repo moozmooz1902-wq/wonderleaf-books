@@ -105,10 +105,12 @@ def call(path, method="GET", body=None, raw=False):
     environment's stored API credential injecting x-api-key at the proxy."""
     req = urllib.request.Request(f"{API}{path}", method=method)
     req.add_header("content-type", "application/json")
+    # anthropic-version is not a secret - always send it ourselves so the
+    # stored credential only has to carry x-api-key.
+    req.add_header("anthropic-version", "2023-06-01")
     key = os.environ.get("ANTHROPIC_API_KEY")
     if key:
         req.add_header("x-api-key", key)
-        req.add_header("anthropic-version", "2023-06-01")
     if body is not None:
         req.data = json.dumps(body).encode()
     with urllib.request.urlopen(req, timeout=300) as r:
