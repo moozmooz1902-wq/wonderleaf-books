@@ -7,9 +7,12 @@
 Batch API runs asynchronously at 50% cost, so submit and collect are separate
 steps - the job survives this session ending.
 
-Needs ANTHROPIC_API_KEY.
+Auth works two ways, and the script picks whichever is present:
+  - ANTHROPIC_API_KEY in the environment, or
+  - an API credential stored on the environment, which injects x-api-key at
+    the proxy. In that case no key is present in the container at all.
 """
-import base64, json, os, sys, time
+import base64, json, os, sys, time, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -94,11 +97,25 @@ def media_type(b):
     return "image/webp"
 
 
-def submit(sold_only=False):
-    import anthropic
+API = "https://api.anthropic.com/v1"
+
+
+def call(path, method="GET", body=None, raw=False):
+    """Call the API. Sends a key if we have one; otherwise relies on the
+    environment's stored API credential injecting x-api-key at the proxy."""
+    req = urllib.request.Request(f"{API}{path}", method=method)
+    req.add_header("content-type", "application/json")
     key = os.environ.get("ANTHROPIC_API_KEY")
-    if not key: sys.exit("Set ANTHROPIC_API_KEY first.")
-    client = anthropic.Anthropic(api_key=key)
+    if key:
+        req.add_header("x-api-key", key)
+        req.add_header("anthropic-version", "2023-06-01")
+    if body is not None:
+        req.data = json.dumps(body).encode()
+    with urllib.request.urlopen(req, timeout=300) as r:
+        return r.read() if raw else json.loads(r.read())
+
+
+def submit(sold_only=False):
     data = rows()
     idx = [i for i, r in enumerate(data) if (r["sold"] > 0 or not sold_only)]
     idx = [i for i in idx if path_for(i).exists()]
@@ -127,33 +144,32 @@ def submit(sold_only=False):
                     ]}],
                 },
             })
-        batch = client.messages.batches.create(requests=reqs)
-        state["batches"].append({"id": batch.id, "first": chunk[0], "n": len(chunk)})
+        batch = call("/messages/batches", "POST", {"requests": reqs})
+        state["batches"].append({"id": batch["id"], "first": chunk[0], "n": len(chunk)})
         STATE.write_text(json.dumps(state, indent=1))
-        print(f"  submitted {batch.id}  ({len(chunk):,} designs)", flush=True)
+        print(f"  submitted {batch['id']}  ({len(chunk):,} designs)", flush=True)
     print("all batches submitted. Run `collect` later - results keep for 29 days.")
 
 
 def collect():
-    import anthropic
-    key = os.environ.get("ANTHROPIC_API_KEY")
-    if not key: sys.exit("Set ANTHROPIC_API_KEY first.")
-    client = anthropic.Anthropic(api_key=key)
     state = json.loads(STATE.read_text())
     data = rows()
     out = open("fingerprints.jsonl", "a", encoding="utf-8")
     total = bad = 0
 
     for b in state["batches"]:
-        info = client.messages.batches.retrieve(b["id"])
-        if info.processing_status != "ended":
-            print(f"  {b['id']}: {info.processing_status} - not ready")
+        info = call(f"/messages/batches/{b['id']}")
+        if info["processing_status"] != "ended":
+            print(f"  {b['id']}: {info['processing_status']} - not ready")
             continue
-        for res in client.messages.batches.results(b["id"]):
-            if res.result.type != "succeeded":
+        body = call(f"/messages/batches/{b['id']}/results", raw=True).decode()
+        for line in body.splitlines():
+            if not line.strip(): continue
+            res = json.loads(line)
+            if res["result"]["type"] != "succeeded":
                 bad += 1; continue
-            i = int(res.custom_id[1:])
-            txt = res.result.message.content[0].text.strip()
+            i = int(res["custom_id"][1:])
+            txt = res["result"]["message"]["content"][0]["text"].strip()
             if txt.startswith("```"):
                 txt = txt.split("\n", 1)[1].rsplit("```", 1)[0].strip()
             try:
