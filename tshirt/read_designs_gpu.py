@@ -10,11 +10,14 @@ No Anthropic key, no per-image cost beyond GPU time.
 
 Writes designs_read.jsonl, one row per design. Resumable - rerun to continue.
 """
-import base64, json, os, sys, time
+import base64, json, os, sys, threading, time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 URL   = os.environ.get("VLM_URL", "http://localhost:11434").rstrip("/")
 MODEL = os.environ.get("VLM_MODEL", "qwen2.5vl:7b")
+# Ollama serves requests in parallel; 4-6 keeps a 24GB card busy
+WORKERS = int(os.environ.get("VLM_WORKERS", "5"))
 IMG   = Path("images")
 OUT   = Path("designs_read.jsonl")
 
@@ -84,23 +87,35 @@ def main(cmd, all_of_them=False):
         return
 
     todo, already = targets(all_of_them)
-    print(f"{already:,} already read, {len(todo):,} to go")
+    print(f"{already:,} already read, {len(todo):,} to go, {WORKERS} workers")
     fh = OUT.open("a", encoding="utf-8")
-    t0 = time.time(); ok = bad = 0
-    for n, (i, r, p) in enumerate(todo, 1):
+    lock = threading.Lock()
+    t0 = time.time()
+    counts = {"ok": 0, "bad": 0, "n": 0}
+
+    def work(job):
+        i, r, p = job
         try:
             res = read_one(p)
         except Exception:
-            bad += 1; continue
+            with lock:
+                counts["bad"] += 1; counts["n"] += 1
+            return
         res.update(idx=i, title=r["title"], sold=r["sold"])
-        fh.write(json.dumps(res, ensure_ascii=False) + "\n"); fh.flush()
-        ok += 1
-        if n % 100 == 0:
-            rate = n / (time.time() - t0)
-            print(f"  {n:,}/{len(todo):,}  {rate:.1f}/s  "
-                  f"eta {(len(todo)-n)/rate/3600:.1f}h  ({bad} failed)", flush=True)
+        with lock:
+            fh.write(json.dumps(res, ensure_ascii=False) + "\n"); fh.flush()
+            counts["ok"] += 1; counts["n"] += 1
+            n = counts["n"]
+            if n % 100 == 0:
+                rate = n / (time.time() - t0)
+                print(f"  {n:,}/{len(todo):,}  {rate:.1f}/s  "
+                      f"eta {(len(todo)-n)/rate/3600:.1f}h  "
+                      f"({counts['bad']} failed)", flush=True)
+
+    with ThreadPoolExecutor(max_workers=WORKERS) as ex:
+        list(ex.map(work, todo))
     fh.close()
-    print(f"\n{ok:,} designs read, {bad:,} failed -> {OUT}")
+    print(f"\n{counts['ok']:,} designs read, {counts['bad']:,} failed -> {OUT}")
 
 
 if __name__ == "__main__":
