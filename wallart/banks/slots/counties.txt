@@ -1,0 +1,67 @@
+Yorkshire
+Lancashire
+Cornwall
+Devon
+Somerset
+Dorset
+Kent
+Essex
+Sussex
+Surrey
+Norfolk
+Suffolk
+Cumbria
+Northumberland
+Durham
+Cheshire
+Derbyshire
+Nottinghamshire
+Lincolnshire
+Leicestershire
+Staffordshire
+Shropshire
+Herefordshire
+Worcestershire
+Warwickshire
+Gloucestershire
+Wiltshire
+Hampshire
+Berkshire
+Oxfordshire
+Buckinghamshire
+Hertfordshire
+Bedfordshire
+Cambridgeshire
+Northamptonshire
+Rutland
+Merseyside
+Tyneside
+Teesside
+the Black Country
+the Cotswolds
+the Lake District
+the Peak District
+the Yorkshire Dales
+the Highlands
+Fife
+Ayrshire
+Aberdeenshire
+Perthshire
+the Borders
+Pembrokeshire
+Gwynedd
+Anglesey
+Carmarthenshire
+Ceredigion
+Snowdonia
+the Valleys
+Antrim
+Down
+Fermanagh
+Tyrone
+Armagh
+Derry
+the Isle of Wight
+the Isle of Man
+Jersey
+Guernsey

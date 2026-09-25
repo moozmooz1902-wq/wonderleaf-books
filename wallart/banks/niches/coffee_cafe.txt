@@ -1,0 +1,102 @@
+name: Coffee & Café
+noun: Coffee Sign Print|Coffee Quote Print|Café Wall Art Print
+rooms: Kitchen|Café|Coffee Shop|Office|Staff Room|Break Room|Coffee Bar|Restaurant|Bakery|Reception|Customer Lounge|Tea Room
+mood: rustic, bold, retro, script
+---
+But first, / *coffee*
+Coffee / first
+Coffee / then the world
+Coffee / because adulting is hard
+Life happens / *coffee* helps
+Espresso / yourself
+Rise / and grind
+Stressed / blessed / and coffee obsessed
+Coffee / is my love language
+Powered by / *coffee*
+Coffee / o'clock
+Coffee / & kindness
+Coffee / & contemplation
+Good ideas start / with *coffee*
+Today's good mood / is sponsored by / *coffee*
+May your coffee / be strong
+Coffee / fixes everything
+Coffee / keeps me going
+Fuelled by / coffee / and chaos
+Coffee / conversation / & cake
+Coffee / cake / & catch-ups
+Latte / love
+You mocha me / so happy
+I like you / a *latte*
+Thanks a latte
+Sip / happens
+Coffee / & calm
+Deep breaths / & *coffee*
+Coffee bar / open all day
+Coffee station
+The coffee corner
+Self-serve / coffee bar
+Coffee / tea / & me
+Coffee / is always / a good idea
+Coffee / in one hand / confidence in the other
+Drink coffee / do good
+Brew / happiness
+Freshly brewed / every morning
+Coffee / makes mornings / *better*
+Where there's coffee / there's hope
+Coffee / because mornings happen / every day
+The best stories / are told / over *coffee*
+Friends / gather here / for coffee
+Coffee / & good company
+Just add / *coffee*
+Hello / *coffee*
+Coffee / time
+It's a / coffee / kind of day
+Not today / *Monday* / pass the coffee
+Wake up / & smell the *coffee*
+Coffee / then adventure
+A yawn / is a silent scream / for *coffee*
+Instant human / just add *coffee*
+Keep calm / and drink *coffee*
+Cup of joy
+Mugs / on the wall
+Bean there / done that
+Death before / decaf
+Decaf? / No thanks
+Grind / & shine
+One more cup
+Coffee / friends / & Fridays
+Pour over / everything
+Cold brew / crew
+Home brewed / with love
+Grab a mug / pull up a chair
+Pull up a chair / the kettle's on
+The kettle's on
+Put the kettle on
+Tea / & sympathy
+Keep calm / and put the *kettle* on
+Tea / is always / the answer
+There's always / time for *tea*
+A proper / cuppa
+Builder's / tea
+Milk / two sugars
+Tea / solves / everything
+Tea / & toast
+Afternoon / tea
+Tea / for two
+Life's too short / for bad tea
+Tea / time
+Brew / o'clock
+Fancy / a brew?
+Everything stops / for *tea*
+Tea / & biscuits
+Dunk / responsibly
+Tea / party
+You're my / cup of tea
+Chai / & chill
+{drink} / o'clock
+But first / *{drink}*
+Powered by / *{drink}*
+Life happens / *{drink}* helps
+{drink} / is my love language
+Keep calm / and drink *{drink}*
+Fuelled by / {drink}

@@ -1,0 +1,68 @@
+name: Classroom & Teacher
+noun: Classroom Poster|Teacher Gift Print|School Wall Art Print
+rooms: Classroom|Study|Playroom|Library|Nursery School|Tutoring Centre|Staff Room|School Office
+mood: bold, playful, kids, modern
+occasion: End of Term|Back to School
+---
+In / this / classroom / we are / kind
+In / this / classroom / we / make mistakes / we learn / we try again
+Welcome / to / our / classroom
+Classroom / rules
+Be / kind / be / safe / be / respectful
+Mistakes / are / proof / you are / trying
+Mistakes / help / us / grow
+The / power / of / yet
+I / can't / do it / yet
+Growth / mindset
+Think / before / you / speak
+Is it / true / helpful / kind?
+Listen / to / learn
+Everyone / is / welcome / here
+All / are / welcome / here
+Readers / are / leaders
+Reading / is / my superpower
+Read / more
+Books / are / magic
+Keep / calm / and / read / on
+Never / stop / learning
+Learning / is / an adventure
+Learn / something / new / every day
+Dream / believe / achieve
+Try / your / best
+Always / try / your best
+You / can / do / hard things
+Teamwork / makes / the dream work
+Together / we / can
+Be / a / good friend
+Choose / kind
+Be / proud / of / your work
+Ask / questions
+Stay / curious
+Think / big
+Show / your working
+Maths / is / everywhere
+Science / rocks
+Art / room
+Music / room
+Library
+Quiet / zone
+Quiet / please
+Calm / corner
+Take / a / break
+Breathe / in / breathe out
+Feelings / are / welcome
+How / are / you / feeling / today?
+Teachers / plant / seeds / of knowledge / that grow / forever
+It / takes / a big heart / to help / shape / little minds
+Thank / you / for helping / me grow
+Best / teacher / ever
+Best / teaching / assistant / ever
+Teach / love / inspire
+Teaching / is / a work / of heart
+Mrs / {surname}'s / classroom
+Miss / {surname}'s / classroom
+Mr / {surname}'s / classroom
+Mrs / {surname}'s / class
+Thank / you / Mrs / {surname}
+Thank / you / Miss / {surname}
+Thank / you / Mr / {surname}

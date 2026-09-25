@@ -1,0 +1,35 @@
+name: UK Towns & Places
+noun: Town Print|Hometown Wall Art|Personalised Place Print
+rooms: Living Room|Hallway|Office
+mood: vintage, minimal, bold, retro
+occasion: New Home|Moving Away|Christmas
+---
+{town}
+Home / {town}
+Home / is / {town}
+Home / sweet / {town}
+{town} / home / sweet home
+{town} / born / and bred
+Made / in / {town}
+Proud / to / be / from {town}
+{town} / is / where / my story / begins
+{town} / will / always / be home
+Love / from / {town}
+Greetings / from / {town}
+{town} / forever
+{town} / my / happy place
+I / heart / {town}
+Wherever / I / roam / {town} is home
+It's / a / {town} / thing
+Visit / {town}
+{town} / lass
+{town} / lad
+{county}
+God's / own / county
+Proud / to / be / from {county}
+Home / is / {county}
+{county} / born / and bred
+{county} / forever
+Made / in / {county}
+{county} / lass
+{county} / lad

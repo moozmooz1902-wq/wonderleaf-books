@@ -1,0 +1,60 @@
+Fishing|Fisherman|fish|Tackle
+Gardening|Gardener|garden|Shed
+Golf|Golfer|golf|Clubhouse
+Cycling|Cyclist|ride|Bike Shed
+Running|Runner|run|Trainers
+Knitting|Knitter|knit|Yarn Stash
+Crochet|Crocheter|crochet|Yarn Stash
+Sewing|Sewist|sew|Sewing Room
+Baking|Baker|bake|Kitchen
+Camping|Camper|camp|Tent
+Caravanning|Caravanner|caravan|Caravan
+Walking|Walker|walk|Boots
+Hiking|Hiker|hike|Boots
+Reading|Reader|read|Book Nook
+Darts|Darts Player|play darts|Oche
+Snooker|Snooker Player|play snooker|Snooker Room
+Motorbikes|Biker|ride|Garage
+Classic Cars|Petrolhead|tinker|Garage
+Woodwork|Woodworker|build|Workshop
+Allotment|Allotmenteer|dig|Allotment
+Birdwatching|Birder|watch birds|Hide
+Horse Riding|Rider|ride|Stable
+Swimming|Swimmer|swim|Pool
+Wild Swimming|Wild Swimmer|swim|Lake
+Yoga|Yogi|stretch|Studio
+Gym|Gym Rat|lift|Gym
+Football|Footballer|play football|Pitch
+Rugby|Rugby Player|play rugby|Pitch
+Cricket|Cricketer|play cricket|Pavilion
+Bowls|Bowler|bowl|Green
+Gaming|Gamer|game|Gaming Room
+Painting|Painter|paint|Studio
+Crafting|Crafter|craft|Craft Room
+Scrapbooking|Scrapbooker|create|Craft Room
+Quilting|Quilter|quilt|Sewing Room
+Photography|Photographer|shoot|Studio
+Music|Musician|play|Music Room
+Guitar|Guitarist|play guitar|Music Room
+Dancing|Dancer|dance|Studio
+Beekeeping|Beekeeper|keep bees|Apiary
+Chickens|Chicken Keeper|keep chickens|Coop
+Sailing|Sailor|sail|Boat
+Canal Boating|Boater|cruise|Narrowboat
+Walking the Dog|Dog Walker|walk|Park
+Puzzles|Puzzler|puzzle|Puzzle Table
+Board Games|Gamer|play|Games Room
+Wine Tasting|Wine Lover|taste|Cellar
+Gin Tasting|Gin Lover|sip|Gin Bar
+Barbecue|Grill Master|grill|BBQ Shack
+Metal Detecting|Detectorist|dig|Shed
+Skiing|Skier|ski|Chalet
+Surfing|Surfer|surf|Beach Hut
+Climbing|Climber|climb|Wall
+Martial Arts|Martial Artist|train|Dojo
+Boxing|Boxer|box|Gym
+Tennis|Tennis Player|play tennis|Court
+Pickleball|Pickleballer|play|Court
+Netball|Netballer|play netball|Court
+Horse Racing|Racegoer|back a winner|Stables
+Trains|Trainspotter|spot trains|Signal Box

@@ -1,0 +1,37 @@
+name: New Home & Housewarming
+noun: New Home Gift Print|Housewarming Print|First Home Wall Art
+rooms: Hallway|Living Room|Kitchen
+mood: elegant, script, minimal, rustic
+occasion: New Home|Housewarming
+---
+Our / first / home
+Our / first / home / {ryear}
+Our / first / home / together
+First / home / {ryear}
+Home / sweet / home / {ryear}
+New / home / new / adventures
+New / home / new / memories
+Welcome / home
+Home / at / last
+Home / is / wherever / we're together
+Keys / to / our / first home
+It's / not / a house / it's / a home
+Home / is / not / a place / it's a feeling
+This / is / us
+This / is / our / happy place
+Home / owners / {ryear}
+Proud / home / owners
+New / house / who dis
+We / bought / a house
+Moving / day
+Housewarming
+Happy / housewarming
+Bless / our / new / home
+The / {surname}s / new home / {ryear}
+The / {surname}s / first home / {ryear}
+Home / of / the / {surname}s / since {year}
+Est. {ryear} / the {surname}s
+Number / {num}
+No. / {num}
+Home / No. {num}
+The / {surname}s / at / number {num}

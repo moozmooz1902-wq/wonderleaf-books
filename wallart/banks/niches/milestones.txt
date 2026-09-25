@@ -1,0 +1,55 @@
+name: Birthdays, Anniversaries & Milestones
+noun: Birthday Gift Print|Anniversary Gift Print|Milestone Wall Art
+rooms: Living Room|Bedroom|Office
+mood: elegant, bold, script, retro
+occasion: Birthday|Anniversary|Retirement
+---
+Happy / {age.1} / birthday
+{age} / and / fabulous
+{age} / and / fabulous / {rel}
+Happy / {age.1} / birthday / {rel}
+{rel} / is / {age}
+{age} / years / young
+Aged / to / perfection / {age}
+Vintage / {year}
+Born / in / {year}
+Made / in / {year}
+Established / {year}
+Limited / edition / {year}
+Original / since / {year}
+Legend / since / {year}
+Awesome / since / {year}
+Queen / since / {year}
+Classic / since / {year}
+{year} / vintage / all original parts
+{name} / est. {year}
+Happy / birthday / {name}
+{name} / is / {age}
+{anniv.1} / anniversary / {anniv}
+Happy / {anniv.1} / anniversary
+Happy / {anniv} / anniversary
+Our / {anniv} / anniversary
+{anniv} / wedding / anniversary
+Mr & Mrs / {surname} / {anniv} anniversary / {year}
+The / {surname}s / {anniv} / anniversary
+Together / since / {year}
+Married / since / {year}
+Still / in love / since {year}
+Happy / retirement
+Retired
+Officially / retired
+Retired / {ryear}
+Retirement / loading
+Retired / not / expired
+Goodbye / tension / hello / pension
+The / legend / has retired
+Happy / retirement / {rel}
+Happy / retirement / {name}
+Retirement / the / best job / ever
+Under / new / management / see wife / for details
+Congratulations
+Congratulations / graduate
+Class / of / {ryear}
+Graduate / {ryear}
+Proud / graduate
+Dream / big / graduate

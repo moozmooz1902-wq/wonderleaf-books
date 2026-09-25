@@ -1,0 +1,76 @@
+name: Restaurant, Café & Hotel
+noun: Restaurant Wall Art Print|Café Sign Print|Hotel Wall Art Print
+rooms: Restaurant|Café|Tea Room|Coffee Shop|Bakery|Pub|Wine Bar|Hotel|Guest House|B&B|Holiday Let|Airbnb|Takeaway|Pizzeria|Diner|Ice Cream Parlour|Deli
+mood: rustic, retro, bold, script
+---
+Good / food / good / mood
+Eat / well / travel often
+Fresh / food / made / with love
+Made / fresh / daily
+Freshly / baked / every morning
+Baked / with / love
+Homemade / with / love
+From / our / kitchen / to your table
+Farm / to / table
+Local / & / seasonal
+Proudly / independent
+Support / local
+Shop / local / eat local
+Please / wait / to be seated
+Please / seat / yourself
+Order / here
+Collect / here
+Pay / here
+Thank / you / for visiting
+Thank / you / come again
+Thanks / for / supporting / small business
+We / love / our / customers
+Welcome / friends
+Welcome / in
+Come / in / we're open
+Open / daily
+Take / away
+Eat / in / or / take away
+Dine / in
+Today's / specials
+Soup / of / the day
+Pizza / is / my / love language
+Pizza / time
+Life / happens / pizza helps
+Love / at / first bite
+Burgers / & / beers
+Fish / & / chips
+Sunday / roast / served here
+Full / English / all day
+Breakfast / served / all day
+Afternoon / tea / served here
+Cream / tea
+Scones / & / tea
+Cake / of / the day
+Life / is / short / eat dessert first
+Ice / cream / is / always / a good idea
+Gelato
+Deli / counter
+Espresso / bar
+Wine / bar
+Cocktail / bar
+Good / times / & / tan lines
+Home / away / from / home
+Welcome / to / your / home from home
+Relax / you're / on holiday
+Rest / & / relax
+Sleep / well
+Check / in / relax / unwind
+Reception
+Please / ring / for service
+Guest / lounge
+Breakfast / room
+Wi-Fi / is / free / ask for the password
+Hotel / du / bonheur
+Bon / voyage
+Enjoy / your / stay
+We / hope / you / enjoy your stay
+Please / leave / your key / at reception
+Holiday / cottage
+The / cottage
+Beach / cottage

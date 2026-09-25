@@ -1,0 +1,65 @@
+name: Salon, Barber & Beauty
+noun: Salon Wall Art Print|Beauty Salon Decor|Barber Shop Sign Print
+rooms: Hair Salon|Barber Shop|Beauty Salon|Nail Salon|Lash Studio|Brow Bar|Spa|Tanning Salon|Tattoo Studio|Dressing Room
+mood: elegant, script, modern, bold
+---
+Hair / today / gorgeous / tomorrow
+Good / hair / day
+Every / day / is / a good hair day
+Life / is / too short / for boring hair
+Beautiful / you
+Feel / beautiful
+You / are / beautiful
+Glow / up
+Glow / getter
+Let's / glow
+Relax / restore / renew
+Self / care / is / the best care
+Treat / yourself
+You / deserve / this
+Pamper / yourself
+Take / time / for you
+Beauty / is / confidence
+Confidence / is / the best / accessory
+Nails / on / point
+Nail / goals
+Nail / bar
+Life / is / better / with pretty nails
+Polished
+Lash / bar
+Lashes / & / lattes
+Brows / on / fleek
+Brow / bar
+Lash / & / brow studio
+Blow / dry / bar
+Colour / bar
+Blonde / ambition
+Hair / by / appointment
+Walk-ins / welcome
+Appointments / only
+Please / wait / to be seated
+Please / switch / your / phone to silent
+Relax / you're / in good hands
+Beauty / room
+Treatment / room
+Spa / day
+Salon / life
+Barber / shop
+Classic / cuts / & / hot shaves
+Fresh / cuts / daily
+Cuts / & / conversation
+Sharp / cuts / sharper minds
+Stay / sharp
+Fresh / fade
+Beards / & / banter
+Hot / towel / shave
+Gentlemen's / barbers
+Look / sharp / feel sharp
+Ink / & / art
+Tattoo / studio
+Ink / is / my / therapy
+Pink / fridays
+Blush / & / bloom
+Glam / room
+Vanity
+Getting / ready / room

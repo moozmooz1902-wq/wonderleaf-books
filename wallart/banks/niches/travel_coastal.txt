@@ -1,0 +1,89 @@
+name: Travel, Coastal & Adventure
+noun: Coastal Wall Art Print|Beach House Sign Print|Travel Quote Print
+rooms: Bathroom|Hallway|Beach Hut|Caravan|Living Room|Holiday Let|Travel Agents|Surf Shop|B&B|Seaside Café
+mood: minimal, retro, script, vintage
+---
+Beach / house
+Beach / hut
+Beach / life
+Life's / a / beach
+Salty / hair / don't care
+Sea / salt / & / sunshine
+Sun / sea / & / sand
+Happiness / comes / in waves
+Ride / the / wave
+Catch / a / wave
+Good / vibes / & / high tides
+High / tide / good vibes
+Let's / go / to / the beach
+To / the / beach
+Beach / this / way
+The / beach / is / calling
+The / sea / is / calling
+The / sea / is / calling / and I / must go
+Ocean / air / salty hair
+Seaside
+Coastal / living
+Seaside / cottage
+Lighthouse
+Anchors / away
+Welcome / aboard
+Captain's / quarters
+Life / is / better / at the beach
+Life / is / better / at the lake
+Life / is / better / in / flip flops
+Lake / house
+Lake / life
+Cabin / life
+Mountain / life
+The / mountains / are calling
+Adventure / awaits
+Explore / dream / discover
+Wander
+Wanderlust
+Go / explore
+Just / go
+Travel / often
+Travel / is / the only thing / you buy / that makes you richer
+Collect / memories / not things
+Oh / the / places / we've been
+The / world / is / yours
+Our / adventures
+Our / travel / adventures
+Home / is / where / we park it
+Happy / camper
+Happy / glamper
+Caravan / rules
+Our / caravan
+Campervan / life
+Van / life
+Holiday / home
+Staycation
+Holiday / mode / on
+Out / of / office / gone to the beach
+Sun / lounger / reserved
+Paradise
+Aloha
+Tropical / vibes
+Palm / Springs
+Riviera
+Côte / d'Azur
+Amalfi
+Santorini
+Mykonos
+Ibiza
+Marbella
+Positano
+Capri
+Cornwall
+St Ives
+Whitby
+Brighton
+Blackpool
+Tenby
+Skegness
+Scarborough
+Padstow
+Bournemouth
+Margate
+Southwold

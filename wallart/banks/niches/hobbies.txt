@@ -1,0 +1,36 @@
+name: Hobbies
+noun: Hobby Gift Print|Funny Hobby Wall Art|Hobby Quote Print
+rooms: Man Cave|Shed|Hobby Room|Office
+mood: retro, bold, playful, vintage
+---
+{hobby} / is / cheaper / than therapy
+{hobby} / is / my / therapy
+Warning / may / start / talking / about {hobby}
+Eat / sleep / {hobby} / repeat
+Weekend / forecast / {hobby}
+Life / is / better / with {hobby}
+{hobby} / makes / me / happy
+Keep / calm / and / {hobby.2}
+Born / to / {hobby.2} / forced / to work
+Retired / {hobby.1}
+Old / {hobby.1} / club
+Grumpy / old / {hobby.1}
+World's / best / {hobby.1}
+Legendary / {hobby.1}
+Proud / {hobby.1}
+The / {hobby.1}
+{hobby.1} / at / heart
+{hobby.1} / by / choice / worker by necessity
+{hobby.3} / rules
+The / {hobby.3}
+Welcome / to / the / {hobby.3}
+{name}'s / {hobby.3}
+Dad's / {hobby.3}
+Grandad's / {hobby.3}
+Mum's / {hobby.3}
+Nan's / {hobby.3}
+{hobby} / club / est. {year}
+{name} / {hobby} / club
+Happiness / is / {hobby}
+All / I / care / about / is {hobby}
+{hobby} / o'clock

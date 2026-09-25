@@ -1,0 +1,32 @@
+name: Thank You & Profession Gifts
+noun: Thank You Gift Print|Appreciation Wall Art|Profession Gift Print
+rooms: Office|Staff Room|Workplace
+mood: bold, script, elegant, playful
+occasion: Thank You|Leaving|End of Term|Christmas
+---
+Thank / you / {job}
+Best / {job} / ever
+World's / best / {job}
+Super / {job}
+Proud / {job}
+Superhero / {job}
+{job} / by day / superhero by night
+Not / all / heroes / wear / capes / some / are / {job.2}
+Thank / you / for / all / you do
+Thank / you / for / everything
+Happy / {job} / appreciation day
+Keep / calm / I'm / a {job}
+Behind / every / great / {job} / is / a lot of coffee
+Powered / by / coffee / and {job.1}
+{job.1} / is / a work / of heart
+Trust / me / I'm / a {job}
+The / {job.3}
+Welcome / to / the / {job.3}
+Kindness / is / our / business
+Retired / {job}
+Happy / retirement / {job}
+Thank / you / {name}
+Good / luck / {name}
+Good / luck / in / your new job
+You / will / be / missed
+Sorry / you're / leaving

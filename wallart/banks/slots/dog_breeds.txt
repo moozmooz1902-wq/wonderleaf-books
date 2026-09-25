@@ -1,0 +1,60 @@
+Labrador
+Golden Retriever
+Cocker Spaniel
+Springer Spaniel
+French Bulldog
+English Bulldog
+Pug
+Dachshund
+Sausage Dog
+Border Collie
+German Shepherd
+Staffy
+Jack Russell
+Beagle
+Boxer
+Whippet
+Greyhound
+Lurcher
+Border Terrier
+Westie
+Scottie
+Yorkie
+Shih Tzu
+Cavapoo
+Cockapoo
+Labradoodle
+Cavalier
+Chihuahua
+Pomeranian
+Bichon Frise
+Schnauzer
+Husky
+Dalmatian
+Rottweiler
+Doberman
+Great Dane
+Poodle
+Corgi
+Bernese
+Newfoundland
+Weimaraner
+Vizsla
+Pointer
+Setter
+Basset Hound
+Bloodhound
+Shar Pei
+Akita
+Shiba Inu
+Samoyed
+Maltese
+Sprocker
+Patterdale
+Bedlington
+Airedale
+Collie
+Sheepdog
+Dobermann
+Frenchie
+Rescue Dog

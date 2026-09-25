@@ -1,0 +1,66 @@
+name: Wedding & Love
+noun: Wedding Gift Print|Love Quote Print|Couples Wall Art
+rooms: Bedroom|Living Room
+mood: script, elegant, minimal
+occasion: Wedding|Valentine's Day|Anniversary|Engagement
+---
+Love
+Always
+Forever
+Always / & / forever
+You / & me
+You / are / my sunshine
+You / are / my / favourite
+You / are / my / person
+You're / my / person
+My / person
+My / happy / place / is / with you
+I choose / you
+I'd choose / you / again
+I / love / you
+Love / you / always
+I / love / you / more
+I love you / most
+Together / forever
+Forever / & always
+Forever / & a day
+Happily / ever / after
+And they / lived / happily / ever after
+Once / upon / a time
+Mr / & Mrs
+Mr / & Mr
+Mrs / & Mrs
+Just / married
+Better / together
+Two / hearts / one love
+Love / is / patient / love is kind
+Soulmates
+Hand / in hand
+Grow / old / with me
+Grow / old / along with me / the best is yet to be
+Whatever / our souls / are made of / his and mine / are the same
+In / all / the world / there is no heart / for me / like yours
+My / heart / is / yours
+With / all / my / heart
+Love / at / first sight
+Our / love story
+Our / story
+Our / first / home
+Our / first / Christmas / married
+Our / first / year
+Kiss / me / goodnight
+Sweet / dreams
+Goodnight / I love you
+Always / kiss me / goodnight
+Every / love story / is beautiful / but ours / is my favourite
+The / best / thing / to hold / onto / in life / is each other
+Home / is / wherever / you are
+Wherever / you / are / is my home
+You / are / my / home
+To / the / moon / and back
+{girl} / & / {boy}
+{boy} / & / {girl}
+{girl} / & / {boy} / est. {year}
+{girl} / & / {boy} / forever
+{girl} / & / {boy} / always
+{girl} / & / {boy} / {year}

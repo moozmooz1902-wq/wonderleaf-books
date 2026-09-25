@@ -1,0 +1,330 @@
+# audience | parent niche | tones (m=motivational f=funny h=heartfelt s=sign/welcome)
+nurses|thank_you_jobs|mfh
+midwives|thank_you_jobs|fh
+paramedics|thank_you_jobs|mfh
+doctors|thank_you_jobs|fh
+carers|thank_you_jobs|mh
+teachers|classroom|mfh
+teaching assistants|classroom|fh
+nursery practitioners|biz_education|fh
+dinner ladies|thank_you_jobs|fh
+police officers|thank_you_jobs|mf
+firefighters|thank_you_jobs|mf
+soldiers and veterans|thank_you_jobs|mh
+HGV and lorry drivers|hobbies|fm
+taxi drivers|hobbies|f
+bus drivers|hobbies|f
+builders|biz_trades_pets|fm
+electricians|biz_trades_pets|f
+plumbers|biz_trades_pets|f
+joiners and carpenters|biz_trades_pets|fm
+plasterers|biz_trades_pets|f
+roofers|biz_trades_pets|f
+mechanics|biz_automotive|fm
+farmers|biz_trades_pets|fmh
+gamekeepers|hobbies|f
+gardeners and landscapers|garden_outdoor|fm
+chefs|kitchen|fm
+bakers|kitchen|fh
+baristas|coffee_cafe|f
+bartenders|bar_pub|f
+hairdressers|biz_hair_beauty|fm
+barbers|biz_hair_beauty|fm
+nail technicians|biz_hair_beauty|f
+beauticians|biz_hair_beauty|m
+tattoo artists|biz_hair_beauty|f
+dog groomers|biz_trades_pets|f
+vets and vet nurses|biz_health|fh
+dentists and dental nurses|biz_health|f
+pharmacists|biz_health|f
+opticians|biz_health|f
+physiotherapists|biz_health|fm
+personal trainers|biz_fitness_venues|m
+yoga teachers|fitness_selfcare|mh
+accountants|biz_office_pro|f
+lawyers and solicitors|biz_office_pro|f
+estate agents|biz_office_pro|fm
+recruiters|biz_office_pro|fm
+sales teams|biz_office_pro|m
+customer service teams|biz_office_pro|mf
+call centre staff|biz_office_pro|f
+software developers|office_work|f
+engineers|office_work|f
+scientists|office_work|f
+entrepreneurs|motivation|m
+small business owners|biz_retail_shop|mh
+freelancers|office_work|mf
+remote workers|office_work|f
+students|motivation|mf
+university graduates|milestones|mh
+new mums|nursery_kids|fh
+new dads|nursery_kids|fh
+grandparents|home_family|hf
+nans|home_family|hf
+grandads|home_family|hf
+retirees|milestones|fh
+twins|nursery_kids|fh
+foster carers|home_family|h
+adoptive families|home_family|h
+stepfamilies|home_family|h
+single mums|home_family|mh
+big families|home_family|fh
+newlyweds|wedding_love|hf
+couples|wedding_love|hf
+best friends|funny_sarcasm|hf
+sisters|home_family|hf
+brothers|home_family|f
+teenagers' bedrooms|words_aesthetic|mf
+gamers|man_cave|f
+bookworms|words_aesthetic|fh
+wine lovers|bar_pub|f
+gin lovers|bar_pub|f
+beer and real ale lovers|bar_pub|f
+whisky drinkers|bar_pub|f
+tea lovers|coffee_cafe|fh
+coffee addicts|coffee_cafe|f
+chocolate lovers|kitchen|f
+cake lovers|kitchen|f
+foodies|kitchen|f
+vegans and vegetarians|kitchen|fm
+BBQ lovers|garden_outdoor|f
+cheese lovers|kitchen|f
+pizza lovers|biz_hospitality|f
+curry lovers|kitchen|f
+Sunday roast lovers|kitchen|f
+chip shop lovers|biz_hospitality|f
+fishing and angling|hobbies|fm
+golfers|hobbies|fm
+cyclists|hobbies|fm
+runners|fitness_selfcare|mf
+swimmers|hobbies|m
+wild swimmers|hobbies|fm
+hikers and ramblers|travel_coastal|mf
+campers|travel_coastal|f
+caravanners|travel_coastal|f
+motorhome owners|travel_coastal|f
+narrowboat owners|travel_coastal|fh
+sailors|travel_coastal|f
+surfers|travel_coastal|mf
+skiers|travel_coastal|f
+horse riders|biz_trades_pets|fm
+bikers and motorcyclists|man_cave|fm
+classic car owners|biz_automotive|f
+petrolheads|biz_automotive|f
+Formula 1 fans|man_cave|f
+football fans|man_cave|fm
+rugby fans|man_cave|fm
+cricket fans|man_cave|f
+darts players|man_cave|f
+snooker players|man_cave|f
+boxing fans|biz_fitness_venues|m
+martial artists|biz_fitness_venues|m
+dancers|biz_fitness_venues|mf
+gym goers|biz_fitness_venues|mf
+knitters|hobbies|f
+crocheters|hobbies|f
+sewing and quilting|hobbies|f
+crafters|hobbies|f
+painters and artists|words_aesthetic|m
+photographers|hobbies|f
+musicians|man_cave|mf
+guitarists|man_cave|f
+drummers|man_cave|f
+singers and choirs|hobbies|mh
+DJs and vinyl collectors|man_cave|f
+rock and metal fans|man_cave|f
+jazz lovers|bar_pub|h
+country music fans|bar_pub|f
+80s kids|funny_sarcasm|f
+90s kids|funny_sarcasm|f
+trainspotters|hobbies|f
+birdwatchers|garden_outdoor|fh
+beekeepers|garden_outdoor|f
+allotment growers|garden_outdoor|f
+houseplant lovers|garden_outdoor|f
+chicken keepers|garden_outdoor|f
+dog walkers|pets|f
+cat lovers|pets|fh
+rescue dog owners|pets|h
+horse lovers|pets|h
+rabbit owners|pets|f
+reptile keepers|pets|f
+astronomy lovers|words_aesthetic|h
+history buffs|proverbs_classics|f
+witchy and magical decor|words_aesthetic|f
+gothic home decor|words_aesthetic|f
+boho decor lovers|words_aesthetic|h
+Scandi minimalist homes|words_aesthetic|m
+farmhouse kitchens|kitchen|hs
+cottagecore homes|home_family|h
+coastal cottages|travel_coastal|hs
+country pubs|bar_pub|fs
+seaside cafés|biz_hospitality|fs
+tea rooms|biz_hospitality|hs
+village shops|biz_retail_shop|s
+farm shops|biz_retail_shop|s
+bakeries|biz_hospitality|fs
+butchers|biz_retail_shop|fs
+fish and chip shops|biz_hospitality|fs
+ice cream parlours|biz_hospitality|fs
+pizzerias|biz_hospitality|fs
+Indian restaurants|biz_hospitality|s
+Italian restaurants|biz_hospitality|s
+cocktail bars|bar_pub|fs
+wine bars|bar_pub|fs
+microbreweries|bar_pub|fs
+gin distilleries|bar_pub|fs
+car showrooms|biz_automotive|ms
+used car dealers|biz_automotive|mfs
+MOT and service garages|biz_automotive|fs
+car washes and valeting|biz_automotive|fs
+tyre shops|biz_automotive|fs
+driving schools|biz_automotive|mf
+motorbike dealers|biz_automotive|ms
+hair salons|biz_hair_beauty|ms
+barber shops|biz_hair_beauty|fs
+nail salons|biz_hair_beauty|fs
+lash and brow studios|biz_hair_beauty|fs
+day spas|biz_hair_beauty|hs
+tanning salons|biz_hair_beauty|fs
+tattoo studios|biz_hair_beauty|fs
+gyms|biz_fitness_venues|ms
+boxing gyms|biz_fitness_venues|ms
+yoga studios|biz_fitness_venues|hs
+dance schools|biz_fitness_venues|ms
+football clubs|biz_fitness_venues|ms
+golf clubs|biz_fitness_venues|fs
+cricket clubs|biz_fitness_venues|fs
+swimming clubs|biz_fitness_venues|ms
+dental practices|biz_health|fs
+GP surgeries|biz_health|s
+physio clinics|biz_health|ms
+opticians' practices|biz_health|fs
+pharmacies|biz_health|fs
+vet practices|biz_health|hs
+care homes|biz_health|hs
+hospices|memorial|h
+counselling rooms|fitness_selfcare|h
+estate agents' offices|biz_office_pro|ms
+accountancy firms|biz_office_pro|fs
+law firms|biz_office_pro|s
+recruitment agencies|biz_office_pro|ms
+coworking spaces|biz_office_pro|ms
+startup offices|biz_office_pro|mf
+call centres|biz_office_pro|mf
+office kitchens|coffee_cafe|fs
+staff rooms|biz_office_pro|fs
+hotel receptions|biz_hospitality|s
+B&Bs and guest houses|biz_hospitality|hs
+holiday lets and Airbnbs|biz_hospitality|fs
+caravan parks|travel_coastal|fs
+campsites|travel_coastal|fs
+primary school classrooms|biz_education|ms
+secondary school classrooms|biz_education|mf
+school libraries|biz_education|ms
+nurseries and pre-schools|biz_education|hs
+SEN and sensory rooms|biz_education|hs
+music rooms|biz_education|ms
+art rooms|biz_education|ms
+science labs|biz_education|mf
+maths classrooms|biz_education|mf
+English classrooms|biz_education|mf
+PE and sports halls|biz_education|m
+churches|faith_christian|hs
+church halls|faith_christian|s
+Sunday schools|faith_christian|h
+mosques and Islamic schools|faith_islamic|hs
+Muslim homes during Ramadan|faith_islamic|h
+Hindu homes at Diwali|faith_dharmic|h
+Sikh homes|faith_dharmic|h
+Jewish homes|faith_blessings|h
+florists|biz_retail_shop|hs
+bookshops|biz_retail_shop|fs
+garden centres|biz_retail_shop|fs
+pet shops|biz_retail_shop|fs
+charity shops|biz_retail_shop|hs
+gift shops|biz_retail_shop|fs
+boutiques|biz_retail_shop|ms
+vintage and antique shops|biz_retail_shop|fs
+craft and yarn shops|biz_retail_shop|fs
+kennels and catteries|biz_trades_pets|fs
+stables and livery yards|biz_trades_pets|fs
+workshops and sheds|man_cave|fs
+home bars|bar_pub|fs
+garden bars|bar_pub|fs
+games rooms|man_cave|fs
+home cinemas|man_cave|fs
+home gyms|fitness_selfcare|ms
+home offices|office_work|mf
+utility rooms|laundry_utility|fs
+boot rooms|laundry_utility|fs
+downstairs toilets|bathroom|fs
+en suites|bathroom|hs
+guest bedrooms|home_family|hs
+hallways and entrances|home_family|hs
+staircases|home_family|h
+conservatories|garden_outdoor|h
+summer houses|garden_outdoor|fs
+hot tubs|garden_outdoor|fs
+beach huts|travel_coastal|fs
+Yorkshire folk|heritage_dialect|fh
+Lancashire folk|heritage_dialect|fh
+Geordies|heritage_dialect|fh
+Scousers|heritage_dialect|fh
+Mancunians|heritage_dialect|fh
+Brummies and the Black Country|heritage_dialect|fh
+Cornish folk|heritage_dialect|fh
+Londoners|heritage_dialect|fh
+West Country folk|heritage_dialect|fh
+Welsh families|heritage_dialect|fh
+Scottish families|heritage_dialect|fh
+Irish families|heritage_dialect|fh
+Northern Irish families|heritage_dialect|fh
+Polish families in the UK|heritage_dialect|h
+Indian families in the UK|heritage_dialect|h
+Pakistani families in the UK|heritage_dialect|h
+Nigerian families in the UK|heritage_dialect|h
+Caribbean families in the UK|heritage_dialect|h
+Italian families|heritage_dialect|h
+people in recovery and sobriety|fitness_selfcare|mh
+anxiety and mental health|fitness_selfcare|mh
+cancer survivors|fitness_selfcare|mh
+grief and loss|memorial|h
+baby loss|memorial|h
+pet loss|memorial|h
+armed forces remembrance|memorial|h
+divorce and fresh starts|motivation|mf
+new job starters|motivation|m
+job leavers|thank_you_jobs|fh
+first-time buyers|new_home|fh
+moving abroad|new_home|h
+empty nesters|home_family|fh
+stoic philosophy fans|proverbs_classics|m
+leadership and management|biz_office_pro|m
+discipline and self-improvement|motivation|m
+gratitude and positivity|motivation|mh
+confidence for women|motivation|m
+body positivity|fitness_selfcare|m
+kindness|motivation|h
+Christmas at home|christmas_seasonal|fh
+Halloween decor|christmas_seasonal|f
+Easter decor|christmas_seasonal|h
+autumn decor|christmas_seasonal|h
+spring decor|christmas_seasonal|h
+summer garden parties|garden_outdoor|f
+Valentine's Day|wedding_love|hf
+Mother's Day|christmas_seasonal|h
+Father's Day|christmas_seasonal|hf
+Eid|faith_islamic|h
+Diwali|faith_dharmic|h
+Chinese New Year|words_aesthetic|h
+St Patrick's Day|faith_blessings|f
+Burns Night|heritage_dialect|f
+St David's Day|heritage_dialect|h
+new baby nursery|nursery_kids|h
+kids' bedrooms|nursery_kids|mf
+playrooms|nursery_kids|fs
+dinosaur-loving kids|nursery_kids|f
+space-loving kids|nursery_kids|mf
+football-mad kids|nursery_kids|mf
+unicorn and rainbow kids|nursery_kids|h

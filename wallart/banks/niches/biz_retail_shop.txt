@@ -1,0 +1,66 @@
+name: Shop, Boutique & Garden Centre
+noun: Shop Wall Art Print|Boutique Sign Print|Retail Wall Decor
+rooms: Shop|Boutique|Florist|Bookshop|Garden Centre|Pet Shop|Charity Shop|Gift Shop|Farm Shop|Butchers|Bakery|Vintage Shop|Craft Shop|Market Stall|Pop-up Shop
+mood: script, rustic, modern, bold
+---
+Shop / small
+Shop / local
+Support / small / business
+When / you / buy / from a small business / an actual person / does a happy dance
+Thank / you / for / shopping small
+Thank / you / for / shopping with us
+Handmade / with / love
+Made / by / hand
+Made / with / love
+Proudly / handmade
+Small / business / big dreams
+Small / shop / big heart
+Treat / yourself
+You / deserve / it
+New / in
+Just / arrived
+Shop / til / you drop
+Retail / therapy
+Life / is / short / buy the dress
+Life / is / short / buy the flowers
+Buy / the / flowers
+Fresh / flowers / daily
+Flowers / make / people happy
+Let / love / bloom
+Bloom / & / grow
+Grow / & / bloom
+Plant / lady / paradise
+A / room / without / books / is like a body / without a soul
+Read / more / books
+Bookshop
+Second / hand / books
+Pre-loved / & / fabulous
+Vintage / finds
+One / of / a kind
+Something / old / something new
+Every / purchase / helps
+Thank / you / for / your donation
+Farm / fresh
+Fresh / from / the farm
+Local / produce
+Free / range
+Quality / meats
+Family / butchers
+Freshly / baked / bread
+Pets / welcome
+Dogs / welcome
+Treats / for / good dogs
+Happy / pets / live here
+Gift / shop
+Gifts / for / every occasion
+Wrapped / with / love
+Open
+Come / in / we're open
+Sorry / we're / closed
+Please / come / again
+Back / in / five minutes
+Cash / & / card / accepted
+Card / payments / welcome
+Please / ask / for help
+Fitting / room
+Changing / room

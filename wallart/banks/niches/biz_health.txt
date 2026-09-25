@@ -1,0 +1,59 @@
+name: Dental, Clinic, Vet & Care
+noun: Clinic Wall Art Print|Waiting Room Wall Art|Surgery Wall Art Print
+rooms: Dental Surgery|Dentist Waiting Room|GP Surgery|Waiting Room|Physio Clinic|Chiropractor|Pharmacy|Opticians|Vet Practice|Care Home|Hospital Ward|Therapy Room|Counselling Room|Clinic
+mood: minimal, modern, script, playful
+---
+Smile / it's / good for you
+Keep / smiling
+Smile / more
+Smile / you're / in good hands
+Your / smile / is / our / passion
+Life / is / better / when you're smiling
+Brush / twice / a day
+Brush / floss / smile
+Floss / like / a boss
+Happy / teeth / happy / you
+Healthy / smile / happy life
+Every / tooth / in a man's head / is more valuable / than a diamond
+Take / a / seat / we won't be long
+Please / take / a seat
+You / are / in / good hands
+Caring / for / you / since day one
+We're / here / to help
+Health / is / wealth
+Your / health / matters
+Wellness / starts / here
+Healing / takes / time
+Heal / move / live
+Move / better / feel better
+Keep / moving
+Motion / is / lotion
+Posture / check
+Sit / up / straight
+Look / after / your back
+Stretch / every / day
+See / the / world / clearly
+Eyes / are / the / window / to the soul
+Look / after / your / eyes
+Take / your / medicine
+Stay / healthy / stay happy
+An / apple / a / day
+Laughter / is / the / best medicine
+Rest / is / part / of the treatment
+Breathe / you're / safe here
+You / are / safe / here
+It's / okay / to / ask for help
+Talking / helps
+Every / pet / deserves / love
+Happy / pets / healthy pets
+Pets / welcome
+Where / pets / are / family
+Love / is / a / four-legged word
+Be / kind / to / animals
+Care / with / compassion
+Kindness / is / the / best medicine
+Nurses / are / angels / in comfy shoes
+Home / is / where / you're cared for
+Every / day / is / a gift
+Growing / old / is / a privilege
+Memories / made / here

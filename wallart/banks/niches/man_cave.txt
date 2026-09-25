@@ -1,0 +1,81 @@
+name: Man Cave, Garage & Games Room
+noun: Man Cave Sign Print|Garage Wall Art|Games Room Sign Print
+rooms: Man Cave|Garage|Games Room|Workshop|Shed|Car Showroom|Motorbike Shop|Barber Shop|Pub
+mood: retro, bold, vintage, industrial
+---
+Man / cave
+Man / cave / rules
+Welcome / to / the / man cave
+Dad's / garage
+Grandad's / garage
+Dad's / workshop
+Dad's / shed
+Grandad's / shed
+Garage / rules
+Workshop / rules
+Workshop
+Tools / & / tales
+If / Dad / can't / fix it / no one can
+If / Grandad / can't / fix it / no one can
+Fixed / it
+Measure / twice / cut once
+Keep / calm / and / fix it
+Gone / fishing
+Gone / to / the pub
+Beer / & / sport
+Games / room
+Game / room
+Gaming / zone
+Game / on
+Eat / sleep / game / repeat
+Press / start
+Level / up
+Player / one
+Player / two
+Controller / required
+Do not / disturb / gaming / in progress
+Snooker / room
+Darts / room
+Pool / room
+Poker / night
+Cards / room
+Sports / bar
+Match / day
+Kick / off
+Sports / zone
+Motor / heads
+Petrolhead
+Classic / cars
+Vintage / motors
+Garage / service / & repairs
+Speed / shop
+Mechanics / on duty
+Custom / garage
+Keep / out / genius at work
+Genius / at / work
+The / boss's / office
+No / girls / allowed
+Party / zone
+Retro / arcade
+Arcade
+Vinyl / corner
+Music / room
+Rock / & / roll
+Jam / room
+Home / cinema
+Cinema / room
+Now / showing
+Movie / night
+Popcorn
+Tickets / please
+{name}'s / man cave
+{name}'s / garage
+{name}'s / workshop
+{name}'s / games room
+{name}'s / snooker room
+{name}'s / home cinema
+{surname} / garage / est. {year}
+{surname} / motors
+{surname}'s / garage
+{surname} / workshop / est. {year}
+The / {surname} / cinema

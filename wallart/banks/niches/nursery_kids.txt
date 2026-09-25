@@ -1,0 +1,108 @@
+name: Nursery & Kids
+noun: Nursery Print|Kids Room Wall Art|Nursery Wall Art Print
+rooms: Nursery|Kids Bedroom|Playroom|Nursery School|Pre-school|Soft Play|Baby Room
+mood: kids, script, playful, minimal
+occasion: New Baby|Baby Shower|Christening|Birthday
+---
+Twinkle / twinkle / little star
+Twinkle twinkle / little star / how I wonder / what you are
+Hey / diddle / diddle
+Row / row / row your boat
+Hush / little / baby
+Rock-a-bye / baby
+Sleep / tight
+Night / night / sleep tight
+Sweet / dreams / little one
+Sweet / dreams
+Dream / big / little one
+Hello / little one
+Hello / world
+Oh / baby
+Little / one
+Little / star
+Little / dreamer
+Little / explorer
+Little / adventurer
+Wild / one
+Stay / wild / little one
+Be / brave / little one
+You / are / my / sunshine
+You / are / loved
+You / are / so / loved
+You / are / kind
+You / are / brave
+You / are / smart
+You / are / strong
+You / are / important
+You / are / enough
+You / are / magic
+You / are / one / of a kind
+I / am / kind / I am / brave / I am / loved
+I / can / do / hard things
+Mistakes / help / me grow
+Be / kind / to everyone
+Always / be / kind
+Be / curious
+Be / a / rainbow / in someone's cloud
+Adventure / awaits
+Let / the / adventure / begin
+Imagine
+Play
+Play / room
+Playroom / rules
+Let's / play
+Let's / have / an adventure
+Make / believe
+Reading / corner
+Book / nook
+Read / more / books
+Once / upon / a time
+The / end
+Make / a wish
+Wish / upon / a star
+Reach / for / the stars
+Shoot / for / the moon
+Love / you / to the moon / and back
+Moon / & / stars
+Little / sunshine
+Little / rainbow
+Little / bear
+Little / lion
+Little / fox
+Little / bunny
+Brave / like / a lion
+Roar
+Rawr / means / I love you / in dinosaur
+Dinosaur / zone
+Space / cadet
+Future / astronaut
+Future / footballer
+Future / scientist
+Princess / in training
+Superhero / in training
+Boys' / room
+Girls' / room
+Keep / out
+Knock / first
+Welcome / to / {name}'s / room
+{name}'s / room
+{name}'s / nursery
+{name}'s / playroom
+{name}'s / reading / corner
+{name}'s / adventures
+{name} / you / are / loved
+{name} / you are / my sunshine
+{name} / dream big
+{name} / twinkle twinkle / little star
+{name} / sweet dreams
+Hello / {name}
+Welcome / to the world / {name}
+Goodnight / {name}
+Little / {name}
+{name} / est. {year}
+{name} / born {year}
+Baby / {name}
+{name} / be brave
+{name} / stay wild
+{name} / you are / magic
+Adventure / awaits / {name}

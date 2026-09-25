@@ -1,0 +1,42 @@
+name: Laundry & Utility
+noun: Laundry Room Sign Print|Utility Room Wall Art|Laundry Print
+rooms: Laundry Room|Utility Room|Launderette|Boot Room|Holiday Let
+mood: retro, rustic, bold, minimal
+---
+Laundry
+Laundry / room
+Laundry / rules
+Laundry / services
+Wash / dry / fold / repeat
+Wash / dry / fold / put away
+Laundry / today / or naked / tomorrow
+Wash / & / fold
+Clean / clothes / fresh start
+Lost / socks
+Lost / sock / department
+Lost / socks / find them here
+Missing / socks
+Sock / exchange
+Loads / of / love
+Wash / day
+Laundry / day
+Dirty / laundry / not included
+Mom's / laundry / service
+Mum's / laundry / open 24 hours
+Self / service
+Coin / laundry
+The / laundry / fairy / doesn't live here
+Utility
+Utility / room
+Boot / room
+Mud / room
+Wipe / your / paws
+Coats / & / boots
+Hang / your / coat
+Leave / your / worries / at the door
+Leave / your / shoes / at the door
+Cleaning / crew
+Keep / it / clean
+Clean / as / you go
+Iron / free / zone
+Ironing / is / not / my thing

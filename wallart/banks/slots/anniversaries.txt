@@ -1,0 +1,26 @@
+Paper|1st
+Cotton|2nd
+Leather|3rd
+Linen|4th
+Wood|5th
+Iron|6th
+Wool|7th
+Bronze|8th
+Pottery|9th
+Tin|10th
+Steel|11th
+Silk|12th
+Lace|13th
+Ivory|14th
+Crystal|15th
+China|20th
+Silver|25th
+Pearl|30th
+Coral|35th
+Ruby|40th
+Sapphire|45th
+Golden|50th
+Emerald|55th
+Diamond|60th
+Blue Sapphire|65th
+Platinum|70th

@@ -1,0 +1,58 @@
+name: Islamic
+noun: Islamic Wall Art Print|Muslim Home Decor Print|Islamic Quote Print
+rooms: Living Room|Hallway|Prayer Room|Bedroom|Mosque|Islamic School|Kitchen|Nursery
+mood: elegant, minimal, geometric, sacred
+occasion: Ramadan|Eid
+---
+Bismillah
+Alhamdulillah
+SubhanAllah
+Allahu / Akbar
+MashaAllah
+InshaAllah
+Astaghfirullah
+La hawla / wa la quwwata / illa billah
+Hasbunallahu / wa ni'mal wakeel
+Tawakkul
+Sabr
+Shukr
+Sabr / & / Shukr
+Jannah
+Ummah
+Dua
+Allah / is / with / the patient
+Verily / with hardship / comes ease
+With / hardship / comes / ease
+Indeed / with hardship / there is relief
+And He / found you / lost / and guided you
+Allah / knows / best
+Trust / Allah's / plan
+Allah / never / burdens a soul / beyond / what it can bear
+Remember / Allah / and He / will remember you
+In / the remembrance / of Allah / do hearts / find rest
+Put / your / trust / in Allah
+Be / grateful / to Allah
+Say / Alhamdulillah
+Bismillah / before / everything
+Pray / before / you / are prayed upon
+Salaam
+As-salamu / alaykum
+Peace / be / upon / this home
+Welcome / to / our / home / as-salamu alaykum
+Bless / this / home / Ya Allah
+Ramadan / Mubarak
+Ramadan / Kareem
+Eid / Mubarak
+Eid / al-Fitr / Mubarak
+Eid / al-Adha / Mubarak
+Blessed / Ramadan
+Ramadan / countdown
+Hajj / Mubarak
+Umrah / Mubarak
+Welcome / home / Hajji
+Jummah / Mubarak
+Laylatul / Qadr
+Mashallah / {name}
+{name} / MashaAllah
+The {surname} / family / Bismillah
+Bismillah / the {surname} / home

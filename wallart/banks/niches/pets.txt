@@ -1,0 +1,76 @@
+name: Dog & Cat Lovers
+noun: Dog Lover Print|Pet Wall Art Print|Dog Quote Print
+rooms: Hallway|Living Room|Kitchen|Boot Room|Dog Groomers|Vet Practice|Pet Shop|Kennels
+mood: playful, script, rustic, minimal
+---
+Home / is / where / the dog is
+Home / is / where / the cat is
+Home / is where / my {breed} is
+Life / is / better / with a {breed}
+Life / is / better / with a dog
+Life / is / better / with a cat
+All / you need / is / a {breed}
+I / love / my {breed}
+{breed} / mum
+{breed} / dad
+Proud / {breed} / mum
+Proud / {breed} / dad
+{breed} / lover
+Crazy / {breed} / lady
+Warning / {breed} / on duty
+Beware / of the / {breed}
+Beware / of the / dog
+Beware / the / dog is friendly / the owner / is not
+Dog / hair / don't care
+Wipe / your / paws
+Please / wipe / your paws
+Dogs / welcome / people tolerated
+Dogs / welcome
+The / dog / and I / talked / and / you can stay
+Our / dog / is / family
+Dogs / leave / paw prints / on our hearts
+Paw / prints / on / my heart
+Adopt / don't / shop
+Rescued / is / my / favourite breed
+Who / rescued / who?
+Rescue / dog / mum
+Dog / mum
+Dog / dad
+Cat / mum
+Cat / dad
+Crazy / cat / lady
+Crazy / dog / lady
+Cat / hair / don't care
+Cats / leave / pawprints / on our hearts
+Home / of / the / spoilt / cat
+Home / of / a / spoilt / {breed}
+The / cat / is / the boss
+The / dog / is / the boss
+The / dog / lives / here / we just pay / the mortgage
+Treats
+Dog / treats
+Walkies
+Leads / & / treats
+Muddy / paws / welcome
+Happy / tails
+Wag / more / bark less
+Sit / stay / love
+Good / dog
+Good / boy
+Good / girl
+Who's / a good / boy?
+Paws
+Woof
+Meow
+Purr
+Dog / bowl
+{name}'s / bowl
+{name}'s / bed
+{name} / the / {breed}
+{name} / the / cat
+{name}'s / corner
+In / loving / memory / of / {name}
+Forever / in / our / hearts / {name}
+Run / free / {name}
+Rainbow / bridge
+If / love / could have saved you / you would have / lived forever

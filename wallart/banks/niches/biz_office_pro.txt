@@ -1,0 +1,69 @@
+name: Office, Agency & Reception
+noun: Office Wall Art Print|Reception Wall Art|Business Wall Decor Print
+rooms: Office|Reception|Boardroom|Meeting Room|Estate Agents|Accountants|Law Firm|Recruitment Agency|Coworking Space|Call Centre|Startup Office|Staff Room|Break Room|Home Office
+mood: modern, bold, minimal, elegant
+---
+Welcome / to / our / office
+Reception
+Please / report / to reception
+Visitors / please / sign in
+Welcome / please / take a seat
+Your / new / home / starts here
+Home / is / where / our story begins
+Find / your / place
+Sold
+Home / sweet / sold
+Keys / to / your / future
+Every / home / has / a story
+Your / future / starts / today
+Building / futures / together
+Making / business / personal
+Numbers / tell / the story
+Good / advice / is / priceless
+We / do / the / numbers / you do the dreaming
+Your / success / is / our business
+People / are / our / greatest asset
+Great / people / great / work
+Hire / character / train skill
+Together / everyone / achieves more
+Collaboration / over / competition
+Ideas / live / here
+Big / ideas / start here
+Think / create / innovate
+Innovate / or / stagnate
+Do / what / you / love / love what you do
+Work / hard / be kind / amazing things will happen
+Hustle / & / heart
+Grind / & / grace
+Customer / first
+Customers / are / everything
+Service / with / a smile
+Excellence / is / a habit
+Integrity / always
+Honesty / integrity / quality
+Mission / vision / values
+Our / values
+Our / team
+Meet / the / team
+Team / work
+Coffee / break
+Break / room
+Take / a / break
+Recharge / refocus / repeat
+Staff / room / rules
+Clean / up / after / yourself / your mother / doesn't work here
+Please / wash / your mug
+Tea / & / coffee / station
+Be / the / reason / someone / smiles today
+Every / day / is / a / chance / to be better
+Good / vibes / at work
+Positive / vibes / only
+Meeting / room
+Boardroom
+Quiet / zone
+Focus / zone
+Phone / booth
+Creative / space
+Coworking / community
+Start / up / nation
+Est. / {ryear}

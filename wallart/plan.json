@@ -1,0 +1,264 @@
+{
+ "_note": "Demand weights and store focus. demand = relative buyer demand (1-10). vmax = most listings one phrase may appear in across ALL stores (each in a different colourway, colour named in the title). Personalised templates get vmax 1-2 because their supply is already huge; hand-written phrases get more colourways because there are only ~40-150 of them per niche. Edit and re-run generate.py. vmax is further capped at venues x 26 colourways for that niche.",
+ "per_store": 1000000,
+ "primary_share": 0.65,
+ "stores": [
+  {
+   "id": 1,
+   "name": "Faith & Blessings",
+   "niches": [
+    "faith_christian",
+    "scripture",
+    "faith_blessings",
+    "faith_islamic",
+    "faith_dharmic",
+    "memorial"
+   ]
+  },
+  {
+   "id": 2,
+   "name": "Business & Motivation",
+   "niches": [
+    "motivation",
+    "office_work",
+    "biz_office_pro",
+    "biz_automotive",
+    "biz_fitness_venues",
+    "fitness_selfcare",
+    "biz_hair_beauty",
+    "biz_health",
+    "proverbs_classics",
+    "words_aesthetic"
+   ]
+  },
+  {
+   "id": 3,
+   "name": "Food, Drink & Hospitality",
+   "niches": [
+    "coffee_cafe",
+    "kitchen",
+    "bar_pub",
+    "biz_hospitality",
+    "biz_retail_shop"
+   ]
+  },
+  {
+   "id": 4,
+   "name": "Family, Wedding & Home",
+   "niches": [
+    "personalised_family",
+    "home_family",
+    "wedding_love",
+    "new_home",
+    "bathroom",
+    "laundry_utility"
+   ]
+  },
+  {
+   "id": 5,
+   "name": "Kids, Nursery & School",
+   "niches": [
+    "nursery_kids",
+    "classroom",
+    "biz_education"
+   ]
+  },
+  {
+   "id": 6,
+   "name": "Humour, Hobbies & Pets",
+   "niches": [
+    "funny_sarcasm",
+    "man_cave",
+    "hobbies",
+    "pets",
+    "garden_outdoor",
+    "heritage_dialect",
+    "biz_trades_pets"
+   ]
+  },
+  {
+   "id": 7,
+   "name": "Gifts, Places & Seasons",
+   "niches": [
+    "milestones",
+    "places_towns",
+    "thank_you_jobs",
+    "christmas_seasonal",
+    "travel_coastal"
+   ]
+  }
+ ],
+ "niches": {
+  "personalised_family": {
+   "demand": 9,
+   "vmax": 400
+  },
+  "wedding_love": {
+   "demand": 5,
+   "vmax": 2,
+   "max_listings": 400000
+  },
+  "nursery_kids": {
+   "demand": 8,
+   "vmax": 400
+  },
+  "milestones": {
+   "demand": 8,
+   "vmax": 400
+  },
+  "new_home": {
+   "demand": 7,
+   "vmax": 400
+  },
+  "home_family": {
+   "demand": 8,
+   "vmax": 400
+  },
+  "kitchen": {
+   "demand": 8,
+   "vmax": 400
+  },
+  "coffee_cafe": {
+   "demand": 7,
+   "vmax": 400
+  },
+  "bar_pub": {
+   "demand": 7,
+   "vmax": 400
+  },
+  "bathroom": {
+   "demand": 8,
+   "vmax": 400
+  },
+  "faith_christian": {
+   "demand": 7,
+   "vmax": 400
+  },
+  "scripture": {
+   "demand": 7,
+   "vmax": 400
+  },
+  "faith_islamic": {
+   "demand": 6,
+   "vmax": 400
+  },
+  "faith_blessings": {
+   "demand": 5,
+   "vmax": 400
+  },
+  "faith_dharmic": {
+   "demand": 3,
+   "vmax": 400
+  },
+  "motivation": {
+   "demand": 7,
+   "vmax": 400
+  },
+  "office_work": {
+   "demand": 5,
+   "vmax": 400
+  },
+  "fitness_selfcare": {
+   "demand": 5,
+   "vmax": 400
+  },
+  "proverbs_classics": {
+   "demand": 4,
+   "vmax": 400
+  },
+  "words_aesthetic": {
+   "demand": 4,
+   "vmax": 400
+  },
+  "classroom": {
+   "demand": 5,
+   "vmax": 400
+  },
+  "funny_sarcasm": {
+   "demand": 6,
+   "vmax": 400
+  },
+  "man_cave": {
+   "demand": 6,
+   "vmax": 400
+  },
+  "hobbies": {
+   "demand": 6,
+   "vmax": 400
+  },
+  "pets": {
+   "demand": 7,
+   "vmax": 400
+  },
+  "garden_outdoor": {
+   "demand": 5,
+   "vmax": 400
+  },
+  "heritage_dialect": {
+   "demand": 5,
+   "vmax": 400
+  },
+  "places_towns": {
+   "demand": 6,
+   "vmax": 400
+  },
+  "thank_you_jobs": {
+   "demand": 6,
+   "vmax": 400
+  },
+  "christmas_seasonal": {
+   "demand": 6,
+   "vmax": 400
+  },
+  "travel_coastal": {
+   "demand": 5,
+   "vmax": 400
+  },
+  "memorial": {
+   "demand": 6,
+   "vmax": 400
+  },
+  "laundry_utility": {
+   "demand": 4,
+   "vmax": 400
+  },
+  "biz_automotive": {
+   "demand": 6,
+   "vmax": 400
+  },
+  "biz_hair_beauty": {
+   "demand": 6,
+   "vmax": 400
+  },
+  "biz_hospitality": {
+   "demand": 6,
+   "vmax": 400
+  },
+  "biz_fitness_venues": {
+   "demand": 6,
+   "vmax": 400
+  },
+  "biz_health": {
+   "demand": 6,
+   "vmax": 400
+  },
+  "biz_office_pro": {
+   "demand": 6,
+   "vmax": 400
+  },
+  "biz_retail_shop": {
+   "demand": 6,
+   "vmax": 400
+  },
+  "biz_education": {
+   "demand": 6,
+   "vmax": 400
+  },
+  "biz_trades_pets": {
+   "demand": 6,
+   "vmax": 400
+  }
+ },
+ "colours_per_venue": 4,
+ "template_variants": 3
+}

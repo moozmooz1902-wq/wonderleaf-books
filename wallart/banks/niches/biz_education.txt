@@ -1,0 +1,61 @@
+name: School, Nursery & Library
+noun: School Poster Print|Classroom Wall Art|Library Wall Art Print
+rooms: Classroom|Primary School|Secondary School|Nursery School|Pre-school|Library|School Office|Staff Room|Sensory Room|Tutoring Centre|Music Room|Art Room|Science Lab
+mood: bold, playful, kids, modern
+---
+Welcome / to / our / school
+Every / child / is / a star
+Every / child / matters
+Everyone / belongs / here
+You / belong / here
+All / are / welcome / here
+Be / kind / be / brave / be you
+Dream / believe / achieve
+Aim / high
+Reach / for / the / stars
+Believe / in / yourself
+You / can / do / it
+Try / new / things
+Learning / is / fun
+Learning / is / a / treasure
+Knowledge / is / power
+Read / to / succeed
+Readers / are / leaders
+Today / a / reader / tomorrow a leader
+Libraries / change / lives
+Quiet / please / reading in progress
+Get / lost / in / a book
+Books / take / you / places
+Imagination / is / everything
+Create / explore / discover
+Ask / questions
+Curiosity / is / the / engine / of learning
+Mistakes / are / how / we learn
+Practice / makes / progress
+Hard / work / beats talent
+Effort / is / everything
+Respect / yourself / respect others
+Treat / others / how / you want / to be treated
+Use / kind / words
+Kind / hands / kind words
+Hands / are / not / for hitting
+Walk / don't / run
+Tidy / up / time
+Line / up / here
+Hang / your / coat
+Wash / your / hands
+Snack / time
+Story / time
+Circle / time
+Nap / time
+Calm / down / corner
+Sensory / room
+Music / makes / us / happy
+Art / is / everywhere
+Every / child / is / an artist
+Maths / is / magic
+Numbers / are / fun
+Our / school / family
+Proud / to / be / here
+Class / of / {ryear}
+Leavers / {ryear}

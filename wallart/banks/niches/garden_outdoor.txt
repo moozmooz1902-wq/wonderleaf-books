@@ -1,0 +1,75 @@
+name: Garden & Outdoors
+noun: Garden Sign Print|Garden Quote Wall Art|Shed Sign Print
+rooms: Garden|Shed|Summer House|Garden Centre|Allotment|Conservatory|Garden Room|Greenhouse
+mood: rustic, vintage, script
+---
+Garden
+Welcome / to / our / garden
+Welcome / to / my / garden
+Grow / your / own
+Bloom / where / you / are planted
+Let / it / grow
+Grow / with / love
+Life / begins / the day / you start / a garden
+Happiness / is / homegrown
+Home / grown
+Garden / party
+Garden / bar
+Garden / room
+Summer / house
+She / shed
+He / shed
+Man / shed
+The / shed
+The / potting / shed
+Potting / shed
+Seed / & / bloom
+Fresh / flowers
+Fresh / herbs
+Herb / garden
+Kitchen / garden
+Vegetable / patch
+The / allotment
+Allotment / life
+Keep / calm / and / garden / on
+Gardening / is / cheaper / than therapy
+Gardening / therapy
+Dig / it
+Get / your / hands / dirty
+Sow / reap / repeat
+Plant / more / plants
+Plant / lady
+Crazy / plant / lady
+Crazy / chicken / lady
+Fresh / eggs
+Chicken / coop
+Hen / house
+Bee / kind
+Bee / happy
+Save / the / bees
+Wildflowers
+Bird / café
+Bird / feeding / station
+Fairy / garden
+Fairies / welcome
+Enchanted / garden
+Secret / garden
+Hot / tub / rules
+Hot / tub / time
+BBQ / rules
+Grill / master
+The / grill / father
+Firepit / stories
+Gather / round / the fire
+Campfire / stories
+Outdoor / living
+Sun / lounge
+Patio
+Pool / rules
+The / {surname} / garden
+{name}'s / garden
+{name}'s / allotment
+{name}'s / shed
+{name}'s / potting / shed
+{name}'s / she / shed
+{name}'s / garden / bar

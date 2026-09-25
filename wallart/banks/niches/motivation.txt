@@ -1,0 +1,140 @@
+name: Motivational Quotes
+noun: Motivational Quote Print|Inspirational Wall Art|Positive Quote Print
+rooms: Office|Home Office|Gym|Classroom|Car Showroom|Barber Shop|Salon|Bedroom|Study|Reception|Coworking Space|Teen Bedroom|Sports Club|Coffee Shop|Staff Room
+mood: bold, modern, minimal, script
+---
+Dream / big
+Dream big / work hard
+Dream big / work hard / stay humble
+Stay / humble / work hard / be kind
+Work hard / be nice
+Do / more / of what / makes you / *happy*
+Do / what you / love
+Love / what you do
+Believe / in yourself
+Believe / you can
+Believe you can / and you're / halfway there
+You / got / this
+You've got / this
+Keep / going
+Just / keep / going
+Never / give up
+Don't / quit
+Progress / not / perfection
+Small steps / every day
+One day / at a time
+One step / at a time
+Start / where you are
+Start / now
+Begin / anywhere
+Make it / happen
+Make / today / count
+Today / is / a good day
+Today / is a good day / for a good day
+Good vibes / only
+Positive / vibes
+Stay / positive
+Choose / joy
+Choose / kindness
+Be / kind
+In a world / where you can be / anything / be *kind*
+Kindness / is free
+Be / brave
+Be / bold
+Be / fearless
+Be / the change
+Be / yourself
+Be / you
+Be / true / to / you
+Stay / true
+Stay / wild
+Stay / curious
+Stay / focused
+Focus
+Hustle
+Hustle / hard
+Hustle / & heart
+Work / hard / play hard
+Rise / & shine
+Shine / bright
+Let / it / shine
+Chase / your / dreams
+Follow / your / dreams
+Follow / your / heart
+Take / the / leap
+Go / for it
+Why / not / you?
+If / not now / when?
+Difficult roads / lead to / beautiful destinations
+Great things / take time
+Good things / take time
+Good things / are coming
+Everything / you need / is / already / inside you
+You are / capable / of amazing things
+You are / enough
+You / are / stronger / than you think
+Stronger / every day
+Fall / seven times / stand up / eight
+Nothing / is impossible
+No / pressure / no / diamonds
+Grow / through / what you / go through
+Bloom / where you / are planted
+Let / it / be
+Let / it / go
+Breathe
+Just / breathe
+Inhale / exhale
+Keep / it / simple
+Less / is / more
+Enjoy / the / little things
+Collect / moments / not things
+Live / in / the moment
+Seize / the day
+Carpe / diem
+Make / it / count
+Create / your / own sunshine
+Be / the energy / you want / to attract
+Your only limit / is you
+The best / is yet / to come
+Onwards / & upwards
+Up / & / onwards
+Adventure / awaits
+Hard work / pays off
+Mindset / is / everything
+Think / big
+Think / positive
+Rest / but / don't quit
+It's / a beautiful / day / to be alive
+Life / is / good
+Life / is / beautiful
+Life / is / an adventure
+Life / is / short / make it sweet
+Be / patient / with yourself
+Work / in progress
+Mistakes / are proof / you are trying
+Failure / is / not / final
+Try / again
+Do / it / scared
+Do / it / anyway
+Fortune / favours / the bold
+Actions / speak / louder / than words
+Every / day / is / a fresh start
+New / day / new / beginnings
+Look / on the / bright side
+Happiness / is / a choice
+Happy / thoughts
+Good / morning / sunshine
+Smile / more / worry less
+Worry / less / live more
+Less / worry / more / joy
+Stay / strong
+Keep / your / chin up
+Head / up / heart open
+Hope
+Courage
+Strength
+Gratitude
+Believe
+Dream
+Inspire
+Achieve

@@ -1,0 +1,40 @@
+Teacher|teaching|teachers|classroom
+Teaching Assistant|teaching|teaching assistants|classroom
+Nurse|nursing|nurses|ward
+Midwife|midwifery|midwives|ward
+Doctor|medicine|doctors|surgery
+Paramedic|saving lives|paramedics|station
+Carer|caring|carers|home
+Nursery Nurse|early years|nursery nurses|nursery
+Childminder|childminding|childminders|playroom
+Hairdresser|hairdressing|hairdressers|salon
+Barber|barbering|barbers|barbershop
+Beautician|beauty|beauticians|salon
+Nail Tech|nails|nail techs|salon
+Chef|cooking|chefs|kitchen
+Baker|baking|bakers|bakery
+Barista|coffee|baristas|café
+Builder|building|builders|site
+Electrician|wiring|electricians|workshop
+Plumber|plumbing|plumbers|workshop
+Mechanic|fixing cars|mechanics|garage
+Engineer|engineering|engineers|workshop
+Firefighter|firefighting|firefighters|station
+Police Officer|policing|police officers|station
+Vet|veterinary work|vets|surgery
+Dental Nurse|dentistry|dental nurses|surgery
+Pharmacist|pharmacy|pharmacists|pharmacy
+Accountant|accounting|accountants|office
+Lawyer|law|lawyers|chambers
+Social Worker|social work|social workers|office
+Lollipop Lady|keeping kids safe|lollipop ladies|crossing
+Dinner Lady|school dinners|dinner ladies|canteen
+Farmer|farming|farmers|farm
+Gardener|gardening|gardeners|garden
+Postman|delivering|postmen|round
+HGV Driver|driving|HGV drivers|cab
+Pilot|flying|pilots|cockpit
+Soldier|serving|soldiers|barracks
+Coach|coaching|coaches|pitch
+Dog Groomer|grooming|dog groomers|salon
+Florist|flowers|florists|shop

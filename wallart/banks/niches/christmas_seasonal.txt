@@ -1,0 +1,96 @@
+name: Christmas & Seasonal
+noun: Christmas Wall Art Print|Christmas Decor Print|Seasonal Print
+rooms: Living Room|Hallway|Kitchen
+mood: script, vintage, elegant, rustic
+occasion: Christmas|Easter|Halloween|Autumn|Mother's Day|Father's Day|Valentine's Day
+---
+Merry / Christmas
+Merry / & / bright
+Merry / little / Christmas
+Happy / Christmas
+Season's / greetings
+Happy / holidays
+Joy
+Noel
+Peace / love / joy
+Believe
+Oh / what / fun
+Jingle / all / the way
+Deck / the / halls
+Ho / ho / ho
+Santa / stop / here
+Santa / please / stop here
+Dear / Santa / I can explain
+Nice / list
+Naughty / or / nice
+Official / nice / list
+North / Pole
+North / Pole / express
+Reindeer / games
+Reindeer / crossing
+Elf / on / duty
+Christmas / eve / box
+Christmas / morning
+Christmas / movies / & hot chocolate
+Hot / cocoa / bar
+Hot / chocolate / station
+Mulled / wine / o'clock
+Warm / & / cosy
+Cosy / season
+Home / for / Christmas
+Our / first / Christmas
+Our / first / Christmas / {ryear}
+Christmas / {ryear}
+The / {surname}s / Christmas {ryear}
+Merry / Christmas / from the {surname}s
+{name}'s / first / Christmas
+Baby's / first / Christmas / {ryear}
+Christmas / at / Nan's
+Christmas / at / Grandma's
+Gather / round / the tree
+Oh / Christmas / tree
+Tis / the / season
+Faith / hope / love / joy
+Winter / wonderland
+Happy / new / year
+Cheers / to / {ryear}
+Hello / autumn
+Hello / pumpkin
+Autumn / leaves
+Pumpkin / spice / everything nice
+Cosy / autumn
+Harvest / blessings
+Happy / harvest
+Happy / Halloween
+Trick / or / treat
+Witch / way
+Boo
+Something / wicked
+Hello / spring
+Spring / has / sprung
+Happy / Easter
+Hoppy / Easter
+Easter / blessings
+He / is / risen
+Somebunny / loves / you
+Hello / summer
+Summer / vibes
+Sunshine / & / lemonade
+Happy / Mother's Day
+Happy / Father's Day
+Best / {rel} / ever
+World's / best / {rel}
+Love / you / {rel}
+{rel} / you are / my sunshine
+Thank / you / {rel}
+{rel} / you / are / amazing
+{rel} / the / woman / the myth / the legend
+{rel} / the / man / the myth / the legend
+Our / {rel} / our / hero
+{rel}'s / kitchen
+{rel}'s / garden
+{rel}'s / house / rules
+{rel}'s / house / where cookies are baked / and memories / are made
+Be / my / Valentine
+Hugs / & / kisses
+XOXO
