@@ -462,6 +462,8 @@ def render(phrase, palette="bw", fonts="classic_serif", layout="stack", orn="non
     has_orn = orn != "none"
     osz = W * 0.16
 
+    if layout == "block":            # retired: a solid colour block uses too much ink
+        layout = "frame"
     if layout == "badge" and len(lines) > 4:
         layout = "frame"
     if layout == "subway" and len(lines) < 3:

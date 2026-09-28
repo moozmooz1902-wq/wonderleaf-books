@@ -6,9 +6,6 @@ occasion: Birthday|Anniversary|Retirement
 ---
 Happy / {age.1} / birthday
 {age} / and / fabulous
-{age} / and / fabulous / {rel}
-Happy / {age.1} / birthday / {rel}
-{rel} / is / {age}
 {age} / years / young
 Aged / to / perfection / {age}
 Vintage / {year}
@@ -31,7 +28,7 @@ Happy / {anniv} / anniversary
 Our / {anniv} / anniversary
 {anniv} / wedding / anniversary
 Mr & Mrs / {surname} / {anniv} anniversary / {year}
-The / {surname}s / {anniv} / anniversary
+The / {surname}s' / {anniv} / anniversary
 Together / since / {year}
 Married / since / {year}
 Still / in love / since {year}
@@ -43,7 +40,7 @@ Retirement / loading
 Retired / not / expired
 Goodbye / tension / hello / pension
 The / legend / has retired
-Happy / retirement / {rel}
+Happy / retirement / {relelder}
 Happy / retirement / {name}
 Retirement / the / best job / ever
 Under / new / management / see wife / for details

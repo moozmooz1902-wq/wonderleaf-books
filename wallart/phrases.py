@@ -40,6 +40,10 @@ def _read_slot(name):
             if l.strip() and ip_ok(l.split("|")[0])]
 
 
+ELDERS = {"Mum", "Mam", "Mom", "Mummy", "Dad", "Daddy", "Nan", "Nana", "Nanny", "Gran", "Granny",
+          "Grandma", "Grandad", "Grandpa", "Grampy", "Auntie", "Uncle"}
+
+
 def load_slots():
     s = {n: _read_slot(n) for n in ["girl_names", "boy_names", "surnames", "towns",
                                      "counties", "drinks", "dog_breeds", "relations",
@@ -51,6 +55,10 @@ def load_slots():
         "drink": s["drinks"], "breed": s["dog_breeds"], "rel": s["relations"],
         "job": s["professions"], "hobby": s["hobbies"], "age": s["ages"],
         "anniv": s["anniversaries"],
+        # relatives split so a template can't say "Dad the woman" or "Happy retirement Daughter"
+        "relf": [r for r in s["relations"] if r[1:] == ["her"]],
+        "relm": [r for r in s["relations"] if r[1:] == ["him"]],
+        "relelder": [r for r in s["relations"] if r[0] in ELDERS],
         "year": [[str(y)] for y in range(2026, 1949, -1)],
         "ryear": [[str(y)] for y in range(2027, 2019, -1)],
         "num": [[str(n)] for n in range(1, 201)],

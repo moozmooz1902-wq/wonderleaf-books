@@ -83,13 +83,13 @@ Love / you / {rel}
 {rel} / you are / my sunshine
 Thank / you / {rel}
 {rel} / you / are / amazing
-{rel} / the / woman / the myth / the legend
-{rel} / the / man / the myth / the legend
+{relf} / the / woman / the myth / the legend
+{relm} / the / man / the myth / the legend
 Our / {rel} / our / hero
 {rel}'s / kitchen
 {rel}'s / garden
-{rel}'s / house / rules
-{rel}'s / house / where cookies are baked / and memories / are made
+{relelder}'s / house / rules
+{relelder}'s / house / where cookies are baked / and memories / are made
 Be / my / Valentine
 Hugs / & / kisses
 XOXO

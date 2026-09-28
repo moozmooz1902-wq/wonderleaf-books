@@ -154,10 +154,10 @@ def pick_layout(phrase, rnd):
     if long_text:
         return rnd.choice(["stack", "frame", "arch", "left", "corner"])
     if n == 1:
-        return rnd.choice(["stack", "badge", "frame", "block", "arch", "corner", "left"])
+        return rnd.choice(["stack", "badge", "frame", "arch", "corner", "left"])
     if n >= 3:
         return rnd.choice(LAYOUTS)
-    return rnd.choice(["stack", "frame", "rules", "arch", "badge", "block", "ribbon", "left", "corner"])
+    return rnd.choice(["stack", "frame", "rules", "arch", "badge", "ribbon", "left", "corner"])
 
 
 SLOT_WORDS = None

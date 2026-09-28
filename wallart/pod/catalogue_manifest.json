@@ -1,18 +1,18 @@
 {
  "luxvia-art": {
-  "sha256": "577e0a7a4e67989f391db6d365050bc30e2e1cb717747cf4e0dffdc67840b3f7",
+  "sha256": "24296bd96b94b9911c96bffe84c88f2f9685e2134ad46fbdb53b5db36defa19a",
   "rows": 1000000
  },
  "mercury-usm": {
-  "sha256": "fc5c0f342aae89d18110c4799143c5b004904dd02f3a083c5ff65fb5b4be96cc",
+  "sha256": "fd201d13ab28cfd7b8ec21baac15adac072fa8520ef0acf7307bccb81cbf8911",
   "rows": 500000
  },
  "lunar-kms": {
-  "sha256": "3e4e4724e41e5cac03265432c70ec6f384e64ff657aa6571b1c26aa24e110990",
+  "sha256": "40f8ab45b9749866915917a6f940ba0dbb658691f942b03d24fe9aee81644d24",
   "rows": 500000
  },
  "posterleaf-store1": {
-  "sha256": "5b152ac3fc9738852c0d2278eb77034b835eefae7fa34e340465c211291d3c6b",
+  "sha256": "9be5b3851a45324a87a30a83a3bd305dd51a1150d7a329f50953078997269d16",
   "rows": 500000
  }
 }
