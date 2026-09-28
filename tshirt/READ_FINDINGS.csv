@@ -1,0 +1,21 @@
+finding,value,basis,verdict
+designs read,"22,437","of 22,485 attempted (99.8%); 48 lost to truncated model output",solid
+units in the read set,"216,636",sum of Sold Quantity over the designs read,solid
+carry printed text,"15,195 (67.7%)",VLM read at least one text line,solid
+carry an illustration,"18,777 (83.7%)",VLM named a main image,solid - SUPERSEDES the 43.4% CV estimate
+text AND illustration,"11,538 (51.4%)","the dominant format is both, not either",solid
+usable slogans (3-14 words),"10,716 designs / 110,624u",the pool templates are mined from,solid
+non-overlapping templates,89,greedy set cover; every unit counted once,solid
+template coverage of slogan sales,40.6%,"44,942 of 110,624u",solid
+template coverage of ALL sales,20.7%,"44,942 of 216,636u; old hand-written set was 7.1%",solid
+first coverage figure (44.3%),WITHDRAWN,inflated - same slogan counted up to 4x as the mask slid along it,corrected
+grid_of_designs layout,85.5 u/design,"ARTEFACT: 66% of its units are ONE biker listing (7,863u)",outlier-driven - do not act on
+two_panel layout,53.4 u/design,"136 designs, top5 = 40% of units; 'Problem Solved' is a real template",partly outlier-driven
+typography_only style,13.4 u/design,"2,394 designs - best broad-based style rate",solid
+distressed style,10.9 u/design,"6,848 designs - biggest category, rate holds up",solid
+line_art style,10.9 u/design,"6,488 designs",solid
+flat_vector style,4.6 u/design,"3,234 designs - worst broad category",solid
+image_only layout,6.1 u/design,"7,226 designs - worst layout despite being most common",solid
+text_only layout,10.5 u/design,"6,380 designs",solid
+text_above_image layout,9.5 u/design,"6,208 designs",solid
+IP-infringing designs,"140 (0.6%), 9,097u (4.2%)","Alien/Weyland-Yutani, Rocky, Queen, car marques. DO NOT REPLICATE",solid - legal risk
