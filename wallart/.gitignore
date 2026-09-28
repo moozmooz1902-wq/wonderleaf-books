@@ -2,3 +2,4 @@ out/
 __pycache__/
 *.pyc
 assets/geo/countries_10m.geojson
+research/raw/image/
