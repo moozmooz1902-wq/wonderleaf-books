@@ -310,12 +310,13 @@
     "A2": 34.99
    }
   },
-  "listings_per_file": 5000,
+  "listings_per_file": 71000,
   "profiles": {
    "shipping": "",
    "returns": "",
    "payment": ""
   },
-  "brand": "Unbranded"
+  "brand": "Unbranded",
+  "max_rows_per_file": 500000
  }
 }

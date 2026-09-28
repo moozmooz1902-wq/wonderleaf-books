@@ -71,7 +71,7 @@ def description(row, eb):
 
 def rows_for(row, store, eb, ebay_title):
     base = store["pic_base"].rstrip("/")
-    pics = f"{base}/art/mock/{row['sku']}.jpg|{base}/art/mock/{row['sku']}_framed.jpg"
+    pics = f"{base}/art/mock/{row['sku']}.jpg"          # one photo: the print in a black frame
     prof = {k: store["profiles"].get(k) or eb["profiles"].get(k, "") for k in ("shipping", "returns", "payment")}
     parent = dict.fromkeys(HEADER, "")
     parent.update({
@@ -108,6 +108,10 @@ def build(store, eb, out_root, src_dir):
     for old in dest.glob("*.csv"):
         old.unlink()
     per = eb["listings_per_file"]
+    rows_per_listing = 1 + len(eb["sizes"]) * len(eb["frames"])
+    cap = eb.get("max_rows_per_file", 500000)
+    if 1 + per * rows_per_listing > cap:          # header + listings must fit eBay's row limit
+        per = (cap - 1) // rows_per_listing
     n = files = blocked = 0
     fh = w = None
     with gzip.open(src, "rt", encoding="utf-8") as fin:
@@ -151,6 +155,13 @@ def check_files(out_root, eb):
                 bad += 1
             i += 1 + len(kids)
     print("structure problems:", bad)
+    big = []
+    for f in sorted(out_root.glob("*/*.csv")):
+        with open(f, "rb") as fh:
+            lines = sum(1 for _ in csv.reader(line.decode("utf-8") for line in fh))
+        if lines > eb.get("max_rows_per_file", 500000):
+            big.append((f.name, lines))
+    print("files over the row limit:", big or "none")
 
 
 def main():

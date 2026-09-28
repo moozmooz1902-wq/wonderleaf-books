@@ -2,8 +2,7 @@
 """Render a store's catalogue and upload it to that store's Cloudflare R2 bucket,
 in the layout the existing fulfilment tools already read:
 
-    art/mock/<SKU>.jpg          listing photo, unframed (main eBay picture)
-    art/mock/<SKU>_framed.jpg   the same print in the black frame (second picture)
+    art/mock/<SKU>.jpg   the listing photo: the print in a black frame (the only eBay picture)
     art/raw/<SKU>.png    print file, 300 dpi (order.py / print_tool.py fetch this)
 
 Resumable: files already in the bucket are skipped, so it can be stopped and
@@ -48,15 +47,14 @@ def existing(client, bucket, prefix):
 def draw(job):
     """Render one row -> {key: bytes}. Runs in a worker process."""
     from render import render, mockup
-    row, want_raw, size = job
+    row, want_raw, size, want_mock = job
     out = {}
-    art = render(row["phrase"], row["palette"], row["fonts"], row["layout"], row["ornament"], 1200)
-    buf = io.BytesIO()
-    mockup(art, 1600).save(buf, "JPEG", quality=88, optimize=True)
-    out[f"art/mock/{row['sku']}.jpg"] = (buf.getvalue(), "image/jpeg")
-    buf = io.BytesIO()
-    mockup(art, 1600, framed=True).save(buf, "JPEG", quality=88, optimize=True)
-    out[f"art/mock/{row['sku']}_framed.jpg"] = (buf.getvalue(), "image/jpeg")
+    if want_mock:
+        art = render(row["phrase"], row["palette"], row["fonts"], row["layout"], row["ornament"], 1200)
+        # the ONE listing photo: the print in a black frame on a wall
+        buf = io.BytesIO()
+        mockup(art, 1600, framed=True).save(buf, "JPEG", quality=88, optimize=True)
+        out[f"art/mock/{row['sku']}.jpg"] = (buf.getvalue(), "image/jpeg")
     if want_raw:
         px = round(PRINT_MM[size] / 25.4 * 300)
         buf = io.BytesIO()
@@ -74,20 +72,23 @@ def main():
     ap.add_argument("--workers", type=int, default=os.cpu_count())
     ap.add_argument("--limit", type=int)
     ap.add_argument("--part", default="1/1", help="k/n: this machine does every n-th row")
-    ap.add_argument("--mock-only", action="store_true")
-    ap.add_argument("--print-size", default="A3", choices=list(PRINT_MM))
+    ap.add_argument("--mock-only", action="store_true", help="listing photos only (fast first pass)")
+    ap.add_argument("--raw-only", action="store_true", help="print files only (second pass)")
+    ap.add_argument("--print-size", default="A2", choices=list(PRINT_MM),
+                    help="print file size; A2 is the largest sold, smaller sizes scale down from it")
     a = ap.parse_args()
 
     k, n = map(int, a.part.split("/"))
     client = s3()
-    done = existing(client, a.bucket, "art/mock/")
-    print(f"{len(done):,} listing photos already in {a.bucket}")
+    kind, ext = ("raw", "png") if a.raw_only else ("mock", "jpg")
+    done = existing(client, a.bucket, f"art/{kind}/")
+    print(f"{len(done):,} {'print files' if a.raw_only else 'listing photos'} already in {a.bucket}")
 
     path = Path(a.csv or HERE / "out" / f"store{a.store}.csv.gz")
     rows = []
     with gzip.open(path, "rt", encoding="utf-8") as fh:
         for i, r in enumerate(csv.DictReader(fh)):
-            if i % n != k - 1 or f"art/mock/{r['sku']}.jpg" in done:
+            if i % n != k - 1 or f"art/{kind}/{r['sku']}.{ext}" in done:
                 continue
             rows.append(r)
             if a.limit and len(rows) >= a.limit:
@@ -102,11 +103,11 @@ def main():
                           CacheControl="public, max-age=31536000, immutable")
 
     with ProcessPoolExecutor(max_workers=a.workers) as pool:
-        jobs = ((r, not a.mock_only, a.print_size) for r in rows)
+        jobs = ((r, not a.mock_only, a.print_size, not a.raw_only) for r in rows)
         futures = []
         for files in pool.map(draw, jobs, chunksize=16):
             # raw first, mock last: a listing photo only exists once its print file does
-            for key in sorted(files, key=lambda x: ("mock" in x, not x.endswith("_framed.jpg"))):
+            for key in sorted(files, key=lambda x: "mock" in x):
                 body, ctype = files[key]
                 futures.append(up.submit(put, key, body, ctype))
             sent += 1
