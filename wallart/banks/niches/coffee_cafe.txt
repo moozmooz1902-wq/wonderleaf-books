@@ -56,7 +56,6 @@ Wake up / & smell the *coffee*
 Coffee / then adventure
 A yawn / is a silent scream / for *coffee*
 Instant human / just add *coffee*
-Keep calm / and drink *coffee*
 Cup of joy
 Mugs / on the wall
 Bean there / done that
@@ -73,7 +72,6 @@ Pull up a chair / the kettle's on
 The kettle's on
 Put the kettle on
 Tea / & sympathy
-Keep calm / and put the *kettle* on
 Tea / is always / the answer
 There's always / time for *tea*
 A proper / cuppa
@@ -98,5 +96,4 @@ But first / *{drink}*
 Powered by / *{drink}*
 Life happens / *{drink}* helps
 {drink} / is my love language
-Keep calm / and drink *{drink}*
 Fuelled by / {drink}

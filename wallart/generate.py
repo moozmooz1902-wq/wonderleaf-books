@@ -24,6 +24,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from phrases import load_niches, iter_niche, supply
+from compliance import check as ip_check
 from styles import PALETTES, PALETTE_MOODS, FONTSETS, FONT_MOODS, LAYOUTS, ORNAMENTS
 
 HERE = Path(__file__).resolve().parent
@@ -36,7 +37,6 @@ SMALL = {"a", "an", "and", "the", "of", "in", "on", "to", "for", "at", "by", "or
 # ------------------------------------------------------------------ allocation
 
 def allocate(plan, niches):
-    per_store = plan["per_store"]
     P = plan["primary_share"]
     def pl(n):   # AI micro-niches inherit their parent's demand and store
         return plan["niches"].get(n) or plan["niches"].get(niches[n].get("parent", n), {})
@@ -61,7 +61,7 @@ def allocate(plan, niches):
         for group, share in ((pri, P), (oth, 1 - P)):
             tw = sum(w[n] for n in group) or 1
             for n in group:
-                a[n] = per_store * share * w[n] / tw
+                a[n] = s["rows"] * share * w[n] / tw
         alloc[s["id"]] = a
 
     # water-fill: shrink over-subscribed niches, hand the freed rows to niches with room
@@ -82,8 +82,11 @@ def allocate(plan, niches):
             # freed rows stay on-theme: they go only to this store's own niches.
             # If those are full too, the store is simply smaller - better than
             # padding a business store with family-name prints.
+            # freed rows go to this store's own niches first; only when those are
+            # full do they spill to any niche with room, so the store still
+            # reaches its target (every row stays globally unique either way)
             room = [n for n in niches if n not in over and need[n] < cap[n]]
-            targets = [n for n in room if niches[n].get("parent", n) in primary[sid]]
+            targets = [n for n in room if niches[n].get("parent", n) in primary[sid]] or room
             tw = sum(w[n] for n in targets) or 1
             for n in targets:
                 a[n] += freed * w[n] / tw
@@ -130,7 +133,7 @@ KINDS = ["Wall Art", "Sign", "Print", "Poster", "Wall Decor"]
 def build_title(phrase, venue, colour, rnd):
     kind = rnd.choice(KINDS)
     tail = "Art Print" if kind in ("Sign", "Wall Decor") else "Decor"
-    return fit([title_phrase(phrase), f"{venue} {kind}", colour, tail, "Gift", "A4 A3", "Unframed"])
+    return fit([title_phrase(phrase), f"{venue} {kind}", colour, tail, "A4 A3 A2", "Framed", "Gift"])
 
 
 # ------------------------------------------------------------------ style picks
@@ -202,17 +205,20 @@ def main():
     a = ap.parse_args()
 
     plan = json.loads(Path(a.plan).read_text())
-    if a.per_store:
-        plan["per_store"] = a.per_store
+    if a.per_store:          # quick trial: scale every store down proportionally
+        big = max(st["rows"] for st in plan["stores"])
+        for st in plan["stores"]:
+            st["rows"] = max(1, st["rows"] * a.per_store // big)
     niches = load_niches()
     alloc, cap, vmax, tvar = allocate(plan, niches)
     stores = {s["id"]: s for s in plan["stores"]}
 
     total = {n: min(cap[n], sum(alloc[s][n] for s in alloc)) for n in niches}
     tot_cap = sum(cap.values())
-    if tot_cap < plan["per_store"] * len(alloc):
+    target = sum(st["rows"] for st in plan["stores"])
+    if tot_cap < target:
         print(f"NOTE: unique-design capacity is {tot_cap:,} listings, below the "
-              f"{plan['per_store'] * len(alloc):,} target. Add phrases (expand_phrases.py) to close the gap.\n")
+              f"{target:,} target. Add phrases (expand_phrases.py) to close the gap.\n")
     print(f"{'niche':22s} {'supply':>12s} {'vmax':>4s} {'listings':>10s} {'phrases':>9s} {'avg colourways':>14s}")
     report = {}
     for n in sorted(niches, key=lambda n: -total[n]):
@@ -275,10 +281,11 @@ def main():
     codes = {n: hashlib.md5(n.encode()).hexdigest()[:3].upper() for n in niches}
     summary = {"plan": plan, "niches": report, "stores": {}}
     micros = set()
+    blocked = 0
     pools = {}
     for sid in sorted(store_jobs):
         jobs = store_jobs[sid]
-        path = out / f"store{sid}.csv.gz"
+        path = out / f"{stores[sid]['bucket']}.csv.gz"
         heap = [(0.0, n) for n in jobs if jobs[n][1]]
         heapq.heapify(heap)
         pos = {n: 0 for n in jobs}
@@ -315,18 +322,24 @@ def main():
                 orn = rnd.choice(ORNAMENTS.get(meta.get("parent", n), ["none"]))
                 colour = PALETTES[pal][0]
                 occ = meta["occasion"][0] if meta["occasion"] else ""
+                title = build_title(phrase, room, colour, rnd)
+                if ip_check(title):          # e.g. a venue word that collides with a brand
+                    blocked += 1
+                    continue
                 row_no += 1
-                sku = f"WL{sid}{codes[n]}{row_no:07d}"
+                sku = f"{stores[sid]['sku']}{codes[n]}{row_no:07d}"
                 micro = f"{n}|{room}|{microkey(phrase, meta)}"
                 micros.add(micro)
                 w.writerow([sku, sid, n, micro, phrase, v, pal, fset, layout, orn, colour, room, occ,
-                            build_title(phrase, room, colour, rnd),
+                            title,
                             img_path(phrase, pal, fset, layout, orn)])
                 counts[n] += 1
         summary["stores"][sid] = {"name": stores[sid]["name"], "rows": row_no, "by_niche": dict(counts)}
         print(f"store {sid} {stores[sid]['name']:26s} {row_no:>9,} rows  {path.stat().st_size / 1e6:.0f} MB  ({time.time() - t0:.0f}s)", flush=True)
 
     summary["micro_niches"] = len(micros)
+    summary["ip_blocked_titles"] = blocked
+    print(f"titles blocked by the IP check: {blocked:,}")
     print(f"distinct micro-niches (niche x venue x audience): {len(micros):,}")
     (out / "summary.json").write_text(json.dumps(summary, indent=1))
     print(f"done in {time.time() - t0:.0f}s")

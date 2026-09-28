@@ -25,7 +25,8 @@ SS = 3                                   # supersampling for smooth edges
 SHORT = {"United States of America": "USA", "United Kingdom": "UK", "Dem. Rep. Congo": "DR Congo",
          "Central African Rep.": "Central African Republic", "Bosnia and Herz.": "Bosnia",
          "Dominican Rep.": "Dominican Republic", "Czechia": "Czech Republic"}
-STYLES = ["solid", "outline", "dots", "lines", "home", "split"]
+# "split" (solid colour block) is not generated any more - it uses too much ink
+STYLES = ["outline", "dots", "lines", "solid", "home"]
 
 
 @lru_cache(maxsize=1)

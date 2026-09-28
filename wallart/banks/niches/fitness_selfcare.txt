@@ -4,14 +4,12 @@ rooms: Home Gym|Gym|Bedroom|Yoga Studio|Salon|Spa|Therapy Room|Bathroom|Pilates 
 mood: bold, modern, minimal, script
 ---
 Sweat / smile / repeat
-Train / insane / or remain the same
 No / pain / no gain
 Stronger / than / yesterday
 Earn / your / body
 Sore / today / strong tomorrow
 Lift / heavy
 One / more / rep
-Beast / mode
 Home / gym
 Gym / rules
 Rack / your / weights

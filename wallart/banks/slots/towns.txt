@@ -71,7 +71,6 @@ High Wycombe
 Gloucester
 Exeter
 Colchester
-Tottenham
 Salford
 Newcastle under Lyme
 Solihull
@@ -112,7 +111,6 @@ Darlington
 Stevenage
 Southport
 Chester
-Wembley
 Grays
 Harrogate
 Hartlepool
@@ -159,7 +157,6 @@ Stafford
 Uxbridge
 Rhondda
 Royal Tunbridge Wells
-Wimbledon
 Corby
 Stamford Hill
 Paignton
@@ -362,7 +359,6 @@ Briton Ferry
 Hoddesdon
 Bridlington
 Accrington
-Bentley
 Bromsgrove
 Lichfield
 Swadlincote
@@ -698,7 +694,6 @@ Sandbach
 New Mills
 Ascot
 Barrhead
-Manchester City Centre
 Glossop
 Spennymoor
 Dorking
@@ -805,7 +800,6 @@ Old Swan
 Saltash
 Earlsfield
 Wimborne Minster
-West Ham
 Allerton
 Erskine
 Wombwell
@@ -825,7 +819,6 @@ Sinfin
 Mexborough
 Newport Pagnell
 Neston
-Tottenham Hale
 Larkhall
 Cleveleys
 Darras Hall
@@ -1094,7 +1087,6 @@ Royal Wootton Bassett
 Atherstone
 Mountain Ash
 Woodbridge
-Wimbledon Park
 Uppermill
 Ince-in-Makerfield
 Aylestone
@@ -1855,7 +1847,6 @@ Essington
 Loftus
 Easton-in-Gordano
 Sonning Common
-Vauxhall
 Henfield
 Six Bells
 Grange-over-Sands

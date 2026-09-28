@@ -2,7 +2,6 @@ coffee|a coffee lover
 tea|a tea lover
 gin|a gin lover
 wine|a wine lover
-prosecco|a prosecco lover
 beer|a beer lover
 cider|a cider lover
 whisky|a whisky lover
@@ -11,8 +10,6 @@ espresso|an espresso lover
 latte|a latte lover
 cappuccino|a cappuccino lover
 hot chocolate|a hot chocolate lover
-champagne|a champagne lover
-tequila|a tequila lover
 vodka|a vodka lover
 cocktails|a cocktail lover
 bubbly|a bubbly lover

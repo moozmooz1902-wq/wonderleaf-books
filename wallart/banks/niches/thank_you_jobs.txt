@@ -15,7 +15,6 @@ Not / all / heroes / wear / capes / some / are / {job.2}
 Thank / you / for / all / you do
 Thank / you / for / everything
 Happy / {job} / appreciation day
-Keep / calm / I'm / a {job}
 Behind / every / great / {job} / is / a lot of coffee
 Powered / by / coffee / and {job.1}
 {job.1} / is / a work / of heart

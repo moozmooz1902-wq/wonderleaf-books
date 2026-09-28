@@ -1,23 +1,89 @@
 {
- "_note": "Demand weights and store focus. demand = relative buyer demand (1-10). vmax = most listings one phrase may appear in across ALL stores (each in a different colourway, colour named in the title). Personalised templates get vmax 1-2 because their supply is already huge; hand-written phrases get more colourways because there are only ~40-150 of them per niche. Edit and re-run generate.py. vmax is further capped at venues x 26 colourways for that niche.",
- "per_store": 1000000,
+ "_note": "Stores = Cloudflare R2 buckets, one per eBay account. rows = listings for that store. 65% of each store's rows come from its own niches, the rest is spread over every niche so no store rests on one market. No phrase+venue+colourway repeats across stores. Edit and re-run generate.py.",
  "primary_share": 0.65,
  "stores": [
   {
    "id": 1,
-   "name": "Faith & Blessings",
+   "name": "Luxvia Art",
+   "bucket": "luxvia-art",
+   "sku": "LX",
+   "rows": 1000000,
    "niches": [
+    "personalised_family",
+    "home_family",
+    "wedding_love",
+    "new_home",
+    "milestones",
+    "places_towns",
+    "christmas_seasonal"
+   ],
+   "pic_base": "",
+   "profiles": {
+    "shipping": "",
+    "returns": "",
+    "payment": ""
+   }
+  },
+  {
+   "id": 2,
+   "name": "Mercury",
+   "bucket": "mercury-usm",
+   "sku": "MC",
+   "rows": 500000,
+   "niches": [
+    "kitchen",
+    "coffee_cafe",
+    "bar_pub",
+    "biz_hospitality",
+    "biz_retail_shop",
+    "bathroom",
+    "laundry_utility",
+    "garden_outdoor",
+    "man_cave",
+    "hobbies",
+    "pets",
+    "funny_sarcasm",
+    "heritage_dialect",
+    "biz_trades_pets"
+   ],
+   "pic_base": "",
+   "profiles": {
+    "shipping": "",
+    "returns": "",
+    "payment": ""
+   }
+  },
+  {
+   "id": 3,
+   "name": "Lunar",
+   "bucket": "lunar-kms",
+   "sku": "LN",
+   "rows": 500000,
+   "niches": [
+    "nursery_kids",
+    "classroom",
+    "biz_education",
     "faith_christian",
     "scripture",
     "faith_blessings",
     "faith_islamic",
     "faith_dharmic",
-    "memorial"
-   ]
+    "memorial",
+    "thank_you_jobs"
+   ],
+   "pic_base": "",
+   "profiles": {
+    "shipping": "",
+    "returns": "",
+    "payment": ""
+   }
   },
   {
-   "id": 2,
-   "name": "Business & Motivation",
+   "id": 4,
+   "name": "Posterleaf",
+   "bucket": "posterleaf-store1",
+   "sku": "PL",
+   "rows": 500000,
    "niches": [
     "motivation",
     "office_work",
@@ -28,64 +94,15 @@
     "biz_hair_beauty",
     "biz_health",
     "proverbs_classics",
-    "words_aesthetic"
-   ]
-  },
-  {
-   "id": 3,
-   "name": "Food, Drink & Hospitality",
-   "niches": [
-    "coffee_cafe",
-    "kitchen",
-    "bar_pub",
-    "biz_hospitality",
-    "biz_retail_shop"
-   ]
-  },
-  {
-   "id": 4,
-   "name": "Family, Wedding & Home",
-   "niches": [
-    "personalised_family",
-    "home_family",
-    "wedding_love",
-    "new_home",
-    "bathroom",
-    "laundry_utility"
-   ]
-  },
-  {
-   "id": 5,
-   "name": "Kids, Nursery & School",
-   "niches": [
-    "nursery_kids",
-    "classroom",
-    "biz_education"
-   ]
-  },
-  {
-   "id": 6,
-   "name": "Humour, Hobbies & Pets",
-   "niches": [
-    "funny_sarcasm",
-    "man_cave",
-    "hobbies",
-    "pets",
-    "garden_outdoor",
-    "heritage_dialect",
-    "biz_trades_pets"
-   ]
-  },
-  {
-   "id": 7,
-   "name": "Gifts, Places & Seasons",
-   "niches": [
-    "milestones",
-    "places_towns",
-    "thank_you_jobs",
-    "christmas_seasonal",
+    "words_aesthetic",
     "travel_coastal"
-   ]
+   ],
+   "pic_base": "",
+   "profiles": {
+    "shipping": "",
+    "returns": "",
+    "payment": ""
+   }
   }
  ],
  "niches": {
@@ -260,5 +277,41 @@
   }
  },
  "colours_per_venue": 4,
- "template_variants": 3
+ "template_variants": 3,
+ "ebay": {
+  "_note": "Everything the eBay upload files need. Prices are DEFAULTS from earlier notes (framed A4/A3/A2 \u00a324.99/\u00a329.99/\u00a334.99; \u00a34.99 A4 unframed) - check and edit before uploading. Profile names must match the business policies set up in EACH eBay account exactly.",
+  "category": "360",
+  "condition_id": "1000",
+  "location": "United Kingdom",
+  "dispatch_days": 3,
+  "quantity": 1,
+  "sizes": [
+   "A4",
+   "A3",
+   "A2"
+  ],
+  "frames": [
+   "Unframed",
+   "Black Frame"
+  ],
+  "prices": {
+   "Unframed": {
+    "A4": 4.99,
+    "A3": 7.99,
+    "A2": 11.99
+   },
+   "Black Frame": {
+    "A4": 24.99,
+    "A3": 29.99,
+    "A2": 34.99
+   }
+  },
+  "listings_per_file": 5000,
+  "profiles": {
+   "shipping": "",
+   "returns": "",
+   "payment": ""
+  },
+  "brand": "Unbranded"
+ }
 }

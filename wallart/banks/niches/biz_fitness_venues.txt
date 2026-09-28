@@ -4,7 +4,6 @@ rooms: Gym|Home Gym|Fitness Studio|Yoga Studio|Pilates Studio|Boxing Gym|Martial
 mood: bold, modern, industrial, minimal
 ---
 Train / hard / or / go home
-Train / insane / or / remain the same
 Stronger / every / day
 Stronger / than / yesterday
 No / excuses
@@ -19,7 +18,6 @@ One / more / rep
 Every / rep / counts
 Leave / it / all / on the floor
 The / only / bad workout / is the one / that didn't happen
-Strong / is / the / new beautiful
 Strength / & / honour
 Pain / is / temporary / pride is forever
 Champions / are / made here
@@ -38,7 +36,6 @@ Workout / done
 Lift / heavy / lift often
 Squat / life
 Leg / day
-Beast / mode / on
 Rise / & / grind
 Grind / now / shine later
 Box / clever
@@ -46,8 +43,6 @@ Respect / the / dojo
 Bow / before / you / enter
 Discipline / focus / respect
 Kick / hard
-Keep / calm / and / dance on
-Just / dance
 Move / with / purpose
 Breathe / move / flow
 Find / your / balance

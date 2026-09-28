@@ -22,17 +22,41 @@ listing picture on request.
 
 ## The stores (plan.json)
 
-Each store puts 65% of its rows into its own market and spreads 35% across
-everything else. That way no store depends on one niche, and every store tests
-demand across all niches.
+One Cloudflare R2 bucket per eBay account. 65% of each store's listings come
+from its own markets and 35% are spread across everything else. No design
+(phrase, venue and colour) appears in two stores.
 
-1. Faith & Blessings: Christian, scripture, Irish blessings, Islamic, Hindu/Sikh, memorial
-2. Business & Motivation: offices, car showrooms, gyms, salons, barbers, clinics, motivation
-3. Food, Drink & Hospitality: kitchen, café, pub/bar, restaurants, hotels, shops
-4. Family, Wedding & Home: family name signs, weddings, new home, bathroom, laundry
-5. Kids, Nursery & School: nursery names, classrooms, schools, libraries
-6. Humour, Hobbies & Pets: man cave, garage, hobbies, dog breeds, garden, dialect
-7. Gifts, Places & Seasons: birthdays, anniversaries, UK towns, Christmas, coastal
+| Bucket | Listings | Markets |
+|---|---|---|
+| `luxvia-art` | 1,000,000 | family and surname signs, home, wedding, new home, birthdays and anniversaries, UK towns, Christmas |
+| `mercury-usm` | 500,000 | kitchen, café, bar and pub, restaurants and shops, bathroom, laundry, garden, man cave, hobbies, pets, humour, dialect |
+| `lunar-kms` | 500,000 | nursery and kids, classroom and school, faith and scripture, memorial, thank-you gifts |
+| `posterleaf-store1` | 500,000 | motivation, office and business venues (car showrooms, gyms, salons, clinics), words, classic quotes, coastal |
+
+Every design prints as black or one dark colour on a **white background**, to
+keep ink costs down. Every listing offers **A4, A3 and A2**, each **Unframed or
+in a Black Frame** (six variations, prices in `plan.json`).
+
+## From catalogue to eBay
+
+```bash
+python3 generate.py                  # out/<bucket>.csv.gz, 2.5M designs (~5 min)
+python3 build_ebay.py                # out/ebay/<bucket>/*.csv + one zip per store
+python3 build_ebay.py --check        # structure check of every file
+python3 publish.py --store 1 --bucket luxvia-art        # render + upload images to R2
+```
+
+Before uploading to eBay, fill these in `plan.json`:
+- `stores[].pic_base`: the bucket's public URL (Cloudflare -> R2 -> bucket -> Settings -> Public access)
+- `ebay.profiles`: shipping, returns and payment policy names, exactly as they appear in each eBay account
+- `ebay.prices` and `ebay.quantity`
+
+Images go to `art/mock/<SKU>.jpg` (unframed), `art/mock/<SKU>_framed.jpg` (black frame)
+and `art/raw/<SKU>.png` (A3 print file, 300 dpi). That is the layout the existing
+`order.py` / `print_tool.py` already read, so fulfilment works unchanged. Add the
+four buckets' public URLs to `sources.json`.
+
+See `COMPLIANCE.md` for the IP / VeRO rules every phrase and title passes.
 
 ## Rules that keep it from becoming duplicate spam
 

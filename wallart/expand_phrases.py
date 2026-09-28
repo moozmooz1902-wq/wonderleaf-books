@@ -18,6 +18,7 @@ Options: --model (default claude-opus-5), --per 80 phrases per request,
 import argparse, json, re, sys, time
 from pathlib import Path
 
+from compliance import ok as ip_ok
 from phrases import load_niches, load_slots, norm
 
 HERE = Path(__file__).resolve().parent
@@ -38,7 +39,8 @@ TONES = {
 SYSTEM = """You write short text for typography wall art prints sold in the UK (A4/A3 prints, flat vector lettering, no pictures).
 
 Rules for every phrase:
-- ORIGINAL wording only. Never quote song lyrics, film or TV lines, poems or authors, and never use brand names, trademarks, sports club names, celebrity names or catchphrases.
+- ORIGINAL wording only. Never quote or echo song lyrics or song titles, film or TV lines, poems, hymns or authors, and never use brand or product names, trademarks, sports club or stadium names, celebrity names, catchphrases, or protected food and drink names (Champagne, Prosecco, Tequila and the like).
+- Avoid well-known trademarked slogan formats: "Keep Calm and ...", "Live Laugh Love", "Good Vibes Only", "Eat Sleep ... Repeat", "Gin/Wine/Prosecco O'Clock", "Rosé All Day", "Beast Mode", "Girl Boss".
 - British English spelling and idiom (colour, mum, cosy, favourite).
 - 1 to 14 words. Mark natural line breaks for the layout with " / " (for example "Life happens / coffee helps").
 - It must make sense printed on a wall with nothing else around it, for the audience and tone given.
@@ -172,7 +174,7 @@ BANNED = re.compile(r"\b(disney|marvel|harry potter|hogwarts|star wars|nike|adid
 def clean(p):
     p = re.sub(r"\s+", " ", p.strip().strip('"').strip("“”"))
     p = re.sub(r"\s*/\s*", " / ", p)
-    if not p or len(p) > 100 or BANNED.search(p) or len(p.replace(" / ", " ").split()) > 16:
+    if not p or len(p) > 100 or BANNED.search(p) or not ip_ok(p) or len(p.replace(" / ", " ").split()) > 16:
         return None
     return p[:1].upper() + p[1:]
 

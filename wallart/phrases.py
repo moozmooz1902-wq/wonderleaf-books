@@ -24,6 +24,8 @@ import argparse, math, random, re
 from itertools import islice
 from pathlib import Path
 
+from compliance import ok as ip_ok
+
 HERE = Path(__file__).resolve().parent
 NICHES = HERE / "banks" / "niches"
 AI_NICHES = HERE / "banks" / "niches_ai"          # written by expand_phrases.py
@@ -34,7 +36,8 @@ SLOT_RE = re.compile(r"\{(\w+)(?:\.(\d|PL))?\}")
 
 
 def _read_slot(name):
-    return [l.split("|") for l in (SLOTS / f"{name}.txt").read_text().splitlines() if l.strip()]
+    return [l.split("|") for l in (SLOTS / f"{name}.txt").read_text().splitlines()
+            if l.strip() and ip_ok(l.split("|")[0])]
 
 
 def load_slots():
@@ -198,7 +201,7 @@ def iter_niche(meta, seen, seed=0):
     random.Random(f"{seed}-{meta['id']}").shuffle(fixed)
     for t in fixed:
         k = norm(t)
-        if k not in seen:
+        if k not in seen and ip_ok(t):
             seen.add(k)
             yield t
     gens = [iter(t) for t in meta["templates"]]
@@ -207,7 +210,7 @@ def iter_niche(meta, seen, seed=0):
         for g in gens:
             for t in g:
                 k = norm(t)
-                if k not in seen:
+                if k not in seen and ip_ok(t):
                     seen.add(k)
                     yield t
                     alive.append(g)

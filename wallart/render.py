@@ -484,11 +484,14 @@ def render(phrase, palette="bw", fonts="classic_serif", layout="stack", orn="non
             k2 = k + W * 0.018
             d.rectangle([k2, k2, W - k2, H - k2], outline=ink, width=max(1, int(W * 0.002)))
         if layout == "arch":
-            tint = mix(bg, acc, 0.22)
+            # outlined arch, not a filled one - a filled arch prints a lot of ink
             ax0, ax1, ay0, ay1 = W * 0.12, W * 0.88, H * 0.12, H * 0.9
             rad = (ax1 - ax0) / 2
-            d.rectangle([ax0, ay0 + rad, ax1, ay1], fill=tint)
-            d.ellipse([ax0, ay0, ax1, ay0 + 2 * rad], fill=tint)
+            lw = max(2, int(W * 0.004))
+            d.arc([ax0, ay0, ax1, ay0 + 2 * rad], 180, 360, fill=acc, width=lw)
+            d.line([(ax0, ay0 + rad), (ax0, ay1)], fill=acc, width=lw)
+            d.line([(ax1, ay0 + rad), (ax1, ay1)], fill=acc, width=lw)
+            d.line([(ax0, ay1), (ax1, ay1)], fill=acc, width=lw)
             m = W * 0.17
         box_w = W - 2 * m
         box_h = H - 2 * m * 1.3 - (osz * 1.3 if has_orn else 0) - attrib_h()
@@ -497,7 +500,7 @@ def render(phrase, palette="bw", fonts="classic_serif", layout="stack", orn="non
         total_all = total + (osz * 1.25 if has_orn else 0) + attrib_h() + gap_rule * (len(rows) - 1)
         y = (H - total_all) / 2 + (H * 0.04 if layout == "arch" else 0)
         if has_orn:
-            ornament(d, orn, W / 2, y + osz / 2, osz, ink, acc, mix(bg, acc, 0.22) if layout == "arch" else bg)
+            ornament(d, orn, W / 2, y + osz / 2, osz, ink, acc, bg)
             y += osz * 1.25
         if layout == "rules":
             for i, row in enumerate(rows):
@@ -511,9 +514,13 @@ def render(phrase, palette="bw", fonts="classic_serif", layout="stack", orn="non
             for i, row in enumerate(rows):
                 if i == big:
                     t, f, w, tp, bt, gap, role, tr = row
+                    # the key line sits between two rules - no filled band, to save ink
                     pad = (bt - tp) * 0.28
-                    d.rectangle([W * 0.06, y - pad, W * 0.94, y + (bt - tp) + pad], fill=ink)
-                    draw_block(d, [row], 0, W / 2, y, {"ink": bg, "acc": bg})
+                    y += pad                     # room above the top rule
+                    lw = max(2, int(W * 0.004))
+                    d.line([(W * 0.08, y - pad), (W * 0.92, y - pad)], fill=acc, width=lw)
+                    d.line([(W * 0.08, y + (bt - tp) + pad), (W * 0.92, y + (bt - tp) + pad)], fill=acc, width=lw)
+                    draw_block(d, [row], 0, W / 2, y, colours)
                     y += (bt - tp) + gap + pad
                 else:
                     y = draw_block(d, [row], 0, W / 2, y, colours)
@@ -562,7 +569,7 @@ def render(phrase, palette="bw", fonts="classic_serif", layout="stack", orn="non
         if attrib:
             draw_attrib(cy + r + W * 0.05)
 
-    elif layout == "block":
+    elif layout == "block":          # kept for old catalogue rows; no longer generated
         split = H * 0.58
         d.rectangle([0, 0, W, split], fill=ink)
         box_w = W - 2 * m
@@ -575,20 +582,31 @@ def render(phrase, palette="bw", fonts="classic_serif", layout="stack", orn="non
     return img
 
 
-def mockup(art, width=1000, wall="#EDE9E3"):
-    """Listing photo: the print on a wall with a soft shadow. No frame is shown,
-    because the product is an unframed print."""
+def mockup(art, width=1000, wall="#EDE9E3", framed=False):
+    """Listing photo: the print on a wall with a soft shadow.
+    framed=True puts it in a thin black frame with a white mount - the only
+    frame colour sold, shown as the second photo so buyers see both options."""
     W, H = width, int(width * 1.0)
     canvas = Image.new("RGB", (W, H), hexrgb(wall))
     ph = int(H * 0.84)
     pw = int(ph / RATIO)
-    art = art.resize((pw, ph), Image.LANCZOS)
     x, y = (W - pw) // 2, (H - ph) // 2
     shadow = Image.new("L", (W, H), 0)
-    ImageDraw.Draw(shadow).rectangle([x + 6, y + 10, x + pw + 6, y + ph + 12], fill=90)
-    shadow = shadow.filter(ImageFilter.GaussianBlur(12))
+    ImageDraw.Draw(shadow).rectangle([x + 6, y + 10, x + pw + 6, y + ph + 12], fill=110 if framed else 90)
+    shadow = shadow.filter(ImageFilter.GaussianBlur(14 if framed else 12))
     canvas.paste(Image.new("RGB", (W, H), (60, 55, 50)), (0, 0), shadow)
-    canvas.paste(art, (x, y))
+    if framed:
+        fw = max(8, int(pw * 0.035))            # frame moulding
+        d = ImageDraw.Draw(canvas)
+        d.rectangle([x, y, x + pw, y + ph], fill=(22, 22, 22))
+        d.rectangle([x + fw, y + fw, x + pw - fw, y + ph - fw], fill=(250, 250, 248))
+        m = int(pw * 0.06)                       # white mount around the print
+        iw, ih = pw - 2 * (fw + m), ph - 2 * (fw + m)
+        art = art.resize((iw, ih), Image.LANCZOS)
+        canvas.paste(art, (x + fw + m, y + fw + m))
+        d.rectangle([x + fw + m - 1, y + fw + m - 1, x + fw + m + iw, y + fw + m + ih], outline=(215, 213, 208))
+    else:
+        canvas.paste(art.resize((pw, ph), Image.LANCZOS), (x, y))
     return canvas
 
 

@@ -111,7 +111,7 @@ horse riders|biz_trades_pets|fm
 bikers and motorcyclists|man_cave|fm
 classic car owners|biz_automotive|f
 petrolheads|biz_automotive|f
-Formula 1 fans|man_cave|f
+motorsport fans|man_cave|f
 football fans|man_cave|fm
 rugby fans|man_cave|fm
 cricket fans|man_cave|f
