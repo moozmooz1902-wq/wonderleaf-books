@@ -44,10 +44,10 @@ python3 build_ebay.py --check
 python3 pod/upload_ebay_files.py
 echo "eBay files ready: Cloudflare -> R2 -> <bucket> -> ebay-upload/. You can start uploading now."
 
-echo "== 6/6 A2 print files -> R2 (art/raw/), for fulfilment"
+echo "== 6/6 flat print files, A4 at 300dpi -> R2 (art/raw/); upscale for A3/A2 as usual"
 i=0
 for b in luxvia-art mercury-usm lunar-kms posterleaf-store1; do
   i=$((i+1))
-  python3 publish.py --store "$i" --bucket "$b" --csv "out/$b.csv.gz" --workers "$WORKERS" --raw-only --print-size A2
+  python3 publish.py --store "$i" --bucket "$b" --csv "out/$b.csv.gz" --workers "$WORKERS" --raw-only --print-size A4
 done
 echo "ALL DONE."

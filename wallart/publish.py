@@ -74,8 +74,8 @@ def main():
     ap.add_argument("--part", default="1/1", help="k/n: this machine does every n-th row")
     ap.add_argument("--mock-only", action="store_true", help="listing photos only (fast first pass)")
     ap.add_argument("--raw-only", action="store_true", help="print files only (second pass)")
-    ap.add_argument("--print-size", default="A2", choices=list(PRINT_MM),
-                    help="print file size; A2 is the largest sold, smaller sizes scale down from it")
+    ap.add_argument("--print-size", default="A4", choices=list(PRINT_MM),
+                    help="print file size at 300dpi; A4 by default - the print shop upscales for A3/A2")
     a = ap.parse_args()
 
     k, n = map(int, a.part.split("/"))
