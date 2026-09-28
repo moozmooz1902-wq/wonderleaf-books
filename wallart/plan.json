@@ -1,5 +1,5 @@
 {
- "_note": "Stores = Cloudflare R2 buckets, one per eBay account. rows = listings for that store. 65% of each store's rows come from its own niches, the rest is spread over every niche so no store rests on one market. No phrase+venue+colourway repeats across stores. Edit and re-run generate.py.",
+ "_note": "Stores = Cloudflare R2 buckets, one per eBay account. rows = listings for that store. 65% of each store's rows come from its own niches, the rest is spread over every niche so no store rests on one market. No phrase+venue+colourway repeats across stores. Edit and re-run generate.py. headroom = over-allocate this much, then cut the file at exactly rows (the phrase filter removes a few percent).",
  "primary_share": 0.65,
  "stores": [
   {
@@ -22,7 +22,8 @@
     "shipping": "",
     "returns": "",
     "payment": ""
-   }
+   },
+   "headroom": 1.03
   },
   {
    "id": 2,
@@ -51,7 +52,8 @@
     "shipping": "",
     "returns": "",
     "payment": ""
-   }
+   },
+   "headroom": 1.08
   },
   {
    "id": 3,
@@ -76,7 +78,8 @@
     "shipping": "",
     "returns": "",
     "payment": ""
-   }
+   },
+   "headroom": 1.35
   },
   {
    "id": 4,
@@ -102,7 +105,8 @@
     "shipping": "",
     "returns": "",
     "payment": ""
-   }
+   },
+   "headroom": 1.08
   }
  ],
  "niches": {

@@ -672,7 +672,7 @@
    "ip_risk": "low",
    "verdict": "BET",
    "bet_rank": 12,
-   "notes": "Edinburgh 123, Cornwall 91, Weymouth 84, Flying Scotsman 72, Wales by train 70. Many originals are still in copyright (artists d. after 1955); new designs in the style are safe."
+   "notes": "Edinburgh 123, Cornwall 91, Weymouth 84, Flying Scotsman 72, Wales by train 70. Originals are PD only if the artist died before 1956 (check each one); new designs in the same style avoid the question."
   },
   {
    "theme": "Dinosaur chart",
@@ -1147,7 +1147,7 @@
    "ip_risk": "medium",
    "verdict": "LONG TAIL",
    "bet_rank": null,
-   "notes": "Mona Lisa toilet gag 228 (loopylus10) beats straight reproductions (Last Supper 62). Picasso/Dali/Matisse/Frida/Hopper are NOT PD in the UK."
+   "notes": "Mona Lisa toilet gag 228 (loopylus10) beats straight reproductions (Last Supper 62). UK copyright runs 70 years from the artist's death, so artists who died before 1956 are PD in 2026: Vermeer, Da Vinci, Mucha, Blake, Turner, Constable, Kandinsky, Mondrian, Matisse and Kahlo (both d.1954) are PD. Picasso (d.1973), Dali (d.1989) and Hopper (d.1967) are not. 'Frida Kahlo' is also a registered trade mark."
   },
   {
    "theme": "Sea life (octopus, whale, crab, turtle)",
@@ -1585,6 +1585,1425 @@
    "verdict": "WEAK",
    "bet_rank": null,
    "notes": "Personalised star map 154 sold; low volume on eBay UK."
+  }
+ ],
+ "top_sellers": [
+  {
+   "seller_id": "trademagnetuk",
+   "store_url": "https://www.ebay.co.uk/str/trademagnetuk",
+   "store_items_sold_lifetime_all_categories": "1.5M",
+   "followers": "8.5K",
+   "active_listings": "571",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 183,
+   "page1_price_median": 8.95,
+   "page1_price_range": [
+    3.59,
+    49.99
+   ],
+   "page1_share_showing_price_range": 0.05,
+   "best_selling_wall_art": [
+    {
+     "title": "SUMBOX MULTIPLICATION SQUARE EDUCATIONAL X TIMES TABLES MATHS POSTER WALL CHART",
+     "sold": 6002,
+     "price": "£3.69",
+     "price_max": null
+    },
+    {
+     "title": "SUMBOX GIRLS EDUCATIONAL TIMES TABLES MATHS SUMS POSTER WALL CHART - PINK (1-12)",
+     "sold": 5081,
+     "price": "£3.69",
+     "price_max": null
+    },
+    {
+     "title": "EDUCATIONAL POSTER TIMES TABLES MATHS CHILDS WALL CHART",
+     "sold": 4130,
+     "price": "£3.69",
+     "price_max": null
+    },
+    {
+     "title": "Know & Learn Your Alphabet Educational Poster Large / Wall Chart - ABC's & Maths",
+     "sold": 2970,
+     "price": "£3.69",
+     "price_max": null
+    },
+    {
+     "title": "SUMBOX EDUCATIONAL NUMBER SQUARE MATHS POSTER WALL CHART COUNT 1 - 100 TEACHING",
+     "sold": 2645,
+     "price": "£3.69",
+     "price_max": null
+    },
+    {
+     "title": "2D & 3D Shapes - EDUCATIONAL MATHS POSTER - Numeracy Teaching Resource Revision",
+     "sold": 1385,
+     "price": "£3.69",
+     "price_max": null
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 15,
+   "category": "Educational wall charts",
+   "main_image_style": "Flat, bright, full-bleed chart artwork (no room mockup).",
+   "titling_formula": "BRAND + EDUCATIONAL + subject (TIMES TABLES / NUMBER SQUARE / PERIODIC TABLE) + MATHS POSTER WALL CHART + detail (1-12, PINK)",
+   "sets": "No",
+   "variations": "Mostly single price (5% of page-1 show a range)",
+   "notes": "General trader (flea foggers are its biggest lines); the Sumbox charts are its only posters and outsell almost every wall-art listing measured.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "ukposters_and_leathers",
+   "store_url": "https://www.ebay.co.uk/str/millenniumart",
+   "store_items_sold_lifetime_all_categories": "47K",
+   "followers": "186",
+   "active_listings": "64",
+   "page1_listings": 64,
+   "page1_with_sold_counter": 48,
+   "page1_price_median": 5.76,
+   "page1_price_range": [
+    5.76,
+    15.99
+   ],
+   "page1_share_showing_price_range": 0.05,
+   "best_selling_wall_art": [
+    {
+     "title": "A3 TIMES TABLES time table laminated multiplication educational kids Poster",
+     "sold": 3224,
+     "price": "£5.76",
+     "price_max": null
+    },
+    {
+     "title": "PERIODIC Table real elements A2 laminated chemistry science educational poster",
+     "sold": 1686,
+     "price": "£15.99",
+     "price_max": null
+    },
+    {
+     "title": "Learn to Tell the TIME wall Clock A2 Laminated educational nursery kids Poster",
+     "sold": 1229,
+     "price": "£5.76",
+     "price_max": null
+    },
+    {
+     "title": "educational NUMBER (1-20) square large A2 laminated maths wall nursery Poster",
+     "sold": 1016,
+     "price": "£5.76",
+     "price_max": null
+    },
+    {
+     "title": "SKELETON A2 laminated Human body organs bones anatomy medical student art Poster",
+     "sold": 860,
+     "price": "£5.76",
+     "price_max": null
+    },
+    {
+     "title": "A2 laminated USA UNITED STATES of AMERICA  map wall chart poster",
+     "sold": 728,
+     "price": "£5.76",
+     "price_max": null
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 47,
+   "category": "Educational wall charts",
+   "main_image_style": "Flat chart artwork, dense and colourful.",
+   "titling_formula": "SIZE + SUBJECT + 'laminated' + educational + audience + Poster",
+   "sets": "Few",
+   "variations": "Single price per listing; size is in the title (A3 / A2)",
+   "notes": "64 listings, 48 of which show sales on page 1: tiny catalogue, very high sell-through.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "blackheartprints",
+   "store_url": "https://www.ebay.co.uk/str/blackheartprints",
+   "store_items_sold_lifetime_all_categories": "151K",
+   "followers": "3.2K",
+   "active_listings": "1,500",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 79,
+   "page1_price_median": 2.99,
+   "page1_price_range": [
+    2.99,
+    2.99
+   ],
+   "page1_share_showing_price_range": 1.0,
+   "best_selling_wall_art": [
+    {
+     "title": "Times Table Educational Maths Sums SCOTTISH Layout Poster Blue A5 A4 A3 A2 A1",
+     "sold": 935,
+     "price": "£2.99",
+     "price_max": "£15.99"
+    },
+    {
+     "title": "Times Table Educational Maths Sums Multiplication Square Pocket/Wall Poster",
+     "sold": 823,
+     "price": "£2.99",
+     "price_max": "£15.99"
+    },
+    {
+     "title": "Times Table Educational Maths Sums ENGLISH Layout Poster Blue A5 A4 A3 A2 A1",
+     "sold": 710,
+     "price": "£2.99",
+     "price_max": "£15.99"
+    },
+    {
+     "title": "Star Wars Vintage Skywalker Movie Film Poster Print A5 A4 A3 A2 A1 A0",
+     "sold": 634,
+     "price": "£2.99",
+     "price_max": "£15.99"
+    },
+    {
+     "title": "Star Wars The Empire Strikes Back 40th Anniversary 2020 Poster A5 A4 A3 A2 A1",
+     "sold": 402,
+     "price": "£2.99",
+     "price_max": "£15.99"
+    },
+    {
+     "title": "Stranger Things Season 3 Poster A5 A4 A3 A2 A1",
+     "sold": 374,
+     "price": "£2.99",
+     "price_max": "£15.99"
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 79,
+   "category": "Movie posters + educational charts",
+   "main_image_style": "Flat poster art with a red 'Buy 2 Get 1 Free' corner banner.",
+   "titling_formula": "SUBJECT + 'Poster' + A5 A4 A3 A2 A1 (size ladder at the end)",
+   "sets": "No",
+   "variations": "All listings are A5-A1 size variations; £2.99 A5 entry price is what shows in search",
+   "notes": "Film IP is the bulk; its non-IP times-table charts sell 700-935 each.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "grabbanicepair_ltd",
+   "store_url": "https://www.ebay.co.uk/str/loveyakidsshoes",
+   "store_items_sold_lifetime_all_categories": "126K",
+   "followers": "1.4K",
+   "active_listings": "1,100",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 54,
+   "page1_price_median": 3.99,
+   "page1_price_range": [
+    1.99,
+    7.99
+   ],
+   "page1_share_showing_price_range": 0.02,
+   "best_selling_wall_art": [
+    {
+     "title": "giraffe print PICTURE flower garland WALL ART A4  unframed 22 pink",
+     "sold": 873,
+     "price": "£3.99",
+     "price_max": null
+    },
+    {
+     "title": "Palm Leaf Leaves Print Picture Wall Art A4 Botanical plant Unframed Home Decor",
+     "sold": 503,
+     "price": "£3.99",
+     "price_max": null
+    },
+    {
+     "title": "Funny bathroom highland cow on toilet Print Picture Poster Unframe A4 newspaper",
+     "sold": 369,
+     "price": "£3.99",
+     "price_max": null
+    },
+    {
+     "title": "Funny bathroom monkey on toilet Print Picture Poster Unframe A4 newspaper",
+     "sold": 313,
+     "price": "£3.99",
+     "price_max": null
+    },
+    {
+     "title": "zebra Print poster a4  picture unframed animal pair wall art 25 black white",
+     "sold": 244,
+     "price": "£3.99",
+     "price_max": null
+    },
+    {
+     "title": "giraffe Print poster a4  picture nursery unframed animal wall art watercolour",
+     "sold": 241,
+     "price": "£3.99",
+     "price_max": null
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 54,
+   "category": "Photo animals, tropical leaves, bathroom humour, lips/fashion",
+   "main_image_style": "Photographic subject on white, shown in a thin rose-gold frame on a white wall (simple mockup).",
+   "titling_formula": "lower-case subject + 'print PICTURE' + motif (flower garland / on toilet) + 'WALL ART A4 unframed' + a stray code number (22, 23, 503) + colour",
+   "sets": "A few (set of 3 bathroom £6.99)",
+   "variations": "Almost none: single A4, £3.99",
+   "notes": "eBay store is named 'loveyakidsshoes' (the /usr link redirects there). 1,100 listings; the best image seller measured.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "in-the-frame-shop",
+   "store_url": "https://www.ebay.co.uk/str/intheframeshop",
+   "store_items_sold_lifetime_all_categories": "32K",
+   "followers": "2.1K",
+   "active_listings": "714",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 165,
+   "page1_price_median": 5.99,
+   "page1_price_range": [
+    5.99,
+    21.98
+   ],
+   "page1_share_showing_price_range": 0.17,
+   "best_selling_wall_art": [
+    {
+     "title": "Stag Steampunk Deer Vintage Dictionary Page Print Steampunk Wall Art Picture",
+     "sold": 489,
+     "price": "£5.99",
+     "price_max": null
+    },
+    {
+     "title": "Original ART Print DICTIONARY ANTIQUE BOOK PAGE Alice in Wonderland picture",
+     "sold": 463,
+     "price": "£5.99",
+     "price_max": null
+    },
+    {
+     "title": "Vintage Peacocks Flowers Love Dictionary Print Page Wall Art Picture Bird",
+     "sold": 392,
+     "price": "£5.99",
+     "price_max": null
+    },
+    {
+     "title": "Original ART Print DICTIONARY ANTIQUE BOOK PAGE Alice in Wonderland Cheshire Cat",
+     "sold": 352,
+     "price": "£5.99",
+     "price_max": null
+    },
+    {
+     "title": "Fox Print Vintage Dictionary Page Wall Art Picture Steampunk Animal In Clothes",
+     "sold": 342,
+     "price": "£5.99",
+     "price_max": null
+    },
+    {
+     "title": "ART Print DICTIONARY ANTIQUE BOOK PAGE Alice in Wonderland VINTAGE Cheshire Cat",
+     "sold": 321,
+     "price": "£5.99",
+     "price_max": null
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 161,
+   "category": "Vintage dictionary-page art (steampunk animals, Alice, birds)",
+   "main_image_style": "Art printed on an antique dictionary page, shown in an ornate black frame on a brick wall.",
+   "titling_formula": "SUBJECT + 'Print Vintage Dictionary Page Wall Art Picture' + Steampunk/Animal In Clothes",
+   "sets": "Some",
+   "variations": "Mostly single £5.99",
+   "notes": "714 listings, 69% of page 1 show sales. One style carried across a subject bank; base images are public-domain engravings and Tenniel.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "swiftmaps",
+   "store_url": "https://www.ebay.co.uk/str/swiftmapsandcollectibles",
+   "store_items_sold_lifetime_all_categories": "62K",
+   "followers": "535",
+   "active_listings": "41",
+   "page1_listings": 41,
+   "page1_with_sold_counter": 21,
+   "page1_price_median": 24.45,
+   "page1_price_range": [
+    11.69,
+    52.54
+   ],
+   "page1_share_showing_price_range": 0.29,
+   "best_selling_wall_art": [
+    {
+     "title": "RMC 32\" x 50\" World Map Poster Mural Signature Series w/ Gulf of America update",
+     "sold": 1782,
+     "price": "£22.64",
+     "price_max": null
+    },
+    {
+     "title": "24x36 World Classic Premier 3D Wall Map - large poster wall mural art decor",
+     "sold": 1650,
+     "price": "£15.09",
+     "price_max": null
+    },
+    {
+     "title": "32x50 RMC World Map Poster Signature Series Large Wall Map",
+     "sold": 1028,
+     "price": "£22.64",
+     "price_max": null
+    },
+    {
+     "title": "United States Map Classic Premier USA US Wall Poster Decor w/ Gulf of America",
+     "sold": 706,
+     "price": "£18.86",
+     "price_max": "£52.80"
+    },
+    {
+     "title": "United States US-USA Wall Map Poster Classic Blue Edition by Swiftmaps",
+     "sold": 192,
+     "price": "£18.86",
+     "price_max": null
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 5,
+   "category": "World maps",
+   "main_image_style": "Flat map artwork.",
+   "titling_formula": "SIZE (24x36 / 32x50) + publisher series + 'World Map Poster' + Large Wall Map",
+   "sets": "Bundles",
+   "variations": "Some",
+   "notes": "Only 41 listings; three world maps sell 1,028-1,782 each at £15-£23.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "home-giftsolutions121",
+   "store_url": "https://www.ebay.co.uk/str/homegiftsolutions121",
+   "store_items_sold_lifetime_all_categories": "475K",
+   "followers": "7.2K",
+   "active_listings": "2,400",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 187,
+   "page1_price_median": 9.77,
+   "page1_price_range": [
+    2.55,
+    47.99
+   ],
+   "page1_share_showing_price_range": 0.52,
+   "best_selling_wall_art": [
+    {
+     "title": "World Map Maps Educational Maxi Poster Print 61x91.5cm",
+     "sold": 1003,
+     "price": "£8.15",
+     "price_max": null
+    },
+    {
+     "title": "Revolving Leather Punch Plier, Hole Puncher for Belt, Canvas, Plastics, Eyelets",
+     "sold": 164,
+     "price": "£5.99",
+     "price_max": null
+    },
+    {
+     "title": "Celtic FC Rug Bedroom Mat Crest Green Printed Fan Gift Official Licensed Product",
+     "sold": 164,
+     "price": "£15.34",
+     "price_max": null
+    },
+    {
+     "title": "Beechfield Dad Cap Cotton Hat Adjustable Plain Baseball Cap Printing 15 COLOURS",
+     "sold": 85,
+     "price": "£5.50",
+     "price_max": "£7.99"
+    },
+    {
+     "title": "Beechfield BB640 Snapback Trucker Cap Mesh Hat Plain Custom Print Ready",
+     "sold": 65,
+     "price": "£5.99",
+     "price_max": "£7.45"
+    },
+    {
+     "title": "Black Tote Bag 100% Organic Cotton Canvas Shopping Bag Reusable Shoulder HandBag",
+     "sold": 39,
+     "price": "£6.09",
+     "price_max": null
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 7,
+   "category": "General goods + world map maxi posters",
+   "main_image_style": "Flat map.",
+   "titling_formula": "World Map Maps Educational Maxi Poster Print 61x91.5cm",
+   "sets": "-",
+   "variations": "-",
+   "notes": "Map maxi poster 1,003 sold at £8.15.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "veryhonestbonnie",
+   "store_url": "https://www.ebay.co.uk/str/twiggmiester",
+   "store_items_sold_lifetime_all_categories": "84K",
+   "followers": "1.6K",
+   "active_listings": "2,900",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 47,
+   "page1_price_median": 8.99,
+   "page1_price_range": [
+    1.99,
+    89.99
+   ],
+   "page1_share_showing_price_range": 0.03,
+   "best_selling_wall_art": [
+    {
+     "title": "(231) NEW MAXI WALL POSTER STANFORDS GENERAL MAP OF THE WORLD EDUCATIONAL",
+     "sold": 578,
+     "price": "£7.99",
+     "price_max": null
+    },
+    {
+     "title": "(069) TENNIS GIRL ICONIC AND SEXY erotic CLASSIC MAXI POSTER NEW WALL HANGING",
+     "sold": 192,
+     "price": "£7.99",
+     "price_max": null
+    },
+    {
+     "title": "The Lord of the Rings MAXI WALL POSTER (Middle Earth Map) HANGING(439)",
+     "sold": 183,
+     "price": "£7.99",
+     "price_max": null
+    },
+    {
+     "title": "(465) COCKTAIL MIXES MIXOLOGY DRINKS INGREDIENTS MAXI POSTER NEW WALL HANGING",
+     "sold": 179,
+     "price": "£7.25",
+     "price_max": null
+    },
+    {
+     "title": "(127) NEW MAXI WALL POSTER SUPER MARIO CHARACTERS LUIGI YOSHI PRINCESS PEACH",
+     "sold": 161,
+     "price": "£7.99",
+     "price_max": null
+    },
+    {
+     "title": "(176) NEW MAXI POSTER DINOSAUR BATTLE FIGHT T-REX TRICERATOPS DAVID PENFOUND",
+     "sold": 157,
+     "price": "£7.99",
+     "price_max": null
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 33,
+   "category": "Maxi (61x91cm) posters",
+   "main_image_style": "Flat artwork.",
+   "titling_formula": "'(catalogue no.)' + NEW MAXI WALL POSTER + subject",
+   "sets": "-",
+   "variations": "Single price",
+   "notes": "Stanfords world map 578, map of the world with flags 312.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "artivo",
+   "store_url": "https://www.ebay.co.uk/str/penguinprintcanvas",
+   "store_items_sold_lifetime_all_categories": "78K",
+   "followers": "2.7K",
+   "active_listings": "5,100",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 35,
+   "page1_price_median": 11.99,
+   "page1_price_range": [
+    9.0,
+    29.99
+   ],
+   "page1_share_showing_price_range": 0.93,
+   "best_selling_wall_art": [
+    {
+     "title": "Large Tree Yellow Leaves Black White Nature Canvas Wall Art Picture Print",
+     "sold": 716,
+     "price": "£11.99",
+     "price_max": "£34.99"
+    },
+    {
+     "title": "Large Tree Red Leaves Black White Nature Canvas Wall Art Picture Print",
+     "sold": 237,
+     "price": "£11.99",
+     "price_max": "£34.99"
+    },
+    {
+     "title": "Yellow Black & White Paris Painting Canvas Wall Art Picture Print",
+     "sold": 205,
+     "price": "£11.99",
+     "price_max": "£34.99"
+    },
+    {
+     "title": "Lunch Atop A New York Skyscraper Canvas Wall Art Picture Print",
+     "sold": 203,
+     "price": "£11.99",
+     "price_max": "£34.99"
+    },
+    {
+     "title": "Aromatic Candles & Zen Stones Canvas Wall Art Picture Print",
+     "sold": 196,
+     "price": "£11.99",
+     "price_max": "£34.99"
+    },
+    {
+     "title": "Vincent Van Gogh Starry Night Canvas Wall Art Picture Print",
+     "sold": 145,
+     "price": "£11.99",
+     "price_max": "£34.99"
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 35,
+   "category": "Photographic canvases",
+   "main_image_style": "Flat canvas shown at an angle (3D edge) on white; black-and-white photo with one colour kept.",
+   "titling_formula": "SUBJECT (colour + noun) + 'Canvas Wall Art Picture Print'",
+   "sets": "Rare",
+   "variations": "93% of listings use size variations, £11.99-£34.99",
+   "notes": "Store name 'penguinprintcanvas'. 5,100 listings, but 15% of page 1 shows sales: it depends on a few hits (tree 716).",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "canvasartshop",
+   "store_url": "https://www.ebay.co.uk/str/canvasartshoponline",
+   "store_items_sold_lifetime_all_categories": "92K",
+   "followers": "5.8K",
+   "active_listings": "11,000",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 16,
+   "page1_price_median": 14.99,
+   "page1_price_range": [
+    0.99,
+    24.99
+   ],
+   "page1_share_showing_price_range": 1.0,
+   "best_selling_wall_art": [
+    {
+     "title": "BANKSY GIRL BLUE BIRD QUOTE LEARN TO REST CANVAS WALL STREET ART PRINT GRAFFITI",
+     "sold": 263,
+     "price": "£14.99",
+     "price_max": "£59.99"
+    },
+    {
+     "title": "Large Tree Teal Turquoise Leaves Black White Canvas Wall Art Picture Print",
+     "sold": 188,
+     "price": "£14.99",
+     "price_max": "£59.99"
+    },
+    {
+     "title": "VAN GOGH CANVAS WALL ART PRINT ARTWORK  PICTURE STARRY NIGHT OVER THE RHONE",
+     "sold": 176,
+     "price": "£14.99",
+     "price_max": "£59.99"
+    },
+    {
+     "title": "GRAFFITI FOLLOW YOUR DREAMS CANVAS WALL ART PRINT ARTWORK BRAINWASH BANKSY STYLE",
+     "sold": 147,
+     "price": "£14.99",
+     "price_max": "£59.99"
+    },
+    {
+     "title": "Peaky Blinders Crew - CANVAS WALL ART ARTWORK 30MM DEEP FRAMED PRINT",
+     "sold": 135,
+     "price": "£14.99",
+     "price_max": "£59.99"
+    },
+    {
+     "title": "Van gogh Starry Night CANVAS WALL ART ARTWORK 30MM DEEP FRAMED PRINT Bedroom",
+     "sold": 130,
+     "price": "£14.99",
+     "price_max": "£39.99"
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 16,
+   "category": "Canvas: Banksy, masters, trees",
+   "main_image_style": "Canvas at an angle on a wood floor or wall.",
+   "titling_formula": "CANVAS WALL ART PRINT + subject + 30MM DEEP FRAMED + room word, packed to 70-80 chars",
+   "sets": "Rare",
+   "variations": "100% size variations £14.99-£59.99",
+   "notes": "11,000 listings, only 7% of page 1 shows sales.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "artscape_galleries",
+   "store_url": "https://www.ebay.co.uk/str/artscapegalleries",
+   "store_items_sold_lifetime_all_categories": "160K",
+   "followers": "8.3K",
+   "active_listings": "9,000",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 188,
+   "page1_price_median": 13.55,
+   "page1_price_range": [
+    8.11,
+    27.14
+   ],
+   "page1_share_showing_price_range": 0.0,
+   "best_selling_wall_art": [
+    {
+     "title": "Marijuana 1930s Smoking Reefer Madness Vintage Style Movie Poster - 18x24",
+     "sold": 1054,
+     "price": "£12.64",
+     "price_max": null
+    },
+    {
+     "title": "1942 \"Devil's Harvest\" Vintage Marijuana Movie Poster - 18x24",
+     "sold": 586,
+     "price": "£12.64",
+     "price_max": null
+    },
+    {
+     "title": "1972 Massimo Vignelli New York Subway Map - 24x28",
+     "sold": 547,
+     "price": "£18.08",
+     "price_max": null
+    },
+    {
+     "title": "North America 1771 Colonial Map - 13 Colonies - 20x24",
+     "sold": 423,
+     "price": "£12.80",
+     "price_max": null
+    },
+    {
+     "title": "Adirondack New York Central Lines 1920s Classic Vintage Travel Poster - 16x24",
+     "sold": 344,
+     "price": "£12.64",
+     "price_max": null
+    },
+    {
+     "title": "1950s San Francisco TWA Cable Car Vintage Style Travel Poster - 16x24",
+     "sold": 288,
+     "price": "£12.64",
+     "price_max": null
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 178,
+   "category": "Vintage-style travel, movie and map posters",
+   "main_image_style": "Flat poster.",
+   "titling_formula": "YEAR/era + subject + 'Vintage Style Travel Poster' + fixed size (18x24)",
+   "sets": "92 of 240 page-1 titles mention sets",
+   "variations": "Fixed size per listing, £12.64-£27",
+   "notes": "9,000 listings with 78% of page 1 showing sales: a large catalogue that still sells because every item is a known vintage design.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "rdiamond",
+   "store_url": "https://www.ebay.co.uk/str/classicvintagetractors",
+   "store_items_sold_lifetime_all_categories": "43K",
+   "followers": "1.7K",
+   "active_listings": "2,300",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 182,
+   "page1_price_median": 5.95,
+   "page1_price_range": [
+    3.95,
+    13.95
+   ],
+   "page1_share_showing_price_range": 0.19,
+   "best_selling_wall_art": [
+    {
+     "title": "Vintage Star Wars Poster 140 Action Figures Checklist Kenner Palitoy Print A3",
+     "sold": 763,
+     "price": "£5.95",
+     "price_max": null
+    },
+    {
+     "title": "Farmers Weekly Magazine Guide to European Livestock Tractor Poster Brochure (A3)",
+     "sold": 526,
+     "price": "£5.95",
+     "price_max": null
+    },
+    {
+     "title": "Oasis Liam Noel Gallagher Man City Poster Print  Wall Art Picture Size A3",
+     "sold": 188,
+     "price": "£5.95",
+     "price_max": null
+    },
+    {
+     "title": "Vintage Ford New Holland Tractor History Collection BROCHURE/POSTER ADVERT A3",
+     "sold": 164,
+     "price": "£5.95",
+     "price_max": null
+    },
+    {
+     "title": "A3 Ford RS 40 Years of Evolution Escort Capri Sierra RS200 Cosworth CAR Poster",
+     "sold": 149,
+     "price": "£5.95",
+     "price_max": null
+    },
+    {
+     "title": "Vintage Fordson Ford New Holland Through The Years Tractor Poster Brochure (A3)",
+     "sold": 144,
+     "price": "£5.95",
+     "price_max": null
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 182,
+   "category": "A3 brochure/advert posters (tractors, cars, butchery, Star Wars toys)",
+   "main_image_style": "Flat scan of a vintage brochure or chart.",
+   "titling_formula": "SUBJECT + Poster + BROCHURE/ADVERT + A3",
+   "sets": "No",
+   "variations": "Single £5.95",
+   "notes": "Store name 'classicvintagetractors'. 2,300 listings, 76% of page 1 show sales. Niche hobby charts (livestock guide 526, beef cuts 127).",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "nposter",
+   "store_url": "https://www.ebay.co.uk/str/gbposter",
+   "store_items_sold_lifetime_all_categories": "67K",
+   "followers": "1.2K",
+   "active_listings": "2,800",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 41,
+   "page1_price_median": 4.02,
+   "page1_price_range": [
+    3.5,
+    489.0
+   ],
+   "page1_share_showing_price_range": 0.64,
+   "best_selling_wall_art": [
+    {
+     "title": "-A3 Size- WOODSTOCK 1969 FESTIVAL CONCERT wall Poster Print Art - #02",
+     "sold": 231,
+     "price": "£4.76",
+     "price_max": null
+    },
+    {
+     "title": "A3 - do it anyway - Mother Teresa  INSPIRATIONAL MOTIVATIONAL QUOTE POSTER #33",
+     "sold": 223,
+     "price": "£4.15",
+     "price_max": null
+    },
+    {
+     "title": "San francisco bridge A3 vintage retro travel & railways posters print #3",
+     "sold": 219,
+     "price": "£5.07",
+     "price_max": null
+    },
+    {
+     "title": "A3/A4 - Fleetwood Mac RUMOURS Album Cover Wall Art Posters",
+     "sold": 197,
+     "price": "£4.89",
+     "price_max": "£5.89"
+    },
+    {
+     "title": "A3 SIZE - POLAND HUNTING IN  - Vintage Retro Travel & Railways Poster Print #3",
+     "sold": 181,
+     "price": "£4.23",
+     "price_max": null
+    },
+    {
+     "title": "-A3 Size- NINA SIMONE 1 wall Home Poster Print Art - #02",
+     "sold": 134,
+     "price": "£4.65",
+     "price_max": null
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 41,
+   "category": "A3 vintage travel and music posters",
+   "main_image_style": "Flat poster.",
+   "titling_formula": "'A3 SIZE -' + subject + 'vintage retro travel & railways poster' + '#3' series code",
+   "sets": "No",
+   "variations": "64% show A3/A4 price ranges, £3.50-£5.07",
+   "notes": "Store name 'gbposter'. Cheap A3 vintage travel posters 137-219 sold.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "andys-prints-uk",
+   "store_url": "https://www.ebay.co.uk/str/andysprints",
+   "store_items_sold_lifetime_all_categories": "38K",
+   "followers": "915",
+   "active_listings": "2,400",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 26,
+   "page1_price_median": 4.97,
+   "page1_price_range": [
+    3.65,
+    11.38
+   ],
+   "page1_share_showing_price_range": 0.05,
+   "best_selling_wall_art": [
+    {
+     "title": "VINTAGE 1965 USAF LUNAR MOON MAP A4 POSTER PRINT",
+     "sold": 187,
+     "price": "£4.91",
+     "price_max": null
+    },
+    {
+     "title": "VINTAGE COCK SAFETY MATCHES ADVERTISING A4 POSTER PRINT",
+     "sold": 142,
+     "price": "£4.92",
+     "price_max": null
+    },
+    {
+     "title": "LM02 VINTAGE PORSCHE LE MANS 1970 RACING A2 POSTER PRINT",
+     "sold": 135,
+     "price": "£11.25",
+     "price_max": null
+    },
+    {
+     "title": "VINTAGE VISIT PALESTINE TRAVEL A3 POSTER PRINT",
+     "sold": 123,
+     "price": "£9.36",
+     "price_max": null
+    },
+    {
+     "title": "VINTAGE CITROEN 2CV FRENCH CAR ADVERTISING A4 POSTER PRINT",
+     "sold": 98,
+     "price": "£4.92",
+     "price_max": null
+    },
+    {
+     "title": "VINTAGE MARMITE FOOD ADVERTISING A4 POSTER PRINT",
+     "sold": 90,
+     "price": "£4.92",
+     "price_max": null
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 26,
+   "category": "A4 vintage adverts, maps, racing, travel",
+   "main_image_style": "Flat scan.",
+   "titling_formula": "SKU prefix (LM02, SP02) + VINTAGE + subject + ADVERTISING/TRAVEL + A4 POSTER PRINT",
+   "sets": "No",
+   "variations": "Single £4.91-£11.25 by size",
+   "notes": "Store name 'andysprints'. Public-domain adverts and a 1965 USAF moon map (187).",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "britishvintageposters",
+   "store_url": "https://www.ebay.co.uk/str/britishvintageposters",
+   "store_items_sold_lifetime_all_categories": "26K",
+   "followers": "783",
+   "active_listings": "1,000",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 12,
+   "page1_price_median": 6.29,
+   "page1_price_range": [
+    6.29,
+    10.99
+   ],
+   "page1_share_showing_price_range": 0.97,
+   "best_selling_wall_art": [
+    {
+     "title": "A2 2026 Chemistry Poster Periodic Table Elements Science Educational WALL CHART",
+     "sold": 265,
+     "price": "£10.99",
+     "price_max": null
+    },
+    {
+     "title": "VINTAGE Railway POSTER Edinburgh Castle Scotland Travel Ad Art Deco PRINT A3 A4",
+     "sold": 123,
+     "price": "£6.29",
+     "price_max": "£9.89"
+    },
+    {
+     "title": "French VINTAGE POSTER Le Mans 1959 Motor Racing Car Race Art Deco PRINT A3 A4 A2",
+     "sold": 92,
+     "price": "£6.29",
+     "price_max": "£15.29"
+    },
+    {
+     "title": "VINTAGE RAILWAY POSTER CORNWALL 1930s Beach GWR Rail Travel ART Deco PRINT A3 A4",
+     "sold": 91,
+     "price": "£6.29",
+     "price_max": "£9.89"
+    },
+    {
+     "title": "VINTAGE Railway POSTER Weymouth Retro Seaside Holiday Travel Ad Print A3 A4",
+     "sold": 84,
+     "price": "£6.29",
+     "price_max": "£9.89"
+    },
+    {
+     "title": "Retro Boxing POSTER Warhol Basquiat Artist 1985 Art Exhibition Ad PRINT A3 A4 A2",
+     "sold": 76,
+     "price": "£6.29",
+     "price_max": "£15.29"
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 12,
+   "category": "UK railway posters, racing, periodic table",
+   "main_image_style": "Flat poster.",
+   "titling_formula": "VINTAGE Railway POSTER + place + era + 'Art Deco PRINT' + A3 A4",
+   "sets": "No",
+   "variations": "97% A4/A3 variations £6.29-£9.89",
+   "notes": "Edinburgh 123, Cornwall 91, Weymouth 84: the UK-town railway format works, at 50-150 per town.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "paintingsbysimon",
+   "store_url": "https://www.ebay.co.uk/str/paintingsbysimon",
+   "store_items_sold_lifetime_all_categories": "21K",
+   "followers": "1.8K",
+   "active_listings": "3,300",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 151,
+   "page1_price_median": 4.99,
+   "page1_price_range": [
+    0.99,
+    19.99
+   ],
+   "page1_share_showing_price_range": 0.06,
+   "best_selling_wall_art": [
+    {
+     "title": "Upgrade Any 5\"x7\" Print to A4 Size",
+     "sold": 137,
+     "price": "£5.00",
+     "price_max": null
+    },
+    {
+     "title": "Black Cat Oil Painting Print - Enigmatic Art Decor 5\" x 7\"",
+     "sold": 91,
+     "price": "£4.99",
+     "price_max": null
+    },
+    {
+     "title": "Tranquil Sleeping Ginger Cat Watercolor Painting Print 5\"x7\" on Matte Paper",
+     "sold": 78,
+     "price": "£4.99",
+     "price_max": null
+    },
+    {
+     "title": "Whimsical Encounter: Watercolor Painting Print of a Hare in a Forest - 5\"x7\"",
+     "sold": 73,
+     "price": "£4.99",
+     "price_max": null
+    },
+    {
+     "title": "Mesmerizing Barn Owl Watercolor Illustration Print - Enchanting Artwork  5\"x7\"",
+     "sold": 69,
+     "price": "£4.99",
+     "price_max": null
+    },
+    {
+     "title": "Flying Kingfisher Watercolor Painting Print - River Bird Art 5\" x 7\"",
+     "sold": 63,
+     "price": "£4.99",
+     "price_max": null
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 148,
+   "category": "Painterly animals, 5x7",
+   "main_image_style": "Flat painterly image with a yellow 'Buy 3 Get 1 Free' side banner.",
+   "titling_formula": "Adjective + SUBJECT + Watercolor/Oil Painting Print + '5\"x7\"' + 'on Matte Paper'",
+   "sets": "Few",
+   "variations": "Single £4.99; a separate £5 'upgrade to A4' listing (137 sold)",
+   "notes": "3,300 listings, 63% of page 1 show sales but each only 10-90: a long tail that works at small volumes.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "printedwithlovestore",
+   "store_url": "https://www.ebay.co.uk/str/printedwithlovestore",
+   "store_items_sold_lifetime_all_categories": "68K",
+   "followers": "1.2K",
+   "active_listings": "282",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 9,
+   "page1_price_median": 3.99,
+   "page1_price_range": [
+    2.99,
+    22.99
+   ],
+   "page1_share_showing_price_range": 1.0,
+   "best_selling_wall_art": [
+    {
+     "title": "Safari Animal Baby Nursery Posters Prints Children's Bedroom Wall Art Pictures",
+     "sold": 175,
+     "price": "£2.99",
+     "price_max": "£79.99"
+    },
+    {
+     "title": "Safari Animal Baby Nursery Posters Prints Children's Bedroom Wall Art Pictures",
+     "sold": 141,
+     "price": "£2.99",
+     "price_max": "£10.99"
+    },
+    {
+     "title": "Banksy Wall Art Prints Pictures Graffiti Artwork Decor Posters - A3 A4 A5 Size",
+     "sold": 127,
+     "price": "£4.99",
+     "price_max": "£11.99"
+    },
+    {
+     "title": "Set of 3 Banksy Heart Balloon Girl Wall Art Posters Quote Prints Pictures Green",
+     "sold": 123,
+     "price": "£10.99",
+     "price_max": "£54.99"
+    },
+    {
+     "title": "Set of 3 Banksy Wall Art Quote Prints Heart Balloon Girl Pictures Posters Beige",
+     "sold": 112,
+     "price": "£10.99",
+     "price_max": "£44.99"
+    },
+    {
+     "title": "Floral Animal Wall Art Posters Prints Baby Nursery Children's Bedroom Pictures",
+     "sold": 91,
+     "price": "£2.99",
+     "price_max": "£9.99"
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 9,
+   "category": "Sets: safari nursery, Banksy, botanical",
+   "main_image_style": "Grid of framed prints on white (gallery mockup).",
+   "titling_formula": "Set of 3 + SUBJECT + Wall Art Prints/Posters + room + A3 A4 A5",
+   "sets": "Yes, 85 of 240 titles",
+   "variations": "100% size variations £2.99-£79.99",
+   "notes": "Safari nursery 175/141.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "paperie-art-prints",
+   "store_url": "https://www.ebay.co.uk/usr/paperie-art-prints",
+   "store_items_sold_lifetime_all_categories": "1.0K",
+   "followers": "16",
+   "active_listings": "17",
+   "page1_listings": 17,
+   "page1_with_sold_counter": 6,
+   "page1_price_median": 9.99,
+   "page1_price_range": [
+    5.99,
+    19.99
+   ],
+   "page1_share_showing_price_range": 0.06,
+   "best_selling_wall_art": [
+    {
+     "title": "Peter Rabbit Nursery Wall Art Prints, Peter Rabbit Nursery Decor -  Set Of 3",
+     "sold": 216,
+     "price": "£9.99",
+     "price_max": null
+    },
+    {
+     "title": "Pink Elephant Nursery Print - Set Of 3 - Baby Room Wall Art - Nursery Decor",
+     "sold": 188,
+     "price": "£9.99",
+     "price_max": null
+    },
+    {
+     "title": "Blue Elephant Nursery Print - Set Of 3 - Baby Room Wall Art - Nursery Decor",
+     "sold": 147,
+     "price": "£9.99",
+     "price_max": null
+    },
+    {
+     "title": "Elephant Nursery Print - Set Of 3 - Baby Room Wall Art - Nursery Decor",
+     "sold": 111,
+     "price": "£9.99",
+     "price_max": null
+    },
+    {
+     "title": "Little Bear Cave Nurser Print, Baby Room Wall Art, Rustic Nursery Decor, 3 Set",
+     "sold": 110,
+     "price": "£9.99",
+     "price_max": null
+    },
+    {
+     "title": "Disney Princess Nursery Prints, Set Of 3, Princess Wall Art, Nursery Decor",
+     "sold": 55,
+     "price": "£9.99",
+     "price_max": null
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 6,
+   "category": "Nursery sets of 3",
+   "main_image_style": "Three prints above a cot (room mockup).",
+   "titling_formula": "CHARACTER/ANIMAL + Nursery Print - Set Of 3 - Baby Room Wall Art - Nursery Decor",
+   "sets": "Yes, 13 of 17",
+   "variations": "Single £9.99",
+   "notes": "Only 17 listings; Peter Rabbit set 216, elephant sets 188/147.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "the_blue_butterfly_emporium",
+   "store_url": "https://www.ebay.co.uk/str/thebluebutterflyemporium",
+   "store_items_sold_lifetime_all_categories": "35K",
+   "followers": "767",
+   "active_listings": "242",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 28,
+   "page1_price_median": 5.99,
+   "page1_price_range": [
+    3.49,
+    19.99
+   ],
+   "page1_share_showing_price_range": 0.18,
+   "best_selling_wall_art": [
+    {
+     "title": "SET OF 6 Classic Winnie the Pooh quote prints, A4, Black & White, Unframed",
+     "sold": 502,
+     "price": "£14.99",
+     "price_max": null
+    },
+    {
+     "title": "SET OF 6 ART PRINTS ON OLD ANTIQUE BOOK PAGE - Birds, Deer, Vintage, Upcycled",
+     "sold": 309,
+     "price": "£19.99",
+     "price_max": null
+    },
+    {
+     "title": "SET OF 6 ART PRINTS ON OLD ANTIQUE BOOK PAGE, Alice in Wonderland, White Rabbit",
+     "sold": 131,
+     "price": "£19.99",
+     "price_max": null
+    },
+    {
+     "title": "SET OF 6 ART PRINTS ON OLD ANTIQUE BOOK PAGE - Butterflies, Vintage, Upcycled",
+     "sold": 101,
+     "price": "£19.99",
+     "price_max": null
+    },
+    {
+     "title": "Winnie the Pooh Quote Print, A4, Black & White, Unframed, Picture, Baby Gift",
+     "sold": 97,
+     "price": "£4.99",
+     "price_max": null
+    },
+    {
+     "title": "Winnie the Pooh Quote Print, A4, Black & White, Unframed, Picture, Baby Gift",
+     "sold": 90,
+     "price": "£4.99",
+     "price_max": null
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 28,
+   "category": "Sets of 6 on antique book pages, Pooh quotes",
+   "main_image_style": "Grid of framed prints.",
+   "titling_formula": "SET OF 6 + subject + A4 + colour + Unframed",
+   "sets": "Yes, 44 of 240",
+   "variations": "Single price",
+   "notes": "Set of 6 Pooh 502 (IP), set of 6 antique book page birds/deer 309 at £19.99.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "memorablemomentsshop",
+   "store_url": "https://www.ebay.co.uk/str/ceationarts",
+   "store_items_sold_lifetime_all_categories": "44K",
+   "followers": "1.8K",
+   "active_listings": "1,600",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 142,
+   "page1_price_median": 2.99,
+   "page1_price_range": [
+    2.0,
+    12.99
+   ],
+   "page1_share_showing_price_range": 0.0,
+   "best_selling_wall_art": [
+    {
+     "title": "Bathroom Humour Print  ,funny highland cow Print ,Bathroom Print wall art X3",
+     "sold": 152,
+     "price": "£10.99",
+     "price_max": null
+    },
+    {
+     "title": "Dark  Alice In Wonderland wall art Print gift decor home Picture Floral Retro",
+     "sold": 89,
+     "price": "£5.99",
+     "price_max": null
+    },
+    {
+     "title": "Gothic Rose  Print , Skeleton Print , Picture ,Home Decor, Gothic Flowers",
+     "sold": 51,
+     "price": "£5.99",
+     "price_max": null
+    },
+    {
+     "title": "ART PRINT Alice In Wonderland Shabby Chic wall art gift decor home Picture",
+     "sold": 49,
+     "price": "£5.99",
+     "price_max": null
+    },
+    {
+     "title": "Personalised Superhero Prints , spiderman Bedroom print Pictures x3",
+     "sold": 49,
+     "price": "£9.99",
+     "price_max": null
+    },
+    {
+     "title": "Vintage Alice In Wonderland wall art Print gift decor home Picture Floral Retro",
+     "sold": 45,
+     "price": "£5.99",
+     "price_max": null
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 22,
+   "category": "Bathroom humour, gothic prints, bunting",
+   "main_image_style": "Flat.",
+   "titling_formula": "Bathroom Humour Print , subject Print , Bathroom Print wall art X3",
+   "sets": "18 of 240",
+   "variations": "Single",
+   "notes": "Store name 'ceationarts'. Highland cow x3 bathroom set 152.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "roebux_ltd",
+   "store_url": "https://www.ebay.co.uk/str/roebuxltd",
+   "store_items_sold_lifetime_all_categories": "59K",
+   "followers": "1.5K",
+   "active_listings": "292",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 11,
+   "page1_price_median": 3.49,
+   "page1_price_range": [
+    3.49,
+    19.99
+   ],
+   "page1_share_showing_price_range": 1.0,
+   "best_selling_wall_art": [
+    {
+     "title": "Fashion Designer Brand Home Gift Wall Art Poster Print Picture Canvas A3 A4",
+     "sold": 139,
+     "price": "£3.49",
+     "price_max": "£13.99"
+    },
+    {
+     "title": "Fashion Designer Poster Quotes Home Gift Wall Fun Art Poster Print Picture",
+     "sold": 135,
+     "price": "£3.49",
+     "price_max": "£13.99"
+    },
+    {
+     "title": "CoCo fashion Shop Woman Designer  Wall Art Poster Print Picture Gift Black White",
+     "sold": 134,
+     "price": "£3.49",
+     "price_max": "£13.99"
+    },
+    {
+     "title": "Banksy Funky Monkey Wall Art Poster Print Gift Home Bedroom A4 A3",
+     "sold": 98,
+     "price": "£3.49",
+     "price_max": "£13.99"
+    },
+    {
+     "title": "Fashion Designer Makeup Lip Stick Books Wall Art Poster  Print Picture  A3 A4",
+     "sold": 95,
+     "price": "£3.49",
+     "price_max": "£8.99"
+    },
+    {
+     "title": "GYM WORKOUT POSTERS Exercises Dumbbell Kettle bell Training 5 pack Poster",
+     "sold": 91,
+     "price": "£4.99",
+     "price_max": "£44.99"
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 11,
+   "category": "Sets of 3 abstract, fashion-brand prints",
+   "main_image_style": "Framed set in a styled bedroom.",
+   "titling_formula": "Set of 3 + colours + Abstract Wall Art Prints + Neutral Modern + room",
+   "sets": "39 of 240",
+   "variations": "100% variations £3.49-£29.99",
+   "notes": "Luxury-brand logo prints (trade-mark risk) sell 134-139.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "rkeprinting",
+   "store_url": "https://www.ebay.co.uk/str/omgprinting",
+   "store_items_sold_lifetime_all_categories": "66K",
+   "followers": "1.4K",
+   "active_listings": "728",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 48,
+   "page1_price_median": 4.99,
+   "page1_price_range": [
+    4.99,
+    9.99
+   ],
+   "page1_share_showing_price_range": 1.0,
+   "best_selling_wall_art": [
+    {
+     "title": "The Beatles Yellow Submarine Movie Film Poster Print Picture A3 A4 Posters",
+     "sold": 319,
+     "price": "£4.99",
+     "price_max": "£8.99"
+    },
+    {
+     "title": "Vintage Star Wars Skywalker Movie Film Poster Print Picture A3 A4",
+     "sold": 302,
+     "price": "£4.99",
+     "price_max": "£8.99"
+    },
+    {
+     "title": "Labyrinth David Bowie Movie Film Poster Print Picture A3 A4",
+     "sold": 246,
+     "price": "£4.99",
+     "price_max": "£8.99"
+    },
+    {
+     "title": "Rocky 2 Stallone Boxing  Movie Film Poster Print Picture A3 A4 Boxing Posters",
+     "sold": 207,
+     "price": "£4.99",
+     "price_max": "£8.99"
+    },
+    {
+     "title": "Vintage Classic Le Chat Noir Poster / Print / Picture A3 A4 Size",
+     "sold": 190,
+     "price": "£4.99",
+     "price_max": "£8.99"
+    },
+    {
+     "title": "Vintage Art Deco Monaco F1 Racing Travel Grand Prix Print Poster Picture A3 A4",
+     "sold": 184,
+     "price": "£4.99",
+     "price_max": "£8.99"
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 48,
+   "category": "A3/A4 posters: film, PD art, deco racing",
+   "main_image_style": "Framed poster on a desk with a lamp (room mockup).",
+   "titling_formula": "SUBJECT + Movie Film Poster Print Picture A3 A4",
+   "sets": "No",
+   "variations": "100% A4/A3 variations £4.99-£8.99",
+   "notes": "Store name 'omgprinting'. Le Chat Noir 190, Monaco deco 184, Great Wave 99.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  }
+ ],
+ "contrast_sellers_large_catalogue_few_sales": [
+  {
+   "seller_id": "bigboxart",
+   "store_url": "https://www.ebay.co.uk/str/bigboxart",
+   "store_items_sold_lifetime_all_categories": "119K",
+   "followers": "5.9K",
+   "active_listings": "89,000",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 0,
+   "page1_price_median": 22.95,
+   "page1_price_range": [
+    14.95,
+    49.95
+   ],
+   "page1_share_showing_price_range": 0.95,
+   "best_selling_wall_art": [],
+   "page1_wall_art_listings_with_sold_counter": 0,
+   "category": "Framed and canvas decor (AI-look landscapes, botanical sets, Frida)",
+   "main_image_style": "Styled room mockups",
+   "titling_formula": "SUBJECT + Framed Wall Art Print Home Decor Ready to Hang",
+   "sets": "Yes",
+   "variations": "95% variations £14.95-£49.95",
+   "notes": "89,000 listings and 119K lifetime sales (about 1.3 per listing). 0 of 240 page-1 listings show a sold counter. This is the model closest to store 1.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "retrorevolution-2015",
+   "store_url": "https://www.ebay.co.uk/str/retrorevolution2015",
+   "store_items_sold_lifetime_all_categories": "26K",
+   "followers": "942",
+   "active_listings": "1,400",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 0,
+   "page1_price_median": 13.95,
+   "page1_price_range": [
+    7.95,
+    28.0
+   ],
+   "page1_share_showing_price_range": 0.8,
+   "best_selling_wall_art": [],
+   "page1_wall_art_listings_with_sold_counter": 0,
+   "category": "Colourful canvas/poster decor",
+   "main_image_style": "Room mockups",
+   "titling_formula": "SUBJECT + Colourful Ready To Hang Poster or Canvas",
+   "sets": "-",
+   "variations": "80% variations",
+   "notes": "1,400 listings, 0 of 240 page-1 listings with a sold counter.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
+  },
+  {
+   "seller_id": "colour-splash",
+   "store_url": "https://www.ebay.co.uk/str/hg11design",
+   "store_items_sold_lifetime_all_categories": "31K",
+   "followers": "1.3K",
+   "active_listings": "446",
+   "page1_listings": 240,
+   "page1_with_sold_counter": 1,
+   "page1_price_median": 8.75,
+   "page1_price_range": [
+    1.39,
+    21.92
+   ],
+   "page1_share_showing_price_range": 1.0,
+   "best_selling_wall_art": [
+    {
+     "title": "Personalised Photo on Canvas Print Framed A0 A1 A2 A3 A4 A5 Ready to Hang..✔️",
+     "sold": 117,
+     "price": "£1.39",
+     "price_max": "£75.26"
+    }
+   ],
+   "page1_wall_art_listings_with_sold_counter": 1,
+   "category": "Personalised photo canvas + decor canvas",
+   "main_image_style": "Canvas mockup",
+   "titling_formula": "-",
+   "sets": "-",
+   "variations": "100% variations",
+   "notes": "446 listings, 1 of 240 with a sold counter.",
+   "measured": "MEASURED 28 Sep 2026: store stats from ebay.co.uk/usr/<id> (redirects to the store); listings and page-1 from ebay.co.uk/sch/i.html?_ssn=<id>&_ipg=240 (Best Match, so page 1 is the seller's best-ranked items; share with sales is an upper bound). Image style and formula are read from listing thumbnails and titles."
   }
  ]
 }

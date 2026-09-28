@@ -61,7 +61,7 @@ def allocate(plan, niches):
         for group, share in ((pri, P), (oth, 1 - P)):
             tw = sum(w[n] for n in group) or 1
             for n in group:
-                a[n] = s["rows"] * share * w[n] / tw
+                a[n] = s["rows"] * s.get("headroom", 1.0) * share * w[n] / tw
         alloc[s["id"]] = a
 
     # water-fill: shrink over-subscribed niches, hand the freed rows to niches with room
@@ -294,7 +294,7 @@ def main():
             w = csv.writer(fh)
             w.writerow(FIELDS)
             row_no = 0
-            while heap:
+            while heap and row_no < stores[sid]["rows"]:
                 _, n = heapq.heappop(heap)
                 phr, lst = jobs[n]
                 i, v = lst[pos[n]]
