@@ -63,6 +63,42 @@ def get(url):
         return r.read()
 
 
+NE = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/"
+
+
+def _round(g):
+    # 4 decimals is ~10 m: plenty for a print, and a much smaller file
+    if isinstance(g[0], (int, float)):
+        return [round(g[0], 4), round(g[1], 4)]
+    return [_round(x) for x in g]
+
+
+def fetch_geo():
+    """Natural Earth (public domain) outlines and populated places for maps.py."""
+    import json
+    geo = HERE / "assets" / "geo"
+    geo.mkdir(parents=True, exist_ok=True)
+    if not (geo / "countries_10m.geojson").exists():
+        src = json.loads(get(NE + "ne_10m_admin_0_countries.geojson"))
+        out = [{"type": "Feature",
+                "properties": {k: f["properties"][k] for k in ("NAME", "ADMIN", "POP_EST", "CONTINENT")},
+                "geometry": {"type": f["geometry"]["type"], "coordinates": _round(f["geometry"]["coordinates"])}}
+               for f in src["features"]]
+        (geo / "countries_10m.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": out}, separators=(",", ":")))
+        print("countries downloaded")
+    if not (geo / "uk_nations.geojson").exists():
+        src = json.loads(get(NE + "ne_10m_admin_0_map_subunits.geojson"))
+        uk = [f for f in src["features"] if f["properties"]["SUBUNIT"] in ("England", "Scotland", "Wales", "Northern Ireland")]
+        for f in uk:
+            f["geometry"]["coordinates"] = _round(f["geometry"]["coordinates"])
+        (geo / "uk_nations.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": uk}, separators=(",", ":")))
+    if not (geo / "places.geojson").exists():
+        src = json.loads(get(NE + "ne_10m_populated_places_simple.geojson"))
+        slim = [{"properties": {k: f["properties"][k] for k in ("name", "adm0name", "pop_max", "longitude", "latitude")}}
+                for f in src["features"]]
+        (geo / "places.geojson").write_text(json.dumps({"features": slim}, separators=(",", ":")))
+
+
 def main():
     FONTS.mkdir(parents=True, exist_ok=True)
     bad = []
@@ -80,6 +116,7 @@ def main():
         z = zipfile.ZipFile(io.BytesIO(get(BIBLE_URL)))
         bible.write_bytes(z.read("eng-webbe_vpl.txt"))
         print("scripture downloaded")
+    fetch_geo()
     if bad:
         sys.exit("FAILED:\n  " + "\n  ".join(bad))
     print("assets ready")
