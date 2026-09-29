@@ -43,8 +43,21 @@ def chart_rows():
                            colour=colour)
 
 
+UK_NATIONS = {"England", "Scotland", "Wales", "Northern Ireland"}
+
+
+def mappable():
+    """Countries whose outline reads well on a print: 1M+ people (drops tiny island
+    states that render as specks), plus the four UK nations."""
+    import json
+    from maps import GEO
+    pop = {f["properties"]["NAME"]: f["properties"]["POP_EST"]
+           for f in json.load(open(GEO / "countries_10m.geojson"))["features"]}
+    return sorted(c for c in countries() if c in UK_NATIONS or pop.get(c, 0) >= 1_000_000)
+
+
 def map_rows():
-    names = sorted(countries())
+    names = mappable()
     for c in names:
         label = SHORT.get(c, c)
         for style, sword in MAP_STYLES.items():
