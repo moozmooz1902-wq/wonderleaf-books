@@ -1,0 +1,300 @@
+# name | group | plural   (group: safari, farm, woodland, pet_dog, pet_cat, pet_small, bird, sea, bug, reptile, polar, horse)
+Giraffe|safari|Giraffes
+Zebra|safari|Zebras
+Elephant|safari|Elephants
+Lion|safari|Lions
+Lioness|safari|Lionesses
+Tiger|safari|Tigers
+Leopard|safari|Leopards
+Cheetah|safari|Cheetahs
+Rhino|safari|Rhinos
+Hippo|safari|Hippos
+Gorilla|safari|Gorillas
+Chimpanzee|safari|Chimpanzees
+Orangutan|safari|Orangutans
+Monkey|safari|Monkeys
+Lemur|safari|Lemurs
+Sloth|safari|Sloths
+Koala|safari|Koalas
+Kangaroo|safari|Kangaroos
+Panda|safari|Pandas
+Red Panda|safari|Red Panda
+Meerkat|safari|Meerkats
+Flamingo|bird|Flamingos
+Peacock|bird|Peacocks
+Ostrich|bird|Ostriches
+Toucan|bird|Toucans
+Parrot|bird|Parrots
+Camel|safari|Camels
+Llama|farm|Llamas
+Alpaca|farm|Alpacas
+Highland Cow|farm|Highland Cows
+Cow|farm|Cows
+Calf|farm|Calves
+Pig|farm|Pigs
+Piglet|farm|Piglets
+Sheep|farm|Sheep
+Lamb|farm|Lambs
+Goat|farm|Goats
+Donkey|farm|Donkeys
+Horse|horse|Horses
+Pony|horse|Ponies
+Shetland Pony|horse|Shetland Ponies
+Chicken|farm|Chickens
+Hen|farm|Hens
+Rooster|farm|Roosters
+Duck|farm|Ducks
+Goose|farm|Geese
+Turkey|farm|Turkeys
+Fox|woodland|Foxes
+Hare|woodland|Hares
+Rabbit|woodland|Rabbits
+Bunny|woodland|Bunnies
+Badger|woodland|Badgers
+Hedgehog|woodland|Hedgehogs
+Squirrel|woodland|Squirrels
+Red Squirrel|woodland|Red Squirrels
+Deer|woodland|Deer
+Stag|woodland|Stags
+Fawn|woodland|Fawns
+Otter|woodland|Otters
+Owl|bird|Owls
+Barn Owl|bird|Barn Owls
+Mouse|woodland|Mice
+Bear|woodland|Bears
+Brown Bear|woodland|Brown Bears
+Wolf|woodland|Wolves
+Raccoon|woodland|Raccoons
+Moose|woodland|Moose
+Polar Bear|polar|Polar Bears
+Penguin|polar|Penguins
+Arctic Fox|polar|Arctic Foxes
+Seal|sea|Seals
+Walrus|polar|Walruses
+Puffin|bird|Puffins
+Robin|bird|Robins
+Blue Tit|bird|Blue Tits
+Wren|bird|Wrens
+Kingfisher|bird|Kingfishers
+Swan|bird|Swans
+Heron|bird|Herons
+Hummingbird|bird|Hummingbirds
+Pheasant|bird|Pheasants
+Magpie|bird|Magpies
+Crow|bird|Crows
+Eagle|bird|Eagles
+Pelican|bird|Pelicans
+Dolphin|sea|Dolphins
+Whale|sea|Whales
+Octopus|sea|Octopuses
+Turtle|sea|Turtles
+Seahorse|sea|Seahorses
+Jellyfish|sea|Jellyfish
+Crab|sea|Crabs
+Shark|sea|Sharks
+Starfish|sea|Starfish
+Clownfish|sea|Clownfish
+Frog|reptile|Frogs
+Tortoise|reptile|Tortoises
+Chameleon|reptile|Chameleons
+Crocodile|reptile|Crocodiles
+Bee|bug|Bees
+Bumblebee|bug|Bumblebees
+Butterfly|bug|Butterflies
+Dragonfly|bug|Dragonflies
+Ladybird|bug|Ladybirds
+Snail|bug|Snails
+Cat|pet_cat|Cats
+Kitten|pet_cat|Kittens
+Black Cat|pet_cat|Black Cats
+Ginger Cat|pet_cat|Ginger Cats
+Tabby Cat|pet_cat|Tabby Cats
+Siamese Cat|pet_cat|Siamese Cats
+Maine Coon|pet_cat|Maine Coons
+Persian Cat|pet_cat|Persian Cats
+Sphynx Cat|pet_cat|Sphynx Cats
+Bengal Cat|pet_cat|Bengal Cats
+Ragdoll Cat|pet_cat|Ragdoll Cats
+British Shorthair|pet_cat|British Shorthairs
+Hamster|pet_small|Hamsters
+Guinea Pig|pet_small|Guinea Pigs
+Ferret|pet_small|Ferrets
+Labrador|pet_dog|Labradors
+Golden Retriever|pet_dog|Golden Retrievers
+Cocker Spaniel|pet_dog|Cocker Spaniels
+Springer Spaniel|pet_dog|Springer Spaniels
+French Bulldog|pet_dog|French Bulldogs
+English Bulldog|pet_dog|Bulldogs
+Pug|pet_dog|Pugs
+Dachshund|pet_dog|Dachshunds
+Border Collie|pet_dog|Border Collies
+German Shepherd|pet_dog|German Shepherds
+Staffordshire Bull Terrier|pet_dog|Staffies
+Jack Russell|pet_dog|Jack Russells
+Beagle|pet_dog|Beagles
+Boxer Dog|pet_dog|Boxer Dogs
+Whippet|pet_dog|Whippets
+Greyhound|pet_dog|Greyhounds
+Lurcher|pet_dog|Lurchers
+Border Terrier|pet_dog|Border Terriers
+West Highland Terrier|pet_dog|Westies
+Scottish Terrier|pet_dog|Scotties
+Yorkshire Terrier|pet_dog|Yorkies
+Shih Tzu|pet_dog|Shih Tzus
+Cockapoo|pet_dog|Cockapoos
+Cavapoo|pet_dog|Cavapoos
+Labradoodle|pet_dog|Labradoodles
+Cavalier Spaniel|pet_dog|Cavaliers
+Chihuahua|pet_dog|Chihuahuas
+Pomeranian|pet_dog|Pomeranians
+Bichon Frise|pet_dog|Bichons
+Miniature Schnauzer|pet_dog|Schnauzers
+Siberian Husky|pet_dog|Huskies
+Dalmatian|pet_dog|Dalmatians
+Rottweiler|pet_dog|Rottweilers
+Dobermann|pet_dog|Dobermanns
+Great Dane|pet_dog|Great Danes
+Poodle|pet_dog|Poodles
+Corgi|pet_dog|Corgis
+Bernese Mountain Dog|pet_dog|Bernese Mountain Dogs
+Newfoundland|pet_dog|Newfoundlands
+Weimaraner|pet_dog|Weimaraners
+Vizsla|pet_dog|Vizslas
+Basset Hound|pet_dog|Basset Hounds
+Bloodhound|pet_dog|Bloodhounds
+Shar Pei|pet_dog|Shar Peis
+Akita|pet_dog|Akitas
+Shiba Inu|pet_dog|Shiba Inus
+Samoyed|pet_dog|Samoyeds
+Maltese|pet_dog|Maltese
+Patterdale Terrier|pet_dog|Patterdales
+Bedlington Terrier|pet_dog|Bedlingtons
+Airedale Terrier|pet_dog|Airedales
+Old English Sheepdog|pet_dog|Old English Sheepdogs
+Irish Setter|pet_dog|Irish Setters
+Pointer|pet_dog|Pointers
+Sprocker|pet_dog|Sprockers
+Rough Collie|pet_dog|Rough Collies
+Bull Terrier|pet_dog|Bull Terriers
+Boston Terrier|pet_dog|Boston Terriers
+Pekingese|pet_dog|Pekingese
+Lhasa Apso|pet_dog|Lhasa Apsos
+Cairn Terrier|pet_dog|Cairn Terriers
+Italian Greyhound|pet_dog|Italian Greyhounds
+Saluki|pet_dog|Salukis
+Rhodesian Ridgeback|pet_dog|Ridgebacks
+Australian Shepherd|pet_dog|Australian Shepherds
+Sausage Dog Puppy|pet_dog|Sausage Dog Puppies
+Labrador Puppy|pet_dog|Labrador Puppies
+Snow Leopard|safari|Snow Leopards
+Jaguar Cat|safari|Jaguars
+Hyena|safari|Hyenas
+Warthog|safari|Warthogs
+Buffalo|safari|Buffalo
+Gazelle|safari|Gazelles
+Okapi|safari|Okapis
+Tapir|safari|Tapirs
+Capybara|safari|Capybaras
+Armadillo|safari|Armadillos
+Anteater|safari|Anteaters
+Wombat|safari|Wombats
+Quokka|safari|Quokkas
+Bison|woodland|Bison
+Reindeer|polar|Reindeer
+Lynx|woodland|Lynx
+Beaver|woodland|Beavers
+Mole|woodland|Moles
+Dormouse|woodland|Dormice
+Pine Marten|woodland|Pine Martens
+Stoat|woodland|Stoats
+Water Vole|woodland|Water Voles
+Clydesdale Horse|horse|Clydesdales
+Shire Horse|horse|Shire Horses
+Arabian Horse|horse|Arabian Horses
+Appaloosa Horse|horse|Appaloosas
+Friesian Horse|horse|Friesian Horses
+Welsh Cob|horse|Welsh Cobs
+Dartmoor Pony|horse|Dartmoor Ponies
+Zebu Cow|farm|Zebu
+Belted Galloway|farm|Belted Galloways
+Jersey Cow|farm|Jersey Cows
+Herdwick Sheep|farm|Herdwick Sheep
+Jacob Sheep|farm|Jacob Sheep
+Valais Blacknose Sheep|farm|Valais Blacknose Sheep
+Pygmy Goat|farm|Pygmy Goats
+Kunekune Pig|farm|Kunekune Pigs
+Silkie Chicken|farm|Silkie Chickens
+Peahen|bird|Peahens
+Goldfinch|bird|Goldfinches
+Bullfinch|bird|Bullfinches
+Sparrow|bird|Sparrows
+Starling|bird|Starlings
+Woodpecker|bird|Woodpeckers
+Jay|bird|Jays
+Swallow|bird|Swallows
+Blackbird|bird|Blackbirds
+Chaffinch|bird|Chaffinches
+Long Tailed Tit|bird|Long Tailed Tits
+Great Tit|bird|Great Tits
+Nuthatch|bird|Nuthatches
+Tawny Owl|bird|Tawny Owls
+Snowy Owl|bird|Snowy Owls
+Kestrel|bird|Kestrels
+Hawk|bird|Hawks
+Macaw|bird|Macaws
+Cockatoo|bird|Cockatoos
+Budgie|bird|Budgies
+Kookaburra|bird|Kookaburras
+Stork|bird|Storks
+Crane Bird|bird|Cranes
+Hare in Snow|woodland|Hares
+Axolotl|reptile|Axolotls
+Gecko|reptile|Geckos
+Bearded Dragon|reptile|Bearded Dragons
+Tree Frog|reptile|Tree Frogs
+Iguana|reptile|Iguanas
+Manta Ray|sea|Manta Rays
+Humpback Whale|sea|Humpback Whales
+Orca|sea|Orcas
+Sea Otter|sea|Sea Otters
+Pufferfish|sea|Pufferfish
+Lobster|sea|Lobsters
+Moth|bug|Moths
+Beetle|bug|Beetles
+Grasshopper|bug|Grasshoppers
+Devon Rex Cat|pet_cat|Devon Rex Cats
+Scottish Fold Cat|pet_cat|Scottish Fold Cats
+Norwegian Forest Cat|pet_cat|Norwegian Forest Cats
+Tortoiseshell Cat|pet_cat|Tortoiseshell Cats
+Tuxedo Cat|pet_cat|Tuxedo Cats
+White Cat|pet_cat|White Cats
+Grey Cat|pet_cat|Grey Cats
+Rabbit Lop|pet_small|Lop Rabbits
+Chinchilla|pet_small|Chinchillas
+Gerbil|pet_small|Gerbils
+Hungarian Vizsla Puppy|pet_dog|Vizsla Puppies
+French Bulldog Puppy|pet_dog|French Bulldog Puppies
+Cockapoo Puppy|pet_dog|Cockapoo Puppies
+Golden Retriever Puppy|pet_dog|Golden Retriever Puppies
+Pug Puppy|pet_dog|Pug Puppies
+Staffy Puppy|pet_dog|Staffy Puppies
+English Setter|pet_dog|English Setters
+Flat Coated Retriever|pet_dog|Flat Coated Retrievers
+Norfolk Terrier|pet_dog|Norfolk Terriers
+Welsh Terrier|pet_dog|Welsh Terriers
+Irish Wolfhound|pet_dog|Irish Wolfhounds
+Deerhound|pet_dog|Deerhounds
+Havanese|pet_dog|Havanese
+Papillon|pet_dog|Papillons
+Cane Corso|pet_dog|Cane Corsos
+American Bulldog|pet_dog|American Bulldogs
+Belgian Malinois|pet_dog|Malinois
+Hungarian Puli|pet_dog|Pulis
+Chow Chow|pet_dog|Chow Chows
+Dogue de Bordeaux|pet_dog|Dogue de Bordeaux
+Leonberger|pet_dog|Leonbergers
+Sheltie|pet_dog|Shelties
+Miniature Dachshund|pet_dog|Miniature Dachshunds
+Maltipoo|pet_dog|Maltipoos
+Pomsky|pet_dog|Pomskies
+Goldendoodle|pet_dog|Goldendoodles

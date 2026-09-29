@@ -4,3 +4,5 @@ __pycache__/
 assets/geo/countries_10m.geojson
 research/raw/image/
 research/samples_pd/
+pd/raw/
+pd/__pycache__/

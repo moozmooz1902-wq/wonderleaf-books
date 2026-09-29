@@ -1,0 +1,41 @@
+# name | kind
+Monstera Leaf|tropical
+Palm Leaf|tropical
+Banana Leaf|tropical
+Fan Palm Leaf|tropical
+Bird of Paradise Leaf|tropical
+Philodendron Leaf|tropical
+Alocasia Leaf|tropical
+Calathea Leaf|tropical
+Fern Frond|green
+Eucalyptus Branch|green
+Olive Branch|green
+Ginkgo Leaf|green
+Fig Leaf|green
+Oak Leaf|green
+Maple Leaf|green
+Pampas Grass|dried
+Dried Palm Spear|dried
+Bunny Tail Grass|dried
+Lavender Sprig|flower
+Rose|flower
+Peony|flower
+Sunflower|flower
+Tulip|flower
+Poppy|flower
+Magnolia|flower
+Cherry Blossom Branch|flower
+Hydrangea|flower
+Daisy|flower
+Lily|flower
+Orchid|flower
+Protea|flower
+Ranunculus|flower
+Anemone|flower
+Iris|flower
+Dandelion Clock|flower
+Cotton Stem|dried
+Wheat Sheaf|dried
+Lemon Branch|fruit
+Orange Branch|fruit
+Olive Tree|tree
