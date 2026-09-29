@@ -9,6 +9,7 @@ Usage:
     python3 ebay_file.py               # everything
 """
 import csv, html, sys
+import r2_config
 
 # ---- the only things that need changing -------------------------------
 PRICE     = "9.99"          # <-- CONFIRM: placeholder
@@ -17,7 +18,7 @@ LOCATION  = "United Kingdom"
 CATEGORY  = "15687"         # eBay UK > Men's Clothing > T-Shirts
 CONDITION = "1000"          # New with tags
 POLICY    = "default"       # payment / postage / returns profile name
-IMG_BASE  = "https://IMAGES-NOT-UPLOADED-YET/"   # becomes the r2.dev URL
+# image URL comes from r2_config (bucket tshirt-m12k, account M12K)
 # -----------------------------------------------------------------------
 
 HEADER = ("*Action(SiteID=UK|Country=GB|Currency=GBP|Version=1193)",
@@ -60,7 +61,7 @@ def main(limit=None):
         for r in rows:
             sku = f"WLT-{int(r['source_idx']):06d}"
             w.writerow(("Add", sku, CATEGORY, r["new_title"], description(r),
-                        CONDITION, IMG_BASE + sku + ".jpg", QUANTITY, PRICE,
+                        CONDITION, r2_config.image_url(sku), QUANTITY, PRICE,
                         "FixedPrice", "GTC", LOCATION, POLICY, POLICY, POLICY,
                         "Unbranded", "Black", "Cotton", "Regular",
                         "Graphic Tee", "Men"))
