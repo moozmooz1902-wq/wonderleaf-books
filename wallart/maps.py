@@ -21,7 +21,7 @@ from render import font, hexrgb, mix, measure, draw_tracked, ornament, RATIO
 from styles import PALETTES, FONTSETS
 
 GEO = Path(__file__).resolve().parent / "assets" / "geo"
-SS = 3                                   # supersampling for smooth edges
+SS = 3                                   # supersampling for smooth edges (listing size)
 SHORT = {"United States of America": "USA", "United Kingdom": "UK", "Dem. Rep. Congo": "DR Congo",
          "Central African Rep.": "Central African Republic", "Bosnia and Herz.": "Bosnia",
          "Dominican Rep.": "Dominican Republic", "Czechia": "Czech Republic"}
@@ -107,7 +107,7 @@ def render_map(country, style="solid", palette="bw", fonts="classic_serif", city
         rings = [r for r in rings if min(p[0] for p in r) > -130 and min(p[1] for p in r) > 23]
     rings = main_rings(rings)
 
-    S = SS
+    S = SS if width <= 1600 else 1           # print files are big enough not to need it
     big = (W * S, H * S)
     img = Image.new("RGB", big, bg)
     d = ImageDraw.Draw(img)

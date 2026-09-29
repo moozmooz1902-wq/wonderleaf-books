@@ -143,12 +143,28 @@ RULES = {
 META = re.compile(r"[\\?()\[\]|*+{}^$.]")
 
 
+def _top_split(s):
+    """Split on | only at bracket depth 0, so "apple (?:inc|store)" stays one entry."""
+    parts, depth, cur = [], 0, ""
+    for ch in s:
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth -= 1
+        if ch == "|" and depth == 0:
+            parts.append(cur); cur = ""
+        else:
+            cur += ch
+    parts.append(cur)
+    return parts
+
+
 def _split(rule):
     """Word-list rules -> (set of plain phrases, regex for the few with patterns).
     Set lookups keep the check fast enough for millions of titles."""
     inner = rule[len(r"\b(?:"):-len(r")\b")]
     plain, pats = set(), []
-    for w in inner.split("|"):
+    for w in _top_split(inner):
         if META.search(w.replace("\\.", "")) or "\\" in w:
             pats.append(w)
         else:

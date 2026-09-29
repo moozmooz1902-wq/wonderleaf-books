@@ -44,13 +44,28 @@ def existing(client, bucket, prefix):
     return keys
 
 
+def art_for(row, width):
+    """Draw any catalogue row at `width` px: typography, chart or map."""
+    kind = row.get("kind") or "text"
+    if kind == "chart":
+        from charts import render_chart
+        cid, var = row["spec"].split("|")
+        return render_chart(cid, var, row["palette"], row["fonts"], width)
+    if kind == "map":
+        from maps import render_map
+        country, style, city = row["spec"].split("|")
+        return render_map(country, style, row["palette"], row["fonts"], city or None, width=width)
+    from render import render
+    return render(row["phrase"], row["palette"], row["fonts"], row["layout"], row["ornament"], width)
+
+
 def draw(job):
     """Render one row -> {key: bytes}. Runs in a worker process."""
-    from render import render, mockup
+    from render import mockup
     row, want_raw, size, want_mock = job
     out = {}
     if want_mock:
-        art = render(row["phrase"], row["palette"], row["fonts"], row["layout"], row["ornament"], 1200)
+        art = art_for(row, 1200)
         # the ONE listing photo: the print in a black frame on a wall
         buf = io.BytesIO()
         mockup(art, 1600, framed=True).save(buf, "JPEG", quality=88, optimize=True)
@@ -58,7 +73,7 @@ def draw(job):
     if want_raw:
         px = round(PRINT_MM[size] / 25.4 * 300)
         buf = io.BytesIO()
-        render(row["phrase"], row["palette"], row["fonts"], row["layout"], row["ornament"], px).save(
+        art_for(row, px).save(
             buf, "PNG", dpi=(300, 300), optimize=False, compress_level=6)
         out[f"art/raw/{row['sku']}.png"] = (buf.getvalue(), "image/png")
     return out

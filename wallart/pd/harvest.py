@@ -27,6 +27,8 @@ Sources and routes (all keyless):
          PDM 1.0 / CC0 records with an image.
   si     Smithsonian Open Access bulk NDJSON on S3 (art units only), media
          usage.access == CC0.
+  ycba   Yale Center for British Art OAI-PMH (LIDO) + IIIF manifest per CC0
+         picture record (image URL and pixel size).
 
 Only needs: python3 stdlib + requests + pandas.
 """
@@ -338,12 +340,12 @@ def harvest_cma(cache, out, workers, limit=None):
     total = first["info"]["total"]
     if limit:
         total = min(total, limit)
-    page = 1000
+    page = 200
     skips = list(range(0, total, page))
     print(f"  cma: {total:,} CC0 records with image, {len(skips)} pages", flush=True)
 
     def fetch(skip):
-        p = d / f"page_{skip:06d}.json.gz"
+        p = d / f"page{page}_{skip:06d}.json.gz"
         if p.exists():
             return
         r = get(CMA_API.format(limit=page, skip=skip), timeout=300)
@@ -351,12 +353,12 @@ def harvest_cma(cache, out, workers, limit=None):
         with gzip.open(p, "wt", encoding="utf-8") as f:
             json.dump(data["data"], f)
 
-    with cf.ThreadPoolExecutor(min(workers, 4)) as ex:
+    with cf.ThreadPoolExecutor(min(workers, 3)) as ex:
         list(ex.map(fetch, skips))
     w = Writer(out / "cma.jsonl.gz")
     seen = set()
     for skip in skips:
-        for a in json.load(gzip.open(d / f"page_{skip:06d}.json.gz", "rt", encoding="utf-8")):
+        for a in json.load(gzip.open(d / f"page{page}_{skip:06d}.json.gz", "rt", encoding="utf-8")):
             if a["id"] in seen or a.get("share_license_status") != "CC0":
                 continue
             seen.add(a["id"])
@@ -667,13 +669,15 @@ def harvest_si(cache, out, workers, limit=None):
         ud.mkdir(exist_ok=True)
 
         def fetch(u):
-            p = ud / (u.rsplit("/", 1)[-1] + ".gz")
+            p = ud / (u.rsplit("/", 1)[-1] + ".utf8.gz")
             if p.exists():
                 return p
             r = get(u, timeout=300)
             # keep only CC0 records with images, to keep the cache small
             keep = []
-            for line in r.text.splitlines():
+            if r.status_code != 200:
+                raise RuntimeError(f"HTTP {r.status_code} {u}")
+            for line in r.content.decode("utf-8", "replace").split("\n"):
                 if '"CC0"' in line and "online_media" in line:
                     keep.append(line)
             with gzip.open(p.with_suffix(".part"), "wt", encoding="utf-8") as f:
@@ -688,7 +692,10 @@ def harvest_si(cache, out, workers, limit=None):
             for line in gzip.open(p, "rt", encoding="utf-8"):
                 if not line.strip():
                     continue
-                o = json.loads(line)
+                try:
+                    o = json.loads(line)
+                except ValueError:
+                    continue
                 c = o.get("content", {})
                 dnr = c.get("descriptiveNonRepeating", {})
                 media = [m for m in (dnr.get("online_media", {}).get("media") or [])
@@ -748,8 +755,159 @@ def harvest_si(cache, out, workers, limit=None):
     return w.close()
 
 
+# ---------------------------------------------------------------------------
+# Yale Center for British Art (OAI-PMH LIDO + IIIF manifests)
+# ---------------------------------------------------------------------------
+YCBA_OAI = "https://harvester-bl.britishart.yale.edu/oaicatmuseum/OAIHandler"
+YCBA_UA = "Mozilla/5.0 (compatible; wallart-pd-harvest/1.0)"
+YCBA_PICTURE = re.compile(r"paint|drawing|watercolo|print|map|book|illustrat|poster|"
+                          r"pastel|miniature", re.I)
+
+
+def _lido(r, pat):
+    return [html_unescape(x).strip() for x in re.findall(pat, r, re.S)]
+
+
+def html_unescape(x):
+    import html
+    return html.unescape(x)
+
+
+def ycba_parse(r):
+    r = re.sub(r"\s+", " ", r)
+    ident = re.search(r"<identifier>oai:tms\.ycba\.yale\.edu:(\d+)</identifier>", r)
+    if not ident:
+        return None
+    oid = ident.group(1)
+    cc0 = "publicdomain/zero" in r
+    man = re.search(r"<lido:linkResource[^>]*>(https://manifests\.collections\.yale\.edu/ycba/obj/\d+)<", r)
+    title = _lido(r, r'<lido:titleSet lido:type="Repository title">.*?<lido:appellationValue[^>]*>([^<]*)<') \
+        or _lido(r, r"<lido:titleSet[^>]*>.*?<lido:appellationValue[^>]*>([^<]*)<")
+    actors = _lido(r, r"<lido:displayActorInRole>([^<]*)<")
+    artist, b, dth = "", None, None
+    if actors:
+        a0 = actors[0]
+        m = re.match(r"(.*?),\s*(?:ca\.\s*)?(\d{3,4})?\s*[–-]\s*(?:ca\.\s*)?(\d{3,4})?", a0)
+        if m:
+            artist, b, dth = m.group(1), year(m.group(2)), year(m.group(3))
+        else:
+            artist = a0.split(",")[0]
+        deaths = []
+        for a in actors:
+            m2 = re.search(r"[–-]\s*(?:ca\.\s*)?(\d{4})", a)
+            if m2:
+                deaths.append(int(m2.group(1)))
+        dth = max(deaths) if deaths else dth
+    cls = _lido(r, r"<lido:classification>.*?<lido:term>([^<]*)<")
+    wt = _lido(r, r"<lido:objectWorkType>.*?<lido:term>([^<]*)<")
+    subj = _lido(r, r"<lido:subjectConcept>.*?<lido:term>([^<]*)<")
+    date = (_lido(r, r"<lido:displayDate>([^<]*)<") or [""])[0]
+    ed = re.search(r"<lido:latestDate>(\d{3,4})", r)
+    bd = re.search(r"<lido:earliestDate>(\d{3,4})", r)
+    return rec(
+        source="ycba", source_id=oid, title=(title or [""])[0], artist=artist,
+        artist_birth_year=b, artist_death_year=dth, date=date,
+        date_begin=int(bd.group(1)) if bd else None, date_end=int(ed.group(1)) if ed else None,
+        classification=" | ".join(cls + wt), medium=(_lido(r, r"<lido:displayMaterialsTech>([^<]*)<") or [""])[0],
+        tags=list(dict.fromkeys(subj + wt)), culture="British",
+        image_url="", licence="CC0" if cc0 else "",
+        page_url=f"https://collections.britishart.yale.edu/catalog/tms:{oid}",
+        extra_manifest=man.group(1) if man else "",
+    )
+
+
+def harvest_ycba(cache, out, workers, limit=None):
+    """
+    OAI-PMH list (LIDO) -> CC0 picture records -> IIIF manifest for each to get
+    the image URL and pixel size. The resumption token is an offset
+    ("from:until:set:offset:prefix"), so pages are fetched in parallel.
+    """
+    d = cache / "ycba"
+    d.mkdir(parents=True, exist_ok=True)
+    hdr = {"User-Agent": YCBA_UA}
+
+    def page(off):
+        p = d / f"page_{off:06d}.jsonl.gz"
+        if p.exists():
+            return [json.loads(x) for x in gzip.open(p, "rt", encoding="utf-8") if x.strip()]
+        url = (f"{YCBA_OAI}?verb=ListRecords&metadataPrefix=lido" if off == 0 else
+               f"{YCBA_OAI}?verb=ListRecords&resumptionToken=0001-01-01:9999-12-31:.:{off}:lido")
+        txt = get(url, timeout=300, headers=hdr).content.decode("utf-8", "replace")
+        recs = [x for x in (ycba_parse(c) for c in txt.split("<record>")[1:]) if x]
+        with gzip.open(p.with_suffix(".part"), "wt", encoding="utf-8") as f:
+            for x in recs:
+                f.write(json.dumps(x, ensure_ascii=False) + "\n")
+        os.replace(p.with_suffix(".part"), p)
+        return recs
+
+    allrecs, off, step = [], 0, 100
+    batch = max(1, workers)
+    with cf.ThreadPoolExecutor(batch) as ex:
+        while True:
+            offs = list(range(off, off + step * batch, step))
+            res = list(ex.map(page, offs))
+            for r_ in res:
+                allrecs.extend(r_)
+            off += step * batch
+            if any(len(r_) == 0 for r_ in res) or (limit and len(allrecs) >= limit):
+                break
+            if (off // step) % 50 == 0:
+                print(f"    ycba listed {len(allrecs):,}", flush=True)
+    uniq = {x["source_id"]: x for x in allrecs}
+    cand = [x for x in uniq.values() if x["licence"] == "CC0" and x["extra_manifest"]
+            and YCBA_PICTURE.search(x["classification"])]
+    print(f"  ycba: {len(uniq):,} records, {len(cand):,} CC0 picture records -> manifests", flush=True)
+
+    mcache = d / "manifests.jsonl"
+    done = {}
+    if mcache.exists():
+        for line in open(mcache, encoding="utf-8"):
+            try:
+                x = json.loads(line)
+                done[x["id"]] = x
+            except Exception:
+                pass
+    todo = [x for x in cand if x["source_id"] not in done]
+    lock = threading.Lock()
+
+    def man(x):
+        r = get(x["extra_manifest"], headers=hdr, timeout=120)
+        if r.status_code != 200:
+            return {"id": x["source_id"], "img": None}
+        m = r.json()
+        img = None
+        try:
+            body = m["items"][0]["items"][0]["items"][0]["body"]
+            svc = body.get("service") or [{}]
+            img = {"url": body.get("id"), "w": body.get("width"), "h": body.get("height"),
+                   "iiif": svc[0].get("@id") or svc[0].get("id") or ""}
+        except (KeyError, IndexError, TypeError):
+            pass
+        return {"id": x["source_id"], "img": img, "rights": m.get("rights")}
+
+    with open(mcache, "a", encoding="utf-8") as fh, cf.ThreadPoolExecutor(workers) as ex:
+        for n, res in enumerate(ex.map(man, todo), 1):
+            with lock:
+                fh.write(json.dumps(res) + "\n")
+                done[res["id"]] = res
+            if n % 2000 == 0:
+                fh.flush()
+                print(f"    ycba manifests {n:,}/{len(todo):,}", flush=True)
+    w = Writer(out / "ycba.jsonl.gz")
+    for x in cand:
+        m = done.get(x["source_id"]) or {}
+        img = m.get("img")
+        if not img or not img.get("url") or "zero" not in (m.get("rights") or ""):
+            continue
+        x.update(image_url=img["url"], image_width=to_int(img.get("w")),
+                 image_height=to_int(img.get("h")), iiif_base=img.get("iiif", ""))
+        w.write(x)
+    return w.close()
+
+
 SOURCES = {"met": harvest_met, "aic": harvest_aic, "cma": harvest_cma, "nga": harvest_nga,
-           "rijks": harvest_rijks, "si": harvest_si}
+           "rijks": harvest_rijks, "si": harvest_si,
+           "ycba": harvest_ycba}
 
 
 def main():

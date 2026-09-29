@@ -27,6 +27,8 @@ python3 fetch_assets.py
 
 echo "== 3/6 designs (same SKUs as the reviewed catalogue)"
 if [ ! -f out/luxvia-art.csv.gz ]; then python3 generate.py; fi
+python3 visual_bank.py                     # educational charts + maps
+python3 images_bank.py                     # the AI image listings (pictures come from pod/gen_ai.sh)
 python3 pod/verify_catalogue.py            # stops here if anything differs from the reviewed build
 
 echo "== 4/6 listing photos (black frame) -> R2   ($WORKERS workers)"
@@ -34,20 +36,25 @@ python3 r2_urls.py
 i=0
 for b in luxvia-art mercury-usm lunar-kms posterleaf-store1; do
   i=$((i+1))
-  python3 publish.py --store "$i" --bucket "$b" --csv "out/$b.csv.gz" --workers "$WORKERS" --mock-only
+  for f in "out/$b.csv.gz" "out/${b}_visual.csv.gz"; do
+    [ -f "$f" ] && python3 publish.py --store "$i" --bucket "$b" --csv "$f" --workers "$WORKERS" --mock-only
+  done
 done
 python3 r2_urls.py --test                 # a real uploaded picture must load from each public URL
 
-echo "== 5/6 eBay upload files -> each bucket's ebay-upload/ folder"
-python3 build_ebay.py
+echo "== 5/6 eBay upload files (typography, charts, maps) -> each bucket's ebay-upload/ folder"
+python3 build_ebay.py --source text --source visual --only-uploaded
 python3 build_ebay.py --check
 python3 pod/upload_ebay_files.py
 echo "eBay files ready: Cloudflare -> R2 -> <bucket> -> ebay-upload/. You can start uploading now."
+echo "(The AI animal listings get their own eBay files from pod/gen_ai.sh on the GPU pod.)"
 
 echo "== 6/6 flat print files, A4 at 300dpi -> R2 (art/raw/); upscale for A3/A2 as usual"
 i=0
 for b in luxvia-art mercury-usm lunar-kms posterleaf-store1; do
   i=$((i+1))
-  python3 publish.py --store "$i" --bucket "$b" --csv "out/$b.csv.gz" --workers "$WORKERS" --raw-only --print-size A4
+  for f in "out/$b.csv.gz" "out/${b}_visual.csv.gz"; do
+    [ -f "$f" ] && python3 publish.py --store "$i" --bucket "$b" --csv "$f" --workers "$WORKERS" --raw-only --print-size A4
+  done
 done
 echo "ALL DONE."

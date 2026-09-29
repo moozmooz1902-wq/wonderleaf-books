@@ -187,7 +187,6 @@ Australian Shepherd|pet_dog|Australian Shepherds
 Sausage Dog Puppy|pet_dog|Sausage Dog Puppies
 Labrador Puppy|pet_dog|Labrador Puppies
 Snow Leopard|safari|Snow Leopards
-Jaguar Cat|safari|Jaguars
 Hyena|safari|Hyenas
 Warthog|safari|Warthogs
 Buffalo|safari|Buffalo

@@ -47,19 +47,67 @@ THEME = {
 }
 
 
+THEME.update({"charts": "Education", "maps_country": "Maps", "maps_home": "Maps", "animals_flowers": "Animals",
+              "animals_bw": "Animals", "bathroom_animals": "Animals", "nursery_animals": "Children",
+              "dictionary_art": "Animals", "dressed_animals": "Animals", "christmas_animals": "Holidays & Seasons",
+              "mummy_baby": "Animals", "animals_crown": "Animals", "animals_colourpop": "Animals",
+              "animals_fun": "Animals", "botanical": "Flowers & Plants"})
+
+
+def subject(row):
+    kind = row.get("kind") or "text"
+    if kind == "chart":
+        return "Education"
+    if kind == "map":
+        return "Maps"
+    if kind == "ai":
+        return row.get("subject") or "Animals"
+    return row["niche"].split("_")[-1].title() if not row["niche"].startswith("biz_") else "Typography"
+
+
+def style_of(row):
+    kind = row.get("kind") or "text"
+    if kind == "text":
+        return STYLE_WORD.get(row["layout"], "Typography")
+    if kind == "chart":
+        return "Educational"
+    if kind == "map":
+        return "Minimalist"
+    t = row["title"].lower()
+    return "Watercolour" if "watercolour" in t else "Vintage" if ("dictionary" in t or "vintage" in t) else "Photographic"
+
+
 def money(x):
     return f"{x:.2f}"
 
 
+KIND_TEXT = {
+    "chart": "An educational wall chart for classrooms, playrooms and bedrooms. Clear, colourful and easy to read, "
+             "printed on a clean white background in the UK on quality paper.",
+    "map": "A map print drawn from accurate country outlines, printed on a clean white background in the UK on quality paper.",
+    "ai": "An art print for your {room}, printed in the UK on quality paper.",
+}
+SOURCES = {"text": "{b}.csv.gz", "visual": "{b}_visual.csv.gz", "ai": "{b}_ai.csv.gz"}
+
+
 def description(row, eb):
+    kind = row.get("kind") or "text"
+    if kind != "text":
+        return _desc(html.escape(row["title"].split(" Print")[0], quote=False),
+                     KIND_TEXT[kind].format(room=html.escape(row["room"].lower())), eb)
     phrase = html.escape(row["phrase"].split(" ~ ")[0].replace(" / ", " ").replace("*", ""), quote=False)
     ref = row["phrase"].split(" ~ ")[1] if " ~ " in row["phrase"] else ""
+    return _desc(phrase + (" - " + html.escape(ref, quote=False) if ref else ""),
+                 f'A typography print for your {html.escape(row["room"].lower())}. '
+                 'Crisp lettering on a clean white background, printed in the UK on quality paper.', eb)
+
+
+def _desc(heading, blurb, eb):
     sizes = ", ".join(eb["sizes"])
     lines = [
         f'<div style="font-family:Arial,sans-serif;max-width:760px;margin:auto;color:#222">',
-        f'<h2 style="font-weight:normal">{phrase}{" - " + html.escape(ref, quote=False) if ref else ""}</h2>',
-        f'<p>A typography print for your {html.escape(row["room"].lower())}. '
-        f'Crisp lettering on a clean white background, printed in the UK on quality paper.</p>',
+        f'<h2 style="font-weight:normal">{heading}</h2>',
+        f'<p>{blurb}</p>',
         "<h3>Options</h3><ul>",
         f"<li><b>Sizes:</b> {sizes} (A4 21 x 29.7 cm, A3 29.7 x 42 cm, A2 42 x 59.4 cm)</li>",
         "<li><b>Unframed:</b> print only, posted flat or rolled with protection.</li>",
@@ -83,8 +131,8 @@ def rows_for(row, store, eb, ebay_title):
         "ShippingProfileName": prof["shipping"], "ReturnProfileName": prof["returns"],
         "PaymentProfileName": prof["payment"],
         "C:Brand": eb["brand"], "C:Artist": store["name"], "C:Type": "Print",
-        "C:Subject": row["niche"].split("_")[-1].title() if not row["niche"].startswith("biz_") else "Typography",
-        "C:Style": STYLE_WORD.get(row["layout"], "Typography"), "C:Theme": THEME.get(row["niche"], "Quotes & Sayings"),
+        "C:Subject": subject(row),
+        "C:Style": style_of(row), "C:Theme": THEME.get(row["niche"], "Quotes & Sayings"),
         "C:Room": row["room"], "C:Colour": row["colour"], "C:Material": "Paper",
         "C:Production Technique": "Digital Print", "C:Orientation": "Portrait",
         "C:Features": "Unframed or Black Frame", "C:Unit Type": "Unit",
@@ -101,43 +149,53 @@ def rows_for(row, store, eb, ebay_title):
     return out
 
 
-def build(store, eb, out_root, src_dir):
-    src = src_dir / f"{store['bucket']}.csv.gz"
+def build(store, eb, out_root, src_dir, sources=("text", "visual", "ai"), uploaded=None):
+    """One set of files per source (text / visual / ai), so e.g. the AI files can be
+    built later, once the GPU pod has uploaded those pictures."""
     dest = out_root / store["bucket"]
     dest.mkdir(parents=True, exist_ok=True)
-    for old in dest.glob("*.csv"):
-        old.unlink()
     per = eb["listings_per_file"]
     rows_per_listing = 1 + len(eb["sizes"]) * len(eb["frames"])
     cap = eb.get("max_rows_per_file", 500000)
     if 1 + per * rows_per_listing > cap:          # header + listings must fit eBay's row limit
         per = (cap - 1) // rows_per_listing
-    n = files = blocked = 0
-    fh = w = None
-    with gzip.open(src, "rt", encoding="utf-8") as fin:
-        for row in csv.DictReader(fin):
-            title = row["title"][:80]
-            if ip_check(title) or ip_check(row["phrase"]):
-                blocked += 1
-                continue
-            if n % per == 0:
-                if fh:
-                    fh.close()
-                files += 1
-                fh = open(dest / f"{store['bucket']}_{files:04d}.csv", "w", encoding="utf-8", newline="")
-                w = csv.DictWriter(fh, fieldnames=HEADER, extrasaction="ignore")
-                w.writeheader()
-            w.writerows(rows_for(row, store, eb, title))
-            n += 1
-    if fh:
-        fh.close()
+    total = 0
+    for source in sources:
+        src = src_dir / SOURCES[source].format(b=store["bucket"])
+        if not src.exists():
+            continue
+        for old in dest.glob(f"{store['bucket']}_{source}_*.csv"):
+            old.unlink()
+        n = files = blocked = missing = 0
+        fh = w = None
+        with gzip.open(src, "rt", encoding="utf-8") as fin:
+            for row in csv.DictReader(fin):
+                title = row["title"][:80]
+                if ip_check(title) or ip_check(row.get("phrase") or ""):
+                    blocked += 1
+                    continue
+                if uploaded is not None and f"art/mock/{row['sku']}.jpg" not in uploaded:
+                    missing += 1          # no picture in the bucket yet - never list without one
+                    continue
+                if n % per == 0:
+                    if fh:
+                        fh.close()
+                    files += 1
+                    fh = open(dest / f"{store['bucket']}_{source}_{files:04d}.csv", "w", encoding="utf-8", newline="")
+                    w = csv.DictWriter(fh, fieldnames=HEADER, extrasaction="ignore")
+                    w.writeheader()
+                w.writerows(rows_for(row, store, eb, title))
+                n += 1
+        if fh:
+            fh.close()
+        total += n
+        print(f"{store['bucket']:20s} {source:6s} {n:>9,} listings  {files:>3} files  (IP-blocked {blocked}"
+              + (f", waiting for pictures {missing:,}" if uploaded is not None else "") + ")", flush=True)
     z = out_root / f"{store['bucket']}_ebay_upload.zip"
     with zipfile.ZipFile(z, "w", zipfile.ZIP_DEFLATED, compresslevel=6) as zf:
         for f in sorted(dest.glob("*.csv")):
             zf.write(f, f"{store['bucket']}/{f.name}")
-    print(f"{store['bucket']:20s} {n:>9,} listings  {files:>4} files  {z.stat().st_size / 1e6:6.0f} MB zip"
-          f"  (IP-blocked {blocked})", flush=True)
-    return n
+    return total
 
 
 def check_files(out_root, eb):
@@ -170,6 +228,10 @@ def main():
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--src", default=str(HERE / "out"), help="folder with <bucket>.csv.gz")
     ap.add_argument("--dest", help="default <src>/ebay")
+    ap.add_argument("--source", choices=["text", "visual", "ai"], action="append",
+                    help="only these catalogue parts (repeatable); default all")
+    ap.add_argument("--only-uploaded", action="store_true",
+                    help="skip listings whose picture is not in the bucket yet (needs R2 credentials)")
     a = ap.parse_args()
     plan = json.loads((HERE / "plan.json").read_text())
     eb = plan["ebay"]
@@ -189,7 +251,11 @@ def main():
     for s in plan["stores"]:
         if a.store and s["bucket"] != a.store:
             continue
-        build(s, eb, out_root, Path(a.src))
+        uploaded = None
+        if a.only_uploaded:
+            from publish import s3, existing
+            uploaded = existing(s3(), s["bucket"], "art/mock/")
+        build(s, eb, out_root, Path(a.src), tuple(a.source or ("text", "visual", "ai")), uploaded)
 
 
 if __name__ == "__main__":
