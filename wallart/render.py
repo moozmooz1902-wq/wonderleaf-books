@@ -481,10 +481,7 @@ def render(phrase, palette="bw", fonts="classic_serif", layout="stack", orn="non
 
     if layout in ("stack", "frame", "rules", "arch", "ribbon"):
         if layout == "frame":
-            k = W * 0.05
-            d.rectangle([k, k, W - k, H - k], outline=ink, width=max(2, int(W * 0.006)))
-            k2 = k + W * 0.018
-            d.rectangle([k2, k2, W - k2, H - k2], outline=ink, width=max(1, int(W * 0.002)))
+            pass                     # no drawn border: the design sits on plain white
         if layout == "arch":
             # outlined arch, not a filled one - a filled arch prints a lot of ink
             ax0, ax1, ay0, ay1 = W * 0.12, W * 0.88, H * 0.12, H * 0.9
@@ -601,12 +598,11 @@ def mockup(art, width=1000, wall="#EDE9E3", framed=False):
         fw = max(8, int(pw * 0.035))            # frame moulding
         d = ImageDraw.Draw(canvas)
         d.rectangle([x, y, x + pw, y + ph], fill=(22, 22, 22))
-        d.rectangle([x + fw, y + fw, x + pw - fw, y + ph - fw], fill=(250, 250, 248))
-        m = int(pw * 0.06)                       # white mount around the print
-        iw, ih = pw - 2 * (fw + m), ph - 2 * (fw + m)
+        d.rectangle([x + fw, y + fw, x + pw - fw, y + ph - fw], fill=(255, 255, 255))
+        # the print fills the frame on plain white - no mount tone, no inner line
+        iw, ih = pw - 2 * fw, ph - 2 * fw
         art = art.resize((iw, ih), Image.LANCZOS)
-        canvas.paste(art, (x + fw + m, y + fw + m))
-        d.rectangle([x + fw + m - 1, y + fw + m - 1, x + fw + m + iw, y + fw + m + ih], outline=(215, 213, 208))
+        canvas.paste(art, (x + fw, y + fw))
     else:
         canvas.paste(art.resize((pw, ph), Image.LANCZOS), (x, y))
     return canvas

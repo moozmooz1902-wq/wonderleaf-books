@@ -29,6 +29,8 @@ Sources and routes (all keyless):
          usage.access == CC0.
   ycba   Yale Center for British Art OAI-PMH (LIDO) + IIIF manifest per CC0
          picture record (image URL and pixel size).
+  loc    Library of Congress: WPA / artist / WWI / performing-arts posters
+         ("No known restrictions on publication") and maps dated <= 1900.
 
 Only needs: python3 stdlib + requests + pandas.
 """
@@ -79,6 +81,9 @@ def get(url, tries=6, timeout=90, **kw):
             err = f"HTTP {r.status_code}"
             if r.status_code in (403, 407) and "agentproxy" in r.text[:500].lower():
                 raise RuntimeError(f"blocked by egress proxy: {url}")
+            if r.status_code == 429:  # rate limited: honour Retry-After (loc.gov: up to 1h)
+                ra = r.headers.get("Retry-After", "")
+                time.sleep(min(900, int(ra)) if ra.isdigit() else 120)
         except requests.RequestException as e:
             err = str(e)
         time.sleep(min(60, 2 ** i))
@@ -423,7 +428,7 @@ def harvest_nga(cache, out, workers, limit=None):
     first = oc.sort_values("displayorder").drop_duplicates("objectid").set_index("objectid")
     maxdeath = oc.groupby("objectid")["endyear_i"].max()
     terms = rd("objects_terms.csv", usecols=["objectid", "termtype", "term"])
-    terms = terms[terms["termtype"].isin(["Keyword", "Theme", "Style", "School"])]
+    terms = terms[terms["termtype"].isin(["Keyword", "Theme", "Style"])]
     tagmap = terms.groupby("objectid")["term"].apply(lambda s: list(dict.fromkeys(s))).to_dict()
     objs = objs.set_index("objectid")
     print(f"  nga: {len(imgs):,} open-access primary images", flush=True)
@@ -905,9 +910,198 @@ def harvest_ycba(cache, out, workers, limit=None):
     return w.close()
 
 
+# ---------------------------------------------------------------------------
+# Library of Congress (loc.gov JSON API): vintage posters and pre-1901 maps
+# ---------------------------------------------------------------------------
+LOC_SEARCHES = {
+    # name: (search url, per-item resource lookup?)
+    "wpa_posters": ("https://www.loc.gov/collections/works-progress-administration-posters/?fo=json&c=150", True),
+    "artist_posters": ("https://www.loc.gov/photos/?fa=partof:posters:+artist+posters&fo=json&c=150", True),
+    "wwi_posters": ("https://www.loc.gov/photos/?fa=partof:posters:+world+war+i+posters&fo=json&c=150", True),
+    "performing_arts_posters": ("https://www.loc.gov/photos/?fa=partof:posters:+performing+arts+posters&fo=json&c=150", True),
+    "maps_pre1901": ("https://www.loc.gov/maps/?fa=online-format:image&dates=1500/1900&fo=json&c=150", False),
+}
+LOC_OK_RIGHTS = re.compile(r"no known restrictions|public domain", re.I)
+
+
+def harvest_loc(cache, out, workers, limit=None):
+    """
+    Posters: kept only when rights_advisory says "No known restrictions on
+    publication" (an advisory, not a licence; UK copyright is still checked in
+    curate.py by artist death year / anonymous date). Each poster needs one
+    item call to find the largest file. Maps: dated <= 1900, the maker is long
+    dead; the IIIF service from the search result gives the pixel size.
+    loc.gov asks for <= ~20 requests / 10 s, so this is deliberately slow.
+    """
+    d = cache / "loc"
+    d.mkdir(parents=True, exist_ok=True)
+    results = {}
+    for name, (url, per_item) in LOC_SEARCHES.items():
+        p = d / f"search_{name}.jsonl.gz"
+        if not p.exists():
+            rows, nxt, n = [], url, 0
+            while nxt:
+                r = get(nxt, timeout=120)
+                j = r.json()
+                for x in j.get("results", []):
+                    rows.append({k: x.get(k) for k in ("id", "title", "date", "image_url",
+                                                       "subject", "description", "resources",
+                                                       "contributor", "original_format")}
+                                | {"item": {k: (x.get("item") or {}).get(k) for k in
+                                            ("rights_advisory", "created_published", "date",
+                                             "creators", "medium", "genre", "subjects",
+                                             "sort_date", "notes")}})
+                nxt = (j.get("pagination") or {}).get("next")
+                n += 1
+                time.sleep(3.0)
+                if limit and len(rows) >= limit:
+                    break
+            with gzip.open(p.with_suffix(".part"), "wt", encoding="utf-8") as f:
+                for x in rows:
+                    f.write(json.dumps(x) + "\n")
+            os.replace(p.with_suffix(".part"), p)
+        rows = [json.loads(x) for x in gzip.open(p, "rt", encoding="utf-8") if x.strip()]
+        print(f"  loc/{name}: {len(rows):,} search results", flush=True)
+        for x in rows:
+            results.setdefault(x["id"], (name, per_item, x))
+
+    # per-item resources for posters
+    rc = d / "resources.jsonl"
+    done = {}
+    if rc.exists():
+        for line in open(rc, encoding="utf-8"):
+            try:
+                x = json.loads(line)
+                done[x["id"]] = x
+            except Exception:
+                pass
+
+    def adv(x):
+        a = (x.get("item") or {}).get("rights_advisory")
+        return " ".join(a) if isinstance(a, list) else (a or "")
+
+    def people(x):
+        """Person creators 'Surname, Forename, 1860-1939.' -> [(name, birth, death)]"""
+        out = []
+        for c in ((x.get("item") or {}).get("creators") or []):
+            t = c.get("title") or ""
+            if (c.get("role") or "") in ("sponsor", "publisher", "printer", "former owner",
+                                         "distributor", "lithographer company"):
+                continue
+            if re.search(r"&|company|\bco\.|litho|press|print|inc\b|ltd|project|"
+                         r"administration|bureau|committee|office|department|society|"
+                         r"association|league|corporation|studio|archiv", t, re.I):
+                continue
+            m = re.search(r"(\d{4})\??-(\d{4})?", t)
+            name = re.sub(r",?\s*(?:\d{4}\??-(?:\d{4})?|active.*|b\. .*|d\. .*|approximately.*)\.?$",
+                          "", t).strip(" .,")
+            name = re.sub(r"\s*\(.*?\)", "", name)
+            if "," in name:
+                last, first = name.split(",", 1)
+                name = f"{first.strip()} {last.strip()}"
+            out.append((name, int(m.group(1)) if m else None,
+                        int(m.group(2)) if m and m.group(2) else None))
+        return out
+
+    def loc_years(x):
+        it = x.get("item") or {}
+        yrs = [int(y) for y in re.findall(r"(1[5-9]\d\d)", f"{it.get('date')} {x.get('date')}")]
+        return (min(yrs), max(yrs)) if yrs else (None, None)
+
+    def plausible_uk_pd(x):
+        """Cheap pre-check before spending an item call (curate.py re-checks)."""
+        ps = people(x)
+        _, end = loc_years(x)
+        if ps:
+            deaths = [p_[2] for p_ in ps]
+            if all(dd is not None for dd in deaths):
+                return max(deaths) <= 1955
+            return end is not None and end <= 1880
+        return end is not None and end <= 1900
+
+    todo = [i for i, (nm, per, x) in results.items() if per and i not in done
+            and LOC_OK_RIGHTS.search(adv(x)) and plausible_uk_pd(x)]
+    print(f"  loc: {len(todo):,} poster items to resolve", flush=True)
+    lock = threading.Lock()
+
+    def res(i):
+        time.sleep(1.5)
+        r = get(i.rstrip("/") + "/?fo=json&at=resources", timeout=120)
+        best = None
+        if r.status_code == 200:
+            for rs in (r.json().get("resources") or []):
+                for grp in rs.get("files") or []:
+                    for f in grp:
+                        w_, h_ = f.get("width") or 0, f.get("height") or 0
+                        est = False
+                        if not w_ and f.get("mimetype") == "image/tiff" and f.get("size"):
+                            # uncompressed RGB TIFF: pixels ~= bytes / 3
+                            px = f["size"] / 3
+                            w_ = h_ = int(px ** 0.5)
+                            est = True
+                        if f.get("mimetype") in ("image/jpeg", "image/tiff") and \
+                                (best is None or w_ * h_ > best["w"] * best["h"]):
+                            best = {"url": f.get("url"), "w": w_, "h": h_, "est": est}
+                break  # first resource = the item image
+        return {"id": i, "best": best}
+
+    with open(rc, "a", encoding="utf-8") as fh, cf.ThreadPoolExecutor(min(workers, 2)) as ex:
+        for n, x in enumerate(ex.map(res, todo), 1):
+            with lock:
+                fh.write(json.dumps(x) + "\n")
+                done[x["id"]] = x
+            if n % 500 == 0:
+                fh.flush()
+                print(f"    loc items {n:,}/{len(todo):,}", flush=True)
+
+    w = Writer(out / "loc.jsonl.gz")
+    for i, (name, per, x) in results.items():
+        it = x.get("item") or {}
+        ps = people(x)
+        artist = ps[0][0] if ps else ""
+        deaths = [p_[2] for p_ in ps]
+        # conservative: the latest death among named people; unknown if any is unknown
+        dth = max(deaths) if deaths and all(dd is not None for dd in deaths) else None
+        date = it.get("date") or x.get("date") or ""
+        y0, y1 = loc_years(x)
+        if not per:
+            ps, artist, dth = [], "", None  # maps: publishers/surveyors, dated <= 1900
+        common = dict(source="loc", source_id=i.rstrip("/").rsplit("/", 1)[-1],
+                      title=x.get("title") or "", artist=artist, artist_death_year=dth,
+                      artist_birth_year=ps[0][1] if ps else None,
+                      date=str(date), date_begin=y0, date_end=y1,
+                      medium=" ".join(it.get("medium") or []) if isinstance(it.get("medium"), list)
+                      else (it.get("medium") or ""),
+                      tags=list(dict.fromkeys((x.get("subject") or []) + (it.get("genre") or []))),
+                      description=" ".join(x.get("description") or [])[:600],
+                      department=name, page_url=i, licence="PDM 1.0")
+        if per:
+            if not LOC_OK_RIGHTS.search(adv(x)):
+                continue
+            b = (done.get(i) or {}).get("best")
+            if not b or not b.get("url"):
+                continue
+            w.write(rec(classification="Poster | print", image_url=b["url"],
+                        image_width=b["w"] or None, image_height=b["h"] or None,
+                        **common) | {"extra_size_estimated": b.get("est", False)})
+        else:
+            iu = [u for u in (x.get("image_url") or []) if "image-services/iiif" in u]
+            if not iu or (common["date_end"] or 9999) > 1900 or re.search(r"sanborn", common["title"], re.I):
+                continue
+            m = re.match(r"(https://tile\.loc\.gov/image-services/iiif/[^/]+)/full/pct:(\d+)/.*#h=(\d+)&w=(\d+)", iu[-1])
+            if not m:
+                continue
+            base, pct, h_, w_ = m.group(1), int(m.group(2)), int(m.group(3)), int(m.group(4))
+            k = 100 / pct
+            w.write(rec(classification="Map", image_url=f"{base}/full/pct:100/0/default.jpg",
+                        iiif_base=base, image_width=int(w_ * k), image_height=int(h_ * k),
+                        **common))
+    return w.close()
+
+
 SOURCES = {"met": harvest_met, "aic": harvest_aic, "cma": harvest_cma, "nga": harvest_nga,
            "rijks": harvest_rijks, "si": harvest_si,
-           "ycba": harvest_ycba}
+           "ycba": harvest_ycba, "loc": harvest_loc}
 
 
 def main():

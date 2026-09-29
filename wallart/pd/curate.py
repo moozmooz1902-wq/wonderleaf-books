@@ -261,7 +261,15 @@ SUBJECTS = {
         ("woodpeckers?", "Woodpecker"), ("puffins?", "Puffin"), ("penguins?", "Penguin"),
         ("toucans?", "Toucan"), ("blackbirds?|thrush(?:es)?", "Songbird"), ("jays?", "Jay"),
         ("orioles?|warblers?|tanagers?|cardinals? bird|bluebirds?|buntings?", "Songbird"),
-        ("gulls?|seagulls?|terns?", "Gull"), ("hoopoes?", "Hoopoe"), ("birds?", "Bird"),
+        ("gulls?|seagulls?|terns?", "Gull"), ("hoopoes?", "Hoopoe"),
+        ("ostrich(?:es)?|emus?|turkeys?|vultures?|condors?|buzzards?|lapwings?|plovers?|"
+         "sandpipers?|snipes?|woodcocks?|partridges?|grouse|quails?|larks?|skylarks?|"
+         "nightingales?|starlings?|cuckoos?|kestrels?|ospreys?|cormorants?|ibis(?:es)?|"
+         "spoonbills?|bitterns?|moorhens?|grebes?|albatross(?:es)?|guinea ?fowl|"
+         "lyrebirds?|birds? of paradise|cockatiels?|lovebirds?|canar(?:y|ies)|"
+         "goldcrests?|nuthatch(?:es)?|wagtails?|kingbirds?|shrikes?|waxwings?|"
+         "blue jays?|mockingbirds?|curlews?|oystercatchers?|avocets?", "*"),
+        ("birds?", "Bird"),
         ("ornithology|aves", "Bird"),
     ],
     "horses": [("horses?|mares?|stallions?|ponies|pony|foals?|colts?|equestrian|"
@@ -352,7 +360,8 @@ SUBJECTS = {
     "city_architecture": [
         ("venice|venetian", "Venice"), ("london|thames", "London"), ("paris|seine", "Paris"),
         ("rome|roman forum|colosseum", "Rome"), ("amsterdam", "Amsterdam"),
-        ("cathedrals?|churches|church|abbey|chapel|basilica|mosque|temple|pagoda|shrine", "Church"),
+        ("cathedrals?|churches|church|abbey|chapel|basilica", "Church"),
+        ("mosques?|temples?|pagodas?|shrines?", "Temple"),
         ("bridges?", "Bridge"), ("castles?|palaces?|chateau|fort\b|fortress|towers?", "Castle"),
         ("streets?|squares?|market|canals?|city|cities|town|townscape|cityscape|urban|"
          "buildings?|architecture|architectural|ruins?|houses?|facade|interior", "Architecture"),
@@ -395,8 +404,12 @@ MAP_RX = re.compile(r"\bmaps?\b|cartograph|\batlas\b|\bkaart\b|\bplattegrond|\bc
 POSTER_RX = re.compile(r"\bposters?\b|\baffiche|\baanplakbiljet|\bplakat|\bwpa\b", re.I)
 JAPAN_RX = re.compile(r"\bjapan|japanese|ukiyo|surimono|edo period|meiji|\bjapans\b", re.I)
 WOODBLOCK_RX = re.compile(r"woodblock|woodcut|\bprint|surimono|ukiyo|houtsnede|nishiki", re.I)
-PORTRAIT_TITLE = re.compile(r"^(?:portrait|portret|self-portrait|zelfportret|bust of|head of)\b",
-                            re.I)
+PORTRAIT_TITLE = re.compile(r"^(?:portrait|portret|self-portrait|zelfportret|bust of|head of|"
+                            r"mrs|mr|miss|lady|sir|captain|capt|general|colonel|col|dr|doctor|"
+                            r"madame|mme|mlle|mademoiselle|monsieur|lord|duchess|duke|countess|"
+                            r"count|reverend|rev|the reverend|the honourable|the hon|hon|"
+                            r"admiral|major|judge|bishop|cardinal|pope|king|queen|prince|"
+                            r"princess|emperor|empress)\b\.?", re.I)
 NAT_HIST_RX = re.compile(r"natural history|ornithology|botany|botanical|zoolog|entomolog|"
                          r"ichthyolog|herpetolog|conchology|pomology|flora\b|fauna\b|"
                          r"\bplate \d|\bpl\.\s?\d|\btab\.\s?\d|curtis|species", re.I)
@@ -562,7 +575,8 @@ def surname(name):
             rest = [q.lower() if q.lower() in PARTICLE else q for q in parts[i + 1:]]
             return " ".join([p.capitalize()] + rest)
     s = parts[-1]
-    return s.title() if s.isupper() else s
+    s = s.title() if s.isupper() else s
+    return s if len(s.strip(".")) >= 3 and not s.endswith(".") else ""
 
 
 def titlecase(t):
@@ -597,6 +611,7 @@ def clean_title(t, tc=True):
     t = re.split(r",?\s+from (?:the |a )?(?:series|set|album|book|portfolio|publication|"
                  r"illustrated book|periodical|suite)\b", t, flags=re.I)[0]
     t = re.split(r",?\s+(?:no\.|number|plate|pl\.|folio|fol\.|page|p\.)\s*\d+", t, flags=re.I)[0]
+    t = re.split(r",?\s+(?:plate|number|no\.)\s+[a-z-]+\s+(?:from|of|in)\b", t, flags=re.I)[0]
     t = re.split(r"\s+/\s+|\s*;\s*|\s+—\s+|\s+-\s+(?=[A-Z])", t)[0]
     t = re.sub(r"\s*\([^)]*\)?", "", t)
     t = re.sub(r"\s*\[[^\]]*\]?", "", t)
@@ -740,7 +755,16 @@ def classify(r, text, title_en):
             continue
         for theme in SUBJECT_ORDER:
             for rx, word in SUBJECT_RX[theme]:
-                if rx.search(src_text):
+                m = rx.search(src_text)
+                if m:
+                    if word == "*":
+                        word = titlecase(m.group(0).lower())
+                        if word.endswith("es") and word[:-2].endswith(("ch", "ss")):
+                            word = word[:-2]
+                        elif word.endswith("ies"):
+                            word = word[:-3] + "y"
+                        elif word.endswith("s") and not word.endswith(("ss", "Grouse", "Ibis")):
+                            word = word[:-1]
                     return theme, word
     return "other", None
 
@@ -984,6 +1008,8 @@ def main():
         counts[src]["kept"] += 1
         store = STORE_OF[theme]
         o = {k: v for k, v in r.items() if not k.startswith("_") and not k.startswith("extra_")}
+        if r.get("extra_size_estimated"):
+            o["size_estimated"] = True
         o.update(theme=theme, score=r["_score"], ebay_title=title, store=store,
                  work_title=r["_title_en"], famous_artist=bool(fam),
                  artwork_id=f"{src}:{r['source_id']}")
@@ -1070,6 +1096,26 @@ def write_summary(out, kept, counts, FILTERS, a):
         L.append(f"- {o['ebay_title']}  _({o['source']}, {o['theme']}, {o['store']}, "
                  f"score {o['score']})_")
     L.append("")
+    L.append("## Sources harvested\n")
+    L.append("| source | route | records harvested (CC0/PD with image) |")
+    L.append("|---|---|---:|")
+    routes = {
+        "met": "MetObjects.csv bulk dump (Is Public Domain) -> picture-like rows -> API objects/{id} for primaryImage",
+        "aic": "Art Institute of Chicago full data dump (S3), is_public_domain + image_id",
+        "cma": "Cleveland open-access API, cc0=1&has_image=1",
+        "nga": "NGA Washington opendata CSVs (GitHub raw), openaccess=1 primary images",
+        "rijks": "Rijksmuseum OAI-PMH EDM, sharded; rights PDM 1.0 / CC0 with image",
+        "si": "Smithsonian S3 bulk NDJSON: SAAM, FSG, Cooper Hewitt, NPG, HMSG, NASM; media CC0",
+        "ycba": "Yale Center for British Art OAI-PMH LIDO (CC0) + IIIF manifest per picture record",
+        "loc": "Library of Congress JSON API: WPA/artist/WWI/performing-arts posters (No known restrictions) + maps <= 1900",
+    }
+    for s_ in srcs:
+        L.append(f"| {s_} | {routes.get(s_, '')} | {counts[s_].get('read', 0):,} |")
+    L.append("")
+    L.append("**Not harvested:** Biodiversity Heritage Library (API and Flickr Commons both need a "
+             "key; no keyless bulk plate list), Smithsonian natural-history units (specimen "
+             "photos, not plates) and Smithsonian Libraries (book-level records), Wikimedia "
+             "Commons (per-file licence checks, rate limited).\n")
     L.append("## Notes\n")
     L.append("- UK copyright: artist death year must be <= 1955. With no death year, a named "
              "artist's work must be dated <= 1880 (and artist born <= 1880); an anonymous "
@@ -1080,6 +1126,14 @@ def write_summary(out, kept, counts, FILTERS, a):
     L.append("- AIC IIIF needs an explicit width (`/full/{w},/0/default.jpg`) and an "
              "`AIC-User-Agent` header.")
     L.append("- Cleveland `image_url` is the full TIFF; `image_url_jpg` is the 3400 px print JPG.")
+    L.append("- Rijksmuseum titles are mostly Dutch-only. Simple ones are translated with a small "
+             "glossary; otherwise the title is built from the English Iconclass subject "
+             "(\"Hare Antique Etching\") and only for animal, botanical, landscape, sea, map and "
+             "poster subjects. The rest is counted under no_english_title.")
+    L.append("- Library of Congress posters: \"No known restrictions on publication\" is an "
+             "advisory, not a licence; the UK death-year rule still applies. Some LoC sizes are "
+             "estimated from TIFF file size (`extra_size_estimated`).")
+    L.append("- YCBA `image_url` is the IIIF full image from the object's manifest.")
     L.append("- Titles never contain museum names; every title passed `compliance.check`.")
     (out / "SUMMARY.md").write_text("\n".join(L) + "\n")
 
