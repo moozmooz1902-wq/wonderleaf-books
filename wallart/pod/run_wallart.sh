@@ -29,6 +29,7 @@ echo "== 3/6 designs (same SKUs as the reviewed catalogue)"
 if [ ! -f out/luxvia-art.csv.gz ]; then python3 generate.py; fi
 python3 visual_bank.py                     # educational charts + maps
 python3 images_bank.py                     # the AI image listings (pictures come from pod/gen_ai.sh)
+python3 pd_bank.py                         # public-domain museum art
 python3 pod/verify_catalogue.py            # stops here if anything differs from the reviewed build
 
 echo "== 4/6 listing photos (black frame) -> R2   ($WORKERS workers)"
@@ -42,8 +43,12 @@ for b in luxvia-art mercury-usm lunar-kms posterleaf-store1; do
 done
 python3 r2_urls.py --test                 # a real uploaded picture must load from each public URL
 
-echo "== 5/6 eBay upload files (typography, charts, maps) -> each bucket's ebay-upload/ folder"
-python3 build_ebay.py --source text --source visual --only-uploaded
+echo "== 4b/6 public-domain museum art: download, frame, upload (network bound, ~150k images)"
+python3 -m pip install -q requests numpy
+python3 pod/fetch_pd.py --all --workers 48
+
+echo "== 5/6 eBay upload files (typography, charts, maps, museum art) -> each bucket's ebay-upload/ folder"
+python3 build_ebay.py --source text --source visual --source pd --only-uploaded
 python3 build_ebay.py --check
 python3 pod/upload_ebay_files.py
 echo "eBay files ready: Cloudflare -> R2 -> <bucket> -> ebay-upload/. You can start uploading now."

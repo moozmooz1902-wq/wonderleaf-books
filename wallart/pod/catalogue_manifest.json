@@ -38,5 +38,21 @@
  "posterleaf-store1_ai": {
   "sha256": "229f63194b4f08adbe074c6659e59370a7b2fa7cf8f1849308e4b6b8576409e4",
   "rows": 8177
+ },
+ "luxvia-art_pd": {
+  "sha256": "36ca54d66ab0c7b1d25a4a37f13cff20f924e3c4f65dc563773f94575b46cde6",
+  "rows": 30605
+ },
+ "mercury-usm_pd": {
+  "sha256": "edf2d9fe2ae1dcd4e503cf7e35c91145ed79547b1675567e829f364698b1857b",
+  "rows": 25761
+ },
+ "lunar-kms_pd": {
+  "sha256": "e3fd422d8c420cf62ddecace0d86514014ea2742de67cdffef0fa31b8fdc53f1",
+  "rows": 16912
+ },
+ "posterleaf-store1_pd": {
+  "sha256": "bdf45f018437aab5678e61606894dad9352740251e2a272e2def8f239b92b15c",
+  "rows": 69626
  }
 }

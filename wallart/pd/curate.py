@@ -25,8 +25,10 @@ SUMMARY.md):
   low_demand        score below --min-score (obscure portraits of sitters,
                     anonymous ornament prints, unthemed objects ...)
   no_english_title  Dutch-only title with no usable English subject
-  compliance        eBay title fails compliance.check (VeRO words)
-  duplicate_work    same artist + same work already kept (best copy wins)
+  compliance        eBay title fails compliance.check (VeRO words), names a
+                    museum, or says canvas/framed (we sell unframed paper)
+  duplicate_work    same artist + same work, or the same image URL, already
+                    kept (best-scoring copy wins)
   duplicate_title   eBay title already used by another artwork
 
 The Met / Rijksmuseum give no pixel size in metadata; those records pass the
@@ -156,7 +158,7 @@ SENSITIVE = re.compile(
     r"\btorture|corpse|cadaver|suicide|\bhanged|\bhanging of|gallows|gibbet|"
     r"holofernes|head of (?:saint |st\. )?john the baptist|\bsalome\b|"
     r"\bdead\b|\bdeath of\b|\bdying\b|\bblood|bloody|wounded|mutilat|dissect|"
-    r"flaying|flayed|martyrdom|\bmartyr|slain|carnage|atrocit|\bwar dead|"
+    r"flaying|flayed|scalp|martyrdom|\bmartyr|slain|carnage|atrocit|\bwar dead|"
     r"\bdeath\b|memento mori|macabre|\bdevil|satan|"
     r"\bdemons?\b|\bwitch|sabbat|\bhell\b|inferno|temptation of|\bdrunk|vomit|urinat|"
     r"defecat|\bexcrement|debauch|orgy|orgie|venereal|syphilis|\binsane|asylum|"
@@ -175,6 +177,7 @@ OFFENSIVE = re.compile(
     r"\bmohammedan|\binfidel",
     re.I)
 
+NOT_PRODUCT = re.compile(r"\bcanvas|\bframed?\b|\bframing\b|ready to hang|\bmounted\b", re.I)
 MUSEUM = re.compile(r"museum|museo|gallery|galerie|rijks|smithsonian|metropolitan|"
                     r"art institute|cleveland|yale|national gallery|\bmet\b|collection",
                     re.I)
@@ -281,7 +284,7 @@ SUBJECTS = {
     "cats": [("cats?|kittens?|kitty", "Cat")],
     "farm_animals": [
         ("cows?|cattle|oxen|\box\b|bulls?|calf|calves|heifers?", "Cow"),
-        ("sheep|lambs?|ewes?|rams?", "Sheep"), ("pigs?|hogs?|swine|sows?|piglets?", "Pig"),
+        ("sheep|lambs?|ewes?", "Sheep"), ("pigs?|hogs?|swine|sows?|piglets?", "Pig"),
         ("goats?", "Goat"), ("hens?|chickens?|roosters?|cockerels?|cocks?|poultry|chicks?", "Chicken"),
         ("donkeys?|asses?|mules?", "Donkey"), ("farmyard|barnyard", "Farm Animals"),
         ("highland cattle", "Highland Cow"),
@@ -620,6 +623,7 @@ def clean_title(t, tc=True):
     t = re.sub(r"\s*\([^)]*\)?", "", t)
     t = re.sub(r"\s*\[[^\]]*\]?", "", t)
     t = NON_LATIN.sub("", t)
+    t = re.sub(r"^[\d/.\s]+(?=[A-Za-z])", "", t)
     t = re.sub(r"(^|\s)'", r"\1", t)
     t = re.sub(r"(?<![sS])'(?=\s|$|,)", "", t)
     t = re.sub(r"\s+", " ", t).strip(" ,;:-.'")
@@ -754,6 +758,31 @@ def classify(r, text, title_en):
         return "famous_masters", None
     if PORTRAIT_TITLE.search(title_en):
         return "portraits", "Portrait"
+    # YCBA subject lists name every incidental thing in a picture (a bird in the
+    # sky of a coastal view), but its work-type genre terms describe the whole
+    # picture, so they decide the theme when the title does not.
+    if r.get("source") == "ycba" and title_en:
+        tl = {t.lower() for t in (r.get("tags") or [])}
+        hit_title = any(rx.search(title_en) for th in SUBJECT_ORDER for rx, _ in SUBJECT_RX[th])
+        if not hit_title:
+            if tl & {"animal art", "sporting art"}:
+                tag_text = " ".join(r.get("tags") or [])
+                for th in ("birds", "horses", "dogs", "cats", "farm_animals",
+                           "insects_butterflies", "sea_life", "wild_animals"):
+                    for rx, word in SUBJECT_RX[th]:
+                        if rx.search(tag_text):
+                            return th, (word if word != "*" else "Bird")
+            for g, th, word in (("cartographic material", "maps_vintage", "Antique Map"),
+                                ("still life", "still_life", "Still Life"),
+                                ("botanical subject", "botanical_flowers", "Botanical"),
+                                ("marine art", "seascapes_ships", "Seascape"),
+                                ("cityscape", "city_architecture", "Architecture"),
+                                ("architectural subject", "city_architecture", "Architecture"),
+                                ("landscape", "landscapes", "Landscape"),
+                                ("portrait", "portraits", "Portrait")):
+                if g in tl:
+                    return th, word
+            return "other", None
     for src_text in (title_en, text):
         if not src_text:
             continue
@@ -814,11 +843,14 @@ TAIL_PRIORITY = ["Art Print", "Wall Art", "Vintage", "A4 A3 A2", "Gift"]
 
 def build_title(artist_sur, fam, work, keywords):
     """Artist Surname, Work Title Keywords Vintage Art Print Wall Art A4 A3 A2 Gift"""
+    work = work.rstrip(" .")
     head = f"{artist_sur}, {work}" if (artist_sur and fam) else work
     low_head = head.lower()
     kws = []
     for k in keywords:
-        if k and k.lower() not in low_head and not any(k.lower() in x.lower() for x in kws):
+        stem = re.escape(k.lower()[:max(4, len(k) - 2)])
+        if k and not re.search(r"\b" + stem, low_head) and \
+                not any(k.lower() in x.lower() for x in kws):
             kws.append(k)
     # Head gets at most 80 - len("Art Print Wall Art") - keywords
     kw_str = " ".join(kws)
@@ -1060,14 +1092,14 @@ def main():
 
     # ---- dedupe works: same artist surname + same normalised title ---------
     cand.sort(key=lambda r: (-r["_score"], -best_image_key(r)))
-    seen_work, seen_title = set(), set()
+    seen_work, seen_title, seen_url = set(), set(), set()
     kept = []
     for r in cand:
         src = r["source"]
         sur = surname(r.get("artist") or "")
         wkey = (norm(sur), norm(r["_title_en"]))
         generic = len(norm(r["_title_en"]).split()) <= 1
-        if not generic and wkey in seen_work:
+        if (not generic and wkey in seen_work) or r["image_url"] in seen_url:
             counts[src]["duplicate_work"] += 1
             continue
         theme = r["_theme"]
@@ -1101,10 +1133,13 @@ def main():
         if title.lower() in seen_title:
             counts[src]["duplicate_title"] += 1
             continue
-        if MUSEUM.search(title) or compliance.check(title) is not None:
+        # museum names imply endorsement; "canvas"/"framed" would misdescribe an
+        # unframed paper print even when it is part of the work's own title
+        if MUSEUM.search(title) or NOT_PRODUCT.search(title) or compliance.check(title) is not None:
             counts[src]["compliance"] += 1
             continue
         seen_work.add(wkey)
+        seen_url.add(r["image_url"])
         seen_title.add(title.lower())
         counts[src]["kept"] += 1
         store = STORE_OF[theme]
@@ -1178,7 +1213,8 @@ def write_summary(out, kept, counts, FILTERS, a):
                  f"{sum(3500 <= x < 4961 for x in m):,} | {sum(2000 <= x < 3500 for x in m):,} | "
                  f"{len(rs) - len(m):,} |")
     L.append("")
-    fam = collections.Counter(o["artist"] for o in kept if o["famous_artist"])
+    fam = collections.Counter(titlecase(famous_key(o["artist"])[0]) for o in kept
+                              if o["famous_artist"])
     L.append("## Famous artists (top 30 by curated works)\n")
     L.append(", ".join(f"{k} {v:,}" for k, v in fam.most_common(30)) + "\n")
     L.append("## Score distribution\n")
@@ -1222,8 +1258,14 @@ def write_summary(out, kept, counts, FILTERS, a):
     L.append("- UK copyright: artist death year must be <= 1955. With no death year, a named "
              "artist's work must be dated <= 1880 (and artist born <= 1880); an anonymous "
              "work <= 1900. Records with no date at all are excluded.")
-    L.append("- Met and Rijksmuseum metadata give no pixel sizes (image_width/height null); "
-             "check the long side at download time and drop < 2000 px.")
+    if a.probe_sizes:
+        L.append("- Met and Rijksmuseum metadata give no pixel sizes, so they were probed "
+                 "(`--probe-sizes`: Rijksmuseum IIIF info.json, Met JPEG header via a 64 KB "
+                 "range request). Their `too_small` count is applied after `low_demand`; "
+                 "the few that could not be probed keep null sizes.")
+    else:
+        L.append("- Met and Rijksmuseum metadata give no pixel sizes (image_width/height null); "
+                 "rerun with --probe-sizes or check the long side at download time.")
     L.append("- NGA IIIF delivers at most 4096 px; recorded sizes are capped to that.")
     L.append("- AIC IIIF needs an explicit width (`/full/{w},/0/default.jpg`) and an "
              "`AIC-User-Agent` header.")
@@ -1234,7 +1276,7 @@ def write_summary(out, kept, counts, FILTERS, a):
              "poster subjects. The rest is counted under no_english_title.")
     L.append("- Library of Congress posters: \"No known restrictions on publication\" is an "
              "advisory, not a licence; the UK death-year rule still applies. Some LoC sizes are "
-             "estimated from TIFF file size (`extra_size_estimated`).")
+             "estimated from TIFF file size (`size_estimated: true`).")
     L.append("- YCBA `image_url` is the IIIF full image from the object's manifest.")
     L.append("- Titles never contain museum names; every title passed `compliance.check`.")
     (out / "SUMMARY.md").write_text("\n".join(L) + "\n")

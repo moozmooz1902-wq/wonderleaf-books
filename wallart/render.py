@@ -587,8 +587,12 @@ def mockup(art, width=1000, wall="#EDE9E3", framed=False):
     frame colour sold, shown as the second photo so buyers see both options."""
     W, H = width, int(width * 1.0)
     canvas = Image.new("RGB", (W, H), hexrgb(wall))
-    ph = int(H * 0.84)
-    pw = int(ph / RATIO)
+    if art.width > art.height:            # landscape print, landscape frame
+        pw = int(W * 0.84)
+        ph = int(pw / RATIO)
+    else:
+        ph = int(H * 0.84)
+        pw = int(ph / RATIO)
     x, y = (W - pw) // 2, (H - ph) // 2
     shadow = Image.new("L", (W, H), 0)
     ImageDraw.Draw(shadow).rectangle([x + 6, y + 10, x + pw + 6, y + ph + 12], fill=110 if framed else 90)

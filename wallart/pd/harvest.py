@@ -928,10 +928,11 @@ def harvest_loc(cache, out, workers, limit=None):
     """
     Posters: kept only when rights_advisory says "No known restrictions on
     publication" (an advisory, not a licence; UK copyright is still checked in
-    curate.py by artist death year / anonymous date). Each poster needs one
-    item call to find the largest file. Maps: dated <= 1900, the maker is long
-    dead; the IIIF service from the search result gives the pixel size.
-    loc.gov asks for <= ~20 requests / 10 s, so this is deliberately slow.
+    curate.py by artist death year / anonymous date). The master TIFF URL is
+    derived from the thumbnail path and its size estimated from a HEAD request
+    to tile.loc.gov. Maps: dated <= 1900, the maker is long dead; the IIIF
+    service from the search result gives the pixel size. www.loc.gov search
+    returns 429 quickly, so search pages are fetched slowly (3 s apart).
     """
     d = cache / "loc"
     d.mkdir(parents=True, exist_ok=True)
@@ -1024,28 +1025,34 @@ def harvest_loc(cache, out, workers, limit=None):
     print(f"  loc: {len(todo):,} poster items to resolve", flush=True)
     lock = threading.Lock()
 
+    def master_of(x):
+        """Master TIFF on tile.loc.gov derived from the search thumbnail path
+        (.../service/pnp/cph/.../3b49078r.jpg -> .../master/pnp/cph/.../3b49078u.tif).
+        tile.loc.gov is not rate limited like www.loc.gov, so no item call."""
+        for u in x.get("image_url") or []:
+            m = re.match(r"https://tile\.loc\.gov/storage-services/service/(pnp/.+/)([0-9a-z]+?)"
+                         r"(?:_150px|t|r|v|_\d+px)?\.(?:jpg|gif)", u.split("#")[0])
+            if m:
+                return f"https://tile.loc.gov/storage-services/master/{m.group(1)}{m.group(2)}u.tif"
+        return None
+
     def res(i):
-        time.sleep(1.5)
-        r = get(i.rstrip("/") + "/?fo=json&at=resources", timeout=120)
+        x = results[i][2]
+        u = master_of(x)
         best = None
-        if r.status_code == 200:
-            for rs in (r.json().get("resources") or []):
-                for grp in rs.get("files") or []:
-                    for f in grp:
-                        w_, h_ = f.get("width") or 0, f.get("height") or 0
-                        est = False
-                        if not w_ and f.get("mimetype") == "image/tiff" and f.get("size"):
-                            # uncompressed RGB TIFF: pixels ~= bytes / 3
-                            px = f["size"] / 3
-                            w_ = h_ = int(px ** 0.5)
-                            est = True
-                        if f.get("mimetype") in ("image/jpeg", "image/tiff") and \
-                                (best is None or w_ * h_ > best["w"] * best["h"]):
-                            best = {"url": f.get("url"), "w": w_, "h": h_, "est": est}
-                break  # first resource = the item image
+        if u:
+            try:
+                r = session().head(u, timeout=60, allow_redirects=True)
+                if r.status_code == 200 and r.headers.get("Content-Length"):
+                    # uncompressed 8-bit RGB TIFF: pixels ~= bytes / 3 (a lower bound
+                    # for greyscale); recorded as a square, flagged as estimated
+                    side = int((int(r.headers["Content-Length"]) / 3) ** 0.5)
+                    best = {"url": u, "w": side, "h": side, "est": True}
+            except requests.RequestException:
+                pass
         return {"id": i, "best": best}
 
-    with open(rc, "a", encoding="utf-8") as fh, cf.ThreadPoolExecutor(min(workers, 2)) as ex:
+    with open(rc, "a", encoding="utf-8") as fh, cf.ThreadPoolExecutor(workers) as ex:
         for n, x in enumerate(ex.map(res, todo), 1):
             with lock:
                 fh.write(json.dumps(x) + "\n")

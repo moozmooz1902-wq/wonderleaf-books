@@ -47,6 +47,13 @@ THEME = {
 }
 
 
+THEME.update({"landscapes": "Landscapes", "seascapes_ships": "Seascapes", "city_architecture": "Architecture",
+              "famous_masters": "Fine Art", "japanese_woodblock": "Asian Art", "portraits": "Portraits",
+              "maps_vintage": "Maps", "posters_vintage": "Vintage Posters", "religious_art": "Religion & Spirituality",
+              "botanical_flowers": "Flowers & Plants", "fruit_food": "Food & Drink", "still_life": "Still Life",
+              "birds": "Birds", "horses": "Animals", "dogs": "Animals", "cats": "Animals", "farm_animals": "Animals",
+              "wild_animals": "Animals", "sea_life": "Animals", "insects_butterflies": "Animals",
+              "abstract_modern": "Abstract"})
 THEME.update({"charts": "Education", "maps_country": "Maps", "maps_home": "Maps", "animals_flowers": "Animals",
               "animals_bw": "Animals", "bathroom_animals": "Animals", "nursery_animals": "Children",
               "dictionary_art": "Animals", "dressed_animals": "Animals", "christmas_animals": "Holidays & Seasons",
@@ -62,6 +69,8 @@ def subject(row):
         return "Maps"
     if kind == "ai":
         return row.get("subject") or "Animals"
+    if kind == "pd":
+        return row["niche"].replace("_", " ").title()
     return row["niche"].split("_")[-1].title() if not row["niche"].startswith("biz_") else "Typography"
 
 
@@ -73,6 +82,8 @@ def style_of(row):
         return "Educational"
     if kind == "map":
         return "Minimalist"
+    if kind == "pd":
+        return "Vintage"
     t = row["title"].lower()
     return "Watercolour" if "watercolour" in t else "Vintage" if ("dictionary" in t or "vintage" in t) else "Photographic"
 
@@ -86,8 +97,9 @@ KIND_TEXT = {
              "printed on a clean white background in the UK on quality paper.",
     "map": "A map print drawn from accurate country outlines, printed on a clean white background in the UK on quality paper.",
     "ai": "An art print for your {room}, printed in the UK on quality paper.",
+    "pd": "A fine art reproduction of a classic artwork, printed in the UK on quality paper with a clean white border.",
 }
-SOURCES = {"text": "{b}.csv.gz", "visual": "{b}_visual.csv.gz", "ai": "{b}_ai.csv.gz"}
+SOURCES = {"text": "{b}.csv.gz", "visual": "{b}_visual.csv.gz", "ai": "{b}_ai.csv.gz", "pd": "{b}_pd.csv.gz"}
 
 
 def description(row, eb):
@@ -149,7 +161,7 @@ def rows_for(row, store, eb, ebay_title):
     return out
 
 
-def build(store, eb, out_root, src_dir, sources=("text", "visual", "ai"), uploaded=None):
+def build(store, eb, out_root, src_dir, sources=("text", "visual", "ai", "pd"), uploaded=None):
     """One set of files per source (text / visual / ai), so e.g. the AI files can be
     built later, once the GPU pod has uploaded those pictures."""
     dest = out_root / store["bucket"]
@@ -228,7 +240,7 @@ def main():
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--src", default=str(HERE / "out"), help="folder with <bucket>.csv.gz")
     ap.add_argument("--dest", help="default <src>/ebay")
-    ap.add_argument("--source", choices=["text", "visual", "ai"], action="append",
+    ap.add_argument("--source", choices=["text", "visual", "ai", "pd"], action="append",
                     help="only these catalogue parts (repeatable); default all")
     ap.add_argument("--only-uploaded", action="store_true",
                     help="skip listings whose picture is not in the bucket yet (needs R2 credentials)")
@@ -255,7 +267,7 @@ def main():
         if a.only_uploaded:
             from publish import s3, existing
             uploaded = existing(s3(), s["bucket"], "art/mock/")
-        build(s, eb, out_root, Path(a.src), tuple(a.source or ("text", "visual", "ai")), uploaded)
+        build(s, eb, out_root, Path(a.src), tuple(a.source or ("text", "visual", "ai", "pd")), uploaded)
 
 
 if __name__ == "__main__":
