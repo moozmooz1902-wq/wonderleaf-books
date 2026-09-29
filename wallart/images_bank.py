@@ -157,7 +157,7 @@ PLANT_FORMATS = {
     "bw": "Black and white fine art photograph of a {p}, high key, isolated on a pure white background, {nt}",
 }
 PLANT_TITLE = "{P} {Style} Botanical Print"
-TAIL = ["Wall Art", "Picture", "A4", "Unframed", "Gift"]
+TAIL = ["Wall Art", "Picture", "A4 A3 A2", "Gift", "Framed"]
 SHORT = {"Head and Shoulders Portrait": "Portrait", "Close-up Portrait": "Close Up", "Close-up Face Portrait": "Face",
          "Side Profile Portrait": "Profile", "Full Body Portrait": "Full Body", "Intense Eyes Close-up": "Eyes",
          "Looking Up": "Looking Up", "Nuzzling Each Other": "Nuzzling", "Side by Side": "Side By Side",

@@ -113,27 +113,74 @@ def title_phrase(phrase):
     return t
 
 
-def fit(parts, limit=80):
-    """Join parts greedily in priority order; the first part is trimmed to fit."""
-    head, rest = parts[0], parts[1:]
-    need = sum(len(p) + 1 for p in rest[:1])
+def fit(parts, limit=80, keep=1):
+    """Join parts in priority order within `limit` characters.
+    The first part (the phrase) is trimmed at a word boundary so that the next
+    `keep` parts always fit - those carry the search keywords that must never
+    be squeezed out. Later parts are added only while they fit."""
+    head, must, rest = parts[0], parts[1:1 + keep], parts[1 + keep:]
+    need = sum(len(p) + 1 for p in must if p)
     if len(head) + need > limit:
-        cut = head[: limit - need].rsplit(" ", 1)[0]
+        cut = head[: max(0, limit - need)].rsplit(" ", 1)[0]
         head = cut.rstrip(",.;:&-")
-    out = head
+    out = " ".join([head] + [p for p in must if p]).strip()
     for p in rest:
         if p and len(out) + 1 + len(p) <= limit:
             out += " " + p
-    return out
+    return out[:limit]
 
 
-KINDS = ["Wall Art", "Sign", "Print", "Poster", "Wall Decor"]
+# The words buyers type for each kind of print. They go straight after the phrase
+# and can never be trimmed, so a funny print is found by "funny", a religious one
+# by "religious"/"christian", a memorial one by "memorial"/"sympathy", etc.
+MOOD = {
+    "funny_sarcasm": "Funny", "bathroom": "Funny Bathroom", "hobbies": "Funny", "heritage_dialect": "Funny",
+    "man_cave": "Man Cave", "laundry_utility": "Funny Laundry", "bar_pub": "Home Bar",
+    "coffee_cafe": "Coffee", "kitchen": "Kitchen", "garden_outdoor": "Garden",
+    "faith_christian": "Christian Religious", "scripture": "Bible Verse Christian",
+    "faith_blessings": "Blessing Religious", "faith_islamic": "Islamic Muslim", "faith_dharmic": "Spiritual",
+    "memorial": "Memorial Sympathy", "motivation": "Motivational", "proverbs_classics": "Inspirational Quote",
+    "words_aesthetic": "Minimalist Typography", "office_work": "Motivational Office",
+    "fitness_selfcare": "Motivational", "home_family": "Family Quote", "personalised_family": "Family Name",
+    "wedding_love": "Wedding Love", "new_home": "New Home", "milestones": "Gift", "places_towns": "Hometown",
+    "christmas_seasonal": "Christmas", "travel_coastal": "Coastal", "nursery_kids": "Nursery Kids",
+    "classroom": "Classroom", "biz_education": "Classroom School", "thank_you_jobs": "Thank You Gift",
+    "pets": "Dog Lover", "biz_automotive": "Car Showroom", "biz_hair_beauty": "Salon",
+    "biz_hospitality": "Cafe Restaurant", "biz_fitness_venues": "Gym Motivational", "biz_health": "Clinic",
+    "biz_office_pro": "Office Motivational", "biz_retail_shop": "Shop Sign", "biz_trades_pets": "Workshop",
+}
 
 
-def build_title(phrase, venue, colour, rnd):
-    kind = rnd.choice(KINDS)
-    tail = "Art Print" if kind in ("Sign", "Wall Decor") else "Decor"
-    return fit([title_phrase(phrase), f"{venue} {kind}", colour, tail, "A4 A3 A2", "Framed", "Gift"])
+def mood_words(niche, phrase):
+    """Niche keyword, sharpened by what the phrase actually is."""
+    p = phrase.lower()
+    m = MOOD.get(niche, "")
+    if niche == "milestones":
+        m = ("Anniversary Gift" if "anniversary" in p else "Retirement Gift" if "retire" in p
+             else "Graduation Gift" if ("graduat" in p or "class of" in p) else "Birthday Gift")
+    elif niche == "pets" and "cat" in p.split():
+        m = "Cat Lover"
+    elif niche == "wedding_love" and not any(w in p for w in ("mr", "mrs", "married", "wedding")):
+        m = "Love Couple"
+    return m
+
+
+KINDS = ["Wall Art Print", "Print Wall Art", "Art Print Wall Decor", "Wall Art Poster Print"]
+
+
+def _fresh(words, already):
+    """Drop words already present so a title never says 'Anniversary Anniversary'."""
+    have = set(re.findall(r"[a-z']+", already.lower()))
+    return " ".join(w for w in words.split() if w.lower() not in have)
+
+
+def build_title(phrase, venue, colour, rnd, niche=""):
+    kind = rnd.choice(KINDS)                # "Wall Art" and "Print" are always in the title
+    head = title_phrase(phrase)
+    mood = _fresh(mood_words(niche, phrase), head)
+    core = f"{mood} {kind}".strip()
+    venue = venue if _fresh(venue, head + " " + core) == venue else _fresh(venue, head + " " + core)
+    return fit([head, core, venue, colour, "A4 A3 A2", "Gift", "Framed"])
 
 
 # ------------------------------------------------------------------ style picks
@@ -322,7 +369,7 @@ def main():
                 orn = rnd.choice(ORNAMENTS.get(meta.get("parent", n), ["none"]))
                 colour = PALETTES[pal][0]
                 occ = meta["occasion"][0] if meta["occasion"] else ""
-                title = build_title(phrase, room, colour, rnd)
+                title = build_title(phrase, room, colour, rnd, meta.get("parent", n))
                 if ip_check(title):          # e.g. a venue word that collides with a brand
                     blocked += 1
                     continue

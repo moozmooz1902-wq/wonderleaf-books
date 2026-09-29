@@ -159,7 +159,8 @@ SENSITIVE = re.compile(
     r"flaying|flayed|martyrdom|\bmartyr|slain|carnage|atrocit|\bwar dead|"
     r"\bdeath\b|memento mori|macabre|\bdevil|satan|"
     r"\bdemons?\b|\bwitch|sabbat|\bhell\b|inferno|temptation of|\bdrunk|vomit|urinat|"
-    r"defecat|\bexcrement|debauch|orgy|orgie|caricature|satire|satirical|spotprent|cartoon",
+    r"defecat|\bexcrement|debauch|orgy|orgie|venereal|syphilis|\binsane|asylum|"
+    r"deathbed|death-bed|\bleper|diseased|caricature|satire|satirical|spotprent|cartoon",
     re.I)
 # Racist / offensive historic language. Titles with these are dropped
 # outright, not rewritten.
@@ -502,7 +503,7 @@ SMALL = {"a", "an", "and", "as", "at", "but", "by", "for", "from", "in", "into",
          "la", "le", "les", "des", "et", "van", "von", "der", "den", "di", "da", "del", "en", "aux"}
 NOT_A_PERSON = re.compile(
     r"&|\bcompany\b|\bco\.|\binc\b|\bltd\b|publisher|manufactur|works\b|press\b|studio|"
-    r"factory|firm\b|unknown|anonymous|anoniem|unidentified|after |attributed|workshop|"
+    r"factory|firm\b|unknown|anonymous|anoniem|unidentified|\bafter\b|attributed|workshop|"
     r"school|circle of|follower|manner of|style of|artist|maker|master of|\bmeester\b|"
     r"\bdesigned\b|\bprinted\b", re.I)
 PARTICLE = {"van", "de", "der", "del", "di", "da", "le", "la", "von", "ter", "ten", "du", "des"}
@@ -604,7 +605,10 @@ def brit(t):
 def clean_title(t, tc=True):
     t = t or ""
     t = t.replace("’", "'").replace("‘", "'").replace("“", "").replace("”", "")
-    t = t.replace('"', "")
+    t = t.replace('"', "").replace("|", " ")
+    # Met: "Plate 12 from the Disasters of War: This Is What You Were Born For"
+    t = re.sub(r"^(?:plate|pl\.|no\.?|number|folio|page)\s*[\divxlc]+[a-z]?\s*"
+               r"(?:(?:from|of|in)\s+[^:]{0,80})?:\s*", "", t, flags=re.I)
     m = re.search(r"(?:also )?(?:known|called) as\s+([^,;()]+)", t, re.I)
     if m:
         t = m.group(1)
@@ -843,12 +847,96 @@ def best_image_key(r):
     return max(w, h)
 
 
+# --------------------------------------------------------------------------
+# optional: probe pixel sizes the metadata does not give (Met, Rijksmuseum)
+# --------------------------------------------------------------------------
+def jpeg_size(b):
+    """(w, h) from the first SOF marker of JPEG bytes, else None."""
+    i = 2
+    if b[:2] != b"\xff\xd8":
+        return None
+    while i + 9 < len(b):
+        if b[i] != 0xFF:
+            i += 1
+            continue
+        m = b[i + 1]
+        if m in (0xD8, 0x01) or 0xD0 <= m <= 0xD7:
+            i += 2
+            continue
+        seg = int.from_bytes(b[i + 2:i + 4], "big")
+        if m in (0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7, 0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF):
+            h = int.from_bytes(b[i + 5:i + 7], "big")
+            w = int.from_bytes(b[i + 7:i + 9], "big")
+            return w, h
+        i += 2 + seg
+    return None
+
+
+def probe_sizes(recs, cache_path, workers=16):
+    import concurrent.futures as cf
+    import threading
+    import requests
+    cache = {}
+    if cache_path.exists():
+        for line in open(cache_path, encoding="utf-8"):
+            try:
+                u, w, h = json.loads(line)
+                cache[u] = (w, h)
+            except Exception:
+                pass
+    todo = sorted({r["image_url"] for r in recs if r["image_url"] not in cache})
+    print(f"  probing {len(todo):,} image sizes ({len(cache):,} cached)", flush=True)
+    tl = threading.local()
+
+    def sess():
+        if not hasattr(tl, "s"):
+            tl.s = requests.Session()
+            tl.s.headers["User-Agent"] = "wallart-pd-curate/1.0"
+        return tl.s
+
+    def one(u):
+        for attempt in range(3):
+            try:
+                if "iiif.micr.io" in u:
+                    base = u.split("/full/")[0]
+                    j = sess().get(base + "/info.json", timeout=60).json()
+                    return u, j.get("width"), j.get("height")
+                r = sess().get(u, headers={"Range": "bytes=0-65535"}, timeout=60)
+                if r.status_code in (200, 206):
+                    wh = jpeg_size(r.content)
+                    if wh:
+                        return u, wh[0], wh[1]
+                    return u, None, None
+            except Exception:
+                pass
+        return u, None, None
+
+    lock = threading.Lock()
+    with open(cache_path, "a", encoding="utf-8") as fh, cf.ThreadPoolExecutor(workers) as ex:
+        for n, (u, w, h) in enumerate(ex.map(one, todo), 1):
+            with lock:
+                cache[u] = (w, h)
+                fh.write(json.dumps([u, w, h]) + "\n")
+            if n % 5000 == 0:
+                fh.flush()
+                print(f"    probed {n:,}/{len(todo):,}", flush=True)
+    for r in recs:
+        w, h = cache.get(r["image_url"], (None, None))
+        if w and h:
+            r["image_width"], r["image_height"] = w, h
+            r["size_probed"] = True
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--records", default=str(HERE / "raw" / "records"))
     ap.add_argument("--out", default=str(HERE))
     ap.add_argument("--min-score", type=int, default=20)
     ap.add_argument("--seed", type=int, default=7)
+    ap.add_argument("--probe-sizes", action="store_true",
+                    help="fetch pixel sizes for Met/Rijksmuseum candidates (IIIF info.json / "
+                         "JPEG header range request), cached in <records>/size_cache.jsonl")
+    ap.add_argument("--probe-workers", type=int, default=16)
     a = ap.parse_args()
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
@@ -956,6 +1044,19 @@ def main():
             r["_score"] = sc
             cand.append(r)
     print(f"  {len(cand):,} candidates after filters", flush=True)
+    if a.probe_sizes:
+        unknown = [r for r in cand if not (r.get("image_width") and r.get("image_height"))
+                   and r["source"] in ("met", "rijks")]
+        probe_sizes(unknown, Path(a.records) / "size_cache.jsonl", a.probe_workers)
+        keep = []
+        for r in cand:
+            w, h = r.get("image_width"), r.get("image_height")
+            if w and h and max(w, h) < MIN_LONG_SIDE:
+                counts[r["source"]]["too_small"] += 1
+                continue
+            keep.append(r)
+        cand = keep
+        print(f"  {len(cand):,} candidates after size probe", flush=True)
 
     # ---- dedupe works: same artist surname + same normalised title ---------
     cand.sort(key=lambda r: (-r["_score"], -best_image_key(r)))
@@ -1010,6 +1111,7 @@ def main():
         o = {k: v for k, v in r.items() if not k.startswith("_") and not k.startswith("extra_")}
         if r.get("extra_size_estimated"):
             o["size_estimated"] = True
+        o.pop("size_probed", None)
         o.update(theme=theme, score=r["_score"], ebay_title=title, store=store,
                  work_title=r["_title_en"], famous_artist=bool(fam),
                  artwork_id=f"{src}:{r['source_id']}")

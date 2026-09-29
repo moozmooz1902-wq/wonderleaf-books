@@ -36,8 +36,10 @@ def chart_rows():
             for fset, word in CHART_FONTS.items():
                 name = chart_title(cid, var)
                 colour = PALETTES[pal][0]
-                title = fit([f"{name} Poster {word} {colour}", CHARTS[cid]["keywords"], "Classroom", "Kids",
-                             "A4 A3 A2", "Wall Chart"])
+                kw = " ".join(w for w in CHARTS[cid]["keywords"].replace("Poster", "").split()
+                              if w.lower() not in name.lower())
+                title = fit([f"{name} Educational {kw}", "Wall Art Print", f"{word} {colour}", "Classroom",
+                             "Children" if word == "Kids" else "Kids", "A4 A3 A2", "Chart"])
                 yield dict(store="lunar-kms", kind="chart", niche="charts", spec=f"{cid}|{var}", palette=pal,
                            fonts=fset, title=title, room=random.Random(title).choice(["Classroom", "Kids Bedroom", "Playroom", "Study"]),
                            colour=colour)
