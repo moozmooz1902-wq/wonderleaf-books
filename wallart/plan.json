@@ -312,9 +312,9 @@
   },
   "listings_per_file": 71000,
   "profiles": {
-   "shipping": "",
-   "returns": "",
-   "payment": ""
+   "shipping": "1",
+   "returns": "1",
+   "payment": "1"
   },
   "brand": "Unbranded",
   "max_rows_per_file": 500000
