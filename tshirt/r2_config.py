@@ -14,10 +14,11 @@ import os
 ACCOUNT = "M12K"
 BUCKET  = os.environ.get("R2_BUCKET", "tshirt-m12k")
 
-# Filled in once the bucket's public access is switched on. Cloudflare gives
-# a URL of the form https://pub-<hash>.r2.dev - the hash is random, so it
-# cannot be derived from the bucket name and has to be pasted in.
-PUBLIC_BASE = os.environ.get("R2_PUBLIC_BASE", "").rstrip("/")
+# Public r2.dev hostname for tshirt-m12k. The hash is assigned by Cloudflare
+# and is not derivable from the bucket name, so it is recorded here.
+PUBLIC_BASE = os.environ.get(
+    "R2_PUBLIC_BASE",
+    "https://pub-4b710c8610a84acc8fad1513f48132fd.r2.dev").rstrip("/")
 
 
 def image_url(sku):
