@@ -9,7 +9,10 @@ design tinted.
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import math, random
 
-F = "/mnt/skills/examples/canvas-design/canvas-fonts"
+import os
+F = os.environ.get("FONT_DIR") or next(
+    (p for p in ("fonts", "/mnt/skills/examples/canvas-design/canvas-fonts")
+     if os.path.isdir(p)), "fonts")
 FONTS = {
   "condensed": f"{F}/BigShoulders-Bold.ttf",
   "grotesk":   f"{F}/InstrumentSans-Bold.ttf",
