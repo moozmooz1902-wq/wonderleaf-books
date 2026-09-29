@@ -69,7 +69,7 @@ TEMPLATES = [
  ("I LOVE {N}",                                                   "GENERIC",  91),
  ("EAT SLEEP {N} REPEAT",                                         "GENERIC", 231),
  ("{N} ON THE BRAIN",                                             "GENERIC", 384),
- ("WARNING MAY SPONTANEOUSLY START TALKING ABOUT {N}",            "GENERIC", 400),
+ ("WARNING MAY SPONTANEOUSLY START TALKING ABOUT {N}",            "GENERIC", 180),
  ("EASILY DISTRACTED BY {N}",                                     "GENERIC",  59),
  ("I GOOGLED MY SYMPTOMS AND IT TURNS OUT I JUST NEED MORE {N}",  "GENERIC", 186),
 ]

@@ -102,9 +102,9 @@ def c_badge(d, lines, pal):
     d.ellipse([cx-r, cy-r, cx+r, cy+r], outline=ink, width=4)
     d.ellipse([cx-r+10, cy-r+10, cx+r-10, cy+r-10], outline=sig, width=2)
     n = len(lines)
-    y = cy - (n * 21) / 2 - 10
+    y = cy - (n * 26) / 2 - 12
     for i, ln in enumerate(lines):
-        f = fit(d, ln.upper(), "slab", 2*r-34, 22 if i == len(lines)-1 else 17)
+        f = fit(d, ln.upper(), "slab", 2*r-26, 27 if i == len(lines)-1 else 21)
         col = sig if i == len(lines)-1 else ink
         y = centre(d, y, ln.upper(), f, col) + 4
     d.line([cx-34, cy+r-26, cx+34, cy+r-26], fill=sig, width=2)

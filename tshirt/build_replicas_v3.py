@@ -34,6 +34,12 @@ BAD_NICHE = {
  "LOOKING","LOOKS","LOOK","WEARING","FEATURING","INCLUDING","SAYING","QUOTE",
  "SIZED","FITTED","UNISEX","ADULT","ADULTS","GEORGES","ANYTHING","SOMETHING",
  "DISTRESSED","FADED","WASHED","GRAPHIC","PRINT","SLOGAN","TEXT","LOGO","REX",
+ "AFTER","BEFORE","DURING","SINCE","UNTIL","ALWAYS","NEVER","SOMETIMES","OFTEN",
+ # words that describe a picture rather than name a subject - these came in
+ # from the vision model's image captions, not from a niche
+ "BACKGROUND","FOREGROUND","SYMBOL","EFFECT","EFFECTS","COLOUR","COLOR","IMAGE",
+ "ILLUSTRATION","ARTWORK","PHOTO","SILHOUETTE","OUTLINE","PATTERN","TEXTURE",
+ "ELECTRIC","ACOUSTIC","DIGITAL","ABSTRACT","MODERN","TRADITIONAL","SCHOOL",
 }
 # Adjectival endings - COLOURFUL, STUPID, GORGEOUS are not niches.
 ADJ = re.compile(r"\b\w+(FUL|OUS|IVE|ABLE|IBLE|ISH|LESS|IEST|EST)\b")
@@ -189,9 +195,28 @@ def niche_of(title, vocab_all):
         if f" {v} " in up and (best is None or len(v) > len(best)): best = v
     if best: return best, True
     kw = [w.upper() for w in keyword_core(title)]
+    tw = template_words()
     kw = [w for w in kw if len(w) > 2 and not w.isdigit() and w not in BAD_NICHE
-          and w not in STOPWORDS and re.fullmatch(r"[A-Z']+", w)]
+          and w not in STOPWORDS and w not in tw and re.fullmatch(r"[A-Z']+", w)]
     return (kw[0] if kw else None), False
+
+
+_TW_CACHE = []
+
+
+def template_words():
+    if _TW_CACHE: return _TW_CACHE[0]
+    """Words that belong to the slogans themselves are not niches.
+
+    "EAT SLEEP HOCKEY REPEAT" in a source title made REPEAT look like a
+    frequent subject, which produced "HOCKEY REPEAT ON THE BRAIN". Any word
+    that appears in a template is excluded from the niche vocabulary.
+    """
+    ws = set()
+    for t, _, _ in vetted.TEMPLATES:
+        ws |= {w for w in re.findall(r"[A-Z']{3,}", t.replace("{N}", " "))}
+    _TW_CACHE.append(ws)
+    return ws
 
 
 def corpus_vocab(rows, min_freq=40):
@@ -205,7 +230,10 @@ def corpus_vocab(rows, min_freq=40):
         uni.update(w)
         bi.update(f"{a} {b}" for a, b in zip(w, w[1:]))
     total = max(1, sum(uni.values()))
-    keep = {x for x, n in uni.items() if n >= min_freq and not ADJ.search(x)}
+    TW = template_words()
+    def clean(x):
+        return not ADJ.search(x) and not (set(x.split()) & TW)
+    keep = {x for x, n in uni.items() if n >= min_freq and clean(x)}
     # "MUAY THAI" is a niche; "SKULL SWORD" is two words that happen to be
     # common. Pointwise mutual information tells them apart.
     for x, n in bi.items():
@@ -213,7 +241,7 @@ def corpus_vocab(rows, min_freq=40):
         a, b = x.split()
         pa, pb = uni.get(a, 0) / total, uni.get(b, 0) / total
         if pa <= 0 or pb <= 0: continue
-        if (n / total) / (pa * pb) >= 300 and not ADJ.search(x):
+        if (n / total) / (pa * pb) >= 300 and clean(x):
             keep.add(x)
     return keep
 
@@ -248,7 +276,13 @@ def main(limit=None):
     rows = json.load(open("all.json"))
     cvoc = corpus_vocab(rows)
     print(f"corpus niche vocabulary: {len(cvoc):,} terms (40+ listings each)")
-    vocab_all = sorted(set(vocab_all) | cvoc, key=len, reverse=True)
+    TW = template_words()
+    # the harvested vocabulary needs the same filter as the corpus one, or
+    # LEGEND and BRAIN come back in through the other door
+    vocab_all = sorted({v for v in set(vocab_all) | cvoc
+                        if not (set(v.split()) & TW)}, key=len, reverse=True)
+    vocab = {k: {v for v in s_ if not (set(v.split()) & TW)}
+             for k, s_ in vocab.items()}
     observed = {n for s_ in vocab.values() for n in s_}
     rng = random.Random(11)
     out, skipped, seen, st = [], 0, set(), Counter()
