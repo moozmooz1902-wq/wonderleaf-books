@@ -81,10 +81,12 @@ def usable(img):
 
 
 def finish(row, img):
-    from ai_compose import dictionary_page
+    from ai_compose import dictionary_page, pure_white
     from render import mockup
     if row["page"] == "1":
         img = dictionary_page(img, int(row["seed"]), width=1728)
+    else:
+        img = pure_white(img)                  # background exactly #FFFFFF, not the model's 245-grey
     raw = io.BytesIO(); img.save(raw, "PNG", optimize=False, compress_level=6)
     mock = io.BytesIO(); mockup(img, 1600, framed=True).save(mock, "JPEG", quality=88, optimize=True)
     return raw.getvalue(), mock.getvalue()

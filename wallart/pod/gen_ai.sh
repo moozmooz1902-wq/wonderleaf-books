@@ -15,7 +15,7 @@ cd "$(dirname "$0")/.."
 PART="${PART:-1/1}"
 
 echo "== 1/5 install (PyTorch comes with the RunPod PyTorch template)"
-python3 -m pip install -q pillow boto3 "diffusers>=0.30" transformers accelerate sentencepiece protobuf
+python3 -m pip install -q pillow boto3 numpy scipy "diffusers>=0.30" transformers accelerate sentencepiece protobuf
 
 echo "== 2/5 fonts, dictionary text"
 python3 fetch_assets.py

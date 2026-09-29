@@ -9,6 +9,7 @@ import random
 from functools import lru_cache
 from pathlib import Path
 from PIL import Image, ImageChops, ImageDraw, ImageFilter
+import numpy as np
 
 from render import font, RATIO
 
@@ -89,3 +90,29 @@ def dictionary_page(art, seed, width=None):
     layer = Image.new("RGB", page.size, (255, 255, 255))
     layer.paste(a, ((W - a.width) // 2, (H - a.height) // 2))
     return ImageChops.multiply(page, layer)
+
+
+def pure_white(img, thresh=232, feather=2):
+    """Make the background exactly #FFFFFF.
+
+    Image models paint 'white' backgrounds as 240-252 grey, which prints as a
+    faint tint. Pixels that are near-white (all channels >= thresh) AND connected
+    to the picture's edge are the background: they become 255. Near-white areas
+    inside the subject (white fur, highlights) are not connected to the edge, so
+    they keep their shading. The mask edge is feathered so there is no halo.
+    """
+    from scipy import ndimage
+    a = np.asarray(img.convert("RGB")).astype(np.int16)
+    near = (a >= thresh).all(axis=2)
+    lab, _ = ndimage.label(near)
+    edge = np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))
+    bg = np.isin(lab, edge[edge > 0])
+    m = Image.fromarray((bg * 255).astype(np.uint8))
+    if feather:
+        m = m.filter(ImageFilter.GaussianBlur(feather))
+    white = Image.new("RGB", img.size, (255, 255, 255))
+    out = Image.composite(white, img.convert("RGB"), m)
+    # anything that was background stays exactly 255 after blending
+    o = np.asarray(out).copy()
+    o[bg] = 255
+    return Image.fromarray(o)
