@@ -132,36 +132,61 @@ def fit(parts, limit=80, keep=1):
 
 # The words buyers type for each kind of print. They go straight after the phrase
 # and can never be trimmed, so a funny print is found by "funny", a religious one
-# by "religious"/"christian", a memorial one by "memorial"/"sympathy", etc.
+# by "religious"/"christian", a memorial one by "memorial"/"remembrance", etc.
+# Every phrase here was checked against eBay UK's search-box suggestions (what UK
+# buyers actually type, ranked by search volume): research/keywords.py, KEYWORDS.md.
 MOOD = {
-    "funny_sarcasm": "Funny", "bathroom": "Funny Bathroom", "hobbies": "Funny", "heritage_dialect": "Funny",
-    "man_cave": "Man Cave", "laundry_utility": "Funny Laundry", "bar_pub": "Home Bar",
-    "coffee_cafe": "Coffee", "kitchen": "Kitchen", "garden_outdoor": "Garden",
-    "faith_christian": "Christian Religious", "scripture": "Bible Verse Christian",
-    "faith_blessings": "Blessing Religious", "faith_islamic": "Islamic Muslim", "faith_dharmic": "Spiritual",
-    "memorial": "Memorial Sympathy", "motivation": "Motivational", "proverbs_classics": "Inspirational Quote",
-    "words_aesthetic": "Minimalist Typography", "office_work": "Motivational Office",
-    "fitness_selfcare": "Motivational", "home_family": "Family Quote", "personalised_family": "Family Name",
-    "wedding_love": "Wedding Love", "new_home": "New Home", "milestones": "Gift", "places_towns": "Hometown",
-    "christmas_seasonal": "Christmas", "travel_coastal": "Coastal", "nursery_kids": "Nursery Kids",
-    "classroom": "Classroom", "biz_education": "Classroom School", "thank_you_jobs": "Thank You Gift",
-    "pets": "Dog Lover", "biz_automotive": "Car Showroom", "biz_hair_beauty": "Salon",
-    "biz_hospitality": "Cafe Restaurant", "biz_fitness_venues": "Gym Motivational", "biz_health": "Clinic",
+    "funny_sarcasm": "Funny Quote", "bathroom": "Funny Bathroom", "hobbies": "Funny",
+    "heritage_dialect": "Funny", "man_cave": "Man_Cave", "laundry_utility": "Funny Laundry_Room",
+    "bar_pub": "Home_Bar", "coffee_cafe": "Coffee_Bar Kitchen", "kitchen": "Kitchen Quote",
+    "garden_outdoor": "Garden Quote", "faith_christian": "Christian Religious",
+    "scripture": "Bible_Verse Christian", "faith_blessings": "Religious Christian",
+    "faith_islamic": "Islamic Muslim", "faith_dharmic": "Spiritual",
+    "memorial": "Memorial", "motivation": "Motivational",
+    "proverbs_classics": "Inspirational Quote", "words_aesthetic": "Minimalist Typography",
+    "office_work": "Office Motivational", "fitness_selfcare": "Motivational",
+    "home_family": "Family Quote", "personalised_family": "Family_Name Sign",
+    "wedding_love": "Wedding Gift", "new_home": "New_Home", "milestones": "Gift",
+    "places_towns": "Town Typography", "christmas_seasonal": "Christmas Quote",
+    "travel_coastal": "Coastal", "nursery_kids": "Nursery Kids_Room",
+    "classroom": "Educational Classroom", "biz_education": "Educational School",
+    "thank_you_jobs": "Thank_You Gift", "pets": "Dog_Lover Pet", "biz_automotive": "Car_Showroom",
+    "biz_hair_beauty": "Hair_Salon Beauty_Salon", "biz_hospitality": "Cafe Restaurant",
+    "biz_fitness_venues": "Motivational Gym", "biz_health": "Medical Clinic",
     "biz_office_pro": "Office Motivational", "biz_retail_shop": "Shop Sign", "biz_trades_pets": "Workshop",
+}
+# Second keyword, added right after the first when the title has room.
+EXTRA = {
+    "bathroom": "Toilet", "laundry_utility": "Utility", "bar_pub": "Pub", "scripture": "Scripture",
+    "faith_dharmic": "Zen", "memorial": "Remembrance", "motivation": "Inspirational",
+    "fitness_selfcare": "Positive", "new_home": "Housewarming", "travel_coastal": "Seaside",
+    "biz_automotive": "Garage", "man_cave": "Garage",
 }
 
 
 def mood_words(niche, phrase):
     """Niche keyword, sharpened by what the phrase actually is."""
-    p = phrase.lower()
+    p = " ".join(re.findall(r"[a-z0-9']+", phrase.lower()))
+    w = set(p.split())
     m = MOOD.get(niche, "")
     if niche == "milestones":
         m = ("Anniversary Gift" if "anniversary" in p else "Retirement Gift" if "retire" in p
              else "Graduation Gift" if ("graduat" in p or "class of" in p) else "Birthday Gift")
-    elif niche == "pets" and "cat" in p.split():
-        m = "Cat Lover"
-    elif niche == "wedding_love" and not any(w in p for w in ("mr", "mrs", "married", "wedding")):
-        m = "Love Couple"
+    elif niche == "pets" and w & {"cat", "cats", "kitten"}:
+        m = "Cat_Lover Pet"
+    elif niche == "wedding_love":
+        m = ("Mr_and_Mrs Wedding" if {"mr", "mrs"} & w else "Wedding Gift" if w & {"married", "wedding", "wed"}
+             else "Love_Quote Couple")
+    elif niche == "thank_you_jobs":
+        m = ("Teacher_Gift" if w & {"teacher", "teachers", "teaching", "miss", "sir"} else
+             "Nurse_Gift" if w & {"nurse", "nurses", "nursing"} else
+             "Leaving_Gift" if w & {"leaving", "retire", "goodbye"} else m)
+    elif niche == "biz_hair_beauty" and w & {"barber", "barbers", "beard", "fade"}:
+        m = "Barber_Shop"
+    elif niche == "biz_health" and w & {"teeth", "tooth", "dentist", "dental", "smile", "floss"}:
+        m = "Dentist Dental"
+    elif niche == "memorial" and w & {"dog", "cat", "pet", "paw", "paws"}:
+        m = "Pet_Memorial"
     return m
 
 
@@ -169,18 +194,29 @@ KINDS = ["Wall Art Print", "Print Wall Art", "Art Print Wall Decor", "Wall Art P
 
 
 def _fresh(words, already):
-    """Drop words already present so a title never says 'Anniversary Anniversary'."""
+    """Drop keywords already present so a title never says 'Anniversary Anniversary'.
+    Words joined by _ are one keyword ('Coffee_Bar'): dropped whole if any of its words is there."""
     have = set(re.findall(r"[a-z']+", already.lower()))
-    return " ".join(w for w in words.split() if w.lower() not in have)
+    out = []
+    for chunk in words.split():
+        parts = chunk.split("_")
+        if not any(p.lower() in have for p in parts):   # 'Coffee Coffee Bar' -> drop the whole keyword
+            out.append(" ".join(parts))
+    return " ".join(out)
 
 
 def build_title(phrase, venue, colour, rnd, niche=""):
     kind = rnd.choice(KINDS)                # "Wall Art" and "Print" are always in the title
     head = title_phrase(phrase)
     mood = _fresh(mood_words(niche, phrase), head)
+    if len(mood) + len(kind) > 30:          # long keyword phrase: shortest kind, so the phrase keeps its room
+        kind = "Wall Art Print"
     core = f"{mood} {kind}".strip()
-    venue = venue if _fresh(venue, head + " " + core) == venue else _fresh(venue, head + " " + core)
-    return fit([head, core, venue, colour, "A4 A3 A2", "Gift", "Framed"])
+    extra = _fresh(EXTRA.get(niche, ""), head + " " + core)
+    if _fresh(venue, head + " " + core + " " + extra) != venue:   # 'Kids Room ... Living' - skip a clashing room
+        venue = ""
+    gift = "" if "gift" in (head + " " + core).lower() else "Gift"
+    return fit([head, core, extra, venue, colour, "A4 A3 A2", gift, "Framed"])
 
 
 # ------------------------------------------------------------------ style picks

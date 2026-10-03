@@ -38,8 +38,8 @@ def chart_rows():
                 colour = PALETTES[pal][0]
                 kw = " ".join(w for w in CHARTS[cid]["keywords"].replace("Poster", "").split()
                               if w.lower() not in name.lower())
-                title = fit([f"{name} Educational {kw}", "Wall Art Print", f"{word} {colour}", "Classroom",
-                             "Children" if word == "Kids" else "Kids", "A4 A3 A2", "Chart"])
+                title = fit([f"{name} Educational Poster", "Wall Art Print", f"{word} {colour}", kw, "Classroom",
+                             "Children" if word == "Kids" else "Kids", "A4 A3 A2", "Chart"], keep=2)
                 yield dict(store="lunar-kms", kind="chart", niche="charts", spec=f"{cid}|{var}", palette=pal,
                            fonts=fset, title=title, room=random.Random(title).choice(["Classroom", "Kids Bedroom", "Playroom", "Study"]),
                            colour=colour)
@@ -65,8 +65,8 @@ def map_rows():
         for style, sword in MAP_STYLES.items():
             for i, pal in enumerate(MAP_PALETTES):
                 colour = PALETTES[pal][0]
-                title = fit([f"{label} Map Print {sword} {colour}", "Country Outline", "Wall Art", "Travel Gift",
-                             "A4 A3 A2", "Poster"])
+                title = fit([f"{label} Map Print {sword} {colour}", "Wall Art", "Country Map Poster", "Travel Gift",
+                             "A4 A3 A2"])
                 yield dict(store="posterleaf-store1", kind="map", niche="maps_country", spec=f"{c}|{style}|",
                            palette=pal, fonts=MAP_FONTS[i % len(MAP_FONTS)], title=title,
                            room=random.Random(title).choice(["Living Room", "Hallway", "Office", "Study"]), colour=colour)
@@ -80,8 +80,8 @@ def map_rows():
             label = SHORT.get(adm, adm)
             for i, pal in enumerate(HOME_PALETTES):
                 colour = PALETTES[pal][0]
-                title = fit([f"Home {city} {label} Map Print Heart {colour}", "Hometown", "Wall Art",
-                             "New Home Gift", "A4 A3 A2"])
+                title = fit([f"Home {city} {label} Map Print Heart {colour}", "Wall Art", "New Home Gift",
+                             "Housewarming", "A4 A3 A2"])
                 yield dict(store="posterleaf-store1", kind="map", niche="maps_home", spec=f"{adm}|home|{city}",
                            palette=pal, fonts=MAP_FONTS[i % len(MAP_FONTS)], title=title,
                            room=random.Random(title).choice(["Living Room", "Hallway", "Bedroom"]), colour=colour)

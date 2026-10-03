@@ -1,6 +1,6 @@
 {
  "luxvia-art": {
-  "sha256": "b701c82f3fef701a9e4f6a22a98b26cf66c7cd3a538064deb36601aaa0802cf9",
+  "sha256": "e5b3b0ee389e0f997744359b612dd6a73f5fb89dbaf6b8ac2e5c5d140538a91f",
   "rows": 1000000
  },
  "luxvia-art_ai": {
@@ -8,7 +8,7 @@
   "rows": 25290
  },
  "mercury-usm": {
-  "sha256": "30fe71d8ddc6c34cbcaffac0ea8b485c73761aac0a9b8d63dac7351c213fab64",
+  "sha256": "d310d79b9c1b9f4a7c515b7d9b64c2093bf3c50080464289faf432489e04fb8b",
   "rows": 500000
  },
  "mercury-usm_ai": {
@@ -16,23 +16,23 @@
   "rows": 9327
  },
  "lunar-kms": {
-  "sha256": "d0b2f0559d2ceabd8888a17f5d327745f72558e64dddee33ca1558cb8bc2d62f",
+  "sha256": "01a53bec9efb2c45fde1a3895f8af3909affab593318085536a7a23b2a6ba067",
   "rows": 500000
  },
  "lunar-kms_visual": {
-  "sha256": "bbac5abb9c2208137ced347c9180e32ebdf657e2d978f575f24e2b8d30538901",
-  "rows": 412
+  "sha256": "06758b65a35b51252f9ed24b15392464068d16036b3e49034eb570b50a84ac20",
+  "rows": 464
  },
  "lunar-kms_ai": {
   "sha256": "ef07d0165325b390b94d4750d4d6b134f60a153891b498afa076be9068850993",
   "rows": 6380
  },
  "posterleaf-store1": {
-  "sha256": "97740c04ef2c204dde5c72413f5186f645c75edc0ea74cf8c03f3b42848e7aaa",
+  "sha256": "9094cb1900a7ea6f6dd2069cd254f876b025b737a33d4ade4218582807581ab9",
   "rows": 500000
  },
  "posterleaf-store1_visual": {
-  "sha256": "d6d1ba22cdbcfdd159ed32c91fc2fb8013393d78e0c08016f1d79773271b1e7a",
+  "sha256": "3e7a98985cffd0779e332c251608fb4b695d20bfa18dd6d71f454b1a753e3bda",
   "rows": 23058
  },
  "posterleaf-store1_ai": {
