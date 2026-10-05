@@ -36,6 +36,11 @@ named "default", quantity 1, category 15687, GTC fixed price.
 `https://pub-4b710c8610a84acc8fad1513f48132fd.r2.dev`. `r2_upload.py` is
 resumable and reports real errors.
 
+## Read first
+
+`ACCESS.md` - what is connected, what is not, and what has already been
+tried and failed. RunPod is wired up and needs no setup from the seller.
+
 ## Next
 
 1. CPU pod (16 vCPU, 50 GB). NOT a GPU - measured 12.3 designs/sec/core,
