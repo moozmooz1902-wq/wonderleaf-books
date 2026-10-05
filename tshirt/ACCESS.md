@@ -45,6 +45,24 @@ every request with a value computed from the secret, so a static
 `Authorization: Bearer ...` cannot authenticate however the host is set.
 This has already cost several rounds; do not retry it.
 
+### Template already created
+
+    id    vbsgwyibn1
+    name  wonderleaf-tshirt-render
+    image runpod/base:0.7.0-ubuntu2404, CPU, 60 GB container, 40 GB volume
+
+Created 2026-10-05 via `POST /v1/templates`. It carries `R2_BUCKET` and
+`R2_PUBLIC_BASE` already filled, and `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`
+and `R2_SECRET_ACCESS_KEY` as `PASTE_..._HERE` placeholders for the seller
+to replace in the RunPod UI. Pods created with `templateId: vbsgwyibn1`
+inherit all of them, so the pod holds the keys and Claude never does.
+
+Unlike every earlier pod, this one has a 40 GB volume at /workspace, so
+work survives a stop.
+
+Before using it, check the three placeholders have been replaced -
+`GET /v1/templates` shows the env values.
+
 Two routes that do work:
 
 1. **RunPod template (preferred).** The seller creates a template in the
