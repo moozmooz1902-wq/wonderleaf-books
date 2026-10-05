@@ -167,3 +167,28 @@ def sheet(sample_idx, path):
 
 for i in range(3):
     print(sheet(i, f"STYLE_SHEET_{i+1}.png"))
+
+
+# ---------------------------------------------------------------- colourways
+# The same slogan sells as many shirts when the DESIGN differs. Each look
+# carries several ink pairs, so "Best Dad Ever" can be a dozen genuinely
+# different products rather than a dozen copies.
+# Every pair is one light ink plus one signal colour, both tested for contrast
+# on a black garment.
+PALETTES = [
+    ("bone/red",     (242, 240, 234), (214,  69,  47)),
+    ("bone/amber",   (242, 240, 234), (247, 181,  56)),
+    ("bone/teal",    (240, 236, 226), ( 96, 170, 158)),
+    ("bone/orange",  (240, 238, 232), (224, 110,  64)),
+    ("bone/lime",    (238, 240, 230), (154, 199,  77)),
+    ("bone/violet",  (238, 234, 242), (158, 124, 212)),
+    ("bone/sky",     (236, 240, 244), ( 92, 164, 222)),
+    ("bone/rose",    (244, 236, 238), (226, 106, 134)),
+    ("mono",         (242, 240, 234), (242, 240, 234)),   # single ink, cheapest
+    ("amber/bone",   (247, 181,  56), (242, 240, 234)),   # inverted emphasis
+]
+
+
+def palette(i):
+    """Pick a colourway by index, so variants rotate rather than collide."""
+    return PALETTES[i % len(PALETTES)]
