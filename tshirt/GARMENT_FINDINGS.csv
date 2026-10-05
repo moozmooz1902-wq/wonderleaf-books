@@ -1,0 +1,12 @@
+garment,listings,distinct_designs,units,units_per_listing,verdict
+t-shirt,43520,37312,177777,4.08,THE business
+hoodie,16926,11279,9200,0.54,marginal
+kids,14614,12975,9106,0.62,marginal
+vest/tank,10634,10180,8679,0.82,marginal
+womens,17573,16718,4187,0.24,dead weight
+sweatshirt,14823,12442,4111,0.28,dead weight
+baseball tee,20777,19981,2006,0.1,dead weight
+long sleeve,10394,9887,1518,0.15,dead weight
+v-neck tee,9743,9281,873,0.09,dead weight
+apron,8662,8234,503,0.06,dead weight
+other,29,28,498,17.17,marginal
