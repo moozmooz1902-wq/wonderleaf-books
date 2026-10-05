@@ -112,3 +112,55 @@ subjects, ~3h on a 4090, ~$2.50. Not started.
   price column, so it cannot be derived from any data held.
 - Confirm eBay category 15687 matches their existing listings.
 - Whether listings need S-XXL variations (current file is single-SKU).
+
+## Learned from branch `claude/hopeful-rubin-u14pgu` (the wall-art work)
+
+That branch is the same seller's wall-art pipeline. Things it settled that
+apply here:
+
+**eBay business policies are named `1`, not `default`.** `wallart/plan.json`
+has `profiles: {shipping: "1", returns: "1", payment: "1"}`, quantity 1,
+location United Kingdom. "1, 1, 1" in conversation meant the policy names,
+not the quantity. `ebay_file.py` has been corrected. Wall art uses category
+360; t-shirts use 15687.
+
+**FLUX.1 [schnell] is the image model**, chosen for its Apache-2.0 licence
+(commercial use allowed). FLUX.1-dev is NON-COMMERCIAL and must not be used
+on products that are sold. `wallart/pod/gen_ai.py` is a working
+implementation: diffusers FluxPipeline, bfloat16, 4 steps, 864x1216,
+shardable with `--part k/n`, and a `--dry-run` mode that emits grey
+placeholders so the plumbing can be tested without a GPU. Adapt it rather
+than writing a new one.
+
+`wallart/research/IMAGE_SOURCES.md` costs fal.ai FLUX.1 schnell at $0.003/MP
+if hosting is not worth it.
+
+**Serve-on-demand beats pre-rendering.** `wallart/serve.py` draws the
+listing photo, mockup and print file from the URL on request, so nothing is
+stored. Worth considering here instead of rendering and uploading 118k JPEGs.
+
+**The duplicate rule, and why it matters.** That branch found store 1's
+424k wall-art listings are 89% near-duplicates and treats that as the
+likeliest reason they do not sell. Its rules: no two rows share phrase +
+venue + colourway; every unique phrase is used before any phrase repeats; a
+phrase appears in at most 4 colourways; no template produces more than
+40,000 phrases.
+
+### This catalogue fails that test, worse than theirs
+
+Measured on REPLICA_V5.csv, 118,258 listings carrying a slogan:
+
+    distinct slogans            9,761     91.7% of listings are repeats
+    distinct slogan+look pairs 25,945     78.1% are repeats
+    NEVER UNDERESTIMATE AN OLD MAN WITH A MOTORCYCLE   x2,332
+    WEEKEND FORECAST FOOTBALL WITH A CHANCE OF DRINKING x1,540
+    niche FOOTBALL x4,579, MOTORCYCLE x4,441, empty x5,117
+
+Cause: the slogan is a function of (niche, template) only, and the niche
+vocabulary collapses to 1,913 terms, so thousands of distinct source
+listings map onto the same handful of slogans. DO NOT UPLOAD THIS AS IS -
+it would reproduce the exact failure the wall-art branch diagnosed.
+
+Fix direction: make the slogan depend on more of the source listing than a
+single niche word - the full subject phrase, not the collapsed category -
+and enforce a cap so no slogan+look pair repeats.

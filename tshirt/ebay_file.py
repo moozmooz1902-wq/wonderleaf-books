@@ -16,8 +16,10 @@ PRICE     = "9.99"          # <-- CONFIRM: placeholder
 QUANTITY  = "1"
 LOCATION  = "United Kingdom"
 CATEGORY  = "15687"         # eBay UK > Men's Clothing > T-Shirts
+                            # (wall art uses 360; this is the tee equivalent)
 CONDITION = "1000"          # New with tags
-POLICY    = "default"       # payment / postage / returns profile name
+POLICY    = "1"             # payment/postage/returns profile name, confirmed
+                            # from wallart/plan.json on the other branch
 # image URL comes from r2_config (bucket tshirt-m12k, account M12K)
 # -----------------------------------------------------------------------
 
