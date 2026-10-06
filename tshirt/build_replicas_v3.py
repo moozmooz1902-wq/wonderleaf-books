@@ -42,6 +42,23 @@ BAD_NICHE = {
  "ELECTRIC","ACOUSTIC","DIGITAL","ABSTRACT","MODERN","TRADITIONAL","SCHOOL",
  # garment-construction words, not subjects
  "NECK","SLEEVE","SLEEVES","COLLAR","POCKET","HEM","CREW","RAGLAN","FIT",
+ # verbs and participles are not subjects - they produced "I LOVE WORE"
+ "WORE","WEAR","WORN","SAID","TOLD","WENT","CAME","DOES","DONE","MADE",
+ "TAKE","TOOK","GIVE","GAVE","KNOW","KNEW","THINK","THOUGHT","FEEL","FELT",
+ "KEEP","KEPT","LEFT","FOUND","HELD","SEEN","SAW","GONE","BEEN","BEING",
+ "GETS","GOES","PUTS","SAYS","TELL","TRIED","USING","USED","HAVING","DOING",
+ "WANT","NEED","LIKE","LOVED","HATE","CALL","MEAN","TURN","MOVE","PLAY",
+ # Medical conditions, disabilities and tragedy must never be dropped into a
+ # joke template. "I just need more AUTISM" came out of the generator and is
+ # exactly the kind of listing that gets a store reported.
+ "AUTISM","AUTISTIC","ASD","ADHD","CANCER","TUMOUR","TUMOR","DEMENTIA",
+ "ALZHEIMER","PARKINSON","EPILEPSY","DIABETES","DOWNS","DISABILITY",
+ "DISABLED","DEPRESSION","ANXIETY","SUICIDE","PTSD","TRAUMA","STROKE",
+ "LEUKAEMIA","LEUKEMIA","CHEMO","MISCARRIAGE","STILLBIRTH","BEREAVEMENT",
+ "FUNERAL","MEMORIAL","DECEASED","TERMINAL","HOSPICE","AMPUTEE","BLIND",
+ "DEAF","WHEELCHAIR","SURVIVOR","DIAGNOSIS","MENTAL","ILLNESS",
+ # words that read as nonsense or contradiction in a slogan slot
+ "WAR","SHORT","FORGET","NOTHING","EVERYTHING","ANYTHING","SOMEONE",
 }
 # Adjectival endings - COLOURFUL, STUPID, GORGEOUS are not niches.
 ADJ = re.compile(r"\b\w+(FUL|OUS|IVE|ABLE|IBLE|ISH|LESS|IEST|EST)\b")

@@ -93,3 +93,73 @@ DROPPED = {
  "THE LEGEND {X}":                "slot too loose",
  "BLOOD SWEAT {X}":               "slot too loose",
 }
+
+
+# ---------------------------------------------------------------------------
+# Twists on the families that already sell. The seller's point: "Best Dad
+# Ever" is a hot seller, so give it siblings - "Perfect Dad", "World's
+# Okayest Dad" - rather than one design. Each line below is a variation on a
+# template the miner found in designs that sold, keeping the slot type so the
+# grammar stays safe.
+# ---------------------------------------------------------------------------
+TEMPLATES += [
+ # ---- ROLE
+ ("WORLD'S BEST {N}",                                             "ROLE",  900),
+ ("WORLD'S OKAYEST {N}",                                          "ROLE",  700),
+ ("{N} OF THE YEAR",                                              "ROLE",  600),
+ ("CERTIFIED {N}",                                                "ROLE",  550),
+ ("PROFESSIONAL {N} SINCE DAY ONE",                               "ROLE",  500),
+ ("IT'S A {N} THING YOU WOULDN'T UNDERSTAND",                     "ROLE",  850),
+ ("{N} BY DAY LEGEND BY NIGHT",                                   "ROLE",  600),
+ ("KEEP CALM I'M A {N}",                                          "ROLE",  500),
+ ("NEVER UNDERESTIMATE A {N}",                                    "ROLE",  800),
+ ("BEHIND EVERY GREAT TEAM IS AN AWESOME {N}",                    "ROLE",  450),
+ ("THE {N} THE MYTH THE LEGEND",                                  "ROLE",  950),
+ ("PROUD {N}",                                                    "ROLE",  400),
+ ("{N} MODE ON",                                                  "ROLE",  380),
+ ("NOT ALL HEROES WEAR CAPES SOME ARE A {N}",                     "ROLE",  520),
+ # ---- OBJECT
+ ("I'D RATHER BE ON MY {N}",                                      "OBJECT",820),
+ ("LIFE IS BETTER WITH A {N}",                                    "OBJECT",760),
+ ("MY OTHER RIDE IS A {N}",                                       "OBJECT",640),
+ ("THE {N} IS CALLING AND I MUST GO",                             "OBJECT",700),
+ ("YOU HAD ME AT {N}",                                            "OBJECT",520),
+ ("ALL I NEED IS A {N}",                                          "OBJECT",600),
+ ("BORN TO RIDE A {N}",                                           "OBJECT",580),
+ ("HAPPINESS IS A {N}",                                           "OBJECT",540),
+ ("TOUCH MY {N} AND WE HAVE A PROBLEM",                           "OBJECT",480),
+ # ---- ACTIVITY
+ ("I'D RATHER BE {N}",                                            "ACTIVITY",880),
+ ("{N} IS MY THERAPY",                                            "ACTIVITY",820),
+ ("SORRY I'M LATE I WAS {N}",                                     "ACTIVITY",640),
+ ("LIVE LOVE {N}",                                                "ACTIVITY",600),
+ ("{N} ALL DAY EVERY DAY",                                        "ACTIVITY",560),
+ ("MY WEEKEND IS ALREADY BOOKED {N}",                             "ACTIVITY",520),
+ ("{N} BECAUSE PEOPLE ARE EXHAUSTING",                            "ACTIVITY",600),
+ ("I WORK HARD SO I CAN KEEP {N}",                                "ACTIVITY",540),
+ ("{N} IS NOT A HOBBY IT'S A LIFESTYLE",                          "ACTIVITY",680),
+ # ---- PLURAL
+ ("JUST A BLOKE WHO LOVES {N}",                                   "PLURAL", 620),
+ ("CRAZY ABOUT {N}",                                              "PLURAL", 540),
+ ("ALL YOU NEED IS LOVE AND {N}",                                 "PLURAL", 580),
+ ("MY HEART BELONGS TO {N}",                                      "PLURAL", 500),
+ ("{N} MAKE ME HAPPY PEOPLE NOT SO MUCH",                         "PLURAL", 620),
+ # ---- RELATION
+ ("PERFECT {N}",                                                  "RELATION",700),
+ ("NUMBER ONE {N}",                                               "RELATION",650),
+ ("LIKE A NORMAL {N} ONLY COOLER",                                "RELATION",600),
+ ("{N} OF THE YEAR EVERY YEAR",                                   "RELATION",560),
+ ("AWESOME {N} SINCE DAY ONE",                                    "RELATION",520),
+ # ---- AGE
+ ("{N} AND STILL AWESOME",                                        "AGE",    700),
+ ("{N} YEARS YOUNG",                                              "AGE",    660),
+ ("{N} AND FABULOUS",                                             "AGE",    520),
+ ("LEVEL {N} COMPLETE",                                           "AGE",    600),
+ ("OFFICIALLY {N} AND LOVING IT",                                 "AGE",    540),
+ # ---- GENERIC (safe with any noun)
+ ("OBSESSED WITH {N}",                                            "GENERIC",560),
+ ("{N} MAKES EVERYTHING BETTER",                                  "GENERIC",520),
+ ("TALK {N} TO ME",                                               "GENERIC",480),
+ ("POWERED BY {N}",                                               "GENERIC",540),
+ ("{N} ENTHUSIAST",                                               "GENERIC",460),
+]

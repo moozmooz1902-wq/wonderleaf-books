@@ -38,7 +38,7 @@ def make_blank():
 # Chest, not belly: the print sits just under the collar, centred on the torso.
 PRINT_W   = int((BODY_R - BODY_L) * 0.46)      # ~418px  - the smaller print
 PRINT_CX  = (BODY_L + BODY_R) // 2             # 725
-PRINT_TOP = COLLAR_Y + 60                      # chest, just under the collar
+PRINT_TOP = COLLAR_Y + 74                      # chest. +60 read low, +28 read high
 
 
 def place(design, base=None):

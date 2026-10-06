@@ -28,7 +28,11 @@ SENSITIVE = {"faith", "memorial", "awareness", "veteran"}
 EXCLUDE = re.compile(
     r"\bfuck|\bcunt|\bnigg|\bretard|\bspastic|\bcock\b|\bwank|\btwat|"
     r"atheis|death to religion|anti.?christ|"
-    r"cannabis|\bweed\b|cocaine|spliff|\bbong\b|\bdrugs?\b|marijuana|\bstoner\b",
+    r"cannabis|\bweed\b|cocaine|spliff|\bbong\b|\bdrugs?\b|marijuana|\bstoner\b|"
+    # hate and extremist references - excluded whatever the claimed context
+    r"hitler|\bnazi|swastika|third reich|gestapo|\bkkk\b|ku klux|white power|"
+    r"white pride|\b1488\b|heil |fuhrer|holocaust|auschwitz|\bisis\b|al.?qaeda|"
+    r"taliban|jihad|supremacis|skinhead|blood and soil|\bgenocide\b",
     re.I)
 
 # measured: funny 2.12x, tee 2.70x, top 2.51x, mens 1.29x. The rest are

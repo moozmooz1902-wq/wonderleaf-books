@@ -21,9 +21,9 @@ import csv, hashlib, sys
 from collections import Counter, defaultdict
 import vetted, build_replicas_v3 as B
 
-LOOKS = ["A", "B", "C", "D"]
-import styles
-PALETTES = list(range(len(styles.PALETTES)))   # 10 colourways per look
+import styles2
+LOOKS = list(range(len(styles2.LAYOUTS)))        # 8 layouts
+PALETTES = list(range(len(styles2.PALETTES)))    # 12 four-ink palettes
 
 
 def subject_of(title, vocab_all, tw):
@@ -85,15 +85,20 @@ def main():
         if i >= cap:
             dropped += 1; continue
         seen[s] += 1
+        # Rotation alone put every subject on layout 0 and palette 0, because
+        # most subjects have fewer listings than there are layouts. Offsetting
+        # the rotation by a hash of the subject spreads layouts and colours
+        # across the catalogue while keeping the triple unique WITHIN a subject.
+        h = int(hashlib.md5(s.encode()).hexdigest()[:8], 16)
         tmpl = pool[i % len(pool)]
-        look = LOOKS[(i // len(pool)) % len(LOOKS)]
-        pal  = PALETTES[(i // (len(pool) * len(LOOKS))) % len(PALETTES)]
+        look = LOOKS[(h + i // len(pool)) % len(LOOKS)]
+        pal  = PALETTES[(h // 7 + i // (len(pool) * len(LOOKS))) % len(PALETTES)]
         slogan = B.agree(tmpl.replace("{N}", noun))
         key = (slogan, look, pal)
         if key in used:
             dropped += 1; continue
         used.add(key)
-        r["slogan"] = slogan; r["look"] = look; r["palette"] = styles.PALETTES[pal][0]
+        r["slogan"] = slogan; r["look"] = str(look); r["palette"] = styles2.PALETTES[pal][0]
         r["palette_idx"] = pal
         r["template_used"] = tmpl; r["niche"] = noun; r["niche_type"] = typ
         r["subject"] = s
