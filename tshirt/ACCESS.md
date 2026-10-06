@@ -324,3 +324,62 @@ and all five size variations together. Run it before any upload.
 The likeness rule is the one most often got wrong: a portrait of a public
 figure is their likeness, not public property, and the estate of a dead one
 usually still enforces it.
+
+## Illustrated listings - the composed format
+
+13,313 of the 116,355 listings (11%) now carry a real illustration above the
+slogan. The rest stay type-only, because that is what their data says:
+type-only averaged 10.53 units per design, type-with-picture 9.66,
+picture-only 6.08. The picture is an addition to the best format, not a
+replacement for it.
+
+Which listings get one is decided by the catalogue, not by taste: a row's
+`illustration` column is matched against the 259 generated subjects, exactly
+or by word subset, preferring the closest-sized phrase so "skull" does not
+capture "skull with diving gear and stopwatch" when plain "skull" exists.
+246 of the 259 found a home.
+
+**The SKUs do not change, so the eBay file does not change.** The artwork at
+`art/mock/<SKU>.jpg` and `art/raw/<SKU>.png` is simply replaced.
+
+### Recolouring, and why it is not optional
+
+The illustration is remapped into the listing's own palette before it is
+stacked. That does two jobs at once:
+
+- The picture stops clashing with the type under it.
+- One drawing of a motorcycle becomes twelve visibly different motorcycles,
+  so the 1,466 motorcycle listings do not all carry the same picture.
+
+Checked on the full set: 13,313 listings, 13,313 distinct
+picture+layout+palette+slogan combinations. Zero repeats.
+
+Two things had to be got right. The palettes were written for type, where
+the deep tone is an outline and never carries a shape on its own - dropped
+straight into a drawing, the violet palette's deep (62,46,102) becomes a
+hole in the middle of it on a black shirt. So each palette colour goes
+through the same brightness floor as `dtf.plan_inks`. And the picture is
+sized off the type block's WIDTH: sizing it by height made a one-line slogan
+produce a postage stamp and a four-line one produce a poster.
+
+### The print master stays flat
+
+Scaling a composed design up to 2600px interpolates, and an interpolation
+between two flat inks is a gradient - the thing DTF cannot hold. So
+`dtf.snap()` runs last: every pixel is forced to the nearest ink it is
+allowed to be and the alpha is made binary again. Measured on the output:
+5 to 7 flat inks per design, **zero semi-transparent pixels**.
+
+The print is 22cm wide unless that would make it taller than 30cm. A picture
+over type is a much taller shape than type alone, and an uncapped 36cm print
+is both a bigger transfer than it needs to be and lower on the chest than
+the placement the seller signed off.
+
+### Cost
+
+Recolouring per listing is a million-pixel remap and the job takes a day.
+Cached it is 2,952 remaps in total - 246 pictures in 12 palettes - and the
+listings become pastes, at under a second each. The cache only pays off
+because the jobs are sorted by picture and palette first, so each worker
+gets a contiguous run that shares one tint rather than a random spread that
+shares none. 16 cores, about 20 minutes, roughly 20p.

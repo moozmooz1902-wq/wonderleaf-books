@@ -213,3 +213,25 @@ def printable(img, min_cov=0.06, max_cov=0.75, max_edge=0.22, max_box=0.86):
     if box > max_box:
         return False, f"prints as a rectangle (fill {box:.2f})"
     return True, f"ok  ink {cov:.1%}  edge {edge:.2f}  fill {box:.2f}"
+
+
+def snap(img, palette):
+    """Force a composed, resampled design back to flat ink.
+
+    Scaling artwork up to print size interpolates, and interpolation between
+    two flat inks is a gradient - exactly what DTF cannot hold. The design is
+    built and scaled first because that is what keeps the type sharp, then
+    every pixel is snapped to the nearest colour it is allowed to be and the
+    alpha is made binary again. Nothing in the finished print master is a
+    tone between two inks.
+    """
+    cols = list(dict.fromkeys(tuple(c) for c in palette))[:256]
+    ref = Image.new("P", (1, 1))
+    flat = []
+    for c in cols:
+        flat += list(c)
+    ref.putpalette(flat + [0] * (768 - len(flat)))
+    a = _hard_alpha(img)
+    out = img.convert("RGB").quantize(palette=ref, dither=Image.NONE).convert("RGBA")
+    out.putalpha(a)
+    return out
