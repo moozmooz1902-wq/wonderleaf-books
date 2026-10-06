@@ -1,5 +1,5 @@
 --- orig/wallart/render.py	2026-10-03 16:29:33.000000000 +0000
-+++ wallart/render.py	2026-10-06 18:52:19.004659508 +0000
++++ wallart/render.py	2026-10-06 19:00:08.331213871 +0000
 @@ -115,6 +115,37 @@
          x += f.getlength(ch) + tracking
  
@@ -73,6 +73,22 @@
          gap_rule = W * 0.035 if layout == "rules" else 0
          total_all = total + (osz * 1.25 if has_orn else 0) + attrib_h() + gap_rule * (len(rows) - 1)
          y = (H - total_all) / 2 + (H * 0.04 if layout == "arch" else 0)
+@@ -581,7 +627,14 @@
+     return img
+ 
+ 
+-def mockup(art, width=1000, wall="#EDE9E3", framed=False):
++# The listing photo is 2000x2000. That is not a taste call: the seller's team
++# runs a tool over these that finds the black frame and crops away the rest,
++# and every image already in their buckets is 2000x2000 - 14 of 14 sampled at
++# random from a real listing of the bucket. Matching it is the whole point.
++LISTING_PX = 2000
++
++
++def mockup(art, width=LISTING_PX, wall="#EDE9E3", framed=False):
+     """Listing photo: the print on a wall with a soft shadow.
+     framed=True puts it in a thin black frame with a white mount - the only
+     frame colour sold, shown as the second photo so buyers see both options."""
 --- orig/wallart/generate.py	2026-10-03 16:29:33.000000000 +0000
 +++ wallart/generate.py	2026-10-06 18:39:51.485984220 +0000
 @@ -221,6 +221,40 @@
@@ -143,3 +159,113 @@
                  pal = porder[(vq + vr) % len(porder)]
                  room = vorder[vr]
                  fset = rnd.choice(fonts)
+--- orig/wallart/publish.py	2026-10-03 16:29:33.000000000 +0000
++++ wallart/publish.py	2026-10-06 19:00:08.331723384 +0000
+@@ -68,7 +68,7 @@
+         art = art_for(row, 1200)
+         # the ONE listing photo: the print in a black frame on a wall
+         buf = io.BytesIO()
+-        mockup(art, 1600, framed=True).save(buf, "JPEG", quality=88, optimize=True)
++        mockup(art, framed=True).save(buf, "JPEG", quality=88, optimize=True)
+         out[f"art/mock/{row['sku']}.jpg"] = (buf.getvalue(), "image/jpeg")
+     if want_raw:
+         px = round(PRINT_MM[size] / 25.4 * 300)
+--- orig/wallart/serve.py	2026-10-03 16:29:33.000000000 +0000
++++ wallart/serve.py	2026-10-06 19:00:08.332118578 +0000
+@@ -47,7 +47,7 @@
+         if kind == "r":
+             render(phrase, pal, fonts, layout, orn, 1600).save(buf, "JPEG", quality=90)
+         elif kind == "m":
+-            mockup(render(phrase, pal, fonts, layout, orn, 1200), 1600).save(buf, "JPEG", quality=90)
++            mockup(render(phrase, pal, fonts, layout, orn, 1200)).save(buf, "JPEG", quality=90)
+         else:
+             px = round(MM[size] / 25.4 * 300)
+             render(phrase, pal, fonts, layout, orn, px).save(buf, "PNG", dpi=(300, 300))
+--- /dev/null	2026-10-05 12:57:25.910242281 +0000
++++ wallart/size_contract.py	2026-10-06 19:00:17.416435587 +0000
+@@ -0,0 +1,85 @@
++#!/usr/bin/env python3
++"""The image sizes are an interface. This asserts them.
++
++The seller's team runs a tool over the listing photos that finds the black
++frame and crops everything outside it. That makes the canvas size, and the
++frame's position inside it, something other people's software depends on -
++not a rendering detail someone can nudge while improving a design.
++
++2000x2000 is measured, not chosen: every listing photo already in the
++seller's buckets is 2000x2000, checked on 14 drawn at random from a real
++listing of the bucket rather than from memory of what was built.
++
++So the numbers below are fixed, and this fails loudly if a change moves
++them. Run it after touching render.py, publish.py or serve.py.
++
++    python3 size_contract.py
++"""
++import sys
++from render import render, mockup
++
++# --- the contract -----------------------------------------------------------
++LISTING_CANVAS = (2000, 2000)          # art/mock/<SKU>.jpg
++FRAME_BOX      = (406, 160, 1593, 1840)   # the black moulding, outer edge
++ART_WIDTH      = 1200                  # what the art is drawn at before framing
++ART_SIZE       = (1200, 1697)          # A-series ratio at that width
++PRINT = {"A4": (2480, 3507),           # art/raw/<SKU>.png, 300 dpi
++         "A3": (3508, 4961),
++         "A2": (4961, 7015)}
++WALL = "#EDE9E3"
++# ----------------------------------------------------------------------------
++
++SAMPLE = [("The Maxwell / family / together since 1968", "bw", "classic_serif", "stack", "none"),
++          ("Ruby / & / Paul / 2011", "navy", "raleway", "subway", "heart"),
++          ("But first, / *coffee*", "sage", "didone", "arch", "cup"),
++          ("Gather / here", "bwgrey", "anton", "badge", "none")]
++
++
++def frame_box(im):
++    """Find the moulding the way a cropping tool would: the dark band."""
++    g = im.convert("L")
++    w, h = g.size
++    px = g.load()
++    xs = [x for x in range(w) if px[x, h // 2] < 60]
++    ys = [y for y in range(h) if px[w // 2, y] < 60]
++    if not xs or not ys:
++        return None
++    return (min(xs), min(ys), max(xs), max(ys))
++
++
++def main():
++    bad = []
++    for phrase, pal, fonts, layout, orn in SAMPLE:
++        art = render(phrase, pal, fonts, layout, orn, ART_WIDTH)
++        if art.size != ART_SIZE:
++            bad.append(f"art is {art.size}, the contract says {ART_SIZE}  [{phrase[:30]}]")
++        photo = mockup(art, framed=True)
++        if photo.size != LISTING_CANVAS:
++            bad.append(f"listing photo is {photo.size}, the contract says {LISTING_CANVAS}")
++        fb = frame_box(photo)
++        if fb != FRAME_BOX:
++            bad.append(f"frame is at {fb}, the contract says {FRAME_BOX}  [{phrase[:30]}]"
++                       "  -- this is what the team's cropper keys on")
++    for size, want in PRINT.items():
++        px = {"A4": 2480, "A3": 3508, "A2": 4961}[size]
++        got = render(SAMPLE[0][0], "bw", "classic_serif", "stack", "none", px).size
++        if got != want:
++            bad.append(f"{size} print file is {got}, the contract says {want}")
++
++    if bad:
++        print("SIZE CONTRACT BROKEN\n")
++        for b in bad:
++            print("  " + b)
++        print("\nThe team's crop tool keys on these. Do not change them to fix a design.")
++        return 1
++    print("size contract holds:")
++    print(f"  listing photo  {LISTING_CANVAS[0]}x{LISTING_CANVAS[1]} JPEG on {WALL}")
++    print(f"  frame box      {FRAME_BOX}   ({FRAME_BOX[2]-FRAME_BOX[0]}x{FRAME_BOX[3]-FRAME_BOX[1]})")
++    print(f"  art            {ART_SIZE[0]}x{ART_SIZE[1]} before framing")
++    for k, v in PRINT.items():
++        print(f"  {k} print file  {v[0]}x{v[1]} PNG at 300dpi")
++    return 0
++
++
++if __name__ == "__main__":
++    sys.exit(main())

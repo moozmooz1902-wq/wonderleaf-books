@@ -317,3 +317,63 @@ are 37 to 200 sentences each, stretched 20 to 68 ways.
 `ANTHROPIC_API_KEY` in the environment settings and costs $5-26 at batch
 prices. That is the highest-value thing left on this product line by a
 distance, and it is one setting away.
+
+---
+
+# Image sizes: measured against what the team already uses
+
+The seller's team runs a tool over the listing photos that finds the print
+area and crops away the rest. That makes the canvas size, and where the
+frame sits inside it, an interface other people's software depends on - not
+a rendering detail to nudge while improving a design.
+
+So I measured what is already in the buckets rather than trusting what the
+code says it writes. Fourteen listing photos drawn at random from a real
+listing of `tshirt-m12k`:
+
+    art/mock/<SKU>.jpg    2000 x 2000    14 of 14
+    art/raw/<SKU>.jpg     1024 x 1024    12 of 12   (older numeric SKUs)
+
+**2000 x 2000 is the standard, and two things did not match it.**
+
+## The t-shirt photos I delivered were 1200 x 1200
+
+That is a fault in work I already handed over as ready. The SKUs and URLs
+are right, the eBay file is right, the print masters are right - the photos
+were simply drawn at the wrong canvas size, which is exactly the thing the
+team's cropper keys on. Re-rendering all 116,355 at 2000 x 2000 now. SKUs do
+not change, so nothing else has to.
+
+The print masters are NOT being rewritten. A print file is a physical size -
+22cm wide at 300dpi - and does not follow the photo.
+
+## Wall art was 1600 x 1600, now 2000 x 2000
+
+`LISTING_PX = 2000` in `render.py`, used by `publish.py` and `serve.py`
+rather than each passing its own number. The frame scales with it:
+
+                    was                      now
+    canvas          1600 x 1600              2000 x 2000
+    frame box       (325,128,1275,1472)      (406,160,1593,1840)
+    print area      884 x 1278               1105 x 1598
+
+## size_contract.py
+
+These numbers are now asserted, not remembered. `size_contract.py` renders
+four designs, finds the black moulding the way a cropping tool would, and
+fails loudly if the canvas, the frame box or any print-file size has moved:
+
+    size contract holds:
+      listing photo  2000x2000 JPEG on #EDE9E3
+      frame box      (406, 160, 1593, 1840)   (1187x1680)
+      art            1200x1697 before framing
+      A4 print file  2480x3507 PNG at 300dpi
+      A3 print file  3508x4961 PNG at 300dpi
+      A2 print file  4961x7015 PNG at 300dpi
+
+Checked that it actually catches a drift: moving the frame from 0.84 to 0.80
+of the canvas makes it report the new box against the old one and exit 1.
+Run it after touching `render.py`, `publish.py` or `serve.py`.
+
+The paper sizes are unchanged and deliberately so - A4, A3 and A2 at 300dpi
+are physical sizes, and the six variations per listing stay as they are.
