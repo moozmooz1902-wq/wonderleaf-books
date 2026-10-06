@@ -56,6 +56,14 @@ def main():
     print(f"SKUs with only one of the two: {len(missing)}")
     for s in sorted(missing)[:10]:
         print("   ", s)
+    # written back so the eBay file can be diffed against what the bucket
+    # really holds, rather than against what the render log claims
+    cli.put_object(Bucket=B, Key="art/_MOCK_SKUS.txt",
+                   Body=("\n".join(sorted(mock))).encode(),
+                   ContentType="text/plain")
+    cli.put_object(Bucket=B, Key="art/_RAW_SKUS.txt",
+                   Body=("\n".join(sorted(raw))).encode(),
+                   ContentType="text/plain")
     cli.put_object(Bucket=B, Key="art/_INVENTORY.txt",
                    Body=f"mock={len(mock)} raw={len(raw)} mismatched={len(missing)}".encode(),
                    ContentType="text/plain")

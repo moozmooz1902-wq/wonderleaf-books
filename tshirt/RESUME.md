@@ -84,3 +84,32 @@ tried and failed. RunPod is wired up and needs no setup from the seller.
   56-78% of each one's units come from three listings.
 - Told the seller to rent a 4090 with 150 GB for a job that is Pillow on a
   CPU needing 9.5 GB. Benchmark before specifying hardware.
+
+## 2026-10-06 - the upload set is finished
+
+`EBAY_PARTS_CLEAN.zip` is the file to push. 115,966 listings, 579,830
+variations, every one with a listing photo and a print master in the bucket,
+checked by diffing the file's SKUs against a real listing of the bucket
+rather than against a render log. `PUSH.md` says what to do with it.
+
+Three things were added since the last entry:
+
+- **Illustrations that a DTF transfer can print.** 400 generated, 365
+  physically printable, 271 judged good by a vision model, 259 after the IP
+  filter; about three in four of those are genuinely good, so roughly 200
+  solid designs. `dtf.py` forces flat ink, `judge_illus.py` asks whether the
+  result is recognisable, and `ACCESS.md` records why four different pixel
+  statistics could not answer that question.
+- **13,313 listings composed as picture-over-type**, recoloured per listing
+  so one drawing of a motorcycle becomes twelve. Zero repeats on
+  picture+layout+palette+slogan.
+- **389 listings pulled for trademark or likeness.** Banksy, King Charles,
+  Che Guevara, Spitfire, Ducati. 52 of them had clean titles and the brand
+  only in the artwork, so they are dropped by SKU as well as by text.
+
+Still open:
+- Background panels on roughly one illustration in six. Unsolved in post and
+  in prompt; the gate rejects the worst and the rest get through.
+- The seller has not yet run `EBAY_TEST_50.csv`.
+- A print-size bump of 10-15% was offered once the placement settled at
+  mid-chest and has not been answered. The geometry is untouched.
