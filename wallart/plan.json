@@ -189,7 +189,7 @@
   },
   "words_aesthetic": {
    "demand": 4,
-   "vmax": 400
+   "vmax": 20
   },
   "classroom": {
    "demand": 5,
@@ -197,7 +197,7 @@
   },
   "funny_sarcasm": {
    "demand": 6,
-   "vmax": 400
+   "vmax": 20
   },
   "man_cave": {
    "demand": 6,
@@ -265,7 +265,7 @@
   },
   "biz_office_pro": {
    "demand": 6,
-   "vmax": 400
+   "vmax": 20
   },
   "biz_retail_shop": {
    "demand": 6,
@@ -273,7 +273,7 @@
   },
   "biz_education": {
    "demand": 6,
-   "vmax": 400
+   "vmax": 20
   },
   "biz_trades_pets": {
    "demand": 6,
