@@ -1,0 +1,365 @@
+{"slug": "1956-car", "subject": "1956 car", "shows": "1956 car", "matches": true, "clean": true, "panel": true, "verdict": "good"}
+{"slug": "a-character-with-a-staff-and-a-red-sun", "subject": "a character with a staff and a red sun", "shows": "a character with a staff and a red sun", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "airplane-with-parachutes", "subject": "airplane with parachutes", "shows": "airplanes with parachutes", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "american-flag", "subject": "american flag", "shows": "abstract shapes", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "anarchy-symbol", "subject": "anarchy symbol", "shows": "anarchy symbol", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "axolotl", "subject": "axolotl", "shows": "axolotl", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "baseball-cap", "subject": "baseball cap", "shows": "baseball cap", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "bear-with-tree-branches", "subject": "bear with tree branches", "shows": "bear with tree branches", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "beer-glass", "subject": "beer glass", "shows": "green glass", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "beer-mug", "subject": "beer mug", "shows": "beer mug", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "bicycle-rider", "subject": "bicycle rider", "shows": "bicycle rider", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "bicycle", "subject": "bicycle", "shows": "bicycle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "biker-on-a-hill", "subject": "biker on a hill", "shows": "biker on a hill", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "biker-riding-motorcycle", "subject": "biker riding motorcycle", "shows": "biker riding motorcycle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "black-leather-belt", "subject": "black leather belt", "shows": "blue and orange abstract shapes", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "bmx-rider-performing-a-trick", "subject": "bmx rider performing a trick", "shows": "bmx rider performing a trick", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "bob-marley-portrait", "subject": "bob marley portrait", "shows": "a stylized portrait of Bob Marley", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "bookshelf-with-vinyl-records", "subject": "bookshelf with vinyl records", "shows": "bookshelf with vinyl records", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "boot-with-figure", "subject": "boot with figure", "shows": "boot with figure", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "boxer-with-multiple-belts", "subject": "boxer with multiple belts", "shows": "boxer with multiple belts", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "boxing-champion", "subject": "boxing champion", "shows": "boxing champion", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "boxing-gloves", "subject": "boxing gloves", "shows": "boxing gloves", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "boxing-gorilla", "subject": "boxing gorilla", "shows": "boxing gorilla", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "boy-playing-with-toy", "subject": "boy playing with toy", "shows": "a child playing with toys", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "brain-with-flowers", "subject": "brain with flowers", "shows": "brain with flowers", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "brazilian-jiu-jitsu-grappling", "subject": "brazilian jiu jitsu grappling", "shows": "Brazilian jiu jitsu grappling", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "brown-trout-jumping", "subject": "brown trout jumping", "shows": "brown trout jumping", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "bulldog-lifting-weights", "subject": "bulldog lifting weights", "shows": "bulldog lifting weights", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "bunk-beds", "subject": "bunk beds", "shows": "bunk beds", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "cactus", "subject": "cactus", "shows": "abstract shapes resembling cacti", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "camera-and-lens-characters", "subject": "camera and lens characters", "shows": "camera and lens characters", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "camera", "subject": "camera", "shows": "camera", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "camper", "subject": "camper", "shows": "camper", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "camping-scene-with-people-and-campfire", "subject": "camping scene with people and campfire", "shows": "camping scene with people and campfire", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "capybara", "subject": "capybara", "shows": "a capybara with a Santa hat", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "car-with-heartbeat-lines", "subject": "car with heartbeat lines", "shows": "car with heartbeat lines", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "car-with-union-jack", "subject": "car with union jack", "shows": "car with union jack", "matches": false, "clean": true, "panel": false, "verdict": "weak"}
+{"slug": "car", "subject": "car", "shows": "abstract shapes", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "caravan", "subject": "caravan", "shows": "caravan", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "cartoon-character-farting", "subject": "cartoon character farting", "shows": "cartoon character farting", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "cartoon-character-with-lightning-bolts", "subject": "cartoon character with lightning bolts", "shows": "cartoon character with lightning bolts", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "cartoon-old-man-with-rugby-ball", "subject": "cartoon old man with rugby ball", "shows": "cartoon old man with rugby ball", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "cat-mugshot", "subject": "cat mugshot", "shows": "cat mugshot", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "cat", "subject": "cat", "shows": "cat", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "che-guevara-portrait", "subject": "che guevara portrait", "shows": "che guevara portrait", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "child-playing-with-toy", "subject": "child playing with toy", "shows": "child playing with toy", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "coat-of-arms-with-dragons", "subject": "coat of arms with dragons", "shows": "coat of arms with dragons", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "coat-of-arms", "subject": "coat of arms", "shows": "coat of arms", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "combat-boots", "subject": "combat boots", "shows": "combat boots", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "couple-with-flag", "subject": "couple with flag", "shows": "couple with flag", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "cross-with-crown-of-thorns", "subject": "cross with crown of thorns", "shows": "abstract shapes with no clear recognizable form", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "crossed-fishing-rods", "subject": "crossed fishing rods", "shows": "crossed fishing rods", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "crow", "subject": "crow", "shows": "a stylized crow", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "custom-chopper-motorcycle", "subject": "custom chopper motorcycle", "shows": "custom chopper motorcycle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "d20-die", "subject": "d20 die", "shows": "d20 die", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "dartboard-with-santa-hat", "subject": "dartboard with santa hat", "shows": "dartboard with santa hat", "matches": false, "clean": true, "panel": false, "verdict": "weak"}
+{"slug": "dirt-bike-rider", "subject": "dirt bike rider", "shows": "dirt bike rider", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "diver", "subject": "diver", "shows": "diver", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "dog-face", "subject": "dog face", "shows": "dog face", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "dog-wearing-santa-hat", "subject": "dog wearing santa hat", "shows": "dog wearing santa hat", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "dog", "subject": "dog", "shows": "abstract dog shape", "matches": false, "clean": true, "panel": false, "verdict": "unusable"}
+{"slug": "dot-pattern-of-a-person", "subject": "dot pattern of a person", "shows": "dot pattern of a person", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "dotted-stick-figure-kicking", "subject": "dotted stick figure kicking", "shows": "dotted stick figure kicking", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "dragon", "subject": "dragon", "shows": "dragon", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "drum-kit", "subject": "drum kit", "shows": "drum kit", "matches": true, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "drum-set", "subject": "drum set", "shows": "drum set", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "drummer-in-vitruvian-man-pose", "subject": "drummer in vitruvian man pose", "shows": "drummer in vitruvian man pose", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "drumsticks-and-fist", "subject": "drumsticks and fist", "shows": "fist and drumsticks", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "drunk-uncle-lying-down-with-beer-mug", "subject": "drunk uncle lying down with beer mug", "shows": "drunk uncle lying down with beer mug", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "eagle-on-shield", "subject": "eagle on shield", "shows": "eagle on shield", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "eagle-with-crown", "subject": "eagle with crown", "shows": "eagle with crown", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "eagle-with-stars", "subject": "eagle with stars", "shows": "eagle with stars", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "eagle", "subject": "eagle", "shows": "a stylized bird with outstretched wings", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "ecto-1-ghostbusters-car", "subject": "ecto 1 ghostbusters car", "shows": "ghostbusters car", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "electric-guitar", "subject": "electric guitar", "shows": "electric guitar", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "elf-hat-and-boots", "subject": "elf hat and boots", "shows": "elf hat and boots", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "eurofighter-typhoon-aircraft", "subject": "eurofighter typhoon aircraft", "shows": "a red and white aircraft", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "evolutionary-progression-with-land-rover", "subject": "evolutionary progression with land rover", "shows": "abstract shapes with no clear representation", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "face-and-hand-with-fork", "subject": "face and hand with fork", "shows": "face and hand with fork", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "face-with-crown", "subject": "face with crown", "shows": "face with crown", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "face-with-dreadlocks", "subject": "face with dreadlocks", "shows": "face with dreadlocks", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "face-with-fork-and-knife", "subject": "face with fork and knife", "shows": "face with fork and knife", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "face-with-rasta-colors", "subject": "face with rasta colors", "shows": "face with rasta colors", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "factory-silhouette", "subject": "factory silhouette", "shows": "factory silhouette", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "fibonacci-spiral", "subject": "fibonacci spiral", "shows": "fibonacci spiral", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "fierce-gorilla-with-bandaged-fist", "subject": "fierce gorilla with bandaged fist", "shows": "fierce gorilla with bandaged fist", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "fighter-plane-with-roundel", "subject": "fighter plane with roundel", "shows": "fighter plane with roundel", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "fighter-plane", "subject": "fighter plane", "shows": "abstract shapes with red, yellow, and white", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "fighter-with-snakes", "subject": "fighter with snakes", "shows": "fighter with snakes", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "fish-jumping-out-of-water", "subject": "fish jumping out of water", "shows": "fish jumping out of water", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "fish", "subject": "fish", "shows": "fish", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "fishing-rod-and-fish", "subject": "fishing rod and fish", "shows": "fishing rod and fish", "matches": false, "clean": true, "panel": false, "verdict": "weak"}
+{"slug": "fishing-scene-with-fish-and-fisherman", "subject": "fishing scene with fish and fisherman", "shows": "fishing scene with fish and fisherman", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "fishing-tackle-box-with-rod", "subject": "fishing tackle box with rod", "shows": "fishing tackle box with rod", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "fist-bump", "subject": "fist bump", "shows": "fist bump", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "fist-pointing", "subject": "fist pointing", "shows": "fist pointing", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "fist", "subject": "fist", "shows": "fist", "matches": false, "clean": true, "panel": false, "verdict": "weak"}
+{"slug": "flag-with-claw-marks", "subject": "flag with claw marks", "shows": "flag with claw marks", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "flag-with-crown-and-spear", "subject": "flag with crown and spear", "shows": "flag with crown and spear", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "flame-with-cross", "subject": "flame with cross", "shows": "flame with cross", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "football-jersey", "subject": "football jersey", "shows": "football jersey", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "freddy-krueger", "subject": "freddy krueger", "shows": "Freddy Krueger", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "game-controller", "subject": "game controller", "shows": "game controller", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "gearbox-diagram", "subject": "gearbox diagram", "shows": "gearbox diagram", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "glass-of-cider", "subject": "glass of cider", "shows": "glass of cider", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "glass-of-dark-beer", "subject": "glass of dark beer", "shows": "glass of dark beer", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "glass-with-rainbow", "subject": "glass with rainbow", "shows": "abstract shapes with rainbow colors", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "gloved-hand-holding-sword", "subject": "gloved hand holding sword", "shows": "gloved hand holding sword", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "gorilla-face", "subject": "gorilla face", "shows": "gorilla face", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "gorilla-lifting-weights", "subject": "gorilla lifting weights", "shows": "gorilla lifting weights", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "graffiti-style-face", "subject": "graffiti style face", "shows": "graffiti style face", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "grid-of-guitars", "subject": "grid of guitars", "shows": "grid of guitars", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "grim-reaper-holding-hourglass", "subject": "grim reaper holding hourglass", "shows": "grim reaper holding hourglass", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "guitar--skulls--rose", "subject": "guitar  skulls  rose", "shows": "guitar, skulls, rose", "matches": true, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "guitar-shape-with-abstract-design", "subject": "guitar shape with abstract design", "shows": "guitar shape with abstract design", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "guitar-with-musical-notes", "subject": "guitar with musical notes", "shows": "guitar with musical notes", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "guitar-with-tree-branches", "subject": "guitar with tree branches", "shows": "guitar with tree branches", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "guitar-with-wings", "subject": "guitar with wings", "shows": "guitar with wings", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "guitar", "subject": "guitar", "shows": "guitar", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "guitars", "subject": "guitars", "shows": "abstract shapes resembling guitars", "matches": false, "clean": true, "panel": false, "verdict": "unusable"}
+{"slug": "gun-with-nature-scene", "subject": "gun with nature scene", "shows": "gun with nature scene", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "hammer", "subject": "hammer", "shows": "abstract red and yellow shapes", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "hand-holding-golf-club", "subject": "hand holding golf club", "shows": "hand holding golf club", "matches": false, "clean": true, "panel": false, "verdict": "weak"}
+{"slug": "headphones", "subject": "headphones", "shows": "headphones", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "heart-shape-made-of-bicycle-chain", "subject": "heart shape made of bicycle chain", "shows": "heart shape made of bicycle chain", "matches": true, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "heart-with-flag-colors", "subject": "heart with flag colors", "shows": "heart with flag colors", "matches": false, "clean": true, "panel": false, "verdict": "unusable"}
+{"slug": "heart-with-flag-design", "subject": "heart with flag design", "shows": "heart with flag design", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "hedgehog", "subject": "hedgehog", "shows": "hedgehog", "matches": true, "clean": true, "panel": true, "verdict": "good"}
+{"slug": "highland-cow", "subject": "highland cow", "shows": "highland cow", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "hot-rod-car", "subject": "hot rod car", "shows": "hot rod car", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "houseboat", "subject": "houseboat", "shows": "houseboat", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "human-evolution-stages", "subject": "human evolution stages", "shows": "human evolution stages", "matches": true, "clean": true, "panel": true, "verdict": "good"}
+{"slug": "human-evolution-with-bow-and-arrow", "subject": "human evolution with bow and arrow", "shows": "abstract shapes with arrows", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "human-evolution-with-hunting-elements", "subject": "human evolution with hunting elements", "shows": "human evolution with hunting elements", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "human-figure-in-circle", "subject": "human figure in circle", "shows": "human figure in circle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "interceptor-car", "subject": "interceptor car", "shows": "interceptor car", "matches": false, "clean": true, "panel": false, "verdict": "weak"}
+{"slug": "jack-russell-terrier", "subject": "jack russell terrier", "shows": "dog with blue and brown coloration", "matches": false, "clean": true, "panel": false, "verdict": "weak"}
+{"slug": "jamaican-flag-ribbon", "subject": "jamaican flag ribbon", "shows": "jamaican flag ribbon", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "jeep----truck----car----jeep", "subject": "jeep    truck    car    jeep", "shows": "jeep", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "jeep-on-rocks", "subject": "jeep on rocks", "shows": "jeep on rocks", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "jeep", "subject": "jeep", "shows": "jeep", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "jesus-with-crown-of-thorns", "subject": "jesus with crown of thorns", "shows": "Jesus with crown of thorns", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "jiu-jitsu-fighter", "subject": "jiu jitsu fighter", "shows": "jiu jitsu fighter", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "judo-fighter-performing-a-throw", "subject": "judo fighter performing a throw", "shows": "judo fighter performing a throw", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "knight-holding-sword", "subject": "knight holding sword", "shows": "knight holding sword", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "knight-in-armor", "subject": "knight in armor", "shows": "knight in armor", "matches": true, "clean": true, "panel": true, "verdict": "good"}
+{"slug": "koala", "subject": "koala", "shows": "koala", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "leprechaun-hat-with-beer-and-gold-coins", "subject": "leprechaun hat with beer and gold coins", "shows": "leprechaun hat with beer and gold coins", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "lightning-bolt", "subject": "lightning bolt", "shows": "abstract shapes with purple and pink hues", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "lion-and-face", "subject": "lion and face", "shows": "purple lion face", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "lion-face", "subject": "lion face", "shows": "lion face", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "lion-with-dreadlocks-and-sunglasses", "subject": "lion with dreadlocks and sunglasses", "shows": "lion with dreadlocks and sunglasses", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "lion", "subject": "lion", "shows": "lion", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man----woman----bicycle", "subject": "man    woman    bicycle", "shows": "man, woman, bicycle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man----woman----guitar", "subject": "man    woman    guitar", "shows": "guitar", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "man----woman----jeep", "subject": "man    woman    jeep", "shows": "jeep", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man----woman----motorcycle", "subject": "man    woman    motorcycle", "shows": "woman on motorcycle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-and-woman-on-scooter", "subject": "man and woman on scooter", "shows": "man and woman on scooter", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-fishing", "subject": "man fishing", "shows": "man fishing", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-holding-bike", "subject": "man holding bike", "shows": "man holding bike", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-holding-gun", "subject": "man holding gun", "shows": "man holding gun", "matches": true, "clean": true, "panel": true, "verdict": "good"}
+{"slug": "man-holding-staff", "subject": "man holding staff", "shows": "man holding staff", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-hunting-with-dog", "subject": "man hunting with dog", "shows": "man hunting with dog", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-in-suit-dancing", "subject": "man in suit dancing", "shows": "man in suit dancing", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-on-iron-throne", "subject": "man on iron throne", "shows": "man on iron throne", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-on-motorcycle", "subject": "man on motorcycle", "shows": "man on motorcycle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-playing-guitar-in-vitruvian-man-pose", "subject": "man playing guitar in vitruvian man pose", "shows": "man playing guitar in vitruvian man pose", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-playing-guitar", "subject": "man playing guitar", "shows": "man playing guitar", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-riding-bicycle", "subject": "man riding bicycle", "shows": "man riding bicycle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-riding-motorcycle", "subject": "man riding motorcycle", "shows": "man riding motorcycle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-riding-scooter", "subject": "man riding scooter", "shows": "man riding scooter", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-wearing-a-crown", "subject": "man wearing a crown", "shows": "man wearing a crown", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-wearing-crown", "subject": "man wearing crown", "shows": "man wearing crown", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-wearing-santa-hat", "subject": "man wearing santa hat", "shows": "man wearing santa hat", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-with-bow-and-arrow", "subject": "man with bow and arrow", "shows": "man with bow and arrow", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-with-headband", "subject": "man with headband", "shows": "man with headband", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-with-mustache", "subject": "man with mustache", "shows": "man with mustache", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "man-with-staff", "subject": "man with staff", "shows": "man with staff", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "maple-leaf", "subject": "maple leaf", "shows": "maple leaf", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "marijuana-leaf", "subject": "marijuana leaf", "shows": "marijuana leaf", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "melting-rainbow-skull", "subject": "melting rainbow skull", "shows": "melting rainbow skull", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "melting-skull", "subject": "melting skull", "shows": "melting skull", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "middle-finger-with-santa-hat", "subject": "middle finger with santa hat", "shows": "middle finger with santa hat", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "mini-cooper", "subject": "mini cooper", "shows": "two cars", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "mjolnir-hammer-with-celtic-knot", "subject": "mjolnir hammer with celtic knot", "shows": "mjolnir hammer with celtic knot", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "mjolnir-hammer-with-lightning", "subject": "mjolnir hammer with lightning", "shows": "abstract shapes with orange and blue", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "monkey-wearing-a-beret", "subject": "monkey wearing a beret", "shows": "monkey wearing a beret", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "monkey-wearing-aviator-hat", "subject": "monkey wearing aviator hat", "shows": "monkey wearing aviator hat", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "motorbike-evolution", "subject": "motorbike evolution", "shows": "motorbike evolution", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "motorcycle-and-gas-pumps", "subject": "motorcycle and gas pumps", "shows": "motorcycle and gas pumps", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "motorcycle-crash", "subject": "motorcycle crash", "shows": "motorcycle crash", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "motorcycle-engine-with-wings", "subject": "motorcycle engine with wings", "shows": "motorcycle engine with wings", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "motorcycle-engine", "subject": "motorcycle engine", "shows": "motorcycle engine", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "motorcycle-evolution", "subject": "motorcycle evolution", "shows": "motorcycle evolution", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "motorcycle-front-view", "subject": "motorcycle front view", "shows": "motorcycle front view", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "motorcycle-rider", "subject": "motorcycle rider", "shows": "motorcycle rider", "matches": true, "clean": true, "panel": true, "verdict": "good"}
+{"slug": "motorcycle-with-flames", "subject": "motorcycle with flames", "shows": "motorcycle with flames", "matches": true, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "motorcycle-with-rider-and-wings", "subject": "motorcycle with rider and wings", "shows": "motorcycle with rider and wings", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "motorcycle-with-rider", "subject": "motorcycle with rider", "shows": "motorcycle with rider", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "motorcycle-with-sidecar", "subject": "motorcycle with sidecar", "shows": "motorcycle with sidecar", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "motorcycle-with-wings", "subject": "motorcycle with wings", "shows": "motorcycle with wings", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "motorcycle", "subject": "motorcycle", "shows": "motorcycle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "motorcycles-with-union-jack", "subject": "motorcycles with union jack", "shows": "motorcycles with union jack", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "muay-thai-fighter-in-action", "subject": "muay thai fighter in action", "shows": "muay thai fighter in action", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "muay-thai-fighter", "subject": "muay thai fighter", "shows": "muay thai fighter", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "muscular-man-lifting-dumbbell", "subject": "muscular man lifting dumbbell", "shows": "muscular man lifting dumbbell", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "muscular-santa-lifting-weights", "subject": "muscular santa lifting weights", "shows": "muscular santa lifting weights", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "mushrooms", "subject": "mushrooms", "shows": "mushrooms", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "nerdy-girl-holding-a-book", "subject": "nerdy girl holding a book", "shows": "nerdy girl holding a book", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "octopus-wearing-diving-helmet", "subject": "octopus wearing diving helmet", "shows": "octopus wearing diving helmet", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "octopus-with-diving-helmet", "subject": "octopus with diving helmet", "shows": "octopus with diving helmet", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "paw-print", "subject": "paw print", "shows": "abstract yellow and green shapes", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "pegasus", "subject": "pegasus", "shows": "pegasus", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "person-holding-lanterns", "subject": "person holding lanterns", "shows": "person holding lanterns", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "person-kayaking", "subject": "person kayaking", "shows": "person kayaking", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "person-riding-motorcycle", "subject": "person riding motorcycle", "shows": "person riding motorcycle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "person-riding-mountain-bike", "subject": "person riding mountain bike", "shows": "person riding mountain bike", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "planet-with-colorful-stripes", "subject": "planet with colorful stripes", "shows": "planet with colorful stripes", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "police-car", "subject": "police car", "shows": "police car", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "portrait-of-a-man-in-a-military-uniform", "subject": "portrait of a man in a military uniform", "shows": "portrait of a man in a military uniform", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "portrait-of-a-person-with-dreadlocks", "subject": "portrait of a person with dreadlocks", "shows": "portrait of a person with dreadlocks", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "profile-of-a-person-wearing-a-hat", "subject": "profile of a person wearing a hat", "shows": "profile of a person wearing a hat", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "pumpkin-face", "subject": "pumpkin face", "shows": "pumpkin face", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "puzzle-heart", "subject": "puzzle heart", "shows": "puzzle heart", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "rabbits", "subject": "rabbits", "shows": "rabbits", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "racing-car", "subject": "racing car", "shows": "racing car", "matches": false, "clean": true, "panel": false, "verdict": "weak"}
+{"slug": "railway-tracks", "subject": "railway tracks", "shows": "railway tracks", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "rainbow-barcode", "subject": "rainbow barcode", "shows": "diagonal red and white stripes", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "rainbow-fist-with-radiating-lines", "subject": "rainbow fist with radiating lines", "shows": "rainbow fist with radiating lines", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "rainbow-fist", "subject": "rainbow fist", "shows": "rainbow fist", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "rainbow-heart-with-heartbeat-line", "subject": "rainbow heart with heartbeat line", "shows": "rainbow heart with heartbeat line", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "rainbow-lips", "subject": "rainbow lips", "shows": "rainbow lips", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "raised-fist", "subject": "raised fist", "shows": "raised fist", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "raven-on-branch", "subject": "raven on branch", "shows": "raven on branch", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "record-player", "subject": "record player", "shows": "record player", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "red--white--and-blue-circle-with-stars", "subject": "red  white  and blue circle with stars", "shows": "red, white, and blue circle with stars", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "red-car-with-open-hood", "subject": "red car with open hood", "shows": "red car with open hood", "matches": false, "clean": true, "panel": false, "verdict": "weak"}
+{"slug": "red-car-with-roof-rack", "subject": "red car with roof rack", "shows": "red car with roof rack", "matches": true, "clean": true, "panel": true, "verdict": "good"}
+{"slug": "red-flowers", "subject": "red flowers", "shows": "red flowers", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "red-star-with-two-rifles", "subject": "red star with two rifles", "shows": "red star with two rifles", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "red-star", "subject": "red star", "shows": "red star", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "rhinoceros", "subject": "rhinoceros", "shows": "rhinoceros", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "roman-helmet-with-laurel-wreath", "subject": "roman helmet with laurel wreath", "shows": "a stylized roman helmet with a laurel wreath", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "rooster", "subject": "rooster", "shows": "rooster", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "rubik-s-cube-melting", "subject": "rubik s cube melting", "shows": "rubik's cube melting", "matches": true, "clean": false, "panel": true, "verdict": "weak"}
+{"slug": "sailboat", "subject": "sailboat", "shows": "sailboat", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "samurai-warrior", "subject": "samurai warrior", "shows": "samurai warrior", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "santa-claus-on-a-motorcycle", "subject": "santa claus on a motorcycle", "shows": "santa claus on a motorcycle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "santa-claus-playing-guitar", "subject": "santa claus playing guitar", "shows": "santa claus playing guitar", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "santa-claus-with-a-clock-on-his-back", "subject": "santa claus with a clock on his back", "shows": "santa claus with a clock on his back", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "santa-claus", "subject": "santa claus", "shows": "jester figures", "matches": false, "clean": true, "panel": false, "verdict": "unusable"}
+{"slug": "santa-hat", "subject": "santa hat", "shows": "santa hat", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "santa-on-a-bicycle", "subject": "santa on a bicycle", "shows": "santa on a bicycle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "santa-on-a-motorcycle", "subject": "santa on a motorcycle", "shows": "santa on a motorcycle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "santa-riding-a-bicycle", "subject": "santa riding a bicycle", "shows": "santa riding a bicycle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "scooby-doo-mystery-machine-van", "subject": "scooby doo mystery machine van", "shows": "scooby doo mystery machine van", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "scooter-racer", "subject": "scooter racer", "shows": "motorcycle racer", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "scooter-with-union-jack-flag", "subject": "scooter with union jack flag", "shows": "scooter with union jack flag", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "scooter", "subject": "scooter", "shows": "scooter", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "scottish-flag-in-a-crest", "subject": "scottish flag in a crest", "shows": "scottish flag in a crest", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "shark", "subject": "shark", "shows": "shark", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "silhouette-of-a-person-riding-a-bicycle", "subject": "silhouette of a person riding a bicycle", "shows": "silhouette of a person riding a bicycle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "silhouette-of-a-person", "subject": "silhouette of a person", "shows": "silhouette of a person", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "silver-eagle-on-red-shield", "subject": "silver eagle on red shield", "shows": "silver eagle on red shield", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skeleton-playing-drums", "subject": "skeleton playing drums", "shows": "skeleton playing drums", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skeleton-playing-guitar", "subject": "skeleton playing guitar", "shows": "skeleton playing guitar", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skeleton-riding-motorcycle", "subject": "skeleton riding motorcycle", "shows": "skeleton riding motorcycle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skeleton-riding-scooter", "subject": "skeleton riding scooter", "shows": "skeleton riding scooter", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-wearing-aviator-goggles", "subject": "skull wearing aviator goggles", "shows": "skull wearing aviator goggles", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-wearing-aviator-helmet", "subject": "skull wearing aviator helmet", "shows": "skull wearing aviator helmet", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-wearing-goggles-and-hat", "subject": "skull wearing goggles and hat", "shows": "skull wearing goggles and hat", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-wearing-goggles", "subject": "skull wearing goggles", "shows": "skull wearing goggles", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-wearing-headdress", "subject": "skull wearing headdress", "shows": "skull wearing headdress", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-wearing-helmet-with-guns", "subject": "skull wearing helmet with guns", "shows": "skull wearing helmet with guns", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-wearing-helmet", "subject": "skull wearing helmet", "shows": "skull wearing helmet", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-wearing-santa-hat-with-antlers", "subject": "skull wearing santa hat with antlers", "shows": "skull wearing santa hat with antlers", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-wearing-santa-hat", "subject": "skull wearing santa hat", "shows": "skull wearing santa hat", "matches": true, "clean": true, "panel": true, "verdict": "good"}
+{"slug": "skull-with-beard-and-beanie", "subject": "skull with beard and beanie", "shows": "skull with beard and beanie", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-beard-and-hair", "subject": "skull with beard and hair", "shows": "skull with beard and hair", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-beard-and-santa-hat", "subject": "skull with beard and santa hat", "shows": "skull with beard and santa hat", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-crossed-rifles", "subject": "skull with crossed rifles", "shows": "skull with crossed rifles", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-cyclist-inside", "subject": "skull with cyclist inside", "shows": "skull with cyclist inside", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-diving-gear-and-stopwatch", "subject": "skull with diving gear and stopwatch", "shows": "skull with diving gear and stopwatch", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-dripping-effect", "subject": "skull with dripping effect", "shows": "skull with dripping effect", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-green-bandana-and-clovers", "subject": "skull with green bandana and clovers", "shows": "skull with green bandana and clovers", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-headdress", "subject": "skull with headdress", "shows": "skull with headdress", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-headphones-and-smiley-face", "subject": "skull with headphones and smiley face", "shows": "skull with headphones and smiley face", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-headphones", "subject": "skull with headphones", "shows": "skull with headphones", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-horns", "subject": "skull with horns", "shows": "skull with horns", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-middle-fingers", "subject": "skull with middle fingers", "shows": "skull with middle fingers", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-roses", "subject": "skull with roses", "shows": "skull with roses", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-union-jack-flag", "subject": "skull with union jack flag", "shows": "skull with union jack flag", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-wings-and-bones", "subject": "skull with wings and bones", "shows": "skull with wings and bones", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-wings-and-goggles", "subject": "skull with wings and goggles", "shows": "skull with wings and goggles", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-wings-and-pistons", "subject": "skull with wings and pistons", "shows": "skull with wings and pistons", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull-with-wings", "subject": "skull with wings", "shows": "skull with wings", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skull", "subject": "skull", "shows": "neon skull", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skulls-and-bones", "subject": "skulls and bones", "shows": "skulls and bones", "matches": true, "clean": true, "panel": true, "verdict": "good"}
+{"slug": "skulls-and-floral-patterns", "subject": "skulls and floral patterns", "shows": "skulls and floral patterns", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skulls-with-chains", "subject": "skulls with chains", "shows": "skulls with chains", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "skydiver-in-freefall", "subject": "skydiver in freefall", "shows": "skydiver in freefall", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "smoking-skull", "subject": "smoking skull", "shows": "smoking skull", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "snake", "subject": "snake", "shows": "abstract shapes", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "soldiers-with-peace-symbol", "subject": "soldiers with peace symbol", "shows": "soldiers with peace symbol", "matches": false, "clean": true, "panel": true, "verdict": "weak"}
+{"slug": "spaceship-with-wings", "subject": "spaceship with wings", "shows": "spaceship with wings", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "spartan-helmet-with-spear", "subject": "spartan helmet with spear", "shows": "spartan helmet with spear", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "spartan-helmet", "subject": "spartan helmet", "shows": "spartan helmet", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "spartan-warrior-helmet-with-spear", "subject": "spartan warrior helmet with spear", "shows": "spartan warrior helmet with spear", "matches": false, "clean": true, "panel": false, "verdict": "weak"}
+{"slug": "spear-and-shield-with-blood-splatter", "subject": "spear and shield with blood splatter", "shows": "spear and shield with blood splatter", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "speedometer", "subject": "speedometer", "shows": "speedometer", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "spider", "subject": "spider", "shows": "spider", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "spiral", "subject": "spiral", "shows": "spiral", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "spock-djing", "subject": "spock djing", "shows": "Spock DJing", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "sports-car", "subject": "sports car", "shows": "sports car", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "sports-cars", "subject": "sports cars", "shows": "sports cars", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "stadium", "subject": "stadium", "shows": "stadium", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "star-with-gun-silhouette", "subject": "star with gun silhouette", "shows": "star with gun silhouette", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "steam-locomotive", "subject": "steam locomotive", "shows": "steam locomotive", "matches": true, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "strong-man-with-kettlebell-and-dumbbells", "subject": "strong man with kettlebell and dumbbells", "shows": "strong man with kettlebell and dumbbells", "matches": false, "clean": true, "panel": false, "verdict": "weak"}
+{"slug": "supermarine-spitfire-aircraft", "subject": "supermarine spitfire aircraft", "shows": "aircraft", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "supermarine-spitfire", "subject": "supermarine spitfire", "shows": "abstract airplane", "matches": false, "clean": true, "panel": false, "verdict": "unusable"}
+{"slug": "sword-and-shield", "subject": "sword and shield", "shows": "sword and shield", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "t-shirt", "subject": "t shirt", "shows": "abstract shapes", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "taekwondo-emblem", "subject": "taekwondo emblem", "shows": "taekwondo emblem", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "target-icons", "subject": "target icons", "shows": "target icons", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "target", "subject": "target", "shows": "target", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "three-glasses-of-dark-beer", "subject": "three glasses of dark beer", "shows": "three glasses of dark beer", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "three-wise-men-on-camels", "subject": "three wise men on camels", "shows": "three wise men on camels", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "tiger-head", "subject": "tiger head", "shows": "tiger head", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "tiger", "subject": "tiger", "shows": "tiger", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "tiki-figure", "subject": "tiki figure", "shows": "tiki figure", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "tools", "subject": "tools", "shows": "abstract shapes", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "tractor-with-heartbeat-line", "subject": "tractor with heartbeat line", "shows": "tractor with heartbeat line", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "tractor", "subject": "tractor", "shows": "tractor", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "triangle-with-person-silhouette", "subject": "triangle with person silhouette", "shows": "triangle with person silhouette", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "triathlon-silhouette", "subject": "triathlon silhouette", "shows": "triathlon silhouette", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "truck", "subject": "truck", "shows": "abstract shapes resembling trucks", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "tuxedo-with-red-rose", "subject": "tuxedo with red rose", "shows": "tuxedo with red rose", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "two-hands-making-a--shaka--sign", "subject": "two hands making a  shaka  sign", "shows": "two hands making a shaka sign", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "two-hands-pointing", "subject": "two hands pointing", "shows": "two hands pointing", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "two-men-in-suits-and-hats", "subject": "two men in suits and hats", "shows": "two men in suits and hats", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "two-people-practicing-judo", "subject": "two people practicing judo", "shows": "two people practicing judo", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "two-thumbs-up", "subject": "two thumbs up", "shows": "two fists", "matches": false, "clean": true, "panel": false, "verdict": "unusable"}
+{"slug": "unicorn-with-rainbow", "subject": "unicorn with rainbow", "shows": "unicorn with rainbow", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "union-jack-flag-with-a-punk-style-skull", "subject": "union jack flag with a punk style skull", "shows": "union jack flag with a punk style skull", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "vehicle", "subject": "vehicle", "shows": "abstract vehicle", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "viking-helmet-and-ship", "subject": "viking helmet and ship", "shows": "viking helmet", "matches": true, "clean": true, "panel": true, "verdict": "good"}
+{"slug": "viking-helmet", "subject": "viking helmet", "shows": "viking helmet", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "viking-warrior-with-axes", "subject": "viking warrior with axes", "shows": "viking warrior with axes", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "viking-warrior-with-horns", "subject": "viking warrior with horns", "shows": "viking warrior with horns", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "viking-warrior", "subject": "viking warrior", "shows": "viking warrior", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "vulture", "subject": "vulture", "shows": "eagle", "matches": false, "clean": true, "panel": false, "verdict": "weak"}
+{"slug": "wedding-rings", "subject": "wedding rings", "shows": "abstract shapes with red, blue, and yellow", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "weights", "subject": "weights", "shows": "weights", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "welsh-dragon-on-shield", "subject": "welsh dragon on shield", "shows": "green dragon on shield", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "welsh-flag-with-dragon", "subject": "welsh flag with dragon", "shows": "abstract shapes with no clear representation", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "whale-made-of-plastic-bottles", "subject": "whale made of plastic bottles", "shows": "whale made of plastic bottles", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "wings-with-a-sphere", "subject": "wings with a sphere", "shows": "wings with a sphere", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "witch-with-broom", "subject": "witch with broom", "shows": "witch with broom", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "wolf-howling-at-moon", "subject": "wolf howling at moon", "shows": "wolf howling at moon", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "wolf", "subject": "wolf", "shows": "abstract shapes resembling a wolf", "matches": false, "clean": false, "panel": false, "verdict": "unusable"}
+{"slug": "woman-on-motorcycle", "subject": "woman on motorcycle", "shows": "woman on motorcycle", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "x-symbol", "subject": "x symbol", "shows": "x symbol", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "yin-yang-with-hands", "subject": "yin yang with hands", "shows": "yin yang with hands", "matches": true, "clean": true, "panel": false, "verdict": "good"}
+{"slug": "young-person-making-a-peace-sign", "subject": "young person making a peace sign", "shows": "a person in a red and white outfit", "matches": false, "clean": true, "panel": false, "verdict": "unusable"}

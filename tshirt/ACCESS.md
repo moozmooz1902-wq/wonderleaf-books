@@ -264,3 +264,63 @@ stopped by hand.
 
 Measured: 24 illustrations on a 4090 in 4.3 minutes end to end, model
 download included - $0.06. The 400-subject run is about 25 minutes.
+
+## The 400-subject run, and what it actually yielded
+
+    400 generated          $0.50, 42 minutes on a 4090
+    365 physically printable   dtf.py gate: 33 covered the whole shirt, 2 were rectangles
+    271 judged good        qwen2.5vl, strict
+    259 after the IP filter
+
+Of those 259, eyeballing a 48-design spread, about three in four are
+genuinely good and the rest are weak - a blob, or artwork sitting on a
+painted panel. So call it 200 solid designs from 400 attempts. That is the
+honest number; the mechanical gate's 365 is not.
+
+### The judge, and why it exists
+
+`dtf.py` catches what cannot physically print. It cannot catch the other
+failure, which is artwork that prints perfectly and is a magenta blob.
+
+Four different pixel statistics were measured against a labelled sample
+looking for one that separates "recognisable motorcycle" from "abstract
+smear": dominant-ink share, number of inks above 4% coverage, silhouette
+fill, and per-ink block solidity. **None of them separates anything.** The
+worst blob in the sample scored better than the best motorcycle on three of
+the four. It is not a question about pixels.
+
+So `judge_illus.py` asks qwen2.5vl - the same model that read the seller's
+22,437 designs - whether each finished print file is a recognisable,
+deliberate illustration of the thing it is meant to be. 365 designs in about
+four minutes, $0.09. It composites each design onto black first, because the
+judge should see what a buyer sees on the shirt.
+
+It is well calibrated on "is this recognisable" and poorly calibrated on
+"is this on a background panel" - it flagged 12 where about 55 were
+expected. Panels remain the one unsolved defect, in post and in prompt
+alike. Do not claim otherwise.
+
+## Trademark and likeness - 389 listings that must not go up
+
+The subject bank was mined from the collaborator's live catalogue, so
+anything they sell arrives looking like a proven seller. 15 of the 400
+subjects and 389 of the 116,355 listings (0.33%) name something somebody
+else owns:
+
+    banksy 67, king charles 57, che guevara 45, supermarine 45, spitfire 26,
+    guinness 15, ducati 14, game of thrones 13, rubik 12, mini cooper 12,
+    ghostbusters 9, yamaha 9, xbox 8, land rover 8, delorean 8, scooby 6,
+    batman 5, darth 3, the beatles 3, queen elizabeth 3, bob marley 3
+
+eBay runs the VeRO programme: a rights owner reports a listing, it comes
+down, and a run of removals puts the account at risk. The M12K account
+already carries a selling limit, so it has less room than any of the others
+to absorb that. 389 listings out of 116,355 is not worth it.
+
+`ip_risk.py` holds the rules - trademark, character, likeness - and
+`strip_ip.py` removes the matching listings from the eBay files, parent row
+and all five size variations together. Run it before any upload.
+
+The likeness rule is the one most often got wrong: a portrait of a public
+figure is their likeness, not public property, and the estate of a dead one
+usually still enforces it.
