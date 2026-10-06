@@ -1,5 +1,5 @@
 {
- "_note": "Stores = Cloudflare R2 buckets, one per eBay account. rows = listings for that store. 65% of each store's rows come from its own niches, the rest is spread over every niche so no store rests on one market. No phrase+venue+colourway repeats across stores. Edit and re-run generate.py. headroom = over-allocate this much, then cut the file at exactly rows (the phrase filter removes a few percent).",
+ "_note": "Stores = Cloudflare R2 buckets, one per eBay account. rows = listings for that store. 65% of each store's rows come from its own niches, the rest is spread over every niche so no store rests on one market. No phrase+venue+colourway repeats across stores. Edit and re-run generate.py. headroom = over-allocate this much, then cut the file at exactly rows (the phrase filter removes a few percent). vmax was raised for the thin niches when their banks held 40-200 phrases; the banks now hold 180-460, so the same listings come from far less repetition and vmax is back down to 20.",
  "primary_share": 0.65,
  "stores": [
   {
@@ -149,7 +149,7 @@
   },
   "bathroom": {
    "demand": 8,
-   "vmax": 400
+   "vmax": 20
   },
   "faith_christian": {
    "demand": 7,
@@ -173,7 +173,7 @@
   },
   "motivation": {
    "demand": 7,
-   "vmax": 400
+   "vmax": 20
   },
   "office_work": {
    "demand": 5,
@@ -241,27 +241,27 @@
   },
   "laundry_utility": {
    "demand": 4,
-   "vmax": 400
+   "vmax": 20
   },
   "biz_automotive": {
    "demand": 6,
-   "vmax": 400
+   "vmax": 20
   },
   "biz_hair_beauty": {
    "demand": 6,
-   "vmax": 400
+   "vmax": 20
   },
   "biz_hospitality": {
    "demand": 6,
-   "vmax": 400
+   "vmax": 20
   },
   "biz_fitness_venues": {
    "demand": 6,
-   "vmax": 400
+   "vmax": 20
   },
   "biz_health": {
    "demand": 6,
-   "vmax": 400
+   "vmax": 20
   },
   "biz_office_pro": {
    "demand": 6,
@@ -269,7 +269,7 @@
   },
   "biz_retail_shop": {
    "demand": 6,
-   "vmax": 400
+   "vmax": 20
   },
   "biz_education": {
    "demand": 6,
