@@ -20,6 +20,17 @@ import titles, themes
 RNG = random.Random(20261006)
 SENSITIVE = {"faith", "memorial", "awareness", "veteran"}
 
+# Designs kept out of the catalogue entirely. Slurs and profanity are an
+# account risk with no revenue behind them; anti-religion draws complaints
+# and sells poorly in the source data; drug references get listings pulled.
+# Alcohol is deliberately NOT here - beer and pub designs are mainstream on
+# eBay and are 2% of the file.
+EXCLUDE = re.compile(
+    r"\bfuck|\bcunt|\bnigg|\bretard|\bspastic|\bcock\b|\bwank|\btwat|"
+    r"atheis|death to religion|anti.?christ|"
+    r"cannabis|\bweed\b|cocaine|spliff|\bbong\b|\bdrugs?\b|marijuana|\bstoner\b",
+    re.I)
+
 # measured: funny 2.12x, tee 2.70x, top 2.51x, mens 1.29x. The rest are
 # shape variation, not claimed lifts - they stop every title looking alike.
 MODIFIER = (["Funny"] * 6) + ["Novelty", "Humour", "Joke", "Sarcastic",
@@ -119,8 +130,11 @@ def main():
     rows = list(csv.DictReader(open("REPLICA_V6.csv")))
     print(f"{len(rows):,} distinct designs in")
     rows = interleave(rows)
-    kept, seen = [], set()
+    kept, seen, excluded = [], set(), 0
     for i, r in enumerate(rows):
+        if EXCLUDE.search(f"{r['original_title']} {r.get('slogan','')}"):
+            excluded += 1
+            continue
         t = build_title(r, i)
         if not t or t.lower() in seen:
             continue
@@ -135,7 +149,8 @@ def main():
 
     from collections import Counter
     n = len(kept)
-    print(f"{n:,} listings out ({len(rows)-n:,} dropped on duplicate titles)")
+    print(f"{n:,} listings out")
+    print(f"excluded on content: {excluded:,} (slurs, anti-religion, drugs)")
     print(f"distinct titles  {len(set(r['new_title'] for r in kept)):,}")
     from collections import Counter
     fy = sum(1 for r in kept if "funny" in r["new_title"].lower())
