@@ -164,3 +164,107 @@ I would cut them or curate them down hard rather than list 143k of them.
 
 `CURRENT_OUTPUT.png` in this folder is 12 designs across all 9 layouts, as
 the code draws them today.
+
+---
+
+# What was decided, and what is now written
+
+The seller answered three questions on 2026-10-06.
+
+## Buckets: unchanged, already correct
+
+    luxvia-art          1,000,000
+    mercury-usm           500,000
+    lunar-kms             500,000
+    posterleaf-store1     500,000
+
+Four accounts, 2.5M base listings. That is what `plan.json` already says and
+it matches what the seller described. Nothing to change.
+
+## Ink: mostly black, some colour - DONE and measured
+
+`CHANGES.patch` adds `black_first()` to `generate.py`. Only two palettes
+print on the black cartridge alone - `bw` and `bwgrey`, both ink `#111111`
+with a black or grey accent. Every other palette is a dark colour: the same
+coverage on the page, but CMY rather than K.
+
+A phrase gets its versions by walking down the palette list and most phrases
+take only two or three, so the ORDER of that list is what decides the ink
+bill, not how many colours exist. `black_first()` interleaves black and
+colour so the share holds at roughly 60% at **every** prefix length, instead
+of depending on where a phrase happened to stop:
+
+    first 1: 100%   first 4: 50%
+    first 2:  50%   first 5: 60%
+    first 3:  67%   first 8: 62%
+
+Regenerated all four stores and counted the result:
+
+    2,500,000 listings
+    1,581,769 on the black cartridge alone = 63.3%
+
+      bw          Black and White     924,512   37.0%
+      bwgrey      Black and Grey      657,257   26.3%
+      navy        Navy Blue           159,490    6.4%
+      sage        Sage Green          154,921    6.2%
+      forest      Forest Green        121,525    4.9%
+      gold        Black and Gold      101,855    4.1%
+
+`gold` and `mustard` are black ink too - `#111111` and `#2A2419` - with a
+coloured accent used only on the small ornament and the script word, so the
+share of pages that are essentially K-only is nearer 69%.
+
+The 37% that stays coloured is led by navy, sage and forest, which are the
+three colour words UK decor buyers actually search.
+
+## Museum scans: curate down hard - the filter is written, not yet run
+
+`pd_quality.py` (goes to `wallart/pd/quality.py`).
+
+`curate.py` already filters on what the museums SAY about a work - licence,
+UK copyright, theme, demand, duplicates - and takes 1,090,421 records down
+to 153,178. What it cannot see is what the scan looks like, which is the
+entire problem with this product line. A faded mezzotint on yellowed paper
+passes every metadata test.
+
+Unlike the t-shirt illustrations, where "is this a recognisable motorcycle"
+defeated four different pixel statistics and needed a vision model, this
+defect **is** photometric, so it gets measured:
+
+    contrast  spread between the 5th and 95th percentile of luminance. A
+              crisp engraving uses the range; a faded one sits in a band.
+    ink       share darker than mid grey - real blacks, not a grey wash.
+    sat       mean saturation - a colour woodblock against a sepia one.
+    cast      distance from neutral towards yellow, which is what aged
+              paper does.
+
+Shortlist first, so nothing is paid for that could not print anyway:
+
+    153,178 curated
+     55,360 are >= 3508px on the long side (A3 at 300dpi) and score >= 40
+
+Then fetch a 400px thumbnail of each, measure, and keep the best with a
+quota per theme - landscapes and city views are half the shortlist by count
+and the least distinctive by eye, and without a quota the survivors would be
+mostly those, which is how a catalogue ends up looking like a job lot.
+
+**Not run yet.** The museum IIIF hosts are not on this environment's
+outbound allowlist - `artic.edu` returns 403 through the proxy - so the
+fetch is a pod job. 55,360 thumbnails, 32 workers, roughly 30 minutes and
+about 30p. Target after measuring: 15,000-20,000 kept of 153,178.
+
+## Also in the patch: build_block grows as well as shrinks
+
+`build_block` says it sizes a block to fill its box and only ever shrinks to
+fit it. A short phrase is laid out at the size its width needs and left
+sitting small. The fix is bounded by the width each line can still take, so
+no line can overflow the margin. Measured effect is small because width is
+usually the binding edge, but it is correct and it matters for the badge
+layout, where the cap is looser.
+
+## Where this code has to go
+
+`CHANGES.patch` applies to `claude/hopeful-rubin-u14pgu`. This session can
+only push to `claude/dreamy-hopper-cgp4p4`, so it is carried here as a patch
+rather than committed there. One word of permission and it goes to the
+wall-art branch properly, where it belongs.

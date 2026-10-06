@@ -1,0 +1,97 @@
+--- orig/wallart/render.py	2026-10-03 16:29:33.000000000 +0000
++++ wallart/render.py	2026-10-06 18:20:25.955572789 +0000
+@@ -164,8 +164,22 @@
+ 
+     rows, total = lay(1.0)
+     if total > box_h:
+-        rows, total = lay(box_h / total * 0.98)
+-    return rows, total
++        return lay(box_h / total * 0.98)
++
++    # Grow to fill the box as well as shrink to fit it. Sizes above come from
++    # the WIDTH each line needs, so a short phrase - "Gather / here" - was
++    # laid out small and left sitting in the middle of an empty sheet. Measured
++    # over 120 designs, the ink filled 76% of the width but only 42% of the
++    # height, and two thirds of designs covered less than half the sheet. At
++    # the size an eBay thumbnail is actually seen, that is not minimalism, it
++    # is unreadable.
++    #
++    # The growth is bounded by the width each line can still take, so no line
++    # can overflow the margin: whichever of the two edges is reached first
++    # stops it.
++    head = min((f / s for f, s in zip(fits, sizes) if s > 0), default=1.0)
++    grow = min(box_h / total * 0.98, head)
++    return lay(grow) if grow > 1.0 else (rows, total)
+ 
+ 
+ def draw_block(d, rows, total, cx, top, colours, align="center", left=0):
+--- orig/wallart/generate.py	2026-10-03 16:29:33.000000000 +0000
++++ wallart/generate.py	2026-10-06 18:39:51.485984220 +0000
+@@ -221,6 +221,40 @@
+ 
+ # ------------------------------------------------------------------ style picks
+ 
++# Palettes whose ink AND accent are black or grey, so the whole sheet prints
++# on the black cartridge alone. Every other palette is a dark colour: the same
++# coverage, but CMY rather than K, which costs more per page.
++BLACK_ONLY = ("bw", "bwgrey")
++BLACK_SHARE = 0.6
++
++
++def black_first(pals):
++    """Order the palettes so any prefix of them is ~60% black.
++
++    A phrase gets its variants by walking down this list, and most phrases
++    take only two or three, so the ORDER is what decides the ink bill - not
++    how many colours exist. Interleaving to hold the share at every position
++    means the catalogue is 60% black whether a phrase has two versions or
++    twenty, instead of depending on where it happened to stop.
++
++    Colour is not dropped altogether because the palette name goes in the
++    title and decor buyers search it - "sage green kitchen print" is a real
++    search that a black and white listing does not answer.
++    """
++    black = [p for p in BLACK_ONLY if p in pals] or list(BLACK_ONLY)
++    colour = [p for p in pals if p not in BLACK_ONLY]
++    out, nb, bi, ci = [], 0, 0, 0
++    while ci < len(colour) or bi < len(black):
++        n = len(out) + 1
++        # take whichever choice leaves the running share closest to target
++        take_black = abs((nb + 1) / n - BLACK_SHARE) <= abs(nb / n - BLACK_SHARE)
++        if (take_black and bi < len(black) * 99) or ci >= len(colour):
++            out.append(black[bi % len(black)]); bi += 1; nb += 1
++        else:
++            out.append(colour[ci]); ci += 1
++    return out
++
++
+ def style_pools(meta):
+     pals, fonts = [], []
+     for m in meta["mood"]:
+@@ -228,7 +262,7 @@
+         fonts += FONT_MOODS.get(m, [])
+     pals = list(dict.fromkeys(pals)) + [p for p in PALETTES if p not in pals]
+     fonts = list(dict.fromkeys(fonts)) or list(FONTSETS)
+-    return pals, fonts
++    return black_first(pals), fonts
+ 
+ 
+ def pick_layout(phrase, rnd):
+@@ -396,8 +430,15 @@
+                 vr, vq = v % len(venues), v // len(venues)
+                 shuf = random.Random(f"{a.seed}|{n}|{i}")
+                 vorder = venues[:]; shuf.shuffle(vorder)
+-                head = pals[:8]; shuf.shuffle(head)
+-                porder = head + pals[8:]
++                # black_first() has already ordered these to hold the 60%
++                # share at every prefix length; shuffling the head would undo
++                # exactly that, so only the colour positions are shuffled and
++                # the black ones stay where they are.
++                porder = pals[:]
++                spots = [j for j, p in enumerate(porder[:10]) if p not in BLACK_ONLY]
++                picked = [porder[j] for j in spots]; shuf.shuffle(picked)
++                for j, p in zip(spots, picked):
++                    porder[j] = p
+                 pal = porder[(vq + vr) % len(porder)]
+                 room = vorder[vr]
+                 fset = rnd.choice(fonts)
