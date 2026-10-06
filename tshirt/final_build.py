@@ -15,9 +15,10 @@ Two things the seller asked for that the earlier build got wrong:
 """
 import csv, random, re
 from collections import defaultdict
-import titles
+import titles, themes
 
 RNG = random.Random(20261006)
+SENSITIVE = {"faith", "memorial", "awareness", "veteran"}
 
 # measured: funny 2.12x, tee 2.70x, top 2.51x, mens 1.29x. The rest are
 # shape variation, not claimed lifts - they stop every title looking alike.
@@ -44,25 +45,38 @@ def dedupe_words(s):
 
 def build_title(row, i):
     """Nine shapes, rotated by index so neighbours differ."""
-    subj = titles.subject_words(row["original_title"])[:7]
+    theme0, _ = themes.theme_of(row["original_title"], row.get("slogan", ""))
+    subj = titles.subject_words(row["original_title"])
+    if theme0 in SENSITIVE:
+        # the source title sometimes carries "Funny" itself; it must not ride
+        # along onto a memorial, a scripture or an awareness design
+        subj = [w for w in subj if w.lower() not in
+                {"funny", "novelty", "humour", "humor", "joke", "rude", "sarcastic", "cheeky"}]
+    subj = subj[:7]
     if len(subj) < 2:
         return None
     core = " ".join(subj[:5])
     extra = " ".join(subj[5:7])
-    m = MODIFIER[i % len(MODIFIER)]
+    # the theme decides the keywords, so Funny only goes on shirts that are
+    # funny. A memorial or a scripture design gets its own buyers' words.
+    theme, kw = themes.theme_of(row["original_title"], row.get("slogan", ""))
+    m = kw if theme != "humour" else MODIFIER[i % len(MODIFIER)]
+    row["theme"] = theme
     g = GARMENT[(i // 3) % len(GARMENT)]
     a = AUDIENCE[(i // 5) % len(AUDIENCE)]
     t = TAIL[(i // 7) % len(TAIL)]
+    # the subject and the search keywords always survive; garment, audience
+    # and the tail are what gets dropped when the 80 chars run out
     shapes = [
-        f"{core} {g} {a} {m} {extra} {t}",
-        f"{m} {core} {g} {a} {extra} {t}",
         f"{core} {m} {g} {a} {extra} {t}",
-        f"{core} {g} {m} {a} {t} {extra}",
+        f"{m} {core} {g} {a} {extra} {t}",
+        f"{core} {m} {a} {g} {extra} {t}",
+        f"{core} {m} {g} {t} {a} {extra}",
         f"{m} {core} {a} {g} {t} {extra}",
-        f"{core} {a} {g} {m} {extra} {t}",
-        f"{core} {g} {a} {extra} {m} {t}",
+        f"{core} {m} {extra} {g} {a} {t}",
+        f"{core} {m} {g} {a} {t} {extra}",
         f"{m} {g} {core} {a} {extra} {t}",
-        f"{core} {extra} {g} {a} {m} {t}",
+        f"{core} {extra} {m} {g} {a} {t}",
     ]
     s = dedupe_words(re.sub(r"\s{2,}", " ", shapes[i % len(shapes)]).strip())
     if len(s) > 80:
@@ -106,7 +120,7 @@ def main():
         seen.add(t.lower())
         r["new_title"] = t
         kept.append(r)
-    fields = list(rows[0].keys())
+    fields = list(rows[0].keys()) + (["theme"] if "theme" not in rows[0] else [])
     with open("FINAL_V7.csv", "w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=fields)
         w.writeheader()
@@ -116,8 +130,14 @@ def main():
     n = len(kept)
     print(f"{n:,} listings out ({len(rows)-n:,} dropped on duplicate titles)")
     print(f"distinct titles  {len(set(r['new_title'] for r in kept)):,}")
+    from collections import Counter
     fy = sum(1 for r in kept if "funny" in r["new_title"].lower())
     print(f"titles with Funny {fy:,} ({100*fy/n:.0f}%) - was 100%")
+    th = Counter(r.get("theme","?") for r in kept)
+    print("themes:", ", ".join(f"{k} {v:,}" for k,v in th.most_common(8)))
+    bad = sum(1 for r in kept if r.get("theme") in ("faith","memorial","awareness","veteran")
+              and "funny" in r["new_title"].lower())
+    print(f"sensitive themes carrying 'Funny': {bad}")
     print(f"max title length {max(len(r['new_title']) for r in kept)}")
     nb = sum(1 for a, b in zip(kept, kept[1:])
              if (a.get('subject') or '') == (b.get('subject') or ''))
