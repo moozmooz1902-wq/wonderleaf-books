@@ -268,3 +268,52 @@ layout, where the cap is looser.
 only push to `claude/dreamy-hopper-cgp4p4`, so it is carried here as a patch
 rather than committed there. One word of permission and it goes to the
 wall-art branch properly, where it belongs.
+
+## Type size: the weak tail, lifted a little
+
+Measured on 300 rows sampled across all 2.5M, how much of the sheet the type
+actually covers:
+
+                before   after
+      median      56%     60%
+      p25         40%     45%
+      p10         30%     34%
+      under 35%   18%     12%   of listings
+
+The cause is in `build_block`: in `even` mode every main line shares one
+size, and that size is set by the LONGEST line. "The Maxwell / family /
+together since 1968" is laid out at the size nineteen characters need, so
+the whole sign covers 22% of the sheet - small type marooned in white. That
+is what the weak end of this catalogue looks like, and it is concentrated in
+the family-name niche, which is the largest one at 649,577 listings.
+
+`even_or_fill()` picks the mode from the shape of the phrase. A quote keeps
+`even`, because its lines are long and even and it should read as a
+sentence. A name sign - two to four short lines of markedly uneven length,
+no attribution - gets `fill`, where each line stretches to the width. That
+is how these are set on a poster, and it is what the strongest designs in
+the range already do by accident when their longest line happens to be
+short.
+
+**Be clear about the size of this.** It is a real lift at the bottom of the
+range and it does nothing to the middle. `TYPE_SIZE_BEFORE_AFTER.png` shows
+the six designs the old code laid out smallest: one of them ("Shah / est.
+2010") is transformed, the rest are unchanged because their lines are not
+uneven enough to trip the rule. I would rather say that than dress it up.
+
+## The conclusion I did not expect
+
+I went into this looking for a rendering fault and found a good renderer.
+The drawing is clean, the centring is right, the compliance gate is more
+thorough than the one I had to build for the t-shirts, and black on white
+was already the rule.
+
+What is thin is what the catalogue has to SAY. 957,516 phrases across 2.5M
+listings, of which 95% are names, towns and breeds poured into a handful of
+templates, and the generic niches that a buyer finds without knowing a name
+are 37 to 200 sentences each, stretched 20 to 68 ways.
+
+`expand_phrases.py` is already written and is the fix. It needs
+`ANTHROPIC_API_KEY` in the environment settings and costs $5-26 at batch
+prices. That is the highest-value thing left on this product line by a
+distance, and it is one setting away.

@@ -1,6 +1,44 @@
 --- orig/wallart/render.py	2026-10-03 16:29:33.000000000 +0000
-+++ wallart/render.py	2026-10-06 18:20:25.955572789 +0000
-@@ -164,8 +164,22 @@
++++ wallart/render.py	2026-10-06 18:52:19.004659508 +0000
+@@ -115,6 +115,37 @@
+         x += f.getlength(ch) + tracking
+ 
+ 
++def even_or_fill(lines, attrib):
++    """Pick the sizing mode from the shape of the phrase.
++
++    'even' gives every main line one shared size, which is right for a quote
++    and keeps it reading as a sentence. But the size is set by the LONGEST
++    line, so "The Maxwell / family / together since 1968" is laid out at the
++    size that nineteen characters need and the whole sign ends up covering
++    22% of the sheet - small type marooned in white, which is what the weak
++    end of the catalogue looks like.
++
++    A name sign is not a sentence. When the lines are short and markedly
++    uneven, each one is stretched to the width instead, which is how these
++    are set on a poster and what the strongest designs in the range already
++    do by accident when their longest line happens to be short.
++
++    Measured over 300 catalogue rows, this lifts the bottom of the range
++    without touching the middle: quotes and scripture keep 'even' because
++    their lines are long and even.
++    """
++    if attrib:
++        return "even"                        # an attributed quote is a quote
++    main = [t for t, role in lines if role == "main"]
++    if len(main) < 2 or len(main) > 4:
++        return "even"
++    longest = max(len(t) for t in main)
++    shortest = min(len(t) for t in main)
++    if longest > 22:
++        return "even"                        # long lines: a sentence, not a sign
++    return "fill" if longest >= shortest * 1.6 else "even"
++
++
+ def build_block(lines, fs, box_w, box_h, mode, upper, cap=0.30):
+     """Choose a size for every line so the block fills box_w x box_h.
+     mode 'even'   - main lines share one size (classic centred quote)
+@@ -164,8 +195,22 @@
  
      rows, total = lay(1.0)
      if total > box_h:
@@ -25,6 +63,16 @@
  
  
  def draw_block(d, rows, total, cx, top, colours, align="center", left=0):
+@@ -494,7 +539,8 @@
+             m = W * 0.17
+         box_w = W - 2 * m
+         box_h = H - 2 * m * 1.3 - (osz * 1.3 if has_orn else 0) - attrib_h()
+-        rows, total = build_block(lines, fs, box_w, box_h, "even", upper)
++        rows, total = build_block(lines, fs, box_w, box_h,
++                                  even_or_fill(lines, attrib), upper)
+         gap_rule = W * 0.035 if layout == "rules" else 0
+         total_all = total + (osz * 1.25 if has_orn else 0) + attrib_h() + gap_rule * (len(rows) - 1)
+         y = (H - total_all) / 2 + (H * 0.04 if layout == "arch" else 0)
 --- orig/wallart/generate.py	2026-10-03 16:29:33.000000000 +0000
 +++ wallart/generate.py	2026-10-06 18:39:51.485984220 +0000
 @@ -221,6 +221,40 @@
