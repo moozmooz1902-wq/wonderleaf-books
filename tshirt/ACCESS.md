@@ -164,3 +164,81 @@ it would reproduce the exact failure the wall-art branch diagnosed.
 Fix direction: make the slogan depend on more of the source listing than a
 single niche word - the full subject phrase, not the collapsed category -
 and enforce a cap so no slogan+look pair repeats.
+
+## Illustrations for DTF - settled 2026-10-06
+
+The seller prints by DTF transfer onto **black** shirts. That rules out
+three things the image model produces by default, and no amount of prompting
+reliably removes any of them, so `dtf.py` enforces all three after the fact:
+
+- **Gradients and shading.** They band on transfer film. `deshade()`
+  mode-filters the artwork into plateaus and then quantises to four flat
+  inks with dithering off - dithering is itself a gradient.
+- **Hairlines.** A stroke under about 2mm at print size lifts off with the
+  carrier sheet. `despeckle()` is a majority vote over a 5px window, so an
+  engraved lion's mane becomes either a solid shape or nothing.
+- **Dark ink.** The model's default palette is sepia and charcoal, which on
+  a black shirt is invisible. `plan_inks()` keeps each ink's hue but floors
+  its brightness and saturation, and drops a dark neutral to transparent
+  entirely - the shirt is that ink, and the artwork gets its outlines free.
+
+`printable()` then rejects anything still unprintable: too little ink, ink
+over the whole shirt, an edge-to-area ratio that means spindly detail, or a
+silhouette that is nearly a filled rectangle (a painted background panel the
+knockout could not reach).
+
+### Three mistakes worth not repeating
+
+1. **Quantise the artwork, not the canvas.** `knockout()` zeroes the RGB of
+   the pixels it removes, so a straight `quantize()` saw a million pixels of
+   pure black and spent one of its four inks describing empty space. The
+   first flattened sample came out as white blobs because of this.
+   `_ink_palette()` builds the palette from the opaque pixels only.
+2. **Recolour after matching, never before.** Matching pixels against an
+   already-brightened palette sends a black pixel to whichever bright ink
+   happens to sit nearest black. The design scrambles. Match against the
+   true inks, then `putpalette()` the lifted ones.
+3. **Post-processing cannot rescue the wrong prompt.** The first 24
+   illustrations were generated as detailed engravings; flattening them just
+   produced flat mud. Regenerating 24 with a flat-vector prompt and bright
+   palette hints cost about 6p and fixed what hours of filter tuning could
+   not.
+
+Background panels are the one defect still not solved in post. Four
+different detectors were measured against a labelled sample and none
+separated a painted panel from a design that happens to be solid. It is
+handled at the prompt (`no background panel, no frame, no border` plus a
+negative prompt) and whatever gets through is rejected by `printable()`.
+
+### Running it
+
+`gen_illus.py` uploads three copies per subject:
+
+    illus/src/   the image exactly as the model drew it
+    illus/raw/   the printable transparent PNG
+    illus/ink/   the same shape as one flat ink
+
+`src/` exists so the flattening can be retuned without paying for the GPU
+again. Generation is the expensive step and the artwork does not change; how
+it is reduced for DTF is the part that gets argued over. `try_dtf.py`
+re-runs the whole reduction locally against `illus_src/` and renders a
+contact sheet on the mockup - that loop is free and is where the tuning
+belongs.
+
+### Pod recipe that works
+
+There is still no way to write to R2 from the Claude environment (the
+credential form cannot sign SigV4, and the keys live only on template
+`vbsgwyibn1`). So the pod pulls the code pack from the bucket's **public**
+base and the changed files are carried inline:
+
+    tar czf overlay.tgz gen_illus.py dtf.py && base64 -w0 overlay.tgz
+
+and the dockerStartCmd does `echo '<b64>' | base64 -d > o.tgz && tar xzf
+o.tgz` after unpacking `v2/_pack.tgz`. About 9 KB of base64, well inside the
+limit. End the command with `sleep <seconds>` rather than `sleep infinity`:
+the container then exits on its own, which caps the cost if the pod is not
+stopped by hand.
+
+Measured: 24 illustrations on a 4090 in 4.3 minutes end to end, model
+download included - $0.06. The 400-subject run is about 25 minutes.
