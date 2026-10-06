@@ -115,6 +115,37 @@ def draw_tracked(d, x, y, txt, f, fill, tracking):
         x += f.getlength(ch) + tracking
 
 
+def even_or_fill(lines, attrib):
+    """Pick the sizing mode from the shape of the phrase.
+
+    'even' gives every main line one shared size, which is right for a quote
+    and keeps it reading as a sentence. But the size is set by the LONGEST
+    line, so "The Maxwell / family / together since 1968" is laid out at the
+    size that nineteen characters need and the whole sign ends up covering
+    22% of the sheet - small type marooned in white, which is what the weak
+    end of the catalogue looks like.
+
+    A name sign is not a sentence. When the lines are short and markedly
+    uneven, each one is stretched to the width instead, which is how these
+    are set on a poster and what the strongest designs in the range already
+    do by accident when their longest line happens to be short.
+
+    Measured over 300 catalogue rows, this lifts the bottom of the range
+    without touching the middle: quotes and scripture keep 'even' because
+    their lines are long and even.
+    """
+    if attrib:
+        return "even"                        # an attributed quote is a quote
+    main = [t for t, role in lines if role == "main"]
+    if len(main) < 2 or len(main) > 4:
+        return "even"
+    longest = max(len(t) for t in main)
+    shortest = min(len(t) for t in main)
+    if longest > 22:
+        return "even"                        # long lines: a sentence, not a sign
+    return "fill" if longest >= shortest * 1.6 else "even"
+
+
 def build_block(lines, fs, box_w, box_h, mode, upper, cap=0.30):
     """Choose a size for every line so the block fills box_w x box_h.
     mode 'even'   - main lines share one size (classic centred quote)
@@ -164,8 +195,22 @@ def build_block(lines, fs, box_w, box_h, mode, upper, cap=0.30):
 
     rows, total = lay(1.0)
     if total > box_h:
-        rows, total = lay(box_h / total * 0.98)
-    return rows, total
+        return lay(box_h / total * 0.98)
+
+    # Grow to fill the box as well as shrink to fit it. Sizes above come from
+    # the WIDTH each line needs, so a short phrase - "Gather / here" - was
+    # laid out small and left sitting in the middle of an empty sheet. Measured
+    # over 120 designs, the ink filled 76% of the width but only 42% of the
+    # height, and two thirds of designs covered less than half the sheet. At
+    # the size an eBay thumbnail is actually seen, that is not minimalism, it
+    # is unreadable.
+    #
+    # The growth is bounded by the width each line can still take, so no line
+    # can overflow the margin: whichever of the two edges is reached first
+    # stops it.
+    head = min((f / s for f, s in zip(fits, sizes) if s > 0), default=1.0)
+    grow = min(box_h / total * 0.98, head)
+    return lay(grow) if grow > 1.0 else (rows, total)
 
 
 def draw_block(d, rows, total, cx, top, colours, align="center", left=0):
@@ -494,7 +539,8 @@ def render(phrase, palette="bw", fonts="classic_serif", layout="stack", orn="non
             m = W * 0.17
         box_w = W - 2 * m
         box_h = H - 2 * m * 1.3 - (osz * 1.3 if has_orn else 0) - attrib_h()
-        rows, total = build_block(lines, fs, box_w, box_h, "even", upper)
+        rows, total = build_block(lines, fs, box_w, box_h,
+                                  even_or_fill(lines, attrib), upper)
         gap_rule = W * 0.035 if layout == "rules" else 0
         total_all = total + (osz * 1.25 if has_orn else 0) + attrib_h() + gap_rule * (len(rows) - 1)
         y = (H - total_all) / 2 + (H * 0.04 if layout == "arch" else 0)
@@ -581,7 +627,14 @@ def render(phrase, palette="bw", fonts="classic_serif", layout="stack", orn="non
     return img
 
 
-def mockup(art, width=1000, wall="#EDE9E3", framed=False):
+# The listing photo is 2000x2000. That is not a taste call: the seller's team
+# runs a tool over these that finds the black frame and crops away the rest,
+# and every image already in their buckets is 2000x2000 - 14 of 14 sampled at
+# random from a real listing of the bucket. Matching it is the whole point.
+LISTING_PX = 2000
+
+
+def mockup(art, width=LISTING_PX, wall="#EDE9E3", framed=False):
     """Listing photo: the print on a wall with a soft shadow.
     framed=True puts it in a thin black frame with a white mount - the only
     frame colour sold, shown as the second photo so buyers see both options."""

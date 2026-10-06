@@ -113,20 +113,38 @@ def title_phrase(phrase):
     return t
 
 
-def fit(parts, limit=80, keep=1):
+def fit(parts, limit=80, keep=1, tail=()):
     """Join parts in priority order within `limit` characters.
-    The first part (the phrase) is trimmed at a word boundary so that the next
-    `keep` parts always fit - those carry the search keywords that must never
-    be squeezed out. Later parts are added only while they fit."""
+
+    Three bands, and the order matters:
+
+      head      the phrase. Trimmed at a word boundary to make room.
+      must      the first `keep` parts - the niche keywords. Never dropped,
+                so a funny print is found by "funny" and a memorial one by
+                "memorial".
+      tail      reserved BEFORE the optional middle, because the seller puts
+                the same search words at the end of every title and those
+                were being squeezed out: "Framed" was reaching 7% of titles
+                and "Poster" 11%, since fit() filled left to right and ran
+                out of characters before it got there.
+
+    Whatever is left over after head, must and tail goes to the optional
+    middle parts - venue, colour, paper sizes - which are nice to have and
+    were never the point.
+    """
     head, must, rest = parts[0], parts[1:1 + keep], parts[1 + keep:]
-    need = sum(len(p) + 1 for p in must if p)
+    tail = [t for t in tail if t]
+    need = sum(len(p) + 1 for p in must if p) + sum(len(t) + 1 for t in tail)
     if len(head) + need > limit:
         cut = head[: max(0, limit - need)].rsplit(" ", 1)[0]
         head = cut.rstrip(",.;:&-")
     out = " ".join([head] + [p for p in must if p]).strip()
+    budget = limit - sum(len(t) + 1 for t in tail)
     for p in rest:
-        if p and len(out) + 1 + len(p) <= limit:
+        if p and len(out) + 1 + len(p) <= budget:
             out += " " + p
+    for t in tail:
+        out += " " + t
     return out[:limit]
 
 
@@ -190,6 +208,9 @@ def mood_words(niche, phrase):
     return m
 
 
+# Set True to add "Bold" to every title. See build_title for why it is off.
+BOLD = False
+
 KINDS = ["Wall Art Print", "Print Wall Art", "Art Print Wall Decor", "Wall Art Poster Print"]
 
 
@@ -215,11 +236,54 @@ def build_title(phrase, venue, colour, rnd, niche=""):
     extra = _fresh(EXTRA.get(niche, ""), head + " " + core)
     if _fresh(venue, head + " " + core + " " + extra) != venue:   # 'Kids Room ... Living' - skip a clashing room
         venue = ""
-    gift = "" if "gift" in (head + " " + core).lower() else "Gift"
-    return fit([head, core, extra, venue, colour, "A4 A3 A2", gift, "Framed"])
+    # The tail the seller puts on every listing. Ordered by how often UK
+    # buyers actually type each word, counted from the eBay search-box
+    # research in research/keywords.json: poster 912, gift 489, frame 421 and
+    # framed 311 across 303 researched terms. "Bold" is in that list at the
+    # seller's request and is off by default - it appears ZERO times in the
+    # research, so it would spend five characters of every title on a word
+    # nobody searches. Set BOLD = True to put it back.
+    tail = [t for t in ("Framed", "Poster" if "poster" not in core.lower() else "",
+                        "" if "gift" in (head + " " + core).lower() else "Gift",
+                        "Bold" if BOLD else "") if t]
+    return fit([head, core, extra, venue, colour, "A4 A3 A2"], tail=tail)
 
 
 # ------------------------------------------------------------------ style picks
+
+# Palettes whose ink AND accent are black or grey, so the whole sheet prints
+# on the black cartridge alone. Every other palette is a dark colour: the same
+# coverage, but CMY rather than K, which costs more per page.
+BLACK_ONLY = ("bw", "bwgrey")
+BLACK_SHARE = 0.5
+
+
+def palette_order(black, colour, rnd):
+    """Build this phrase's palette order, black with probability BLACK_SHARE.
+
+    The obvious version - a fixed order that alternates black and colour -
+    does not work, and the way it failed is worth keeping. Two orders were
+    built, one starting black and one starting colour, and a phrase picked
+    between them. Variants 0 and 1 came out at exactly 50% as intended and
+    variant 2 came out at 100%, because both orders happened to carry a black
+    palette in third place. Most phrases have about three versions, so the
+    catalogue sat at 63% black however the target was set.
+
+    Drawing each slot independently has no such structure to collide with:
+    the share is BLACK_SHARE at every position, for any number of variants.
+    The white ground is what saves the ink either way - a dark colour on
+    white costs barely more than black - and the palette name goes in the
+    title, which is a search a black and white listing cannot answer.
+    """
+    bi = ci = 0
+    out = []
+    while ci < len(colour) or bi < len(black) * 3:
+        if (rnd.random() < BLACK_SHARE and bi < len(black) * 3) or ci >= len(colour):
+            out.append(black[bi % len(black)]); bi += 1
+        else:
+            out.append(colour[ci]); ci += 1
+    return out
+
 
 def style_pools(meta):
     pals, fonts = [], []
@@ -228,19 +292,36 @@ def style_pools(meta):
         fonts += FONT_MOODS.get(m, [])
     pals = list(dict.fromkeys(pals)) + [p for p in PALETTES if p not in pals]
     fonts = list(dict.fromkeys(fonts)) or list(FONTSETS)
-    return pals, fonts
+    black = [p for p in BLACK_ONLY if p in pals] or list(BLACK_ONLY)
+    return black, [p for p in pals if p not in BLACK_ONLY], fonts
 
 
 def pick_layout(phrase, rnd):
-    n = phrase.count(" / ") + 1
+    """Which layout suits this phrase.
+
+    `corner` and `left` push the block to one edge and leave the rest of the
+    sheet open, which is a deliberate look and a good one - on a SHORT
+    phrase. Given four lines of scripture it put 15% of the sheet's worth of
+    tiny type against the bottom edge with 78% of the sheet empty above it.
+    So both are now limited to phrases short enough to carry the asymmetry,
+    and `badge` to what fits inside a circle.
+    """
+    parts = [p.strip() for p in phrase.split(" / ")] if " / " in phrase else [phrase]
+    n = len(parts)
+    longest = max(len(p) for p in parts)
     long_text = " ~ " in phrase or len(phrase) > 70
-    if long_text:
-        return rnd.choice(["stack", "frame", "arch", "left", "corner"])
-    if n == 1:
-        return rnd.choice(["stack", "badge", "frame", "arch", "corner", "left"])
-    if n >= 3:
-        return rnd.choice(LAYOUTS)
-    return rnd.choice(["stack", "frame", "rules", "arch", "badge", "ribbon", "left", "corner"])
+
+    edge = n <= 3 and longest <= 16          # corner and left want a small block
+    pool = ["stack", "frame", "arch"]
+    if not long_text:
+        pool += ["rules", "ribbon"]
+        if n >= 3:
+            pool += ["subway"]
+        if n <= 3 and longest <= 20:
+            pool += ["badge"]
+    if edge:
+        pool += ["left", "corner"]
+    return rnd.choice(pool)
 
 
 SLOT_WORDS = None
@@ -389,15 +470,17 @@ def main():
                 rnd = random.Random(f"{a.seed}|{n}|{i}|{v}")
                 if n not in pools:
                     pools[n] = style_pools(meta)
-                pals, fonts = pools[n]
+                blacks, colours, fonts = pools[n]
                 venues = meta["rooms"]
                 # variant v -> a unique (venue, colourway) pair for this phrase:
                 # the same words reach a different market AND look different
                 vr, vq = v % len(venues), v // len(venues)
                 shuf = random.Random(f"{a.seed}|{n}|{i}")
+                pals = palette_order(blacks, colours, shuf)
                 vorder = venues[:]; shuf.shuffle(vorder)
-                head = pals[:8]; shuf.shuffle(head)
-                porder = head + pals[8:]
+                # palette_order() already drew this phrase's sequence from
+                # its own RNG, so there is nothing left to shuffle.
+                porder = pals
                 pal = porder[(vq + vr) % len(porder)]
                 room = vorder[vr]
                 fset = rnd.choice(fonts)

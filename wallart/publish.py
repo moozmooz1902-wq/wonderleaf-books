@@ -68,7 +68,7 @@ def draw(job):
         art = art_for(row, 1200)
         # the ONE listing photo: the print in a black frame on a wall
         buf = io.BytesIO()
-        mockup(art, 1600, framed=True).save(buf, "JPEG", quality=88, optimize=True)
+        mockup(art, framed=True).save(buf, "JPEG", quality=88, optimize=True)
         out[f"art/mock/{row['sku']}.jpg"] = (buf.getvalue(), "image/jpeg")
     if want_raw:
         px = round(PRINT_MM[size] / 25.4 * 300)

@@ -114,3 +114,56 @@ Print files come from `/p/A4/...` when an order arrives.
 - The eBay File Exchange upload file (size variations A5/A4/A3, prices, item
   specifics, shipping profiles), built from these CSVs.
 - The order-to-print step (fetch `/p/<size>/...` for each sold SKU).
+
+## Image sizes are an interface, not a detail
+
+The seller's team runs a tool over the listing photos that finds the black
+frame and crops away the rest. The canvas size and the frame's position
+inside it are therefore depended on by other people's software.
+
+Everything already in the seller's buckets is 2000 x 2000 - checked on 14
+photos drawn at random from a real listing of a bucket, not from memory of
+what was built - so that is what `LISTING_PX` is set to, and `publish.py`
+and `serve.py` both take it from there rather than each passing a number.
+
+    listing photo  2000 x 2000 JPEG on #EDE9E3
+    frame box      (406, 160, 1593, 1840)   = 1187 x 1680
+    print area     1105 x 1598 inside the moulding
+    A4 print file  2480 x 3507 PNG at 300 dpi
+    A3 print file  3508 x 4961
+    A2 print file  4961 x 7015
+
+`python3 size_contract.py` asserts all of it and fails loudly if any of it
+moves. Run it after touching `render.py`, `publish.py` or `serve.py`.
+
+## Titles: the search words go at the end and are never trimmed
+
+The seller puts the same words at the end of every title. `fit()` filled
+left to right and ran out of characters before reaching them, so "Framed"
+was landing on 7% of titles and "Poster" on 11%. It now reserves that tail
+before the optional middle - venue, colour, paper sizes - so:
+
+    Poster   11.5% -> 100%
+    Framed    7.1% -> 100%
+    Gift     52.3% -> 100%
+
+still with nothing over 80 characters, median 77. The cost is the paper
+sizes, which fall from 50% to 17% of titles; they are a listing variation
+anyway, and "poster" appears 912 times in the eBay search-box research
+against 75 for "a4".
+
+"Bold" is in the list at the seller's request but is **off by default**
+(`BOLD = False` in `generate.py`). It appears zero times across the 303
+researched search terms, so it would spend five characters of every title on
+a word nobody types. Set it True to put it back.
+
+## Ink: about half black, the rest colour
+
+`palette_order()` draws each slot black with probability `BLACK_SHARE`
+(0.5). Measured on the generated catalogue: 51% of listings on the black
+cartridge alone, 50% at every variant position, with the rest spread across
+navy, gold, blush, burnt orange, sage, mustard, brown and rainbow.
+
+The white ground is what saves the ink. A dark colour on it costs barely
+more than black, and the palette name goes in the title because decor buyers
+search it.

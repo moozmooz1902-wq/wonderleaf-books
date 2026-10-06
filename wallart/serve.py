@@ -47,7 +47,7 @@ class H(BaseHTTPRequestHandler):
         if kind == "r":
             render(phrase, pal, fonts, layout, orn, 1600).save(buf, "JPEG", quality=90)
         elif kind == "m":
-            mockup(render(phrase, pal, fonts, layout, orn, 1200), 1600).save(buf, "JPEG", quality=90)
+            mockup(render(phrase, pal, fonts, layout, orn, 1200)).save(buf, "JPEG", quality=90)
         else:
             px = round(MM[size] / 25.4 * 300)
             render(phrase, pal, fonts, layout, orn, px).save(buf, "PNG", dpi=(300, 300))
