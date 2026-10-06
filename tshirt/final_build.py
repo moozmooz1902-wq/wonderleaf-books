@@ -52,11 +52,11 @@ def build_title(row, i):
         # along onto a memorial, a scripture or an awareness design
         subj = [w for w in subj if w.lower() not in
                 {"funny", "novelty", "humour", "humor", "joke", "rude", "sarcastic", "cheeky"}]
-    subj = subj[:7]
+    subj = subj[:9]
     if len(subj) < 2:
         return None
-    core = " ".join(subj[:5])
-    extra = " ".join(subj[5:7])
+    core = " ".join(subj[:6])
+    extra = " ".join(subj[6:9])
     # the theme decides the keywords, so Funny only goes on shirts that are
     # funny. A memorial or a scripture design gets its own buyers' words.
     theme, kw = themes.theme_of(row["original_title"], row.get("slogan", ""))
@@ -79,6 +79,13 @@ def build_title(row, i):
         f"{core} {extra} {m} {g} {a} {t}",
     ]
     s = dedupe_words(re.sub(r"\s{2,}", " ", shapes[i % len(shapes)]).strip())
+    # pack out to eBay's 80 characters with terms relevant to this theme
+    seen = {re.sub(r"[^a-z0-9]", "", w.lower()) for w in s.split()}
+    for w in themes.extra_terms(theme0):
+        k = re.sub(r"[^a-z0-9]", "", w.lower())
+        if k in seen or len(s) + 1 + len(w) > 80:
+            continue
+        seen.add(k); s += " " + w
     if len(s) > 80:
         s = dedupe_words(re.sub(r"\s{2,}", " ",
                 shapes[i % len(shapes)].replace(extra, "")).strip())
