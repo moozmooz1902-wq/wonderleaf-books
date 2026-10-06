@@ -20,7 +20,7 @@ LOCATION  = "United Kingdom"
 CATEGORY  = "15687"
 CONDITION = "1000"
 POLICY    = "1"
-PREFIX    = "v2/"
+PREFIX    = "art/mock/"   # what the fulfilment tool reads
 
 HEADER = ("*Action(SiteID=UK|Country=GB|Currency=GBP|Version=1193)",
           "CustomLabel", "*Category", "*Title", "*Description", "*ConditionID",
