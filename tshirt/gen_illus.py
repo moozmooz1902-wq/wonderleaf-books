@@ -30,41 +30,37 @@ W, H = 1024, 1024
 STEPS = int(os.environ.get("STEPS", "26"))
 GUIDANCE = float(os.environ.get("GUIDANCE", "8.5"))
 
-# DTF cannot hold a gradient, a soft edge or a 1px line, so the prompt asks
-# for none of them. It is still only a request - dtf.flatten() enforces it
-# afterwards, because the model complies maybe half the time. The second
-# clause is about the garment: these shirts are black, and the model's
-# default palette is sepia and charcoal, which on black is invisible.
-STYLE = ("flat vector illustration, bold thick black outlines, large simple "
-         "shapes, solid blocks of bright saturated colour, screen print "
-         "separation, sticker art, cel shaded, three flat colours only, "
-         "no gradient, no shading, no texture, no halftone, no crosshatch, "
-         "no fine detail, no engraving, high contrast, centred, "
-         "die cut, isolated on a plain white background, no background "
-         "panel, no frame, no border, no box, no label, "
-         "no text, no lettering, no watermark")
+# CLIP stops reading at 77 tokens and silently drops the rest, which the pod
+# log reports as "the following part of your input was truncated". The first
+# version of this prompt ran to about 90 tokens, so every clause after
+# "centred" - including the whole instruction not to paint a background
+# panel - was being discarded. Everything below is counted to fit, subject
+# and palette included, with the clauses that matter most placed first.
+STYLE = ("flat vector illustration, no background, plain white, bold thick "
+         "black outlines, large simple shapes, solid blocks of bright "
+         "saturated colour, cel shaded, three flat colours only, no gradient, "
+         "no shading, no texture, no fine detail, high contrast")
 
 # Rotated per subject so 400 designs do not all come back in the same two
 # colours. The seller asked for colour; the model will not supply it unasked.
 PALETTES = [
-    "vivid red, cream and white",
-    "electric blue, white and orange",
-    "neon green, black and white",
-    "hot pink, purple and cream",
-    "gold, teal and off-white",
-    "orange, turquoise and white",
-    "crimson, mustard and ivory",
-    "lime, magenta and white",
+    "vivid red and cream",
+    "electric blue and orange",
+    "neon green and white",
+    "hot pink and purple",
+    "gold and teal",
+    "orange and turquoise",
+    "crimson and mustard",
+    "lime and magenta",
 ]
 
-NEG = ("gradient, gradients, shading, shadow, soft shading, airbrush, "
-       "halftone, dithering, texture, grain, noise, blurry, soft edges, "
-       "photorealistic, photograph, 3d render, depth of field, bokeh, "
-       "watercolour, sketch, pencil, crosshatch, engraving, etching, "
-       "intricate detail, fine lines, sepia, monochrome, greyscale, dark, "
-       "background, backdrop, panel, frame, border, square, rectangle, "
-       "poster, label, badge outline, vignette, scenery, landscape, "
-       "text, letters, words, watermark, signature")
+# Same 77-token limit applies here, so the negative prompt is ordered by what
+# actually goes wrong: tone first, then fine detail, then painted panels.
+NEG = ("gradient, shading, shadow, halftone, texture, grain, blurry, "
+       "soft edges, fine lines, intricate detail, engraving, crosshatch, "
+       "photorealistic, 3d render, sepia, greyscale, dark, "
+       "background, backdrop, panel, frame, border, rectangle, vignette, "
+       "scenery, text, letters, watermark")
 
 
 def prompt_for(subject, i):
@@ -162,7 +158,7 @@ def main():
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--part", default="1/1", help="shard as k/n")
     ap.add_argument("--batch", type=int, default=4)
-    ap.add_argument("--colours", type=int, default=4)
+    ap.add_argument("--colours", type=int, default=5)
     ap.add_argument("--prefix", default="illus/")
     a = ap.parse_args()
 

@@ -204,6 +204,28 @@ knockout could not reach).
    palette hints cost about 6p and fixed what hours of filter tuning could
    not.
 
+### CLIP reads 77 tokens and silently drops the rest
+
+The pod log says so plainly - "the following part of your input was
+truncated" - and it is easy to miss among the model-loading chatter. The
+first prompt ran to about 90 tokens, so every clause after "centred" was
+discarded, including the whole instruction not to paint a background panel.
+Adding more words to a prompt that is already over the limit changes
+nothing at all.
+
+What that cost, and what three samples of 24 settled:
+
+    long prompt, 4 inks     good colour, background panels on 5 of 24
+    short prompt, die cut   "die cut" makes the model draw a white sticker
+                            border, which eats a palette slot and leaves
+                            the subject as a single flat blob - much worse
+    reordered, 5 inks       best: the anti-background clause now lands
+                            inside the window, 21 of 24 pass, 19 look right
+
+So the order of a prompt matters more than its length: whatever must survive
+goes first. Each sample cost about 6p and six minutes, which is far cheaper
+than tuning filters against artwork that was wrong to begin with.
+
 Background panels are the one defect still not solved in post. Four
 different detectors were measured against a labelled sample and none
 separated a painted panel from a design that happens to be solid. It is

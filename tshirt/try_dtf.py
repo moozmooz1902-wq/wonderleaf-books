@@ -5,7 +5,7 @@ import glob, os, sys
 from PIL import Image, ImageDraw, ImageFont
 import dtf, mockup, gen_illus
 
-files = sorted(glob.glob("illus_src/*.png"))
+files = sorted(glob.glob("illus_src3/*.png"))
 base = mockup.make_blank()
 cells, verdicts = [], []
 for f in files:
