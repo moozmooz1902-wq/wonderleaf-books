@@ -31,6 +31,7 @@ THUMBS = "pd/thumbs"
 MIN_PX = 3508          # A3 at 300 dpi on the long side; below this it cannot print
 MIN_SCORE = 40
 THUMB = 400
+MAX_BYTES = 3 * 1024 * 1024        # a 400px rendition is far under this
 
 
 def shortlist():
@@ -93,38 +94,46 @@ def heartbeat(path="pd.log", every=60):
 
 
 def thumb_url(r):
+    """A SMALL version of the image, from whichever host holds it.
+
+    This is where the job went wrong twice. 42,305 of the shortlist carry an
+    IIIF base and were correctly asked for 400px. The other 13,055 fell back
+    to `image_url`, which is the archival master - Cleveland serves
+    `<id>_full.tif`, the Met serves `/original/`. Downloading those filled a
+    60 GB volume, raised DecompressionBombWarnings on 164-megapixel files,
+    and dragged the rate to 9 a second. It read as a hang; it was a disk.
+
+    Every host gets asked for a small rendition, and anything with no small
+    rendition is skipped rather than guessed at.
+    """
     base = r.get("iiif_base")
     if base:
         return f"{base}/full/{THUMB},/0/default.jpg"
-    return r.get("image_url")
+    u = r.get("image_url") or ""
+    if "openaccess-cdn.clevelandart.org" in u:
+        return u.replace("_full.tif", "_web.jpg")
+    if "images.metmuseum.org" in u:
+        return u.replace("/original/", "/web-large/")
+    return None
 
 
-# Some museums refuse an unrecognised client outright. The first run got
-# HTTP 403 on 12.6% of requests with a "wonderleaf/1.0" agent; a normal
-# browser string is accepted. This is a plain public image request either
-# way, at the rate limit the host sets.
-UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
-      "Chrome/124.0 Safari/537.36")
+def fetch_and_score(rows, workers=96, budget_s=0):
+    """Fetch and measure in one pass, in memory, writing no image to disk.
 
-
-def fetch_all(rows, workers=96, budget_s=0):
-    """Fetch thumbnails, best-scoring first, within an optional time budget.
-
-    The first run managed 4 requests a second against 32 workers, which would
-    have taken 3.8 hours for 55,360 artworks. The limit is per-request
-    latency across eight museum APIs, not bandwidth, so the fix is more
-    workers - and taking the best-scoring artworks first, so that stopping
-    early costs the worst candidates rather than a random third of them.
+    The previous version wrote 16,000 thumbnails to the volume and scored
+    them afterwards. Nothing needs them twice: a few numbers per artwork is
+    all that survives, so the bytes are measured and dropped. That removes
+    the disk entirely, parallelises the measuring, and makes a failed run
+    cost nothing but time.
     """
     import urllib.request
-    os.makedirs(THUMBS, exist_ok=True)
-    done = {f[:-4] for f in os.listdir(THUMBS) if f.endswith(".jpg")}
-    todo = [r for r in rows if r["artwork_id"] not in done]
-    todo.sort(key=lambda r: -(r.get("score") or 0))
-    print(f"{len(rows)} shortlisted, {len(done)} already fetched, {len(todo)} to go, "
-          f"{workers} workers", flush=True)
-    t0 = time.time(); n = [0]; bad = [0]; codes = {}
-    stop = []
+    from PIL import Image
+    Image.MAX_IMAGE_PIXELS = None          # the cap is MAX_BYTES, not pixels
+    rows = [r for r in rows if thumb_url(r)]
+    rows.sort(key=lambda r: -(r.get("score") or 0))
+    print(f"{len(rows)} with a small rendition, {workers} workers", flush=True)
+    t0 = time.time(); n = [0]; bad = [0]; codes = {}; out = []
+    lock = threading.Lock(); stop = []
 
     def one(r):
         if stop:
@@ -132,30 +141,40 @@ def fetch_all(rows, workers=96, budget_s=0):
         try:
             req = urllib.request.Request(thumb_url(r), headers={"User-Agent": UA})
             with urllib.request.urlopen(req, timeout=30) as resp:
-                data = resp.read()
-            open(f"{THUMBS}/{r['artwork_id']}.jpg", "wb").write(data)
+                data = resp.read(MAX_BYTES + 1)
+            if len(data) > MAX_BYTES:
+                raise ValueError(f"over {MAX_BYTES//1024}KB after resize")
+            m = measure_bytes(data)
+            with lock:
+                out.append({"artwork_id": r["artwork_id"], "theme": r["theme"],
+                            "store": r.get("store", ""), "q": round(quality(m), 4),
+                            **{k: round(v, 4) for k, v in m.items()}})
         except Exception as e:
             bad[0] += 1
             k = f"{type(e).__name__}: {str(e)[:40]}"
-            codes[k] = codes.get(k, 0) + 1
+            with lock:
+                codes[k] = codes.get(k, 0) + 1
         n[0] += 1
         if n[0] % 500 == 0:
             el = time.time() - t0
-            print(f"  {n[0]}/{len(todo)}  {n[0]/el:.0f}/s  {bad[0]} failed  "
+            print(f"  {n[0]}/{len(rows)}  {n[0]/el:.0f}/s  {bad[0]} failed  "
                   f"{el/60:.0f} min", flush=True)
             if budget_s and el > budget_s:
                 stop.append(True)
-                print(f"  time budget reached - stopping with {n[0]-bad[0]} fetched",
-                      flush=True)
+                print(f"  time budget reached at {len(out)} measured", flush=True)
 
     with ThreadPoolExecutor(max_workers=workers) as ex:
-        list(ex.map(one, todo))
-    print(f"fetched {n[0]-bad[0]}, failed {bad[0]}, {(time.time()-t0)/60:.1f} min", flush=True)
-    for k, v in sorted(codes.items(), key=lambda kv: -kv[1])[:5]:
+        list(ex.map(one, rows))
+    print(f"measured {len(out)}, failed {bad[0]}, {(time.time()-t0)/60:.1f} min", flush=True)
+    for k, v in sorted(codes.items(), key=lambda kv: -kv[1])[:6]:
         print(f"    {v:>6}  {k}", flush=True)
+    with open("pd/quality.jsonl", "w") as f:
+        for o in out:
+            f.write(json.dumps(o) + "\n")
+    return out
 
 
-def measure(path):
+def measure_bytes(data):
     """What a faded scan looks like, in numbers.
 
     contrast  spread between the 5th and 95th percentile of luminance. A
@@ -168,7 +187,9 @@ def measure(path):
               which is what aged paper does.
     """
     from PIL import Image, ImageStat
-    im = Image.open(path).convert("RGB")
+    im = Image.open(io.BytesIO(data))
+    im.draft("RGB", (256, 256))         # let the JPEG decoder do the shrinking
+    im = im.convert("RGB")
     im.thumbnail((256, 256))
     g = im.convert("L")
     h = g.histogram()
@@ -193,29 +214,6 @@ def quality(m):
     """One number. Contrast carries it; a strong yellow cast is penalised."""
     q = 0.55 * m["contrast"] + 0.25 * min(m["ink"] / 0.35, 1.0) + 0.20 * min(m["sat"] / 0.45, 1.0)
     return q - max(0.0, m["cast"] - 0.06) * 1.2
-
-
-def score_all(rows):
-    out = []
-    t0 = time.time()
-    for i, r in enumerate(rows, 1):
-        if i % 2000 == 0:
-            print(f"  scored {i}/{len(rows)}  {i/(time.time()-t0):.0f}/s", flush=True)
-        p = f"{THUMBS}/{r['artwork_id']}.jpg"
-        if not os.path.exists(p):
-            continue
-        try:
-            m = measure(p)
-        except Exception:
-            continue
-        out.append({"artwork_id": r["artwork_id"], "theme": r["theme"],
-                    "store": r["store"], "q": round(quality(m), 4), **
-                    {k: round(v, 4) for k, v in m.items()}})
-    with open("pd/quality.jsonl", "w") as f:
-        for o in out:
-            f.write(json.dumps(o) + "\n")
-    print(f"measured {len(out)}")
-    return out
 
 
 def keep(rows, target):
@@ -252,7 +250,6 @@ def keep(rows, target):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--fetch", action="store_true")
-    ap.add_argument("--score", action="store_true")
     ap.add_argument("--keep", type=int, default=0)
     ap.add_argument("--workers", type=int, default=96)
     ap.add_argument("--budget", type=int, default=0, help="seconds to spend fetching")
@@ -260,21 +257,13 @@ def main():
     heartbeat()
     rows = shortlist()
     if CAP:
-        # fetching 55,360 thumbnails across eight museum APIs took longer than
-        # it was worth. Only about 18,000 are kept, so the best-scoring 16,000
-        # are enough to choose from and the job finishes inside half an hour.
         rows.sort(key=lambda r: -(r.get("score") or 0))
         rows = rows[:CAP]
     print(f"shortlist: {len(rows):,} of 153,178 are >= {MIN_PX}px and score >= {MIN_SCORE}"
           + (f", capped at {CAP:,}" if CAP else ""), flush=True)
-    if a.fetch:
-        fetch_all(rows, a.workers, a.budget)
-    scored = None
-    if a.score:
-        scored = score_all(rows)
+    scored = fetch_and_score(rows, a.workers, a.budget) if a.fetch else \
+        [json.loads(l) for l in open("pd/quality.jsonl")]
     if a.keep:
-        if scored is None:
-            scored = [json.loads(l) for l in open("pd/quality.jsonl")]
         keep(scored, a.keep)
 
 
