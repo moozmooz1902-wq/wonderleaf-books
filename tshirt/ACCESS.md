@@ -383,3 +383,33 @@ listings become pastes, at under a second each. The cache only pays off
 because the jobs are sorted by picture and palette first, so each worker
 gets a contiguous run that shares one tint rather than a random spread that
 shares none. 16 cores, about 20 minutes, roughly 20p.
+
+## Listing photo size - 2000 x 2000, measured from the bucket
+
+The seller's team runs a tool over the listing photos that finds the print
+area and crops away the rest. The canvas size is therefore an interface, not
+a rendering detail.
+
+Everything already in the bucket is **2000 x 2000** - checked on 14 photos
+drawn at random from a real listing of `art/mock/`, not from memory of what
+was built. The older numeric SKUs also keep `art/raw/<SKU>.jpg` at
+1024 x 1024, which is their earlier convention; this catalogue writes
+`art/raw/<SKU>.png` because that is what the fulfilment tool resolves a
+custom label to.
+
+**The 116,355 photos first delivered here were 1200 x 1200.** The SKUs, the
+eBay file and the print masters were all correct; only the canvas was wrong,
+and the canvas is the one thing the cropper keys on. Re-rendered at
+2000 x 2000 on 2026-10-06: 116,354 written, 0 failed, 61.5 minutes, verified
+on 60 drawn at random afterwards. SKUs unchanged, so the eBay file did not
+have to change.
+
+Print masters were deliberately NOT rewritten. A print file is a physical
+size - 22cm wide at 300 dpi - and does not follow the photo.
+
+`render_illus.py` now renders every listing rather than only the illustrated
+ones: `ALL_ROWS=1 MOCK_ONLY=1 SIZE=2000`. A row with no illustration gets the
+type-only design, as before.
+
+No CPU instances were available on RunPod that day; the job ran on a GPU pod
+doing CPU work, which is worth knowing as a fallback rather than waiting.

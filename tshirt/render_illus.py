@@ -1,12 +1,20 @@
 #!/usr/bin/env python3
-"""Re-render the illustrated listings: picture over type, mockup and print file.
+"""Render every listing photo at the size the seller's team already handles.
 
-Only the 13,313 listings that matched one of the generated illustrations are
-touched. They keep their SKUs, so they keep their image URLs, and the eBay
-file does not change at all - the artwork at those URLs simply gets better.
+The listing photos were being written at 1200x1200. Every image already in
+the seller's buckets is 2000x2000 - 14 of 14 sampled at random from a real
+listing of the bucket - and their team runs a tool over these that finds the
+print area and crops away the rest. A different canvas size is a different
+crop, so 1200 was wrong even though it looked fine.
 
-    art/mock/<SKU>.jpg   listing photo, 1200px
-    art/raw/<SKU>.png    print master, transparent, 2600px at 300dpi
+So this re-renders all 116,355 listing photos at 2000x2000: the 13,313 that
+matched an illustration keep the picture-over-type design, the rest are
+type-only as before. SKUs do not change, so the URLs do not change and the
+eBay file is untouched.
+
+    art/mock/<SKU>.jpg   listing photo, 2000x2000
+    art/raw/<SKU>.png    print master - NOT rewritten here, the print file is
+                         a physical size and does not follow the photo
 
 Both paths are what the seller's fulfilment tool resolves a custom label to,
 so writing anywhere else means it finds nothing when an order comes in.
@@ -18,12 +26,13 @@ from PIL import Image
 import compose, dtf, mockup, styles2
 from linebreak import break_lines
 
-SIZE    = int(os.environ.get("SIZE", "1200"))
+SIZE    = int(os.environ.get("SIZE", "2000"))   # what their tool already crops
 PRINT_W = int(os.environ.get("PRINT_W", "2600"))     # 22cm @ 300dpi
 PRINT_H = int(os.environ.get("PRINT_H", "3600"))     # 30cm, the tall limit
 QUALITY = int(os.environ.get("QUALITY", "86"))
 WORKERS = int(os.environ.get("WORKERS", str(cpu_count())))
 BUCKET  = os.environ["R2_BUCKET"]
+MOCK_ONLY = os.environ.get("MOCK_ONLY", "") == "1"
 SRC     = os.environ.get("ILLUS_PREFIX", "illusv2/raw/")
 
 _s3 = None
@@ -97,10 +106,14 @@ def one(job):
         pi = int(row.get("palette_idx") or 0)
         seed = int(row["source_idx"])
         text = styles2.render(break_lines(row["slogan"]), li, pi, seed=seed)
-        art = compose.stack(tinted(slug, pi), text)
+        # slug is None for the type-only majority: they get the text design
+        art = compose.stack(tinted(slug, pi), text) if slug else text
 
         mock = mockup.place(art, _blank).resize((SIZE, SIZE), Image.LANCZOS)
         put(f"art/mock/{sku}.jpg", mock, "JPEG", quality=QUALITY, optimize=True)
+        if MOCK_ONLY:
+            return 1                      # the print file is a physical
+                                          # size and does not follow the photo
 
         # 22cm wide unless that would make it taller than 30cm: a picture
         # over type is a much taller shape than type alone, and a 36cm print
@@ -117,16 +130,19 @@ def one(job):
         return -1
 
 
+ALL_ROWS = os.environ.get("ALL_ROWS", "") == "1"
+
+
 def main():
     mp = dict(l.rstrip("\n").split("\t") for l in open("ILLUS_MAP.tsv"))
     jobs = []
     with open("FINAL_V7.csv", newline="", encoding="utf-8", errors="replace") as f:
         for r in csv.DictReader(f):
             sku = f"WLT-{int(r['source_idx']):06d}"
-            if sku in mp:
-                jobs.append((sku, mp[sku], {k: r[k] for k in
+            if sku in mp or ALL_ROWS:
+                jobs.append((sku, mp.get(sku), {k: r[k] for k in
                             ("source_idx", "slogan", "look", "palette_idx")}))
-    jobs.sort(key=lambda j: (j[1], int(j[2]["palette_idx"] or 0)))
+    jobs.sort(key=lambda j: (j[1] or "", int(j[2]["palette_idx"] or 0)))
     print(f"{len(jobs)} illustrated listings, {WORKERS} workers", flush=True)
 
     # one before the rest: a smoke test is cheaper than a wasted pod-hour
