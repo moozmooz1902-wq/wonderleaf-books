@@ -20,11 +20,12 @@ those are measurements. So they get measured.
 Needs open outbound network: the museum IIIF hosts are not on the Claude
 environment's allowlist, so --fetch runs on a pod.
 """
-import argparse, gzip, io, json, os, sys, time
+import argparse, gzip, io, json, os, sys, threading, time
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 
 SRC = "pd/artworks.jsonl.gz"
+CAP = int(os.environ.get("CAP", "0"))     # 0 = no cap on the shortlist
 SHORT = "pd/shortlist.tsv.gz"
 THUMBS = "pd/thumbs"
 MIN_PX = 3508          # A3 at 300 dpi on the long side; below this it cannot print
@@ -57,6 +58,38 @@ def shortlist():
             continue
         out.append(r)
     return out
+
+
+def heartbeat(path="pd.log", every=60):
+    """Push the log to R2 while the job runs, not only when it finishes.
+
+    The first two attempts at this ran for 50 and 110 minutes with the log
+    uploading only at the end, so there was no way to tell a slow fetch from
+    a stuck one - and the second was killed on suspicion with nothing to
+    show. A job that takes an hour has to say what it is doing while it does
+    it.
+    """
+    def push():
+        try:
+            import boto3
+            c = boto3.client("s3",
+                endpoint_url=f"https://{os.environ['R2_ACCOUNT_ID']}.r2.cloudflarestorage.com",
+                aws_access_key_id=os.environ["R2_ACCESS_KEY_ID"],
+                aws_secret_access_key=os.environ["R2_SECRET_ACCESS_KEY"],
+                region_name="auto")
+        except Exception:
+            return
+        while True:
+            time.sleep(every)
+            try:
+                if os.path.exists(path):
+                    c.upload_file(path, os.environ["R2_BUCKET"], "pd/progress.log",
+                                  ExtraArgs={"ContentType": "text/plain",
+                                             "CacheControl": "no-store"})
+            except Exception:
+                pass
+    t = threading.Thread(target=push, daemon=True)
+    t.start()
 
 
 def thumb_url(r):
@@ -106,7 +139,7 @@ def fetch_all(rows, workers=96, budget_s=0):
             k = f"{type(e).__name__}: {str(e)[:40]}"
             codes[k] = codes.get(k, 0) + 1
         n[0] += 1
-        if n[0] % 2000 == 0:
+        if n[0] % 500 == 0:
             el = time.time() - t0
             print(f"  {n[0]}/{len(todo)}  {n[0]/el:.0f}/s  {bad[0]} failed  "
                   f"{el/60:.0f} min", flush=True)
@@ -164,7 +197,10 @@ def quality(m):
 
 def score_all(rows):
     out = []
-    for r in rows:
+    t0 = time.time()
+    for i, r in enumerate(rows, 1):
+        if i % 2000 == 0:
+            print(f"  scored {i}/{len(rows)}  {i/(time.time()-t0):.0f}/s", flush=True)
         p = f"{THUMBS}/{r['artwork_id']}.jpg"
         if not os.path.exists(p):
             continue
@@ -221,8 +257,16 @@ def main():
     ap.add_argument("--workers", type=int, default=96)
     ap.add_argument("--budget", type=int, default=0, help="seconds to spend fetching")
     a = ap.parse_args()
+    heartbeat()
     rows = shortlist()
-    print(f"shortlist: {len(rows):,} of 153,178 are >= {MIN_PX}px and score >= {MIN_SCORE}")
+    if CAP:
+        # fetching 55,360 thumbnails across eight museum APIs took longer than
+        # it was worth. Only about 18,000 are kept, so the best-scoring 16,000
+        # are enough to choose from and the job finishes inside half an hour.
+        rows.sort(key=lambda r: -(r.get("score") or 0))
+        rows = rows[:CAP]
+    print(f"shortlist: {len(rows):,} of 153,178 are >= {MIN_PX}px and score >= {MIN_SCORE}"
+          + (f", capped at {CAP:,}" if CAP else ""), flush=True)
     if a.fetch:
         fetch_all(rows, a.workers, a.budget)
     scored = None
