@@ -12,7 +12,7 @@ import csv, html, sys
 import r2_config
 
 # ---- the only things that need changing -------------------------------
-PRICE     = "9.99"          # <-- CONFIRM: placeholder
+PRICE     = "12.99"         # <-- ASSUMPTION, not given. One edit changes all rows.
 QUANTITY  = "1"
 LOCATION  = "United Kingdom"
 CATEGORY  = "15687"         # eBay UK > Men's Clothing > T-Shirts
@@ -54,7 +54,7 @@ def description(r):
 
 
 def main(limit=None):
-    rows = list(csv.DictReader(open("REPLICA_V5.csv")))
+    rows = list(csv.DictReader(open("FINAL_V7.csv")))
     if limit: rows = rows[:limit]
     out = "EBAY_UPLOAD_TEST.csv" if limit else "EBAY_UPLOAD.csv"
     with open(out, "w", newline="", encoding="utf-8") as fh:
