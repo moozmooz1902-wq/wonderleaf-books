@@ -88,9 +88,9 @@ reason, for the record.
 
 **`EBAY_ONE_FILE.zip`** - one eBay File Exchange CSV, zipped.
 
-    115,421 listings
-    577,105 size variations, exactly 5 per listing, no orphans
-    692,526 data rows, 30 columns
+    113,065 listings
+    565,325 size variations, exactly 5 per listing, no orphans
+    678,390 data rows, 30 columns
     £11.99, quantity 1 per size, category 15687, United Kingdom
     business policies: shipping 2, returns 1, payment 1
     every listing has a PicURL and a print master in the bucket
@@ -102,44 +102,52 @@ exactly five variations, no orphan variations, nothing missing `C:Size`,
 nothing missing `PicURL`, no title over 80 characters, and every description
 heading matching its title.
 
-### Titles rebuilt on the hot sellers' formula
+### Titles now lead with the text printed on the shirt
 
-The benchmark is the source catalogue the designs were replicated from - the
-file the seller shared - **filtered to t-shirts only** (it also contains
-hoodies, sweatshirts and jumpers, which were excluded) and **weighted by units
-actually sold**: 75,880 t-shirt titles, 11,849 of them with sales, 134,578
-units between them.
+**A real defect, found by the seller.** One listing was titled "Music Raising
+My Husband Is Exhausting Light Band T-Shirt Mens Music Tee Top" while the shirt
+itself reads "THIS IS WHAT AN AWESOME HUSBAND LOOKS LIKE". Two unrelated
+phrases.
 
-    keyword      all tees   by units   ours
-    T-Shirt        100.0%     100.0%   100.0%
-    Mens            86.4%      89.7%   100.0%
-    Funny           23.4%      40.2%    30.6%
-    Top              8.6%      27.8%    94.5%
-    Tee              6.9%      16.7%    99.8%
-    Gift             0.4%       4.9%     0.0%
-    Unisex           0.1%       3.7%     0.0%
-    Womens          18.9%       2.5%     0.0%
-    Novelty          0.0%       0.0%     0.0%
+The cause: this catalogue was built by replicating a competitor's hot sellers,
+and each row kept their `original_title` - here *"Raising My Husband Is
+Exhausting Mens Light Cotton T-Shirt"*. From that, `subject` was derived as
+`RAISING HUSBAND LIGHT`. But the printed design comes from a **separate**
+template bank: `THIS IS WHAT AN AWESOME {N} LOOKS LIKE` with N = HUSBAND, which
+lands in the `slogan` field. `render_illus.py` line 108 draws
+`row["slogan"]`, so **the slogan is the product**. The title builder was using
+the competitor's words. The two were never tied together.
 
-The shape is **`{subject} T-Shirt Mens [Funny] [theme] Tee Top`**. Their single
-commonest ending among the top 2,000 sellers is literally `Tee Top` (247 of
-them), which is why ours leans on it.
+The hot sellers do it the way the seller expected: the competitor's own title
+*starts with their printed phrase* and then adds garment words. So:
 
-**Womens, Unisex and Novelty are deliberately absent.** They account for 2.5%,
-3.7% and 0.0% of units sold. An earlier version of this file put all three on
-100% of titles, copied from the seller's own GR- catalogue - which is the one
-being ended - and that was the wrong benchmark.
+    {slogan, in full} T-Shirt Mens [extra] [Funny|theme] [Tee] [Top]
 
-Heads are built from each listing's own distinctive words (its old title, then
-its slogan, then its subject) with garment and gift padding stripped, and
-function words dangling at either end removed, so a head reads
-`Japanese Performance Anime Car Drifting Drift` rather than
-`...Drifting Drift On The`. Hot sellers average 61.2 characters; ours average
-69.7, inside the 80 limit.
+**108,118 of 113,065 titles (95.6%) now open with the complete printed slogan**,
+and the rest open with as much of it as fits inside 80 characters, keeping the
+niche noun so the subject survives the cut. The description already quoted the
+slogan correctly, which is why the shirt and the description agreed while the
+title did not; the `<h2>` is now re-synced to the new title as well.
 
-**Uniqueness is enforced, not hoped for: zero exact and zero normalised
-duplicate titles across all 115,421, and zero collisions with anything live
-on the account.** No listing was lost to an unbuildable title.
+Two mistakes made on the way here, recorded so they are not repeated:
+
+- Trimming a long slogan from the end produced *"This Is What An Awesome
+  T-Shirt Mens..."*, which reads as nonsense. The full slogan is now tried
+  before anything else is shortened.
+- Palette names (`mono-bone`, `violet`, `coral`) leaked into titles as
+  differentiating words. They are internal codes with no search value and are
+  now excluded.
+
+Slogans repeat - 26,468 distinct across the catalogue, one of them 96 times -
+so where a slogan alone could not give a unique title, differentiating words
+come from the niche, subject and illustration. **2,356 listings where even that
+could not produce a unique title were dropped**, on the seller's standing
+instruction to drop rather than risk a duplicate. 115,421 down to **113,065**.
+
+Keyword coverage against the hot sellers (t-shirt rows, weighted by units
+sold): T-Shirt 100% (benchmark 100%), Mens 100% (89.7%), Tee 82.8% (16.7%),
+Top 69.0% (27.8%), Funny 29.2% (40.2%), and Womens / Unisex / Novelty 0%
+(2.5% / 3.7% / 0.0%).
 
 ### 545 old near-duplicate pairs dropped
 
@@ -173,7 +181,7 @@ with the 10,000 spare slots asked for:
 
     live now          668,956 listings   (424,118 wall art + 244,838 tees)
     after the ends    542,990 listings
-    after the upload  658,411 listings   - 10,545 fewer than today
+    after the upload  656,055 listings   - 12,901 fewer than today
 
 On an **item** count it also fits, and that is what the quantity choice is
 for. The file carries **quantity 1 on each of the five sizes**, matching
@@ -182,8 +190,8 @@ twenty-five:
 
     live now          about   669,281 items
     after the ends    about   543,315 items
-    new upload                577,105 items
-    account after           1,120,420 items
+    new upload                565,325 items
+    account after           1,108,640 items
 
 At quantity 5 the same upload would have asked for **2,899,150 items**, about
 five times what the account holds today, while 125,966 ends free only about
@@ -202,7 +210,7 @@ Both are the paths the fulfilment tool resolves a custom label to, so an
 order looks up its own artwork with no extra step.
 
 **Verified against the live bucket on 2026-10-07**, not from memory:
-all 115,421 custom labels in the upload file resolve to both
+all 113,065 custom labels in the upload file resolve to both
 `art/mock/<label>.jpg` and `art/raw/<label>.png` in `tshirt-m12k`. Zero
 missing on either side. `art/mock/` holds 116,355 WLT objects - the 389
 extra are the trademark and likeness listings that were pulled, correctly
