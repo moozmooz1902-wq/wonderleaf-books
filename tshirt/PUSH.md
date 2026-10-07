@@ -55,7 +55,7 @@ reason, for the record.
     579,830 size variations, exactly 5 per listing, no orphans
     695,796 data rows, 30 columns
     £11.99, quantity 1 per size, category 15687, United Kingdom
-    business policies named 1 for shipping, returns and payment
+    business policies: shipping 2, returns 1, payment 1
     every listing has a PicURL and a print master in the bucket
 
 Built by joining the eight `EBAY_part0*.csv` files, whose headers are
