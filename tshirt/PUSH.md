@@ -24,16 +24,34 @@ The first test upload failed on all fifty rows with:
     VariationSpecificsSet container (Item.Variations.VariationSpecificsSet)
     is required to list a Multi-SKU item.
 
-A File Exchange variation listing declares its variation axis **on the parent
-row**, listing every value its children use, pipe-separated. Our parents had
-`C:Size` empty and only the children carried a size, so eBay had no set to
-build the variation matrix from. Every parent now carries:
+The seller then supplied a file that **had uploaded successfully**, and
+comparing the two field by field found six differences. The first attempt at a
+fix put the variation set in the wrong place - pipe-separated in `C:Size` -
+when the working file declares it on the **parent's `RelationshipDetails`**,
+semicolon-separated. All six are now matched:
 
-    C:Size = Small|Medium|Large|X-Large|XX-Large
+| | working file | ours before | ours now |
+|---|---|---|---|
+| parent `RelationshipDetails` | `Size=S;M;L;XL;2XL` | blank | `Size=S;M;L;XL;2XL` |
+| parent `C:Size` | blank | the pipe list | blank |
+| size labels | `S M L XL 2XL` | `Small ... XX-Large` | `S M L XL 2XL` |
+| variation `*Category` / `*ConditionID` / `*Title` | repeated | blank | repeated |
+| variation `CustomLabel` | blank | `WLT-nnnnnn-S` | blank |
+| `*Location` | `Manchester` | `United Kingdom` | `Manchester` |
 
-and each child still carries its single value plus
-`RelationshipDetails = Size=<value>`. Checked after the fix: no listing has a
-child size outside the declared set, and every listing has all five.
+Dropping the per-variation SKU is right rather than merely matching: an order
+then reports the **parent** custom label, which is exactly what the fulfilment
+tool resolves `art/raw/<label>.png` and `art/mock/<label>.jpg` from.
+
+**One deliberate difference remains.** The working file uses postage policy
+`1`; ours uses `2`, because the seller said the postage policy on this account
+is 2. If a test comes back with a business-policy error, that is the field to
+flip, and nothing else about the structure is in doubt.
+
+Also worth noting for later: the working file's own titles read
+`... Mens Womens T-Shirt Funny Novelty Gift Tee Top`, so eBay accepts that
+shape. Ours follow the hot sellers' shape instead, on the seller's
+instruction - see above.
 
 ## The end file
 
