@@ -929,8 +929,9 @@ the ones where a new entrant can add breadth without adding near-duplicates.
 - `https://oliveetoriel.com/collections.json?limit=250&page=N` - [oliveetoriel.com](https://oliveetoriel.com/collections.json?limit=250&page=1)
 - `https://society6.com/collections.json?limit=250&page=N` - [society6.com](https://society6.com/collections.json?limit=250&page=1)
 
-Raw JSON retained at `/tmp/claude-0/-home-user-wonderleaf-books/af9e3fdd-8129-53fc-a69c-916ae3713d2b/scratchpad/harvest/`
-(`<host>_p<N>.json`, plus the consolidated `all.json` keyed host -> handle -> [title, products_count]).
+The complete consolidated harvest is saved beside this file as **`collections_raw.json`** - a JSON object keyed
+`host -> handle -> [title, products_count]`, covering all 6918 collections across all five hosts. That file is the
+source of record for anything not reproduced verbatim here (notably the 1099-value Society6 theme axis).
 
 No User-Agent was spoofed. No bot protection was encountered or bypassed. The only failures were HTTP 429
 rate-limiting on `abstracthouse.com` (page 1), `theposterclub.com` (page 1) and `society6.com` (page 5), all of
