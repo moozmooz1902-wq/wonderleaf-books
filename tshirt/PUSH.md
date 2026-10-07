@@ -51,18 +51,76 @@ reason, for the record.
 
 **`EBAY_ONE_FILE.zip`** - one eBay File Exchange CSV, zipped.
 
-    115,966 listings
-    579,830 size variations, exactly 5 per listing, no orphans
-    695,796 data rows, 30 columns
+    115,312 listings
+    576,560 size variations, exactly 5 per listing, no orphans
+    691,872 data rows, 30 columns
     £11.99, quantity 1 per size, category 15687, United Kingdom
     business policies: shipping 2, returns 1, payment 1
     every listing has a PicURL and a print master in the bucket
 
 Built by joining the eight `EBAY_part0*.csv` files, whose headers are
 byte-identical and which were split on listing boundaries. The joined file
-was re-parsed afterwards and checked, not assumed: every listing has exactly
-five variations, there are no orphan variations, no variation is missing
-`C:Size`, and no parent is missing `PicURL`.
+was re-parsed after every change and checked, not assumed: every listing has
+exactly five variations, no orphan variations, nothing missing `C:Size`,
+nothing missing `PicURL`, no title over 80 characters, and every description
+heading matching its title.
+
+### Titles rebuilt on the live catalogue's formula
+
+The 244,838 live t-shirts, which sell, follow one shape almost without
+exception - only 11 depart from it:
+
+    {head}  Mens Womens T-Shirt  [theme]  Unisex Novelty Gift Tee [Funny] [Present]
+
+Our titles did not. Measured against the live set before the rebuild:
+
+    keyword        live    ours (before)   ours (now)
+    Mens Womens   100.0%       0.0%         100.0%
+    Womens        100.0%       0.0%         100.0%
+    Mens          100.0%      25.1%         100.0%
+    T-Shirt       100.0%      25.0%         100.0%
+    Unisex         97.5%      25.0%         100.0%
+    Novelty        89.4%      34.9%         100.0%
+    Gift           81.6%      76.1%          93.9%
+    Tee            67.6%      38.3%          76.6%
+
+Not one of the 115,966 titles contained "Womens", against 100% of the live
+ones, so the catalogue was invisible to anyone searching "womens t shirt".
+
+Rebuilt by taking each listing's distinctive words - from its old title, then
+its slogan, then its subject, with the garment and gift padding stripped -
+and fitting them in front of the formula. The mandatory core is 44 characters
+with spaces, leaving 36 for the head, which matches the live heads (mean 24.6,
+90th percentile 36). Where a title needed to be made unique the builder tries
+a theme word, then the shorter tails the live set also uses
+(`Unisex Novelty Gift`, `Unisex Novelty`), then shorter heads.
+
+**Uniqueness is enforced, not hoped for: zero exact duplicates and zero
+normalised duplicates across all 115,312 titles, and zero collisions with
+anything live on the account.** 110 listings for which no unique title could
+be built inside 80 characters were dropped.
+
+### 545 old near-duplicate pairs dropped
+
+Before the rebuild, 545 pairs differed only by `T-Shirt` versus `T Shirt`.
+Only 2 of the 545 shared both slogan and illustration - the rest were
+genuinely different designs that collided on title text - but one of each pair
+was dropped on the seller's instruction, safe over sorry. With the 110 above
+that is 654 listings removed, 115,966 down to 115,312.
+
+### Every description now says what makes the design different
+
+Two listings can share a theme - two different Happy Birthday shirts - and the
+photo and print file already differ. Each description now carries a
+**This design** block naming the drawing style, the layout, the colourway and
+the illustration subject, taken from the catalogue's own design record, so
+there is something concrete to tell them apart by:
+
+    This design
+    Line art, wording above the illustration in a mono bone colourway.
+    Illustration: anime girl sitting next to a car. Printed for this listing
+    only - each of our designs is drawn separately, so the artwork, wording
+    and colours differ from listing to listing.
 
 `EBAY_PARTS_CLEAN.zip` (the eight parts) is still here and is the same data
 if File Exchange rejects the single file for size.
@@ -74,7 +132,7 @@ with the 10,000 spare slots asked for:
 
     live now          668,956 listings   (424,118 wall art + 244,838 tees)
     after the ends    542,990 listings
-    after the upload  658,956 listings   - 10,000 fewer than today
+    after the upload  658,302 listings   - 10,654 fewer than today
 
 On an **item** count it also fits, and that is what the quantity choice is
 for. The file carries **quantity 1 on each of the five sizes**, matching
@@ -83,8 +141,8 @@ twenty-five:
 
     live now          about   669,281 items
     after the ends    about   543,315 items
-    new upload                579,830 items
-    account after           1,123,145 items
+    new upload                576,560 items
+    account after           1,119,875 items
 
 At quantity 5 the same upload would have asked for **2,899,150 items**, about
 five times what the account holds today, while 125,966 ends free only about
@@ -103,7 +161,7 @@ Both are the paths the fulfilment tool resolves a custom label to, so an
 order looks up its own artwork with no extra step.
 
 **Verified against the live bucket on 2026-10-07**, not from memory:
-all 115,966 custom labels in the upload file resolve to both
+all 115,312 custom labels in the upload file resolve to both
 `art/mock/<label>.jpg` and `art/raw/<label>.png` in `tshirt-m12k`. Zero
 missing on either side. `art/mock/` holds 116,355 WLT objects - the 389
 extra are the trademark and likeness listings that were pulled, correctly
