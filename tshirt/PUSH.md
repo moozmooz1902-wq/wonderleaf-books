@@ -13,7 +13,7 @@ new ones go on. End first, then test, then upload.
    wall art.
 3. **`EBAY_TEST_50.csv`** - fifty new listings, same header as the main file.
    Check in Seller Hub that all five sizes came through, the photo shows, the
-   price is £12.99 and each size shows 1 available.
+   price is £11.99 and each size shows 1 available.
 4. **`EBAY_ONE_FILE.zip`** - the whole catalogue as one file.
 
 ## The end file
@@ -54,7 +54,7 @@ reason, for the record.
     115,966 listings
     579,830 size variations, exactly 5 per listing, no orphans
     695,796 data rows, 30 columns
-    £12.99, quantity 1 per size, category 15687, United Kingdom
+    £11.99, quantity 1 per size, category 15687, United Kingdom
     business policies named 1 for shipping, returns and payment
     every listing has a PicURL and a print master in the bucket
 
