@@ -8,17 +8,17 @@ Happy / {age.1} / birthday
 {age} / and / fabulous
 {age} / years / young
 Aged / to / perfection / {age}
-Vintage / {year}
+Vintage / {vyear}
 Born / in / {year}
 Made / in / {year}
 Established / {year}
-Limited / edition / {year}
-Original / since / {year}
-Legend / since / {year}
+Limited / edition / {vyear}
+Original / since / {vyear}
+Legend / since / {vyear}
 Awesome / since / {year}
 Queen / since / {year}
-Classic / since / {year}
-{year} / vintage / all original parts
+Classic / since / {vyear}
+{vyear} / vintage / all original parts
 {name} / est. {year}
 Happy / birthday / {name}
 {name} / is / {age}
@@ -27,7 +27,7 @@ Happy / {anniv.1} / anniversary
 Happy / {anniv} / anniversary
 Our / {anniv} / anniversary
 {anniv} / wedding / anniversary
-Mr & Mrs / {surname} / {anniv} anniversary / {year}
+Mr & Mrs / {surname} / {annivy} anniversary / {annivy.2}
 The / {surname}s' / {anniv} / anniversary
 Together / since / {year}
 Married / since / {year}

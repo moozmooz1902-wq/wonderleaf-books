@@ -98,8 +98,8 @@ Hello / {name}
 Welcome / to the world / {name}
 Goodnight / {name}
 Little / {name}
-{name} / est. {year}
-{name} / born {year}
+{name} / est. {byear}
+{name} / born {byear}
 Baby / {name}
 {name} / be brave
 {name} / stay wild

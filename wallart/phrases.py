@@ -20,6 +20,7 @@ phrases, so nothing is ever materialised that the generator does not ask for.
     python3 phrases.py --stats          supply per niche
     python3 phrases.py --sample 30      random phrases from every niche
 """
+import datetime
 import argparse, math, random, re
 from itertools import islice
 from pathlib import Path
@@ -40,6 +41,25 @@ def _read_slot(name):
             if l.strip() and ip_ok(l.split("|")[0])]
 
 
+THIS_YEAR = datetime.date.today().year
+
+
+def anniversary_years(rows):
+    """Pair each anniversary with the wedding year it actually implies.
+
+    "Silver|25th" becomes "Silver|25th|<this year minus 25>", so the template
+    can print the name and the year together and have them agree.
+    """
+    out = []
+    for r in rows:
+        ordinal = r[1] if len(r) > 1 else ""
+        n = re.sub(r"[^0-9]", "", ordinal)
+        if not n:
+            continue
+        out.append(list(r) + [str(THIS_YEAR - int(n))])
+    return out
+
+
 ELDERS = {"Mum", "Mam", "Mom", "Mummy", "Dad", "Daddy", "Nan", "Nana", "Nanny", "Gran", "Granny",
           "Grandma", "Grandad", "Grandpa", "Grampy", "Auntie", "Uncle"}
 
@@ -55,12 +75,25 @@ def load_slots():
         "drink": s["drinks"], "breed": s["dog_breeds"], "rel": s["relations"],
         "job": s["professions"], "hobby": s["hobbies"], "age": s["ages"],
         "anniv": s["anniversaries"],
+        # the anniversary name IS a number of years - Paper is the 1st, Silver
+        # the 25th - so a template that prints the name and a year has to
+        # derive one from the other. Filling them from separate pools gave
+        # "Paper anniversary 1952", which is a 74th, and "Mr & Mrs Wong Paper
+        # anniversary 1986". A buyer notices that immediately.
+        "annivy": anniversary_years(s["anniversaries"]),
         # relatives split so a template can't say "Dad the woman" or "Happy retirement Daughter"
         "relf": [r for r in s["relations"] if r[1:] == ["her"]],
         "relm": [r for r in s["relations"] if r[1:] == ["him"]],
         "relelder": [r for r in s["relations"] if r[0] in ELDERS],
-        "year": [[str(y)] for y in range(2026, 1949, -1)],
-        "ryear": [[str(y)] for y in range(2027, 2019, -1)],
+        "year": [[str(y)] for y in range(THIS_YEAR, 1949, -1)],
+        "ryear": [[str(y)] for y in range(THIS_YEAR + 1, THIS_YEAR - 7, -1)],
+        # a birth year for a child's room. The nursery templates were using
+        # {year}, which reaches back to 1950: "Ronan born 1987" on a nursery
+        # print is nobody's purchase.
+        "byear": [[str(y)] for y in range(THIS_YEAR + 1, THIS_YEAR - 14, -1)],
+        # "Vintage 2024" and "Legend since 2025" are not a thing. Anything
+        # that claims age needs a year that is actually old.
+        "vyear": [[str(y)] for y in range(THIS_YEAR - 18, 1949, -1)],
         "num": [[str(n)] for n in range(1, 201)],
     }
 

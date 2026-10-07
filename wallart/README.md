@@ -167,3 +167,49 @@ navy, gold, blush, burnt orange, sage, mustard, brown and rainbow.
 The white ground is what saves the ink. A dark colour on it costs barely
 more than black, and the palette name goes in the title because decor buyers
 search it.
+
+## Phrase quality: what was wrong and what was done
+
+### Nonsense a buyer would spot
+
+Two template faults were producing wrong prints at scale, and both were
+found by drawing forty phrases at random from the finished catalogue and
+reading them rather than by any test:
+
+**Nursery prints with a 1950s birth year.** `{name} / born {year}` used the
+general year pool, which runs back to 1950. "Ronan born 1987" on a nursery
+print is nobody's purchase. Nursery templates now use `{byear}`, the last
+fourteen years.
+
+**Anniversaries that contradicted themselves.** The anniversary name IS a
+number of years - Paper is the 1st, Silver the 25th - but the name and the
+year were filled from separate pools, so the catalogue contained "Mr & Mrs
+Wong Paper anniversary 1986" (a 40th) and "Paper anniversary 1952" (a 74th).
+`{annivy}` now carries the year the name implies, derived from the current
+year at generation time so it does not go stale.
+
+Also: "Vintage 2024" and "Legend since 2025" are not a thing, so anything
+claiming age uses `{vyear}`, which starts eighteen years back.
+
+Those three fixes removed about 78,000 listings. Every one of them was wrong.
+
+### The phrases written for the thin niches
+
+2,311 phrases were written for the thirteen thin niches in one sitting, and
+**49% of them began with a word from the end of the line before**:
+
+    "Wash your hands"        -> "Hands washed properly"
+    "Hands washed properly"  -> "Properly twenty seconds"
+    "Take the long way"      -> "Long way round"
+
+That is chaining, which produces volume quickly and is not how you write
+something somebody wants on their wall. All 1,118 chain links were removed,
+the originals left untouched, and the gaps filled with phrases written to
+stand on their own. Duplicates were removed and American spelling corrected
+- this catalogue sells in the UK, so "Mom's laundry service" was wrong.
+
+Two earlier attempts to automate this judgement are recorded in
+`sellable.py`, both wrong in ways worth not repeating: counting search words
+in the phrase (they belong in the title), and a growing pile of regexes that
+ended up cutting "WC", "Loo" and "Please flush", which are among the best
+selling bathroom prints there are.
