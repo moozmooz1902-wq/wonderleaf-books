@@ -69,28 +69,30 @@ if File Exchange rejects the single file for size.
 
 ## Headroom arithmetic
 
+On a **listing** count the upload lands below where the account sits now,
+with the 10,000 spare slots asked for:
+
     live now          668,956 listings   (424,118 wall art + 244,838 tees)
     after the ends    542,990 listings
     after the upload  658,956 listings   - 10,000 fewer than today
 
-So on a **listing** count the upload lands below where the account sits now,
-with the 10,000 spare slots asked for.
+On an **item** count it also fits, and that is what the quantity choice is
+for. The file carries **quantity 1 on each of the five sizes**, matching
+everything else on the account, so a listing is five items rather than
+twenty-five:
 
-**On an item count it does not, and this is the one thing to check before
-uploading.** Everything live is quantity 1, so 668,956 listings is about
-669,281 items. The new file is quantity 5 on each of five sizes, which is
-25 items per listing:
+    live now          about   669,281 items
+    after the ends    about   543,315 items
+    new upload                579,830 items
+    account after           1,123,145 items
 
-    new upload        2,899,150 items
-    account after     3,442,465 items   - about 5x today
+At quantity 5 the same upload would have asked for **2,899,150 items**, about
+five times what the account holds today, while 125,966 ends free only about
+125,966 items. Quantity 1 is what keeps the item count in range.
 
-If the limit on this account is expressed in items rather than listings,
-ending 129,881 listings does not create room for that, because it frees
-about 129,881 items and the upload asks for 2.9 million. Dropping quantity
-from 5 to 1 takes the upload to 579,830 items and the account to 1,119,230.
-If it turns out fewer listings can go up than the file holds, the upload is
-better split than the ends made bigger - 118,872 live t-shirts are still
-selling and are worth more than empty headroom. Worth reading the actual limit off Seller Hub first.
+If it turns out fewer listings can go up than the file holds, split the
+upload rather than ending more - 118,872 live t-shirts are still selling and
+are worth more than empty headroom.
 
 ## What is in the bucket
 
