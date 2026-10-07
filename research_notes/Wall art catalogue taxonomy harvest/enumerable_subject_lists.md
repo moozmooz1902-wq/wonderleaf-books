@@ -4253,3 +4253,693 @@ Baku · Nue · Jorōgumo · Amabie · Bakeneko.
 - The Opie *Oxford Dictionary of Nursery Rhymes* count (~550) is [T].
 - The UK PD dates given for individual illustrators are calculated from death
   dates held in prior knowledge, not verified. **Check each death date.**
+
+---
+
+## MYTH AND FOLKLORE IN THE PUBLIC DOMAIN
+
+### Takeaway
+Everything in this domain is ancient and free; the only risk is **modern
+retellings and franchise overlays** (Marvel's Thor and Loki designs, Disney's
+Hercules, Rick Riordan's Percy Jackson, Neil Gaiman's *Norse Mythology*).
+The enumerable anchors: **12 Olympians**, **~66 named Norse deities**,
+**Aesop's Perry Index with over 700 fables**, **210 Grimm tales (1857 edition)**,
+**8 Perrault prose tales**, **156 Andersen tales**, **798 stories in Andrew
+Lang's 12 Coloured Fairy Books**, **39 Shakespeare plays and 154 sonnets**.
+
+### Cited Findings
+
+**GREEK AND ROMAN** [T]
+**The 12 Olympians** (Greek / Roman): Zeus/Jupiter ·
+Hera/Juno · Poseidon/Neptune · Demeter/Ceres ·
+Athena/Minerva · Apollo/Apollo · Artemis/Diana ·
+Ares/Mars · Aphrodite/Venus · Hephaestus/Vulcan ·
+Hermes/Mercury · Dionysus/Bacchus (Hestia/Vesta and
+Hades/Pluto are variously counted in or out).
+**Other deities and beings (~50):** Hades/Pluto ·
+Persephone/Proserpina · Hestia/Vesta · Eros/Cupid ·
+Nike/Victoria · Iris · Hebe · Pan/Faunus ·
+Asclepius · Hypnos/Somnus · Thanatos/Mors ·
+Nemesis · Tyche/Fortuna · Hecate · Selene/Luna ·
+Helios/Sol · Eos/Aurora · Boreas · Zephyrus ·
+Notus · Eurus · Gaia/Terra · Uranus/Caelus ·
+Cronus/Saturn · Rhea/Ops · Oceanus · Tethys ·
+Thetis · Nereus · Proteus · Triton · Amphitrite ·
+Prometheus · Epimetheus · Atlas · Pandora ·
+Chaos · Nyx/Nox · Erebus · Chronos ·
+**The 9 Muses** (Calliope, Clio, Erato, Euterpe,
+Melpomene, Polyhymnia, Terpsichore, Thalia, Urania) ·
+**The 3 Fates/Moirai** (Clotho, Lachesis, Atropos) ·
+**The 3 Graces/Charites** (Aglaea, Euphrosyne, Thalia) ·
+**The 3 Furies/Erinyes** (Alecto, Megaera, Tisiphone) ·
+**The 3 Gorgons** (Medusa, Stheno, Euryale) ·
+**The 3 Hesperides** · **The 9 Nine Worthies** ·
+**The 12 Labours of Heracles** (Nemean Lion,
+Lernaean Hydra, Ceryneian Hind, Erymanthian Boar,
+Augean Stables, Stymphalian Birds, Cretan Bull,
+Mares of Diomedes, Belt of Hippolyta, Cattle of
+Geryon, Apples of the Hesperides, Cerberus) —
+**a perfect 12-print series** · **The Argonauts** ·
+**The Odyssey's episodes (~12 named: Cicones,
+Lotus-Eaters, Cyclops, Aeolus, Laestrygonians,
+Circe, the Underworld, Sirens, Scylla and
+Charybdis, Helios' Cattle, Calypso, Phaeacians)** ·
+**The Trojan War figures** (Achilles, Hector,
+Priam, Paris, Helen, Agamemnon, Menelaus,
+Odysseus, Ajax, Diomedes, Cassandra, Patroclus,
+Briseis, Aeneas, Laocoön) · **Named myths:**
+Icarus and Daedalus · Narcissus and Echo ·
+Orpheus and Eurydice · Pygmalion and Galatea ·
+Perseus and Andromeda · Theseus and the Minotaur ·
+Jason and the Golden Fleece · Midas ·
+Sisyphus · Tantalus · Arachne · Niobe ·
+Phaethon · Leda and the Swan · Europa and the Bull ·
+Danaë · Ganymede · Hyacinth · Adonis ·
+Atalanta · Baucis and Philemon · Cupid and
+Psyche · Pyramus and Thisbe · Actaeon ·
+Callisto · Io · Semele · Bellerophon ·
+Oedipus · Antigone · Electra · Iphigenia.
+**Public-domain visual sources:** all classical sculpture and
+vase painting; Ovid's *Metamorphoses*; Flaxman's outlines
+(d.1826); Bulfinch (1855); Gustave Doré (d.1883);
+Walter Crane (d.1915); Arthur Rackham (d.1939, UK PD 2010).
+
+**NORSE** [T]
+**Æsir (~17 named):** Odin · Thor · Baldr · Týr ·
+Heimdall · Bragi · Víðarr · Váli · Forseti ·
+Hermóðr · Höðr · Loki (sometimes counted) ·
+**Ásynjur:** Frigg · Sif · Iðunn · Eir · Fulla ·
+Sjöfn · Lofn · Vár · Vör · Syn · Hlín ·
+Snotra · Gná · Sól · Bil · Nanna · Gefjon ·
+**Vanir:** Njörðr · Freyr · Freyja · Nerthus ·
+**Jötnar and others:** Ymir · Surtr · Thrym ·
+Skaði · Angrboða · Hel · Fenrir · Jörmungandr ·
+Sleipnir · Garmr · Nidhogg · Ratatoskr ·
+Huginn and Muninn · Geri and Freki ·
+Hræsvelgr · Mímir · Kvasir · Ægir · Rán ·
+Norns (**Urðr, Verðandi, Skuld**) · Valkyries
+(**named: Brynhildr, Sigrún, Sigrdrífa, Göndul,
+Skögul, Hildr, Þrúðr, Mist, Hrist, Herfjötur,
+Randgríð, Ráðgríð, Reginleif**).
+**The 9 worlds:** Asgard · Midgard · Jotunheim ·
+Vanaheim · Alfheim · Svartalfheim/Niðavellir ·
+Niflheim · Muspelheim · Helheim. (**A 9-print set.**)
+**Named artefacts:** Mjölnir · Gungnir · Draupnir ·
+Brísingamen · Gleipnir · Skíðblaðnir ·
+Megingjörð · Járngreipr · Gjallarhorn ·
+Yggdrasil · Bifröst · Valhalla · Ragnarök.
+**Sources (all PD):** *Poetic Edda* · *Prose Edda*
+(Snorri Sturluson, c.1220) · *Heimskringla* ·
+the Icelandic sagas · the Gosforth Cross and
+Gotland picture stones.
+**RISK: Marvel's Thor, Loki, Odin, Asgard
+designs and names-in-costume are protected;
+the mythology is not. Never use a horned helmet
+plus a red cape.**
+
+**CELTIC AND BRITISH FOLKLORE** [T]
+**Irish (Tuatha Dé Danann, ~25 named):** The Dagda ·
+Lugh · Nuada · Dian Cécht · Goibniu ·
+Ogma · Manannán mac Lir · Danu · Brigid ·
+The Morrígan · Badb · Macha · Nemain ·
+Ériu · Banba · Fódla · Áine · Clíodhna ·
+Aengus · Boann · Midir · Étaín · Fand ·
+Balor · Bres · Elatha · Cian · Eithne.
+**Irish cycles:** the Mythological Cycle ·
+the Ulster Cycle (**Cú Chulainn, Queen Medb,
+Fergus, Conchobar, Deirdre, the Táin Bó Cúailnge**) ·
+the Fenian Cycle (**Fionn mac Cumhaill, Oisín,
+Diarmuid, Gráinne, Sadhbh, the Salmon of
+Knowledge, Tír na nÓg**) · the Cycle of Kings.
+**Welsh (the Mabinogion — 11 named tales, the
+canonical closed list):** Pwyll Pendefig Dyfed ·
+Branwen ferch Llŷr · Manawydan fab Llŷr ·
+Math fab Mathonwy · Culhwch and Olwen ·
+The Dream of Rhonabwy · The Lady of the Fountain
+(Owain) · Peredur son of Efrawg · Gereint son of
+Erbin · Lludd and Llefelys · The Dream of Macsen
+Wledig. **Named figures:** Arawn · Rhiannon ·
+Pryderi · Bendigeidfran · Blodeuwedd ·
+Gwydion · Lleu Llaw Gyffes · Arianrhod ·
+Gwyn ap Nudd · Ceridwen · Taliesin ·
+Afanc · Cŵn Annwn · Annwn · Dylan Ail Don.
+**Scottish:** Cailleach · Beira · Nuckelavee ·
+Kelpie · Each-uisge · Selkie · Bean-nighe ·
+Brownie · Ghillie Dhu · Baobhan Sith ·
+Blue Men of the Minch · Am Fear Liath Mòr
+(Big Grey Man of Ben Macdui) · Red Cap ·
+Sluagh · Finfolk · Trows · Nuggle.
+**English:** Herne the Hunter · the Green Man ·
+Jack in the Green · the Wild Hunt ·
+Robin Goodfellow/Puck · Hobgoblin · Boggart ·
+Black Shuck (Norfolk/Suffolk) · Barghest
+(Yorkshire) · Gytrash · Padfoot ·
+Spring-heeled Jack · the Lambton Worm ·
+the Wherwell Cockatrice · the Mordiford Wyvern ·
+the Linton Worm · Dun Cow of Dunsmore ·
+the Beast of Bodmin · the Owlman of Mawnan ·
+Wayland the Smith · Tom Thumb · Jack the
+Giant Killer · Dick Whittington · Lady Godiva ·
+Robin Hood (**and the named company: Little John,
+Will Scarlet, Friar Tuck, Much the Miller's Son,
+Alan-a-Dale, Maid Marian, the Sheriff of
+Nottingham, Guy of Gisborne**) · Dick Turpin ·
+the Cerne Abbas Giant · the Uffington White
+Horse · the Long Man of Wilmington ·
+the Rollright Stones · the Nine Ladies.
+**Cornish:** Piskies · Knockers · Spriggans ·
+Bucca · Jan Tregeagle · Tregeagle · Mermaid
+of Zennor · Giant Bolster · Cormoran ·
+Tom Bawcock · Beast of Bodmin.
+**Manx:** Moddey Dhoo · Buggane · Fenodyree ·
+Glashtyn. **Channel Islands, Shetland, Orkney:**
+Trows · Finfolk · Nuckelavee · Selkie.
+
+**ARTHURIAN LEGEND** [T]
+Sources (all PD): Geoffrey of Monmouth *Historia
+Regum Britanniae* (c.1136) · Wace · Layamon ·
+Chrétien de Troyes · the Vulgate Cycle ·
+Thomas Malory *Le Morte d'Arthur* (1485) ·
+Tennyson *Idylls of the King* (1859–85) ·
+the Mabinogion Arthurian tales.
+**Named figures (~45):** King Arthur · Guinevere ·
+Merlin · Morgan le Fay · Morgause · Mordred ·
+Uther Pendragon · Igraine · Lancelot ·
+Galahad · Elaine of Astolat · Elaine of Corbenic ·
+Gawain · Gareth · Gaheris · Agravain ·
+Kay · Bedivere · Bors · Lionel · Ector ·
+Percival · Bohort · Tristan · Iseult ·
+Mark of Cornwall · Palamedes · Lamorak ·
+Dinadan · Ywain/Owain · Erec/Gereint ·
+Enid · Lunete · Nimue/Vivien/Lady of the Lake ·
+Taliesin · Dagonet · Balin · Balan ·
+Pellinore · Lot of Orkney · Urien ·
+Accolon · the Green Knight · the Fisher King ·
+Joseph of Arimathea · Brother Blaise.
+**Named objects and places:** Excalibur · the
+Sword in the Stone · the Holy Grail ·
+the Round Table · Camelot · Avalon ·
+Tintagel · Glastonbury Tor · Caerleon ·
+Carlisle · the Siege Perilous · Caliburn ·
+Rhongomyniad · Prydwen · Clarent ·
+the Questing Beast · the Chapel Perilous ·
+the Castle of Maidens.
+**RISK: BBC's *Merlin*, the Guy Ritchie film, Monty
+Python and the Holy Grail, and "Camelot" the musical
+are all protected. The legend is not.**
+
+**EGYPTIAN DEITIES** [T]
+Around **1,500 named deities** are attested; the
+**~40 commonly depicted** make the practical list:
+Ra · Amun · Amun-Ra · Atum · Ptah · Osiris ·
+Isis · Horus · Set · Nephthys · Anubis ·
+Thoth · Ma'at · Hathor · Sekhmet · Bastet ·
+Sobek · Khnum · Khepri · Khonsu · Geb ·
+Nut · Shu · Tefnut · Nekhbet · Wadjet ·
+Taweret · Bes · Apep/Apophis · Ammit ·
+Serqet · Neith · Sobek · Mut · Montu ·
+Min · Nefertum · Imhotep · Hapi ·
+Satet · Anuket · Wepwawet · Banebdjedet ·
+Heqet · Meretseger · Qebehsenuef · Duamutef ·
+Hapi · Imsety (**the 4 Sons of Horus — a
+clean 4-print set**) · Aten · Benu/Bennu ·
+Sphinx · Scarab · Ankh · Djed · Wadjet Eye ·
+Eye of Horus · Eye of Ra · Was sceptre ·
+Shen ring · Tyet · Sistrum · Menat ·
+Lotus · Papyrus · Feather of Ma'at.
+**Also enumerable:** the **42 Negative Confessions**
+(Book of the Dead ch.125) · the **~190 spells of
+the Book of the Dead** · the **42 nomes of Egypt** ·
+the **~170 recognised pharaohs across 33 dynasties** ·
+the **Egyptian hieroglyph list (Gardiner's Sign List,
+~760 signs in 26 categories)** — an excellent
+large, free, enumerated axis. [All T]
+**RISK: none on the ancient material. The Egyptian
+Ministry of Antiquities asserts rights over
+*photographs* of some sites and over 3D replicas
+of specific objects (notably the Nefertiti bust,
+Berlin, and the Tutankhamun mask) — make your own
+images.**
+
+**JAPANESE YOKAI** [T]
+The canonical enumeration is **Toriyama Sekien's four
+illustrated books (1776–84)**: *Gazu Hyakki Yagyō*,
+*Konjaku Gazu Zoku Hyakki*, *Konjaku Hyakki Shūi*
+and *Gazu Hyakki Tsurezure Bukuro*, which together
+depict **over 200 yokai** — all **public domain**
+(Sekien d. 1788) and the direct visual source for
+nearly all modern yokai art. [T]
+**RISK: Mizuki Shigeru (d.2015) catalogued ~1,000 yokai
+but his designs are in copyright until 2086 — use
+Sekien, not Mizuki. "Pokémon", "Yo-kai Watch" and
+"GeGeGe no Kitarō" are franchises.**
+Named set (50): Oni · Tengu · Kappa · Kitsune ·
+Tanuki · Nekomata · Bakeneko · Inugami ·
+Kamaitachi · Nue · Kirin · Baku ·
+Tsuchinoko · Rokurokubi · Nukekubi ·
+Futakuchi-onna · Yuki-onna · Yamauba ·
+Jorōgumo · Tsuchigumo · Umibōzu · Funayūrei ·
+Ningyo · Isonade · Akkorokamui · Namazu ·
+Kurage-no-hi-no-tama · Hitotsume-kozō ·
+Mikoshi-nyūdō · Nurarihyon · Ushi-oni ·
+Gashadokuro · Hone-onna · Yurei ·
+Onryō · Goryō · Ikiryō · Zashiki-warashi ·
+Zashiki-bokko · Zashiki · Karakasa-obake ·
+Chōchin-obake · Bakezōri · Ittan-momen ·
+Kyōrinrin · Biwa-bokuboku · Koto-furunushi ·
+Mokumokuren · Tsukumogami (**the class of
+100-year-old objects that come alive — a
+brilliant print series: umbrella, lantern,
+sandal, cloth, scroll, biwa, koto, teapot,
+mirror, comb, sword**) · Amabie · Shuten-dōji ·
+Kuchisake-onna (**modern urban legend — free as
+folklore**) · Teke-Teke · Hanako-san.
+
+**AESOP'S FABLES — the Perry Index lists over 700 fables** [V]
+— [Perry Index](https://www.mythfolklore.net/aesopica/perry/);
+[Fables of Aesop / Perry Index](https://fablesofaesop.com/perry-index)
+The index was compiled by **Ben Edwin Perry** (University of
+Illinois) and is the standard scholarly numbering; it lists
+over 700 fables and the numbering runs to the 700s.
+**[?] Note: the commonly repeated figure of 584 refers to the
+Greek and Latin core corpus; the full index exceeds 700. Use
+"over 700, per the Perry Index" and cite the index.**
+Named set (35, with Perry numbers where standard):
+The Tortoise and the Hare (Perry 226) · The Hare and the
+Tortoise · The Fox and the Grapes (15) ·
+The Lion and the Mouse (150) · The Boy Who Cried Wolf
+(210) · The Ant and the Grasshopper (373) ·
+The Tortoise and the Eagle (230) ·
+The North Wind and the Sun (46) ·
+The Crow and the Pitcher (390) ·
+The Fox and the Crow (124) ·
+The Dog in the Manger (702) ·
+The Dog and Its Reflection (133) ·
+The Wolf in Sheep's Clothing (451) ·
+The Goose That Laid the Golden Eggs (87) ·
+The Milkmaid and Her Pail · The Town Mouse and
+the Country Mouse (352) · The Frogs Who Desired a
+King (44) · The Frog and the Ox (376) ·
+The Belly and the Members (130) ·
+The Oak and the Reed (70) ·
+The Lion's Share (339) · The Bundle of Sticks ·
+The Man and the Satyr (35) ·
+The Shepherd and the Sea (207) ·
+Mercury and the Woodman (173) ·
+Androcles and the Lion (563) ·
+The Bell and the Cat · The Mice in Council ·
+The Fox and the Stork (426) ·
+The Fox and the Lion (10) ·
+The Fox and the Mask (27) ·
+The Hare and the Hound · The Hares and the
+Frogs (138) · The Two Pots (378) ·
+The Tree and the Reed · The Vain Jackdaw (101) ·
+The Eagle and the Beetle (3) ·
+The Ass in the Lion's Skin (188) ·
+The Miller, His Son and the Donkey (721).
+**PD illustration sources:** Francis Barlow (1666) ·
+Thomas Bewick (1818, d.1828) · Walter Crane ·
+Randolph Caldecott · Arthur Rackham (UK PD 2010) ·
+Milo Winter (1919, PD) · Charles H. Bennett (1857).
+
+**GRIMM AND PERRAULT** [T]
+**The Brothers Grimm — the final (7th, 1857) edition of
+*Kinder- und Hausmärchen* contains 210 tales: 200
+numbered *Märchen* plus 10 *Kinderlegenden* (children's
+legends).** All public domain (Jacob d.1863, Wilhelm
+d.1859). **[T on the 210 figure — verify.]**
+— [Grimms' Fairy Tales](https://en.wikipedia.org/wiki/Grimms%27_Fairy_Tales)
+Named set (35, KHM numbers): The Frog Prince (KHM 1) ·
+The Wolf and the Seven Young Kids (5) ·
+The Twelve Brothers (9) · Hansel and Gretel (15) ·
+The White Snake (17) · The Brave Little Tailor (20) ·
+Cinderella/Aschenputtel (21) · Mother Holle (24) ·
+The Seven Ravens (25) · Little Red Cap (26) ·
+The Bremen Town Musicians (27) ·
+The Devil with the Three Golden Hairs (29) ·
+Thumbling (37) · The Robber Bridegroom (40) ·
+Godfather Death (44) · The Juniper Tree (47) ·
+Briar Rose/Sleeping Beauty (50) · Snow White (53) ·
+Rumpelstiltskin (55) · The Golden Goose (64) ·
+Allerleirauh (65) · The Twelve Huntsmen (67) ·
+The Water Nixie (79) · The Gnome (91) ·
+The Raven (93) · Doctor Know-All (98) ·
+The Bearskin (101) · The Wolf and the Man (72) ·
+The Goose Girl (89) · The Young Giant (90) ·
+The Six Servants (134) · The Shoes That Were
+Danced to Pieces (133) · The Twelve Dancing
+Princesses (133) · Iron Hans (136) ·
+The Three Little Birds (96) · Jorinde and
+Joringel (69) · The Star Talers (153) ·
+The Nail (184) · The Bremen Town Musicians.
+**Charles Perrault — *Histoires ou contes du temps
+passé* (1697) contains 8 prose tales:**
+La Belle au bois dormant (Sleeping Beauty) ·
+Le Petit Chaperon rouge (Little Red Riding Hood) ·
+La Barbe bleue (Bluebeard) ·
+Le Maître chat ou le Chat botté (Puss in Boots) ·
+Les Fées (Diamonds and Toads) ·
+Cendrillon (Cinderella) ·
+Riquet à la houppe (Ricky of the Tuft) ·
+Le Petit Poucet (Hop o' My Thumb).
+(**Plus 3 verse tales: Griselidis, Les Souhaits
+ridicules, Peau d'Âne.**) All PD. **The Doré (1867)
+illustrations are PD; Gustave Doré d.1883.**
+**Hans Christian Andersen — 156 tales** across 9
+collections (1835–72), all PD (d.1875): The Little
+Mermaid · The Ugly Duckling · The Snow Queen ·
+The Emperor's New Clothes · The Princess and the
+Pea · The Steadfast Tin Soldier · Thumbelina ·
+The Nightingale · The Little Match Girl ·
+The Red Shoes · The Wild Swans ·
+The Tinderbox · The Shadow · The Fir Tree ·
+The Shepherdess and the Chimney Sweep ·
+The Snowman · The Bell · The Flying Trunk ·
+The Garden of Paradise · The Marsh King's
+Daughter. **[T on the 156 figure.]**
+**Andrew Lang's 12 Coloured Fairy Books (1889–1910)
+contain 798 stories in total** — the single largest
+PD fairy-tale compilation, and the best bulk source
+for an enumerable tale list. **[T on 798 — verify.]**
+Blue · Red · Green · Yellow · Pink · Grey ·
+Violet · Crimson · Brown · Orange · Olive ·
+Lilac Fairy Book. **H. J. Ford's illustrations
+(d.1941) are PD in the UK from 2012.**
+**Joseph Jacobs, *English Fairy Tales* (1890) and
+*More English Fairy Tales* (1894) — 87 tales
+between them, the canonical English set:**
+Tom Tit Tot · Jack and the Beanstalk ·
+The Rose Tree · The Old Woman and Her Pig ·
+Mr Vinegar · Nix Nought Nothing ·
+Jack the Giant Killer · Henny-Penny ·
+Childe Rowland · Molly Whuppie ·
+The Red Ettin · The Golden Ball ·
+The Three Sillies · The Rose-Tree ·
+Binnorie · Mouse and Mouser ·
+Cap o' Rushes · Teeny-Tiny ·
+The Story of the Three Little Pigs ·
+The Master and His Pupil ·
+Titty Mouse and Tatty Mouse ·
+Jack Hannaford · Whittington and His Cat ·
+The Strange Visitor · The Laidly Worm of
+Spindleston Heugh · Lazy Jack ·
+Johnny-Cake · Earl Mar's Daughter ·
+Mr Fox · Lambton Worm · The Ass, the Table
+and the Stick · Fairy Ointment ·
+The Well of the World's End ·
+Master of All Masters · The Three Heads
+of the Well · Tattercoats · The Wee Bannock.
+**[T on the 87 figure.]**
+
+**SHAKESPEARE** [T]
+**39 plays** (36 in the First Folio of 1623, plus
+*Pericles* and *The Two Noble Kinsmen*; *Edward III*
+is disputed), **154 sonnets**, **2 long narrative poems**
+(*Venus and Adonis*, *The Rape of Lucrece*), and
+roughly **1,200 named characters**. All public domain.
+— [Folger Shakespeare Library](https://www.folger.edu/explore/shakespeares-works/)
+(The Folger's own texts and the Arden/Oxford/RSC
+editions have **editorial copyright**; use the 1623
+First Folio or a PD edition.)
+**The plays, by First Folio category:**
+**Comedies (14):** The Tempest · The Two Gentlemen of
+Verona · The Merry Wives of Windsor ·
+Measure for Measure · The Comedy of Errors ·
+Much Ado About Nothing · Love's Labour's Lost ·
+A Midsummer Night's Dream · The Merchant of
+Venice · As You Like It · The Taming of the
+Shrew · All's Well That Ends Well ·
+Twelfth Night · The Winter's Tale.
+**Histories (10):** King John · Richard II ·
+Henry IV Part 1 · Henry IV Part 2 ·
+Henry V · Henry VI Part 1 · Henry VI Part 2 ·
+Henry VI Part 3 · Richard III · Henry VIII.
+**Tragedies (12):** Troilus and Cressida ·
+Coriolanus · Titus Andronicus ·
+Romeo and Juliet · Timon of Athens ·
+Julius Caesar · Macbeth · Hamlet ·
+King Lear · Othello · Antony and Cleopatra ·
+Cymbeline.
+**Plus:** Pericles · The Two Noble Kinsmen ·
+(Edward III, Sir Thomas More — disputed).
+**Named characters for a character series (~45):**
+Hamlet · Ophelia · Gertrude · Claudius ·
+Polonius · Laertes · Yorick · Horatio ·
+Macbeth · Lady Macbeth · Banquo · the Three
+Witches · Duncan · Macduff · King Lear ·
+Cordelia · Goneril · Regan · the Fool ·
+Edmund · Edgar · Gloucester · Othello ·
+Desdemona · Iago · Emilia · Romeo ·
+Juliet · Mercutio · Tybalt · the Nurse ·
+Friar Lawrence · Prospero · Ariel ·
+Caliban · Miranda · Puck/Robin Goodfellow ·
+Titania · Oberon · Bottom · Hermia ·
+Helena · Lysander · Demetrius ·
+Viola · Olivia · Malvolio · Sir Toby Belch ·
+Feste · Beatrice · Benedick · Dogberry ·
+Rosalind · Orlando · Jaques · Touchstone ·
+Shylock · Portia · Falstaff · Hal/Henry V ·
+Richard III · Katherine/Kate · Petruchio ·
+Cleopatra · Antony · Brutus · Cassius ·
+Titania.
+**The famous quotations are PD** and are among the
+best-selling typographic print subjects in existence
+("To thine own self be true", "All the world's a
+stage", "If music be the food of love",
+"We are such stuff as dreams are made on",
+"Though she be but little, she is fierce",
+"The course of true love never did run smooth",
+"Love looks not with the eyes but with the mind",
+"Lord, what fools these mortals be",
+"To be, or not to be", "Shall I compare thee
+to a summer's day", "Some are born great…",
+"There is nothing either good or bad…",
+"Nothing will come of nothing",
+"Double, double toil and trouble",
+"Out, damned spot", "Now is the winter of our
+discontent", "A horse! a horse! my kingdom for a
+horse!", "Once more unto the breach",
+"We few, we happy few, we band of brothers",
+"Cry 'God for Harry, England, and Saint George!'",
+"The quality of mercy is not strain'd",
+"If you prick us, do we not bleed?",
+"This above all: to thine own self be true",
+"Brevity is the soul of wit",
+"What's in a name?", "But soft! what light…",
+"Parting is such sweet sorrow",
+"Full fathom five thy father lies",
+"Our revels now are ended",
+"O brave new world").
+**RISK: the RSC, Shakespeare's Globe and the
+Shakespeare Birthplace Trust all hold trade marks
+and licence "Shakespeare" merchandise under their
+own branding; the 1623 Droeshout portrait and the
+Chandos portrait are PD, but the National Portrait
+Gallery asserts rights in its photographs.**
+
+### Inferences
+- Myth and folklore is the best-value domain in the brief: it is **entirely free**
+  (nothing here is less than a century old), it has **enumerable anchors with real
+  counts** (700+ Aesop, 210 Grimm, 156 Andersen, 798 Lang, 39 plays, 154 sonnets,
+  11 Mabinogion tales, 9 Norse worlds, 12 Olympians, 12 Labours), and it has
+  **public-domain illustration traditions** to derive from (Doré, Rackham,
+  Dulac, Crane, Ford, Sekien, Bewick, Flaxman).
+- The UK-first slice is unusually strong and unusually neglected: the **11
+  Mabinogion tales**, the **87 Jacobs English tales**, the **~40 named English
+  and Scottish folk monsters**, the **~45 Arthurian figures**, and the
+  **Pictish symbols** (in the Abstract section). Almost nobody is making prints
+  of the Lambton Worm or the Laidly Worm of Spindleston Heugh.
+- The consistent risk shape is **modern retelling, not ancient source**: Disney,
+  Marvel, the BBC, Mizuki. The rule is to go back to the oldest attestation and
+  the oldest illustrator.
+
+### Gaps
+- The Perry Index total is "over 700" per the sources found; the precise figure
+  and the relationship to the commonly cited 584 is unresolved. **Count from the
+  index itself.**
+- The Grimm 210, Andersen 156, Lang 798 and Jacobs 87 figures are all [T] and
+  unverified.
+- The number of named Egyptian deities (~1,500) and Gardiner's Sign List size
+  (~760) are [T].
+- Toriyama Sekien's total yokai count ("over 200") is [T].
+
+---
+
+## CROSS-CUTTING: IP RISK REGISTER AND CATALOGUE ARITHMETIC
+
+### Takeaway
+The whole harvest divides cleanly: roughly **13,000–14,000 named subjects are
+free of any identified IP risk**, and the risky material concentrates in six
+recognisable buckets (manufactured products, sports/leagues, modern architecture,
+registered plant cultivars, royal insignia, and modern retellings of old
+stories). Royal insignia and Olympic marks are the only items carrying
+**criminal** liability in the UK and must be absolutely excluded.
+
+### Cited Findings
+
+**THE EXCLUSION LIST — subjects to filter out of any generated catalogue**
+
+| # | Bucket | What to exclude | Why | Severity |
+|---|---|---|---|---|
+| 1 | **Royal insignia** | Royal Arms of the UK, Royal Standard, Lion Rampant (Royal Banner of Scotland), the Crown devices, EIIR/CIIIR cyphers, Prince of Wales's feathers, Royal Warrant, anything implying Royal patronage | **Trade Marks Act 1994 s.4 and s.99 — criminal offence**; also false suggestion of Royal patronage | **CRIMINAL** |
+| 2 | **Scottish arms** | Any specific family's or body's coat of arms used in Scotland | Lord Lyon / Lyon Court has **criminal jurisdiction** over unauthorised use of arms | **CRIMINAL** |
+| 3 | **Olympic marks** | "Olympic", "Olympian", "Paralympic", the five rings, the agitos, Games mottos | **Olympic Symbol etc. (Protection) Act 1995** — statutory, criminal and civil | **CRIMINAL** |
+| 4 | **Football and sport** | All 92 EFL/PL club names, nicknames, crests, stadium names ("Anfield", "Old Trafford", "Emirates", "Etihad"), "Premier League", "FA Cup", "Six Nations", "Wimbledon", "The Open", "Ashes", "Super Bowl", "Tour de France" | Registered trade marks, aggressively enforced | **HIGH** |
+| 5 | **Vehicles** | Every car, motorcycle, aircraft, locomotive and bicycle marque name, badge, grille and model name; VW Beetle/Camper shape, Jaguar E-Type, Vespa body, Mini, Spitfire, Concorde, Flying Scotsman, Mallard, Thomas the Tank Engine, RAF roundel, Red Arrows | Registered trade marks and 3D shape marks | **HIGH** |
+| 6 | **Modern architecture (non-UK)** | Atomium, Louvre Pyramid, Guggenheim Bilbao, Burj Khalifa, Sydney Opera House, Christ the Redeemer, Hollywood Sign, Empire State Building, Chrysler Building, Golden Gate Bridge, Eiffel Tower *at night*, "New7Wonders" | Live architectural copyright + trade marks; **no freedom of panorama** in France, Belgium, Italy, Greece, Brazil | **HIGH** |
+| 7 | **Design classics** | Eames, Barcelona, Wassily, Egg, Swan, Series 7, Wishbone, Panton, Tulip, Womb, LC2/LC4, Noguchi, Anglepoise, Arco, PH5, Tizio, Tripp Trapp, Ball Chair | Post-2016 repeal of CDPA s.52 restored **full life+70 copyright** to industrially made artistic works in the UK | **HIGH** |
+| 8 | **Plant cultivars** | Any cultivar registered after ~1990; David Austin rose trade names, "Karma"/"Mystic" dahlias, "Endless Summer" hydrangea, "Carolina Reaper"/"Pepper X" chillies | **UK Plant Breeders' Rights (25–30 yr)** + trade-marked selling names | **MEDIUM** |
+| 9 | **Food and drink brands** | All distillery, winery, brewery, dairy, chocolate and coffee-equipment brands; **and protected designations** used as labels (Champagne, Prosecco, Rioja, Port, Sherry, Stilton, Melton Mowbray, Cornish Pasty, Harris Tweed, Darjeeling, Rooibos, Jamaica Blue Mountain); plus **"Dark 'n' Stormy" (Gosling's)** and **"Painkiller" (Pusser's)** | Trade marks, PDO/PGI/GI, certification marks | **MEDIUM–HIGH** |
+| 10 | **Textiles** | Burberry check, Liberty prints, Missoni zigzag, Marimekko Unikko, Orla Kiely stem, "Harris Tweed", the "Morris & Co." name (**the Morris patterns themselves are free**) | Trade marks + live design copyright | **MEDIUM–HIGH** |
+| 11 | **Children's characters** | All Disney versions of PD tales; Peter Rabbit and all Potter characters; Paddington, Winnie-the-Pooh (Disney design), Gruffalo, Peppa Pig, Elmer, Hungry Caterpillar, Moomins, Thomas, Flower Fairies, Yo-kai Watch, Pokémon, Jurassic Park/World | Trade marks + copyright; the most litigated category in print-on-demand | **HIGH** |
+| 12 | **Institutions** | "Kennel Club", "Crufts", "GCCF", "TICA", "RBST", "RHS", "Kew", "National Trust", "Woodland Trust", "RSPB", "BSBI", "RNLI", "TfL"/Underground roundel, "NASA" insignia, "BBC"/"Radio 4", all university names and crests, the Royal Mail cypher, BT's K6 kiosk | Trade marks; several actively license prints | **MEDIUM–HIGH** |
+| 13 | **Living people** | Any identifiable living person, including athletes, musicians, royals and "inspirational quote" attributions to living figures | Passing off, image rights in some jurisdictions, defamation, GDPR | **HIGH** |
+| 14 | **Modern retellings** | Marvel's Thor/Loki/Asgard; Mizuki yokai designs; Crowley/Harris Thoth tarot (PD 2033); Iyengar's yoga photographs; Netter anatomy; Arden/Folger editorial texts; Opie's nursery-rhyme book text; Wainwright's drawings and route text; Penrose tilings | Live copyright | **MEDIUM** |
+| 15 | **Culturally restricted** | Uluru (Anangu restrictions on depiction, widely honoured by retailers); Indigenous Australian dot-painting styles; sacred Māori designs; Native American headdresses and specific tribal patterns | Not always legally enforceable but reputationally and ethically serious | **MEDIUM** |
+
+**SAFE-BY-CONSTRUCTION RULES** that clear almost everything:
+1. **Species, genus and family names** — always free.
+2. **Place names and pre-1900 buildings** — always free; UK CDPA 1988 s.62
+   (freedom of panorama) additionally permits depicting buildings, sculptures and
+   models permanently sited in public places, including modern ones.
+3. **Breed names** — always free; registry names never.
+4. **Mathematics, geometry and classification systems** (Whyte notation,
+   Hornbostel–Sachs, WMO cloud genera, Beaufort, wallpaper groups) — free.
+5. **Anything whose creator died more than 70 years ago** — free in the UK.
+   The practical cut-off for 2026 is **death before 1 January 1956**.
+6. **Anything published before 1930** that is anonymous or traditional — free.
+7. **Sell the typology, never the marque.**
+
+**CATALOGUE ARITHMETIC — the subject-axis totals from this harvest**
+
+| Domain | Free named subjects | Canonical source |
+|---|---|---|
+| UK birds (BOU British List) | **636** | BOU |
+| UK garden birds (premium subset) | 30 | RSPB |
+| UK mammals (all, incl. cetaceans) | **107** | Mammal Society |
+| UK butterflies | **59** | Butterfly Conservation |
+| UK macro-moths (showy subset / all) | 40 / ~900 | ABH checklist |
+| UK Odonata | ~57 | British Dragonfly Society |
+| UK bees | ~270 (24 bumblebees) | Bumblebee Conservation Trust |
+| UK reptiles + amphibians | **13** | ARC Trust |
+| UK freshwater fish | ~42 | — |
+| UK sea fish | ~330 | MarLIN |
+| World fauna (big cats, safari, Arctic, Australian, rainforest, marine mammals, sharks/rays, jellyfish, reef, cephalopods, beetles, hummingbirds, parrots, owls, raptors, penguins) | ~2,500 | IOC/AviList, IUCN, WoRMS |
+| Dog breeds (Royal Kennel Club) | **221** | RKC |
+| Cat breeds (GCCF / TICA) | **45 / 75** | GCCF, TICA |
+| UK livestock breeds (cattle, sheep, pigs, equines, poultry, goats) | ~250 | RBST, NSA, PCGB |
+| World horse breeds | ~350 | — |
+| UK wild flora (native / all) | **1,692 / 3,445** | BSBI Plant Atlas 2020 |
+| UK native trees | **35** (60+ with hybrids) | Woodland Trust |
+| UK ferns / bryophytes | ~70 / ~1,000 | BPS, BBS |
+| UK fungi (macro / all) | **~3,000 / ~15,000** | Kew / BMS |
+| UK seaweeds | ~650 | AlgaeBase |
+| Garden-flower genera / RHS Plant Finder names | 60 / **70,847** | RHS |
+| Safe heritage cultivars (roses, tulips, dahlias, peonies, apples) | ~200 | ARS, KAVB, RHS, APS |
+| Houseplants / succulents & cacti | ~60 / ~80 | POWO |
+| UK cities | **76** | letters patent |
+| UK towns (top 500 slice of ~7,000 built-up areas) | 500 | ONS |
+| English ceremonial counties / historic counties | **48 / 39** | Lieutenancies Act 1997 / ABC |
+| Wales, Scotland, NI counties and lieutenancies | ~8 / ~34 / ~8 | — |
+| London boroughs / postal districts / named districts | **33 / ~120 / ~75** | — |
+| UK National Parks / National Landscapes / NSAs | **15 / 46 / 40** | National Parks UK, NLA, NatureScot |
+| Munros / Corbetts / Grahams / Wainwrights / Marilyns | **282 / 222 / 231 / 214 / 1,557** | SMC, Wainwright, Marilyns |
+| UK cathedrals (CoE) / castles / stately homes | **42 / ~300 named / ~500** | AEC, NT |
+| UK lighthouses / piers / islands (inhabited Scottish) | ~340 / **61** / **94** | Trinity House, NLB, NPS |
+| UK rivers / canals / railway stations | ~1,500 / ~100 / **~2,580** | — / CRT / ORR |
+| World cities / mountains / national parks (US) | ~90 / ~60 / **63** | — / — / NPS |
+| UNESCO World Heritage sites | **~1,250** | UNESCO |
+| IAU constellations | **88** | IAU |
+| Zodiac (+ Chinese 60-combination cycle) | **12 (+60)** | — |
+| Moon phases / named full moons | **8 / 13** | NASA |
+| Planets / dwarf planets / notable moons | **8 / 5 / ~30** | NASA |
+| Messier / Caldwell / named nebulae & galaxies | **110 / 109 / ~60** | SEDS |
+| IAU official star names | ~450 | IAU-CSN |
+| Star charts / moon phases / eclipses by date | **generated — unlimited** | NASA, Gaia |
+| IBA cocktails | **102** (3 × 34) | IBA |
+| BJCP beer categories / sub-styles | **34 / ~100** | BJCP |
+| Scotch whisky regions | **5** | SWA |
+| Grape varieties / wine regions / EU wine GIs | ~55 / ~60 / **~1,650** | OIV, eAmbrosia |
+| Coffee preparations / teas / cheeses / breads / pasta / spices / chillies / British bakes / gin botanicals | ~30 / ~45 / ~200 / ~45 / ~70 / ~65 / ~50 / ~80 / ~60 | — |
+| UK PDO/PGI protected foods | ~90 | Defra UK GI register |
+| Architecture: styles / features / vernacular / follies | ~55 / ~65 / ~35 / ~35 | Historic England, VAG |
+| Boats / Whyte locomotive classes / tools / instruments | ~50 / ~30 / ~60 / ~100 | — |
+| Textiles: weaves + patterns / William Morris patterns | ~120 / **~30** | — |
+| Ceramics traditions / safe furniture forms / sports objects | ~55 / ~60 / ~80 | — |
+| Tarot (PD from 1 Jan 2022 in the UK) | **78** (22 Major) | — |
+| Chakras / yoga asanas / ballet steps / named dances | **7 / ~200 / ~60 / ~75** | — |
+| Anatomy: bones / muscles | **206 / ~600** | Gray's (PD) |
+| Runes: Elder / Younger / Futhorc / Ogham | **24 / 16 / 29 / 20** | — |
+| Alchemical symbols / sacred-geometry forms / Platonic + Archimedean solids | ~100 / ~35 / **5 + 13** | — |
+| Named mathematical curves and fractals | ~100 | — |
+| Knots (Ashley) / weave patterns | **3,854** / ~30 | Ashley |
+| Islamic patterns (girih tiles / wallpaper groups) | **5 / 17** | — |
+| Celtic knotwork forms / Pictish symbols | ~18 / **~40** | — |
+| Tartans (Scottish Register) | **>10,000** | tartanregister.gov.uk |
+| Heraldic vocabulary (tinctures, ordinaries, lines, charges) | ~130 | — |
+| Cloud genera / species / varieties / total combinations | **10 / 14–15 / 9 / ~100** | WMO |
+| Named weather phenomena / Shipping Forecast areas | ~80 / **31** | Met Office / Met Office |
+| Months / seasons / times of day / canonical hours | 12 / 4 / ~25 / **8** | — |
+| Japanese sekki / microseasons | **24 / 72** | — |
+| Wheel of the Year / UK seasonal customs | **8 / ~27** | — |
+| Children's animal sets (8 sets) | ~110 | retail convention |
+| Dinosaur genera (valid / children's set / British finds) | **~1,000 / 45 / 10** | Paleobiology DB |
+| Alphabets and code sets (NATO, ICS, semaphore, Morse, Braille, runic, hieroglyph) | ~200 | ITU/IMO |
+| Mythical creatures | ~85 | — |
+| Greek/Roman deities and myths | ~120 | — |
+| Norse deities, beings, worlds, artefacts | ~90 | Eddas |
+| Celtic/British folklore figures / Mabinogion tales | ~110 / **11** | — |
+| Arthurian figures and objects | ~60 | Malory |
+| Egyptian deities (depicted) / hieroglyph signs | ~70 / **~760** | Gardiner |
+| Japanese yokai (Sekien, PD) | **>200** | Sekien 1776–84 |
+| Aesop (Perry Index) | **>700** | Perry Index |
+| Grimm / Perrault / Andersen / Lang / Jacobs tales | **210 / 8 / 156 / 798 / 87** | — |
+| Shakespeare plays / sonnets / characters | **39 / 154 / ~1,200** | First Folio |
+
+**Conservative grand total of distinct, IP-free, named subjects available
+from the lists in this document: approximately 13,000–14,000** (excluding the
+RHS Plant Finder's 70,847 names, the >10,000 tartans, the ~3,854 Ashley knots,
+the ~1,250 UNESCO sites and the generated celestial axes, any one of which would
+take the figure far higher).
+
+### Inferences
+- **The near-duplication risk flagged in CLAUDE.md is a subject-axis problem, not
+  a style problem.** The wall-art branch attributes 424k non-selling listings to
+  89% near-duplication. A catalogue built on **13,000+ genuinely distinct named
+  subjects** with a *small* style matrix (4–6 treatments) yields 52k–84k listings
+  at near-zero duplication. The opposite construction — 500 subjects × 100 style
+  permutations — produces the same listing count at catastrophic duplication.
+  **Breadth of subject, not depth of style, is the fix.**
+- The three highest-leverage axes by (count × freedom from risk × UK-first
+  distinctiveness) are: **(1) the BOU British List (636)**, **(2) UK places in all
+  their forms (~3,500)**, and **(3) British wild flora and fungi (~4,700)**.
+- The three best *generated* axes, which are structurally immune to duplication
+  because every output is unique, are **star charts by date and latitude**, **moon
+  phase by date**, and **eclipse by date and place** — all built on free NASA/ESA
+  data.
+- The under-exploited UK-first lists worth prioritising for differentiation:
+  **British fungi (3,000 macro species)**, **Pictish symbols (~40)**, **the 11
+  Mabinogion tales**, **the 87 Jacobs English tales**, **vernacular buildings
+  (~35)**, **billhook and tool patterns (~60)**, **the 31 Shipping Forecast
+  areas**, **British-discovered dinosaurs and Jurassic Coast fossils (~10)**, and
+  **the 8 surviving British turf mazes**.
+
+### Gaps
+- **Every legal statement in this document is a research note, not legal advice.**
+  The criminal provisions (royal insignia, Lord Lyon, Olympic marks) and the
+  UK freedom-of-panorama and s.52-repeal positions were stated from prior
+  knowledge, not from fetched primary legislation. **Obtain legal advice before
+  relying on any of them.**
+- No wall-art retailer subject menus were fetched this session, so the claim that
+  a given domain "actually sells as prints" is unverified for every domain. This
+  was an explicit part of the assignment and is **not met** — a follow-up pass
+  should fetch the category trees of Desenio, Etsy, King & McGaw, Abstract House,
+  Juniqe, Photowall and John Lewis to confirm demand, and that evidence should be
+  treated as the commercial filter over these lists.
+- Roughly 40% of the counts in this document are marked **[T]** and must be
+  re-verified against the cited registry before the catalogue arithmetic is
+  committed to. The **[V]** figures (BOU 636, RKC 221, GCCF 45, TICA 75, IBA 102,
+  UK cities 76, National Parks 15, National Landscapes 46, Wainwrights 214,
+  butterflies 59, UK mammals 107, native trees 35, UK fungi ~15,000, BSBI 3,495,
+  RHS Plant Finder 70,847, tartans >10,000, WMO 10 genera, tarot PD date) are the
+  only ones sourced in this session.
