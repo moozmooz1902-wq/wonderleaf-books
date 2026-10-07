@@ -5,16 +5,35 @@ Everything below is finished and verified. Nothing here needs a terminal.
 ## Order of operations
 
 The account is at its selling limit, so listings have to come off before the
-new ones go on. End first, then test, then upload.
+new ones go on. End first, then test small, then upload.
 
-1. **`EBAY_END_TEST_50.csv`** - fifty ends. Confirms the End template and the
-   column names are right on fifty rows instead of 126,000.
+1. **`EBAY_END_TEST_50.csv`** - fifty ends, to confirm the End template.
 2. **`EBAY_END_TSHIRTS.csv`** - 125,966 ends, one file. T-shirts only; no
-   wall art.
-3. **`EBAY_TEST_50.csv`** - fifty new listings, same header as the main file.
-   Check in Seller Hub that all five sizes came through, the photo shows, the
-   price is £11.99 and each size shows 1 available.
-4. **`EBAY_ONE_FILE.zip`** - the whole catalogue as one file.
+   wall art. *(Uploaded 2026-10-07.)*
+3. **`EBAY_TEST_3.csv`** - three listings. Cheapest possible check that the
+   variation set is accepted.
+4. **`EBAY_TEST_50.csv`** - fifty listings. Check in Seller Hub that all five
+   sizes came through, the photo shows, the price is £11.99 and each size
+   shows 1 available.
+5. **`EBAY_ONE_FILE.zip`** - the whole catalogue as one file.
+
+### Error 21919053, and the fix
+
+The first test upload failed on all fifty rows with:
+
+    VariationSpecificsSet container (Item.Variations.VariationSpecificsSet)
+    is required to list a Multi-SKU item.
+
+A File Exchange variation listing declares its variation axis **on the parent
+row**, listing every value its children use, pipe-separated. Our parents had
+`C:Size` empty and only the children carried a size, so eBay had no set to
+build the variation matrix from. Every parent now carries:
+
+    C:Size = Small|Medium|Large|X-Large|XX-Large
+
+and each child still carries its single value plus
+`RelationshipDetails = Size=<value>`. Checked after the fix: no listing has a
+child size outside the declared set, and every listing has all five.
 
 ## The end file
 
