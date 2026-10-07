@@ -213,3 +213,88 @@ Two earlier attempts to automate this judgement are recorded in
 in the phrase (they belong in the title), and a growing pile of regexes that
 ended up cutting "WC", "Loo" and "Please flush", which are among the best
 selling bathroom prints there are.
+
+## No duplicates: what is guaranteed and what is not
+
+Checked on the generated catalogue, not asserted:
+
+    2,293,671 listings
+            0 duplicate SKUs
+            0 duplicate titles inside any one store
+          253 repeated designs (0.011%)
+      157,000 titles shared across DIFFERENT stores
+
+The last line is the honest caveat. The four stores are four eBay accounts,
+so a repeated title is not two listings competing inside one shop - but they
+do meet each other in eBay search. Removing it entirely would mean one
+global title index across all four, which costs about 150,000 more listings.
+
+### Why titles were repeating, and what gave way
+
+A title is 80 characters and has to carry the phrase, the niche keyword, the
+seller's tail (Framed, Poster, Gift) and ideally a differentiator. `fit()`
+trimmed the PHRASE first to make room, which is exactly backwards: the
+phrase is the only part that makes one listing different from the next.
+
+    "The {surname} family together since {year}"
+
+is 77 distinct phrases. The year fell off the end and all 77 became "The
+Poole Family Together Since Sign Art Print Wall Decor Framed Poster Gift" -
+74 of them in one store. "Proud to be from {town}" lost the town the same
+way, and 144 listings came out as "Proud to Be from Town Typography Wall
+Art Print".
+
+The budget now goes: the phrase first and never cut below 62 characters,
+then the seller's tail, then the niche keyword (in a shorter form if the
+full one will not fit, because that is how the listing is FOUND), then
+colour and room, then the paper sizes. That took repeated titles from 16.5%
+to 12.6%.
+
+The rest cannot be fixed inside 80 characters - 48 colourways of "Everything
+Stops for Tea" have nowhere to put the colour - so a title that is already
+used in that store is not listed at all. 153,943 rows were dropped that way,
+which is where 2.5M became 2.29M. Every one of them was a listing that would
+have competed with one of its own siblings.
+
+## How 3,989 typed lines become 2.29 million listings
+
+Worth setting out plainly, because the ratio looks impossible.
+
+    1. A person types 3,989 lines into banks/niches/.
+       3,699 are plain phrases. 290 contain a {slot}.
+
+    2. A slot draws from a list: 368 surnames, 2,317 UK towns, 516 first
+       names, 77 years, 67 counties, 60 dog breeds, 40 professions.
+
+    3. One template is therefore many phrases:
+         "The {surname} family est. {year}"  =  368 x 77  =  28,336
+
+    4. 290 templates expand to 878,232 distinct phrases.
+
+    5. Each phrase is drawn an average of 2.6 ways - a different colourway,
+       font, layout or ornament, aimed at a different room.
+
+       878,232 x 2.6  =  2,293,671 listings
+
+The important number in that chain is **878,232**, not 2.29M. That is how
+many listings carry genuinely different WORDS. The 2.6 multiplier is the
+same words drawn differently, which is a real choice a buyer makes - people
+search "sage green kitchen print" - but it is not new content.
+
+### What that means commercially
+
+This is a long tail, not a broad one. "The Okafor Family Est. 1998" sells to
+the Okafors and nobody else, so 878,232 phrases are 878,232 very
+low-frequency searches. Each listing sells rarely; the volume is the
+business model, and it is the same one the collaborator's live catalogue
+runs on.
+
+Two things follow that the seller should decide on, not me:
+
+- **eBay insertion fees.** 2.29M listings across four accounts is about
+  573,000 each, far beyond any free allowance. That is a real monthly cost
+  and it should be checked against each account's allowance before the
+  first upload.
+- **A smaller, denser catalogue is a legitimate alternative.** Listing the
+  best 100,000 rather than all 2.29M would cost a fraction and lose only the
+  rarest tail.

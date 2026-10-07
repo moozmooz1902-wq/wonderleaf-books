@@ -113,39 +113,59 @@ def title_phrase(phrase):
     return t
 
 
+MAX_PHRASE = 62          # beyond this a phrase has to give way; below it, never
+
+
 def fit(parts, limit=80, keep=1, tail=()):
-    """Join parts in priority order within `limit` characters.
+    """Join parts within `limit` characters, deciding what gives way first.
 
-    Three bands, and the order matters:
+    The PHRASE is what makes one listing different from the next. It is the
+    last thing shortened, and that is not a style preference - it is the
+    difference between a catalogue and a pile of duplicates.
 
-      head      the phrase. Trimmed at a word boundary to make room.
-      must      the first `keep` parts - the niche keywords. Never dropped,
-                so a funny print is found by "funny" and a memorial one by
-                "memorial".
-      tail      reserved BEFORE the optional middle, because the seller puts
-                the same search words at the end of every title and those
-                were being squeezed out: "Framed" was reaching 7% of titles
-                and "Poster" 11%, since fit() filled left to right and ran
-                out of characters before it got there.
+    Trimming it first cost 400,092 repeated titles. "The {surname} family
+    together since {year}" is 77 distinct phrases; the year fell off the end
+    to make room for keywords and all 77 became "The Poole Family Together
+    Since Sign Art Print Wall Decor Framed Poster Gift", 74 of them in one
+    store. "Proud to be from {town}" lost the town the same way and 144
+    listings came out as "Proud to Be from Town Typography Wall Art Print".
 
-    Whatever is left over after head, must and tail goes to the optional
-    middle parts - venue, colour, paper sizes - which are nice to have and
-    were never the point.
+    So the budget goes in this order:
+
+        1. the phrase          up to MAX_PHRASE characters, never cut below
+        2. the seller's tail   Framed, Poster, Gift
+        3. the niche keyword   funny, memorial, nursery - how it is found
+        4. the rest            venue, colour, paper sizes
+
+    and the pieces are then assembled in reading order, with the tail last
+    where the seller wants it.
     """
-    head, must, rest = parts[0], parts[1:1 + keep], parts[1 + keep:]
+    head, must, rest = parts[0], [p for p in parts[1:1 + keep] if p], \
+        [p for p in parts[1 + keep:] if p]
     tail = [t for t in tail if t]
-    need = sum(len(p) + 1 for p in must if p) + sum(len(t) + 1 for t in tail)
-    if len(head) + need > limit:
-        cut = head[: max(0, limit - need)].rsplit(" ", 1)[0]
-        head = cut.rstrip(",.;:&-")
-    out = " ".join([head] + [p for p in must if p]).strip()
-    budget = limit - sum(len(t) + 1 for t in tail)
-    for p in rest:
-        if p and len(out) + 1 + len(p) <= budget:
-            out += " " + p
+
+    if len(head) > MAX_PHRASE:                  # genuinely too long: trim it
+        head = head[:MAX_PHRASE].rsplit(" ", 1)[0].rstrip(",.;:&-")
+    used = len(head)
+
+    picked_tail = []
     for t in tail:
-        out += " " + t
-    return out[:limit]
+        if used + 1 + len(t) <= limit:
+            picked_tail.append(t); used += 1 + len(t)
+    # the niche keyword is how the listing is FOUND, so if the full form will
+    # not fit, a shorter form of it beats dropping it for a colour name
+    picked_must = []
+    for m in must:
+        for attempt in (m, " ".join(m.split()[:3]), " ".join(m.split()[:2]), m.split()[0]):
+            if used + 1 + len(attempt) <= limit:
+                picked_must.append(attempt); used += 1 + len(attempt)
+                break
+    picked_rest = []
+    for p in rest:
+        if used + 1 + len(p) <= limit:
+            picked_rest.append(p); used += 1 + len(p)
+
+    return " ".join([head] + picked_must + picked_rest + picked_tail)[:limit]
 
 
 # The words buyers type for each kind of print. They go straight after the phrase
@@ -246,7 +266,12 @@ def build_title(phrase, venue, colour, rnd, niche=""):
     tail = [t for t in ("Framed", "Poster" if "poster" not in core.lower() else "",
                         "" if "gift" in (head + " " + core).lower() else "Gift",
                         "Bold" if BOLD else "") if t]
-    return fit([head, core, extra, venue, colour, "A4 A3 A2"], tail=tail)
+    # colour and room before the extra keyword and the paper sizes: those two
+    # are what tell one listing from the next when the phrase is the same, and
+    # they are search terms in their own right ("sage green kitchen print").
+    # Ordered the other way, 48 colourways of "Everything Stops for Tea" all
+    # came out with an identical title.
+    return fit([head, core, colour, venue, extra, "A4 A3 A2"], tail=tail)
 
 
 # ------------------------------------------------------------------ style picks
@@ -458,6 +483,7 @@ def main():
             w = csv.writer(fh)
             w.writerow(FIELDS)
             row_no = 0
+            seen_titles = set(); dup_titles = 0
             while heap and row_no < stores[sid]["rows"]:
                 _, n = heapq.heappop(heap)
                 phr, lst = jobs[n]
@@ -492,6 +518,17 @@ def main():
                 if ip_check(title):          # e.g. a venue word that collides with a brand
                     blocked += 1
                     continue
+                # No two listings in the same store may carry the same title.
+                # A title is 80 characters and sometimes cannot hold the
+                # phrase, the niche keyword, the seller's tail AND a
+                # differentiator, so 48 colourways of "Everything Stops for
+                # Tea" came out identical. Two listings with one title
+                # compete with each other in the same search; the surplus is
+                # dropped rather than listed.
+                if title in seen_titles:
+                    dup_titles += 1
+                    continue
+                seen_titles.add(title)
                 row_no += 1
                 sku = f"{stores[sid]['sku']}{codes[n]}{row_no:07d}"
                 micro = f"{n}|{room}|{microkey(phrase, meta)}"
@@ -501,7 +538,8 @@ def main():
                             img_path(phrase, pal, fset, layout, orn)])
                 counts[n] += 1
         summary["stores"][sid] = {"name": stores[sid]["name"], "rows": row_no, "by_niche": dict(counts)}
-        print(f"store {sid} {stores[sid]['name']:26s} {row_no:>9,} rows  {path.stat().st_size / 1e6:.0f} MB  ({time.time() - t0:.0f}s)", flush=True)
+        print(f"store {sid} {stores[sid]['name']:26s} {row_no:>9,} rows  "
+              f"({dup_titles:,} dropped as duplicate titles)  {path.stat().st_size / 1e6:.0f} MB  ({time.time() - t0:.0f}s)", flush=True)
 
     summary["micro_niches"] = len(micros)
     summary["ip_blocked_titles"] = blocked
