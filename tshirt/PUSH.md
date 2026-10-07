@@ -12,8 +12,8 @@ new ones go on. End first, then test, then upload.
 2. **`EBAY_END_TSHIRTS.csv`** - 125,966 ends, one file. T-shirts only; no
    wall art.
 3. **`EBAY_TEST_50.csv`** - fifty new listings, same header as the main file.
-   Check in Seller Hub that all five sizes came through, the photo shows, and
-   the price is £12.99.
+   Check in Seller Hub that all five sizes came through, the photo shows, the
+   price is £12.99 and each size shows 1 available.
 4. **`EBAY_ONE_FILE.zip`** - the whole catalogue as one file.
 
 ## The end file
@@ -54,7 +54,7 @@ reason, for the record.
     115,966 listings
     579,830 size variations, exactly 5 per listing, no orphans
     695,796 data rows, 30 columns
-    £12.99, quantity 5, category 15687, United Kingdom
+    £12.99, quantity 1 per size, category 15687, United Kingdom
     business policies named 1 for shipping, returns and payment
     every listing has a PicURL and a print master in the bucket
 
@@ -88,9 +88,6 @@ If the limit on this account is expressed in items rather than listings,
 ending 129,881 listings does not create room for that, because it frees
 about 129,881 items and the upload asks for 2.9 million. Dropping quantity
 from 5 to 1 takes the upload to 579,830 items and the account to 1,119,230.
-That is a one-value change to the file and does not affect the SKUs, the
-artwork or the bucket.
-
 If it turns out fewer listings can go up than the file holds, the upload is
 better split than the ends made bigger - 118,872 live t-shirts are still
 selling and are worth more than empty headroom. Worth reading the actual limit off Seller Hub first.
