@@ -51,9 +51,9 @@ reason, for the record.
 
 **`EBAY_ONE_FILE.zip`** - one eBay File Exchange CSV, zipped.
 
-    115,312 listings
-    576,560 size variations, exactly 5 per listing, no orphans
-    691,872 data rows, 30 columns
+    115,421 listings
+    577,105 size variations, exactly 5 per listing, no orphans
+    692,526 data rows, 30 columns
     £11.99, quantity 1 per size, category 15687, United Kingdom
     business policies: shipping 2, returns 1, payment 1
     every listing has a PicURL and a print master in the bucket
@@ -65,48 +65,52 @@ exactly five variations, no orphan variations, nothing missing `C:Size`,
 nothing missing `PicURL`, no title over 80 characters, and every description
 heading matching its title.
 
-### Titles rebuilt on the live catalogue's formula
+### Titles rebuilt on the hot sellers' formula
 
-The 244,838 live t-shirts, which sell, follow one shape almost without
-exception - only 11 depart from it:
+The benchmark is the source catalogue the designs were replicated from - the
+file the seller shared - **filtered to t-shirts only** (it also contains
+hoodies, sweatshirts and jumpers, which were excluded) and **weighted by units
+actually sold**: 75,880 t-shirt titles, 11,849 of them with sales, 134,578
+units between them.
 
-    {head}  Mens Womens T-Shirt  [theme]  Unisex Novelty Gift Tee [Funny] [Present]
+    keyword      all tees   by units   ours
+    T-Shirt        100.0%     100.0%   100.0%
+    Mens            86.4%      89.7%   100.0%
+    Funny           23.4%      40.2%    30.6%
+    Top              8.6%      27.8%    94.5%
+    Tee              6.9%      16.7%    99.8%
+    Gift             0.4%       4.9%     0.0%
+    Unisex           0.1%       3.7%     0.0%
+    Womens          18.9%       2.5%     0.0%
+    Novelty          0.0%       0.0%     0.0%
 
-Our titles did not. Measured against the live set before the rebuild:
+The shape is **`{subject} T-Shirt Mens [Funny] [theme] Tee Top`**. Their single
+commonest ending among the top 2,000 sellers is literally `Tee Top` (247 of
+them), which is why ours leans on it.
 
-    keyword        live    ours (before)   ours (now)
-    Mens Womens   100.0%       0.0%         100.0%
-    Womens        100.0%       0.0%         100.0%
-    Mens          100.0%      25.1%         100.0%
-    T-Shirt       100.0%      25.0%         100.0%
-    Unisex         97.5%      25.0%         100.0%
-    Novelty        89.4%      34.9%         100.0%
-    Gift           81.6%      76.1%          93.9%
-    Tee            67.6%      38.3%          76.6%
+**Womens, Unisex and Novelty are deliberately absent.** They account for 2.5%,
+3.7% and 0.0% of units sold. An earlier version of this file put all three on
+100% of titles, copied from the seller's own GR- catalogue - which is the one
+being ended - and that was the wrong benchmark.
 
-Not one of the 115,966 titles contained "Womens", against 100% of the live
-ones, so the catalogue was invisible to anyone searching "womens t shirt".
+Heads are built from each listing's own distinctive words (its old title, then
+its slogan, then its subject) with garment and gift padding stripped, and
+function words dangling at either end removed, so a head reads
+`Japanese Performance Anime Car Drifting Drift` rather than
+`...Drifting Drift On The`. Hot sellers average 61.2 characters; ours average
+69.7, inside the 80 limit.
 
-Rebuilt by taking each listing's distinctive words - from its old title, then
-its slogan, then its subject, with the garment and gift padding stripped -
-and fitting them in front of the formula. The mandatory core is 44 characters
-with spaces, leaving 36 for the head, which matches the live heads (mean 24.6,
-90th percentile 36). Where a title needed to be made unique the builder tries
-a theme word, then the shorter tails the live set also uses
-(`Unisex Novelty Gift`, `Unisex Novelty`), then shorter heads.
-
-**Uniqueness is enforced, not hoped for: zero exact duplicates and zero
-normalised duplicates across all 115,312 titles, and zero collisions with
-anything live on the account.** 110 listings for which no unique title could
-be built inside 80 characters were dropped.
+**Uniqueness is enforced, not hoped for: zero exact and zero normalised
+duplicate titles across all 115,421, and zero collisions with anything live
+on the account.** No listing was lost to an unbuildable title.
 
 ### 545 old near-duplicate pairs dropped
 
 Before the rebuild, 545 pairs differed only by `T-Shirt` versus `T Shirt`.
 Only 2 of the 545 shared both slogan and illustration - the rest were
 genuinely different designs that collided on title text - but one of each pair
-was dropped on the seller's instruction, safe over sorry. With the 110 above
-that is 654 listings removed, 115,966 down to 115,312.
+was dropped on the seller's instruction, safe over sorry. 115,966 down to
+**115,421**.
 
 ### Every description now says what makes the design different
 
@@ -132,7 +136,7 @@ with the 10,000 spare slots asked for:
 
     live now          668,956 listings   (424,118 wall art + 244,838 tees)
     after the ends    542,990 listings
-    after the upload  658,302 listings   - 10,654 fewer than today
+    after the upload  658,411 listings   - 10,545 fewer than today
 
 On an **item** count it also fits, and that is what the quantity choice is
 for. The file carries **quantity 1 on each of the five sizes**, matching
@@ -141,8 +145,8 @@ twenty-five:
 
     live now          about   669,281 items
     after the ends    about   543,315 items
-    new upload                576,560 items
-    account after           1,119,875 items
+    new upload                577,105 items
+    account after           1,120,420 items
 
 At quantity 5 the same upload would have asked for **2,899,150 items**, about
 five times what the account holds today, while 125,966 ends free only about
@@ -161,7 +165,7 @@ Both are the paths the fulfilment tool resolves a custom label to, so an
 order looks up its own artwork with no extra step.
 
 **Verified against the live bucket on 2026-10-07**, not from memory:
-all 115,312 custom labels in the upload file resolve to both
+all 115,421 custom labels in the upload file resolve to both
 `art/mock/<label>.jpg` and `art/raw/<label>.png` in `tshirt-m12k`. Zero
 missing on either side. `art/mock/` holds 116,355 WLT objects - the 389
 extra are the trademark and likeness listings that were pulled, correctly
