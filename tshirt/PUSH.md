@@ -8,8 +8,9 @@ The account is at its selling limit, so listings have to come off before the
 new ones go on. End first, then test, then upload.
 
 1. **`EBAY_END_TEST_50.csv`** - fifty ends. Confirms the End template and the
-   column names are right on fifty rows instead of 130,000.
-2. **`EBAY_END_TSHIRTS.csv`** - 129,881 ends. T-shirts only; no wall art.
+   column names are right on fifty rows instead of 126,000.
+2. **`EBAY_END_TSHIRTS.csv`** - 125,966 ends, one file. T-shirts only; no
+   wall art.
 3. **`EBAY_TEST_50.csv`** - fifty new listings, same header as the main file.
    Check in Seller Hub that all five sizes came through, the photo shows, and
    the price is £12.99.
@@ -17,21 +18,27 @@ new ones go on. End first, then test, then upload.
 
 ## The end file
 
-`EBAY_END_TSHIRTS.csv` - 129,881 rows, `End` / `NotAvailable`.
+`EBAY_END_TSHIRTS.csv` - **one file**, 125,966 rows, `End` / `NotAvailable`.
+`EBAY_END_TEST_50.csv` is the same thing cut to 50 rows to test the template.
 
-    129,881 t-shirt listings ended
-    114,957 t-shirts left live
+    125,966 t-shirt listings ended   (upload 115,966 + 10,000 spare)
+    118,872 t-shirts left live
           0 wall art touched - Art Prints (360) is untouched
 
-Chosen worst-first, in two passes:
+Chosen worst-first, in two passes, and the file is **written in that order**:
 
     86,770  duplicate titles already live against each other. The 244,816
             live GR- t-shirts carry only 158,046 distinct titles, so a third
             of that catalogue is competing with itself. One copy of each
             title is kept; the older copies are ended.
-    43,111  longest-listed of the remainder (lowest item number first), as
+    39,196  longest-listed of the remainder (lowest item number first), as
             the only available proxy for "has been up longest and still has
             not converted". The downloaded file carries no sales data.
+
+Because the order is worst-first, the file can simply be **truncated** to end
+fewer. Keep the header and the first N rows and the ends stay the worst N.
+Everything down to row 86,770 is removing a duplicate of a listing that stays
+live, so nothing unique comes off until past that point.
 
 Held back and never ended: the 22 t-shirts whose SKU is not `GR-#######`
 (the `hb_`, `oc_`, `br_` batch, the 40 that carry variations, and the 7 at
@@ -63,11 +70,11 @@ if File Exchange rejects the single file for size.
 ## Headroom arithmetic
 
     live now          668,956 listings   (424,118 wall art + 244,838 tees)
-    after the ends    539,075 listings
-    after the upload  655,041 listings   - 13,915 fewer than today
+    after the ends    542,990 listings
+    after the upload  658,956 listings   - 10,000 fewer than today
 
 So on a **listing** count the upload lands below where the account sits now,
-with about 14,000 spare.
+with the 10,000 spare slots asked for.
 
 **On an item count it does not, and this is the one thing to check before
 uploading.** Everything live is quantity 1, so 668,956 listings is about
@@ -75,14 +82,18 @@ uploading.** Everything live is quantity 1, so 668,956 listings is about
 25 items per listing:
 
     new upload        2,899,150 items
-    account after     3,438,550 items   - about 5x today
+    account after     3,442,465 items   - about 5x today
 
 If the limit on this account is expressed in items rather than listings,
 ending 129,881 listings does not create room for that, because it frees
 about 129,881 items and the upload asks for 2.9 million. Dropping quantity
 from 5 to 1 takes the upload to 579,830 items and the account to 1,119,230.
 That is a one-value change to the file and does not affect the SKUs, the
-artwork or the bucket. Worth reading the actual limit off Seller Hub first.
+artwork or the bucket.
+
+If it turns out fewer listings can go up than the file holds, the upload is
+better split than the ends made bigger - 118,872 live t-shirts are still
+selling and are worth more than empty headroom. Worth reading the actual limit off Seller Hub first.
 
 ## What is in the bucket
 

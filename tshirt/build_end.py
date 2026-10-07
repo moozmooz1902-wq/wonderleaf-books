@@ -12,17 +12,19 @@ Selection order, worst-first:
 Never touched: anything in Art Prints (360), and any t-shirt whose SKU is not
 GR-####### (a small separate batch of 22, plus the 40 that carry variations).
 """
-import csv, json, re, collections
+import csv, json, os, re, collections
 
-TARGET_HEADROOM = 0.12           # 12% more than the upload needs
-UPLOAD_LISTINGS = 115_966
-TARGET = int(UPLOAD_LISTINGS * (1 + TARGET_HEADROOM))
+UPLOAD_LISTINGS = 115_966        # listings in EBAY_ONE_FILE.csv, counted not assumed
+EXTRA_ROOM      = 10_000         # spare slots the seller asked for on top
+TARGET = UPLOAD_LISTINGS + EXTRA_ROOM
 
 def norm(t):
     t = t.lower(); t = re.sub(r"[^a-z0-9 ]", " ", t)
     return " ".join(t.split())
 
-tees = json.load(open("tees.json"))
+SCRATCH = ("/tmp/claude-0/-home-user-wonderleaf-books/"
+           "af9e3fdd-8129-53fc-a69c-916ae3713d2b/scratchpad/")
+tees = json.load(open(os.environ.get("TEES", SCRATCH + "tees.json")))
 
 # only the GR- commodity catalogue is eligible
 elig, held = [], []
@@ -49,7 +51,7 @@ rest = sorted((e for e in elig if e[0] not in dupe_items), key=lambda g: int(g[0
 
 need_more = max(0, TARGET - len(dupes))
 chosen = dupes + rest[:need_more]
-print(f"\ntarget to end            {TARGET:,}  (upload {UPLOAD_LISTINGS:,} + {int(TARGET_HEADROOM*100)}% headroom)")
+print(f"\ntarget to end            {TARGET:,}  (upload {UPLOAD_LISTINGS:,} + {EXTRA_ROOM:,} spare)")
 print(f"  from duplicates        {len(dupes):,}")
 print(f"  plus longest-listed    {need_more:,}")
 print(f"  TOTAL to end           {len(chosen):,}")
