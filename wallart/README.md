@@ -147,6 +147,27 @@ before the optional middle - venue, colour, paper sizes - so:
     Framed    7.1% -> 100.000%
     Gift     52.3% ->  99.994%
 
+Against the UK search-share split for this category - wall art 35-40%,
+posters 15-20%, canvas 15-18%, art prints 10-15% - the titles now read:
+
+    wall art    97.4%
+    poster     100.0%
+    art print   95.7%
+    canvas       0.0%
+
+Every KIND now contains "Wall Art Print", which carries the two biggest
+terms in fourteen characters, and a title that still comes out without
+"wall art" is rebuilt with the shortest kind that has it. The 2.6% that
+remain are phrases long enough that nothing else fits.
+
+**Canvas is deliberately 0% and should stay that way unless the product
+changes.** It is 15-18% of searches and the temptation is obvious, but this
+catalogue ships A4/A3/A2 paper prints, unframed or in a black frame. A title
+saying canvas would contradict the item specifics, invite "not as
+described" cases and defect rate, and is the kind of irrelevant keyword eBay
+removes listings for. The honest way to have that traffic is to sell canvas
+as a real variation.
+
 "Poster" is guaranteed by the tail and is deliberately NOT in KINDS. Having
 it in both places left 216 titles without it: when the kind "Wall Art Poster
 Print" would not fit it was shortened to its first three words, which

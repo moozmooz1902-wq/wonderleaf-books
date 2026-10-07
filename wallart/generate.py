@@ -236,7 +236,13 @@ BOLD = False
 # when the full kind "Wall Art Poster Print" would not fit, it was shortened
 # to its first three words - which dropped the Poster that the tail had
 # already been told to leave out as a duplicate.
-KINDS = ["Wall Art Print", "Print Wall Art", "Art Print Wall Decor", "Wall Art Decor Print"]
+# Every kind contains "Wall Art" AND "Art Print", because those are the two
+# biggest search terms in the UK wall-decor box: "wall art" is 35-40% of
+# searches and "art print" 10-15%. "Wall Art Print" carries both in fourteen
+# characters, so the variants differ only in what follows it.
+# "Poster" is deliberately absent - the tail guarantees it on every title.
+KINDS = ["Wall Art Print", "Wall Art Print Decor", "Wall Art Print Sign",
+         "Wall Art Print Gift"]
 
 
 def _fresh(words, already):
@@ -276,7 +282,14 @@ def build_title(phrase, venue, colour, rnd, niche=""):
     # they are search terms in their own right ("sage green kitchen print").
     # Ordered the other way, 48 colourways of "Everything Stops for Tea" all
     # came out with an identical title.
-    return fit([head, core, colour, venue, extra, "A4 A3 A2"], tail=tail)
+    title = fit([head, core, colour, venue, extra, "A4 A3 A2"], tail=tail)
+    if "wall art" not in title.lower():
+        # the single biggest search term in this category must not be the
+        # casualty of a long phrase - rebuild with the shortest kind that
+        # carries it
+        core = f"{mood} Wall Art Print".strip()
+        title = fit([head, core, colour, venue, extra, "A4 A3 A2"], tail=tail)
+    return title
 
 
 # ------------------------------------------------------------------ style picks
