@@ -2740,3 +2740,1516 @@ not name or evoke the brand.
   directly; verify before quoting.
 - No canonical registry exists for coffee preparations, teas, breads or British
   puddings — these lists are assembled, not harvested.
+
+---
+
+## ARCHITECTURE AND OBJECTS
+
+### Takeaway
+Architectural *styles and features* are entirely free and highly enumerable
+(~40 British styles, ~60 named window/door/roof types, the full classical
+orders). Everything that is a **manufactured product** — cars, motorcycles,
+aircraft, locomotives, cameras, typewriters, radios, furniture — carries live
+**trade-mark** risk in the name and badge, and in the case of furniture also
+**UK unregistered design right and registered designs**. Vernacular buildings
+and tools are the safe, under-served slice.
+
+### Cited Findings
+
+**ARCHITECTURAL STYLES — the British sequence (~30, fully free)** [T]
+— [Historic England listing guidance](https://historicengland.org.uk/listing/what-is-designation/listed-buildings/)
+Neolithic/Prehistoric · Roman · Anglo-Saxon · Norman/Romanesque ·
+Early English Gothic · Decorated Gothic · Perpendicular Gothic ·
+Tudor · Elizabethan · Jacobean · English Baroque ·
+Palladian · Georgian · Regency · Greek Revival ·
+Gothic Revival · Victorian Gothic · Italianate ·
+Queen Anne Revival · Arts and Crafts · Art Nouveau ·
+Edwardian Baroque · Art Deco · Streamline Moderne ·
+Modernist/International Style · Brutalist ·
+Festival of Britain style · Postmodern · High-Tech ·
+Vernacular Revival. World styles: Classical Greek
+(**the 3 Greek orders: Doric, Ionic, Corinthian**; **the 5 Roman/
+Renaissance orders adding Tuscan and Composite**) ·
+Byzantine · Islamic · Mughal · Moorish · Gothic (French,
+Flamboyant, Brick) · Renaissance · Mannerist · Baroque ·
+Rococo · Neoclassical · Beaux-Arts · Second Empire ·
+Jugendstil · Secession · Bauhaus · Constructivist ·
+Prairie School · Mid-Century Modern · Metabolist ·
+Deconstructivist · Parametric.
+
+**ARCHITECTURAL FEATURES, WINDOWS, DOORS, ROOFS** [T]
+**Windows (~25 named):** Lancet · Trefoil · Quatrefoil ·
+Rose/Wheel · Oculus · Mullioned · Transomed · Oriel ·
+Bay · Bow · Venetian/Serliana · Palladian · Diocletian/
+Thermal · Sash (6-over-6, 2-over-2, Yorkshire sliding) ·
+Casement · Dormer · Eyebrow Dormer · Gable Dormer ·
+Fanlight · Transom Light · Clerestory · Crittall (**trade mark**) ·
+Leaded Light · Stained Glass · Jesse Window · Tracery
+(Plate, Geometric, Curvilinear, Reticulated, Perpendicular).
+**Doors (~20):** Six-panel Georgian · Four-panel Victorian ·
+Front door with fanlight · Portico door · Pediment door ·
+Pilastered door · Tudor arch door · Batten/Plank door ·
+Dutch door · Stable door · Lychgate · Priest's door ·
+Porch · Pentice · Arched doorway · Norman tympanum ·
+Doorknocker typology (lion's head, ring, urn, hand) ·
+Letterbox · Boot scraper · Door furniture.
+**Roofs (~20):** Gable · Hip · Half-hip (Jerkinhead) ·
+Gambrel/Mansard · Catslide · Lean-to/Pentice ·
+Pyramidal · Conical · Ogee · Dome · Barrel vault ·
+Hammerbeam · Crown-post · Cruck frame · King-post ·
+Queen-post · Collar · Thatch (long straw, combed wheat
+reed, Norfolk reed) · Welsh slate · Cumbrian slate ·
+Cotswold stone slate · Horsham stone · Pantile ·
+Roman tile · Clay plain tile · Lead · Corrugated iron.
+**Other features:** Chimney stack typologies (Tudor twisted,
+Georgian, Cornish, Yorkshire) · Barge board · Finial ·
+Crow-stepped gable · Dutch gable · Pargeting ·
+Flint knapping · Brick bonds (**English, Flemish, Stretcher,
+Header, English Garden Wall, Monk, Sussex, Rat-trap,
+Dearne's, Herringbone, Basketweave, Stack, Soldier Course**) ·
+Quoin · Corbel · Dentil · Modillion · String course ·
+Plinth · Rustication · Keystone · Voussoir ·
+Capital · Volute · Acanthus · Egg and dart ·
+Guilloche · Fretwork · Barleytwist · Balustrade ·
+Ironwork (Coalbrookdale pattern) · Boot scraper ·
+Coal hole cover · Manhole/coal plate · Street lamp
+(gas standard, swan-neck) · Postbox (**Royal Mail
+cypher — see risk**) · Telephone box (**K6 Giles Gilbert
+Scott 1935; BT holds design rights and "K6"/the kiosk
+shape are asserted marks**) · Milestone · Fingerpost ·
+Bollard · Railings · Area railings.
+
+**VERNACULAR BUILDINGS OF BRITAIN (~35, entirely free and strongly under-served)** [T]
+— [Historic England / Vernacular Architecture Group](https://www.vag.org.uk/)
+Cruck-framed hall house · Wealden hall house · Longhouse ·
+Devon longhouse · Welsh longhouse · Black House (Hebridean
+blackhouse) · Croft house · But-and-ben · Shieling ·
+Bastle house · Pele tower · Tower house · Dovecote ·
+Tithe barn · Dutch barn · Oast house · Hop kiln ·
+Granary on staddle stones · Field barn · Cow byre ·
+Lime kiln · Beehive hut · Ice house · Well house ·
+Pump house · Pigsty · Sheepfold · Hogg house ·
+Bee bole · Dew pond · Drystone wall (and **the named wall
+types: Yorkshire double wall, Cornish hedge, Devon bank,
+Galloway dyke, Cotswold dry stone, Clawdd**) ·
+Weavers' cottage with taking-in door · Back-to-back ·
+Tyneside flat · Scottish tenement · Almshouse ·
+Lock-keeper's cottage · Signal box · Engine house
+(Cornish beam engine) · Mine headgear · Tin mine stack ·
+Windmill (post, tower, smock) · Watermill · Tide mill ·
+Chapel · Round tower church · Saxon church · Lychgate ·
+Market cross · Butter cross · Tolbooth · Mercat cross ·
+Doocot · Follies (see below).
+
+**FOLLIES (~25 named British examples, all pre-1900 and free)** [T]
+— [The Folly Fellowship](https://www.follies.org.uk/)
+Hawkstone Park Follies · Broadway Tower · Faringdon Folly ·
+Mow Cop Castle · Clavell Tower · Paxton's Tower ·
+Sham Castle (Bath) · Rushton Triangular Lodge ·
+The Pineapple (Dunmore) · McCaig's Tower ·
+The Hermitage (Dunkeld) · Mussenden Temple ·
+Downhill Temple · Conolly's Folly · Wonderful Barn ·
+Tattingstone Wonder · Racton Monument ·
+Severndroog Castle · Shell Grotto (Margate) ·
+Painshill Grotto · Stourhead Grotto and Pantheon ·
+Temple of the Four Winds (Castle Howard) ·
+Mausoleum (Castle Howard) · Temple of British Worthies
+(Stowe) · The Gothic Temple (Stowe) ·
+King Alfred's Tower · Leith Hill Tower ·
+Dunstanburgh Lilburn Tower · Lord Berners' Folly ·
+Ashton Memorial · Peterson's Tower · Perrott's Folly ·
+Wainhouse Tower · Freston Tower · Nelson's Monument.
+
+**BRIDGES, LIGHTHOUSES** — covered in the UK Places section above.
+
+**CLASSIC CARS BY ERA** [T] — **HIGH TRADE-MARK RISK**
+The enumerable structure is the era, not the model: **Veteran (pre-1905) ·
+Edwardian (1905–18) · Vintage (1919–30) · Post-Vintage Thoroughbred
+(1931–45) · Classic (1946–70) · Modern Classic (1971–2000)** — this is
+the FBHVC/Motor Sport convention. [T]
+— [Federation of British Historic Vehicle Clubs](https://www.fbhvc.co.uk/)
+**RISK:** every marque name and badge (Mini, Jaguar, Aston Martin, Land
+Rover, Morgan, Bentley, Rolls-Royce, MG, Triumph, Lotus, Porsche, Ferrari,
+VW, Citroën, Fiat, Alfa Romeo) is a live **registered trade mark**, and
+several manufacturers (VW over the Beetle and Camper, Jaguar over the E-Type,
+Ford over the Mustang, Ferrari over car shapes) have registered the **vehicle
+shape as a 3D trade mark or design** and actively enforce against prints and
+posters. **Recommendation: build this axis as generic silhouettes by era and
+body type** (roadster, drophead coupé, shooting brake, saloon, estate,
+fastback, woody, hot rod, bubble car, kit car, campervan) **with no marque
+name, badge, grille or model name**. A "1960s British sports car" print is
+safe; an "E-Type" print is not.
+
+**MOTORCYCLES / BICYCLES** [T] — same rule
+Safe axis: **frame and type taxonomy** — penny-farthing · boneshaker ·
+safety bicycle · roadster · butcher's bike · path racer ·
+track/fixed · randonneur · porteur · Dutch bike · step-through ·
+tandem · folding · cargo/bakfiets · BMX · mountain bike
+(hardtail, full-suspension) · gravel · time-trial · recumbent ·
+velocipede · high-wheeler · ordinary · tricycle · cyclocross.
+Motorcycles: café racer · bobber · chopper · scrambler ·
+flat tracker · board tracker · tracker · brat · streetfighter ·
+naked · sportbike · tourer · adventure · trail · trials ·
+enduro · motocross · speedway · sidecar outfit · scooter ·
+step-through · moped · classic British twin · single ·
+boxer twin · V-twin · inline four · two-stroke.
+**RISK: Harley-Davidson, Triumph, Norton, BSA, Royal Enfield,
+Vespa (shape mark), Lambretta, Brough Superior, Ducati, Honda** —
+all live marks. Vespa's **scooter body shape is a registered EU
+design and 3D mark**, enforced.
+
+**BOATS AND SHIP TYPES (~50, almost entirely free — this is the safest transport axis)** [T]
+Coracle · Currach · Logboat · Longship · Cog ·
+Carrack · Caravel · Galleon · Man-o'-war ·
+Ship of the Line · Frigate · Sloop · Brig · Brigantine ·
+Barque · Barquentine · Schooner · Topsail Schooner ·
+Clipper · Tea Clipper · Windjammer · Cutter ·
+Ketch · Yawl · Gaff Cutter · Smack · Bawley ·
+Hoy · Thames Barge (spritsail) · Humber Keel ·
+Norfolk Wherry · Mersey Flat · Cornish Lugger ·
+Zulu · Fifie · Scaffie · Baldie · Herring Drifter ·
+Trawler · Beam Trawler · Steam Drifter · Puffer ·
+Narrowboat · Wide Beam · Butty · Tug · Lightship ·
+Lifeboat (and the **RNLI class names: Shannon, Tamar,
+Severn, Trent, Mersey, Tyne, Arun, Atlantic 85, D-class** —
+**"RNLI" and the RNLI flag are protected; class names are
+descriptive but the RNLI livery is distinctive**) ·
+Pilot Cutter · Bristol Channel Pilot Cutter · Gig ·
+Cornish Pilot Gig · Skiff · Punt · Dinghy ·
+Wherry · Shallop · Gondola · Felucca · Dhow ·
+Junk · Sampan · Proa · Outrigger Canoe ·
+Dragon Boat · Viking Knarr · Galley · Trireme ·
+Paddle Steamer · Ocean Liner · Cargo Liner ·
+Container Ship · Bulk Carrier · Tanker · Ferry ·
+Icebreaker · Tall Ship. (**Named historic ships are free
+where the vessel is historic: Cutty Sark, Mary Rose,
+HMS Victory, SS Great Britain, Discovery, Endurance,
+Golden Hind, Matthew — but "Cutty Sark" is also a whisky
+trade mark and the ship is a trust-run attraction with its
+own marks. Prefer the type over the named vessel.**)
+
+**AIRCRAFT TYPES** [T] — **TRADE-MARK RISK on manufacturer names**
+Safe axis: **configuration taxonomy** — biplane · triplane ·
+sesquiplane · monoplane (high/mid/low wing) · parasol ·
+flying boat · floatplane · amphibian · autogyro ·
+helicopter · tiltrotor · glider · sailplane ·
+hang glider · paraglider · airship (rigid, blimp) ·
+hot-air balloon · gas balloon · canard · flying wing ·
+delta · swept wing · variable geometry · tailless ·
+jet · turboprop · piston · rotary engine · radial ·
+V12 inline · pusher · tractor.
+Historic-type names where the manufacturer no longer trades or the
+type is out of trade-mark use are safer, but **"Spitfire" is a live
+UK trade mark in multiple classes, "Lancaster", "Hurricane",
+"Concorde", "Harrier", "Mosquito", "Tiger Moth", "Boeing",
+"Airbus", "Cessna", "Piper" are all live marks.** The
+**Royal Air Force roundel and RAF name are protected
+(and the RAF licenses them commercially); the Red Arrows name
+and livery are protected.** Treat all military insignia as
+off-limits.
+
+**TRAINS AND LOCOMOTIVES** [T]
+Safe axis: **wheel arrangement (Whyte notation) and type**, which is
+a genuinely enumerable, IP-free classification: 0-4-0 · 0-6-0 ·
+2-4-0 · 2-6-0 (Mogul) · 2-8-0 (Consolidation) · 2-6-2 (Prairie) ·
+2-8-2 (Mikado) · 4-4-0 (American) · 4-4-2 (Atlantic) ·
+4-6-0 (Ten-wheeler) · 4-6-2 (Pacific) · 4-8-2 (Mountain) ·
+4-8-4 (Northern) · 2-10-0 (Decapod) · 4-6-4 (Hudson) ·
+2-6-0+0-6-2 (Garratt) · 0-4-0T (saddle tank) ·
+Pannier tank · Tender locomotive · Diesel-electric ·
+Diesel-hydraulic · Electric (overhead, third rail) ·
+Railcar · DMU · EMU · Multiple unit · Shunter ·
+Steam railmotor · Pacer · HST power car.
+**RISK: "Flying Scotsman", "Mallard", "Rocket", "Tornado",
+"Thomas the Tank Engine" and the "Hogwarts Express" are all
+protected (Flying Scotsman is a registered trade mark of the
+National Railway Museum/SMG; Thomas is Mattel).** British Rail's
+double-arrow logo is a registered mark; the **"Big Four" company
+names and heraldic devices (GWR, LNER, LMS, SR) are in use
+today as live trade marks by current operators.** The *Whyte
+notation, wheel arrangements and generic liveries by era*
+(GWR green, LMS crimson lake, LNER apple green, SR malachite)
+are descriptive and lower risk, but the company initials are not.
+
+**TOOLS (~60, entirely free — a strong under-served axis)** [T]
+Hand plane (jack, smoothing, block, shoulder, rebate,
+plough, router, compass, scrub, jointer) · Chisel (bevel-edge,
+mortice, paring, firmer, gouge) · Spokeshave · Drawknife ·
+Travisher · Scorp · Adze · Froe · Billhook (and the
+**~40 named regional British billhook patterns** — Yorkshire,
+Suffolk, Kent, Newtown, Monmouth, Staffordshire…) ·
+Axe (felling, splitting, side, carpenter's, broad) ·
+Saw (rip, crosscut, tenon, dovetail, coping, fret,
+bow, two-man, pit, keyhole) · Brace and bit · Auger ·
+Gimlet · Awl · Marking gauge · Mortice gauge ·
+Try square · Sliding bevel · Mitre square · Dividers ·
+Callipers · Spirit level · Plumb bob · Chalk line ·
+Mallet · Claw hammer · Ball-pein · Cross-pein ·
+Sledgehammer · Anvil · Swage block · Tongs ·
+Hardy · Punch · Drift · Vice · Holdfast ·
+Clamp (sash, G, F, pipe) · Shave horse · Pole lathe ·
+Treadle lathe · Bellows · Forge · Scythe · Sickle ·
+Hay rake · Pitchfork · Flail · Dibber · Hoe (draw,
+Dutch, onion) · Spade · Fork · Trowel · Dibble ·
+Secateurs · Loppers · Shears · Hedging slasher ·
+Turf iron · Peat spade · Besom · Riddle · Sieve ·
+Last (shoemaker's) · Clicking knife · Fid · Serving
+mallet · Marlinspike · Caulking iron · Slate ripper ·
+Slater's axe · Thatching leggett · Spar hook.
+
+**MUSICAL INSTRUMENTS (Hornbostel–Sachs gives the canonical classification: 5 top-level classes)** [T]
+— [Hornbostel–Sachs](https://en.wikipedia.org/wiki/Hornbostel%E2%80%93Sachs)
+**1 Idiophones · 2 Membranophones · 3 Chordophones ·
+4 Aerophones · 5 Electrophones** (added 1940).
+Named set (65): Violin · Viola · Cello · Double Bass ·
+Viol · Viola da Gamba · Hardanger Fiddle · Nyckelharpa ·
+Hurdy-Gurdy · Harp · Celtic Harp · Lyre · Zither ·
+Dulcimer · Hammered Dulcimer · Appalachian Dulcimer ·
+Guitar (classical, steel-string, resonator, archtop) ·
+Lute · Theorbo · Oud · Bouzouki · Mandolin ·
+Banjo · Ukulele · Cittern · Sitar · Sarod ·
+Veena · Koto · Shamisen · Pipa · Guzheng ·
+Erhu · Balalaika · Domra · Charango ·
+Piano · Harpsichord · Clavichord · Spinet ·
+Virginal · Fortepiano · Organ · Harmonium ·
+Accordion · Concertina · Melodeon · Bandoneón ·
+Flute · Piccolo · Recorder · Tin Whistle ·
+Shakuhachi · Bansuri · Pan Flute · Ocarina ·
+Oboe · Cor Anglais · Bassoon · Contrabassoon ·
+Clarinet · Bass Clarinet · Saxophone (soprano,
+alto, tenor, baritone) · Bagpipes (Great Highland,
+Northumbrian smallpipes, Uilleann, Border) ·
+Trumpet · Cornet · Flugelhorn · Horn · Trombone ·
+Tuba · Euphonium · Sousaphone · Serpent ·
+Didgeridoo · Shofar · Conch · Timpani ·
+Snare Drum · Bass Drum · Bodhrán · Tabla ·
+Djembe · Darbuka · Taiko · Cajón · Bongos ·
+Congas · Steel Pan · Marimba · Xylophone ·
+Vibraphone · Glockenspiel · Celesta · Tubular Bells ·
+Gong · Tam-tam · Cymbals · Triangle · Castanets ·
+Maracas · Guiro · Kalimba · Mbira · Jaw Harp ·
+Theremin · Mellotron · Moog (**trade mark**) ·
+Hammond Organ (**trade mark**) · TB-303/TR-808
+(**Roland trade marks**).
+**RISK: Steinway, Fender, Gibson, Stratocaster, Les Paul,
+Rickenbacker, Marshall, Moog, Hammond, Roland, Selmer are
+live marks, and Fender/Gibson hold registered body-shape
+marks.** Generic instrument names are free.
+
+**TYPEWRITERS, CAMERAS, RADIOS AND MID-CENTURY OBJECTS** [T] — **TRADE-MARK RISK**
+Safe axis: **form taxonomy** — understroke typewriter ·
+upstroke · thrust-action · portable · ultra-portable ·
+index typewriter · electric typewriter · golfball ·
+daisywheel · teleprinter.
+Cameras: box camera · folding bellows · TLR · SLR ·
+rangefinder · view camera · field camera · press camera ·
+half-frame · subminiature · instant/peel-apart ·
+panoramic · stereo · pinhole · Super 8 / 16 mm cine ·
+disposable · bridge · compact · mirrorless.
+Radios: cat's whisker/crystal set · regenerative ·
+superhet · valve/tube radio · bakelite set ·
+cathedral/tombstone radio · console radio ·
+transistor radio · pocket transistor · shortwave ·
+world receiver · Bush-type portable · radiogram ·
+record player · Dansette-style · Gramophone/
+phonograph · reel-to-reel · 8-track · cassette deck ·
+boombox · Walkman-type personal stereo.
+Other mid-century objects: rotary dial telephone ·
+Bakelite phone · trimphone · telex machine ·
+slide projector · magic lantern · stereoscope ·
+View-Master-type viewer · adding machine ·
+mechanical calculator · sewing machine (treadle, hand-crank) ·
+flat iron · mangle · scales (balance, spring, kitchen) ·
+weighing scales · stove-top percolator ·
+whistling kettle · pressure cooker · toaster ·
+Thermos flask (**"Thermos" is a trade mark — use "vacuum
+flask"**) · milk bottle · soda siphon ·
+pressure lamp · hurricane lamp · oil lamp ·
+Tilley lamp (**trade mark**) · paraffin heater ·
+wind-up clock · mantel clock · carriage clock ·
+alarm clock · barometer · sextant · theodolite ·
+microscope · globe · atlas · fountain pen ·
+dip pen · inkwell · blotter · stapler ·
+hole punch · card index · filing cabinet ·
+Rolodex (**trade mark**) · slide rule · abacus ·
+protractor set.
+**RISK: Olivetti, Lettera 22, Remington, Underwood,
+Imperial, Hermes, Smith Corona, IBM Selectric,
+Leica, Rolleiflex, Hasselblad, Nikon, Canon,
+Polaroid, Kodak, Brownie, Instamatic, Bush, Roberts,
+Dansette, Bakelite (**still a registered mark**),
+Braun, Bang & Olufsen, Dansk, Thermos, Tilley,
+Anglepoise (**registered design and mark**), Rolodex** —
+all live marks. Generic form names are free.
+
+**TEXTILES AND PATTERNS (~50 named weaves and patterns, all free)** [T]
+Weaves: Plain · Twill · Herringbone · Chevron ·
+Houndstooth (dogtooth) · Puppytooth · Birdseye ·
+Barleycorn · Basketweave · Satin · Sateen ·
+Jacquard · Damask · Brocade · Dobby · Leno ·
+Pile · Velvet · Corduroy · Chenille · Terry ·
+Bouclé · Tweed (**"Harris Tweed" is a protected
+certification mark under the Harris Tweed Act 1993 —
+never use; "tweed" generically is fine**) ·
+Donegal · Cheviot · Shetland · Saxony ·
+Gabardine · Serge · Whipcord · Bedford Cord ·
+Moleskin · Flannel · Melton · Loden · Felt ·
+Canvas · Duck · Drill · Denim · Chambray ·
+Seersucker · Madras · Poplin · Broadcloth ·
+Oxford · Pinpoint · Voile · Organdie · Lawn ·
+Batiste · Muslin · Cambric · Linen ·
+Hopsack · Crepe · Georgette · Chiffon ·
+Organza · Taffeta · Shantung · Dupion ·
+Habotai · Charmeuse.
+Patterns: Stripe (pinstripe, chalk stripe, Bengal,
+candy, awning, Regency, ticking) · Check (gingham,
+tattersall, windowpane, graph, buffalo, madras,
+glen/Prince of Wales, shepherd's, argyle) ·
+Plaid · Tartan (see below) · Paisley ·
+Toile de Jouy · Chintz · Calico · Ditsy ·
+Chinoiserie · Ikat · Batik · Shibori ·
+Tie-dye · Block print · Kalamkari · Suzani ·
+Kente · Adire · Bogolan/Mudcloth · Kuba ·
+Mola · Molas · Arabesque · Fleur-de-lis ·
+Trellis · Lattice · Quatrefoil · Greek key ·
+Meander · Guilloche · Scallop · Ogee ·
+Harlequin/Diamond · Chevron · Zigzag ·
+Polka dot · Spot · Moiré · Marbling/Suminagashi ·
+Flame stitch/Bargello · Fair Isle ·
+Aran (and **the named Aran stitch patterns: cable,
+honeycomb, trellis/lattice, diamond, blackberry,
+moss, basket, zigzag, tree of life, ladder of life**) ·
+Guernsey · Jacobean crewel · Crewelwork ·
+Blackwork · Whitework · Broderie anglaise ·
+Quilt blocks (**and the named American blocks: Log Cabin,
+Flying Geese, Nine Patch, Dresden Plate, Grandmother's
+Flower Garden, Double Wedding Ring, Drunkard's Path,
+Bear's Paw, Churn Dash, Ohio Star, Lone Star,
+Crazy Quilt, Trip Around the World, Baltimore Album,
+Amish Diamond-in-a-Square, Cathedral Window**).
+**RISK: Harris Tweed (certification mark + statute),
+Liberty prints (**copyright in individual designs,
+"Liberty" trade mark**), Burberry check (**registered
+trade mark, aggressively enforced**), Louis Vuitton
+monogram, Missoni zigzag, Marimekko Unikko (**copyright**),
+Orla Kiely stem (**copyright + mark**), William Morris
+(**d. 1896 — designs are PD; but "Morris & Co." is a live
+trade mark owned by Sanderson Design Group**).**
+**William Morris patterns are a major opportunity: Strawberry
+Thief, Willow Bough, Pimpernel, Acanthus, Trellis,
+Daisy, Fruit/Pomegranate, Honeysuckle, Blackthorn,
+Chrysanthemum, Larkspur, Jasmine, Marigold, Bird,
+Brer Rabbit, Compton, Cray, Wandle, Evenlode,
+Golden Lily, Snakeshead, Wey, Kennet, Severn,
+Tulip, Rose, Sunflower, Lily and Pomegranate —
+all out of copyright; do not use the "Morris & Co."
+name or logo.**
+
+**CERAMICS (~35 named traditions, all free; brand names not)** [T]
+Earthenware · Stoneware · Porcelain · Bone China ·
+Creamware · Pearlware · Jasperware (**"Jasperware"
+and "Wedgwood" are Wedgwood marks**) · Basalt ·
+Lustreware · Slipware · Sgraffito · Mocha ware ·
+Spongeware · Transferware (willow pattern, Asiatic
+Pheasant, blue and white) · Majolica · Faience ·
+Delftware · Tin-glaze · Maiolica · Raku ·
+Celadon · Jun · Ding · Ru · Guan · Ge ·
+Qingbai · Blue-and-white (Jingdezhen) ·
+Famille Rose/Verte · Satsuma · Imari · Kutani ·
+Bizen · Shino · Oribe · Hagi · Mashiko ·
+Onggi · Buncheong · Talavera · Hispano-Moresque ·
+Iznik · Kütahya · Qajar · Terra Sigillata ·
+Samian · Roman Black Burnished · Medieval
+Green-glaze · Cistercian ware · Agate ware ·
+Studio pottery · Salt glaze · Ash glaze ·
+Tenmoku · Crystalline glaze · Crawl glaze ·
+Wood-fired · Anagama · Nerikomi · Kurinuki ·
+Kintsugi.
+
+**FURNITURE CLASSICS** [T] — **DESIGN RIGHT RISK**
+Safe (out of copyright/design right, maker long dead):
+Windsor chair (and its named forms: comb-back,
+hoop-back, wheel-back, lath-back, Gothic,
+smoker's bow, captain's chair) · Ladder-back ·
+Spindle-back · Sussex chair · Orkney chair ·
+Caquetoire · Settle · Wainscot chair ·
+Farthingale chair · Chippendale (Thomas Chippendale
+d.1779; the *Director* patterns are PD) ·
+Hepplewhite · Sheraton · Adam · Regency ·
+Klismos · Curule · Savonarola · Dante chair ·
+Bentwood (Thonet No.14, 1859 — the design is PD,
+but **"Thonet" is a live trade mark**) ·
+Shaker ladder-back · Rocking chair · Boston rocker ·
+Morris chair · Settle (Arts & Crafts) ·
+Deckchair · Director's chair · Campaign chair ·
+Steamer chair · Adirondack chair · Lloyd Loom
+(**trade mark**) · Lutyens bench · Monet bench ·
+Chesterfield · Knole settee · Howard chair ·
+Wingback · Bergère · Fauteuil · Chaise longue ·
+Récamier · Davenport · Davenport desk ·
+Pedestal desk · Partners' desk · Bureau ·
+Secretaire · Tallboy · Chest-on-chest ·
+Press cupboard · Dresser (Welsh, Yorkshire) ·
+Longcase clock · Tea table · Pembroke table ·
+Sutherland table · Drop-leaf · Gateleg ·
+Refectory table · Trestle table.
+**NOT SAFE (live design right / registered design /
+trade mark):** Eames Lounge Chair, DSW, DSR
+(Herman Miller/Vitra) · Barcelona Chair (Knoll) ·
+Wassily Chair (Knoll) · Egg, Swan, Series 7,
+Ant Chair (Fritz Hansen) · Wishbone/CH24 (Carl
+Hansen) · Panton Chair (Vitra) · Tulip Chair (Knoll) ·
+Womb Chair (Knoll) · LC2/LC4 Chaise (Cassina) ·
+Noguchi Table (Herman Miller) · Tolix A chair ·
+Anglepoise lamp · Arco lamp (Flos) ·
+PH Artichoke, PH5 (Louis Poulsen) ·
+Tizio lamp (Artemide) · Butterfly/BKF chair ·
+Tripp Trapp (Stokke) · Ball Chair (Eero Aarnio).
+**UK note:** since the Copyright, Designs and Patents Act
+s.52 was repealed in 2016, **artistic works that are
+industrially manufactured enjoy full life+70 copyright
+in the UK**, which brought most mid-century design
+classics back into copyright. Treat *all* named 20th-century
+designer furniture as off-limits.
+
+**SPORTS EQUIPMENT (generic objects — free; all brands and league marks — not)** [T]
+Cricket bat · stumps · bails · cricket ball ·
+pads · wicketkeeping gloves · Football (and the
+**named historical ball patterns: 18-panel laced,
+32-panel truncated icosahedron**) · Rugby ball ·
+Tennis racket (wooden, graphite) · tennis ball ·
+Squash racket · Badminton racket · shuttlecock ·
+Table tennis bat · Golf club set (driver, wood,
+iron, wedge, putter) · golf ball · tee ·
+Hockey stick · Lacrosse stick · Baseball bat ·
+glove · Boxing glove · speed bag · Fencing foil ·
+épée · sabre · mask · Archery bow (longbow,
+recurve, compound) · arrow · quiver ·
+Darts · dartboard · Snooker cue · rest ·
+triangle · Bowls · jack · Croquet mallet ·
+hoop · Curling stone · broom · Skis ·
+poles · Snowboard · Ice skates · Roller skates ·
+Skateboard · Surfboard (longboard, shortboard,
+fish, gun) · Bodyboard · Windsurf rig ·
+Kite · Paddle (canoe, kayak, SUP) · Oar ·
+Rowing scull · Rugby boot · Football boot ·
+Running spikes · Climbing shoe · harness ·
+carabiner · nut · hex · cam · belay device ·
+chalk bag · Ice axe · crampons · Riding saddle ·
+bridle · stirrup · hard hat · Horseshoe ·
+Dumbbell · kettlebell · barbell · Indian club ·
+medicine ball · skipping rope · Stopwatch ·
+Whistle · Trophy forms (loving cup, shield, urn).
+**RISK: "Wimbledon", "The Open", "FA Cup", "Six Nations",
+"Olympic" rings and the word "Olympic/Olympian"
+(protected in the UK by the Olympic Symbol etc.
+(Protection) Act 1995 — criminal and civil liability),
+"Paralympic", "Premier League", "Ashes", "Tour de France",
+"Super Bowl"** are all protected; the **Olympic and
+Paralympic marks carry statutory protection in the UK and
+should be treated as absolutely off-limits.**
+
+### Inferences
+- The safe half of this domain is large and genuinely under-served: ~30 British
+  architectural styles + ~65 window/door/roof features + ~15 brick bonds +
+  ~35 vernacular building types + ~35 follies + ~50 boat types + ~30 Whyte
+  locomotive arrangements + ~60 tools + ~100 instruments + ~120 textile weaves
+  and patterns + ~55 ceramics traditions + ~60 safe furniture forms +
+  ~80 sports objects ≈ **700 IP-free named subjects**.
+- The unsafe half (cars, motorcycles, aircraft, cameras, named furniture) is
+  where most print-on-demand sellers get takedowns. The consistent fix is the
+  same everywhere: **sell the typology, not the marque**. A "1930s Art Deco
+  streamliner" or "4-6-2 Pacific" print is unassailable; the badge is not.
+- **William Morris is the single biggest free-pattern opportunity** in the
+  catalogue — ~30 named, instantly recognisable patterns, out of copyright since
+  1967, with enormous and growing UK demand. The only care needed is avoiding
+  the live "Morris & Co." trade mark.
+
+### Gaps
+- No verified count for British architectural styles, vernacular building types,
+  billhook patterns or follies — none of these has a canonical registry.
+- The precise current UK legal position on freedom of panorama (CDPA s.62),
+  the s.52 repeal and its effect on mid-century furniture copyright is reported
+  from prior knowledge, not from a source fetched this session. **Legal advice
+  required before relying on it.**
+
+---
+
+## HUMAN AND ABSTRACT
+
+### Takeaway
+Confirmed: **the original Rider–Waite–Smith tarot entered the public domain in
+the UK and EU on 1 January 2022**, seventy years after Pamela Colman Smith's
+death in 1951 — but **"Rider-Waite" and "Rider" are registered trade marks of
+U.S. Games Systems**, which also holds copyright in its **1971 recoloured
+edition**. So: 78 card *images* usable, the *name* not. The other sets here are
+small and fixed — **7 chakras, 22 Major Arcana, 24 Elder Futhark runes, 5
+Platonic solids, 13 Archimedean solids** — and tartans are the one genuinely
+huge list: **over 10,000 designs on the Scottish Register of Tartans**.
+
+### Cited Findings
+
+**TAROT — 78 cards: 22 Major Arcana + 56 Minor Arcana (4 suits × 14)** [T on the
+structure; the PD position is verified]
+**PUBLIC DOMAIN STATUS — CONFIRMED:** the original Rider–Waite Tarot is in the
+public domain in all countries with a term of 70 years or fewer from the death of
+the last surviving author; **in the UK and EU it entered the public domain on
+1 January 2022**, 70 years after artist Pamela Colman Smith died in 1951. It was
+originally expected to fall PD in 2013 (70 years after A. E. Waite's death in
+1942) but U.S. Games Systems based expiry on Smith as the later-dying
+contributor. **U.S. Games Systems holds trade marks on the names "Rider-Waite"
+and "Rider", and copyright in its later recoloured 1971 edition, but NOT in the
+original 1909 art.** [V] — [Rider–Waite Tarot](https://en.wikipedia.org/wiki/Rider%E2%80%93Waite_Tarot);
+[Wild Hunt analysis](https://wildhunt.org/2021/01/rider-waite-smith-tarot-deck-may-enter-public-domain.html);
+[Global Spiritual Studies](https://globalspiritualstudies.com/is-rider-waite-smith-public-domain/)
+**Practical rule: use the 1909 Smith images and the card names; title the series
+"classic tarot" or "1909 tarot", never "Rider-Waite".**
+**The 22 Major Arcana (0–XXI):** 0 The Fool · I The Magician ·
+II The High Priestess · III The Empress · IV The Emperor ·
+V The Hierophant · VI The Lovers · VII The Chariot ·
+VIII Strength · IX The Hermit · X Wheel of Fortune ·
+XI Justice · XII The Hanged Man · XIII Death ·
+XIV Temperance · XV The Devil · XVI The Tower ·
+XVII The Star · XVIII The Moon · XIX The Sun ·
+XX Judgement · XXI The World.
+**The 56 Minor Arcana:** 4 suits — **Wands · Cups · Swords ·
+Pentacles** — each Ace, 2, 3, 4, 5, 6, 7, 8, 9, 10, Page,
+Knight, Queen, King.
+**Also public domain and usable:** the **Tarot de Marseille** (18th C),
+the **Visconti-Sforza** and **Sola Busca** decks (15th C), the
+**Thoth deck** (Crowley d.1947 / Lady Frieda Harris d.1962 — **NOT PD in
+the UK until 2033**; exclude).
+
+**THE CHAKRAS — 7 principal chakras** (the standard modern system) [T]
+1 Muladhara (Root) — red · 2 Svadhisthana (Sacral) — orange ·
+3 Manipura (Solar Plexus) — yellow · 4 Anahata (Heart) — green ·
+5 Vishuddha (Throat) — blue · 6 Ajna (Third Eye) — indigo ·
+7 Sahasrara (Crown) — violet/white.
+(Extended systems add Bindu, Hrit/Surya, Manas, Lalana and the
+8th–12th "transpersonal" chakras; and the classical Shat-chakra-nirupana
+of 1577 describes six plus Sahasrara.) Each chakra carries a **bija
+mantra (LAM, VAM, RAM, YAM, HAM, OM, silence)**, a **petal count
+(4, 6, 10, 12, 16, 2, 1000)**, an **element** and a **yantra** — so
+the 7 chakras expand to ~**35 named attributes** usable as print detail.
+
+**YOGA — named asanas** [T]
+The classical count is **84 asanas** (named in the Hatha tradition; the
+*Hatha Yoga Pradipika* describes 15, the *Gheranda Samhita* 32, the
+*Shiva Samhita* 84 by name). **B. K. S. Iyengar's *Light on Yoga* (1966)
+illustrates 200 asanas** and is the most-cited modern enumeration — but it
+is **in copyright (Iyengar d.2014; UK to 2084)**, so use the Sanskrit
+names (which are free) and never his photographs or sequence text.
+— [Yoga Journal pose directory](https://www.yogajournal.com/poses/) (~200 named)
+Named set (50, Sanskrit + English): Tadasana (Mountain) ·
+Urdhva Hastasana (Upward Salute) · Uttanasana (Standing
+Forward Bend) · Ardha Uttanasana (Half Forward Bend) ·
+Chaturanga Dandasana (Four-Limbed Staff) ·
+Urdhva Mukha Svanasana (Upward Dog) ·
+Adho Mukha Svanasana (Downward Dog) ·
+Phalakasana (Plank) · Vasisthasana (Side Plank) ·
+Virabhadrasana I, II, III (Warrior I, II, III) ·
+Utthita Trikonasana (Extended Triangle) ·
+Parivrtta Trikonasana (Revolved Triangle) ·
+Utthita Parsvakonasana (Extended Side Angle) ·
+Prasarita Padottanasana (Wide-Legged Forward Bend) ·
+Parsvottanasana (Intense Side Stretch) ·
+Utkatasana (Chair) · Vrksasana (Tree) ·
+Garudasana (Eagle) · Natarajasana (Dancer) ·
+Ardha Chandrasana (Half Moon) · Utthita Hasta
+Padangusthasana (Extended Hand-to-Big-Toe) ·
+Virasana (Hero) · Supta Virasana (Reclining Hero) ·
+Baddha Konasana (Bound Angle/Cobbler) ·
+Upavistha Konasana (Wide-Angle Seated Forward Bend) ·
+Paschimottanasana (Seated Forward Bend) ·
+Janu Sirsasana (Head-to-Knee) ·
+Marichyasana (Marichi's Pose) ·
+Ardha Matsyendrasana (Half Lord of the Fishes) ·
+Navasana (Boat) · Dandasana (Staff) ·
+Bhujangasana (Cobra) · Salabhasana (Locust) ·
+Dhanurasana (Bow) · Ustrasana (Camel) ·
+Setu Bandha Sarvangasana (Bridge) ·
+Urdhva Dhanurasana (Wheel/Upward Bow) ·
+Matsyasana (Fish) · Halasana (Plough) ·
+Salamba Sarvangasana (Shoulderstand) ·
+Salamba Sirsasana (Headstand) ·
+Pincha Mayurasana (Forearm Stand) ·
+Adho Mukha Vrksasana (Handstand) ·
+Vrschikasana (Scorpion) · Mayurasana (Peacock) ·
+Kukkutasana (Cockerel) · Bakasana (Crane) ·
+Kakasana (Crow) · Astavakrasana (Eight-Angle) ·
+Eka Pada Koundinyasana · Tittibhasana (Firefly) ·
+Padmasana (Lotus) · Siddhasana (Accomplished) ·
+Sukhasana (Easy) · Gomukhasana (Cow Face) ·
+Balasana (Child) · Savasana (Corpse) ·
+Supta Baddha Konasana (Reclining Bound Angle).
+**Also enumerable:** the **12 poses of Surya Namaskar (Sun Salutation)**,
+the **26 poses + 2 breathing exercises of the Bikram sequence**
+(**"Bikram" is a trade mark and the sequence was the subject of an
+unsuccessful US copyright claim — use "hot yoga 26" instead**), the
+**Ashtanga Primary Series (~41 asanas)**, the **8 limbs of Ashtanga**,
+the **5 koshas**, the **7 chakras**, the **72,000 nadis** (3 principal:
+Ida, Pingala, Sushumna), the **10 pranayamas**, the **~25 mudras**,
+the **~10 bandhas**.
+
+**DANCE AND BALLET** [T]
+**The 5 positions of the feet** (first through fifth) and the
+**~7 positions of the arms** (Cecchetti/RAD/Vaganova systems differ —
+Vaganova uses 3 principal, Cecchetti 5, RAD 5) — all free.
+Named ballet steps (~60): Plié · Demi-plié · Grand plié ·
+Relevé · Élevé · Tendu · Dégagé · Jeté · Grand jeté ·
+Petit jeté · Battement · Grand battement · Frappé ·
+Fondu · Rond de jambe · Développé · Enveloppé ·
+Attitude · Arabesque (first, second, third, fourth) ·
+Penché · Cambré · Port de bras · Épaulement ·
+Croisé · Effacé · Écarté · Sous-sus · Sissonne ·
+Assemblé · Glissade · Chassé · Pas de bourrée ·
+Balancé · Pas de basque · Temps levé · Soubresaut ·
+Changement · Échappé · Entrechat (quatre, six) ·
+Cabriole · Brisé · Ballonné · Ballotté ·
+Piqué · Pirouette (en dehors, en dedans) ·
+Fouetté · Rond de jambe en l'air · Tour jeté ·
+Grand fouetté · Pas de chat · Saut de chat ·
+Pas de deux · Adage · Coda · Variation ·
+Bourrée · Promenade · Pointe · Sur les pointes.
+Other named dances (~45): Waltz · Viennese Waltz ·
+Foxtrot · Quickstep · Tango · Argentine Tango ·
+Milonga · Vals · Samba · Rumba · Cha-cha-cha ·
+Paso Doble · Jive · Bolero · Mambo · Salsa ·
+Bachata · Merengue · Cumbia · Lindy Hop ·
+Charleston · Balboa · Shag · Swing · Jitterbug ·
+Boogie-woogie · Rock and Roll · Twist · Polka ·
+Mazurka · Schottische · Galop · Minuet ·
+Gavotte · Bourrée · Sarabande · Courante ·
+Allemande · Gigue · Pavane · Morris Dance ·
+Clog Dance · Hornpipe · Ceilidh · Highland Fling ·
+Sword Dance · Strip the Willow · Dashing White
+Sergeant · Gay Gordons · Eightsome Reel ·
+Irish Stepdance · Sean-nós · Flamenco (and the
+**~50 named palos: soleá, alegrías, bulerías, tangos,
+fandango, seguiriya, taranta, granaína, malagueña,
+sevillanas, rumba, tientos, caña, martinete, saeta**) ·
+Kathak · Bharatanatyam · Odissi · Kathakali ·
+Butoh · Kabuki · Hula · Haka · Capoeira ·
+Krump · Breaking · Popping · Locking · Voguing ·
+Waacking · Tap · Jazz · Contemporary · Modern.
+
+**ANATOMICAL SUBJECTS** [T]
+Enumerable and free: **206 bones** of the adult human skeleton ·
+**~600 named skeletal muscles** · **12 cranial nerves** ·
+**~360 joints** · **~700 named arteries/veins** ·
+**11 organ systems** · **~78 organs**.
+**Public-domain source material:** *Gray's Anatomy* (1858, Henry Vandyke
+Carter's plates) · Vesalius *De humani corporis fabrica* (1543) ·
+Albinus · William Hunter · Bourgery & Jacob *Traité complet de
+l'anatomie de l'homme* (1831–54) · Cruveilhier ·
+Netter (**NOT PD — Frank Netter d.1991, Elsevier holds rights**) ·
+Haeckel *Kunstformen der Natur* (1899–1904, PD) ·
+Bidloo · Cheselden · Albinus's tables.
+Named set: Skull (and its 22 bones) · Spine (7 cervical,
+12 thoracic, 5 lumbar, sacrum, coccyx) · Ribcage ·
+Pelvis · Femur · Tibia · Fibula · Humerus ·
+Radius · Ulna · Scapula · Clavicle · Sternum ·
+Carpals · Metacarpals · Phalanges · Tarsals ·
+Heart (4 chambers, 4 valves) · Lungs · Brain
+(cerebrum, cerebellum, brainstem, and the **4 lobes**) ·
+Spinal cord · Eye · Ear · Larynx · Liver ·
+Kidney · Stomach · Intestines · Pancreas ·
+Spleen · Uterus · Placenta · Foetus (by week) ·
+Hand · Foot · Diaphragm · Vascular tree ·
+Lymphatic system · Nervous system · Dermatome map ·
+Phrenology head (**the 19th-century phrenology bust is PD
+and a strong print subject; "L. N. Fowler" is the classic
+form**).
+
+**RUNES** [T]
+**Elder Futhark — 24 runes** in 3 *ættir* of 8:
+Fehu · Uruz · Thurisaz · Ansuz · Raidho · Kenaz ·
+Gebo · Wunjo | Hagalaz · Nauthiz · Isa · Jera ·
+Eihwaz · Perthro · Algiz · Sowilo | Tiwaz ·
+Berkano · Ehwaz · Mannaz · Laguz · Ingwaz ·
+Dagaz · Othala.
+**Younger Futhark — 16 runes** (two variants: long-branch
+Danish and short-twig Swedish-Norwegian).
+**Anglo-Saxon Futhorc — 29 runes** (expanding to **33** in
+later Northumbrian use) — the UK-first version of this axis,
+and a point of difference: Feoh · Ur · Thorn · Os ·
+Rad · Cen · Gyfu · Wynn · Hægl · Nyd · Is ·
+Ger · Eoh · Peorth · Eolhx · Sigel · Tir ·
+Beorc · Eh · Mann · Lagu · Ing · Ethel ·
+Dæg · Ac · Æsc · Yr · Ior · Ear (+ Cweorth,
+Calc, Stan, Gar).
+**Also:** **Ogham — 20 letters** in 4 *aicmí* of 5, plus 5
+*forfeda*, each with a tree name (Beith/Birch, Luis/Rowan,
+Fearn/Alder, Sail/Willow, Nion/Ash, Uath/Hawthorn,
+Dair/Oak, Tinne/Holly, Coll/Hazel, Ceirt/Apple,
+Muin/Vine, Gort/Ivy, nGéadal/Broom, Straif/Blackthorn,
+Ruis/Elder, Ailm/Pine, Onn/Gorse, Úr/Heather,
+Eadhadh/Poplar, Iodhadh/Yew) — **a perfect 20-subject
+Celtic series pairing trees with letters.**
+
+**ALCHEMICAL SYMBOLS** [T]
+**The 7 planetary metals** (Gold/Sol, Silver/Luna, Copper/Venus,
+Iron/Mars, Tin/Jupiter, Lead/Saturn, Mercury/Mercury) ·
+**the 4 classical elements + aether** · **the 3 primes
+(tria prima: salt, sulphur, mercury)** · **the 12 alchemical
+processes** (Calcination, Congelation, Fixation, Solution,
+Digestion, Distillation, Sublimation, Separation, Ceration,
+Fermentation, Multiplication, Projection) · the
+**~100 symbols** of Basil Valentine / the *Lexicon
+Alchemiae* · the Ouroboros · the Rebis · the Green Lion ·
+the Pelican · the Philosopher's Stone · the Squared Circle ·
+the Caduceus · the Sulphur cross · the Antimony symbol ·
+the Vitriol/VITRIOL acrostic · the Emerald Tablet.
+All public domain (all pre-1800). Visual sources: Michael
+Maier *Atalanta Fugiens* (1617), *Mutus Liber* (1677),
+*Splendor Solis* (1532), Robert Fludd (1617–21),
+Athanasius Kircher — all PD.
+
+**SACRED GEOMETRY** [T]
+**5 Platonic solids** (tetrahedron, cube/hexahedron,
+octahedron, dodecahedron, icosahedron) · **13 Archimedean
+solids** · **13 Catalan solids** · **4 Kepler–Poinsot
+polyhedra** · **92 Johnson solids** · **the 5 regular
+compounds**. Named forms: Vesica Piscis · Flower of Life ·
+Seed of Life · Egg of Life · Fruit of Life ·
+Metatron's Cube · Tree of Life (Kabbalistic — **10 sephirot
++ 22 paths**) · Sri Yantra · Shri Chakra ·
+Golden Ratio / Phi spiral · Fibonacci spiral ·
+Golden rectangle · Vitruvian proportions · Squared circle ·
+Triquetra · Triskelion · Valknut · Merkaba ·
+Torus · Enneagram · Pentagram · Hexagram ·
+Unicursal hexagram · Borromean rings · Penrose triangle ·
+Penrose tiling (**P1, P2 "kite and dart", P3 "rhombs" —
+Roger Penrose holds/held patents and asserted rights over
+the tilings; the mathematics is free but a *Penrose tiling
+pattern* has been the subject of an IP claim (Pentaplex v.
+Kleenex, 1997). Use with care or prefer Girih and
+Islamic tilings.**) · Vortex-based math torus ·
+Lissajous figure · Cymatic/Chladni figure
+(**the 1787 Chladni plate figures are PD**).
+
+**NAMED MATHEMATICAL CURVES AND FRACTALS (~60, all free)** [T]
+Curves: Circle · Ellipse · Parabola · Hyperbola ·
+Catenary · Cycloid · Epicycloid · Hypocycloid ·
+Astroid · Deltoid · Nephroid · Cardioid ·
+Limaçon · Rose curve (rhodonea) · Lemniscate of
+Bernoulli · Lemniscate of Gerono · Archimedean spiral ·
+Logarithmic spiral · Fermat's spiral · Hyperbolic
+spiral · Lituus · Euler spiral / Clothoid ·
+Cornu spiral · Involute · Tractrix · Witch of
+Agnesi · Cissoid of Diocles · Conchoid of Nicomedes ·
+Folium of Descartes · Trisectrix · Quadratrix ·
+Strophoid · Lissajous figure · Spirograph /
+Hypotrochoid · Epitrochoid · Butterfly curve ·
+Heart curve · Trefoil · Viviani's curve ·
+Torus knot · Helix · Loxodrome · Bézier curve ·
+Watt's curve · Cassini oval · Devil's curve ·
+Kampyle of Eudoxus · Serpentine curve.
+Fractals: Mandelbrot set · Julia set ·
+Burning Ship · Newton fractal · Lyapunov fractal ·
+Koch snowflake · Koch curve · Cesàro fractal ·
+Sierpiński triangle · Sierpiński carpet ·
+Menger sponge · Cantor set · Dragon curve
+(Heighway, Twindragon, Terdragon) · Lévy C curve ·
+Hilbert curve · Peano curve · Moore curve ·
+Gosper curve · Z-order curve · Pythagoras tree ·
+Barnsley fern · Fractal canopy · Apollonian gasket ·
+Vicsek fractal · T-square · H-tree · Lichtenberg
+figure · Brownian tree · Diffusion-limited
+aggregation · Strange attractors: **Lorenz · Rössler ·
+Hénon · Chua · Clifford · De Jong · Thomas ·
+Aizawa · Duffing · Ikeda · Van der Pol · Chen**.
+**All mathematics is free of copyright.** (**Caution:
+"Mandelbrot" and "Julia" are personal names, not marks —
+fine. The only risk is if you reproduce a *specific
+rendering* by another artist.**)
+
+**KNOT AND WEAVE PATTERNS** [T]
+*The Ashley Book of Knots* (1944) catalogues **3,854
+numbered entries with ~7,000 illustrations** — the
+authoritative enumeration. **Clifford Ashley died 1947, so
+the book is in copyright in the UK until 2017+... in fact
+to 1 Jan 2018 (d.1947 + 70); it is now PUBLIC DOMAIN in the
+UK and EU as of 1 January 2018.** [T on both the count and
+the date — **verify the UK status before relying on it**]
+— [The Ashley Book of Knots](https://en.wikipedia.org/wiki/The_Ashley_Book_of_Knots)
+Named set (40): Reef/Square knot · Figure-eight ·
+Overhand · Bowline · Double bowline · Running
+bowline · Clove hitch · Round turn and two half
+hitches · Timber hitch · Rolling hitch ·
+Taut-line hitch · Prusik · Klemheist ·
+Sheet bend · Double sheet bend · Carrick bend ·
+Hunter's bend · Zeppelin bend · Alpine butterfly ·
+Figure-eight loop · Alpine coil · Monkey's fist ·
+Turk's head · Matthew Walker knot · Diamond knot ·
+Lanyard knot · Star knot · Manrope knot ·
+Cat's paw · Sheepshank · Constrictor knot ·
+Highwayman's hitch · Trucker's hitch ·
+Fisherman's knot · Blood knot · Palomar knot ·
+Surgeon's knot · Marlinspike hitch · Cow hitch ·
+Buntline hitch · Anchor bend · Eye splice ·
+Short splice · Long splice · Back splice ·
+Crown knot · Wall knot · Coxcombing · Ropework
+(Flemish coil, French whipping, Grafting, Pointing).
+Weave patterns: plain · twill · satin · basket ·
+leno · herringbone · diamond · birdseye ·
+honeycomb · waffle · huck · crackle · summer
+and winter · overshot · M's and O's · log cabin ·
+rosepath · bronson lace · double weave ·
+rep weave · krokbragd · rya · tapestry ·
+soumak · kilim · ikat · warp-faced ·
+weft-faced.
+
+**ISLAMIC GEOMETRIC PATTERNS** [T]
+The enumerable structure is the **girih tile set (5 tiles:
+the decagon/"tabl", the pentagon/"pange", the elongated
+hexagon/"shesh band", the bow-tie/"sormeh dan", and the
+rhombus/"torange")**, the **symmetry groups (all 17
+wallpaper groups appear in Islamic ornament)**, and the
+named regional traditions: **Zellige (Morocco) ·
+Zellij · Mugarnas/Muqarnas · Girih (Persia) ·
+Jali (Mughal India) · Mashrabiya · Qur'anic
+illumination (Tezhip) · Rumi · Hatayi · Islimi ·
+Khatam-kari · Kufic square · Banna'i brickwork ·
+Yazdi-bandi · Karbandi**.
+Named monuments as pattern sources (all pre-1800, PD):
+Alhambra (Granada) · Great Mosque of Córdoba ·
+Sheikh Lotfollah Mosque (Isfahan) · Shah Mosque ·
+Darb-i Imam (Isfahan — the famous quasicrystalline
+girih) · Topkapı Scroll · Registan (Samarkand) ·
+Shah-i-Zinda · Taj Mahal jali · Fatehpur Sikri ·
+Bou Inania Madrasa (Fez) · Ben Youssef Madrasa
+(Marrakesh) · Hassan II Mosque (**1993 — modern,
+architect's copyright**).
+**IP: the geometry and all pre-1800 monuments are free.
+The 17 wallpaper groups are mathematics. No risk.**
+
+**CELTIC KNOTWORK** [T]
+Named forms: Triquetra · Triskele/Triskelion ·
+Trinity knot · Dara knot · Shield knot ·
+Solomon's knot · Carrick bend knot · Spiral knot ·
+Serch Bythol · Celtic cross · Interlace band ·
+Key pattern · Step pattern · Zoomorphic interlace ·
+Carpet page · Chi-Rho page · Pictish knotwork ·
+Pictish symbol stones (**the ~40 named Pictish
+symbols: crescent and V-rod, double disc and Z-rod,
+Pictish beast, mirror and comb, triple disc,
+serpent, eagle, boar, wolf, stag, salmon, bull,
+goose, horse, arch, rectangle, tuning fork, flower,
+notched rectangle** — a strong, almost entirely
+unexploited Scottish axis).
+Source manuscripts, all PD: Book of Kells (c.800) ·
+Lindisfarne Gospels (c.700) · Book of Durrow ·
+Echternach Gospels · St Chad Gospels ·
+Macregol Gospels · Book of Deer · Ardagh Chalice ·
+Tara Brooch · Hunterston Brooch ·
+Sutton Hoo finds (**the British Museum and the British
+Library assert rights in their *photographs*; the
+objects themselves are PD. Make your own images.**)
+
+**MANDALAS** [T]
+Enumerable by named tradition and form: Tibetan sand
+mandala · Kalachakra mandala · Vajrabhairava ·
+Shri Yantra · Sand mandala · Thangka mandala ·
+Garbhadhatu (Womb Realm) · Vajradhatu (Diamond
+Realm) · Yantra (and the **named yantras: Shri,
+Ganesha, Kali, Durga, Saraswati, Lakshmi, Kubera,
+Navagraha, Sudarshana, Mahamrityunjaya**) ·
+Rose window mandala · Labyrinth (and the **named
+labyrinth forms: Cretan/classical 7-circuit,
+Chartres 11-circuit, Roman, Baltic wheel,
+Man-in-the-Maze, Troy Town, turf maze**;
+**Britain has ~8 surviving historic turf mazes:
+Saffron Walden, Hilton, Wing, Alkborough, Breamore,
+Dalby, Somerton, City of Troy** — a tiny, perfect,
+unexploited UK list) · Zen enso · Ichi-en-sō.
+
+**TARTANS — the Scottish Register of Tartans holds over 10,000 registered designs; the 10,000th was the "131 Argyle" tartan, registered by the Diocesan Boys' School of Hong Kong** [V]
+— [National Records of Scotland announcement](https://nrscotland.gov.uk/latest-news/scottish-register-records-10-000th-tartan);
+the register itself: [tartanregister.gov.uk](https://www.tartanregister.gov.uk/)
+The Register is a **statutory register** established by the Scottish Register
+of Tartans Act 2008, maintained by National Records of Scotland, and is fully
+searchable by name, designer, category and thread count — the ideal
+enumerable source. **Hundreds of new designs are registered every year.** [V]
+Named clan tartans (40 safe examples — clan tartans of long standing are not
+owned, but see risk note): Royal Stewart (**see risk**) · Black Watch ·
+Hunting Stewart · Dress Stewart · Stewart of Appin ·
+MacDonald · MacDonald of Clanranald · MacLeod of Lewis ·
+MacLeod of Harris · Campbell of Argyll · Campbell of Cawdor ·
+Campbell of Breadalbane · MacGregor · Rob Roy ·
+Fraser · Fraser of Lovat · Gordon · Cameron of Erracht ·
+Cameron of Lochiel · Grant · Mackenzie · Mackintosh ·
+MacPherson · Chisholm · Murray of Atholl ·
+Robertson · Menzies · Buchanan · Ramsay ·
+Scott · Douglas · Elliot · Armstrong · Maxwell ·
+Johnstone · Kerr · Home · Lindsay · Ogilvie ·
+Farquharson · Forbes · Sinclair · Sutherland ·
+Mackay · Munro · Ross · Urquhart · Davidson ·
+MacNab · MacLean of Duart · MacNeil · MacAlister ·
+Lamont · MacLachlan · Colquhoun · Galbraith ·
+Anderson · Barclay · Boyd · Bruce · Burns ·
+Carnegie · Crawford · Cunningham · Dunbar ·
+Erskine · Graham of Montrose · Hamilton ·
+Hay · Henderson · Innes · Keith · Kennedy ·
+Leslie · Livingstone · Logan · MacArthur ·
+MacAulay · MacBean · MacDuff · MacEwen ·
+MacFarlane · MacFie · MacInnes · MacIntyre ·
+MacKinnon · MacLaren · MacMillan · MacNaughton ·
+MacQuarrie · MacRae · MacTavish · Matheson ·
+Maitland · Morrison · Napier · Oliphant ·
+Rose · Seton · Shaw · Skene · Stirling ·
+Wallace · Wemyss. **Plus the district tartans
+(Aberdeen, Argyll, Ayrshire, Dunblane, Edinburgh,
+Galloway, Glasgow, Inverness, Isle of Skye, Lennox,
+Lochaber, Moray, Nithsdale, Perthshire, Strathclyde,
+Strathearn, Sutherland, Tweedside, Culloden,
+Jacobite, Caledonia, Flower of Scotland)** and
+**Welsh, Irish county, Cornish and Manx tartans**
+as parallel sub-lists.
+**RISK — tartans:** (1) **"Royal Stewart" is widely treated as the
+Sovereign's personal tartan; while not legally restricted, using it with
+royal framing risks the royal-insignia offences below.** (2) **Modern
+registered tartans are designed works and the designer holds copyright in
+the sett** — only use clan/district tartans of 19th-century or earlier
+provenance, or ones recorded as free to use. (3) **"Burberry Check" and
+"Black Watch" (as used by regimental bodies) have trade-mark overlays;
+Burberry's check is one of the most aggressively enforced marks in the UK.**
+(4) The Register's own **database is subject to Crown copyright and UK
+database right** — search it, do not republish it.
+
+**HERALDIC CHARGES** [T]
+The enumerable structure is the heraldic grammar, all of it free:
+**the 7 tinctures** (Or, Argent, Gules, Azure, Sable, Vert, Purpure) +
+**2 furs** (Ermine, Vair, with their variants Erminois, Pean,
+Erminites, Counter-Vair, Potent, Counter-Potent) ·
+**the ~9 ordinaries** (Chief, Fess, Pale, Bend, Bend Sinister,
+Chevron, Cross, Saltire, Pall) · **the ~30 sub-ordinaries**
+(Bordure, Orle, Tressure, Canton, Quarter, Gyron, Inescutcheon,
+Flaunches, Pile, Pairle, Label, Fret, Lozenge, Fusil, Rustre,
+Mascle, Billet, Roundel/Bezant/Plate/Torteau/Hurt/Pellet/
+Pomme/Golpe/Guze/Orange) · **the ~20 lines of partition**
+(Engrailed, Invected, Indented, Dancetty, Wavy, Nebuly,
+Embattled, Raguly, Dovetailed, Potenty, Urdy, Rayonny,
+Flory-counter-flory, Bevilled, Escartelly) ·
+**the attitudes of beasts** (Rampant, Rampant Guardant,
+Rampant Reguardant, Passant, Statant, Sejant, Couchant,
+Dormant, Salient, Combatant, Addorsed; and for birds:
+Displayed, Rising, Volant, Close, Trussed) ·
+**the common charges** (Lion, Leopard/Lion Passant Guardant,
+Eagle, Double-headed Eagle, Griffin, Wyvern, Dragon,
+Unicorn, Pegasus, Phoenix, Martlet, Cockatrice,
+Yale, Panther Incensed, Antelope, Boar, Stag, Talbot,
+Bull, Ram, Bear, Wolf, Fox, Hart, Dolphin, Escallop,
+Fleur-de-lis, Rose, Thistle, Shamrock, Leek, Daffodil,
+Oak, Acorn, Garb/Wheatsheaf, Mullet, Estoile, Crescent,
+Sun in Splendour, Water Bouget, Maunch, Cinquefoil,
+Trefoil, Quatrefoil, Annulet, Buckle, Crampet,
+Portcullis, Tower, Castle, Anchor, Fountain,
+Caltrap, Pheon, Cross Moline, Cross Patonce,
+Cross Fleury, Cross Potent, Cross Crosslet,
+Cross Botonny, Maltese Cross, Tau Cross).
+**RISK — ROYAL INSIGNIA IS A CRIMINAL MATTER:**
+- **Trade Marks Act 1994 s.4** prohibits registration of, and the
+  **Trade Descriptions Act / s.99 Trade Marks Act 1994** makes it an
+  **offence** to use without authority, the **Royal Arms**, the **Royal
+  Crown**, the **Royal flags**, and any device so closely resembling them
+  as to be mistaken for them, or to falsely suggest **Royal patronage**.
+- **The Lord Lyon King of Arms** has criminal jurisdiction in **Scotland**
+  over the unauthorised use of arms (Lyon Court, under the Act 1672 cap.
+  47) — using another's coat of arms in Scotland is a **criminal offence**
+  prosecutable in the Lyon Court.
+- **The Royal Arms of the United Kingdom, the Royal Standard, the Lion
+  Rampant (Royal Banner of Scotland), the Prince of Wales's feathers,
+  the Tudor Crown/St Edward's Crown devices, the EIIR/CIIIR cyphers,
+  and the Royal Warrant** are all off-limits.
+- **Individual families' and corporations' arms are also protected** (by
+  the Court of Chivalry in England, Lyon Court in Scotland) — depicting a
+  specific real family's arms for sale is actionable.
+- **SAFE:** the heraldic *grammar* — tinctures, ordinaries, lines of
+  partition, charges and attitudes as a design vocabulary, and invented
+  or generic arms. A "heraldic charges chart" is safe; "the Royal Arms"
+  is not; "your family crest" as a product is a legal minefield.
+
+### Inferences
+- Tarot is now the strongest newly-available axis in this whole brief: 78 free
+  images plus 22 Major Arcana as standalone subjects, cleared in the UK on
+  1 January 2022, with very high and growing demand — provided the name is
+  avoided.
+- The small closed sets here (7 chakras, 24/16/29 runes, 20 ogham letters,
+  5 Platonic solids, 5 girih tiles, 7 tinctures, 5 ballet positions, 8 British
+  turf mazes) are perfect "set" posters as well as individual prints, roughly
+  doubling the SKU count per list.
+- The **Pictish symbol stones (~40 symbols) and British turf mazes (8)** are the
+  two most under-exploited UK-first lists found anywhere in this harvest.
+
+### Gaps
+- The *Ashley Book of Knots* UK public-domain date (1 January 2018, Ashley
+  d.1947) is inferred from the life+70 rule, not confirmed from a source.
+  **Verify before use.**
+- The 3,854-entry figure for Ashley is [T].
+- The Scottish Register of Tartans' *current* total (above 10,000) was not
+  obtained; only the 10,000th-registration milestone is verified.
+- The classical 84-asana figure and the Iyengar 200 figure are [T].
+- The criminal-law statements on royal insignia and the Lord Lyon are from prior
+  knowledge. **These are criminal provisions; take legal advice. Do not rely on
+  these notes.**
+
+---
+
+## SEASONS, WEATHER AND TIME
+
+### Takeaway
+The **WMO International Cloud Atlas** is the canonical weather list: **10 cloud
+genera**, subdivided into species and varieties giving **about 100 combinations**
+in total. The time-based lists are tiny and perfect: **12 months, 4 seasons,
+8 festivals in the pagan wheel of the year, 24 Japanese sekki subdividing into
+72 microseasons**. All free of IP.
+
+### Cited Findings
+
+**CLOUDS — the WMO International Cloud Atlas: 10 genera, subdivided into species and varieties, giving about 100 combinations in total** [V]
+— [WMO: Classifying clouds](https://wmo.int/node/21339);
+the Atlas itself: [cloudatlas.wmo.int](https://cloudatlas.wmo.int/);
+PDF: [WMO-No. 407](https://cloudatlas.wmo.int/docs/wmo_407_en-v1.pdf)
+**The 10 genera (with WMO abbreviations):**
+Cirrus (Ci) · Cirrocumulus (Cc) · Cirrostratus (Cs) ·
+Altocumulus (Ac) · Altostratus (As) · Nimbostratus (Ns) ·
+Stratocumulus (Sc) · Stratus (St) · Cumulus (Cu) ·
+Cumulonimbus (Cb).
+**The species** — the WMO lists **fibratus, uncinus, spissatus,
+castellanus, floccus, stratiformis, nebulosus, lenticularis,
+fractus, humilis, mediocris, congestus, calvus, capillatus**,
+plus **volutus** (the roll cloud, added in the 2017 edition),
+giving **14 or 15 depending on whether volutus is counted** —
+**[?] sources found this session gave 14 in one place and the
+2017 addition of volutus separately, so the total is 15.**
+[V for the 14-list and for volutus being a 2017 addition] — [WMO](https://wmo.int/node/21339); [RMetS](https://rmets.org/metmatters/international-cloud-atlas-and-new-cloud-classifications)
+**The 9 varieties:** intortus · vertebratus · undulatus ·
+radiatus · lacunosus · duplicatus · translucidus ·
+perlucidus · opacus.
+**Supplementary features and accessory clouds** (a further ~15
+named forms, all excellent print subjects): incus (anvil) ·
+mamma · virga · praecipitatio · arcus (shelf cloud) ·
+murus (wall cloud) · cauda · fluctus (Kelvin–Helmholtz
+waves) · asperitas (**named in the 2017 edition — the
+first new cloud classification in over 50 years**) ·
+cavum (fallstreak hole) · tuba (funnel cloud) ·
+pileus · velum · pannus · flumen.
+**Special clouds:** nacreous/polar stratospheric ·
+noctilucent · lenticular (Morning Glory) ·
+contrails (homogenitus) · pyrocumulus (flammagenitus) ·
+cataractagenitus · silvagenitus · homomutatus.
+**An exact "cloud types poster" therefore has 10 genera as the
+headline and ~100 named combinations as the full set — a
+genuine official enumeration with a citable source.**
+
+**NAMED WEATHER PHENOMENA (~55, all free)** [T]
+— [Met Office glossary](https://www.metoffice.gov.uk/weather/learn-about/weather/)
+Rainbow · Double rainbow · Supernumerary rainbow ·
+Moonbow · Fogbow · Glory · Brocken spectre ·
+Halo (22°, 46°) · Sun dog / Parhelion · Sun pillar ·
+Parhelic circle · Circumzenithal arc · Circumhorizontal
+arc · Tangent arc · Sundog · Moon halo · Corona ·
+Iridescent cloud · Crepuscular rays · Anticrepuscular
+rays · Green flash · Alpenglow · Belt of Venus ·
+Earth shadow · Zodiacal light · Gegenschein ·
+Airglow · Aurora · STEVE · Mirage (inferior,
+superior) · Fata Morgana · Novaya Zemlya effect ·
+Heat haze · Will-o'-the-wisp · St Elmo's Fire ·
+Ball lightning · Sprite · Elve · Blue jet ·
+Lightning (cloud-to-ground, intracloud, sheet,
+ribbon, bead, anvil crawler, positive, Catatumbo) ·
+Thunder · Hail · Graupel · Sleet · Freezing rain ·
+Hoar frost · Rime · Advection frost · Frost flower ·
+Hair ice · Ice needle · Penitentes · Snow roller ·
+Diamond dust · Light pillar · Virga · Dust devil ·
+Tornado · Waterspout · Landspout · Derecho ·
+Haboob · Supercell · Squall line · Microburst ·
+Hurricane/Typhoon/Cyclone · Eye · Eyewall ·
+Sea fog · Radiation fog · Advection fog ·
+Haar · Mizzle · Smog · Sea smoke ·
+Hamsin · Föhn/Chinook · Mistral · Tramontane ·
+Bora · Sirocco · Levanter · Harmattan ·
+Khamsin · Santa Ana · Williwaw · Barber ·
+Brickfielder · Helm Wind (**the only named wind in
+Britain — Cross Fell, Cumbria**).
+**The Beaufort Scale (13 forces, 0–12), the Fujita/EF
+Scale (EF0–EF5), the Saffir–Simpson Scale (Cat 1–5)
+and the Shipping Forecast's 31 sea areas** are four
+more small canonical lists — **the 31 Shipping Forecast
+areas (Viking, North Utsire, South Utsire, Forties,
+Cromarty, Forth, Tyne, Dogger, Fisher, German Bight,
+Humber, Thames, Dover, Wight, Portland, Plymouth,
+Biscay, Trafalgar, FitzRoy, Sole, Lundy, Fastnet,
+Irish Sea, Shannon, Rockall, Malin, Hebrides, Bailey,
+Fair Isle, Faeroes, Southeast Iceland) are one of the
+best-selling UK print subjects in existence and are
+entirely free; "BBC" and "Radio 4" are not.**
+
+**THE MONTHS, SEASONS AND TIMES OF DAY** [T]
+**12 months:** January–December. **4 seasons** (meteorological:
+Spring Mar–May, Summer Jun–Aug, Autumn Sep–Nov, Winter
+Dec–Feb; astronomical: equinox/solstice-bounded).
+**Times of day (~20 named):** Astronomical twilight ·
+Nautical twilight · Civil twilight · Dawn ·
+First light · Daybreak · Sunrise · Golden hour ·
+Morning · Forenoon · Noon · Afternoon ·
+Teatime · Evening · Golden hour (pm) ·
+Sunset · Dusk · Gloaming · Blue hour ·
+Twilight · Nightfall · Night · Midnight ·
+Witching hour · Small hours · Pre-dawn ·
+First watch · Middle watch · Morning watch
+(**the 7 nautical watches: First, Middle, Morning,
+Forenoon, Afternoon, First Dog, Last Dog**).
+**The canonical hours (monastic, 8):** Matins/Vigils ·
+Lauds · Prime · Terce · Sext · None ·
+Vespers · Compline.
+
+**THE JAPANESE 72 MICROSEASONS (七十二候, *shichijūni kō*) — 24 *sekki* (solar terms) each divided into 3 *kō*, giving exactly 72** [T]
+Structure (the 24 sekki, which subdivide into the 72):
+**Spring:** Risshun (立春, start of spring) · Usui (雨水,
+rainwater) · Keichitsu (啓蟄, insects awaken) ·
+Shunbun (春分, spring equinox) · Seimei (清明, pure and
+clear) · Kokuu (穀雨, grain rain).
+**Summer:** Rikka (立夏) · Shōman (小満) ·
+Bōshu (芒種) · Geshi (夏至, summer solstice) ·
+Shōsho (小暑) · Taisho (大暑).
+**Autumn:** Risshū (立秋) · Shosho (処暑) ·
+Hakuro (白露, white dew) · Shūbun (秋分, autumn
+equinox) · Kanro (寒露, cold dew) · Sōkō (霜降, frost
+falls).
+**Winter:** Rittō (立冬) · Shōsetsu (小雪, lesser snow) ·
+Daisetsu (大雪, greater snow) · Tōji (冬至, winter
+solstice) · Shōkan (小寒) · Daikan (大寒).
+Sample microseason names (the 72 are each a short poetic
+phrase — the real appeal of the list): "East wind melts
+the ice" · "Bush warblers start singing" · "Fish emerge
+from the ice" · "Rain moistens the soil" ·
+"Mist starts to linger" · "Grass sprouts, trees bud" ·
+"Hibernating insects surface" · "First peach blossoms" ·
+"Caterpillars become butterflies" · "Sparrows start to
+nest" · "First cherry blossoms" · "Distant thunder" ·
+"Swallows return" · "Wild geese fly north" ·
+"First rainbows" · "First reeds sprout" ·
+"Last frost, rice seedlings grow" · "Peonies bloom" ·
+"Frogs start singing" · "Worms surface" ·
+"Bamboo shoots sprout" · "Silkworms start feasting on
+mulberry leaves" · "Safflowers bloom" ·
+"Wheat ripens and is harvested" · "Praying mantises
+hatch" · "Rotten grass becomes fireflies" ·
+"Plums turn yellow" · "Irises bloom".
+(The underlying Chinese 24 solar terms are **UNESCO
+Intangible Cultural Heritage**; the Japanese 72 kō
+are classical and free.)
+
+**THE CELTIC / PAGAN WHEEL OF THE YEAR — 8 festivals** [T]
+**4 fire festivals (cross-quarter days):** Samhain
+(~31 Oct–1 Nov) · Imbolc (~1–2 Feb) · Beltane
+(~30 Apr–1 May) · Lughnasadh/Lammas (~1 Aug).
+**4 solar festivals (quarter days):** Yule / Midwinter
+Solstice (~21 Dec) · Ostara / Spring Equinox (~20 Mar) ·
+Litha / Midsummer Solstice (~21 Jun) · Mabon /
+Autumn Equinox (~22 Sep).
+Related enumerable UK sets: the **English quarter days**
+(Lady Day 25 Mar, Midsummer 24 Jun, Michaelmas 29 Sep,
+Christmas 25 Dec) and **cross-quarter days**
+(Candlemas, May Day, Lammas, All Saints);
+the **Scottish term days** (Candlemas 28 Feb,
+Whitsunday 28 May, Lammas 28 Aug, Martinmas 28 Nov);
+the **~30 named British seasonal customs** (Padstow
+'Obby 'Oss, Jack in the Green, Up Helly Aa,
+Burning the Clocks, Wassailing, Cheese Rolling,
+Bonfire Night, Burns Night, Beltane Fire Festival,
+Hobby Horse, Morris Dancing, Mummers' Play,
+Haxey Hood, Hare Pie Scrambling, Tar Barrels of
+Ottery, Shrovetide Football, Well Dressing,
+Rushbearing, Clipping the Church, Straw Bear,
+Plough Monday, Pace Egg Play, Furry Dance,
+Bawming the Thorn, Horn Dance of Abbots Bromley,
+Egremont Crab Fair, Allendale Tar Barrels).
+**Note: "Up Helly Aa", "Glastonbury" and several
+festival names are registered trade marks — check
+each before use.**
+
+### Inferences
+- This is the smallest domain by subject count (~250 named items in total) but
+  the highest in *set-poster* value: cloud charts, Beaufort scales, shipping
+  forecast maps and wheel-of-the-year wheels are all single-print products that
+  encapsulate a whole list.
+- The **72 Japanese microseasons** and the **31 Shipping Forecast areas** are the
+  two standout items here: each is a complete, poetic, free, fully enumerated
+  list that works both as 72/31 individual prints and as one chart.
+
+### Gaps
+- The exact number of WMO cloud **species** (14 vs 15) is unresolved in the
+  sources found. Count from the Atlas itself.
+- The 72 microseason *names in full* were not harvested; only ~28 are sampled.
+  The complete set with Japanese and English text needs one dedicated fetch.
+
+---
+
+## NURSERY AND CHILDREN
+
+### Takeaway
+The animal "sets" (safari, woodland, farm, ocean, jungle, arctic, dinosaur,
+pets) are retail conventions, not registries, but they are the highest-volume
+children's category and are IP-free as long as no character is involved.
+**Dinosaurs are the one enumerable list: over 1,000 valid genera** (of
+~1,500 named). The risk in this domain is concentrated and severe: **almost every
+"classic" nursery-rhyme or fairy-tale *illustration* that people actually
+picture is a copyrighted 20th-century image, and most character names are live
+trade marks.**
+
+### Cited Findings
+
+**THE STANDARD ANIMAL SETS** [T] (retail convention, no registry)
+- **SAFARI (12 core):** Lion · Elephant · Giraffe · Zebra ·
+  Hippo · Rhino · Cheetah · Leopard · Monkey ·
+  Crocodile · Meerkat · Warthog. (Extended set: the 35-species
+  African list in the World Fauna section above.)
+- **WOODLAND (14 core, UK-first):** Fox · Badger · Hedgehog ·
+  Rabbit · Hare · Deer (roe/fallow) · Red Squirrel ·
+  Grey Squirrel · Dormouse · Mouse · Mole · Owl ·
+  Robin · Wren · Blackbird · Pheasant · Stoat ·
+  Weasel · Pine Marten · Bat · Toad · Newt ·
+  Beetle · Butterfly · Snail · Acorn/Toadstool.
+- **FARM (12 core):** Cow · Pig · Sheep · Lamb ·
+  Horse · Donkey · Goat · Chicken · Cockerel ·
+  Duck · Goose · Turkey · Cat · Dog · Rabbit ·
+  Tractor · Barn · Scarecrow. (And the ~250 British
+  breeds listed in the breeds section — "the Highland
+  cow" alone is a major UK nursery subject.)
+- **OCEAN (14 core):** Whale (humpback, blue) · Dolphin ·
+  Orca · Narwhal · Shark · Turtle · Seahorse ·
+  Octopus · Jellyfish · Starfish · Crab · Lobster ·
+  Clownfish · Seal · Puffin · Penguin · Walrus ·
+  Manatee · Ray · Anglerfish · Coral.
+- **JUNGLE / RAINFOREST (12 core):** Tiger · Monkey ·
+  Sloth · Toucan · Parrot/Macaw · Snake ·
+  Tree Frog · Jaguar · Gorilla · Orangutan ·
+  Chameleon · Butterfly (Blue Morpho) · Anteater ·
+  Capybara · Panther · Lemur · Panda (giant and red).
+- **ARCTIC (10 core):** Polar Bear · Penguin (**note: the
+  "arctic set" conventionally and incorrectly includes
+  penguins, which are Antarctic — keep it as sold**) ·
+  Arctic Fox · Seal · Walrus · Narwhal · Beluga ·
+  Reindeer · Snowy Owl · Arctic Hare · Moose ·
+  Puffin · Musk Ox · Wolf.
+- **PETS (12 core):** Dog · Cat · Rabbit · Guinea Pig ·
+  Hamster · Gerbil · Mouse · Rat · Ferret ·
+  Chinchilla · Budgie · Canary · Cockatiel ·
+  Parrot · Goldfish · Tropical Fish · Tortoise ·
+  Terrapin · Snake · Lizard · Pony · Chicken.
+  (Plus the 221 Kennel Club breeds and 45 GCCF cat breeds.)
+- **DINOSAURS — over 1,000 valid genera** (of ~1,500 named;
+  new genera are described at roughly 45–50 per year) [T]
+  — [Paleobiology Database](https://paleobiodb.org/); the
+  canonical scientific compilation is **Weishampel et al.,
+  *The Dinosauria*** and the **Dinosaur Genera List**.
+  The 45 that children actually name: Tyrannosaurus rex ·
+  Triceratops · Stegosaurus · Brachiosaurus ·
+  Diplodocus (**"Dippy" is the NHM's specimen —
+  a nickname, not protected**) · Apatosaurus ·
+  Brontosaurus · Argentinosaurus · Spinosaurus ·
+  Allosaurus · Velociraptor · Deinonychus ·
+  Utahraptor · Carnotaurus · Giganotosaurus ·
+  Carcharodontosaurus · Therizinosaurus ·
+  Gallimimus · Oviraptor · Compsognathus ·
+  Archaeopteryx · Microraptor · Ankylosaurus ·
+  Euoplocephalus · Parasaurolophus ·
+  Corythosaurus · Lambeosaurus · Edmontosaurus ·
+  Iguanodon · Hypsilophodon · Pachycephalosaurus ·
+  Styracosaurus · Protoceratops · Psittacosaurus ·
+  Dilophosaurus · Ceratosaurus · Baryonyx
+  (**a British find — Surrey, 1983**) ·
+  Megalosaurus (**the first dinosaur named, Oxfordshire
+  1824**) · Iguanodon (**Sussex, 1825**) ·
+  Hylaeosaurus (**Sussex, 1833 — these three are
+  Mantell's/Buckland's and form the original
+  "Dinosauria": a perfect British-first dinosaur series**) ·
+  Cetiosaurus · Scelidosaurus (**Dorset**) ·
+  Dracoraptor (**Wales, 2014**) ·
+  Plus the non-dinosaurs children expect:
+  Pteranodon · Pterodactylus · Quetzalcoatlus ·
+  Dimorphodon (**Dorset**) · Plesiosaurus
+  (**Dorset, Mary Anning**) · Ichthyosaurus
+  (**Dorset, Mary Anning**) · Mosasaurus ·
+  Liopleurodon · Dunkleosteus · Mammoth ·
+  Sabre-toothed Cat (*Smilodon*) · Megalodon ·
+  Dimetrodon · Trilobite · Ammonite.
+  **IP: all genus names are scientific and free. Risk is
+  "Jurassic Park"/"Jurassic World" (Universal), the
+  Jurassic Park velociraptor design, and museum specimen
+  nicknames used with the museum's name.**
+
+**NURSERY RHYME SUBJECTS — COPYRIGHT STATUS CHECKED** [T]
+The **texts** of traditional English nursery rhymes are public domain
+(mostly 16th–19th century; the standard scholarly enumeration is the
+**Opie *Oxford Dictionary of Nursery Rhymes* (1951), ~550 rhymes** —
+**the Opies' book itself is in copyright; the rhymes are not**).
+The **Roud Folk Song Index** (~25,000 entries) is the research register.
+— [Roud Folk Song Index (Vaughan Williams Memorial Library)](https://www.vwml.org/search?ts=roud)
+Safe (PD) rhyme subjects: Humpty Dumpty · Hey Diddle Diddle ·
+Little Miss Muffet · Jack and Jill · Hickory Dickory Dock ·
+Baa Baa Black Sheep · Twinkle Twinkle Little Star
+(Jane Taylor, 1806) · Mary Had a Little Lamb (1830) ·
+Mary Mary Quite Contrary · Little Bo Peep ·
+Little Boy Blue · Little Jack Horner ·
+Old Mother Hubbard · There Was an Old Woman Who
+Lived in a Shoe · Sing a Song of Sixpence ·
+Three Blind Mice · This Little Piggy ·
+Rub-a-dub-dub · Pat-a-cake · Ring a Ring o' Roses ·
+Oranges and Lemons · London Bridge Is Falling Down ·
+Pop Goes the Weasel · The Grand Old Duke of York ·
+Georgie Porgie · Polly Put the Kettle On ·
+Wee Willie Winkie · Lavender's Blue ·
+Row Row Row Your Boat · I'm a Little Teapot (1939 —
+**NOT PD; Kelley & Sanders, exclude**) ·
+Incy Wincy Spider · The Wheels on the Bus
+(**1939, Verna Hills — NOT PD, exclude**) ·
+Old MacDonald Had a Farm (1917, **arrangement
+copyrights vary — the text is PD**) ·
+Five Little Ducks · One Two Buckle My Shoe ·
+Ten Green Bottles · Oh the Grand Old Duke ·
+Here We Go Round the Mulberry Bush ·
+Hot Cross Buns · Simple Simon · Doctor Foster ·
+Jack Be Nimble · Goosey Goosey Gander ·
+Rock-a-bye Baby · Bobby Shafto · Dance to
+Your Daddy · The Owl and the Pussycat (Lear,
+1871, PD) · The Jumblies (Lear, PD) ·
+The Walrus and the Carpenter (Carroll, PD).
+**CAUTION: the *illustrations* people associate with these are
+mostly in copyright — Mabel Lucie Attwell (d.1964, UK PD
+2035), Cicely Mary Barker (d.1973, UK PD 2044, and
+"Flower Fairies" is a live trade mark), Margaret Tarrant
+(d.1959, PD 2030). Safe illustrators: Randolph Caldecott
+(d.1886) · Walter Crane (d.1915) · Kate Greenaway
+(d.1901) · Arthur Rackham (d.1939, UK PD 2010) ·
+Edmund Dulac (d.1953, UK PD 2024) · Charles Robinson
+(d.1937) · W. Heath Robinson (d.1944, UK PD 2015) ·
+Jessie M. King (d.1949, UK PD 2020) ·
+Harry Clarke (d.1931) · Ivan Bilibin (d.1942, PD 2013) ·
+Edward Lear (d.1888) · John Tenniel (d.1914) ·
+Beatrix Potter (d.1943, UK PD 2014 — **but "Peter
+Rabbit" and the character names/images are live
+trade marks of Penguin/Frederick Warne; the botanical
+and fungal watercolours are safe, the characters are
+not**).**
+
+**ALPHABET AND NUMBER SUBJECTS** [T]
+26 letters A–Z (and the **Welsh alphabet's 29 letters**, the
+**Scottish Gaelic 18**, the **Irish 18**, the **Greek 24**,
+the **Cyrillic 33**, the **Hebrew 22**, the **Arabic 28**) ·
+numbers 0–20, 0–100 · the **NATO phonetic alphabet (26:
+Alfa, Bravo, Charlie, Delta, Echo, Foxtrot, Golf, Hotel,
+India, Juliett, Kilo, Lima, Mike, November, Oscar, Papa,
+Quebec, Romeo, Sierra, Tango, Uniform, Victor, Whiskey,
+X-ray, Yankee, Zulu)** · the **International Code of Signals
+flags (26 letter + 10 numeral + 3 substitute = 40)** ·
+**Semaphore (26)** · **Morse code (26 + 10)** ·
+**BSL/ASL fingerspelling alphabets** · **Braille (26)** ·
+**Egyptian hieroglyph alphabet (~26 uniliterals)** ·
+**Runic alphabets (see above)**. All free. **"NATO" is not
+a trade mark issue but the **ICS flags** are an ITU/IMO
+standard and free.
+
+**TRANSPORT (children's set, ~30 — generic forms only)** [T]
+Tractor · Digger/Excavator · Dumper Truck ·
+Bulldozer · Crane · Cement Mixer · Road Roller ·
+Fire Engine · Ambulance · Police Car · Bin Lorry ·
+Bus · Double-Decker Bus (**the Routemaster shape is
+a registered trade mark of TfL; "London bus" generic
+is safer**) · Coach · Tram · Train · Steam Train ·
+Underground Train (**the TfL roundel and "London
+Underground" are registered marks — never use**) ·
+Taxi (**the London black cab shape is a registered
+design/mark of LEVC, contested in court**) ·
+Car · Van · Lorry · Tanker · Campervan
+(**the VW shape is a registered mark**) ·
+Motorbike · Scooter · Bicycle · Tricycle ·
+Scooter (kick) · Skateboard · Aeroplane ·
+Helicopter · Hot Air Balloon · Airship ·
+Rocket · Space Shuttle · Boat · Sailboat ·
+Tugboat · Ferry · Submarine · Hovercraft ·
+Canal Boat · Lifeboat · Lighthouse · Tractor
+and Trailer · Combine Harvester · Milk Float ·
+Ice Cream Van · Horse and Cart · Penny Farthing.
+
+**SPACE (children's set, ~25)** [T]
+Sun · Moon · 8 planets · Saturn's rings ·
+Stars · Comet · Asteroid · Meteor/Shooting Star ·
+Constellation · Galaxy · Nebula · Black Hole ·
+Rocket · Space Shuttle · Space Station ·
+Satellite · Lunar Module · Rover · Astronaut ·
+Spacesuit · Space Helmet · Alien · UFO ·
+Telescope · Observatory · Launch Pad ·
+Solar System diagram · Moon Landing (**NASA imagery
+is free of copyright; "NASA" the insignia/"meatball"
+logo IS protected and requires permission**).
+
+**FAIRY-TALE SUBJECTS IN THE PUBLIC DOMAIN** [T] — see the Myth section
+below for the full tale lists. The safe PD sources:
+**Grimm (1812–57), Perrault (1697), Hans Christian Andersen
+(1835–72), Joseph Jacobs' *English Fairy Tales* (1890),
+Andrew Lang's 12 Coloured Fairy Books (1889–1910),
+Asbjørnsen & Moe (Norwegian), Afanasyev (Russian),
+the Arabian Nights (Burton/Lane translations),
+Aesop, the Mabinogion, the Panchatantra.**
+**NEVER: any Disney version, character design, song or title
+treatment — Disney's *versions* of PD tales are heavily
+protected and Disney is the most litigious rightsholder in
+this space. "Cinderella" the tale is free; Disney's
+Cinderella is not. Also exclude: Winnie-the-Pooh (Milne's
+1926 text is PD in the US from 2022 and in the UK from
+2027; the Disney design is not and never will be),
+Paddington, The Gruffalo, Peppa Pig, Elmer,
+The Very Hungry Caterpillar, Where the Wild Things Are,
+Beatrix Potter characters, Thomas the Tank Engine,
+Moomins (Jansson d.2001, UK PD 2072).**
+
+**MYTHICAL CREATURES (~55, all free)** [T]
+Dragon (European, Welsh Red Dragon **— the Welsh flag is a
+national flag, free to depict, but the Welsh Government's
+official logo is not**) · Wyvern · Lindworm · Basilisk ·
+Cockatrice · Hydra · Chimera · Griffin · Hippogriff ·
+Manticore · Sphinx · Pegasus · Unicorn · Kirin/Qilin ·
+Kelpie · Each-uisge · Hippocampus · Mermaid · Merman ·
+Selkie · Siren · Nereid · Naiad · Dryad · Nymph ·
+Satyr · Faun · Centaur · Minotaur · Cyclops ·
+Giant · Titan · Troll · Ogre · Goblin · Hobgoblin ·
+Brownie · Boggart · Bogle · Redcap · Pixie ·
+Fairy · Sprite · Imp · Leprechaun · Clurichaun ·
+Púca/Pooka · Banshee · Dullahan · Cù-Sìth ·
+Black Shuck · Barghest · Gytrash · Padfoot ·
+Questing Beast · Beast of Bodmin · Phoenix ·
+Firebird · Thunderbird · Roc · Simurgh ·
+Garuda · Harpy · Valkyrie · Werewolf · Vampire ·
+Golem · Yeti · Bigfoot · Loch Ness Monster
+(**"Nessie" is widely used; VisitScotland and some
+operators hold marks — prefer "Loch Ness Monster"**) ·
+Kraken · Leviathan · Jörmungandr · Fenrir ·
+Sleipnir · Huginn and Muninn · Ratatoskr ·
+Nidhogg · Yggdrasil · Wendigo · Kappa ·
+Tengu · Kitsune · Tanuki · Oni · Dragon Turtle ·
+Baku · Nue · Jorōgumo · Amabie · Bakeneko.
+
+### Inferences
+- The children's domain has the largest *demand* and the smallest *enumerable
+  supply*: the sets are 10–15 animals each, so the SKU count comes from style
+  and colourway permutations rather than from subject count. This is exactly the
+  pattern that produces the 89% near-duplication problem flagged in CLAUDE.md —
+  so this domain should be *capped*, not expanded.
+- The one genuine expansion route is **dinosaurs (1,000+ valid genera)** and the
+  **British-discovered dinosaur/fossil list** (Megalosaurus, Iguanodon,
+  Hylaeosaurus, Baryonyx, Scelidosaurus, Dimorphodon, Plesiosaurus,
+  Ichthyosaurus, Cetiosaurus, Dracoraptor) which is a genuinely distinctive
+  UK-first children's series tied to Mary Anning and the Jurassic Coast.
+- Nursery rhyme *text* is free but the *look* people want is almost all in
+  copyright. The practical route is the ~12 safe illustrators listed above.
+
+### Gaps
+- No verified count for valid dinosaur genera; the 1,000-of-1,500 figure is [T].
+  The Dinosaur Genera List and Paleobiology Database give live counts.
+- The Opie *Oxford Dictionary of Nursery Rhymes* count (~550) is [T].
+- The UK PD dates given for individual illustrators are calculated from death
+  dates held in prior knowledge, not verified. **Check each death date.**
