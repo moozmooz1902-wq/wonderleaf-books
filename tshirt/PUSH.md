@@ -88,9 +88,9 @@ reason, for the record.
 
 **`EBAY_ONE_FILE.zip`** - one eBay File Exchange CSV, zipped.
 
-    106,838 listings
-    534,190 size variations, exactly 5 per listing, no orphans
-    641,028 data rows, 30 columns
+    105,573 listings
+    527,865 size variations, exactly 5 per listing, no orphans
+    633,438 data rows, 30 columns
     £11.99, quantity 1 per size, category 15687, United Kingdom
     business policies: shipping 2, returns 1, payment 1
     every listing has a PicURL and a print master in the bucket
@@ -136,8 +136,8 @@ carries the style, layout, colourway, illustration and a `Theme:` keyword list.
     shirt: WEEKEND FORECAST FEELING WITH A CHANCE OF DRINKING
     title: Weekend Forecast Feeling With A Chance Of Drinking T-Shirt Mens Beer Tee Top
 
-**106,801 of 106,838 titles (100.0%) open with the COMPLETE printed slogan.**
-Mean length 51.8 against the hot sellers' 61.2. Three earlier attempts are
+**105,536 of 105,573 titles (100.0%) open with the COMPLETE printed slogan.**
+Mean length 50.7 against the hot sellers' 61.2. Three earlier attempts are
 recorded here so they are not repeated:
 
 - Building the head from the competitor's title - the original bug.
@@ -147,6 +147,25 @@ recorded here so they are not repeated:
 - Adding describing words to every title, which is what the seller caught
   second: *"...Husband Looks Like T-Shirt Mens Raising Light Woman Tee"*.
 
+### Theme words are only used when the design corroborates them
+
+The source `theme` field is a loose bucket, not a reliable label, and trusting
+it put wrong keywords in titles - the one the seller spotted was
+*"I Work Hard So I Can Keep Skydiving T-Shirt Mens **Fishing** Tee Top"*.
+
+`fishing2` turns out to hold scuba, camping, skydiving, caravan, sailing and
+kayaking, so it is now **Outdoors**, not Fishing. But the wider problem is that
+every bucket carries stragglers: `music` holds HUSBAND, `gym` holds UNION,
+`patriotic` holds VIKING, `Birthday` was applied to *"PEACE LOVE DAUGHTER"*,
+`Football` to *"I LOVE UNION"*, `Christmas` to *"PEACE LOVE SLICE"* (a pizza).
+
+So a theme word is now emitted **only when the design corroborates it**: the
+word, or one of a hand-written synonym set, must appear in the slogan, niche,
+subject or illustration. `Funny` is exempt, being a tone rather than a claim
+about the subject. **35,253 theme words were suppressed on that test**, led by
+Birthday (7,318), Football (6,561), Christmas (5,448) and Geek (4,337). A
+shorter honest title beats a keyword that misdescribes the shirt.
+
 ### The cost of slogan-led titles, and what was done about it
 
 Slogans repeat: 26,468 distinct across the catalogue, one of them 96 times. A
@@ -154,12 +173,13 @@ title that is only the slogan plus garment keywords therefore collides a lot -
 **78,543 of 115,966 would have been duplicates**. Rather than lose two thirds
 of the catalogue, a distinguishing noun is appended **only where a title would
 otherwise clash**, so the clutter lands on the duplicates and never on a title
-that did not need it. That left 9,128 still colliding, and those redundant
+that did not need it. Suppressing uncorroborated theme words removes a
+differentiator too, so the residue grew from 9,128 to 10,393; those redundant
 copies were dropped on the seller's standing instruction.
 
     115,966  listings built
-    - 9,128  redundant copies of a title that still collided
-    =106,838 listings, zero duplicate titles
+    -10,393  redundant copies of a title that still collided
+    =105,573 listings, zero duplicate titles
 
 ### 545 old near-duplicate pairs dropped
 
@@ -193,7 +213,7 @@ with the 10,000 spare slots asked for:
 
     live now          668,956 listings   (424,118 wall art + 244,838 tees)
     after the ends    542,990 listings
-    after the upload  649,828 listings   - 19,128 fewer than today
+    after the upload  648,563 listings   - 20,393 fewer than today
 
 On an **item** count it also fits, and that is what the quantity choice is
 for. The file carries **quantity 1 on each of the five sizes**, matching
@@ -202,8 +222,8 @@ twenty-five:
 
     live now          about   669,281 items
     after the ends    about   543,315 items
-    new upload                534,190 items
-    account after           1,077,505 items
+    new upload                527,865 items
+    account after           1,071,180 items
 
 At quantity 5 the same upload would have asked for **2,899,150 items**, about
 five times what the account holds today, while 125,966 ends free only about
@@ -222,7 +242,7 @@ Both are the paths the fulfilment tool resolves a custom label to, so an
 order looks up its own artwork with no extra step.
 
 **Verified against the live bucket on 2026-10-07**, not from memory:
-all 106,838 custom labels in the upload file resolve to both
+all 105,573 custom labels in the upload file resolve to both
 `art/mock/<label>.jpg` and `art/raw/<label>.png` in `tshirt-m12k`. Zero
 missing on either side. `art/mock/` holds 116,355 WLT objects - the 389
 extra are the trademark and likeness listings that were pulled, correctly
