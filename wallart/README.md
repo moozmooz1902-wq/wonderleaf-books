@@ -143,9 +143,15 @@ left to right and ran out of characters before reaching them, so "Framed"
 was landing on 7% of titles and "Poster" on 11%. It now reserves that tail
 before the optional middle - venue, colour, paper sizes - so:
 
-    Poster   11.5% -> 100%
-    Framed    7.1% -> 100%
-    Gift     52.3% -> 100%
+    Poster   11.5% -> 100.000%
+    Framed    7.1% -> 100.000%
+    Gift     52.3% ->  99.994%
+
+"Poster" is guaranteed by the tail and is deliberately NOT in KINDS. Having
+it in both places left 216 titles without it: when the kind "Wall Art Poster
+Print" would not fit it was shortened to its first three words, which
+dropped the Poster that the tail had already been told to leave out as a
+duplicate.
 
 still with nothing over 80 characters, median 77. The cost is the paper
 sizes, which fall from 50% to 17% of titles; they are a listing variation

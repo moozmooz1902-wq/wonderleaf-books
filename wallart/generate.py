@@ -231,7 +231,12 @@ def mood_words(niche, phrase):
 # Set True to add "Bold" to every title. See build_title for why it is off.
 BOLD = False
 
-KINDS = ["Wall Art Print", "Print Wall Art", "Art Print Wall Decor", "Wall Art Poster Print"]
+# "Poster" is NOT in this list. It is guaranteed by the tail on every title,
+# and having it in both places caused the only 216 titles that lacked it:
+# when the full kind "Wall Art Poster Print" would not fit, it was shortened
+# to its first three words - which dropped the Poster that the tail had
+# already been told to leave out as a duplicate.
+KINDS = ["Wall Art Print", "Print Wall Art", "Art Print Wall Decor", "Wall Art Decor Print"]
 
 
 def _fresh(words, already):
@@ -263,7 +268,7 @@ def build_title(phrase, venue, colour, rnd, niche=""):
     # seller's request and is off by default - it appears ZERO times in the
     # research, so it would spend five characters of every title on a word
     # nobody searches. Set BOLD = True to put it back.
-    tail = [t for t in ("Framed", "Poster" if "poster" not in core.lower() else "",
+    tail = [t for t in ("Framed", "Poster",
                         "" if "gift" in (head + " " + core).lower() else "Gift",
                         "Bold" if BOLD else "") if t]
     # colour and room before the extra keyword and the paper sizes: those two
