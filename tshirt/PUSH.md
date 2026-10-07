@@ -88,9 +88,9 @@ reason, for the record.
 
 **`EBAY_ONE_FILE.zip`** - one eBay File Exchange CSV, zipped.
 
-    113,065 listings
-    565,325 size variations, exactly 5 per listing, no orphans
-    678,390 data rows, 30 columns
+    106,838 listings
+    534,190 size variations, exactly 5 per listing, no orphans
+    641,028 data rows, 30 columns
     £11.99, quantity 1 per size, category 15687, United Kingdom
     business policies: shipping 2, returns 1, payment 1
     every listing has a PicURL and a print master in the bucket
@@ -102,52 +102,64 @@ exactly five variations, no orphan variations, nothing missing `C:Size`,
 nothing missing `PicURL`, no title over 80 characters, and every description
 heading matching its title.
 
-### Titles now lead with the text printed on the shirt
+### Titles are the text printed on the shirt, and nothing describing it
 
 **A real defect, found by the seller.** One listing was titled "Music Raising
 My Husband Is Exhausting Light Band T-Shirt Mens Music Tee Top" while the shirt
-itself reads "THIS IS WHAT AN AWESOME HUSBAND LOOKS LIKE". Two unrelated
-phrases.
+reads "THIS IS WHAT AN AWESOME HUSBAND LOOKS LIKE".
 
-The cause: this catalogue was built by replicating a competitor's hot sellers,
-and each row kept their `original_title` - here *"Raising My Husband Is
-Exhausting Mens Light Cotton T-Shirt"*. From that, `subject` was derived as
-`RAISING HUSBAND LIGHT`. But the printed design comes from a **separate**
-template bank: `THIS IS WHAT AN AWESOME {N} LOOKS LIKE` with N = HUSBAND, which
-lands in the `slogan` field. `render_illus.py` line 108 draws
-`row["slogan"]`, so **the slogan is the product**. The title builder was using
-the competitor's words. The two were never tied together.
+The cause: this catalogue replicates a competitor's hot sellers, and each row
+kept their `original_title` - here *"Raising My Husband Is Exhausting Mens
+Light Cotton T-Shirt"* - from which `subject` was derived as
+`RAISING HUSBAND LIGHT`. The printed design comes from a **separate** template
+bank, `THIS IS WHAT AN AWESOME {N} LOOKS LIKE`, landing in `slogan`.
+`render_illus.py` line 108 draws `row["slogan"]`, so **the slogan is the
+product**, and the title was being built from the competitor's words instead.
+The two were never tied together.
 
-The hot sellers do it the way the seller expected: the competitor's own title
-*starts with their printed phrase* and then adds garment words. So:
+The rule now:
 
-    {slogan, in full} T-Shirt Mens [extra] [Funny|theme] [Tee] [Top]
+    {slogan, in full} T-Shirt Mens [Funny|theme] [Tee] [Top]
 
-**108,118 of 113,065 titles (95.6%) now open with the complete printed slogan**,
-and the rest open with as much of it as fits inside 80 characters, keeping the
-niche noun so the subject survives the cut. The description already quoted the
-slogan correctly, which is why the shirt and the description agreed while the
-title did not; the `<h2>` is now re-synced to the new title as well.
+and **nothing that merely describes the design**. 80 characters is the scarce
+resource and a buyer reads the wording off the title, so subject,
+illustration and palette words are out. They moved into the description, which
+now opens its **This design** block with `Printed wording: "<slogan>"` and
+carries the style, layout, colourway, illustration and a `Theme:` keyword list.
 
-Two mistakes made on the way here, recorded so they are not repeated:
+    shirt: THIS IS WHAT AN AWESOME HUSBAND LOOKS LIKE
+    title: This Is What An Awesome Husband Looks Like T-Shirt Mens Music Tee Top
 
-- Trimming a long slogan from the end produced *"This Is What An Awesome
-  T-Shirt Mens..."*, which reads as nonsense. The full slogan is now tried
-  before anything else is shortened.
-- Palette names (`mono-bone`, `violet`, `coral`) leaked into titles as
-  differentiating words. They are internal codes with no search value and are
-  now excluded.
+    shirt: TRUST ME I'M A GRANDPA
+    title: Trust Me I'm A Grandpa T-Shirt Mens Family Tee Top
 
-Slogans repeat - 26,468 distinct across the catalogue, one of them 96 times -
-so where a slogan alone could not give a unique title, differentiating words
-come from the niche, subject and illustration. **2,356 listings where even that
-could not produce a unique title were dropped**, on the seller's standing
-instruction to drop rather than risk a duplicate. 115,421 down to **113,065**.
+    shirt: WEEKEND FORECAST FEELING WITH A CHANCE OF DRINKING
+    title: Weekend Forecast Feeling With A Chance Of Drinking T-Shirt Mens Beer Tee Top
 
-Keyword coverage against the hot sellers (t-shirt rows, weighted by units
-sold): T-Shirt 100% (benchmark 100%), Mens 100% (89.7%), Tee 82.8% (16.7%),
-Top 69.0% (27.8%), Funny 29.2% (40.2%), and Womens / Unisex / Novelty 0%
-(2.5% / 3.7% / 0.0%).
+**106,801 of 106,838 titles (100.0%) open with the COMPLETE printed slogan.**
+Mean length 51.8 against the hot sellers' 61.2. Three earlier attempts are
+recorded here so they are not repeated:
+
+- Building the head from the competitor's title - the original bug.
+- Trimming a long slogan from the end, which produced *"This Is What An
+  Awesome T-Shirt Mens..."*. The full slogan is now tried before anything is
+  shortened, and when it truly cannot fit the niche noun is kept.
+- Adding describing words to every title, which is what the seller caught
+  second: *"...Husband Looks Like T-Shirt Mens Raising Light Woman Tee"*.
+
+### The cost of slogan-led titles, and what was done about it
+
+Slogans repeat: 26,468 distinct across the catalogue, one of them 96 times. A
+title that is only the slogan plus garment keywords therefore collides a lot -
+**78,543 of 115,966 would have been duplicates**. Rather than lose two thirds
+of the catalogue, a distinguishing noun is appended **only where a title would
+otherwise clash**, so the clutter lands on the duplicates and never on a title
+that did not need it. That left 9,128 still colliding, and those redundant
+copies were dropped on the seller's standing instruction.
+
+    115,966  listings built
+    - 9,128  redundant copies of a title that still collided
+    =106,838 listings, zero duplicate titles
 
 ### 545 old near-duplicate pairs dropped
 
@@ -181,7 +193,7 @@ with the 10,000 spare slots asked for:
 
     live now          668,956 listings   (424,118 wall art + 244,838 tees)
     after the ends    542,990 listings
-    after the upload  656,055 listings   - 12,901 fewer than today
+    after the upload  649,828 listings   - 19,128 fewer than today
 
 On an **item** count it also fits, and that is what the quantity choice is
 for. The file carries **quantity 1 on each of the five sizes**, matching
@@ -190,8 +202,8 @@ twenty-five:
 
     live now          about   669,281 items
     after the ends    about   543,315 items
-    new upload                565,325 items
-    account after           1,108,640 items
+    new upload                534,190 items
+    account after           1,077,505 items
 
 At quantity 5 the same upload would have asked for **2,899,150 items**, about
 five times what the account holds today, while 125,966 ends free only about
@@ -210,7 +222,7 @@ Both are the paths the fulfilment tool resolves a custom label to, so an
 order looks up its own artwork with no extra step.
 
 **Verified against the live bucket on 2026-10-07**, not from memory:
-all 113,065 custom labels in the upload file resolve to both
+all 106,838 custom labels in the upload file resolve to both
 `art/mock/<label>.jpg` and `art/raw/<label>.png` in `tshirt-m12k`. Zero
 missing on either side. `art/mock/` holds 116,355 WLT objects - the 389
 extra are the trademark and likeness listings that were pulled, correctly

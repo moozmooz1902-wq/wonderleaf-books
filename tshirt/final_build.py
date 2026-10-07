@@ -1,175 +1,216 @@
 #!/usr/bin/env python3
-"""Final catalogue: varied titles, shuffled so it does not read as a dump.
+"""One pass: build the whole eBay file from the freshly joined parts.
 
-Two things the seller asked for that the earlier build got wrong:
+TITLE RULE - what is printed on the shirt leads, and nothing describes it.
 
-1. Every title said "Funny" in the same position and the same shape. Funny
-   measures at 2.12x the catalogue average so it stays on most listings, but
-   it is also the single most spammed word in this category, so the modifier
-   and the title SHAPE both rotate. Nine shapes x several modifiers means
-   two listings in the same niche do not look like the same template.
+    {slogan, in full} T-Shirt Mens [Funny|theme] [Tee] [Top]
 
-2. The file was in source order, so thousands of motorbike listings sat
-   together. eBay sellers get flagged for exactly that. Rows are now
-   interleaved by subject so consecutive listings are from different niches.
+The slogan is what render_illus.py draws, so it is the product, and a buyer
+reads it off the title. No subject, illustration or palette words go in - they
+describe the design rather than name it, they ate the 80 characters, and they
+produced titles like "...Husband Looks Like T-Shirt Mens Raising Light Woman
+Tee". Those words move to the description instead.
+
+Everything else matches the seller's known-good upload: the variation set on
+the parent's RelationshipDetails, S/M/L/XL/2XL, variations repeating category,
+condition and title and carrying no SKU, Location Manchester, quantity 1,
+price 11.99, postage policy 2.
 """
-import csv, random, re
-from collections import defaultdict
-import titles, themes
+import csv, re, html, collections, os, json
 
-RNG = random.Random(20261006)
-SENSITIVE = {"faith", "memorial", "awareness", "veteran"}
+csv.field_size_limit(20 << 20)
+SRC  = "/home/user/wonderleaf-books/tshirt/EBAY_ONE_FILE.csv"
+TMP  = SRC + ".new"
+LIMIT = 80
+SIZES, SETSTR = ["S", "M", "L", "XL", "2XL"], "Size=S;M;L;XL;2XL"
+OLD2NEW = {"Small": "S", "Medium": "M", "Large": "L",
+           "X-Large": "XL", "XX-Large": "2XL"}
+LOCATION, PRICE, QTY, SHIP = "Manchester", "11.99", "1", "2"
 
-# Designs kept out of the catalogue entirely. Slurs and profanity are an
-# account risk with no revenue behind them; anti-religion draws complaints
-# and sells poorly in the source data; drug references get listings pulled.
-# Alcohol is deliberately NOT here - beer and pub designs are mainstream on
-# eBay and are 2% of the file.
-EXCLUDE = re.compile(
-    r"\bfuck|\bcunt|\bnigg|\bretard|\bspastic|\bcock\b|\bwank|\btwat|"
-    r"atheis|death to religion|anti.?christ|"
-    r"cannabis|\bweed\b|cocaine|spliff|\bbong\b|\bdrugs?\b|marijuana|\bstoner\b|"
-    # hate and extremist references - excluded whatever the claimed context
-    r"hitler|\bnazi|swastika|third reich|gestapo|\bkkk\b|ku klux|white power|"
-    r"white pride|\b1488\b|heil |fuhrer|holocaust|auschwitz|\bisis\b|al.?qaeda|"
-    r"taliban|jihad|supremacis|skinhead|blood and soil|\bgenocide\b",
-    re.I)
+THEME = {"humour": "Funny", "football": "Football", "music": "Music",
+         "birthday": "Birthday", "seasonal": "Christmas", "pets": "Pet",
+         "biker": "Biker", "nerd": "Geek", "fishing2": "Fishing",
+         "fishing": "Fishing", "family": "Family", "gym": "Gym",
+         "patriotic": "Flag", "trades": "Work", "drinking": "Beer",
+         "gaming": "Gaming", "veteran": "Veteran", "awareness": "Awareness",
+         "farming": "Farming", "faith": "Faith", "rude": "Rude",
+         "memorial": "Memorial"}
+FUNNY = {"humour", "rude"}
+FUNC = {"a","an","the","of","on","in","at","to","by","for","with","and","or",
+        "but","is","are","was","be","am","it","its","this","that","my","your",
+        "our","i","you","we","me","no","not","so","up","out","as","if"}
+STYLE = {"line_art": "Line art", "distressed": "Distressed vintage print",
+         "typography_only": "Typography", "cartoon": "Cartoon illustration",
+         "flat_vector": "Flat vector artwork", "photographic": "Photographic"}
+LAYOUT = {"text_only": "wording only, no illustration",
+          "text_above_image": "wording above the illustration",
+          "image_only": "illustration only, no wording",
+          "text_below_image": "wording below the illustration",
+          "two_panel": "a two-panel layout"}
+ANCHOR = "<p>Printed on a heavyweight black cotton t-shirt, chest centred.</p>"
 
-# measured: funny 2.12x, tee 2.70x, top 2.51x, mens 1.29x. The rest are
-# shape variation, not claimed lifts - they stop every title looking alike.
-MODIFIER = (["Funny"] * 6) + ["Novelty", "Humour", "Joke", "Sarcastic",
-                              "Slogan", "Graphic", "Rude", "Cheeky"]
-GARMENT  = ["T-Shirt", "Tee", "T Shirt", "Tshirt"]
-AUDIENCE = ["Mens", "Men's", "Unisex", "Adults"]
-TAIL     = ["Tee", "Top", "Gift", "Present", "Gift Idea", ""]
+def norm(t): return " ".join(re.sub(r"[^a-z0-9 ]", " ", t.lower()).split())
+taken = set()
 
+def wsp(s):  return [w for w in re.split(r"\s+", (s or "").strip()) if w]
+def key(w):  return re.sub(r"[^a-z0-9]", "", w.lower())
+def tc(s):   return [w.capitalize() for w in wsp(s)]
 
-def dedupe_words(s):
-    """The source title often already contains Funny or Tee, so the shapes
-    doubled them: "Funny T-Shirt Mens Funny", "... Tee Tee". Keep the first
-    occurrence of each word, drop later ones."""
-    out, seen = [], set()
-    for w in s.split():
-        k = re.sub(r"[^a-z0-9]", "", w.lower())
-        if k and k in seen:
+def make_title(slog, niche, mids, extra, taken):
+    """Full slogan first, clean. Extra words are added ONLY to break a clash.
+
+    A title that is already unique stays as the printed wording plus garment
+    keywords and nothing else. Only where another listing already holds that
+    exact title does a distinguishing noun get appended, and the fewest
+    possible - so the clutter lands on the duplicates, not on everything.
+    """
+    def build(sl, nm, tail, ne=0):
+        return " ".join(sl + ["T-Shirt", "Mens"] + extra[:ne] + mids[:nm]
+                        + (tail.split() if tail else []))
+    # pass 1: clean, no extras
+    for nm in range(len(mids), -1, -1):
+        for tail in ("Tee Top", "Tee", "Top", ""):
+            t = build(slog, nm, tail)
+            if len(t) <= LIMIT and norm(t) not in taken:
+                return t
+    # pass 2: add the fewest distinguishing nouns that make it unique
+    for ne in range(1, len(extra) + 1):
+        for nm in range(len(mids), -1, -1):
+            for tail in ("Tee Top", "Tee", "Top", ""):
+                t = build(slog, nm, tail, ne)
+                if len(t) <= LIMIT and norm(t) not in taken:
+                    return t
+    # pass 3: whatever fits, unique or not
+    for nm in range(len(mids), -1, -1):
+        for tail in ("Tee Top", "Tee", "Top", ""):
+            t = build(slog, nm, tail)
+            if len(t) <= LIMIT:
+                return t
+    for n in range(len(slog) - 1, 0, -1):
+        sl = slog[:n]
+        while sl and key(sl[-1]) in FUNC:
+            sl.pop()
+        if not sl:
             continue
-        if k: seen.add(k)
-        out.append(w)
-    return " ".join(out)
+        if niche and key(niche) not in {key(x) for x in sl}:
+            sl = sl + [niche.capitalize()]
+        for nm in range(len(mids), -1, -1):
+            for tail in ("Tee Top", "Tee", "Top", ""):
+                t = build(sl, nm, tail)
+                if len(t) <= LIMIT:
+                    return t
+    return None
 
+def design_block(s, slogan):
+    style  = STYLE.get(s.get("style", ""), "Original artwork")
+    layout = LAYOUT.get(s.get("layout", ""), "a centred layout")
+    pal    = (s.get("palette", "") or "").replace("-", " ").strip()
+    out = ["<h3>This design</h3><p>Printed wording: <b>&ldquo;"
+           + html.escape(slogan) + "&rdquo;</b>.</p><p>" + style + ", " + layout]
+    if pal:
+        out.append(f' in a <b>{html.escape(pal)}</b> colourway')
+    out.append(".")
+    illus = (s.get("illustration", "") or "").strip()
+    if illus:
+        out.append(" Illustration: " + html.escape(illus) + ".")
+    # the describing keywords that used to clutter the title live here now
+    kws, seen = [], set()
+    for f in ("niche", "subject"):
+        for w in wsp(s.get(f, "").replace("-", " ")):
+            k = key(w)
+            if k and len(k) > 2 and k not in seen and k not in FUNC:
+                seen.add(k); kws.append(w.capitalize())
+    if kws:
+        out.append(" Theme: " + html.escape(", ".join(kws[:8])) + ".")
+    out.append(" Printed for this listing only &mdash; each of our designs is "
+               "drawn separately, so the artwork, wording and colours differ "
+               "from listing to listing.</p>")
+    return "".join(out)
 
-def build_title(row, i):
-    """Nine shapes, rotated by index so neighbours differ."""
-    theme0, _ = themes.theme_of(row["original_title"], row.get("slogan", ""))
-    subj = titles.subject_words(row["original_title"])
-    if theme0 in SENSITIVE:
-        # the source title sometimes carries "Funny" itself; it must not ride
-        # along onto a memorial, a scripture or an awareness design
-        subj = [w for w in subj if w.lower() not in
-                {"funny", "novelty", "humour", "humor", "joke", "rude", "sarcastic", "cheeky"}]
-    subj = subj[:9]
-    if len(subj) < 2:
-        return None
-    core = " ".join(subj[:6])
-    extra = " ".join(subj[6:9])
-    # the theme decides the keywords, so Funny only goes on shirts that are
-    # funny. A memorial or a scripture design gets its own buyers' words.
-    theme, kw = themes.theme_of(row["original_title"], row.get("slogan", ""))
-    m = kw if theme != "humour" else MODIFIER[i % len(MODIFIER)]
-    row["theme"] = theme
-    g = GARMENT[(i // 3) % len(GARMENT)]
-    a = AUDIENCE[(i // 5) % len(AUDIENCE)]
-    t = TAIL[(i // 7) % len(TAIL)]
-    # the subject and the search keywords always survive; garment, audience
-    # and the tail are what gets dropped when the 80 chars run out
-    shapes = [
-        f"{core} {m} {g} {a} {extra} {t}",
-        f"{m} {core} {g} {a} {extra} {t}",
-        f"{core} {m} {a} {g} {extra} {t}",
-        f"{core} {m} {g} {t} {a} {extra}",
-        f"{m} {core} {a} {g} {t} {extra}",
-        f"{core} {m} {extra} {g} {a} {t}",
-        f"{core} {m} {g} {a} {t} {extra}",
-        f"{m} {g} {core} {a} {extra} {t}",
-        f"{core} {extra} {m} {g} {a} {t}",
-    ]
-    s = dedupe_words(re.sub(r"\s{2,}", " ", shapes[i % len(shapes)]).strip())
-    # pack out to eBay's 80 characters with terms relevant to this theme
-    seen = {re.sub(r"[^a-z0-9]", "", w.lower()) for w in s.split()}
-    for w in themes.extra_terms(theme0):
-        k = re.sub(r"[^a-z0-9]", "", w.lower())
-        if k in seen or len(s) + 1 + len(w) > 80:
-            continue
-        seen.add(k); s += " " + w
-    if len(s) > 80:
-        s = dedupe_words(re.sub(r"\s{2,}", " ",
-                shapes[i % len(shapes)].replace(extra, "")).strip())
-    if len(s) > 80:
-        s = s[:80].rsplit(" ", 1)[0]
-    return s
+src = {}
+for r in csv.DictReader(open("v7.csv", newline="", encoding="utf-8")):
+    if r["slogan"]:
+        src[f"WLT-{int(r['source_idx']):06d}"] = r
 
+hdr = open(SRC, newline="", encoding="utf-8").readline().rstrip("\r\n").split(",")
+I = {n: i for i, n in enumerate(hdr)}
+SPEC = [i for n, i in I.items() if n.startswith("C:") and n != "C:Size"]
+H2 = re.compile(r"(<h2[^>]*>)(.*?)(</h2>)", re.S)
 
-def interleave(rows):
-    """Round-robin across subjects so no two neighbours share a niche."""
-    buckets = defaultdict(list)
-    for r in rows:
-        buckets[r.get("subject") or r.get("niche") or "?"].append(r)
-    for b in buckets.values():
-        RNG.shuffle(b)
-    order = list(buckets)
-    RNG.shuffle(order)
-    out, live = [], [buckets[k] for k in order]
-    while live:
-        nxt = []
-        for b in live:
-            out.append(b.pop())
-            if b:
-                nxt.append(b)
-        RNG.shuffle(nxt)
-        live = nxt
-    return out
+parents = variations = nosrc = notitle = 0
+titles = {}
+cur = None
+with open(SRC, newline="", encoding="utf-8") as f, \
+     open(TMP, "w", newline="", encoding="utf-8") as o:
+    r = csv.reader(f); w = csv.writer(o, lineterminator="\r\n")
+    next(r); w.writerow(hdr)
+    skip = False
+    for row in r:
+        if (row[I["Relationship"]] or "").strip() == "Variation":
+            if skip:
+                continue
+            new = OLD2NEW.get((row[I["C:Size"]] or "").strip(), row[I["C:Size"]])
+            row[0] = ""; row[I["CustomLabel"]] = ""
+            row[I["*Category"]] = cur[I["*Category"]]
+            row[I["*Title"]] = cur[I["*Title"]]
+            row[I["*ConditionID"]] = cur[I["*ConditionID"]]
+            row[I["Relationship"]] = "Variation"
+            row[I["RelationshipDetails"]] = f"Size={new}"
+            row[I["C:Size"]] = new
+            row[I["*Location"]] = ""
+            row[I["*StartPrice"]] = PRICE
+            row[I["*Quantity"]] = QTY
+            for i in SPEC:
+                row[i] = cur[i]
+            variations += 1
+            w.writerow(row); continue
 
+        sku = row[I["CustomLabel"]].strip()
+        s = src.get(sku)
+        if s is None:
+            skip = True; nosrc += 1; continue
+        slogan = s["slogan"]
+        th = s.get("theme", "")
+        mids = ["Funny"] if th in FUNNY else []
+        tw = THEME.get(th)
+        if tw and tw not in mids:
+            mids.append(tw)
+        have = {key(x) for x in tc(slogan)}
+        extra, eseen = [], set()
+        for fld in ("niche", "subject", "illustration"):
+            for ww in wsp(s.get(fld, "").replace("-", " ")):
+                k = key(ww)
+                if k and len(k) > 2 and k not in have and k not in eseen and k not in FUNC:
+                    eseen.add(k); extra.append(ww.capitalize())
+        t = make_title(tc(slogan), s.get("niche", ""), mids, extra, taken)
+        if t:
+            taken.add(norm(t))
+        if not t:
+            skip = True; notitle += 1; continue
+        skip = False
+        titles[sku] = t
+        row[I["*Title"]] = t
+        row[I["RelationshipDetails"]] = SETSTR
+        row[I["C:Size"]] = ""
+        row[I["*Location"]] = LOCATION
+        row[I["ShippingProfileName"]] = SHIP
+        d = H2.sub(lambda m: m.group(1) + html.escape(t, quote=True) + m.group(3),
+                   row[I["*Description"]], count=1)
+        if ANCHOR in d:
+            d = d.replace(ANCHOR, ANCHOR + design_block(s, slogan), 1)
+        row[I["*Description"]] = d
+        cur = row
+        parents += 1
+        w.writerow(row)
+os.replace(TMP, SRC)
 
-def main():
-    rows = list(csv.DictReader(open("REPLICA_V6.csv")))
-    print(f"{len(rows):,} distinct designs in")
-    rows = interleave(rows)
-    kept, seen, excluded = [], set(), 0
-    for i, r in enumerate(rows):
-        if EXCLUDE.search(f"{r['original_title']} {r.get('slogan','')}"):
-            excluded += 1
-            continue
-        t = build_title(r, i)
-        if not t or t.lower() in seen:
-            continue
-        seen.add(t.lower())
-        r["new_title"] = t
-        kept.append(r)
-    fields = list(rows[0].keys()) + (["theme"] if "theme" not in rows[0] else [])
-    with open("FINAL_V7.csv", "w", newline="", encoding="utf-8") as fh:
-        w = csv.DictWriter(fh, fieldnames=fields)
-        w.writeheader()
-        for r in kept: w.writerow({k: r.get(k, "") for k in fields})
-
-    from collections import Counter
-    n = len(kept)
-    print(f"{n:,} listings out")
-    print(f"excluded on content: {excluded:,} (slurs, anti-religion, drugs)")
-    print(f"distinct titles  {len(set(r['new_title'] for r in kept)):,}")
-    from collections import Counter
-    fy = sum(1 for r in kept if "funny" in r["new_title"].lower())
-    print(f"titles with Funny {fy:,} ({100*fy/n:.0f}%) - was 100%")
-    th = Counter(r.get("theme","?") for r in kept)
-    print("themes:", ", ".join(f"{k} {v:,}" for k,v in th.most_common(8)))
-    bad = sum(1 for r in kept if r.get("theme") in ("faith","memorial","awareness","veteran")
-              and "funny" in r["new_title"].lower())
-    print(f"sensitive themes carrying 'Funny': {bad}")
-    print(f"max title length {max(len(r['new_title']) for r in kept)}")
-    nb = sum(1 for a, b in zip(kept, kept[1:])
-             if (a.get('subject') or '') == (b.get('subject') or ''))
-    print(f"neighbouring rows sharing a subject: {nb} ({100*nb/n:.2f}%)")
-    print("\nfirst 8 titles, to show the spread:")
-    for r in kept[:8]: print("  ", r["new_title"])
-
-
-main()
+ts = list(titles.values())
+print(f"listings {parents:,} | variations {variations:,}")
+print(f"no source row {nosrc} | no title buildable {notitle}")
+print(f"distinct titles {len(set(ts)):,} | EXACT duplicates {len(ts)-len(set(ts)):,}")
+print(f"normalised duplicates {len(ts)-len(set(norm(t) for t in ts)):,}")
+L = [len(t) for t in ts]
+print(f"length min {min(L)} mean {sum(L)/len(L):.1f} max {max(L)}")
+full = sum(1 for sku, t in titles.items() if norm(t).startswith(norm(src[sku]['slogan'])))
+print(f"opens with the COMPLETE printed slogan: {full:,} ({100*full/len(ts):.1f}%)")
+json.dump(titles, open("final_titles.json", "w"))
