@@ -856,11 +856,11 @@ Subdivision structure is by county, with counts:
 | Worcestershire | 3 |
 | See also | 8 |
 
-Sample (Cumbria, 28): 
-{| class="wikitable sortable" width="100%"; Ambleside Roman Fort; Bow Bridge; Brough Castle; Brougham Castle; Carlisle Castle; Castlerigg Stone Circle; Clifton Hall; Countess Pillar; Furness Abbey; Banks East Turret; Birdoswald Roman Fort; Hadrian's Wall: Hare Hill; Harrows Scar Milecastle; Poltross Burn Milecastle; Leahill Turret; Pike Hill Signal Tower; Turrets; Hardknott Roman Fort; King Arthur's Round Table; Lanercost Priory; Mayburgh Henge; Penrith Castle; Piel Castle; Ravenglass Roman Bath House; Shap Abbey; Stott Park Bobbin Mill; Wetheral Priory Gatehouse
+Sample (Cumbria, 27 after removing a parser artefact): 
+Ambleside Roman Fort; Bow Bridge; Brough Castle; Brougham Castle; Carlisle Castle; Castlerigg Stone Circle; Clifton Hall; Countess Pillar; Furness Abbey; Banks East Turret; Birdoswald Roman Fort; Hadrian's Wall: Hare Hill; Harrows Scar Milecastle; Poltross Burn Milecastle; Leahill Turret; Pike Hill Signal Tower; Turrets; Hardknott Roman Fort; King Arthur's Round Table; Lanercost Priory; Mayburgh Henge; Penrith Castle; Piel Castle; Ravenglass Roman Bath House; Shap Abbey; Stott Park Bobbin Mill; Wetheral Priory Gatehouse
 
-Sample (Cornwall, 18): 
-{| class="wikitable sortable" width="100%"; Ballowall Barrow; Carn Euny Ancient Village; Chysauster Ancient Village; Dupath Well; Halliggye Fogou; Hurlers Stone Circles; King Doniert's Stone; Launceston Castle; Pendennis Castle; Penhallam; Restormel Castle; St Breock Downs Monolith; St Catherine's Castle; St Mawes Castle; Tintagel Castle; Tregiffian Burial Chamber; Trethevy Quoit
+Sample (Cornwall, 17 after removing a parser artefact): 
+Ballowall Barrow; Carn Euny Ancient Village; Chysauster Ancient Village; Dupath Well; Halliggye Fogou; Hurlers Stone Circles; King Doniert's Stone; Launceston Castle; Pendennis Castle; Penhallam; Restormel Castle; St Breock Downs Monolith; St Catherine's Castle; St Mawes Castle; Tintagel Castle; Tregiffian Burial Chamber; Trethevy Quoit
 
 **Stone circles — 341 named across the UK**: England 145, Scotland 87, Wales 90, Northern Ireland 19. — [List of stone circles](https://en.wikipedia.org/wiki/List_of_stone_circles)
 
@@ -893,6 +893,46 @@ South West incl. Cornwall, Devon, Dorset, Somerset, Wiltshire) and Scotland by c
 - **Famous pubs and inns: no authoritative list exists** that I could find, and I did not assemble one.
   CAMRA's National Inventory of Historic Pub Interiors (pubheritage.camra.org.uk) is the nearest thing to
   an authoritative register and would be the source to use.
+
+## Q10 — Railways
+
+### Takeaway
+
+The Underground is complete (269 stations). Mainline stations, heritage railways and named
+express services were not harvested — this is the weakest block in the gazetteer.
+
+### Cited Findings
+
+**London Underground stations — 269** — [List of London Underground stations](https://en.wikipedia.org/wiki/List_of_London_Underground_stations). Full list given in Q3.
+
+**Bridges and viaducts in England — 436 named**, with the source subdividing England into Greater London and Rest of England, plus separate England–Wales Border, Anglo-Scottish Border, Scotland (Glasgow / Rest of Scotland), Northern Ireland, Wales and Isle of Man sections. — [List of bridges in England](https://en.wikipedia.org/wiki/List_of_bridges_in_England)
+
+First 60 of 436: Albert Bridge; Battersea Bridge; Blackfriars Bridge; Chelsea Bridge; Chiswick Bridge; Golden Jubilee Bridges; Hungerford Railway Bridge; Hammersmith Bridge; Hampton Court Bridge; Kew Bridge; Lambeth Bridge; London Bridge; London Millennium Bridge; Putney Bridge; Richmond Bridge; Royal Victoria Dock Bridge; Southwark Bridge; Tower Bridge; Twickenham Bridge; Vauxhall Bridge; Wandsworth Bridge; Waterloo Bridge; Westminster Bridge; A34 Road Bridge; A419 Road Bridge; Abingdon Bridge; Acton Bridge; Albert Bridge, Datchet; Albert Bridge, Manchester; Aldford Iron Bridge; Avonmouth Bridge; Bakewell Bridge; Baslow Bridge; Barle Bridge; Barnstaple Long Bridge; Barton Road Swing Bridge; Bathampton Toll Bridge; Beckfoot Bridge; Beggar's Bridge; Bethells Bridge; Bewdley Bridge; Bideford Long Bridge; Black Boys Bridge; Blakeborough's Bridge; Blaydon Bridge; Boothferry Bridge; Blue Bridge; Botley Bridge; Bow Bridge, Iwood; Bow Bridge, Plox; Bradford Bridge; Breydon Bridge; Bridge of Sighs; Brighouse Bridge; Bristol Bridge; Bromford Viaduct; Broughton Suspension Bridge; Bulstake Bridge; Burghfield Bridge; Bury Bridge
+
+**Hill figures — 22 in the UK**, extracted from the source's body text and gallery:
+Uffington White Horse; Cerne Abbas Giant; Long Man of Wilmington; Westbury White Horse; Cherhill White
+Horse; Marlborough White Horse; Alton Barnes White Horse; Hackpen White Horse; Broad Town White Horse;
+Pewsey White Horse; Devizes White Horse; Osmington White Horse; Litlington White Horse; Kilburn White
+Horse; Folkestone White Horse; Cleadon White Horse; Woolbury White Horse; Mormond White Horse (Scotland);
+Red Horse of Tysoe; Bulford Kiwi; Lenham Cross; Whiteleaf Cross. — [Hill figure](https://en.wikipedia.org/wiki/Hill_figure)
+
+### Gaps
+
+- **Mainline stations: not harvested.** There are about 2,570 National Rail stations. Office of Rail and
+  Road (dataportal.orr.gov.uk) publishes the definitive station list with annual footfall, which is the
+  better source anyway because footfall ranks them by likely demand. **UNVERIFIED count.**
+- **Heritage and steam railways: no list obtained.** The Wikipedia 'Heritage railway' article is global
+  and has no United Kingdom section to extract; 'List of British heritage railways' does not exist under
+  that title. The Heritage Railway Association (hra.uk.com) is the trade body and lists its ~150 members —
+  that is the source to use. **UNVERIFIED count.** Known subjects: Severn Valley, North Yorkshire Moors,
+  Ffestiniog, Talyllyn, Bluebell, West Somerset, Settle–Carlisle (mainline), Jacobite, Snowdon Mountain,
+  Keighley & Worth Valley, Romney Hythe & Dymchurch, Welsh Highland, Llangollen, Great Central — all
+  **UNVERIFIED** general knowledge.
+- **Named express services: not harvested.** Flying Scotsman, Mallard, Royal Scot, Cornish Riviera,
+  Golden Arrow, Brighton Belle, Night Riviera, Caledonian Sleeper — **UNVERIFIED.** Several of these are
+  live registered trademarks or belong to operating companies: see the risk register.
+- **Underground line names were not extracted**, only stations. TfL's own data (tfl.gov.uk/info-for/open-data-users)
+  is authoritative and free, but the roundel and the map design are TfL IP.
 
 ## Q11 — Rivers and canals
 
@@ -937,46 +977,6 @@ Combe Hay Caisson Lock; Hay Inclined Plane. — [Canals of the United Kingdom](h
   flights — Caen Hill, Bingley Five Rise, Foxton, Hatton, Devizes, Neptune's Staircase — are
   **UNVERIFIED.** Canal & River Trust (canalrivertrust.org.uk) is the authoritative operator source.
 - No Northern Ireland river list was harvested.
-
-## Q10 — Railways
-
-### Takeaway
-
-The Underground is complete (269 stations). Mainline stations, heritage railways and named
-express services were not harvested — this is the weakest block in the gazetteer.
-
-### Cited Findings
-
-**London Underground stations — 269** — [List of London Underground stations](https://en.wikipedia.org/wiki/List_of_London_Underground_stations). Full list given in Q3.
-
-**Bridges and viaducts in England — 436 named**, with the source subdividing England into Greater London and Rest of England, plus separate England–Wales Border, Anglo-Scottish Border, Scotland (Glasgow / Rest of Scotland), Northern Ireland, Wales and Isle of Man sections. — [List of bridges in England](https://en.wikipedia.org/wiki/List_of_bridges_in_England)
-
-First 60 of 436: Albert Bridge; Battersea Bridge; Blackfriars Bridge; Chelsea Bridge; Chiswick Bridge; Golden Jubilee Bridges; Hungerford Railway Bridge; Hammersmith Bridge; Hampton Court Bridge; Kew Bridge; Lambeth Bridge; London Bridge; London Millennium Bridge; Putney Bridge; Richmond Bridge; Royal Victoria Dock Bridge; Southwark Bridge; Tower Bridge; Twickenham Bridge; Vauxhall Bridge; Wandsworth Bridge; Waterloo Bridge; Westminster Bridge; A34 Road Bridge; A419 Road Bridge; Abingdon Bridge; Acton Bridge; Albert Bridge, Datchet; Albert Bridge, Manchester; Aldford Iron Bridge; Avonmouth Bridge; Bakewell Bridge; Baslow Bridge; Barle Bridge; Barnstaple Long Bridge; Barton Road Swing Bridge; Bathampton Toll Bridge; Beckfoot Bridge; Beggar's Bridge; Bethells Bridge; Bewdley Bridge; Bideford Long Bridge; Black Boys Bridge; Blakeborough's Bridge; Blaydon Bridge; Boothferry Bridge; Blue Bridge; Botley Bridge; Bow Bridge, Iwood; Bow Bridge, Plox; Bradford Bridge; Breydon Bridge; Bridge of Sighs; Brighouse Bridge; Bristol Bridge; Bromford Viaduct; Broughton Suspension Bridge; Bulstake Bridge; Burghfield Bridge; Bury Bridge
-
-**Hill figures — 22 in the UK**, extracted from the source's body text and gallery:
-Uffington White Horse; Cerne Abbas Giant; Long Man of Wilmington; Westbury White Horse; Cherhill White
-Horse; Marlborough White Horse; Alton Barnes White Horse; Hackpen White Horse; Broad Town White Horse;
-Pewsey White Horse; Devizes White Horse; Osmington White Horse; Litlington White Horse; Kilburn White
-Horse; Folkestone White Horse; Cleadon White Horse; Woolbury White Horse; Mormond White Horse (Scotland);
-Red Horse of Tysoe; Bulford Kiwi; Lenham Cross; Whiteleaf Cross. — [Hill figure](https://en.wikipedia.org/wiki/Hill_figure)
-
-### Gaps
-
-- **Mainline stations: not harvested.** There are about 2,570 National Rail stations. Office of Rail and
-  Road (dataportal.orr.gov.uk) publishes the definitive station list with annual footfall, which is the
-  better source anyway because footfall ranks them by likely demand. **UNVERIFIED count.**
-- **Heritage and steam railways: no list obtained.** The Wikipedia 'Heritage railway' article is global
-  and has no United Kingdom section to extract; 'List of British heritage railways' does not exist under
-  that title. The Heritage Railway Association (hra.uk.com) is the trade body and lists its ~150 members —
-  that is the source to use. **UNVERIFIED count.** Known subjects: Severn Valley, North Yorkshire Moors,
-  Ffestiniog, Talyllyn, Bluebell, West Somerset, Settle–Carlisle (mainline), Jacobite, Snowdon Mountain,
-  Keighley & Worth Valley, Romney Hythe & Dymchurch, Welsh Highland, Llangollen, Great Central — all
-  **UNVERIFIED** general knowledge.
-- **Named express services: not harvested.** Flying Scotsman, Mallard, Royal Scot, Cornish Riviera,
-  Golden Arrow, Brighton Belle, Night Riviera, Caledonian Sleeper — **UNVERIFIED.** Several of these are
-  live registered trademarks or belong to operating companies: see the risk register.
-- **Underground line names were not extracted**, only stations. TfL's own data (tfl.gov.uk/info-for/open-data-users)
-  is authoritative and free, but the roundel and the map design are TfL IP.
 
 ## Q12 — Football grounds (TRADEMARK-RISKY)
 
@@ -1186,3 +1186,174 @@ St John's; Trinity; Trinity Hall; Wolfson
   Cambridge both enforce actively, including on crests and on the words themselves in merchandising).
   College *buildings* and the cities are not. Generate 'Oxford' and recognisable architecture; do not
   generate university or college crests, mottoes, or 'University of X' lettering. Flagged in the risk register.
+
+## Q14 — Markets, arcades and streets that are landmarks
+
+### Takeaway
+
+**No list obtained, and I did not assemble one.** There is no authoritative register of landmark UK
+streets, markets or arcades. This is a genuine gap.
+
+### Gaps
+
+- The nearest authoritative sources are Historic England's National Heritage List for England (which lists
+  individual market halls and arcades as listed buildings, searchable by type) and the National Association
+  of British Market Authorities. Neither gives a ready 'landmark streets' list.
+- The brief's own examples — Portobello Road, The Shambles (York), the Royal Mile (Edinburgh), Princes
+  Street (Edinburgh) — plus Oxford Street, Carnaby Street, Abbey Road, Baker Street, Brick Lane, Bold
+  Street (Liverpool), The Lanes (Brighton), Grainger Market (Newcastle), Leadenhall Market, Borough Market,
+  Camden Market, Burlington Arcade, Royal Arcade, Barton Arcade (Manchester), Victoria Quarter (Leeds),
+  Gold Street / Steep Hill (Lincoln), Mermaid Street (Rye), Gandy Street (Exeter) and Victoria Street
+  (Edinburgh) are **UNVERIFIED** general knowledge, not an extracted list.
+- A practical substitute: the London areas list (558 names, Q3) already contains most of the London street
+  districts people actually search for, and the 454 English BUAs cover the host towns for the rest.
+  OS Open Names also contains every named road, so a filtered street gazetteer is achievable from data
+  rather than from a web page.
+
+## Q15 — Formats that place art takes, and which need lettering
+
+### Takeaway
+
+Place art splits cleanly into formats that are *diagrams carrying text* and formats that are *pictures*.
+The brief's own title evidence is dominated by the first kind, which is exactly the kind a diffusion model
+cannot render. Nine formats are drawable with no lettering at all; those are where generation should start.
+
+### Cited Findings
+
+Retailer and gallery category pages confirm the format set and add a few beyond the brief's list.
+Note plainly: these pages show what sellers *offer*, not what sells — none of them publish sales data.
+— [iCanvas, abstract maps category](https://www.icanvas.com/canvas-art-prints/style/abstract/subject/maps);
+[Art Heroes, city maps collection](https://www.artheroes.se/en/collection/city-maps/1367);
+[Walmart, metro maps category](https://www.walmart.com/c/kp/metro-maps);
+[Canvas Prints Australia, city street maps](https://www.canvasprintsaustralia.net.au/all-wall-art-categories/city-street-maps-art/)
+
+Formats found in the market beyond the brief's seven: **abstract / deconstructed maps** (city grid reduced
+to shape and colour), **typographic place-name designs** (the name *is* the artwork), **watercolour map
+washes**, **vintage vs modern treatments of the same map**, **map-plus-skyline layered compositions**,
+and **place-themed colour palettes** (subway-line colours, taxi yellow, bridge-steel blue for New York;
+cartographic blues and urban greys generally).
+
+### The format table
+
+| Format | Needs legible text? | Needs precise geometry? | Diffusion-safe? |
+|---|---|---|---|
+| Street map (accurate road network) | Yes — street names, place label | Yes — real topology | **No**. Fails twice over. |
+| Transit / metro / Tube map | Yes — every station name | Yes — exact line topology | **No**. Also TfL IP. |
+| Coordinates print | Yes — the numbers must be correct | No | **No**. Numerals are the product. |
+| Elevation profile | Yes — peak names and heights | Yes — real elevation data | **No**. |
+| "Established" date print | Yes — the date is the product | No | **No**. |
+| Typographic place-name design | Yes — the name is the artwork | No | **No**. |
+| Flag | No lettering (most UK flags) | Yes — exact proportions, charges | **Partly**. Vector, not diffusion. |
+| City skyline silhouette | Optional — often sold with name | Loose — recognisable massing only | **Yes**, if name is composited. |
+| Cityscape / painted view | No | No — impressionistic is fine | **Yes**. |
+| Abstract / deconstructed map | No | No — shape and colour only | **Yes**. |
+| Landscape / fell / coast scene | No | No | **Yes**. |
+| Landmark portrait (castle, cathedral, lighthouse, pier) | No | Loose | **Yes**. |
+| Botanical / wildlife of a place | No | No | **Yes**. |
+| Weather / sea-state mood piece | No | No | **Yes**. |
+| Aerial / bird's-eye painterly view | No | Loose | **Yes**. |
+| Vintage travel-poster pastiche | Yes — poster lettering is the genre | No | **No** as diffusion-only; yes if type is composited. |
+| Watercolour map wash | Borderline — often labelled | No | **Yes** if unlabelled. |
+| Map + skyline layered composition | Yes, in practice | Yes, for the map half | **No**. |
+
+### The lettering-free list — formats to generate first
+
+These nine need **no lettering at all** and no precise geometry, so a diffusion model can carry them
+end to end. Every one of them also maps onto the UK lists above:
+
+1. **Landscape / fell / moor / dale scene** — 214 Wainwrights, 282 Munros, 186 Welsh Nuttalls, 15 National Parks, 46 National Landscapes.
+2. **Coast and seascape** — 541 SWCP place names, 59 piers, 65 Trinity House lighthouses.
+3. **Landmark portrait** — 42 CoE cathedrals, 212 UK cathedrals, 260 Welsh castles, 446 English Heritage and 302 HES properties.
+4. **Abstract / deconstructed map** — any of the 76 cities or 454 English BUAs; shape and colour only, no labels.
+5. **City skyline silhouette, unlabelled** — 76 cities; composite the place name as vector type afterwards.
+6. **Cityscape / painted street view** — 558 London districts, 76 cities.
+7. **Water scene** — 1,013 Scottish lochs, 32 Lake District lakes, 1,205 named rivers, 195 canals.
+8. **Island and archipelago scene** — 244 named Scottish islands.
+9. **Standing stones, hill figures and ancient monuments** — 345 stone circles, 22 hill figures.
+
+### Inferences
+
+- The brief's own title counts measure the formats that *need* text: map 20,180, transit map, coordinates,
+  elevation, 'established' dates. That is a warning, not a target. Competitors winning on those titles are
+  almost certainly using vector or real cartographic data, not diffusion.
+- The right architecture is **hybrid**: diffusion generates the pictorial plate, and the place name, date,
+  coordinates or station labels are composited on afterwards as real vector type. That converts every
+  text-needing format in the table from 'No' to 'Yes' at the cost of a compositing step, and it is the only
+  way to compete on the high-volume map and coordinate keywords.
+- FLUX.1 schnell (the Apache-2.0 model this project is committed to) is weaker at text than larger models,
+  which strengthens the case for compositing rather than prompting text.
+
+### Gaps
+
+- **No sales data was found for any format.** Every source located is a retailer category page showing
+  what is offered. The brief's own 874,816-title competitor dataset is better evidence than anything on the
+  open web, and should be the basis for format weighting.
+
+## Risk register — trademark, royal insignia and living-person exposure
+
+### Takeaway
+
+Four blocks carry real risk. Everything else in this gazetteer is place names and landforms, which are not
+protectable as such.
+
+### Risk table
+
+| Block | Count | Risk type | Verdict |
+|---|---|---|---|
+| English football stadiums and clubs | 135 | Registered trade marks: club names, crests, kit colours. Stadium names often *sponsor* marks (Emirates, Etihad, Vitality, bet365, Amex) stacking a second rights-holder. eBay VeRO makes takedown cheap for them. | **EXCLUDE** from first catalogue. |
+| London Underground: roundel, Johnston typeface, Tube map diagram | 11 lines / 269 stations | TfL registered marks and design rights. The roundel and the map diagram are both protected. | **EXCLUDE** transit-map and roundel formats. Station *place names* alone are fine. |
+| Royal residences | ~8 | Royal insignia and the Lord Chamberlain's rules on royal arms/cyphers. Buckingham Palace, Windsor Castle, Balmoral, Sandringham, Holyroodhouse, Hillsborough, Highgrove, Clarence House. Depicting the building is generally fine; royal arms, cyphers, crowns and 'By Appointment' marks are not. | **ALLOW building, EXCLUDE insignia.** No crowns, cyphers or royal arms. |
+| University and college names and crests | 114 universities / 43 Oxford / 31 Cambridge | Oxford and Cambridge both enforce their word marks and crests in merchandising. Most UK universities hold registered marks. | **ALLOW city and architecture, EXCLUDE** crests, mottoes and 'University of X' lettering. |
+| Named express train services | ~8 known | Flying Scotsman, Royal Scot, Caledonian Sleeper and others are live marks held by operators or the NRM. | **EXCLUDE** names; locomotive *forms* are likely fine. |
+| National Trust / English Heritage / Historic Environment Scotland / Cadw names and logos | 446 + 302 properties | The organisations' names and logos are marks. The *properties* are not — a castle is a castle. | **ALLOW property names, EXCLUDE** org names and logos. |
+| Whisky distillery names | 125 + 6 | Every operating distillery name is a registered trade mark, and the Scotch Whisky Association enforces aggressively. | **EXCLUDE distillery names. ALLOW** region names (Speyside, Islay, Highland) and place names. |
+| Blue Flag / Seaside Award | n/a | Certification marks. | **EXCLUDE** the marks. |
+| Living persons | n/a | No living-person exposure found anywhere in this gazetteer — it is entirely places, landforms and historic buildings. The one watch-item is royal *persons* as distinct from royal *residences*. | **LOW RISK**, but no portraits of living royals or any named living person. |
+
+### Inferences
+
+- Stripping the four EXCLUDE blocks removes roughly 135 football rows, the transit-map format, distillery
+  names and a handful of train names. It costs almost nothing against a gazetteer of several thousand
+  clean place names, and it removes essentially all of the account-level risk.
+- Near-duplication, not trademark, remains the main commercial risk flagged in this project's own
+  CLAUDE.md (89% near-duplication blamed for 424k unsold listings). The format table above is the lever:
+  nine lettering-free formats across, say, 1,400 named places gives 12,600 genuinely distinct
+  place-x-format pairs before any style variation, which is a far better duplication profile than one
+  format applied 1,400 times.
+
+### Gaps
+
+- **I did not search any trade mark register.** The risk assessments above are reasoning from how these
+  rights are normally held and enforced, not the result of IPO or EUIPO searches. Anything in the ALLOW
+  column should be confirmed against the UK IPO register (trademarks.ipo.gov.uk) before a large upload.
+- I did not check eBay's VeRO participant list, which names the rights-holders who actively issue
+  takedowns on the platform. That is a cheap, high-value check before the first upload.
+
+## Sources used
+
+**Primary / official:**
+- [ONS, Towns and cities: characteristics of built-up areas, England and Wales, Census 2021](https://www.ons.gov.uk/peoplepopulationandcommunity/housing/articles/townsandcitiescharacteristicsofbuiltupareasenglandandwales/census2021) — 7,018 BUAs, size bands, coastal subset
+- [Trinity House, Lighthouses and Lightvessels](https://www.trinityhouse.co.uk/lighthouses-and-lightvessels) — 65 lighthouses, 7 lightvessels
+- [Church of England, Cathedrals](https://www.churchofengland.org/about/cathedrals) — 42 cathedrals
+
+**Wikipedia list articles that mirror an official or canonical list** (named here so each can be traced):
+- [List of cities in the United Kingdom](https://en.wikipedia.org/wiki/List_of_cities_in_the_United_Kingdom) — mirrors the UK Government's official city list
+- [List of built-up areas in England by population](https://en.wikipedia.org/wiki/List_of_built-up_areas_in_England_by_population) — built on ONS BUA data
+- [Ceremonial counties of England](https://en.wikipedia.org/wiki/Ceremonial_counties_of_England) — statutory lieutenancy areas
+- [Subdivisions of Scotland](https://en.wikipedia.org/wiki/Subdivisions_of_Scotland) · [Principal areas of Wales](https://en.wikipedia.org/wiki/Principal_areas_of_Wales) · [Counties of Northern Ireland](https://en.wikipedia.org/wiki/Counties_of_Northern_Ireland)
+- [National parks of the United Kingdom](https://en.wikipedia.org/wiki/National_parks_of_the_United_Kingdom) · [National Landscape](https://en.wikipedia.org/wiki/National_Landscape)
+- [List of Wainwrights](https://en.wikipedia.org/wiki/List_of_Wainwrights) · [List of Munros](https://en.wikipedia.org/wiki/List_of_Munros) · [List of mountains in Wales](https://en.wikipedia.org/wiki/List_of_mountains_in_Wales) · [Welsh 3000s](https://en.wikipedia.org/wiki/Welsh_3000s) — all sourced from the Database of British and Irish Hills
+- [List of London boroughs](https://en.wikipedia.org/wiki/List_of_London_boroughs) · [List of areas of London](https://en.wikipedia.org/wiki/List_of_areas_of_London) · [London postal district](https://en.wikipedia.org/wiki/London_postal_district) · [List of London Underground stations](https://en.wikipedia.org/wiki/List_of_London_Underground_stations)
+- [List of islands of Scotland](https://en.wikipedia.org/wiki/List_of_islands_of_Scotland) · [List of lochs of Scotland](https://en.wikipedia.org/wiki/List_of_lochs_of_Scotland) · [List of whisky distilleries in Scotland](https://en.wikipedia.org/wiki/List_of_whisky_distilleries_in_Scotland) · [List of Historic Scotland properties](https://en.wikipedia.org/wiki/List_of_Historic_Scotland_properties)
+- [List of castles in Wales](https://en.wikipedia.org/wiki/List_of_castles_in_Wales) · [List of towns in Wales](https://en.wikipedia.org/wiki/List_of_towns_in_Wales) · [List of towns in Scotland](https://en.wikipedia.org/wiki/List_of_towns_in_Scotland)
+- [List of cathedrals in the United Kingdom](https://en.wikipedia.org/wiki/List_of_cathedrals_in_the_United_Kingdom) · [List of English Heritage properties](https://en.wikipedia.org/wiki/List_of_English_Heritage_properties) · [List of stone circles](https://en.wikipedia.org/wiki/List_of_stone_circles) · [Hill figure](https://en.wikipedia.org/wiki/Hill_figure)
+- [List of lighthouses in England](https://en.wikipedia.org/wiki/List_of_lighthouses_in_England) · [List of piers in the United Kingdom](https://en.wikipedia.org/wiki/List_of_piers_in_the_United_Kingdom) · [South West Coast Path](https://en.wikipedia.org/wiki/South_West_Coast_Path)
+- [List of rivers of England](https://en.wikipedia.org/wiki/List_of_rivers_of_England) · [List of rivers of Scotland](https://en.wikipedia.org/wiki/List_of_rivers_of_Scotland) · [List of rivers of Wales](https://en.wikipedia.org/wiki/List_of_rivers_of_Wales) · [List of canals in the United Kingdom](https://en.wikipedia.org/wiki/List_of_canals_in_the_United_Kingdom) · [Canals of the United Kingdom](https://en.wikipedia.org/wiki/Canals_of_the_United_Kingdom)
+- [List of bridges in England](https://en.wikipedia.org/wiki/List_of_bridges_in_England) · [List of lakes of the Lake District](https://en.wikipedia.org/wiki/List_of_lakes_of_the_Lake_District)
+- [Colleges of the University of Oxford](https://en.wikipedia.org/wiki/Colleges_of_the_University_of_Oxford) · [Colleges of the University of Cambridge](https://en.wikipedia.org/wiki/Colleges_of_the_University_of_Cambridge) · [List of universities in the United Kingdom](https://en.wikipedia.org/wiki/List_of_universities_in_the_United_Kingdom) · [List of football stadiums in England](https://en.wikipedia.org/wiki/List_of_football_stadiums_in_England)
+
+**Sources to fetch next, for the gaps named above:** Ordnance Survey OS Open Names (beaches, bays, coves,
+headlands, glens, streets); ONS BUA 2024 dataset (the 1,395 towns above 5,000); Northern Lighthouse Board;
+National Piers Society; National Trust; Cadw; Heritage Railway Association; Office of Rail and Road station
+list; Historic England National Heritage List; NISRA settlement classification; CAMRA National Inventory;
+UK IPO trade mark register; eBay VeRO participant list.

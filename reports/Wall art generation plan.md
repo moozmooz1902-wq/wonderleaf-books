@@ -110,7 +110,7 @@ their images.
 
 | depth | designs | GPU cost at 4 s/image on a community RTX 4090 | SKUs at 15 listing variations |
 |---|---|---|---|
-| **Phase 1 — prove it** | 7,000 UK places × 3 treatments = **21,000** | **$8** | 315,000 |
+| **Phase 1 — prove it** | 5,900 lettering-free place atoms × 3 treatments = **17,700** | **$7** | 265,000 |
 | **Phase 2 — the UK catalogue** | 7,000 places × 15 treatments = **105,000**, plus 1,200 species × 10, 4,700 botanical × 8, 9,634 definitions × 3 = **134,000 more** | **$90** | 3.6M |
 | **Phase 3 — millions of designs** | 7,018 settlements + all other axes × 139 copyright-free treatments ≈ **1.0-1.4M designs** | **$380-530** | 15M+ |
 
@@ -122,12 +122,60 @@ SKUs without a duplicate problem.
 
 ---
 
+## 2b. Which place formats a diffusion model can actually carry
+
+The gazetteer research closed with a finding that sharpens Phase 1, and it cuts
+against the raw volume numbers. Place art splits into formats that are
+**diagrams carrying text** and formats that are **pictures**, and the
+high-volume ones are mostly the first kind:
+
+| format | needs legible text | needs real geometry | diffusion-safe |
+|---|---|---|---|
+| Street map (their biggest template, 22,689) | yes — street and place names | yes — real topology | **no, fails twice** |
+| Transit / Tube map | yes — every station | yes — exact topology | **no**, and TfL IP |
+| Coordinates print | yes — numbers are the product | no | **no** |
+| Elevation profile | yes — peak names, heights | yes — real data | **no** |
+| "Established {year}" print | yes — the date is the product | no | **no** |
+| Typographic place-name | yes — the name *is* the artwork | no | **no** |
+| Flag | no | yes — exact proportions | vector, not diffusion |
+| Vintage travel-poster pastiche | yes — lettering is the genre | no | only with composited type |
+| Skyline silhouette | optional | loose massing | **yes**, name composited |
+| Cityscape / painted view | no | no | **yes** |
+| Abstract / deconstructed map | no | no | **yes** |
+| Landscape, coast, water, island | no | no | **yes** |
+| Landmark portrait | no | loose | **yes** |
+
+So `{X} Map` — the single template they made most of — is the one we cannot
+generate as a picture. That is not a reason to skip it: it is a reason to build
+maps from real geodata with composited type, the way our typography renderer
+already works, rather than asking schnell to invent a road network.
+
+**Phase 1 should therefore be the nine lettering-free formats**, which need no
+text and no precise geometry, and which map straight onto the UK lists:
+
+1. **Fell, moor and dale scenes** — 214 Wainwrights, 282 Munros, 186 Welsh Nuttalls, 15 National Parks, 46 National Landscapes
+2. **Coast and seascape** — 541 South West Coast Path place names, 59 piers, 65 Trinity House lighthouses
+3. **Landmark portrait** — 212 UK cathedrals, 260 Welsh castles, 446 English Heritage, 302 Historic Scotland
+4. **Abstract / deconstructed map** — shape and colour only, no labels; any of 76 cities or 454 built-up areas
+5. **Unlabelled skyline silhouette** — 76 cities, name composited afterwards
+6. **Cityscape / painted street view** — 558 London districts, 76 cities
+7. **Water scenes** — 1,013 Scottish lochs, 32 Lakeland lakes, 1,205 rivers, 195 canals
+8. **Island and archipelago** — 244 named Scottish islands
+9. **Standing stones, hill figures, ancient monuments** — 345 stone circles, 22 hill figures
+
+That is roughly **5,900 place atoms** across nine formats that schnell can carry
+end to end with no lettering risk at all.
+
+---
+
 ## 3. What to generate — the ranked build order
 
-1. **`{UK place} in {treatment}`, pictorial, no lettering.** The direct answer
-   to the gap. Whitby in linocut, Alnwick in vintage travel poster, Islay in
-   cyanotype, Aviemore in woodblock. 7,000 × 15 = 105,000 designs that barely
-   exist anywhere.
+1. **`{UK place} in {treatment}`, in the nine lettering-free formats above.**
+   The direct answer to the gap. Whitby harbour in linocut, Alnwick castle in
+   woodblock, Islay in cyanotype, Aviemore in ink wash. ~5,900 safe place atoms
+   × 15 treatments = **88,500 designs** that barely exist anywhere. Vintage
+   travel-poster pastiche is kept, but with the lettering composited rather
+   than generated.
 2. **`A Window View Of {UK place} In The Style Of {movement}`** — their own
    template, which they ran to 20 world cities and three movements. We run it
    to 1,408 UK settlements and 20 public-domain movements. Fully pictorial, no
@@ -243,10 +291,10 @@ So your memory is right: **this is cheap.** A million designs is a few hundred
 dollars of GPU time. The constraint has never been money.
 
 **With the ~$3 currently in RunPod** we can generate roughly **7,000 designs**
-at the middle speed — which is almost exactly Phase 1's 7,000 UK places at one
-treatment each. That is a real, completable first batch, not a toy: it would
-put one print of every named UK place, hill, island, castle, lighthouse and
-cathedral into the catalogue. Top up to **$50** and Phase 2's full 239,000-design
+at the middle speed — enough to put one print of every one of the ~5,900
+lettering-free place atoms into the catalogue, with headroom. That is a real,
+completable first batch, not a toy: every named UK hill, island, loch, castle,
+lighthouse, pier, cathedral and stone circle, once each. Top up to **$50** and Phase 2's full 239,000-design
 UK catalogue is covered with change left over.
 
 ---
