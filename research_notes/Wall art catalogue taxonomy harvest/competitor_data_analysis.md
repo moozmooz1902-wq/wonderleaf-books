@@ -1,4 +1,12 @@
-# What 1,348,089 competitor listings actually contain
+# What 1,463,031 competitor listings actually contain
+
+> **Correction, same day.** The first version of this file reported 1,348,089
+> titles and a different ranking of subject blocks. My extractor flattened tabs
+> but not newlines, so titles containing a line break split into fragments and
+> corrupted the source attribution. Re-extracted through a proper CSV writer;
+> every figure below is from the corrected data. The subject ranking changed:
+> **Animals, not Botanical, is the largest block**, and place art is 3.64% not
+> 4.76%.
 
 Analysis of the three MEGA folders the seller supplied, 8 October 2026. These
 are eBay File Exchange exports the seller had already prepared from competitor
@@ -8,9 +16,15 @@ seller's own eBay suffix.
 | folder | what it is | files | titles extracted |
 |---|---|---|---|
 | `PBF1FRTZ` | Displate, "1.5 million art" | 15 CSV, 1.11 GB | **500,093** |
-| `LEdCnJQD` | "800k raw art files" (Fy!-sourced) | 12 CSV, 1.38 GB | **374,723** |
-| `jRFREaIB` | Fy! art prints 300k, **one file per collection** | 71 files, 0.49 GB | **473,273** |
-| | | | **1,348,089** |
+| `LEdCnJQD` | "800k raw art files" (Fy!-sourced) | 12 CSV, 1.38 GB | **665,026** |
+| `jRFREaIB` | Fy! art prints 300k, **one file per collection** | 71 files, 0.49 GB | **297,912** |
+| | | **92 files read** | **1,463,031** |
+
+Of those, **1,348,089 carry a usable subject phrase** once the seller's own
+`... Wall Art Poster Canvas Print Picture` suffix is stripped; the percentages
+below use that denominator. Four of the fifteen Displate files were lost to a
+race between two download runs and were re-fetched afterwards, so the Displate
+figure is a floor, not a ceiling.
 
 ---
 
@@ -39,30 +53,31 @@ can match more than one, so these do not sum to 100%.
 
 | block | listings | share |
 |---|---|---|
-| Botanical (flowers, leaves, trees, forest) | 69,371 | **7.93%** |
-| Animals | 62,417 | **7.13%** |
-| Landscape and nature | 61,081 | **6.98%** |
-| Abstract and geometric | 49,462 | **5.65%** |
-| **Place - map, city, skyline, flag** | 41,677 | **4.76%** |
-| People, portrait, fashion | 40,940 | 4.68% |
-| Typography and quotes | 34,447 | 3.94% |
-| Celestial | 15,124 | 1.73% |
-| Vintage and retro | 12,212 | 1.40% |
-| Vehicles | 11,863 | 1.36% |
-| Food and drink | 10,702 | 1.22% |
-| Sport | 8,106 | 0.93% |
-| Music | 5,328 | 0.61% |
-| Nursery and kids | 5,278 | 0.60% |
-| Religion and spiritual | 5,068 | 0.58% |
-| Film, TV and gaming | 3,923 | 0.45% |
+| **Animals** | 153,745 | **11.40%** |
+| **Botanical** (flowers, leaves, trees, forest) | 142,413 | **10.56%** |
+| **Abstract and geometric** | 122,958 | **9.12%** |
+| Landscape and nature | 93,024 | 6.90% |
+| People, portrait, fashion | 55,064 | 4.08% |
+| **Place - map, city, skyline, flag** | 49,058 | **3.64%** |
+| Vintage and retro | 41,191 | 3.06% |
+| Typography and quotes | 35,946 | 2.67% |
+| Celestial | 20,818 | 1.54% |
+| Food and drink | 20,584 | 1.53% |
+| Nursery and kids | 19,981 | 1.48% |
+| Vehicles | 14,952 | 1.11% |
+| Sport | 10,926 | 0.81% |
+| Music | 6,197 | 0.46% |
+| Religion and spiritual | 5,665 | 0.42% |
+| Film, TV and gaming | 4,829 | 0.36% |
 
-Place words on their own: **map 20,180 · city 12,410 · skyline 9,139 · flag
-4,350 · street 2,529 · cityscape 1,706 · island 1,185 · town 1,020 · coast 882
-· bay 768 · harbour+harbor 537 · county 261 · metro 107 · underground 72**.
+Place words on their own: **map 22,689 · city 15,872 · skyline 10,287 · street
+4,836 · flag 4,481 · island 2,817 · cityscape 2,442 · coast 2,075 · bay 1,635 ·
+town 1,552 · state 1,174 · harbour+harbor 869 · county 318 · metro 124 ·
+underground 108 · subway 86**.
 
-**Subject phrases are short: mean 23 characters.** The competitor names the
-thing and stops. 479,280 of 874,816 Displate+800k subjects are distinct, so
-**45% are duplicates within their own data.**
+**Subject phrases are short: mean 28 characters.** The competitor names the
+thing and stops. 790,504 of 1,348,089 subject phrases are distinct, so
+**41% are duplicates within their own data.**
 
 ---
 
@@ -73,10 +88,12 @@ each template they have actually used.
 
 | template | listings | distinct slot values | what fills the slot |
 |---|---|---|---|
-| `{X} Map` | **20,180** | — | places |
-| `{X} Definition` / `{X} Meaning` | **17,113 / 15,707** | **9,579** subjects | law student, sneakerhead, tax, coffeeholic, auditor, podiatrist, friendship, boldness |
-| `{X} Skyline` | **9,139** | — | cities |
-| `{X} Flag` | 4,350 | — | countries, states, causes |
+| `{X} Map` | **22,689** | — | places |
+| `{X} Definition` / `{X} Meaning` | **17,220 / 15,798** | **9,634** subjects | law student, sneakerhead, tax, coffeeholic, auditor, podiatrist, friendship, boldness, hygge, resilience |
+| `{X} Skyline` | **10,287** | — | cities |
+| `{X} Life` | 9,359 | — | — |
+| `{X} Flag` | 4,481 | — | countries, states, causes |
+| `{X} Club` / `{X} Lover` / `I Love {X}` | 1,857 / 1,606 / 1,298 | — | — |
 | `... in the style of {MOVEMENT}` | 3,232 | **135** | Pop Art 685, Matisse 606, Ukiyo-e 181, Expressionism 142, Impressionism 141, William Morris 99, Fauvism 89, Cubism 78 |
 | `Still Life ...` | 1,572 | — | — |
 | `... Line Drawing` | 1,334 | — | — |
@@ -101,34 +118,35 @@ nobody has run to depth.
 
 Tested against official lists.
 
-**World cities: 56 of 58 present, and deep** — Paris 2,389 · London 2,234 ·
-Chicago 1,537 · Dubai 996 · Tokyo 978 · Venice 893 · Sydney 810 · Amsterdam 762
-· Toronto 738 · Singapore 722 · Rio 705.
+**World cities: 56 of 58 present, and deep** — London 5,499 · Paris 4,441 ·
+Amsterdam 2,375 · Tokyo 2,103 · Chicago 2,088 · Venice 1,552 · Sydney 1,492 ·
+Rome 1,421 · Dubai 1,255 · Barcelona 1,228 · Berlin 1,210 · Rio 1,200 ·
+Lisbon 1,099 · Toronto 990 · Singapore 959 · Florence 858 · Istanbul 850.
 
-**UK cities: 69 of 76 present but shallow** — York 3,256 and London 2,234 are
-strong, then it collapses: Lincoln 772 · Manchester 335 · Liverpool 307 ·
-Edinburgh 220 · Chester 213 · Bath 188 · Birmingham 187 · Bristol 161 ·
-Newcastle 141 · Leeds 137 · Oxford 122 · Brighton 114 · Plymouth 111 ·
-Sheffield 106 · Cambridge 101.
+**UK cities: 71 of 76 present, but only two of them deep** — London 5,499 and
+York 5,382, then it falls away sharply: Lincoln 816 · Bath 642 · Edinburgh 579
+· Manchester 462 · Liverpool 364 · Birmingham 274 · Bristol 227 · Perth 215 ·
+Chester 213 · Brighton 199 · Canterbury 195 · Newcastle 192 · Oxford 188 ·
+Glasgow 174 · Leeds 170 · Cambridge 169.
 
-> **Chicago alone has more listings (1,537) than Manchester, Liverpool,
-> Birmingham, Bristol, Newcastle, Leeds, Sheffield and Brighton combined
-> (1,688 across eight cities).** That is the imbalance to exploit.
+> **Chicago alone (2,088) outnumbers Manchester, Liverpool, Birmingham,
+> Bristol, Brighton, Newcastle and Leeds combined (1,888).** A single American
+> city carries more of this catalogue than the seven largest English cities
+> outside London and York put together. That is the imbalance to exploit.
 
-Absent or thin: St Albans, Lisburn, Armagh, Newry, Dunfermline, Kirkwall.
+Absent or thin: St Albans, Newry, Dunfermline, Kirkwall.
 
-**UK ceremonial counties: 14 of 38 effectively missing** — Bedfordshire,
-Berkshire, Buckinghamshire, Derbyshire, Gloucestershire, Hertfordshire,
-Leicestershire, Lincolnshire, Merseyside, Northamptonshire, Nottinghamshire,
-Shropshire, Warwickshire, Worcestershire.
+**UK ceremonial counties: 8 of 38 effectively missing** — Berkshire,
+Buckinghamshire, Hertfordshire, Leicestershire, Northamptonshire,
+Nottinghamshire, Warwickshire, Worcestershire. The Midlands and Home Counties,
+in other words.
 
-**UK towns, coast and country: 44 of 88 tested are missing** — Windermere,
-Alnwick, Lulworth, St Ives, Fowey, Polperro, Mousehole, Looe, Tintagel,
-Clovelly, Lynmouth, Minehead, Swanage, Lymington, Beaulieu, Seaford, Lewes,
-Arundel, Bosham, Emsworth, Cowes, Shanklin, Ventnor, Aberystwyth, Conwy,
-Caernarfon, Betws-y-Coed, Beddgelert, Mallaig, Mull, Islay, Ullapool, Plockton,
-Applecross, Pitlochry, Aviemore, Braemar, Ballater, Peebles, Moffat,
-Portpatrick, Bute, Northumbria.
+**UK towns, coast and country: 27 of 88 tested are missing** — St Ives, Looe,
+Minehead, Lymington, Beaulieu, Seaford, Lewes, Arundel, Bosham, Emsworth,
+Cowes, Ventnor, Aberystwyth, Beddgelert, Mallaig, Islay, Ullapool, Applecross,
+Pitlochry, Aviemore, Braemar, Ballater, Crathie, Peebles, Portpatrick, Bute,
+Northumbria. Those present are mostly thin: Whitby 51 · Bamburgh 51 ·
+Alnwick 49 · Scarborough 46 · Exmoor 41.
 
 Every one of those is a place a UK buyer would plausibly buy a print of, and
 most are exactly the sort of coastal and country subject the `Linocut Of {UK
