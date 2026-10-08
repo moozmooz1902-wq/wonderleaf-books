@@ -34,7 +34,7 @@ Counts are the count of entries actually extracted, so catalogue arithmetic can 
 | Welsh castles (named) | 260 | verified |
 | Church of England cathedrals | 42 | verified |
 | Cathedrals, all denominations UK | 212 | verified |
-| English Heritage properties | 446 | verified |
+| English Heritage properties | 402 | verified |
 | Historic Environment Scotland properties | 302 | verified |
 | Trinity House lighthouses | 65 lighthouses + 7 lightvessels | verified |
 | Lighthouses in England (active, all operators) | 85 | verified |
@@ -804,62 +804,62 @@ Wakefield; Wells; Winchester; Worcester; York Minster
 
 First 50 of 212: Birmingham Cathedral — Anglican; Bristol Cathedral — Anglican; Bury St Edmunds Cathedral — Anglican; Canterbury Cathedral — Anglican; Chelmsford Cathedral — Anglican; Chichester Cathedral — Anglican; Coventry Cathedral — Anglican; Derby Cathedral — Anglican; Ely Cathedral — Anglican; Exeter Cathedral — Anglican; Gloucester Cathedral — Anglican; Guildford Cathedral — Anglican; Hereford Cathedral — Anglican; Leicester Cathedral — Anglican; Lichfield Cathedral — Anglican; Lincoln Cathedral — Anglican; St Paul's Cathedral, London — Anglican; Norwich Cathedral — Anglican; Christ Church Cathedral, Oxford — Anglican; Peterborough Cathedral — Anglican; Portsmouth Cathedral — Anglican; Rochester Cathedral — Anglican; St Albans Cathedral — Anglican; Salisbury Cathedral — Anglican; Southwark Cathedral — Anglican; Truro Cathedral — Anglican; Wells Cathedral — Anglican; Winchester Cathedral — Anglican; Worcester Cathedral — Anglican; Blackburn Cathedral — Anglican; Bradford Cathedral — Anglican; Carlisle Cathedral — Anglican; Chester Cathedral — Anglican; Durham Cathedral — Anglican; Liverpool Cathedral — Anglican; Manchester Cathedral — Anglican; Newcastle Cathedral — Anglican; Peel Cathedral — Anglican; Ripon Cathedral — Anglican; Sheffield Cathedral — Anglican; Southwell Minster — Anglican; Wakefield Cathedral — Anglican; York Minster — Anglican; Christ Church Cathedral (Falkland Islands) — Anglican; Brentwood Cathedral — Catholic; St John the Baptist Cathedral, Norwich — Catholic; Northampton Cathedral — Catholic; Nottingham Cathedral — Catholic; Westminster Cathedral — Catholic; Birmingham Cathedral — Catholic
 
-**English Heritage properties — 446 across 45 counties.** English Heritage is a primary-source organisation and this list mirrors its estate. — [List of English Heritage properties](https://en.wikipedia.org/wiki/List_of_English_Heritage_properties)
+**English Heritage properties — 402 across 45 counties.** English Heritage is a primary-source organisation and this list mirrors its estate. — [List of English Heritage properties](https://en.wikipedia.org/wiki/List_of_English_Heritage_properties)
 
 Subdivision structure is by county, with counts:
 
 | County | Properties |
 |---|---|
-| Bedfordshire | 5 |
-| Berkshire | 2 |
-| Bristol | 2 |
-| Cambridgeshire | 5 |
-| Cheshire | 5 |
-| Cornwall | 18 |
-| Cumbria | 28 |
-| Derbyshire | 10 |
-| Devon | 14 |
-| Dorset | 13 |
-| County Durham | 7 |
-| East Riding of Yorkshire | 4 |
-| East Sussex | 7 |
-| Essex | 10 |
-| Gloucestershire | 17 |
-| Hampshire | 16 |
-| Herefordshire | 8 |
-| Hertfordshire | 4 |
-| Isle of Wight | 6 |
-| Isles of Scilly | 10 |
-| Kent | 27 |
-| Lancashire | 5 |
-| Leicestershire | 4 |
-| Lincolnshire | 9 |
-| London | 15 |
-| Norfolk | 23 |
-| North Yorkshire | 27 |
-| Northamptonshire | 6 |
-| Northumberland | 27 |
-| Nottinghamshire | 3 |
-| Oxfordshire | 11 |
-| Rutland | 2 |
-| Shropshire | 17 |
-| Somerset | 13 |
-| South Yorkshire | 5 |
-| Staffordshire | 3 |
-| Suffolk | 9 |
-| Surrey | 3 |
-| Tyne and Wear | 7 |
-| Warwickshire | 2 |
-| West Midlands | 3 |
-| West Sussex | 3 |
-| Wiltshire | 20 |
-| Worcestershire | 3 |
+| Bedfordshire | 4 |
+| Berkshire | 1 |
+| Bristol | 1 |
+| Cambridgeshire | 4 |
+| Cheshire | 4 |
+| Cornwall | 17 |
+| Cumbria | 27 |
+| Derbyshire | 9 |
+| Devon | 13 |
+| Dorset | 12 |
+| County Durham | 6 |
+| East Riding of Yorkshire | 3 |
+| East Sussex | 6 |
+| Essex | 9 |
+| Gloucestershire | 16 |
+| Hampshire | 15 |
+| Herefordshire | 7 |
+| Hertfordshire | 3 |
+| Isle of Wight | 5 |
+| Isles of Scilly | 9 |
+| Kent | 26 |
+| Lancashire | 4 |
+| Leicestershire | 3 |
+| Lincolnshire | 8 |
+| London | 14 |
+| Norfolk | 22 |
+| North Yorkshire | 26 |
+| Northamptonshire | 5 |
+| Northumberland | 26 |
+| Nottinghamshire | 2 |
+| Oxfordshire | 10 |
+| Rutland | 1 |
+| Shropshire | 16 |
+| Somerset | 12 |
+| South Yorkshire | 4 |
+| Staffordshire | 2 |
+| Suffolk | 8 |
+| Surrey | 2 |
+| Tyne and Wear | 6 |
+| Warwickshire | 1 |
+| West Midlands | 2 |
+| West Sussex | 2 |
+| Wiltshire | 19 |
+| Worcestershire | 2 |
 | See also | 8 |
 
-Sample (Cumbria, 27 after removing a parser artefact): 
+Sample (Cumbria, 27): 
 Ambleside Roman Fort; Bow Bridge; Brough Castle; Brougham Castle; Carlisle Castle; Castlerigg Stone Circle; Clifton Hall; Countess Pillar; Furness Abbey; Banks East Turret; Birdoswald Roman Fort; Hadrian's Wall: Hare Hill; Harrows Scar Milecastle; Poltross Burn Milecastle; Leahill Turret; Pike Hill Signal Tower; Turrets; Hardknott Roman Fort; King Arthur's Round Table; Lanercost Priory; Mayburgh Henge; Penrith Castle; Piel Castle; Ravenglass Roman Bath House; Shap Abbey; Stott Park Bobbin Mill; Wetheral Priory Gatehouse
 
-Sample (Cornwall, 17 after removing a parser artefact): 
+Sample (Cornwall, 17): 
 Ballowall Barrow; Carn Euny Ancient Village; Chysauster Ancient Village; Dupath Well; Halliggye Fogou; Hurlers Stone Circles; King Doniert's Stone; Launceston Castle; Pendennis Castle; Penhallam; Restormel Castle; St Breock Downs Monolith; St Catherine's Castle; St Mawes Castle; Tintagel Castle; Tregiffian Burial Chamber; Trethevy Quoit
 
 **Stone circles — 341 named across the UK**: England 145, Scotland 87, Wales 90, Northern Ireland 19. — [List of stone circles](https://en.wikipedia.org/wiki/List_of_stone_circles)
@@ -1263,7 +1263,7 @@ end to end. Every one of them also maps onto the UK lists above:
 
 1. **Landscape / fell / moor / dale scene** — 214 Wainwrights, 282 Munros, 186 Welsh Nuttalls, 15 National Parks, 46 National Landscapes.
 2. **Coast and seascape** — 541 SWCP place names, 59 piers, 65 Trinity House lighthouses.
-3. **Landmark portrait** — 42 CoE cathedrals, 212 UK cathedrals, 260 Welsh castles, 446 English Heritage and 302 HES properties.
+3. **Landmark portrait** — 42 CoE cathedrals, 212 UK cathedrals, 260 Welsh castles, 402 English Heritage and 302 HES properties.
 4. **Abstract / deconstructed map** — any of the 76 cities or 454 English BUAs; shape and colour only, no labels.
 5. **City skyline silhouette, unlabelled** — 76 cities; composite the place name as vector type afterwards.
 6. **Cityscape / painted street view** — 558 London districts, 76 cities.
