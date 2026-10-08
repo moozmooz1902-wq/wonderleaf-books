@@ -655,11 +655,14 @@ in the UK per square mile and the castle list is the largest single landmark blo
 
 ...remaining 131 in the source.
 
-**The Welsh 3000s — 15 summits over 3,000 ft**, all in Eryri/Snowdonia, and the natural first series:
-Snowdon/Yr Wyddfa; Garnedd Ugain/Crib y Ddysgl; Crib Goch; Carnedd Llewelyn; Carnedd Dafydd;
-Pen yr Ole Wen; Foel Grach; Yr Elen; Garnedd Uchaf/Carnedd Gwenllian; Glyder Fawr; Glyder Fach;
-Tryfan; Y Garn; Elidir Fawr; Y Lliwedd. **UNVERIFIED** as a set (the individual names are all in the
-Nuttall list above; the 15-summit grouping is from general knowledge).
+**The Welsh 3000s — 15 summits over 3,000 ft**, all in Eryri/Snowdonia, grouped in three ranges
+(Snowdon Massif, Glyderau, Carneddau). Verified against the source table. — [Welsh 3000s](https://en.wikipedia.org/wiki/Welsh_3000s)
+
+Snowdon/Yr Wyddfa; Garnedd Ugain; Crib Goch; Elidir Fawr; Y Garn; Glyder Fawr; Glyder Fach; Tryfan;
+Pen yr Ole Wen; Carnedd Dafydd; Carnedd Llewelyn; Yr Elen; Foel Grach; Carnedd Gwenllian; Foel-fras
+
+(Note: Y Lliwedd is *not* one of the 15 — I had assumed it was before checking the source. Castell y
+Gwynt appears in the source as a rock feature on the Glyder Fach ridge, not as a separate summit.)
 
 **Welsh castles — 260 named** (includes Castell- forms) — [List of castles in Wales](https://en.wikipedia.org/wiki/List_of_castles_in_Wales)
 
@@ -934,3 +937,252 @@ Combe Hay Caisson Lock; Hay Inclined Plane. — [Canals of the United Kingdom](h
   flights — Caen Hill, Bingley Five Rise, Foxton, Hatton, Devizes, Neptune's Staircase — are
   **UNVERIFIED.** Canal & River Trust (canalrivertrust.org.uk) is the authoritative operator source.
 - No Northern Ireland river list was harvested.
+
+## Q10 — Railways
+
+### Takeaway
+
+The Underground is complete (269 stations). Mainline stations, heritage railways and named
+express services were not harvested — this is the weakest block in the gazetteer.
+
+### Cited Findings
+
+**London Underground stations — 269** — [List of London Underground stations](https://en.wikipedia.org/wiki/List_of_London_Underground_stations). Full list given in Q3.
+
+**Bridges and viaducts in England — 436 named**, with the source subdividing England into Greater London and Rest of England, plus separate England–Wales Border, Anglo-Scottish Border, Scotland (Glasgow / Rest of Scotland), Northern Ireland, Wales and Isle of Man sections. — [List of bridges in England](https://en.wikipedia.org/wiki/List_of_bridges_in_England)
+
+First 60 of 436: Albert Bridge; Battersea Bridge; Blackfriars Bridge; Chelsea Bridge; Chiswick Bridge; Golden Jubilee Bridges; Hungerford Railway Bridge; Hammersmith Bridge; Hampton Court Bridge; Kew Bridge; Lambeth Bridge; London Bridge; London Millennium Bridge; Putney Bridge; Richmond Bridge; Royal Victoria Dock Bridge; Southwark Bridge; Tower Bridge; Twickenham Bridge; Vauxhall Bridge; Wandsworth Bridge; Waterloo Bridge; Westminster Bridge; A34 Road Bridge; A419 Road Bridge; Abingdon Bridge; Acton Bridge; Albert Bridge, Datchet; Albert Bridge, Manchester; Aldford Iron Bridge; Avonmouth Bridge; Bakewell Bridge; Baslow Bridge; Barle Bridge; Barnstaple Long Bridge; Barton Road Swing Bridge; Bathampton Toll Bridge; Beckfoot Bridge; Beggar's Bridge; Bethells Bridge; Bewdley Bridge; Bideford Long Bridge; Black Boys Bridge; Blakeborough's Bridge; Blaydon Bridge; Boothferry Bridge; Blue Bridge; Botley Bridge; Bow Bridge, Iwood; Bow Bridge, Plox; Bradford Bridge; Breydon Bridge; Bridge of Sighs; Brighouse Bridge; Bristol Bridge; Bromford Viaduct; Broughton Suspension Bridge; Bulstake Bridge; Burghfield Bridge; Bury Bridge
+
+**Hill figures — 22 in the UK**, extracted from the source's body text and gallery:
+Uffington White Horse; Cerne Abbas Giant; Long Man of Wilmington; Westbury White Horse; Cherhill White
+Horse; Marlborough White Horse; Alton Barnes White Horse; Hackpen White Horse; Broad Town White Horse;
+Pewsey White Horse; Devizes White Horse; Osmington White Horse; Litlington White Horse; Kilburn White
+Horse; Folkestone White Horse; Cleadon White Horse; Woolbury White Horse; Mormond White Horse (Scotland);
+Red Horse of Tysoe; Bulford Kiwi; Lenham Cross; Whiteleaf Cross. — [Hill figure](https://en.wikipedia.org/wiki/Hill_figure)
+
+### Gaps
+
+- **Mainline stations: not harvested.** There are about 2,570 National Rail stations. Office of Rail and
+  Road (dataportal.orr.gov.uk) publishes the definitive station list with annual footfall, which is the
+  better source anyway because footfall ranks them by likely demand. **UNVERIFIED count.**
+- **Heritage and steam railways: no list obtained.** The Wikipedia 'Heritage railway' article is global
+  and has no United Kingdom section to extract; 'List of British heritage railways' does not exist under
+  that title. The Heritage Railway Association (hra.uk.com) is the trade body and lists its ~150 members —
+  that is the source to use. **UNVERIFIED count.** Known subjects: Severn Valley, North Yorkshire Moors,
+  Ffestiniog, Talyllyn, Bluebell, West Somerset, Settle–Carlisle (mainline), Jacobite, Snowdon Mountain,
+  Keighley & Worth Valley, Romney Hythe & Dymchurch, Welsh Highland, Llangollen, Great Central — all
+  **UNVERIFIED** general knowledge.
+- **Named express services: not harvested.** Flying Scotsman, Mallard, Royal Scot, Cornish Riviera,
+  Golden Arrow, Brighton Belle, Night Riviera, Caledonian Sleeper — **UNVERIFIED.** Several of these are
+  live registered trademarks or belong to operating companies: see the risk register.
+- **Underground line names were not extracted**, only stations. TfL's own data (tfl.gov.uk/info-for/open-data-users)
+  is authoritative and free, but the roundel and the map design are TfL IP.
+
+## Q12 — Football grounds (TRADEMARK-RISKY)
+
+### Takeaway
+
+135 current English football stadiums extracted with club and locality. Every single row carries
+trademark risk and none should be generated with club names, crests, colours or kit.
+
+### Cited Findings
+
+**Current English football stadiums — 135**, as club — stadium — locality. — [List of football stadiums in England](https://en.wikipedia.org/wiki/List_of_football_stadiums_in_England)
+
+| # | Club — Stadium — Locality |
+|---|---|
+| 1 | men's — Wembley Stadium — Wembley |
+| 2 | Premier League — Old Trafford — Old Trafford |
+| 3 | Premier League — Tottenham Hotspur Stadium — Tottenham |
+| 4 | EFL Championship — London Stadium — Stratford |
+| 5 | Premier League — Anfield — Anfield |
+| 6 | Premier League — Etihad Stadium — Bradford |
+| 7 | rowspan="2" 2006 — rowspan="2" | 7 — Emirates Stadium |
+| 8 | Premier League — Hill Dickinson Stadium — Bramley-Moore Dock |
+| 9 | Premier League — St James' Park — Newcastle upon Tyne |
+| 10 | Premier League — Stadium of Light — Monkwearmouth |
+| 11 | rowspan="2" 1897 — rowspan="2" | 11 — Villa Park |
+| 12 | Premier League — Stamford Bridge — Fulham |
+| 13 | Women's Super League — Goodison Park — Walton |
+| 14 | Premier League — Elland Road — Beeston |
+| 15 | EFL League One — Hillsborough — Owlerton |
+| 16 | EFL Championship — Riverside Stadium — Middlesbrough |
+| 17 | EFL Championship — Cardiff City Stadium — Leckwith |
+| 18 | EFL Championship — Pride Park — Derby |
+| 19 | Premier League — Coventry Building Society Arena — Coventry |
+| 20 | rowspan="2" 2001 — rowspan="2" 19 — St Mary's Stadium |
+| 21 | rowspan="2" 2002 — rowspan="2" | 20 — King Power Stadium |
+| 22 | rowspan="2" 1855 — rowspan="2" | 21 — Bramall Lane |
+| 23 | Premier League — Falmer Stadium — Falmer |
+| 24 | EFL Championship — Molineux — Wolverhampton |
+| 25 | EFL Championship — Ewood Park — Blackburn |
+| 26 | rowspan="2" 1898 — rowspan="2" 25 — City Ground |
+| 27 | EFL League One — Stadium MK — Denbigh |
+| 28 | EFL Championship — bet365 Stadium — Stoke-on-Trent |
+| 29 | Premier League — Portman Road — Ipswich |
+| 30 | rowspan="2" 1906 — rowspan="2" 29 — St Andrew's |
+| 31 | EFL Championship — Toughsheet Community Stadium — Horwich |
+| 32 | Premier League — Craven Cottage — Fulham, London |
+| 33 | EFL Championship — Carrow Road — Norwich |
+| 34 | rowspan="2" 1919 — rowspan="2" 33 — The Valley |
+| 35 | rowspan="2" 1887 — rowspan="2" 34 — Ashton Gate Stadium |
+| 36 | EFL Championship — The Hawthorns — West Bromwich |
+| 37 | Premier League — MKM Stadium — Hull |
+| 38 | Premier League — Selhurst Park — Selhurst |
+| 39 | EFL League One — Brick Community Stadium — Wigan |
+| 40 | EFL League One — Valley Parade — Bradford |
+| 41 | EFL League One — Madejski Stadium — Reading |
+| 42 | EFL League One — Kirklees Stadium — Huddersfield |
+| 43 | EFL Championship — Deepdale — Preston |
+| 44 | EFL League One — Oakwell — Barnsley |
+| 45 | EFL Championship — Vicarage Road — Watford |
+| 46 | EFL Championship — Turf Moor — Burnley |
+| 47 | EFL Championship — Liberty Stadium — Landore |
+| 48 | EFL Championship — Fratton Park — Milton |
+| 49 | EFL League One — Meadow Lane — Nottingham |
+| 50 | EFL Championship — The Den — Bermondsey |
+| 51 | Women's Super League — Langtree Park — St Helens |
+| 52 | EFL Championship — Loftus Road — White City |
+| 53 | EFL League One — Home Park — Plymouth |
+| 54 | Premier League — Brentford Community Stadium — Brentford |
+| 55 | National League — Brunton Park — Carlisle |
+| 56 | EFL League One — Bloomfield Road — Blackpool |
+| 57 | EFL League Two — frameless|151x151px — County Ground |
+| 58 | EFL League One — frameless|151x151px — Club Doncaster Sports Village |
+| 59 | EFL League Two — Vale Park — Burslem |
+| 60 | EFL League Two — Prenton Park — Birkenhead |
+| 61 | EFL League One — London Road — Peterborough |
+| 62 | EFL League Two — Boundary Park — Oldham |
+| 63 | EFL League One — Kassam Stadium — Littlemore |
+| 64 | EFL League Two — Memorial Stadium — Horfield |
+| 65 | National League — Roots Hall — Southend |
+| 66 | EFL League Two — New York Stadium — Rotherham |
+| 67 | Women's Super League — Leigh Sports Village — Leigh |
+| 68 | rowspan="2" 1955 — rowspan="2" 66 — Gateshead International Stadium |
+| 69 | Northern Premier League — Gigg Lane — Bury |
+| 70 | EFL League Two — Priestfield Stadium — Gillingham |
+
+...remaining 65 in the source (the article is ordered by capacity and also carries separate
+'Old stadiums' and 'Future stadiums' tables).
+
+### Inferences
+
+- The title evidence in the brief shows demand, but the legal exposure here is categorically different
+  from the rest of the gazetteer. Club names and crests are registered trade marks; stadium names are
+  frequently *sponsor* marks too (Emirates, Etihad, Vitality, bet365, Amex), which stacks a second
+  rights-holder onto the first.
+- The only defensible football format is a **stadium-shaped pitch-and-stand geometry with no club name,
+  no crest, no club colours and a neutral place name** — i.e. sell 'Manchester' or 'Anfield (district)',
+  not 'Manchester United'. Even then the ground's architectural form can be distinctive enough to attract
+  a complaint, and eBay's VeRO programme makes takedowns cheap for rights-holders and expensive for sellers.
+- Recommendation: hold this block out of the first catalogue entirely. It is 135 rows out of a gazetteer
+  of many thousands, so the opportunity cost is negligible relative to the account risk.
+
+## Q13 — Universities, and the Oxford and Cambridge colleges
+
+### Takeaway
+
+148 university rows extracted *with their city*, which is what makes this block usable as
+place art. Oxford's 43 colleges and PPHs and Cambridge's 31 colleges are both complete.
+
+### Cited Findings
+
+**UK universities — 148 rows**, each with city and region — [List of universities in the United Kingdom](https://en.wikipedia.org/wiki/List_of_universities_in_the_United_Kingdom)
+
+| University | City |
+|---|---|
+| Abertay University | Dundee |
+| Aberystwyth University | Aberystwyth |
+| Anglia Ruskin University | Cambridge |
+| Arden University | Coventry |
+| Arts University Bournemouth | Bournemouth |
+| Arts University Plymouth | Plymouth |
+| Aston University | Birmingham |
+| Bangor University | Bangor |
+| Bath Spa University | Bath |
+| BIMM University | Birmingham |
+| Birkbeck, University of London | London |
+| Birmingham City University | Birmingham |
+| Birmingham Newman University | Birmingham |
+| Bournemouth University | Bournemouth |
+| BPP University | Abingdon |
+| Brunel University of London | London |
+| Buckinghamshire New University | High Wycombe |
+| Canterbury Christ Church University | Canterbury |
+| Cardiff Metropolitan University | Cardiff |
+| Cardiff University | Cardiff |
+| City St George's, University of London | London |
+| Coventry University | Coventry |
+| Cranfield University | Cranfield |
+| De Montfort University | Leicester |
+| Durham University | Durham |
+| Edge Hill University | Ormskirk |
+| Edinburgh Napier University | Edinburgh |
+| Falmouth University | Falmouth |
+| Glasgow Caledonian University | Glasgow |
+| Goldsmiths, University of London | London |
+| Harper Adams University | Edgmond |
+| Hartpury University | Hartpury |
+| Health Sciences University | Bournemouth |
+| Heriot-Watt University | Edinburgh |
+| Imperial College London | London |
+| Keele University | Keele |
+| King's College London | London |
+| Kingston University | London |
+| Lancaster University | Lancaster |
+| Leeds Arts University | Leeds |
+| Leeds Beckett University | Leeds |
+| Leeds Trinity University | Leeds |
+| Lincoln Bishop University | Lincoln |
+| Liverpool Hope University | Liverpool |
+| Liverpool John Moores University | Liverpool |
+| London Metropolitan University | London |
+| London South Bank University | London |
+| Loughborough University | Loughborough |
+| Manchester Metropolitan University | Manchester |
+| Middlesex University | London |
+| Newcastle University | Newcastle |
+| Northeastern University – London | London |
+| Northumbria University | Newcastle |
+| Norwich University of the Arts | Norwich |
+| Nottingham Trent University | Nottingham |
+| Open University | Milton Keynes |
+| Oxford Brookes University | Oxford |
+| Plymouth Marjon University | Plymouth |
+| Queen Margaret University | Musselburgh |
+| Queen Mary University of London | London |
+| Queen's University Belfast | Belfast |
+| Ravensbourne University London | London |
+| Regent's University London | London |
+| Richmond American University London | London |
+| Robert Gordon University | Aberdeen |
+| Royal Agricultural University | Cirencester |
+| Royal Holloway, University of London | Egham |
+| Royal Veterinary College | London |
+| Sheffield Hallam University | Sheffield |
+| SOAS University of London | London |
+
+...remaining rows in the source. The source also has separate sections for university colleges, the
+member institutions of the University of London, and other recognised bodies.
+
+**Oxford colleges and Permanent Private Halls — 43** (39 colleges + 4 PPHs) — [Colleges of the University of Oxford](https://en.wikipedia.org/wiki/Colleges_of_the_University_of_Oxford)
+
+All Souls College; Balliol College; Brasenose College; Campion Hall; Christ Church; Corpus Christi College; Exeter College; Green Templeton College; Harris Manchester College; Hertford College; Jesus College; Keble College; Kellogg College; Lady Margaret Hall; Linacre College; Lincoln College; Magdalen College; Mansfield College; Merton College; New College; Nuffield College; Oriel College; Pembroke College; Regent's Park College; Reuben College; Somerville College; St Anne's College; St Antony's College; St Benet's Hall; St Catherine's College; St Cross College; St Edmund Hall; St Hilda's College; St Hugh's College; St John's College; St Peter's College; The Queen's College; Trinity College; University College; Wadham College; Wolfson College; Worcester College; Wycliffe Hall
+
+**Cambridge colleges — 31.** Extraction returned 41 names because the source table also carries historical
+foundations (Buckingham College, Cavendish College, God's House, Gonville Hall, King's Hall, New Hall,
+University Hall) and theological colleges that are not among the 31 (Ridley Hall, Westcott House,
+Westminster College). Removing those 10 leaves exactly 31. Peterhouse has no ', Cambridge' suffix in the
+source so it had to be added back by hand. — [Colleges of the University of Cambridge](https://en.wikipedia.org/wiki/Colleges_of_the_University_of_Cambridge)
+
+Christ's; Churchill; Clare; Clare Hall; Corpus Christi; Darwin; Downing; Emmanuel; Fitzwilliam; Girton;
+Gonville and Caius; Homerton; Hughes Hall; Jesus; King's; Lucy Cavendish; Magdalene; Murray Edwards;
+Newnham; Pembroke; Peterhouse; Queens'; Robinson; Selwyn; Sidney Sussex; St Catharine's; St Edmund's;
+St John's; Trinity; Trinity Hall; Wolfson
+
+### Inferences
+
+- University *names* are registered trade marks in most cases (the University of Oxford and University of
+  Cambridge both enforce actively, including on crests and on the words themselves in merchandising).
+  College *buildings* and the cities are not. Generate 'Oxford' and recognisable architecture; do not
+  generate university or college crests, mottoes, or 'University of X' lettering. Flagged in the risk register.
