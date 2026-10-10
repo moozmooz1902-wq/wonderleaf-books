@@ -74,3 +74,54 @@ generate a million before anything has been tested.
 
 The image-level learning pass (styles and colour measured from pixels across
 the competitor corpus) is still running and is not reflected here.
+
+## How big can this get without recreating the failure
+
+The seller wants volume — "millions and millions". The same evidence that
+points at the first build also constrains how that volume can be reached,
+because the wall-art branch's reading is that **89% near-duplication is why
+424k listings do not sell**, and the live catalogue confirms the duplication
+is in the pictures rather than the titles.
+
+So the honest arithmetic, using only enumerable lists already held
+(`uk_place_gazetteer.md`, `enumerable_subject_lists.md`):
+
+| Axis | Count | Source |
+|---|---|---|
+| UK place atoms | **6,155** | 83 official registry lists, extracted |
+| Royal Kennel Club dog breeds | **221** | UK-canonical registry |
+| GCCF cat breeds | 45 | |
+| BOU British List birds | **636** | |
+| British mammals | 107 | |
+| UK butterflies | 59 | |
+| **Species subtotal** | **1,068** | |
+
+**First run, high confidence:**
+
+| Product | Designs |
+|---|---|
+| UK places × 3 vintage-poster treatments | 18,465 |
+| Species × 2 charcoal treatments | 2,136 |
+| **Total** | **~20,600 designs** |
+
+At FLUX.1 schnell rates measured earlier (~$0.0004/image) that is **about
+$8 of GPU**. Each design becomes one eBay listing with 3 frames × 3 sizes =
+9 variations, so 20,600 designs is **185,400 eBay variations** — already a
+substantial catalogue from a single cheap run.
+
+**Reaching the hundreds of thousands honestly** means multiplying genuine
+axes, not reprinting the same panel:
+
+    6,155 places x 11 techniques x 4 seasons   = 270,820
+    1,068 species x 11 techniques x 4 grounds  =  47,000
+                                                 -------
+                                                 ~317,000 distinct designs
+
+That is reachable with real variety, and it is ~2.9M eBay variations once
+frames and sizes are applied.
+
+**Millions of genuinely distinct designs is not reachable from these axes.**
+Getting there would mean either adding subject axes we do not yet have, or
+accepting near-duplication — which is the thing the data says killed the
+last catalogue. The recommendation is to build the ~20,600 first, measure it
+against real watchers, and only then decide how far to push the multiplier.
