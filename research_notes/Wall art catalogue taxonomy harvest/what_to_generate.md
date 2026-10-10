@@ -117,3 +117,49 @@ grain, aged cream border") sits squarely inside the vintage/noir winner.
   not licences to generate a million of anything.
 - The catalogue is dominated by licensed fandom, which may itself have drawn a
   fandom-leaning audience. A cleaner catalogue might attract different buyers.
+
+## Language: there is no multilingual problem, and titles are keyword stacks
+
+The seller asked for this directly. Re-run on all **896,595 distinct titles**
+now extracted from the three dumps (`wallart-data/languages.py`).
+
+**Script** — 99.36% pure ASCII. Latin-accented characters appear in 0.315%.
+Every non-Latin script together totals **117 titles**: CJK 41, Arabic 37,
+Cyrillic 30, Greek 5, and one each of Hangul, Armenian, Devanagari, Hebrew.
+
+**Language**, after stripping the boilerplate tail:
+
+| | titles | share |
+|---|---|---|
+| No function words at all — a bare noun phrase | **630,437** | **70.3%** |
+| English | 256,678 | 28.6% |
+| French | 5,811 | 0.65% |
+| Spanish | 1,109 | 0.12% |
+| Dutch | 878 | 0.10% |
+| Italian | 606 | 0.07% |
+| German | 527 | 0.06% |
+| Portuguese | 262 | 0.03% |
+
+*(A first attempt put English at 99.998%. That was my method, not the data:
+the function-word list included `art`, `print`, `poster` and `wall`, which the
+boilerplate tail puts in every single title. Corrected by stripping the tail
+first.)*
+
+**So: no multilingual work is needed.** French is the only non-English with
+any volume at 0.65%, and it is the single `Affiche de voyage {PLACE}` template
+already identified in `live_catalogue_6_4m.md` — 5,525 listings where only the
+caption changes. Cheap to copy if ever wanted; not a strategy.
+
+**The more useful finding is the 70.3%.** Seven titles in ten contain no
+grammar at all — they are bare noun phrases like *Golden Cranes Japanese Art*
+or *Highland Cow Charcoal*. Competitor titles are **keyword stacks, not
+sentences**, because that is what eBay and Etsy search on.
+
+That matters for our titling, alongside the measurement that this seller's own
+titles spend **56% of their 80 characters on an identical boilerplate tail**
+and truncate the distinguishing part at 35 characters. The rule falls out:
+
+> Build titles as a keyword stack of the attributes that actually matter —
+> subject, place, technique, register — and spend the boilerplate budget on
+> those instead. Drop "Framed Wall Art Poster Canvas Print Picture" to
+> something far shorter and give the 43 recovered characters to the subject.
