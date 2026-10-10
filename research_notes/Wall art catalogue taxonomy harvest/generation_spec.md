@@ -125,3 +125,44 @@ the problem. pHash first, then CLIP/DINOv2 embeddings with FAISS, reject at
 ~20,600 designs (18,465 place posters + 2,136 breed portraits), about **$8 of
 GPU**, becoming 185,400 eBay variations across three frames and three sizes.
 Measure that against real watchers before scaling the multiplier.
+
+## The four caption layouts actually in use for UK places
+
+From 24 random live Fy! images whose titles name a UK place (14,640 matched).
+These are the layouts to build, rather than invented ones:
+
+**L1 — captioned panel (grammar G6).** A small art panel inset in a wide
+cream margin; place name in small letterspaced caps; a smaller second line
+for the county or country. Seen as *PEMBROKESHIRE COAST / WALES*,
+*SNOWDONIA / WALES*, *BRECON BEACONS / WALES*, *THE COTSWOLDS / ENGLAND*.
+**This is the one `wallart/render.py` already builds** and the one to lead
+with — the type sits in clean margin space, so compositing it is trivial and
+the diffusion model never has to attempt a letterform.
+
+**L2 — full bleed with overlaid name.** Art to all four edges, place name
+set over it, often a script face over a plain sky area. Seen as
+*Cadgwith / CORNWALL, ENGLAND*, *Loch Lomond / Scotland*,
+*Cumbria / GRASMERE*. Harder: the type needs a quiet region to sit in, so
+the generator must reserve one.
+
+**L3 — no type at all.** Watercolour coasts, painterly fields, photographic
+beach huts. The place lives only in the listing title. Cheapest to produce
+and carries no lettering risk whatsoever.
+
+**L4 — line map.** A white street network on black, place name beneath
+(*CARDIFF*). **Procedural, not diffusion** — same argument as the hard-edge
+geometric block: it is vector data, and OpenStreetMap extracts would draw it
+exactly, free and instantly. Worth building as its own generator.
+
+Styles observed across the same 24: flat vector travel-poster illustration,
+watercolour, painterly oil, photographic, abstract colour-block landscape,
+line map. No single style owns the category.
+
+### A warning visible in the same sample
+
+*ABSTRACT LANDSCAPES / Yorkshire Dales National Park / England* appears
+**three times in 24** with different colourways. That is the series template
+trap — one design recoloured and relisted — and it is exactly the behaviour
+blamed for 89% near-duplication. Our rule stands: a design may appear in at
+most a small number of colourways, and no two may share subject + technique
++ palette.
