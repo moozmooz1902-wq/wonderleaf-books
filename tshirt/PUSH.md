@@ -305,9 +305,39 @@ listings; finishing needs roughly four times that again.
    product, so it is the seller's call.
 3. **End for value, not for count.** If ending, select to maximise £ freed per
    listing removed — a different ordering from `EBAY_END_TSHIRTS.csv`, which
-   was worst-first by duplication. The old t-shirts carry ten sizes each, so
-   they free roughly twice the value of a new listing and about 2.7x that of a
-   wall-art listing.
+   was worst-first by duplication.
+
+   **CORRECTION (same day).** An earlier version of this line said the old
+   t-shirts carry ten sizes each and so free about 2.7x a wall-art listing.
+   That is wrong, and it inverted the advice. Only **40** of the old t-shirts
+   carry variations (`build_end.py` holds them back by name); the other
+   ~244,776 GR- listings are **single-item listings worth one unit each**.
+   The ten-size example came from a 20-row sample of the unsold export that
+   happened to fall among those 40. This file's own earlier arithmetic already
+   said so — *"125,966 ends free only about 125,966 items"*.
+
+### What ending can actually free
+
+    all 118,872 remaining old t-shirts, at £11.99   ->  £1.43M
+    headroom actually needed                            £5.33M
+                                                        ------
+    ending EVERY remaining old t-shirt covers           27%
+
+**Ending t-shirts cannot solve this**, even if every one of them went. A
+single-item t-shirt frees £11.99; an old wall-art listing (£29.95 framed +
+£14.99 unframed) frees **£44.94 — 3.7x as much**. £5.33M is 118,603 wall-art
+listings, 28% of the 424,118 live.
+
+### The size lever, with all old tees ended
+
+Even after freeing the full £1.43M, at five sizes only a fifth of the
+catalogue fits:
+
+    5 sizes  £59.95/listing   ->   20,438 of 105,573
+    4 sizes  £47.96           ->   25,548
+    3 sizes  £35.97           ->   34,064
+    2 sizes  £23.98           ->   51,096
+    1 size   £11.99           ->  102,191
 
 ### Caution before ending anything else
 
