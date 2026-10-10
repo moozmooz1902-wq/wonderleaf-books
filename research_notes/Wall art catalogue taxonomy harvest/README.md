@@ -43,10 +43,14 @@ listings. There is no multilingual problem to solve.
 9. **`seller_data_structure_and_frames.md`** — the seller's own three MEGA
    dumps read column by column: the black/white/oak frame set, the price
    ladder, the exact mockup geometry, and which competitor to copy.
-10. **`first_party_demand_watchers.md`** — **read this one.** The seller's own
-   eBay export has a Watchers column. It is the only first-party demand signal
-   in the project: what gets saved, what never does, and the 7.5x result for
-   UK places.
+10. **`first_party_demand_watchers.md`** — **read this one first of all.** The
+   seller's own eBay export has a Watchers column. It is the only first-party
+   demand signal in the project: a 1.05% base rate, the 7.5x result for UK
+   places, where the duplication really is, and the 12,731-listing slogan
+   block that earns almost nothing.
+11. **`what_to_generate.md`** — the brief that falls out of those watchers.
+   Which techniques, registers, places and subjects beat the base rate, which
+   ones lose, and where this contradicts the earlier supply-side research.
 
 Supporting, read as needed: `live_image_style_analysis.md` (the earlier
 156-image pass), `enumerable_subject_lists.md` (species, breeds, plants,
@@ -57,6 +61,16 @@ collections), `etsy_ebay_taxonomy.md`, `european_uk_retailer_taxonomy.md`,
 `pod_marketplace_taxonomy.md`, `browser_harvest_firsthand.md`.
 
 ---
+
+## If you read only one thing
+
+The seller's own catalogue gets a watcher on **1.05%** of its listings. Scored
+against that base, what wins is **hand-drawn monochrome (charcoal 5.96%,
+sketch 5.26%) in a vintage / noir / gothic register, of named places (UK
+places 7.91% overall, z = +12.6) and heavy objects (motorcycles 6.10%, ships,
+the moon)**. What loses is the t-shirt register: **funny 0.39%, cute 0.24%**.
+Colour words in titles do nothing either way. Full detail and limits in
+`first_party_demand_watchers.md` and `what_to_generate.md`.
 
 ## The five things that matter most
 
