@@ -6,7 +6,15 @@ actually contain, column by column, and three things that change the build:
 the frame set, the price ladder, and which competitor is worth copying.
 
 Scripts: `wallart-data/extract_all.py`, `mine_titles.py`, `mine_templates.py`.
-Extracted corpus: **9,507,654 rows** across 98 CSVs.
+Extracted corpus: **13,727,739 rows across 93 CSVs** — displate 15 files /
+7,000,890 rows, fy 71 files / 2,979,429 rows, raw800k 7 files / 3,747,420 rows.
+Exactly 10.0% of rows in every set carry a title, because a listing is one
+parent row plus nine variations (3 colours x 3 sizes).
+
+*(An earlier draft said 9,507,654 rows across 98 CSVs. That was the count
+appended by the second extraction run, not the total in the file, and 98 was
+the glob count including files that were empty or errored. Verified: 93
+distinct files, 93 entries in done.txt, no double-counting.)*
 
 ## What I got wrong, and why
 
@@ -156,3 +164,23 @@ and Displate is mainly a negative example.**
 UK places do appear in Displate's *supply* (a "Salisbury England" skyline, a
 "London United Kingdom" photograph) despite having almost no demand there —
 another reminder that supply is not demand.
+
+## There is no "mid" column — checked
+
+The seller said the files have "a title column, there's a mid there as well".
+The titles were there and I had missed them. The "mid" was checked the same
+way, across every header-bearing CSV:
+
+The File Exchange header carries **36 columns and none of them is a MID**.
+The only name containing those letters is `ItemID`, and across all 13,727,739
+rows `ItemID`, `CustomLabel` and `StoreCategory` are **completely empty —
+0.0% filled**. There is no merchant or media identifier with data in these
+dumps.
+
+The most likely referent is the Fy! collection file
+`mid-century-modern-art-prints-and-posters.csv`, which is real and carries the
+`Color=Black;White;Oak` set like the rest of that dump.
+
+(A handful of rows — 8 to 50 out of 13.7M — show values landing in the wrong
+column, e.g. `Modern` under MPN. Those are the unquoted-comma overflow rows,
+and at that rate they confirm the parser handles the other 99.9995% correctly.)
