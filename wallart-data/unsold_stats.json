@@ -1,0 +1,5356 @@
+{
+ "listings": 168819,
+ "watchers_total": 2142,
+ "with_watcher": 1770,
+ "base_rate": 0.01048460185168731,
+ "scored": [
+  {
+   "word": "movie",
+   "z": 9.99,
+   "watched": 27,
+   "listings": 467,
+   "rate": 0.05782
+  },
+  {
+   "word": "chopper",
+   "z": 7.2,
+   "watched": 13,
+   "listings": 213,
+   "rate": 0.06103
+  },
+  {
+   "word": "vintage",
+   "z": 6.64,
+   "watched": 68,
+   "listings": 2959,
+   "rate": 0.02298
+  },
+  {
+   "word": "tour",
+   "z": 6.63,
+   "watched": 11,
+   "listings": 180,
+   "rate": 0.06111
+  },
+  {
+   "word": "band",
+   "z": 6.52,
+   "watched": 22,
+   "listings": 573,
+   "rate": 0.03839
+  },
+  {
+   "word": "charcoal",
+   "z": 5.89,
+   "watched": 9,
+   "listings": 151,
+   "rate": 0.0596
+  },
+  {
+   "word": "noir",
+   "z": 4.83,
+   "watched": 9,
+   "listings": 197,
+   "rate": 0.04569
+  },
+  {
+   "word": "ray",
+   "z": 4.63,
+   "watched": 13,
+   "listings": 370,
+   "rate": 0.03514
+  },
+  {
+   "word": "artwork",
+   "z": 4.42,
+   "watched": 9,
+   "listings": 219,
+   "rate": 0.0411
+  },
+  {
+   "word": "japanese",
+   "z": 4.34,
+   "watched": 14,
+   "listings": 443,
+   "rate": 0.0316
+  },
+  {
+   "word": "mortal",
+   "z": 4.26,
+   "watched": 8,
+   "listings": 190,
+   "rate": 0.04211
+  },
+  {
+   "word": "moon",
+   "z": 4.11,
+   "watched": 19,
+   "listings": 728,
+   "rate": 0.0261
+  },
+  {
+   "word": "sexy",
+   "z": 3.77,
+   "watched": 9,
+   "listings": 262,
+   "rate": 0.03435
+  },
+  {
+   "word": "greek",
+   "z": 3.63,
+   "watched": 7,
+   "listings": 185,
+   "rate": 0.03784
+  },
+  {
+   "word": "watch",
+   "z": 3.63,
+   "watched": 11,
+   "listings": 369,
+   "rate": 0.02981
+  },
+  {
+   "word": "pop",
+   "z": 3.23,
+   "watched": 13,
+   "listings": 520,
+   "rate": 0.025
+  },
+  {
+   "word": "man",
+   "z": 3.21,
+   "watched": 20,
+   "listings": 945,
+   "rate": 0.02116
+  },
+  {
+   "word": "tower",
+   "z": 3.02,
+   "watched": 11,
+   "listings": 435,
+   "rate": 0.02529
+  },
+  {
+   "word": "star",
+   "z": 2.93,
+   "watched": 9,
+   "listings": 335,
+   "rate": 0.02687
+  },
+  {
+   "word": "pool",
+   "z": 2.89,
+   "watched": 7,
+   "listings": 235,
+   "rate": 0.02979
+  },
+  {
+   "word": "lady",
+   "z": 2.82,
+   "watched": 12,
+   "listings": 518,
+   "rate": 0.02317
+  },
+  {
+   "word": "hitman",
+   "z": 2.78,
+   "watched": 6,
+   "listings": 194,
+   "rate": 0.03093
+  },
+  {
+   "word": "classic",
+   "z": 2.78,
+   "watched": 18,
+   "listings": 902,
+   "rate": 0.01996
+  },
+  {
+   "word": "things",
+   "z": 2.78,
+   "watched": 7,
+   "listings": 244,
+   "rate": 0.02869
+  },
+  {
+   "word": "solid",
+   "z": 2.77,
+   "watched": 6,
+   "listings": 195,
+   "rate": 0.03077
+  },
+  {
+   "word": "series",
+   "z": 2.73,
+   "watched": 5,
+   "listings": 150,
+   "rate": 0.03333
+  },
+  {
+   "word": "fan",
+   "z": 2.67,
+   "watched": 7,
+   "listings": 253,
+   "rate": 0.02767
+  },
+  {
+   "word": "burger",
+   "z": 2.57,
+   "watched": 5,
+   "listings": 160,
+   "rate": 0.03125
+  },
+  {
+   "word": "peacock",
+   "z": 2.57,
+   "watched": 8,
+   "listings": 317,
+   "rate": 0.02524
+  },
+  {
+   "word": "horror",
+   "z": 2.55,
+   "watched": 7,
+   "listings": 263,
+   "rate": 0.02662
+  },
+  {
+   "word": "zeus",
+   "z": 2.55,
+   "watched": 6,
+   "listings": 211,
+   "rate": 0.02844
+  },
+  {
+   "word": "albert",
+   "z": 2.53,
+   "watched": 6,
+   "listings": 212,
+   "rate": 0.0283
+  },
+  {
+   "word": "fram",
+   "z": 2.49,
+   "watched": 50,
+   "listings": 3359,
+   "rate": 0.01489
+  },
+  {
+   "word": "royal",
+   "z": 2.43,
+   "watched": 5,
+   "listings": 169,
+   "rate": 0.02959
+  },
+  {
+   "word": "drawing",
+   "z": 2.38,
+   "watched": 7,
+   "listings": 279,
+   "rate": 0.02509
+  },
+  {
+   "word": "retro",
+   "z": 2.34,
+   "watched": 30,
+   "listings": 1871,
+   "rate": 0.01603
+  },
+  {
+   "word": "molecule",
+   "z": 2.28,
+   "watched": 5,
+   "listings": 179,
+   "rate": 0.02793
+  },
+  {
+   "word": "anime",
+   "z": 2.26,
+   "watched": 10,
+   "listings": 474,
+   "rate": 0.0211
+  },
+  {
+   "word": "samurai",
+   "z": 2.2,
+   "watched": 6,
+   "listings": 240,
+   "rate": 0.025
+  },
+  {
+   "word": "planet",
+   "z": 2.2,
+   "watched": 6,
+   "listings": 240,
+   "rate": 0.025
+  },
+  {
+   "word": "off",
+   "z": 2.17,
+   "watched": 6,
+   "listings": 242,
+   "rate": 0.02479
+  },
+  {
+   "word": "gold",
+   "z": 2.14,
+   "watched": 10,
+   "listings": 491,
+   "rate": 0.02037
+  },
+  {
+   "word": "python",
+   "z": 2.11,
+   "watched": 5,
+   "listings": 192,
+   "rate": 0.02604
+  },
+  {
+   "word": "hades",
+   "z": 2.11,
+   "watched": 5,
+   "listings": 192,
+   "rate": 0.02604
+  },
+  {
+   "word": "young",
+   "z": 2.08,
+   "watched": 5,
+   "listings": 194,
+   "rate": 0.02577
+  },
+  {
+   "word": "hammer",
+   "z": 2.07,
+   "watched": 7,
+   "listings": 311,
+   "rate": 0.02251
+  },
+  {
+   "word": "club",
+   "z": 1.93,
+   "watched": 7,
+   "listings": 327,
+   "rate": 0.02141
+  },
+  {
+   "word": "metal",
+   "z": 1.88,
+   "watched": 9,
+   "listings": 463,
+   "rate": 0.01944
+  },
+  {
+   "word": "gentlemen",
+   "z": 1.87,
+   "watched": 5,
+   "listings": 211,
+   "rate": 0.0237
+  },
+  {
+   "word": "modern",
+   "z": 1.87,
+   "watched": 7,
+   "listings": 334,
+   "rate": 0.02096
+  },
+  {
+   "word": "saint",
+   "z": 1.83,
+   "watched": 5,
+   "listings": 215,
+   "rate": 0.02326
+  },
+  {
+   "word": "princess",
+   "z": 1.81,
+   "watched": 5,
+   "listings": 217,
+   "rate": 0.02304
+  },
+  {
+   "word": "california",
+   "z": 1.8,
+   "watched": 7,
+   "listings": 342,
+   "rate": 0.02047
+  },
+  {
+   "word": "god",
+   "z": 1.8,
+   "watched": 9,
+   "listings": 475,
+   "rate": 0.01895
+  },
+  {
+   "word": "logo",
+   "z": 1.79,
+   "watched": 17,
+   "listings": 1054,
+   "rate": 0.01613
+  },
+  {
+   "word": "chinese",
+   "z": 1.78,
+   "watched": 4,
+   "listings": 161,
+   "rate": 0.02484
+  },
+  {
+   "word": "collection",
+   "z": 1.77,
+   "watched": 4,
+   "listings": 162,
+   "rate": 0.02469
+  },
+  {
+   "word": "bridge",
+   "z": 1.77,
+   "watched": 4,
+   "listings": 162,
+   "rate": 0.02469
+  },
+  {
+   "word": "sign",
+   "z": 1.76,
+   "watched": 8,
+   "listings": 414,
+   "rate": 0.01932
+  },
+  {
+   "word": "queen",
+   "z": 1.72,
+   "watched": 7,
+   "listings": 352,
+   "rate": 0.01989
+  },
+  {
+   "word": "goat",
+   "z": 1.72,
+   "watched": 5,
+   "listings": 225,
+   "rate": 0.02222
+  },
+  {
+   "word": "island",
+   "z": 1.71,
+   "watched": 4,
+   "listings": 166,
+   "rate": 0.0241
+  },
+  {
+   "word": "phoenix",
+   "z": 1.68,
+   "watched": 6,
+   "listings": 292,
+   "rate": 0.02055
+  },
+  {
+   "word": "tattoo",
+   "z": 1.64,
+   "watched": 6,
+   "listings": 296,
+   "rate": 0.02027
+  },
+  {
+   "word": "long",
+   "z": 1.64,
+   "watched": 5,
+   "listings": 233,
+   "rate": 0.02146
+  },
+  {
+   "word": "flying",
+   "z": 1.63,
+   "watched": 5,
+   "listings": 234,
+   "rate": 0.02137
+  },
+  {
+   "word": "golden",
+   "z": 1.62,
+   "watched": 8,
+   "listings": 433,
+   "rate": 0.01848
+  },
+  {
+   "word": "south",
+   "z": 1.62,
+   "watched": 4,
+   "listings": 173,
+   "rate": 0.02312
+  },
+  {
+   "word": "romantic",
+   "z": 1.62,
+   "watched": 4,
+   "listings": 173,
+   "rate": 0.02312
+  },
+  {
+   "word": "below",
+   "z": 1.61,
+   "watched": 4,
+   "listings": 174,
+   "rate": 0.02299
+  },
+  {
+   "word": "silver",
+   "z": 1.59,
+   "watched": 4,
+   "listings": 176,
+   "rate": 0.02273
+  },
+  {
+   "word": "show",
+   "z": 1.59,
+   "watched": 4,
+   "listings": 176,
+   "rate": 0.02273
+  },
+  {
+   "word": "frame",
+   "z": 1.58,
+   "watched": 44,
+   "listings": 3309,
+   "rate": 0.0133
+  },
+  {
+   "word": "great",
+   "z": 1.56,
+   "watched": 10,
+   "listings": 586,
+   "rate": 0.01706
+  },
+  {
+   "word": "nose",
+   "z": 1.53,
+   "watched": 6,
+   "listings": 309,
+   "rate": 0.01942
+  },
+  {
+   "word": "force",
+   "z": 1.53,
+   "watched": 5,
+   "listings": 244,
+   "rate": 0.02049
+  },
+  {
+   "word": "bob",
+   "z": 1.5,
+   "watched": 5,
+   "listings": 247,
+   "rate": 0.02024
+  },
+  {
+   "word": "minimalist",
+   "z": 1.49,
+   "watched": 7,
+   "listings": 383,
+   "rate": 0.01828
+  },
+  {
+   "word": "human",
+   "z": 1.46,
+   "watched": 7,
+   "listings": 387,
+   "rate": 0.01809
+  },
+  {
+   "word": "spoon",
+   "z": 1.45,
+   "watched": 5,
+   "listings": 252,
+   "rate": 0.01984
+  },
+  {
+   "word": "coal",
+   "z": 1.45,
+   "watched": 5,
+   "listings": 252,
+   "rate": 0.01984
+  },
+  {
+   "word": "music",
+   "z": 1.4,
+   "watched": 14,
+   "listings": 920,
+   "rate": 0.01522
+  },
+  {
+   "word": "mars",
+   "z": 1.37,
+   "watched": 4,
+   "listings": 195,
+   "rate": 0.02051
+  },
+  {
+   "word": "witch",
+   "z": 1.33,
+   "watched": 8,
+   "listings": 478,
+   "rate": 0.01674
+  },
+  {
+   "word": "new",
+   "z": 1.31,
+   "watched": 11,
+   "listings": 709,
+   "rate": 0.01551
+  },
+  {
+   "word": "from",
+   "z": 1.29,
+   "watched": 12,
+   "listings": 790,
+   "rate": 0.01519
+  },
+  {
+   "word": "tree",
+   "z": 1.29,
+   "watched": 10,
+   "listings": 636,
+   "rate": 0.01572
+  },
+  {
+   "word": "our",
+   "z": 1.27,
+   "watched": 4,
+   "listings": 204,
+   "rate": 0.01961
+  },
+  {
+   "word": "warrior",
+   "z": 1.21,
+   "watched": 6,
+   "listings": 351,
+   "rate": 0.01709
+  },
+  {
+   "word": "evolution",
+   "z": 1.19,
+   "watched": 6,
+   "listings": 353,
+   "rate": 0.017
+  },
+  {
+   "word": "were",
+   "z": 1.18,
+   "watched": 5,
+   "listings": 283,
+   "rate": 0.01767
+  },
+  {
+   "word": "cafe",
+   "z": 1.18,
+   "watched": 5,
+   "listings": 283,
+   "rate": 0.01767
+  },
+  {
+   "word": "beach",
+   "z": 1.17,
+   "watched": 7,
+   "listings": 431,
+   "rate": 0.01624
+  },
+  {
+   "word": "shepherd",
+   "z": 1.14,
+   "watched": 6,
+   "listings": 361,
+   "rate": 0.01662
+  },
+  {
+   "word": "racing",
+   "z": 1.14,
+   "watched": 3,
+   "listings": 150,
+   "rate": 0.02
+  },
+  {
+   "word": "robot",
+   "z": 1.12,
+   "watched": 4,
+   "listings": 219,
+   "rate": 0.01826
+  },
+  {
+   "word": "shoes",
+   "z": 1.12,
+   "watched": 5,
+   "listings": 290,
+   "rate": 0.01724
+  },
+  {
+   "word": "quote",
+   "z": 1.1,
+   "watched": 10,
+   "listings": 674,
+   "rate": 0.01484
+  },
+  {
+   "word": "typography",
+   "z": 1.1,
+   "watched": 4,
+   "listings": 222,
+   "rate": 0.01802
+  },
+  {
+   "word": "grey",
+   "z": 1.1,
+   "watched": 4,
+   "listings": 222,
+   "rate": 0.01802
+  },
+  {
+   "word": "bird",
+   "z": 1.1,
+   "watched": 4,
+   "listings": 222,
+   "rate": 0.01802
+  },
+  {
+   "word": "billiards",
+   "z": 1.1,
+   "watched": 4,
+   "listings": 222,
+   "rate": 0.01802
+  },
+  {
+   "word": "pilot",
+   "z": 1.08,
+   "watched": 5,
+   "listings": 295,
+   "rate": 0.01695
+  },
+  {
+   "word": "stained",
+   "z": 1.08,
+   "watched": 3,
+   "listings": 155,
+   "rate": 0.01935
+  },
+  {
+   "word": "commander",
+   "z": 1.08,
+   "watched": 3,
+   "listings": 155,
+   "rate": 0.01935
+  },
+  {
+   "word": "bunny",
+   "z": 1.06,
+   "watched": 4,
+   "listings": 226,
+   "rate": 0.0177
+  },
+  {
+   "word": "distressed",
+   "z": 1.06,
+   "watched": 3,
+   "listings": 157,
+   "rate": 0.01911
+  },
+  {
+   "word": "woman",
+   "z": 1.04,
+   "watched": 9,
+   "listings": 607,
+   "rate": 0.01483
+  },
+  {
+   "word": "kitchen",
+   "z": 1.04,
+   "watched": 3,
+   "listings": 158,
+   "rate": 0.01899
+  },
+  {
+   "word": "bay",
+   "z": 1.02,
+   "watched": 3,
+   "listings": 160,
+   "rate": 0.01875
+  },
+  {
+   "word": "wing",
+   "z": 1.02,
+   "watched": 5,
+   "listings": 304,
+   "rate": 0.01645
+  },
+  {
+   "word": "watercolor",
+   "z": 1.01,
+   "watched": 9,
+   "listings": 614,
+   "rate": 0.01466
+  },
+  {
+   "word": "tropical",
+   "z": 0.95,
+   "watched": 3,
+   "listings": 166,
+   "rate": 0.01807
+  },
+  {
+   "word": "hamburger",
+   "z": 0.95,
+   "watched": 4,
+   "listings": 238,
+   "rate": 0.01681
+  },
+  {
+   "word": "travel",
+   "z": 0.95,
+   "watched": 6,
+   "listings": 390,
+   "rate": 0.01538
+  },
+  {
+   "word": "roll",
+   "z": 0.94,
+   "watched": 3,
+   "listings": 167,
+   "rate": 0.01796
+  },
+  {
+   "word": "north",
+   "z": 0.94,
+   "watched": 3,
+   "listings": 167,
+   "rate": 0.01796
+  },
+  {
+   "word": "sea",
+   "z": 0.94,
+   "watched": 8,
+   "listings": 549,
+   "rate": 0.01457
+  },
+  {
+   "word": "diamond",
+   "z": 0.93,
+   "watched": 3,
+   "listings": 168,
+   "rate": 0.01786
+  },
+  {
+   "word": "giant",
+   "z": 0.92,
+   "watched": 5,
+   "listings": 317,
+   "rate": 0.01577
+  },
+  {
+   "word": "silhouette",
+   "z": 0.89,
+   "watched": 4,
+   "listings": 245,
+   "rate": 0.01633
+  },
+  {
+   "word": "portrait",
+   "z": 0.89,
+   "watched": 8,
+   "listings": 558,
+   "rate": 0.01434
+  },
+  {
+   "word": "dreams",
+   "z": 0.88,
+   "watched": 3,
+   "listings": 173,
+   "rate": 0.01734
+  },
+  {
+   "word": "eagle",
+   "z": 0.87,
+   "watched": 4,
+   "listings": 248,
+   "rate": 0.01613
+  },
+  {
+   "word": "wizard",
+   "z": 0.85,
+   "watched": 5,
+   "listings": 327,
+   "rate": 0.01529
+  },
+  {
+   "word": "light",
+   "z": 0.84,
+   "watched": 9,
+   "listings": 649,
+   "rate": 0.01387
+  },
+  {
+   "word": "hand",
+   "z": 0.8,
+   "watched": 5,
+   "listings": 334,
+   "rate": 0.01497
+  },
+  {
+   "word": "dance",
+   "z": 0.8,
+   "watched": 3,
+   "listings": 181,
+   "rate": 0.01657
+  },
+  {
+   "word": "clouds",
+   "z": 0.8,
+   "watched": 3,
+   "listings": 181,
+   "rate": 0.01657
+  },
+  {
+   "word": "live",
+   "z": 0.75,
+   "watched": 5,
+   "listings": 341,
+   "rate": 0.01466
+  },
+  {
+   "word": "days",
+   "z": 0.75,
+   "watched": 3,
+   "listings": 186,
+   "rate": 0.01613
+  },
+  {
+   "word": "guy",
+   "z": 0.74,
+   "watched": 3,
+   "listings": 187,
+   "rate": 0.01604
+  },
+  {
+   "word": "home",
+   "z": 0.73,
+   "watched": 4,
+   "listings": 265,
+   "rate": 0.01509
+  },
+  {
+   "word": "beauty",
+   "z": 0.73,
+   "watched": 3,
+   "listings": 188,
+   "rate": 0.01596
+  },
+  {
+   "word": "void",
+   "z": 0.73,
+   "watched": 4,
+   "listings": 266,
+   "rate": 0.01504
+  },
+  {
+   "word": "general",
+   "z": 0.72,
+   "watched": 3,
+   "listings": 189,
+   "rate": 0.01587
+  },
+  {
+   "word": "sheep",
+   "z": 0.72,
+   "watched": 5,
+   "listings": 346,
+   "rate": 0.01445
+  },
+  {
+   "word": "shadow",
+   "z": 0.71,
+   "watched": 4,
+   "listings": 268,
+   "rate": 0.01493
+  },
+  {
+   "word": "neo",
+   "z": 0.7,
+   "watched": 3,
+   "listings": 191,
+   "rate": 0.01571
+  },
+  {
+   "word": "pride",
+   "z": 0.7,
+   "watched": 4,
+   "listings": 269,
+   "rate": 0.01487
+  },
+  {
+   "word": "judo",
+   "z": 0.7,
+   "watched": 5,
+   "listings": 349,
+   "rate": 0.01433
+  },
+  {
+   "word": "sunrise",
+   "z": 0.7,
+   "watched": 6,
+   "listings": 431,
+   "rate": 0.01392
+  },
+  {
+   "word": "girls",
+   "z": 0.69,
+   "watched": 4,
+   "listings": 270,
+   "rate": 0.01481
+  },
+  {
+   "word": "trees",
+   "z": 0.68,
+   "watched": 4,
+   "listings": 272,
+   "rate": 0.01471
+  },
+  {
+   "word": "monster",
+   "z": 0.67,
+   "watched": 4,
+   "listings": 274,
+   "rate": 0.0146
+  },
+  {
+   "word": "ladies",
+   "z": 0.66,
+   "watched": 4,
+   "listings": 275,
+   "rate": 0.01455
+  },
+  {
+   "word": "there",
+   "z": 0.64,
+   "watched": 4,
+   "listings": 278,
+   "rate": 0.01439
+  },
+  {
+   "word": "bold",
+   "z": 0.63,
+   "watched": 3,
+   "listings": 199,
+   "rate": 0.01508
+  },
+  {
+   "word": "radar",
+   "z": 0.62,
+   "watched": 3,
+   "listings": 200,
+   "rate": 0.015
+  },
+  {
+   "word": "hockey",
+   "z": 0.59,
+   "watched": 3,
+   "listings": 204,
+   "rate": 0.01471
+  },
+  {
+   "word": "end",
+   "z": 0.59,
+   "watched": 3,
+   "listings": 204,
+   "rate": 0.01471
+  },
+  {
+   "word": "two",
+   "z": 0.59,
+   "watched": 5,
+   "listings": 367,
+   "rate": 0.01362
+  },
+  {
+   "word": "life",
+   "z": 0.57,
+   "watched": 18,
+   "listings": 1500,
+   "rate": 0.012
+  },
+  {
+   "word": "above",
+   "z": 0.56,
+   "watched": 3,
+   "listings": 207,
+   "rate": 0.01449
+  },
+  {
+   "word": "puppy",
+   "z": 0.54,
+   "watched": 4,
+   "listings": 291,
+   "rate": 0.01375
+  },
+  {
+   "word": "wave",
+   "z": 0.54,
+   "watched": 3,
+   "listings": 210,
+   "rate": 0.01429
+  },
+  {
+   "word": "quotes",
+   "z": 0.53,
+   "watched": 3,
+   "listings": 211,
+   "rate": 0.01422
+  },
+  {
+   "word": "eye",
+   "z": 0.53,
+   "watched": 3,
+   "listings": 211,
+   "rate": 0.01422
+  },
+  {
+   "word": "pub",
+   "z": 0.53,
+   "watched": 5,
+   "listings": 377,
+   "rate": 0.01326
+  },
+  {
+   "word": "full",
+   "z": 0.52,
+   "watched": 5,
+   "listings": 378,
+   "rate": 0.01323
+  },
+  {
+   "word": "made",
+   "z": 0.51,
+   "watched": 3,
+   "listings": 213,
+   "rate": 0.01408
+  },
+  {
+   "word": "one",
+   "z": 0.51,
+   "watched": 10,
+   "listings": 813,
+   "rate": 0.0123
+  },
+  {
+   "word": "yin",
+   "z": 0.5,
+   "watched": 4,
+   "listings": 298,
+   "rate": 0.01342
+  },
+  {
+   "word": "sunset",
+   "z": 0.49,
+   "watched": 10,
+   "listings": 816,
+   "rate": 0.01225
+  },
+  {
+   "word": "pattern",
+   "z": 0.49,
+   "watched": 13,
+   "listings": 1083,
+   "rate": 0.012
+  },
+  {
+   "word": "death",
+   "z": 0.48,
+   "watched": 3,
+   "listings": 217,
+   "rate": 0.01382
+  },
+  {
+   "word": "graphic",
+   "z": 0.44,
+   "watched": 4,
+   "listings": 306,
+   "rate": 0.01307
+  },
+  {
+   "word": "boston",
+   "z": 0.43,
+   "watched": 4,
+   "listings": 308,
+   "rate": 0.01299
+  },
+  {
+   "word": "universe",
+   "z": 0.43,
+   "watched": 3,
+   "listings": 224,
+   "rate": 0.01339
+  },
+  {
+   "word": "psychic",
+   "z": 0.43,
+   "watched": 3,
+   "listings": 224,
+   "rate": 0.01339
+  },
+  {
+   "word": "native",
+   "z": 0.43,
+   "watched": 3,
+   "listings": 224,
+   "rate": 0.01339
+  },
+  {
+   "word": "eating",
+   "z": 0.43,
+   "watched": 3,
+   "listings": 224,
+   "rate": 0.01339
+  },
+  {
+   "word": "matrix",
+   "z": 0.42,
+   "watched": 3,
+   "listings": 225,
+   "rate": 0.01333
+  },
+  {
+   "word": "money",
+   "z": 0.4,
+   "watched": 3,
+   "listings": 227,
+   "rate": 0.01322
+  },
+  {
+   "word": "chan",
+   "z": 0.39,
+   "watched": 3,
+   "listings": 228,
+   "rate": 0.01316
+  },
+  {
+   "word": "high",
+   "z": 0.39,
+   "watched": 4,
+   "listings": 314,
+   "rate": 0.01274
+  },
+  {
+   "word": "king",
+   "z": 0.39,
+   "watched": 6,
+   "listings": 489,
+   "rate": 0.01227
+  },
+  {
+   "word": "reach",
+   "z": 0.38,
+   "watched": 3,
+   "listings": 230,
+   "rate": 0.01304
+  },
+  {
+   "word": "fight",
+   "z": 0.38,
+   "watched": 3,
+   "listings": 230,
+   "rate": 0.01304
+  },
+  {
+   "word": "mafia",
+   "z": 0.37,
+   "watched": 3,
+   "listings": 231,
+   "rate": 0.01299
+  },
+  {
+   "word": "old",
+   "z": 0.35,
+   "watched": 8,
+   "listings": 675,
+   "rate": 0.01185
+  },
+  {
+   "word": "word",
+   "z": 0.34,
+   "watched": 2,
+   "listings": 150,
+   "rate": 0.01333
+  },
+  {
+   "word": "heavy",
+   "z": 0.34,
+   "watched": 2,
+   "listings": 150,
+   "rate": 0.01333
+  },
+  {
+   "word": "ear",
+   "z": 0.34,
+   "watched": 2,
+   "listings": 150,
+   "rate": 0.01333
+  },
+  {
+   "word": "class",
+   "z": 0.34,
+   "watched": 2,
+   "listings": 150,
+   "rate": 0.01333
+  },
+  {
+   "word": "painting",
+   "z": 0.34,
+   "watched": 5,
+   "listings": 410,
+   "rate": 0.0122
+  },
+  {
+   "word": "wild",
+   "z": 0.33,
+   "watched": 4,
+   "listings": 323,
+   "rate": 0.01238
+  },
+  {
+   "word": "terrier",
+   "z": 0.33,
+   "watched": 3,
+   "listings": 237,
+   "rate": 0.01266
+  },
+  {
+   "word": "again",
+   "z": 0.31,
+   "watched": 2,
+   "listings": 153,
+   "rate": 0.01307
+  },
+  {
+   "word": "tank",
+   "z": 0.3,
+   "watched": 2,
+   "listings": 154,
+   "rate": 0.01299
+  },
+  {
+   "word": "crystal",
+   "z": 0.3,
+   "watched": 2,
+   "listings": 154,
+   "rate": 0.01299
+  },
+  {
+   "word": "cats",
+   "z": 0.3,
+   "watched": 3,
+   "listings": 241,
+   "rate": 0.01245
+  },
+  {
+   "word": "car",
+   "z": 0.29,
+   "watched": 5,
+   "listings": 419,
+   "rate": 0.01193
+  },
+  {
+   "word": "mountains",
+   "z": 0.28,
+   "watched": 2,
+   "listings": 156,
+   "rate": 0.01282
+  },
+  {
+   "word": "job",
+   "z": 0.28,
+   "watched": 5,
+   "listings": 421,
+   "rate": 0.01188
+  },
+  {
+   "word": "sky",
+   "z": 0.28,
+   "watched": 6,
+   "listings": 511,
+   "rate": 0.01174
+  },
+  {
+   "word": "crew",
+   "z": 0.28,
+   "watched": 2,
+   "listings": 157,
+   "rate": 0.01274
+  },
+  {
+   "word": "after",
+   "z": 0.28,
+   "watched": 2,
+   "listings": 157,
+   "rate": 0.01274
+  },
+  {
+   "word": "bear",
+   "z": 0.27,
+   "watched": 4,
+   "listings": 334,
+   "rate": 0.01198
+  },
+  {
+   "word": "illustration",
+   "z": 0.26,
+   "watched": 6,
+   "listings": 514,
+   "rate": 0.01167
+  },
+  {
+   "word": "essential",
+   "z": 0.26,
+   "watched": 3,
+   "listings": 246,
+   "rate": 0.0122
+  },
+  {
+   "word": "stone",
+   "z": 0.25,
+   "watched": 2,
+   "listings": 160,
+   "rate": 0.0125
+  },
+  {
+   "word": "petals",
+   "z": 0.25,
+   "watched": 2,
+   "listings": 160,
+   "rate": 0.0125
+  },
+  {
+   "word": "last",
+   "z": 0.25,
+   "watched": 2,
+   "listings": 160,
+   "rate": 0.0125
+  },
+  {
+   "word": "cosmic",
+   "z": 0.25,
+   "watched": 3,
+   "listings": 248,
+   "rate": 0.0121
+  },
+  {
+   "word": "hello",
+   "z": 0.24,
+   "watched": 2,
+   "listings": 161,
+   "rate": 0.01242
+  },
+  {
+   "word": "under",
+   "z": 0.23,
+   "watched": 3,
+   "listings": 250,
+   "rate": 0.012
+  },
+  {
+   "word": "success",
+   "z": 0.23,
+   "watched": 3,
+   "listings": 250,
+   "rate": 0.012
+  },
+  {
+   "word": "come",
+   "z": 0.21,
+   "watched": 2,
+   "listings": 164,
+   "rate": 0.0122
+  },
+  {
+   "word": "venus",
+   "z": 0.21,
+   "watched": 3,
+   "listings": 254,
+   "rate": 0.01181
+  },
+  {
+   "word": "geometric",
+   "z": 0.2,
+   "watched": 3,
+   "listings": 255,
+   "rate": 0.01176
+  },
+  {
+   "word": "demon",
+   "z": 0.2,
+   "watched": 3,
+   "listings": 255,
+   "rate": 0.01176
+  },
+  {
+   "word": "marble",
+   "z": 0.2,
+   "watched": 2,
+   "listings": 166,
+   "rate": 0.01205
+  },
+  {
+   "word": "interest",
+   "z": 0.19,
+   "watched": 2,
+   "listings": 167,
+   "rate": 0.01198
+  },
+  {
+   "word": "chaplin",
+   "z": 0.19,
+   "watched": 2,
+   "listings": 167,
+   "rate": 0.01198
+  },
+  {
+   "word": "german",
+   "z": 0.19,
+   "watched": 3,
+   "listings": 257,
+   "rate": 0.01167
+  },
+  {
+   "word": "paint",
+   "z": 0.18,
+   "watched": 2,
+   "listings": 168,
+   "rate": 0.0119
+  },
+  {
+   "word": "glacier",
+   "z": 0.17,
+   "watched": 3,
+   "listings": 259,
+   "rate": 0.01158
+  },
+  {
+   "word": "girl",
+   "z": 0.16,
+   "watched": 17,
+   "listings": 1558,
+   "rate": 0.01091
+  },
+  {
+   "word": "legends",
+   "z": 0.16,
+   "watched": 2,
+   "listings": 170,
+   "rate": 0.01176
+  },
+  {
+   "word": "fox",
+   "z": 0.16,
+   "watched": 2,
+   "listings": 170,
+   "rate": 0.01176
+  },
+  {
+   "word": "crazy",
+   "z": 0.16,
+   "watched": 3,
+   "listings": 261,
+   "rate": 0.01149
+  },
+  {
+   "word": "immortal",
+   "z": 0.15,
+   "watched": 2,
+   "listings": 171,
+   "rate": 0.0117
+  },
+  {
+   "word": "small",
+   "z": 0.15,
+   "watched": 2,
+   "listings": 172,
+   "rate": 0.01163
+  },
+  {
+   "word": "person",
+   "z": 0.13,
+   "watched": 4,
+   "listings": 357,
+   "rate": 0.0112
+  },
+  {
+   "word": "super",
+   "z": 0.12,
+   "watched": 6,
+   "listings": 544,
+   "rate": 0.01103
+  },
+  {
+   "word": "hum",
+   "z": 0.12,
+   "watched": 2,
+   "listings": 175,
+   "rate": 0.01143
+  },
+  {
+   "word": "power",
+   "z": 0.12,
+   "watched": 4,
+   "listings": 359,
+   "rate": 0.01114
+  },
+  {
+   "word": "brown",
+   "z": 0.12,
+   "watched": 3,
+   "listings": 267,
+   "rate": 0.01124
+  },
+  {
+   "word": "kids",
+   "z": 0.12,
+   "watched": 4,
+   "listings": 360,
+   "rate": 0.01111
+  },
+  {
+   "word": "tortoise",
+   "z": 0.11,
+   "watched": 3,
+   "listings": 268,
+   "rate": 0.01119
+  },
+  {
+   "word": "soda",
+   "z": 0.11,
+   "watched": 3,
+   "listings": 269,
+   "rate": 0.01115
+  },
+  {
+   "word": "colors",
+   "z": 0.11,
+   "watched": 3,
+   "listings": 269,
+   "rate": 0.01115
+  },
+  {
+   "word": "ali",
+   "z": 0.11,
+   "watched": 3,
+   "listings": 269,
+   "rate": 0.01115
+  },
+  {
+   "word": "tune",
+   "z": 0.11,
+   "watched": 2,
+   "listings": 177,
+   "rate": 0.0113
+  },
+  {
+   "word": "black",
+   "z": 0.1,
+   "watched": 24,
+   "listings": 2241,
+   "rate": 0.01071
+  },
+  {
+   "word": "initial",
+   "z": 0.1,
+   "watched": 2,
+   "listings": 178,
+   "rate": 0.01124
+  },
+  {
+   "word": "charlie",
+   "z": 0.09,
+   "watched": 4,
+   "listings": 364,
+   "rate": 0.01099
+  },
+  {
+   "word": "mother",
+   "z": 0.09,
+   "watched": 2,
+   "listings": 179,
+   "rate": 0.01117
+  },
+  {
+   "word": "edition",
+   "z": 0.08,
+   "watched": 2,
+   "listings": 180,
+   "rate": 0.01111
+  },
+  {
+   "word": "sun",
+   "z": 0.07,
+   "watched": 4,
+   "listings": 369,
+   "rate": 0.01084
+  },
+  {
+   "word": "red",
+   "z": 0.04,
+   "watched": 18,
+   "listings": 1701,
+   "rate": 0.01058
+  },
+  {
+   "word": "weapon",
+   "z": 0.04,
+   "watched": 2,
+   "listings": 186,
+   "rate": 0.01075
+  },
+  {
+   "word": "mist",
+   "z": 0.04,
+   "watched": 2,
+   "listings": 186,
+   "rate": 0.01075
+  },
+  {
+   "word": "those",
+   "z": 0.03,
+   "watched": 4,
+   "listings": 375,
+   "rate": 0.01067
+  },
+  {
+   "word": "cat",
+   "z": 0.03,
+   "watched": 18,
+   "listings": 1706,
+   "rate": 0.01055
+  },
+  {
+   "word": "beside",
+   "z": 0.03,
+   "watched": 3,
+   "listings": 282,
+   "rate": 0.01064
+  },
+  {
+   "word": "morning",
+   "z": 0.0,
+   "watched": 5,
+   "listings": 476,
+   "rate": 0.0105
+  },
+  {
+   "word": "thing",
+   "z": -0.0,
+   "watched": 2,
+   "listings": 191,
+   "rate": 0.01047
+  },
+  {
+   "word": "lovers",
+   "z": -0.01,
+   "watched": 3,
+   "listings": 287,
+   "rate": 0.01045
+  },
+  {
+   "word": "never",
+   "z": -0.01,
+   "watched": 6,
+   "listings": 574,
+   "rate": 0.01045
+  },
+  {
+   "word": "snake",
+   "z": -0.01,
+   "watched": 5,
+   "listings": 479,
+   "rate": 0.01044
+  },
+  {
+   "word": "meadow",
+   "z": -0.02,
+   "watched": 2,
+   "listings": 193,
+   "rate": 0.01036
+  },
+  {
+   "word": "fries",
+   "z": -0.02,
+   "watched": 4,
+   "listings": 385,
+   "rate": 0.01039
+  },
+  {
+   "word": "master",
+   "z": -0.04,
+   "watched": 2,
+   "listings": 196,
+   "rate": 0.0102
+  },
+  {
+   "word": "fall",
+   "z": -0.04,
+   "watched": 2,
+   "listings": 196,
+   "rate": 0.0102
+  },
+  {
+   "word": "good",
+   "z": -0.05,
+   "watched": 6,
+   "listings": 583,
+   "rate": 0.01029
+  },
+  {
+   "word": "radio",
+   "z": -0.05,
+   "watched": 5,
+   "listings": 487,
+   "rate": 0.01027
+  },
+  {
+   "word": "nuclear",
+   "z": -0.05,
+   "watched": 4,
+   "listings": 391,
+   "rate": 0.01023
+  },
+  {
+   "word": "skull",
+   "z": -0.05,
+   "watched": 6,
+   "listings": 584,
+   "rate": 0.01027
+  },
+  {
+   "word": "omega",
+   "z": -0.05,
+   "watched": 2,
+   "listings": 198,
+   "rate": 0.0101
+  },
+  {
+   "word": "load",
+   "z": -0.05,
+   "watched": 2,
+   "listings": 198,
+   "rate": 0.0101
+  },
+  {
+   "word": "down",
+   "z": -0.05,
+   "watched": 3,
+   "listings": 295,
+   "rate": 0.01017
+  },
+  {
+   "word": "chair",
+   "z": -0.06,
+   "watched": 3,
+   "listings": 296,
+   "rate": 0.01014
+  },
+  {
+   "word": "garden",
+   "z": -0.06,
+   "watched": 3,
+   "listings": 297,
+   "rate": 0.0101
+  },
+  {
+   "word": "muhammad",
+   "z": -0.07,
+   "watched": 2,
+   "listings": 200,
+   "rate": 0.01
+  },
+  {
+   "word": "field",
+   "z": -0.07,
+   "watched": 2,
+   "listings": 200,
+   "rate": 0.01
+  },
+  {
+   "word": "game",
+   "z": -0.07,
+   "watched": 5,
+   "listings": 493,
+   "rate": 0.01014
+  },
+  {
+   "word": "angel",
+   "z": -0.07,
+   "watched": 4,
+   "listings": 396,
+   "rate": 0.0101
+  },
+  {
+   "word": "rasta",
+   "z": -0.08,
+   "watched": 3,
+   "listings": 300,
+   "rate": 0.01
+  },
+  {
+   "word": "dead",
+   "z": -0.08,
+   "watched": 3,
+   "listings": 300,
+   "rate": 0.01
+  },
+  {
+   "word": "roses",
+   "z": -0.09,
+   "watched": 2,
+   "listings": 204,
+   "rate": 0.0098
+  },
+  {
+   "word": "brother",
+   "z": -0.09,
+   "watched": 2,
+   "listings": 204,
+   "rate": 0.0098
+  },
+  {
+   "word": "behind",
+   "z": -0.1,
+   "watched": 3,
+   "listings": 303,
+   "rate": 0.0099
+  },
+  {
+   "word": "poison",
+   "z": -0.1,
+   "watched": 2,
+   "listings": 205,
+   "rate": 0.00976
+  },
+  {
+   "word": "yang",
+   "z": -0.1,
+   "watched": 4,
+   "listings": 402,
+   "rate": 0.00995
+  },
+  {
+   "word": "tiger",
+   "z": -0.11,
+   "watched": 5,
+   "listings": 501,
+   "rate": 0.00998
+  },
+  {
+   "word": "football",
+   "z": -0.12,
+   "watched": 2,
+   "listings": 207,
+   "rate": 0.00966
+  },
+  {
+   "word": "javelin",
+   "z": -0.12,
+   "watched": 3,
+   "listings": 306,
+   "rate": 0.0098
+  },
+  {
+   "word": "alien",
+   "z": -0.13,
+   "watched": 2,
+   "listings": 209,
+   "rate": 0.00957
+  },
+  {
+   "word": "face",
+   "z": -0.13,
+   "watched": 5,
+   "listings": 506,
+   "rate": 0.00988
+  },
+  {
+   "word": "pizza",
+   "z": -0.14,
+   "watched": 2,
+   "listings": 210,
+   "rate": 0.00952
+  },
+  {
+   "word": "rose",
+   "z": -0.14,
+   "watched": 4,
+   "listings": 409,
+   "rate": 0.00978
+  },
+  {
+   "word": "espresso",
+   "z": -0.15,
+   "watched": 2,
+   "listings": 212,
+   "rate": 0.00943
+  },
+  {
+   "word": "card",
+   "z": -0.17,
+   "watched": 2,
+   "listings": 215,
+   "rate": 0.0093
+  },
+  {
+   "word": "book",
+   "z": -0.17,
+   "watched": 2,
+   "listings": 215,
+   "rate": 0.0093
+  },
+  {
+   "word": "engineer",
+   "z": -0.18,
+   "watched": 3,
+   "listings": 318,
+   "rate": 0.00943
+  },
+  {
+   "word": "soul",
+   "z": -0.19,
+   "watched": 2,
+   "listings": 218,
+   "rate": 0.00917
+  },
+  {
+   "word": "bike",
+   "z": -0.2,
+   "watched": 3,
+   "listings": 321,
+   "rate": 0.00935
+  },
+  {
+   "word": "take",
+   "z": -0.2,
+   "watched": 2,
+   "listings": 220,
+   "rate": 0.00909
+  },
+  {
+   "word": "gamer",
+   "z": -0.2,
+   "watched": 2,
+   "listings": 220,
+   "rate": 0.00909
+  },
+  {
+   "word": "ninja",
+   "z": -0.21,
+   "watched": 5,
+   "listings": 523,
+   "rate": 0.00956
+  },
+  {
+   "word": "mask",
+   "z": -0.21,
+   "watched": 2,
+   "listings": 221,
+   "rate": 0.00905
+  },
+  {
+   "word": "city",
+   "z": -0.21,
+   "watched": 4,
+   "listings": 424,
+   "rate": 0.00943
+  },
+  {
+   "word": "trade",
+   "z": -0.22,
+   "watched": 3,
+   "listings": 325,
+   "rate": 0.00923
+  },
+  {
+   "word": "loyal",
+   "z": -0.22,
+   "watched": 2,
+   "listings": 223,
+   "rate": 0.00897
+  },
+  {
+   "word": "sticker",
+   "z": -0.23,
+   "watched": 4,
+   "listings": 427,
+   "rate": 0.00937
+  },
+  {
+   "word": "monkey",
+   "z": -0.23,
+   "watched": 3,
+   "listings": 326,
+   "rate": 0.0092
+  },
+  {
+   "word": "minimal",
+   "z": -0.23,
+   "watched": 2,
+   "listings": 224,
+   "rate": 0.00893
+  },
+  {
+   "word": "glass",
+   "z": -0.24,
+   "watched": 4,
+   "listings": 431,
+   "rate": 0.00928
+  },
+  {
+   "word": "three",
+   "z": -0.28,
+   "watched": 2,
+   "listings": 232,
+   "rate": 0.00862
+  },
+  {
+   "word": "ball",
+   "z": -0.28,
+   "watched": 3,
+   "listings": 336,
+   "rate": 0.00893
+  },
+  {
+   "word": "butterfly",
+   "z": -0.28,
+   "watched": 2,
+   "listings": 233,
+   "rate": 0.00858
+  },
+  {
+   "word": "she",
+   "z": -0.29,
+   "watched": 4,
+   "listings": 440,
+   "rate": 0.00909
+  },
+  {
+   "word": "school",
+   "z": -0.29,
+   "watched": 3,
+   "listings": 338,
+   "rate": 0.00888
+  },
+  {
+   "word": "bright",
+   "z": -0.31,
+   "watched": 2,
+   "listings": 237,
+   "rate": 0.00844
+  },
+  {
+   "word": "how",
+   "z": -0.31,
+   "watched": 2,
+   "listings": 238,
+   "rate": 0.0084
+  },
+  {
+   "word": "boat",
+   "z": -0.31,
+   "watched": 2,
+   "listings": 238,
+   "rate": 0.0084
+  },
+  {
+   "word": "storm",
+   "z": -0.32,
+   "watched": 3,
+   "listings": 344,
+   "rate": 0.00872
+  },
+  {
+   "word": "motion",
+   "z": -0.32,
+   "watched": 2,
+   "listings": 239,
+   "rate": 0.00837
+  },
+  {
+   "word": "green",
+   "z": -0.33,
+   "watched": 14,
+   "listings": 1458,
+   "rate": 0.0096
+  },
+  {
+   "word": "pants",
+   "z": -0.33,
+   "watched": 2,
+   "listings": 241,
+   "rate": 0.0083
+  },
+  {
+   "word": "know",
+   "z": -0.33,
+   "watched": 2,
+   "listings": 241,
+   "rate": 0.0083
+  },
+  {
+   "word": "over",
+   "z": -0.34,
+   "watched": 5,
+   "listings": 555,
+   "rate": 0.00901
+  },
+  {
+   "word": "too",
+   "z": -0.34,
+   "watched": 2,
+   "listings": 243,
+   "rate": 0.00823
+  },
+  {
+   "word": "where",
+   "z": -0.35,
+   "watched": 2,
+   "listings": 244,
+   "rate": 0.0082
+  },
+  {
+   "word": "fish",
+   "z": -0.36,
+   "watched": 3,
+   "listings": 352,
+   "rate": 0.00852
+  },
+  {
+   "word": "bourbon",
+   "z": -0.36,
+   "watched": 3,
+   "listings": 352,
+   "rate": 0.00852
+  },
+  {
+   "word": "was",
+   "z": -0.36,
+   "watched": 2,
+   "listings": 246,
+   "rate": 0.00813
+  },
+  {
+   "word": "spirit",
+   "z": -0.36,
+   "watched": 2,
+   "listings": 246,
+   "rate": 0.00813
+  },
+  {
+   "word": "blue",
+   "z": -0.36,
+   "watched": 22,
+   "listings": 2267,
+   "rate": 0.0097
+  },
+  {
+   "word": "house",
+   "z": -0.37,
+   "watched": 2,
+   "listings": 248,
+   "rate": 0.00806
+  },
+  {
+   "word": "summer",
+   "z": -0.37,
+   "watched": 4,
+   "listings": 460,
+   "rate": 0.0087
+  },
+  {
+   "word": "staff",
+   "z": -0.38,
+   "watched": 2,
+   "listings": 249,
+   "rate": 0.00803
+  },
+  {
+   "word": "abstract",
+   "z": -0.38,
+   "watched": 10,
+   "listings": 1077,
+   "rate": 0.00929
+  },
+  {
+   "word": "plasma",
+   "z": -0.4,
+   "watched": 2,
+   "listings": 253,
+   "rate": 0.00791
+  },
+  {
+   "word": "dogs",
+   "z": -0.41,
+   "watched": 2,
+   "listings": 254,
+   "rate": 0.00787
+  },
+  {
+   "word": "imp",
+   "z": -0.41,
+   "watched": 2,
+   "listings": 255,
+   "rate": 0.00784
+  },
+  {
+   "word": "head",
+   "z": -0.42,
+   "watched": 5,
+   "listings": 576,
+   "rate": 0.00868
+  },
+  {
+   "word": "thunder",
+   "z": -0.42,
+   "watched": 2,
+   "listings": 257,
+   "rate": 0.00778
+  },
+  {
+   "word": "tea",
+   "z": -0.43,
+   "watched": 4,
+   "listings": 473,
+   "rate": 0.00846
+  },
+  {
+   "word": "smoke",
+   "z": -0.46,
+   "watched": 2,
+   "listings": 263,
+   "rate": 0.0076
+  },
+  {
+   "word": "food",
+   "z": -0.46,
+   "watched": 4,
+   "listings": 480,
+   "rate": 0.00833
+  },
+  {
+   "word": "punch",
+   "z": -0.46,
+   "watched": 2,
+   "listings": 264,
+   "rate": 0.00758
+  },
+  {
+   "word": "bad",
+   "z": -0.46,
+   "watched": 2,
+   "listings": 264,
+   "rate": 0.00758
+  },
+  {
+   "word": "men",
+   "z": -0.47,
+   "watched": 3,
+   "listings": 374,
+   "rate": 0.00802
+  },
+  {
+   "word": "hot",
+   "z": -0.47,
+   "watched": 5,
+   "listings": 587,
+   "rate": 0.00852
+  },
+  {
+   "word": "cartoon",
+   "z": -0.47,
+   "watched": 5,
+   "listings": 587,
+   "rate": 0.00852
+  },
+  {
+   "word": "most",
+   "z": -0.47,
+   "watched": 1,
+   "listings": 152,
+   "rate": 0.00658
+  },
+  {
+   "word": "driver",
+   "z": -0.47,
+   "watched": 1,
+   "listings": 152,
+   "rate": 0.00658
+  },
+  {
+   "word": "dont",
+   "z": -0.47,
+   "watched": 1,
+   "listings": 152,
+   "rate": 0.00658
+  },
+  {
+   "word": "year",
+   "z": -0.48,
+   "watched": 1,
+   "listings": 153,
+   "rate": 0.00654
+  },
+  {
+   "word": "therapy",
+   "z": -0.48,
+   "watched": 1,
+   "listings": 153,
+   "rate": 0.00654
+  },
+  {
+   "word": "sports",
+   "z": -0.48,
+   "watched": 1,
+   "listings": 153,
+   "rate": 0.00654
+  },
+  {
+   "word": "satoshi",
+   "z": -0.48,
+   "watched": 1,
+   "listings": 153,
+   "rate": 0.00654
+  },
+  {
+   "word": "legs",
+   "z": -0.48,
+   "watched": 1,
+   "listings": 153,
+   "rate": 0.00654
+  },
+  {
+   "word": "drunk",
+   "z": -0.48,
+   "watched": 2,
+   "listings": 267,
+   "rate": 0.00749
+  },
+  {
+   "word": "nature",
+   "z": -0.48,
+   "watched": 2,
+   "listings": 268,
+   "rate": 0.00746
+  },
+  {
+   "word": "version",
+   "z": -0.48,
+   "watched": 1,
+   "listings": 154,
+   "rate": 0.00649
+  },
+  {
+   "word": "elden",
+   "z": -0.48,
+   "watched": 1,
+   "listings": 154,
+   "rate": 0.00649
+  },
+  {
+   "word": "cook",
+   "z": -0.48,
+   "watched": 1,
+   "listings": 154,
+   "rate": 0.00649
+  },
+  {
+   "word": "bicycle",
+   "z": -0.48,
+   "watched": 1,
+   "listings": 154,
+   "rate": 0.00649
+  },
+  {
+   "word": "rain",
+   "z": -0.49,
+   "watched": 1,
+   "listings": 155,
+   "rate": 0.00645
+  },
+  {
+   "word": "bar",
+   "z": -0.49,
+   "watched": 2,
+   "listings": 270,
+   "rate": 0.00741
+  },
+  {
+   "word": "portal",
+   "z": -0.5,
+   "watched": 2,
+   "listings": 271,
+   "rate": 0.00738
+  },
+  {
+   "word": "symbol",
+   "z": -0.5,
+   "watched": 2,
+   "listings": 272,
+   "rate": 0.00735
+  },
+  {
+   "word": "romance",
+   "z": -0.51,
+   "watched": 1,
+   "listings": 158,
+   "rate": 0.00633
+  },
+  {
+   "word": "best",
+   "z": -0.51,
+   "watched": 8,
+   "listings": 914,
+   "rate": 0.00875
+  },
+  {
+   "word": "they",
+   "z": -0.51,
+   "watched": 4,
+   "listings": 493,
+   "rate": 0.00811
+  },
+  {
+   "word": "twirl",
+   "z": -0.52,
+   "watched": 1,
+   "listings": 159,
+   "rate": 0.00629
+  },
+  {
+   "word": "nothing",
+   "z": -0.52,
+   "watched": 1,
+   "listings": 159,
+   "rate": 0.00629
+  },
+  {
+   "word": "mushroom",
+   "z": -0.52,
+   "watched": 1,
+   "listings": 159,
+   "rate": 0.00629
+  },
+  {
+   "word": "galaxy",
+   "z": -0.52,
+   "watched": 2,
+   "listings": 275,
+   "rate": 0.00727
+  },
+  {
+   "word": "mens",
+   "z": -0.52,
+   "watched": 1,
+   "listings": 160,
+   "rate": 0.00625
+  },
+  {
+   "word": "pretty",
+   "z": -0.53,
+   "watched": 1,
+   "listings": 161,
+   "rate": 0.00621
+  },
+  {
+   "word": "photo",
+   "z": -0.53,
+   "watched": 1,
+   "listings": 161,
+   "rate": 0.00621
+  },
+  {
+   "word": "them",
+   "z": -0.53,
+   "watched": 2,
+   "listings": 277,
+   "rate": 0.00722
+  },
+  {
+   "word": "pri",
+   "z": -0.53,
+   "watched": 47,
+   "listings": 4844,
+   "rate": 0.0097
+  },
+  {
+   "word": "night",
+   "z": -0.54,
+   "watched": 5,
+   "listings": 607,
+   "rate": 0.00824
+  },
+  {
+   "word": "train",
+   "z": -0.55,
+   "watched": 2,
+   "listings": 281,
+   "rate": 0.00712
+  },
+  {
+   "word": "eyes",
+   "z": -0.55,
+   "watched": 2,
+   "listings": 281,
+   "rate": 0.00712
+  },
+  {
+   "word": "going",
+   "z": -0.55,
+   "watched": 1,
+   "listings": 165,
+   "rate": 0.00606
+  },
+  {
+   "word": "lincoln",
+   "z": -0.56,
+   "watched": 1,
+   "listings": 166,
+   "rate": 0.00602
+  },
+  {
+   "word": "body",
+   "z": -0.56,
+   "watched": 1,
+   "listings": 166,
+   "rate": 0.00602
+  },
+  {
+   "word": "beautiful",
+   "z": -0.56,
+   "watched": 4,
+   "listings": 505,
+   "rate": 0.00792
+  },
+  {
+   "word": "saxophone",
+   "z": -0.57,
+   "watched": 1,
+   "listings": 167,
+   "rate": 0.00599
+  },
+  {
+   "word": "cup",
+   "z": -0.57,
+   "watched": 1,
+   "listings": 167,
+   "rate": 0.00599
+  },
+  {
+   "word": "blood",
+   "z": -0.57,
+   "watched": 1,
+   "listings": 167,
+   "rate": 0.00599
+  },
+  {
+   "word": "colorful",
+   "z": -0.57,
+   "watched": 7,
+   "listings": 828,
+   "rate": 0.00845
+  },
+  {
+   "word": "legend",
+   "z": -0.57,
+   "watched": 2,
+   "listings": 285,
+   "rate": 0.00702
+  },
+  {
+   "word": "skeleton",
+   "z": -0.57,
+   "watched": 1,
+   "listings": 168,
+   "rate": 0.00595
+  },
+  {
+   "word": "let",
+   "z": -0.58,
+   "watched": 3,
+   "listings": 399,
+   "rate": 0.00752
+  },
+  {
+   "word": "pack",
+   "z": -0.58,
+   "watched": 1,
+   "listings": 169,
+   "rate": 0.00592
+  },
+  {
+   "word": "its",
+   "z": -0.58,
+   "watched": 1,
+   "listings": 169,
+   "rate": 0.00592
+  },
+  {
+   "word": "first",
+   "z": -0.58,
+   "watched": 3,
+   "listings": 400,
+   "rate": 0.0075
+  },
+  {
+   "word": "shower",
+   "z": -0.59,
+   "watched": 1,
+   "listings": 170,
+   "rate": 0.00588
+  },
+  {
+   "word": "medic",
+   "z": -0.59,
+   "watched": 1,
+   "listings": 170,
+   "rate": 0.00588
+  },
+  {
+   "word": "sport",
+   "z": -0.59,
+   "watched": 1,
+   "listings": 171,
+   "rate": 0.00585
+  },
+  {
+   "word": "shark",
+   "z": -0.6,
+   "watched": 3,
+   "listings": 403,
+   "rate": 0.00744
+  },
+  {
+   "word": "purple",
+   "z": -0.62,
+   "watched": 6,
+   "listings": 737,
+   "rate": 0.00814
+  },
+  {
+   "word": "spider",
+   "z": -0.62,
+   "watched": 1,
+   "listings": 176,
+   "rate": 0.00568
+  },
+  {
+   "word": "close",
+   "z": -0.62,
+   "watched": 1,
+   "listings": 176,
+   "rate": 0.00568
+  },
+  {
+   "word": "cake",
+   "z": -0.62,
+   "watched": 1,
+   "listings": 176,
+   "rate": 0.00568
+  },
+  {
+   "word": "abraham",
+   "z": -0.64,
+   "watched": 1,
+   "listings": 179,
+   "rate": 0.00559
+  },
+  {
+   "word": "soy",
+   "z": -0.64,
+   "watched": 2,
+   "listings": 299,
+   "rate": 0.00669
+  },
+  {
+   "word": "ghoul",
+   "z": -0.65,
+   "watched": 1,
+   "listings": 180,
+   "rate": 0.00556
+  },
+  {
+   "word": "father",
+   "z": -0.65,
+   "watched": 1,
+   "listings": 180,
+   "rate": 0.00556
+  },
+  {
+   "word": "steam",
+   "z": -0.65,
+   "watched": 2,
+   "listings": 301,
+   "rate": 0.00664
+  },
+  {
+   "word": "australia",
+   "z": -0.66,
+   "watched": 1,
+   "listings": 182,
+   "rate": 0.00549
+  },
+  {
+   "word": "fork",
+   "z": -0.66,
+   "watched": 1,
+   "listings": 183,
+   "rate": 0.00546
+  },
+  {
+   "word": "building",
+   "z": -0.66,
+   "watched": 1,
+   "listings": 183,
+   "rate": 0.00546
+  },
+  {
+   "word": "bbq",
+   "z": -0.66,
+   "watched": 1,
+   "listings": 183,
+   "rate": 0.00546
+  },
+  {
+   "word": "fried",
+   "z": -0.67,
+   "watched": 2,
+   "listings": 306,
+   "rate": 0.00654
+  },
+  {
+   "word": "hearts",
+   "z": -0.68,
+   "watched": 1,
+   "listings": 186,
+   "rate": 0.00538
+  },
+  {
+   "word": "road",
+   "z": -0.69,
+   "watched": 1,
+   "listings": 187,
+   "rate": 0.00535
+  },
+  {
+   "word": "skater",
+   "z": -0.69,
+   "watched": 1,
+   "listings": 188,
+   "rate": 0.00532
+  },
+  {
+   "word": "top",
+   "z": -0.7,
+   "watched": 1,
+   "listings": 189,
+   "rate": 0.00529
+  },
+  {
+   "word": "out",
+   "z": -0.7,
+   "watched": 4,
+   "listings": 540,
+   "rate": 0.00741
+  },
+  {
+   "word": "root",
+   "z": -0.7,
+   "watched": 2,
+   "listings": 312,
+   "rate": 0.00641
+  },
+  {
+   "word": "stars",
+   "z": -0.7,
+   "watched": 1,
+   "listings": 190,
+   "rate": 0.00526
+  },
+  {
+   "word": "talent",
+   "z": -0.71,
+   "watched": 1,
+   "listings": 191,
+   "rate": 0.00524
+  },
+  {
+   "word": "back",
+   "z": -0.71,
+   "watched": 4,
+   "listings": 543,
+   "rate": 0.00737
+  },
+  {
+   "word": "gas",
+   "z": -0.71,
+   "watched": 2,
+   "listings": 314,
+   "rate": 0.00637
+  },
+  {
+   "word": "winter",
+   "z": -0.72,
+   "watched": 2,
+   "listings": 315,
+   "rate": 0.00635
+  },
+  {
+   "word": "humor",
+   "z": -0.72,
+   "watched": 1,
+   "listings": 193,
+   "rate": 0.00518
+  },
+  {
+   "word": "coffee",
+   "z": -0.72,
+   "watched": 10,
+   "listings": 1198,
+   "rate": 0.00835
+  },
+  {
+   "word": "future",
+   "z": -0.73,
+   "watched": 3,
+   "listings": 435,
+   "rate": 0.0069
+  },
+  {
+   "word": "flowers",
+   "z": -0.74,
+   "watched": 4,
+   "listings": 550,
+   "rate": 0.00727
+  },
+  {
+   "word": "his",
+   "z": -0.74,
+   "watched": 1,
+   "listings": 196,
+   "rate": 0.0051
+  },
+  {
+   "word": "see",
+   "z": -0.74,
+   "watched": 1,
+   "listings": 197,
+   "rate": 0.00508
+  },
+  {
+   "word": "look",
+   "z": -0.74,
+   "watched": 1,
+   "listings": 197,
+   "rate": 0.00508
+  },
+  {
+   "word": "calm",
+   "z": -0.74,
+   "watched": 2,
+   "listings": 321,
+   "rate": 0.00623
+  },
+  {
+   "word": "everything",
+   "z": -0.75,
+   "watched": 1,
+   "listings": 198,
+   "rate": 0.00505
+  },
+  {
+   "word": "ring",
+   "z": -0.75,
+   "watched": 2,
+   "listings": 322,
+   "rate": 0.00621
+  },
+  {
+   "word": "jazz",
+   "z": -0.75,
+   "watched": 1,
+   "listings": 199,
+   "rate": 0.00503
+  },
+  {
+   "word": "gun",
+   "z": -0.75,
+   "watched": 2,
+   "listings": 323,
+   "rate": 0.00619
+  },
+  {
+   "word": "reggae",
+   "z": -0.77,
+   "watched": 2,
+   "listings": 326,
+   "rate": 0.00613
+  },
+  {
+   "word": "doctor",
+   "z": -0.77,
+   "watched": 1,
+   "listings": 202,
+   "rate": 0.00495
+  },
+  {
+   "word": "text",
+   "z": -0.77,
+   "watched": 2,
+   "listings": 327,
+   "rate": 0.00612
+  },
+  {
+   "word": "heartbeat",
+   "z": -0.78,
+   "watched": 1,
+   "listings": 204,
+   "rate": 0.0049
+  },
+  {
+   "word": "artist",
+   "z": -0.78,
+   "watched": 1,
+   "listings": 204,
+   "rate": 0.0049
+  },
+  {
+   "word": "meme",
+   "z": -0.78,
+   "watched": 2,
+   "listings": 329,
+   "rate": 0.00608
+  },
+  {
+   "word": "jesus",
+   "z": -0.78,
+   "watched": 1,
+   "listings": 205,
+   "rate": 0.00488
+  },
+  {
+   "word": "letter",
+   "z": -0.79,
+   "watched": 1,
+   "listings": 206,
+   "rate": 0.00485
+  },
+  {
+   "word": "favorite",
+   "z": -0.79,
+   "watched": 1,
+   "listings": 206,
+   "rate": 0.00485
+  },
+  {
+   "word": "spring",
+   "z": -0.79,
+   "watched": 1,
+   "listings": 207,
+   "rate": 0.00483
+  },
+  {
+   "word": "street",
+   "z": -0.8,
+   "watched": 2,
+   "listings": 333,
+   "rate": 0.00601
+  },
+  {
+   "word": "egg",
+   "z": -0.8,
+   "watched": 2,
+   "listings": 333,
+   "rate": 0.00601
+  },
+  {
+   "word": "australian",
+   "z": -0.8,
+   "watched": 1,
+   "listings": 209,
+   "rate": 0.00478
+  },
+  {
+   "word": "living",
+   "z": -0.81,
+   "watched": 2,
+   "listings": 336,
+   "rate": 0.00595
+  },
+  {
+   "word": "about",
+   "z": -0.82,
+   "watched": 2,
+   "listings": 338,
+   "rate": 0.00592
+  },
+  {
+   "word": "leaves",
+   "z": -0.82,
+   "watched": 1,
+   "listings": 212,
+   "rate": 0.00472
+  },
+  {
+   "word": "ears",
+   "z": -0.83,
+   "watched": 1,
+   "listings": 213,
+   "rate": 0.00469
+  },
+  {
+   "word": "sweet",
+   "z": -0.83,
+   "watched": 3,
+   "listings": 459,
+   "rate": 0.00654
+  },
+  {
+   "word": "copy",
+   "z": -0.83,
+   "watched": 3,
+   "listings": 460,
+   "rate": 0.00652
+  },
+  {
+   "word": "atlantis",
+   "z": -0.83,
+   "watched": 1,
+   "listings": 214,
+   "rate": 0.00467
+  },
+  {
+   "word": "peace",
+   "z": -0.83,
+   "watched": 2,
+   "listings": 341,
+   "rate": 0.00587
+  },
+  {
+   "word": "every",
+   "z": -0.84,
+   "watched": 1,
+   "listings": 215,
+   "rate": 0.00465
+  },
+  {
+   "word": "still",
+   "z": -0.84,
+   "watched": 1,
+   "listings": 216,
+   "rate": 0.00463
+  },
+  {
+   "word": "zodiac",
+   "z": -0.85,
+   "watched": 1,
+   "listings": 217,
+   "rate": 0.00461
+  },
+  {
+   "word": "mountain",
+   "z": -0.85,
+   "watched": 3,
+   "listings": 466,
+   "rate": 0.00644
+  },
+  {
+   "word": "style",
+   "z": -0.85,
+   "watched": 4,
+   "listings": 583,
+   "rate": 0.00686
+  },
+  {
+   "word": "addict",
+   "z": -0.86,
+   "watched": 1,
+   "listings": 219,
+   "rate": 0.00457
+  },
+  {
+   "word": "animal",
+   "z": -0.86,
+   "watched": 3,
+   "listings": 469,
+   "rate": 0.0064
+  },
+  {
+   "word": "trust",
+   "z": -0.87,
+   "watched": 1,
+   "listings": 221,
+   "rate": 0.00452
+  },
+  {
+   "word": "gentleman",
+   "z": -0.87,
+   "watched": 1,
+   "listings": 222,
+   "rate": 0.0045
+  },
+  {
+   "word": "nation",
+   "z": -0.87,
+   "watched": 2,
+   "listings": 350,
+   "rate": 0.00571
+  },
+  {
+   "word": "into",
+   "z": -0.88,
+   "watched": 1,
+   "listings": 223,
+   "rate": 0.00448
+  },
+  {
+   "word": "fra",
+   "z": -0.88,
+   "watched": 27,
+   "listings": 3050,
+   "rate": 0.00885
+  },
+  {
+   "word": "heart",
+   "z": -0.88,
+   "watched": 10,
+   "listings": 1260,
+   "rate": 0.00794
+  },
+  {
+   "word": "ever",
+   "z": -0.88,
+   "watched": 1,
+   "listings": 225,
+   "rate": 0.00444
+  },
+  {
+   "word": "piano",
+   "z": -0.89,
+   "watched": 2,
+   "listings": 354,
+   "rate": 0.00565
+  },
+  {
+   "word": "penguin",
+   "z": -0.89,
+   "watched": 2,
+   "listings": 354,
+   "rate": 0.00565
+  },
+  {
+   "word": "lion",
+   "z": -0.89,
+   "watched": 2,
+   "listings": 354,
+   "rate": 0.00565
+  },
+  {
+   "word": "stream",
+   "z": -0.89,
+   "watched": 1,
+   "listings": 226,
+   "rate": 0.00442
+  },
+  {
+   "word": "air",
+   "z": -0.89,
+   "watched": 2,
+   "listings": 355,
+   "rate": 0.00563
+  },
+  {
+   "word": "support",
+   "z": -0.9,
+   "watched": 2,
+   "listings": 356,
+   "rate": 0.00562
+  },
+  {
+   "word": "leaf",
+   "z": -0.9,
+   "watched": 1,
+   "listings": 228,
+   "rate": 0.00439
+  },
+  {
+   "word": "magic",
+   "z": -0.9,
+   "watched": 2,
+   "listings": 357,
+   "rate": 0.0056
+  },
+  {
+   "word": "cool",
+   "z": -0.91,
+   "watched": 5,
+   "listings": 714,
+   "rate": 0.007
+  },
+  {
+   "word": "cheese",
+   "z": -0.91,
+   "watched": 1,
+   "listings": 230,
+   "rate": 0.00435
+  },
+  {
+   "word": "video",
+   "z": -0.91,
+   "watched": 1,
+   "listings": 231,
+   "rate": 0.00433
+  },
+  {
+   "word": "thug",
+   "z": -0.91,
+   "watched": 1,
+   "listings": 231,
+   "rate": 0.00433
+  },
+  {
+   "word": "her",
+   "z": -0.91,
+   "watched": 1,
+   "listings": 231,
+   "rate": 0.00433
+  },
+  {
+   "word": "floral",
+   "z": -0.92,
+   "watched": 3,
+   "listings": 484,
+   "rate": 0.0062
+  },
+  {
+   "word": "horse",
+   "z": -0.92,
+   "watched": 2,
+   "listings": 362,
+   "rate": 0.00552
+  },
+  {
+   "word": "plastic",
+   "z": -0.94,
+   "watched": 1,
+   "listings": 236,
+   "rate": 0.00424
+  },
+  {
+   "word": "cocktail",
+   "z": -0.94,
+   "watched": 1,
+   "listings": 237,
+   "rate": 0.00422
+  },
+  {
+   "word": "carbon",
+   "z": -0.94,
+   "watched": 1,
+   "listings": 237,
+   "rate": 0.00422
+  },
+  {
+   "word": "war",
+   "z": -0.94,
+   "watched": 2,
+   "listings": 367,
+   "rate": 0.00545
+  },
+  {
+   "word": "earth",
+   "z": -0.95,
+   "watched": 1,
+   "listings": 239,
+   "rate": 0.00418
+  },
+  {
+   "word": "powered",
+   "z": -0.97,
+   "watched": 1,
+   "listings": 244,
+   "rate": 0.0041
+  },
+  {
+   "word": "restaurant",
+   "z": -0.98,
+   "watched": 2,
+   "listings": 376,
+   "rate": 0.00532
+  },
+  {
+   "word": "baseball",
+   "z": -0.98,
+   "watched": 2,
+   "listings": 376,
+   "rate": 0.00532
+  },
+  {
+   "word": "family",
+   "z": -0.99,
+   "watched": 2,
+   "listings": 379,
+   "rate": 0.00528
+  },
+  {
+   "word": "aesthetic",
+   "z": -0.99,
+   "watched": 1,
+   "listings": 248,
+   "rate": 0.00403
+  },
+  {
+   "word": "play",
+   "z": -1.0,
+   "watched": 2,
+   "listings": 381,
+   "rate": 0.00525
+  },
+  {
+   "word": "lover",
+   "z": -1.0,
+   "watched": 6,
+   "listings": 859,
+   "rate": 0.00698
+  },
+  {
+   "word": "only",
+   "z": -1.0,
+   "watched": 3,
+   "listings": 507,
+   "rate": 0.00592
+  },
+  {
+   "word": "playing",
+   "z": -1.01,
+   "watched": 2,
+   "listings": 385,
+   "rate": 0.00519
+  },
+  {
+   "word": "energy",
+   "z": -1.01,
+   "watched": 1,
+   "listings": 253,
+   "rate": 0.00395
+  },
+  {
+   "word": "team",
+   "z": -1.02,
+   "watched": 2,
+   "listings": 386,
+   "rate": 0.00518
+  },
+  {
+   "word": "laser",
+   "z": -1.02,
+   "watched": 1,
+   "listings": 255,
+   "rate": 0.00392
+  },
+  {
+   "word": "river",
+   "z": -1.04,
+   "watched": 1,
+   "listings": 258,
+   "rate": 0.00388
+  },
+  {
+   "word": "chicken",
+   "z": -1.04,
+   "watched": 2,
+   "listings": 391,
+   "rate": 0.00512
+  },
+  {
+   "word": "strong",
+   "z": -1.05,
+   "watched": 1,
+   "listings": 261,
+   "rate": 0.00383
+  },
+  {
+   "word": "yellow",
+   "z": -1.06,
+   "watched": 5,
+   "listings": 764,
+   "rate": 0.00654
+  },
+  {
+   "word": "turtle",
+   "z": -1.06,
+   "watched": 2,
+   "listings": 398,
+   "rate": 0.00503
+  },
+  {
+   "word": "rhythm",
+   "z": -1.07,
+   "watched": 1,
+   "listings": 265,
+   "rate": 0.00377
+  },
+  {
+   "word": "military",
+   "z": -1.07,
+   "watched": 1,
+   "listings": 266,
+   "rate": 0.00376
+  },
+  {
+   "word": "vibes",
+   "z": -1.08,
+   "watched": 1,
+   "listings": 267,
+   "rate": 0.00375
+  },
+  {
+   "word": "prin",
+   "z": -1.08,
+   "watched": 46,
+   "listings": 5144,
+   "rate": 0.00894
+  },
+  {
+   "word": "want",
+   "z": -1.09,
+   "watched": 1,
+   "listings": 271,
+   "rate": 0.00369
+  },
+  {
+   "word": "america",
+   "z": -1.09,
+   "watched": 1,
+   "listings": 271,
+   "rate": 0.00369
+  },
+  {
+   "word": "pastel",
+   "z": -1.1,
+   "watched": 5,
+   "listings": 775,
+   "rate": 0.00645
+  },
+  {
+   "word": "fun",
+   "z": -1.1,
+   "watched": 3,
+   "listings": 534,
+   "rate": 0.00562
+  },
+  {
+   "word": "without",
+   "z": -1.1,
+   "watched": 1,
+   "listings": 273,
+   "rate": 0.00366
+  },
+  {
+   "word": "space",
+   "z": -1.11,
+   "watched": 5,
+   "listings": 778,
+   "rate": 0.00643
+  },
+  {
+   "word": "hard",
+   "z": -1.11,
+   "watched": 2,
+   "listings": 410,
+   "rate": 0.00488
+  },
+  {
+   "word": "puzzle",
+   "z": -1.11,
+   "watched": 1,
+   "listings": 275,
+   "rate": 0.00364
+  },
+  {
+   "word": "inside",
+   "z": -1.11,
+   "watched": 2,
+   "listings": 411,
+   "rate": 0.00487
+  },
+  {
+   "word": "name",
+   "z": -1.12,
+   "watched": 3,
+   "listings": 539,
+   "rate": 0.00557
+  },
+  {
+   "word": "this",
+   "z": -1.13,
+   "watched": 8,
+   "listings": 1134,
+   "rate": 0.00705
+  },
+  {
+   "word": "ice",
+   "z": -1.13,
+   "watched": 1,
+   "listings": 280,
+   "rate": 0.00357
+  },
+  {
+   "word": "water",
+   "z": -1.13,
+   "watched": 2,
+   "listings": 416,
+   "rate": 0.00481
+  },
+  {
+   "word": "born",
+   "z": -1.13,
+   "watched": 2,
+   "listings": 416,
+   "rate": 0.00481
+  },
+  {
+   "word": "stop",
+   "z": -1.15,
+   "watched": 1,
+   "listings": 285,
+   "rate": 0.00351
+  },
+  {
+   "word": "view",
+   "z": -1.17,
+   "watched": 1,
+   "listings": 291,
+   "rate": 0.00344
+  },
+  {
+   "word": "hope",
+   "z": -1.18,
+   "watched": 1,
+   "listings": 292,
+   "rate": 0.00342
+  },
+  {
+   "word": "cold",
+   "z": -1.18,
+   "watched": 1,
+   "listings": 292,
+   "rate": 0.00342
+  },
+  {
+   "word": "santa",
+   "z": -1.19,
+   "watched": 1,
+   "listings": 294,
+   "rate": 0.0034
+  },
+  {
+   "word": "sugar",
+   "z": -1.2,
+   "watched": 2,
+   "listings": 436,
+   "rate": 0.00459
+  },
+  {
+   "word": "work",
+   "z": -1.21,
+   "watched": 3,
+   "listings": 568,
+   "rate": 0.00528
+  },
+  {
+   "word": "zombie",
+   "z": -1.21,
+   "watched": 2,
+   "listings": 439,
+   "rate": 0.00456
+  },
+  {
+   "word": "landscape",
+   "z": -1.22,
+   "watched": 1,
+   "listings": 302,
+   "rate": 0.00331
+  },
+  {
+   "word": "who",
+   "z": -1.22,
+   "watched": 4,
+   "listings": 695,
+   "rate": 0.00576
+  },
+  {
+   "word": "goblin",
+   "z": -1.22,
+   "watched": 1,
+   "listings": 303,
+   "rate": 0.0033
+  },
+  {
+   "word": "local",
+   "z": -1.23,
+   "watched": 1,
+   "listings": 305,
+   "rate": 0.00328
+  },
+  {
+   "word": "whale",
+   "z": -1.24,
+   "watched": 1,
+   "listings": 307,
+   "rate": 0.00326
+  },
+  {
+   "word": "all",
+   "z": -1.25,
+   "watched": 6,
+   "listings": 948,
+   "rate": 0.00633
+  },
+  {
+   "word": "title",
+   "z": -1.26,
+   "watched": 0,
+   "listings": 151,
+   "rate": 0.0
+  },
+  {
+   "word": "flag",
+   "z": -1.26,
+   "watched": 4,
+   "listings": 709,
+   "rate": 0.00564
+  },
+  {
+   "word": "cruise",
+   "z": -1.26,
+   "watched": 1,
+   "listings": 314,
+   "rate": 0.00318
+  },
+  {
+   "word": "reaction",
+   "z": -1.27,
+   "watched": 0,
+   "listings": 153,
+   "rate": 0.0
+  },
+  {
+   "word": "freedom",
+   "z": -1.27,
+   "watched": 0,
+   "listings": 153,
+   "rate": 0.0
+  },
+  {
+   "word": "square",
+   "z": -1.27,
+   "watched": 0,
+   "listings": 154,
+   "rate": 0.0
+  },
+  {
+   "word": "hero",
+   "z": -1.27,
+   "watched": 0,
+   "listings": 154,
+   "rate": 0.0
+  },
+  {
+   "word": "emoticon",
+   "z": -1.27,
+   "watched": 0,
+   "listings": 154,
+   "rate": 0.0
+  },
+  {
+   "word": "french",
+   "z": -1.27,
+   "watched": 2,
+   "listings": 456,
+   "rate": 0.00439
+  },
+  {
+   "word": "waves",
+   "z": -1.27,
+   "watched": 0,
+   "listings": 155,
+   "rate": 0.0
+  },
+  {
+   "word": "find",
+   "z": -1.27,
+   "watched": 0,
+   "listings": 155,
+   "rate": 0.0
+  },
+  {
+   "word": "chick",
+   "z": -1.27,
+   "watched": 0,
+   "listings": 155,
+   "rate": 0.0
+  },
+  {
+   "word": "pink",
+   "z": -1.28,
+   "watched": 15,
+   "listings": 1986,
+   "rate": 0.00755
+  },
+  {
+   "word": "vibrant",
+   "z": -1.29,
+   "watched": 0,
+   "listings": 158,
+   "rate": 0.0
+  },
+  {
+   "word": "saturn",
+   "z": -1.29,
+   "watched": 0,
+   "listings": 158,
+   "rate": 0.0
+  },
+  {
+   "word": "operator",
+   "z": -1.29,
+   "watched": 0,
+   "listings": 158,
+   "rate": 0.0
+  },
+  {
+   "word": "cloud",
+   "z": -1.29,
+   "watched": 0,
+   "listings": 158,
+   "rate": 0.0
+  },
+  {
+   "word": "canada",
+   "z": -1.29,
+   "watched": 0,
+   "listings": 158,
+   "rate": 0.0
+  },
+  {
+   "word": "trumpet",
+   "z": -1.29,
+   "watched": 1,
+   "listings": 322,
+   "rate": 0.00311
+  },
+  {
+   "word": "poor",
+   "z": -1.3,
+   "watched": 0,
+   "listings": 160,
+   "rate": 0.0
+  },
+  {
+   "word": "daddy",
+   "z": -1.3,
+   "watched": 0,
+   "listings": 161,
+   "rate": 0.0
+  },
+  {
+   "word": "perfect",
+   "z": -1.3,
+   "watched": 1,
+   "listings": 324,
+   "rate": 0.00309
+  },
+  {
+   "word": "may",
+   "z": -1.31,
+   "watched": 0,
+   "listings": 163,
+   "rate": 0.0
+  },
+  {
+   "word": "boo",
+   "z": -1.31,
+   "watched": 0,
+   "listings": 163,
+   "rate": 0.0
+  },
+  {
+   "word": "kid",
+   "z": -1.31,
+   "watched": 0,
+   "listings": 164,
+   "rate": 0.0
+  },
+  {
+   "word": "awareness",
+   "z": -1.31,
+   "watched": 0,
+   "listings": 164,
+   "rate": 0.0
+  },
+  {
+   "word": "dad",
+   "z": -1.31,
+   "watched": 3,
+   "listings": 600,
+   "rate": 0.005
+  },
+  {
+   "word": "white",
+   "z": -1.32,
+   "watched": 13,
+   "listings": 1783,
+   "rate": 0.00729
+  },
+  {
+   "word": "lake",
+   "z": -1.32,
+   "watched": 1,
+   "listings": 329,
+   "rate": 0.00304
+  },
+  {
+   "word": "neuron",
+   "z": -1.32,
+   "watched": 0,
+   "listings": 166,
+   "rate": 0.0
+  },
+  {
+   "word": "friend",
+   "z": -1.32,
+   "watched": 0,
+   "listings": 166,
+   "rate": 0.0
+  },
+  {
+   "word": "gray",
+   "z": -1.32,
+   "watched": 0,
+   "listings": 167,
+   "rate": 0.0
+  },
+  {
+   "word": "forever",
+   "z": -1.32,
+   "watched": 0,
+   "listings": 167,
+   "rate": 0.0
+  },
+  {
+   "word": "boss",
+   "z": -1.32,
+   "watched": 0,
+   "listings": 167,
+   "rate": 0.0
+  },
+  {
+   "word": "better",
+   "z": -1.33,
+   "watched": 1,
+   "listings": 331,
+   "rate": 0.00302
+  },
+  {
+   "word": "kicks",
+   "z": -1.33,
+   "watched": 0,
+   "listings": 168,
+   "rate": 0.0
+  },
+  {
+   "word": "ocean",
+   "z": -1.33,
+   "watched": 1,
+   "listings": 332,
+   "rate": 0.00301
+  },
+  {
+   "word": "hair",
+   "z": -1.33,
+   "watched": 0,
+   "listings": 169,
+   "rate": 0.0
+  },
+  {
+   "word": "giraffe",
+   "z": -1.33,
+   "watched": 0,
+   "listings": 169,
+   "rate": 0.0
+  },
+  {
+   "word": "drugs",
+   "z": -1.33,
+   "watched": 0,
+   "listings": 169,
+   "rate": 0.0
+  },
+  {
+   "word": "forest",
+   "z": -1.33,
+   "watched": 2,
+   "listings": 474,
+   "rate": 0.00422
+  },
+  {
+   "word": "lose",
+   "z": -1.33,
+   "watched": 1,
+   "listings": 333,
+   "rate": 0.003
+  },
+  {
+   "word": "chaos",
+   "z": -1.34,
+   "watched": 0,
+   "listings": 170,
+   "rate": 0.0
+  },
+  {
+   "word": "inu",
+   "z": -1.34,
+   "watched": 1,
+   "listings": 334,
+   "rate": 0.00299
+  },
+  {
+   "word": "sister",
+   "z": -1.34,
+   "watched": 3,
+   "listings": 610,
+   "rate": 0.00492
+  },
+  {
+   "word": "soft",
+   "z": -1.34,
+   "watched": 0,
+   "listings": 172,
+   "rate": 0.0
+  },
+  {
+   "word": "say",
+   "z": -1.34,
+   "watched": 0,
+   "listings": 172,
+   "rate": 0.0
+  },
+  {
+   "word": "today",
+   "z": -1.35,
+   "watched": 0,
+   "listings": 174,
+   "rate": 0.0
+  },
+  {
+   "word": "has",
+   "z": -1.36,
+   "watched": 0,
+   "listings": 176,
+   "rate": 0.0
+  },
+  {
+   "word": "frog",
+   "z": -1.37,
+   "watched": 1,
+   "listings": 342,
+   "rate": 0.00292
+  },
+  {
+   "word": "really",
+   "z": -1.37,
+   "watched": 0,
+   "listings": 178,
+   "rate": 0.0
+  },
+  {
+   "word": "tech",
+   "z": -1.37,
+   "watched": 0,
+   "listings": 179,
+   "rate": 0.0
+  },
+  {
+   "word": "problem",
+   "z": -1.38,
+   "watched": 1,
+   "listings": 345,
+   "rate": 0.0029
+  },
+  {
+   "word": "some",
+   "z": -1.38,
+   "watched": 0,
+   "listings": 181,
+   "rate": 0.0
+  },
+  {
+   "word": "grass",
+   "z": -1.38,
+   "watched": 0,
+   "listings": 181,
+   "rate": 0.0
+  },
+  {
+   "word": "cow",
+   "z": -1.38,
+   "watched": 0,
+   "listings": 182,
+   "rate": 0.0
+  },
+  {
+   "word": "gifts",
+   "z": -1.38,
+   "watched": 1,
+   "listings": 347,
+   "rate": 0.00288
+  },
+  {
+   "word": "dragon",
+   "z": -1.38,
+   "watched": 1,
+   "listings": 347,
+   "rate": 0.00288
+  },
+  {
+   "word": "cola",
+   "z": -1.39,
+   "watched": 0,
+   "listings": 183,
+   "rate": 0.0
+  },
+  {
+   "word": "yes",
+   "z": -1.39,
+   "watched": 1,
+   "listings": 348,
+   "rate": 0.00287
+  },
+  {
+   "word": "beer",
+   "z": -1.39,
+   "watched": 1,
+   "listings": 348,
+   "rate": 0.00287
+  },
+  {
+   "word": "loyalty",
+   "z": -1.39,
+   "watched": 0,
+   "listings": 184,
+   "rate": 0.0
+  },
+  {
+   "word": "kick",
+   "z": -1.39,
+   "watched": 0,
+   "listings": 185,
+   "rate": 0.0
+  },
+  {
+   "word": "battery",
+   "z": -1.39,
+   "watched": 0,
+   "listings": 185,
+   "rate": 0.0
+  },
+  {
+   "word": "sad",
+   "z": -1.39,
+   "watched": 1,
+   "listings": 350,
+   "rate": 0.00286
+  },
+  {
+   "word": "china",
+   "z": -1.4,
+   "watched": 0,
+   "listings": 186,
+   "rate": 0.0
+  },
+  {
+   "word": "unicorn",
+   "z": -1.4,
+   "watched": 0,
+   "listings": 187,
+   "rate": 0.0
+  },
+  {
+   "word": "simple",
+   "z": -1.4,
+   "watched": 0,
+   "listings": 187,
+   "rate": 0.0
+  },
+  {
+   "word": "chest",
+   "z": -1.4,
+   "watched": 0,
+   "listings": 188,
+   "rate": 0.0
+  },
+  {
+   "word": "guitar",
+   "z": -1.41,
+   "watched": 0,
+   "listings": 190,
+   "rate": 0.0
+  },
+  {
+   "word": "flower",
+   "z": -1.41,
+   "watched": 3,
+   "listings": 633,
+   "rate": 0.00474
+  },
+  {
+   "word": "caffeine",
+   "z": -1.42,
+   "watched": 0,
+   "listings": 191,
+   "rate": 0.0
+  },
+  {
+   "word": "pun",
+   "z": -1.42,
+   "watched": 0,
+   "listings": 192,
+   "rate": 0.0
+  },
+  {
+   "word": "owl",
+   "z": -1.42,
+   "watched": 0,
+   "listings": 192,
+   "rate": 0.0
+  },
+  {
+   "word": "tennis",
+   "z": -1.42,
+   "watched": 1,
+   "listings": 359,
+   "rate": 0.00279
+  },
+  {
+   "word": "scientist",
+   "z": -1.42,
+   "watched": 1,
+   "listings": 359,
+   "rate": 0.00279
+  },
+  {
+   "word": "awesome",
+   "z": -1.42,
+   "watched": 1,
+   "listings": 359,
+   "rate": 0.00279
+  },
+  {
+   "word": "park",
+   "z": -1.43,
+   "watched": 2,
+   "listings": 503,
+   "rate": 0.00398
+  },
+  {
+   "word": "big",
+   "z": -1.43,
+   "watched": 4,
+   "listings": 769,
+   "rate": 0.0052
+  },
+  {
+   "word": "control",
+   "z": -1.43,
+   "watched": 0,
+   "listings": 196,
+   "rate": 0.0
+  },
+  {
+   "word": "player",
+   "z": -1.44,
+   "watched": 2,
+   "listings": 509,
+   "rate": 0.00393
+  },
+  {
+   "word": "sound",
+   "z": -1.44,
+   "watched": 0,
+   "listings": 199,
+   "rate": 0.0
+  },
+  {
+   "word": "pet",
+   "z": -1.45,
+   "watched": 0,
+   "listings": 200,
+   "rate": 0.0
+  },
+  {
+   "word": "amsterdam",
+   "z": -1.45,
+   "watched": 0,
+   "listings": 200,
+   "rate": 0.0
+  },
+  {
+   "word": "american",
+   "z": -1.45,
+   "watched": 2,
+   "listings": 511,
+   "rate": 0.00391
+  },
+  {
+   "word": "wood",
+   "z": -1.45,
+   "watched": 0,
+   "listings": 201,
+   "rate": 0.0
+  },
+  {
+   "word": "uranus",
+   "z": -1.45,
+   "watched": 0,
+   "listings": 201,
+   "rate": 0.0
+  },
+  {
+   "word": "wine",
+   "z": -1.46,
+   "watched": 0,
+   "listings": 202,
+   "rate": 0.0
+  },
+  {
+   "word": "member",
+   "z": -1.46,
+   "watched": 0,
+   "listings": 202,
+   "rate": 0.0
+  },
+  {
+   "word": "friends",
+   "z": -1.46,
+   "watched": 0,
+   "listings": 202,
+   "rate": 0.0
+  },
+  {
+   "word": "crypto",
+   "z": -1.46,
+   "watched": 0,
+   "listings": 202,
+   "rate": 0.0
+  },
+  {
+   "word": "people",
+   "z": -1.46,
+   "watched": 3,
+   "listings": 648,
+   "rate": 0.00463
+  },
+  {
+   "word": "brain",
+   "z": -1.46,
+   "watched": 0,
+   "listings": 203,
+   "rate": 0.0
+  },
+  {
+   "word": "party",
+   "z": -1.46,
+   "watched": 1,
+   "listings": 370,
+   "rate": 0.0027
+  },
+  {
+   "word": "radiation",
+   "z": -1.46,
+   "watched": 0,
+   "listings": 204,
+   "rate": 0.0
+  },
+  {
+   "word": "atlantic",
+   "z": -1.46,
+   "watched": 0,
+   "listings": 204,
+   "rate": 0.0
+  },
+  {
+   "word": "aries",
+   "z": -1.46,
+   "watched": 0,
+   "listings": 204,
+   "rate": 0.0
+  },
+  {
+   "word": "loser",
+   "z": -1.47,
+   "watched": 0,
+   "listings": 205,
+   "rate": 0.0
+  },
+  {
+   "word": "sorry",
+   "z": -1.47,
+   "watched": 0,
+   "listings": 206,
+   "rate": 0.0
+  },
+  {
+   "word": "voice",
+   "z": -1.48,
+   "watched": 1,
+   "listings": 374,
+   "rate": 0.00267
+  },
+  {
+   "word": "snow",
+   "z": -1.48,
+   "watched": 0,
+   "listings": 210,
+   "rate": 0.0
+  },
+  {
+   "word": "police",
+   "z": -1.48,
+   "watched": 0,
+   "listings": 210,
+   "rate": 0.0
+  },
+  {
+   "word": "please",
+   "z": -1.48,
+   "watched": 0,
+   "listings": 210,
+   "rate": 0.0
+  },
+  {
+   "word": "sale",
+   "z": -1.49,
+   "watched": 0,
+   "listings": 213,
+   "rate": 0.0
+  },
+  {
+   "word": "warning",
+   "z": -1.5,
+   "watched": 0,
+   "listings": 214,
+   "rate": 0.0
+  },
+  {
+   "word": "think",
+   "z": -1.5,
+   "watched": 0,
+   "listings": 214,
+   "rate": 0.0
+  },
+  {
+   "word": "run",
+   "z": -1.5,
+   "watched": 0,
+   "listings": 214,
+   "rate": 0.0
+  },
+  {
+   "word": "easter",
+   "z": -1.5,
+   "watched": 0,
+   "listings": 214,
+   "rate": 0.0
+  },
+  {
+   "word": "boy",
+   "z": -1.5,
+   "watched": 1,
+   "listings": 383,
+   "rate": 0.00261
+  },
+  {
+   "word": "rich",
+   "z": -1.5,
+   "watched": 0,
+   "listings": 216,
+   "rate": 0.0
+  },
+  {
+   "word": "birthday",
+   "z": -1.51,
+   "watched": 1,
+   "listings": 384,
+   "rate": 0.0026
+  },
+  {
+   "word": "gamma",
+   "z": -1.51,
+   "watched": 0,
+   "listings": 217,
+   "rate": 0.0
+  },
+  {
+   "word": "being",
+   "z": -1.51,
+   "watched": 0,
+   "listings": 217,
+   "rate": 0.0
+  },
+  {
+   "word": "plants",
+   "z": -1.51,
+   "watched": 0,
+   "listings": 218,
+   "rate": 0.0
+  },
+  {
+   "word": "vodka",
+   "z": -1.52,
+   "watched": 0,
+   "listings": 219,
+   "rate": 0.0
+  },
+  {
+   "word": "because",
+   "z": -1.53,
+   "watched": 0,
+   "listings": 222,
+   "rate": 0.0
+  },
+  {
+   "word": "happy",
+   "z": -1.53,
+   "watched": 5,
+   "listings": 932,
+   "rate": 0.00536
+  },
+  {
+   "word": "mode",
+   "z": -1.53,
+   "watched": 0,
+   "listings": 224,
+   "rate": 0.0
+  },
+  {
+   "word": "inner",
+   "z": -1.54,
+   "watched": 0,
+   "listings": 225,
+   "rate": 0.0
+  },
+  {
+   "word": "right",
+   "z": -1.54,
+   "watched": 0,
+   "listings": 227,
+   "rate": 0.0
+  },
+  {
+   "word": "chain",
+   "z": -1.55,
+   "watched": 0,
+   "listings": 228,
+   "rate": 0.0
+  },
+  {
+   "word": "autumn",
+   "z": -1.55,
+   "watched": 0,
+   "listings": 228,
+   "rate": 0.0
+  },
+  {
+   "word": "these",
+   "z": -1.55,
+   "watched": 1,
+   "listings": 396,
+   "rate": 0.00253
+  },
+  {
+   "word": "astronaut",
+   "z": -1.55,
+   "watched": 0,
+   "listings": 229,
+   "rate": 0.0
+  },
+  {
+   "word": "rainbow",
+   "z": -1.55,
+   "watched": 2,
+   "listings": 544,
+   "rate": 0.00368
+  },
+  {
+   "word": "spaghetti",
+   "z": -1.55,
+   "watched": 0,
+   "listings": 230,
+   "rate": 0.0
+  },
+  {
+   "word": "through",
+   "z": -1.56,
+   "watched": 0,
+   "listings": 232,
+   "rate": 0.0
+  },
+  {
+   "word": "more",
+   "z": -1.56,
+   "watched": 2,
+   "listings": 547,
+   "rate": 0.00366
+  },
+  {
+   "word": "way",
+   "z": -1.56,
+   "watched": 0,
+   "listings": 233,
+   "rate": 0.0
+  },
+  {
+   "word": "trading",
+   "z": -1.56,
+   "watched": 0,
+   "listings": 233,
+   "rate": 0.0
+  },
+  {
+   "word": "shiba",
+   "z": -1.57,
+   "watched": 1,
+   "listings": 403,
+   "rate": 0.00248
+  },
+  {
+   "word": "mind",
+   "z": -1.57,
+   "watched": 1,
+   "listings": 403,
+   "rate": 0.00248
+  },
+  {
+   "word": "plant",
+   "z": -1.58,
+   "watched": 1,
+   "listings": 406,
+   "rate": 0.00246
+  },
+  {
+   "word": "now",
+   "z": -1.59,
+   "watched": 0,
+   "listings": 240,
+   "rate": 0.0
+  },
+  {
+   "word": "usa",
+   "z": -1.59,
+   "watched": 0,
+   "listings": 241,
+   "rate": 0.0
+  },
+  {
+   "word": "than",
+   "z": -1.59,
+   "watched": 0,
+   "listings": 241,
+   "rate": 0.0
+  },
+  {
+   "word": "save",
+   "z": -1.6,
+   "watched": 0,
+   "listings": 243,
+   "rate": 0.0
+  },
+  {
+   "word": "ham",
+   "z": -1.6,
+   "watched": 0,
+   "listings": 243,
+   "rate": 0.0
+  },
+  {
+   "word": "squad",
+   "z": -1.6,
+   "watched": 0,
+   "listings": 244,
+   "rate": 0.0
+  },
+  {
+   "word": "panda",
+   "z": -1.6,
+   "watched": 0,
+   "listings": 245,
+   "rate": 0.0
+  },
+  {
+   "word": "real",
+   "z": -1.61,
+   "watched": 0,
+   "listings": 247,
+   "rate": 0.0
+  },
+  {
+   "word": "dream",
+   "z": -1.61,
+   "watched": 0,
+   "listings": 247,
+   "rate": 0.0
+  },
+  {
+   "word": "grilled",
+   "z": -1.61,
+   "watched": 0,
+   "listings": 248,
+   "rate": 0.0
+  },
+  {
+   "word": "fire",
+   "z": -1.62,
+   "watched": 2,
+   "listings": 566,
+   "rate": 0.00353
+  },
+  {
+   "word": "always",
+   "z": -1.62,
+   "watched": 1,
+   "listings": 418,
+   "rate": 0.00239
+  },
+  {
+   "word": "mouth",
+   "z": -1.63,
+   "watched": 0,
+   "listings": 253,
+   "rate": 0.0
+  },
+  {
+   "word": "mirror",
+   "z": -1.63,
+   "watched": 0,
+   "listings": 254,
+   "rate": 0.0
+  },
+  {
+   "word": "violin",
+   "z": -1.64,
+   "watched": 0,
+   "listings": 256,
+   "rate": 0.0
+  },
+  {
+   "word": "cookies",
+   "z": -1.64,
+   "watched": 0,
+   "listings": 256,
+   "rate": 0.0
+  },
+  {
+   "word": "brazil",
+   "z": -1.64,
+   "watched": 0,
+   "listings": 257,
+   "rate": 0.0
+  },
+  {
+   "word": "track",
+   "z": -1.64,
+   "watched": 0,
+   "listings": 258,
+   "rate": 0.0
+  },
+  {
+   "word": "reality",
+   "z": -1.64,
+   "watched": 0,
+   "listings": 258,
+   "rate": 0.0
+  },
+  {
+   "word": "background",
+   "z": -1.64,
+   "watched": 0,
+   "listings": 258,
+   "rate": 0.0
+  },
+  {
+   "word": "grenade",
+   "z": -1.65,
+   "watched": 0,
+   "listings": 261,
+   "rate": 0.0
+  },
+  {
+   "word": "definition",
+   "z": -1.65,
+   "watched": 0,
+   "listings": 261,
+   "rate": 0.0
+  },
+  {
+   "word": "sushi",
+   "z": -1.66,
+   "watched": 1,
+   "listings": 433,
+   "rate": 0.00231
+  },
+  {
+   "word": "got",
+   "z": -1.67,
+   "watched": 0,
+   "listings": 267,
+   "rate": 0.0
+  },
+  {
+   "word": "stay",
+   "z": -1.68,
+   "watched": 0,
+   "listings": 268,
+   "rate": 0.0
+  },
+  {
+   "word": "wolf",
+   "z": -1.68,
+   "watched": 2,
+   "listings": 589,
+   "rate": 0.0034
+  },
+  {
+   "word": "rock",
+   "z": -1.68,
+   "watched": 2,
+   "listings": 589,
+   "rate": 0.0034
+  },
+  {
+   "word": "women",
+   "z": -1.69,
+   "watched": 1,
+   "listings": 442,
+   "rate": 0.00226
+  },
+  {
+   "word": "keep",
+   "z": -1.69,
+   "watched": 1,
+   "listings": 442,
+   "rate": 0.00226
+  },
+  {
+   "word": "wolves",
+   "z": -1.69,
+   "watched": 0,
+   "listings": 272,
+   "rate": 0.0
+  },
+  {
+   "word": "soccer",
+   "z": -1.7,
+   "watched": 0,
+   "listings": 277,
+   "rate": 0.0
+  },
+  {
+   "word": "free",
+   "z": -1.7,
+   "watched": 0,
+   "listings": 277,
+   "rate": 0.0
+  },
+  {
+   "word": "valentine",
+   "z": -1.72,
+   "watched": 0,
+   "listings": 283,
+   "rate": 0.0
+  },
+  {
+   "word": "ghost",
+   "z": -1.72,
+   "watched": 2,
+   "listings": 605,
+   "rate": 0.00331
+  },
+  {
+   "word": "digital",
+   "z": -1.73,
+   "watched": 0,
+   "listings": 286,
+   "rate": 0.0
+  },
+  {
+   "word": "rooster",
+   "z": -1.73,
+   "watched": 0,
+   "listings": 287,
+   "rate": 0.0
+  },
+  {
+   "word": "cooking",
+   "z": -1.74,
+   "watched": 0,
+   "listings": 290,
+   "rate": 0.0
+  },
+  {
+   "word": "world",
+   "z": -1.76,
+   "watched": 3,
+   "listings": 759,
+   "rate": 0.00395
+  },
+  {
+   "word": "gift",
+   "z": -1.78,
+   "watched": 9,
+   "listings": 1543,
+   "rate": 0.00583
+  },
+  {
+   "word": "just",
+   "z": -1.79,
+   "watched": 6,
+   "listings": 1169,
+   "rate": 0.00513
+  },
+  {
+   "word": "repeat",
+   "z": -1.8,
+   "watched": 0,
+   "listings": 310,
+   "rate": 0.0
+  },
+  {
+   "word": "steak",
+   "z": -1.81,
+   "watched": 0,
+   "listings": 311,
+   "rate": 0.0
+  },
+  {
+   "word": "horn",
+   "z": -1.82,
+   "watched": 0,
+   "listings": 316,
+   "rate": 0.0
+  },
+  {
+   "word": "nail",
+   "z": -1.82,
+   "watched": 0,
+   "listings": 317,
+   "rate": 0.0
+  },
+  {
+   "word": "shopping",
+   "z": -1.83,
+   "watched": 0,
+   "listings": 318,
+   "rate": 0.0
+  },
+  {
+   "word": "state",
+   "z": -1.83,
+   "watched": 0,
+   "listings": 319,
+   "rate": 0.0
+  },
+  {
+   "word": "color",
+   "z": -1.85,
+   "watched": 1,
+   "listings": 498,
+   "rate": 0.00201
+  },
+  {
+   "word": "like",
+   "z": -1.86,
+   "watched": 6,
+   "listings": 1200,
+   "rate": 0.005
+  },
+  {
+   "word": "time",
+   "z": -1.87,
+   "watched": 4,
+   "listings": 941,
+   "rate": 0.00425
+  },
+  {
+   "word": "line",
+   "z": -1.87,
+   "watched": 0,
+   "listings": 335,
+   "rate": 0.0
+  },
+  {
+   "word": "fantasy",
+   "z": -1.88,
+   "watched": 0,
+   "listings": 337,
+   "rate": 0.0
+  },
+  {
+   "word": "science",
+   "z": -1.89,
+   "watched": 1,
+   "listings": 515,
+   "rate": 0.00194
+  },
+  {
+   "word": "teacher",
+   "z": -1.9,
+   "watched": 0,
+   "listings": 343,
+   "rate": 0.0
+  },
+  {
+   "word": "sleep",
+   "z": -1.94,
+   "watched": 0,
+   "listings": 360,
+   "rate": 0.0
+  },
+  {
+   "word": "wings",
+   "z": -1.95,
+   "watched": 0,
+   "listings": 363,
+   "rate": 0.0
+  },
+  {
+   "word": "get",
+   "z": -1.95,
+   "watched": 1,
+   "listings": 538,
+   "rate": 0.00186
+  },
+  {
+   "word": "here",
+   "z": -1.97,
+   "watched": 0,
+   "listings": 371,
+   "rate": 0.0
+  },
+  {
+   "word": "dog",
+   "z": -1.98,
+   "watched": 6,
+   "listings": 1259,
+   "rate": 0.00477
+  },
+  {
+   "word": "neon",
+   "z": -2.0,
+   "watched": 4,
+   "listings": 997,
+   "rate": 0.00401
+  },
+  {
+   "word": "table",
+   "z": -2.01,
+   "watched": 1,
+   "listings": 558,
+   "rate": 0.00179
+  },
+  {
+   "word": "pocket",
+   "z": -2.01,
+   "watched": 0,
+   "listings": 384,
+   "rate": 0.0
+  },
+  {
+   "word": "orange",
+   "z": -2.01,
+   "watched": 2,
+   "listings": 716,
+   "rate": 0.00279
+  },
+  {
+   "word": "physics",
+   "z": -2.04,
+   "watched": 0,
+   "listings": 396,
+   "rate": 0.0
+  },
+  {
+   "word": "basketball",
+   "z": -2.06,
+   "watched": 0,
+   "listings": 405,
+   "rate": 0.0
+  },
+  {
+   "word": "can",
+   "z": -2.07,
+   "watched": 3,
+   "listings": 890,
+   "rate": 0.00337
+  },
+  {
+   "word": "baby",
+   "z": -2.09,
+   "watched": 2,
+   "listings": 751,
+   "rate": 0.00266
+  },
+  {
+   "word": "when",
+   "z": -2.11,
+   "watched": 0,
+   "listings": 423,
+   "rate": 0.0
+  },
+  {
+   "word": "fishing",
+   "z": -2.13,
+   "watched": 0,
+   "listings": 432,
+   "rate": 0.0
+  },
+  {
+   "word": "sales",
+   "z": -2.13,
+   "watched": 0,
+   "listings": 434,
+   "rate": 0.0
+  },
+  {
+   "word": "math",
+   "z": -2.14,
+   "watched": 0,
+   "listings": 438,
+   "rate": 0.0
+  },
+  {
+   "word": "proud",
+   "z": -2.15,
+   "watched": 0,
+   "listings": 439,
+   "rate": 0.0
+  },
+  {
+   "word": "don",
+   "z": -2.15,
+   "watched": 4,
+   "listings": 1068,
+   "rate": 0.00375
+  },
+  {
+   "word": "need",
+   "z": -2.17,
+   "watched": 0,
+   "listings": 448,
+   "rate": 0.0
+  },
+  {
+   "word": "drink",
+   "z": -2.21,
+   "watched": 0,
+   "listings": 466,
+   "rate": 0.0
+  },
+  {
+   "word": "love",
+   "z": -2.23,
+   "watched": 19,
+   "listings": 3004,
+   "rate": 0.00632
+  },
+  {
+   "word": "loves",
+   "z": -2.23,
+   "watched": 0,
+   "listings": 473,
+   "rate": 0.0
+  },
+  {
+   "word": "but",
+   "z": -2.23,
+   "watched": 1,
+   "listings": 652,
+   "rate": 0.00153
+  },
+  {
+   "word": "what",
+   "z": -2.26,
+   "watched": 2,
+   "listings": 826,
+   "rate": 0.00242
+  },
+  {
+   "word": "kawaii",
+   "z": -2.27,
+   "watched": 0,
+   "listings": 493,
+   "rate": 0.0
+  },
+  {
+   "word": "not",
+   "z": -2.28,
+   "watched": 8,
+   "listings": 1674,
+   "rate": 0.00478
+  },
+  {
+   "word": "make",
+   "z": -2.28,
+   "watched": 1,
+   "listings": 673,
+   "rate": 0.00149
+  },
+  {
+   "word": "mom",
+   "z": -2.33,
+   "watched": 1,
+   "listings": 697,
+   "rate": 0.00143
+  },
+  {
+   "word": "will",
+   "z": -2.38,
+   "watched": 0,
+   "listings": 540,
+   "rate": 0.0
+  },
+  {
+   "word": "eat",
+   "z": -2.38,
+   "watched": 0,
+   "listings": 540,
+   "rate": 0.0
+  },
+  {
+   "word": "have",
+   "z": -2.4,
+   "watched": 1,
+   "listings": 726,
+   "rate": 0.00138
+  },
+  {
+   "word": "that",
+   "z": -2.44,
+   "watched": 1,
+   "listings": 748,
+   "rate": 0.00134
+  },
+  {
+   "word": "dark",
+   "z": -2.45,
+   "watched": 1,
+   "listings": 750,
+   "rate": 0.00133
+  },
+  {
+   "word": "are",
+   "z": -2.46,
+   "watched": 6,
+   "listings": 1504,
+   "rate": 0.00399
+  },
+  {
+   "word": "bitcoin",
+   "z": -2.51,
+   "watched": 1,
+   "listings": 782,
+   "rate": 0.00128
+  },
+  {
+   "word": "national",
+   "z": -2.52,
+   "watched": 0,
+   "listings": 608,
+   "rate": 0.0
+  },
+  {
+   "word": "your",
+   "z": -2.54,
+   "watched": 8,
+   "listings": 1821,
+   "rate": 0.00439
+  },
+  {
+   "word": "little",
+   "z": -2.55,
+   "watched": 0,
+   "listings": 619,
+   "rate": 0.0
+  },
+  {
+   "word": "christmas",
+   "z": -2.57,
+   "watched": 1,
+   "listings": 811,
+   "rate": 0.00123
+  },
+  {
+   "word": "manager",
+   "z": -2.64,
+   "watched": 0,
+   "listings": 665,
+   "rate": 0.0
+  },
+  {
+   "word": "halloween",
+   "z": -2.64,
+   "watched": 0,
+   "listings": 667,
+   "rate": 0.0
+  },
+  {
+   "word": "design",
+   "z": -2.97,
+   "watched": 7,
+   "listings": 1948,
+   "rate": 0.00359
+  },
+  {
+   "word": "shirt",
+   "z": -3.14,
+   "watched": 13,
+   "listings": 2886,
+   "rate": 0.0045
+  },
+  {
+   "word": "day",
+   "z": -3.22,
+   "watched": 4,
+   "listings": 1662,
+   "rate": 0.00241
+  },
+  {
+   "word": "you",
+   "z": -3.85,
+   "watched": 10,
+   "listings": 3019,
+   "rate": 0.00331
+  },
+  {
+   "word": "cute",
+   "z": -3.92,
+   "watched": 6,
+   "listings": 2479,
+   "rate": 0.00242
+  },
+  {
+   "word": "funny",
+   "z": -4.88,
+   "watched": 22,
+   "listings": 5690,
+   "rate": 0.00387
+  }
+ ]
+}
