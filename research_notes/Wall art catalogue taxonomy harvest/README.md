@@ -21,11 +21,14 @@ listings. There is no multilingual problem to solve.
 2. **`the_grammar_of_what_sells.md`** — how a selling picture is actually
    built. Eleven composition grammars, three colour strategies, eleven
    techniques named by their physical artefact. From looking at the images.
-3. **`template_catalogue.md`** — the twenty phrasings their catalogues run on,
+3. **`subject_technique_pairings.md`** — which technique goes with which
+   subject, measured by lift across the whole corpus. The lookup table that
+   removes guesswork from prompt building.
+4. **`template_catalogue.md`** — the twenty phrasings their catalogues run on,
    with the slot values extracted from the full corpus. Generator input.
-4. **`competitor_data_analysis.md`** — subject blocks by volume, the UK
+5. **`competitor_data_analysis.md`** — subject blocks by volume, the UK
    coverage gap, licensed IP to avoid, generation cost model.
-5. **`uk_place_gazetteer.md`** — ~7,000 named UK place atoms from official
+6. **`uk_place_gazetteer.md`** — ~7,000 named UK place atoms from official
    registries, and which place formats a diffusion model can actually carry.
 
 Supporting, read as needed: `live_image_style_analysis.md` (the earlier
