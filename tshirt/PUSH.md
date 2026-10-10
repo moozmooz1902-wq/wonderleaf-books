@@ -263,3 +263,65 @@ touched them.
 into each listing's own palette. The other 103,000 are type-only, which is
 the format their own data rates highest. The SKUs did not change, so the
 eBay file is unaffected either way.
+
+---
+
+## Why the upload stopped at ~20,000 (10 October 2026)
+
+**It is the monthly VALUE limit, not the quantity limit.** From the seller's
+Seller Hub screen:
+
+| limit | used | state |
+|---|---|---|
+| Quantity of items | 731,773 / 10,000,000 | **9.3M spare — only 7.3% used** |
+| Money value | **£10.2M / £10M** | **exceeded** |
+
+So the account has essentially unlimited item headroom and no value headroom.
+Ending listings to free *item* space was solving the wrong constraint.
+
+### The arithmetic
+
+Listed value is price x quantity x sizes, and every listing in this catalogue
+carries five sizes at quantity 1:
+
+    per listing      5 x 1 x £11.99        = £59.95
+    20,000 uploaded                        = £1.20M
+    85,573 remaining                       = £5.13M
+    getting back under the cap             = £0.20M
+    headroom needed to finish              = £5.33M  = 53% of the whole £10M limit
+
+Finishing this upload by ending alone means clearing **more than half the
+account's total allowance by value**. The first 125,966 ends bought 20,000
+listings; finishing needs roughly four times that again.
+
+### The three levers, in order
+
+1. **Request a value-limit increase.** There is a "Request to list more" link
+   on the same Seller Hub screen. At £10.2M listed across 731,773 items this
+   is the normal remedy and the only one that destroys nothing.
+2. **Reduce value per listing.** Five sizes to three (M/L/XL) takes a listing
+   from £59.95 to £35.97, so the remaining 85,573 would need £3.08M instead of
+   £5.13M — **£2.05M of allowance saved without ending anything**. Changes the
+   product, so it is the seller's call.
+3. **End for value, not for count.** If ending, select to maximise £ freed per
+   listing removed — a different ordering from `EBAY_END_TSHIRTS.csv`, which
+   was worst-first by duplication. The old t-shirts carry ten sizes each, so
+   they free roughly twice the value of a new listing and about 2.7x that of a
+   wall-art listing.
+
+### Caution before ending anything else
+
+The counter reads "listed **and sold**", which may be cumulative for the
+month. If it is, ending will **not** give the value back and listings would be
+destroyed for nothing until the cycle resets. End a small batch first and
+check whether the £10.2M figure actually falls.
+
+### Tooling
+
+`build_end2.py` builds the next tranche from a **fresh Active listings export**
+(Seller Hub → Reports → Downloads). A fresh export is required: the container
+no longer holds the one the first end file came from, and the account has
+changed twice since. It skips every ItemID already in `EBAY_END_TSHIRTS.csv`
+and anything with a `WLT-` SKU or an ItemID newer than the newest already-ended
+one, so it cannot end the 20,000 new listings. It needs extending to sort by
+value freed before it is used for lever 3.
