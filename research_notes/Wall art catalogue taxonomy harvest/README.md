@@ -39,8 +39,14 @@ listings. There is no multilingual problem to solve.
 7. **`live_catalogue_6_4m.md`** — the full live Fy! catalogue, 6,448,043
    images, and the 83% repeat rate inside it.
 8. **`displate_catalogue_and_demand.md`** — Displate's full 2,717,198 images,
-   and **34,789 real search queries**: the only demand-side data in the
-   project. Read it before citing UK places as a proven market.
+   and 34,789 real search queries. Displate's audience is fandom, not decor.
+9. **`seller_data_structure_and_frames.md`** — the seller's own three MEGA
+   dumps read column by column: the black/white/oak frame set, the price
+   ladder, the exact mockup geometry, and which competitor to copy.
+10. **`first_party_demand_watchers.md`** — **read this one.** The seller's own
+   eBay export has a Watchers column. It is the only first-party demand signal
+   in the project: what gets saved, what never does, and the 7.5x result for
+   UK places.
 
 Supporting, read as needed: `live_image_style_analysis.md` (the earlier
 156-image pass), `enumerable_subject_lists.md` (species, breeds, plants,
@@ -72,18 +78,19 @@ collections), `etsy_ebay_taxonomy.md`, `european_uk_retailer_taxonomy.md`,
    Circles, arcs, a horizon split, three flat colours — 9.12% of the corpus,
    122,958 listings. Procedural output is free, instant and pixel-perfect;
    diffusion would be slower, dearer and worse.
-5. **Still no sales data — but there is now demand data, and it is not
-   flattering to the UK plan.** "What sells" in the older notes means listing
+5. **Still no sales data — but there is now first-party demand data, and it
+   backs the UK plan.** "What sells" in the older notes means listing
    volume: what a competitor chose to make, not what a buyer bought. That
    caveat stands for every supply-derived number here. What changed is that
    Displate publishes 34,789 of its real search queries, and those are demand.
    They say Displate's buyers search for **named entities** — characters,
    actors, bands, game and anime titles (91.2% of queries) — not decor, and
-   that **UK place names are 0.25% of its queries**, most of those being
-   trademarked football clubs. Displate's audience is not eBay UK's, so this
-   does not sink Phase 1; it does mean Phase 1 has no demand evidence behind
-   it yet and must not be described as if it does. The seller's own eBay
-   figures remain the thing that would settle it.
+   that UK place names are 0.25% of its queries. But Displate's audience is
+   not eBay UK's, and the seller's own eBay export settles it the other way:
+   UK-place listings are watched at **7.91% against a 1.05% base (z = +12.6)**
+   on just 354 listings out of 168,819. Phase 1 now has first-party evidence
+   behind it. Sales data still does not exist anywhere; watchers are the
+   closest thing, and a save is not a purchase.
 
 ---
 
@@ -125,10 +132,9 @@ collections), `etsy_ebay_taxonomy.md`, `european_uk_retailer_taxonomy.md`,
 
 Research complete. **Nothing generated yet.** Phase 1 is scoped to the nine
 lettering-free place formats: ~5,900 UK place atoms × 3 treatments = 17,700
-designs for about $7 of GPU. At $7 it is cheap enough to run as a test rather
-than a bet — but it is a supply-side bet until a UK-facing demand source
-(eBay UK completed listings, or Etsy UK search suggestions) confirms it.
-See `displate_catalogue_and_demand.md`.
+designs for about $7 of GPU — and it is no longer a blind bet: the seller's
+own watchers put UK places at 7.5x the catalogue's base rate off only 354
+listings. See `first_party_demand_watchers.md`.
 
 Blockers before anything can be listed: **no R2 bucket for wall art**
 (`plan.json` has `pic_base: ""`, only `tshirt-m12k` has credentials).

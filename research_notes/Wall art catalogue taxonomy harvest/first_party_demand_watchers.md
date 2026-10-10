@@ -120,3 +120,84 @@ transferable thing on this list.
   test, not settled facts.
 - `ray`, `watch`, `man` and `artwork` are probably artefacts of other words
   they appear inside or beside, and are not read as instructions here.
+
+## UK places over-perform by 7.5x — the evidence Displate could not give
+
+`displate_catalogue_and_demand.md` concluded that the UK-place plan had no
+demand evidence behind it, because UK place names are only 0.25% of Displate's
+search queries. That conclusion was right about Displate and wrong as a verdict
+on the plan. This catalogue settles it from the other side.
+
+Testing the same unambiguous UK settlement names against the seller's own
+watchers:
+
+| | |
+|---|---|
+| Listings naming a UK place | **354** — 0.21% of the catalogue |
+| Of those, watched | **28** |
+| Watch rate | **7.91%**, against a 1.05% base |
+| Expected if UK places were ordinary | 3.7 |
+| Significance | **z = +12.6** |
+
+Per place, where there are at least ten listings:
+
+| rate | watched / listings | place | example |
+|---|---|---|---|
+| 16.7% | 2 / 12 | Devon | *Hope Cove, Devon* |
+| 11.5% | 3 / 26 | Manchester | *Manchester Rooftop Panorama* |
+| 10.0% | 1 / 10 | Cornwall | *Fowey And Fowey Estuary* |
+| 9.1% | 1 / 11 | Whitby | *The 199 Steps Whitby* |
+| 8.3% | 1 / 12 | Liverpool | *Bob Paisley — Anfield* (likeness, unusable) |
+| 5.1% | 5 / 99 | London | *Empty London Underground* |
+| 5.0% | 1 / 20 | Yorkshire | *Yorkshire Tea* (trademark, unusable) |
+
+And separately, *Sheffield — The Steel City* sits sixth in the whole catalogue
+on 5 watchers.
+
+**So the seller has barely tried UK places — 354 listings out of 168,819 — and
+the ones tried beat the catalogue average seven and a half times over.** That
+is the strongest argument in this project for Phase 1, and unlike everything
+before it, it comes from the seller's own buyers rather than a competitor's
+shelf.
+
+Two of the seven examples are unusable (a manager's likeness, a tea brand), so
+the clean rate is a little lower than 7.91%. The counts are small. But the
+direction is not in doubt at z = +12.6.
+
+## The top-watched listings are almost all copyrighted
+
+Worth stating plainly, because it is the trap this catalogue already fell into.
+The twenty most-watched listings include Escher, Mackintosh, Kay Nielsen, Nick
+Cave, The A-Team, Mortal Kombat, The Red Shoes, Mr Blobby, Metal Gear Solid,
+Dracula AD 1972, Banksy, Snoopy, Picasso, Xanadu, The Wizard of Oz, Hockney,
+The Italian Job, Shin Megami Tensei and an adult performer's name.
+
+Almost every top performer is a property we cannot make. The clean exceptions
+are the ones to build on: *Sheffield — The Steel City* (5), *Golden Cranes
+Japanese Art* (6), *Cap de Formentor Mallorca* (4), *Sa Calobra Mallorca
+Cycling* (3), *Paris-Roubaix* (3), *Rugby — A Game For Gentlemen* (3),
+*Shackleton's Endurance By Night* (3), *The 199 Steps Whitby*, *Hope Cove
+Devon*. Places, cycling, Japanese subjects, polar history, rugby.
+
+The watcher distribution is also flat — the top 10 listings hold only 2.7% of
+all watchers, the top 500 hold 40.7%. There is no blockbuster to chase. Breadth
+is what carries this catalogue, which supports generating at scale, provided
+the breadth is aimed better than it has been.
+
+## Every title wastes 56% of itself
+
+Measured across all 168,819 listings:
+
+- **100%** end with the same 43-character tail,
+  `Framed Wall Art Poster Canvas Print Picture`.
+- Mean title length 77.4 characters; mean *real content* 33.3 characters.
+- **The boilerplate is 56% of the average title.**
+- **102,783 listings (60.9%) have their content cut to exactly 35 characters**,
+  and 131,423 (77.8%) land in the 33–36 character truncation band — mid-word:
+  *"Maurits Escher Relativity, Dutch Gr"*, *"Charles Rennie Mackintosh - Window "*,
+  *"Golden Cranes Japanese Art Framed A"*.
+
+eBay allows 80 characters. This catalogue spends 43 of them on a phrase
+identical across every listing, then truncates the only part that distinguishes
+one listing from another. It is both a search problem — eBay sees 168,819
+near-identical titles — and a straightforward, free fix.

@@ -195,9 +195,14 @@ here. The user's existing typography catalogue sells to that other audience.
 
 What it does mean is narrower and still worth having: **Displate is not evidence
 for the UK-place plan, and should not be cited as if it were.** The plan needs its
-own demand check from a UK-facing source — eBay UK completed listings, or Etsy UK
-search suggestions. Until then UK places remain a supply-side bet, which is exactly
-the condition the earlier notes warned about.
+own demand check from a UK-facing source.
+
+> **SUPERSEDED, same day.** That check has since been run, and it came back
+> strongly positive. The seller's own eBay export carries a Watchers column:
+> UK-place listings there watch at **7.91% against a 1.05% base, z = +12.6**,
+> on 354 listings. Displate's indifference to UK places turns out to say
+> something about Displate's audience, not about the plan. See
+> `first_party_demand_watchers.md`.
 
 ## Taxonomy captured as a side effect
 
