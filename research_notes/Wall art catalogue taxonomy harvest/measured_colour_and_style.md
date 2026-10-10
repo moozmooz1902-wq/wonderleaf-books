@@ -124,3 +124,71 @@ crowded shelf, and it costs nothing to test.
 unbiased. A larger colour-only pass over 400,000 images is running; this note
 will be superseded by it on the colour numbers, which are the ones worth
 having precise.
+
+---
+
+# The measured technique spec (59,997 images)
+
+Superseding the CLIP-labelled section above for anything about technique.
+Method changed: instead of asking a model what technique a picture is (37.8%
+agreement), the **title is the label** — Fy! states its technique in 142.6% of
+its titles — and the **pixels are the measurement**. No model, no guessing.
+
+Sample: 59,997 images measured from a 400,000-image list shuffled across the
+full 9,165,241-image corpus. Script: `wallart-data/technique_profiles.py`.
+
+| technique | n | lightness | saturation | edge | border−centre | dominant strategy | top hues |
+|---|---|---|---|---|---|---|---|
+| painting | 1,492 | 0.578 | 0.329 | 0.054 | +0.039 | full spectrum 41% | red 30% orange 28% cyan 13% |
+| illustration | 1,228 | 0.624 | 0.300 | 0.060 | +0.055 | full spectrum 36% | red 29% orange 25% cyan 16% |
+| watercolour | 666 | **0.724** | 0.212 | 0.052 | **+0.142** | duotone 36% | orange 28% red 21% cyan 14% |
+| ink | 655 | 0.646 | 0.298 | 0.047 | +0.059 | duotone 47% | red 29% rose 27% orange 13% |
+| photograph | 287 | 0.529 | **0.177** | 0.052 | **−0.037** | **monochrome 57%** | red 36% cyan 25% |
+| drawing | 245 | 0.713 | **0.166** | 0.052 | **+0.124** | **monochrome 44%** | orange 33% red 33% |
+| pastel | 213 | 0.708 | 0.231 | 0.041 | +0.046 | duotone 35% | orange 29% red 28% |
+| oil | 170 | **0.514** | 0.327 | 0.053 | **−0.042** | full spectrum 37% | orange 30% red 21% |
+| collage | 160 | 0.643 | 0.296 | 0.054 | **+0.171** | full spectrum 51% | orange 32% red 28% |
+
+## Three findings that are directly usable
+
+**1. `border − centre` sorts every technique into three presentation families.**
+This single number says how the work is staged, and it is unambiguous:
+
+- **Margin prints** (+0.12 to +0.17): collage, watercolour, drawing. These are
+  presented as paper with a visible light border. A generator must leave that
+  margin, or the output will read as the wrong kind of object.
+- **Near full-bleed** (+0.04 to +0.06): ink, illustration, pastel, painting.
+- **Edge-to-edge and dark** (−0.04): oil, photograph. No margin at all, and
+  darker than everything else.
+
+**2. Red and orange are 50–60% of the colourful pixels in *every* technique.**
+Not one group is an exception. Wall art is warm, universally, whatever the
+medium. Set against the title evidence — where colour words clear nothing and
+`orange` sits slightly *below* the base watch rate — the rule is exact:
+**warm palettes belong in the picture and never in the title.**
+
+**3. The two least saturated techniques are drawing (0.166) and photograph
+(0.177), and both are the most monochrome** (44% and 57%). These are the same
+techniques the first-party watcher data singles out: charcoal 5.96% and
+sketch 5.26%, the only two beating the 1.05% base.
+
+So the strongest demand signal in the project points at the least saturated,
+most monochrome corner of the supply — and that corner is thinly populated:
+drawing is 245 of 59,997 measured images, **0.4%**.
+
+**A technique with the best measured demand and 0.4% of supply is the clearest
+opportunity this research has produced.**
+
+## Generation targets, per product
+
+**Charcoal breed portrait** — match the `drawing` profile:
+lightness **0.71**, saturation **0.17**, edge **0.052**, border−centre
+**+0.12** (a real paper margin), monochrome-leaning.
+
+**Vintage UK place poster** — match the `illustration` profile:
+lightness **0.62**, saturation **0.30**, edge **0.060**, border−centre
+**+0.055**, full-spectrum or duotone, warm-dominant.
+
+These are assertable: render a batch, measure it with the same script, and
+compare. A generated set that does not land near these numbers does not look
+like the market, whatever it looks like to us.
