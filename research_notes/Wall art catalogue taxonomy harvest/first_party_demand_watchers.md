@@ -201,3 +201,50 @@ eBay allows 80 characters. This catalogue spends 43 of them on a phrase
 identical across every listing, then truncates the only part that distinguishes
 one listing from another. It is both a search problem — eBay sees 168,819
 near-identical titles — and a straightforward, free fix.
+
+## The duplication problem is in the pictures, not the titles
+
+Measured on the live catalogue's title stems (boilerplate removed):
+
+| | |
+|---|---|
+| Distinct stems | 165,316 of 168,819 — **2.1% exact duplicates** |
+| Grouped by first three content words | 142,492 groups — **15.6% near-duplicate** |
+| Watch rate, duplicate titles | 0.76% (n = 6,293) |
+| Watch rate, unique titles | 1.06% (n = 162,526) |
+
+So the live catalogue's *titles* are largely distinct — far better than the
+raw800k source data at 54.3% repeats. The wall-art branch's "89%
+near-duplication" therefore cannot be about titles. It is about the images,
+which is exactly what the grammar notes predicted: *"near-duplicate checking
+must run on the picture, not the title — the same panel with different words
+is still a duplicate."* Confirmed from live data.
+
+Duplicate titles do carry a penalty (0.76% vs 1.06%), but it is modest. Title
+duplication is not the main lever here.
+
+## 12,731 listings are t-shirt slogans sold as wall art
+
+The biggest near-duplicate clusters give the game away: *keep calm and* (141),
+*just a girl who…* (138), *never dreamt sexy…* (115), *support your local*
+(90), and repeated stems like *"think like a proton and stay positive"*,
+*"never trust an atom they make up everything"*, *"no pants are the best
+pants"*, *"yes i really do need all these dice"*.
+
+Counting listings matching a slogan pattern (keep calm, just a girl/boy,
+I love/hate, never trust/dreamt, funny, world's best, definition meaning,
+my wife/husband/cat/dog, retired, don't, you…):
+
+| | listings | share | watched | rate |
+|---|---|---|---|---|
+| Slogan-pattern | **12,731** | 7.5% | 50 | **0.39%** |
+| Everything else | 156,088 | 92.5% | 1,720 | **1.10%** |
+
+**z = −7.2.** The slogan block performs 2.8× worse than the rest of the
+catalogue. These are t-shirt products listed in a wall-art category, and they
+are the clearest ending candidates in the file — 12,731 listings earning 50
+watchers between them.
+
+Removing the block only lifts the overall base rate from 1.05% to 1.10%, so
+this is not the whole problem. But it is 12,731 slots of selling-limit space
+returning almost nothing.
