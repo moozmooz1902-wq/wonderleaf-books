@@ -355,3 +355,51 @@ changed twice since. It skips every ItemID already in `EBAY_END_TSHIRTS.csv`
 and anything with a `WLT-` SKU or an ItemID newer than the newest already-ended
 one, so it cannot end the 20,000 new listings. It needs extending to sort by
 value freed before it is used for lever 3.
+
+
+---
+
+## Corrected wall-art value, and how much to end (10 October 2026)
+
+**The seller corrected the structure: the live wall art is A3 only, framed
+plus unframed print only.** An earlier estimate of £339.95 per listing came
+from the September `roops active listings REPRICED.csv` export, which still
+carried A4/A3/A2 across Black/White/Oak/Unframed — 6 to 12 variations and
+£170.8M of listed value across 502,477 listings. That export is stale and
+must not be used for value arithmetic.
+
+Current structure:
+
+    A3 framed          £29.95
+    A3 unframed only   £14.99
+                       ------
+    per listing        £44.94
+
+### Wall art to end, assuming the end-all-old-t-shirts file goes up first
+
+Ending all 118,872 remaining old t-shirts frees **£1.43M** (single-item
+listings at £11.99).
+
+| finish the 85,573 at | £ still needed | wall art to end | % of 424,118 live |
+|---|---|---|---|
+| **5 sizes** | £3.90M | **86,890** | **20.5%** |
+| 4 sizes | £2.88M | 64,059 | 15.1% |
+| 3 sizes | £1.85M | 41,228 | 9.7% |
+| 2 sizes | £0.83M | 18,397 | 4.3% |
+
+The size choice is worth far more than it looks: dropping from five sizes to
+three removes **45,662 wall-art listings** from what has to be destroyed.
+
+### The safety guarantee on the t-shirt end file
+
+The old catalogue uses `GR-#######` SKUs and the new one uses `WLT-######`
+(verified against `EBAY_PART1of3.csv`). Ending is restricted to `GR-` SKUs,
+so the ~20,000 new listings cannot be touched by SKU alone — the ItemID check
+is a second, independent guard rather than the only one.
+
+### Still outstanding
+
+The active t-shirt export the first end file was built from is gone from the
+container, so `build_end2.py` needs a **fresh Active listings export** to
+recover the 118,872 ItemIDs. One export covering the whole account serves both
+jobs — the t-shirt end-all file and the wall-art selection.

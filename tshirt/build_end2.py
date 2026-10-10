@@ -19,7 +19,8 @@ Selection order is the same as the first file, worst-first:
   1. duplicate titles live against each other - keep one, end the rest;
   2. then longest-listed (lowest ItemID) until the target is met.
 
-  python3 build_end2.py <active_listings_export.csv> <how_many>
+  python3 build_end2.py <active_listings_export.csv> all     # every old tee
+  python3 build_end2.py <active_listings_export.csv> 40000   # a capped tranche
 """
 import csv, collections, re, sys, os
 
@@ -47,7 +48,9 @@ def find_header(path):
 
 
 def main():
-    src, want = sys.argv[1], int(sys.argv[2])
+    src = sys.argv[1]
+    arg = sys.argv[2] if len(sys.argv) > 2 else "all"
+    want = None if arg == "all" else int(arg)
 
     ended = set()
     if os.path.exists(ALREADY):
@@ -117,13 +120,18 @@ def main():
     dupe_items = {d[0] for d in dupes}
     rest = sorted((e for e in live if e[0] not in dupe_items), key=lambda x: int(x[0]))
 
-    chosen = (dupes + rest)[:want]
+    order = dupes + rest          # worst-first: duplicates, then longest-listed
+    chosen = order if want is None else order[:want]
     print(f"\nduplicate titles   {len(dupes):,}")
-    print(f"longest-listed used {max(0, want - len(dupes)):,}")
+    print(f"longest-listed used {max(0, len(chosen) - len(dupes)):,}")
     print(f"TOTAL to end       {len(chosen):,}")
     print(f"left live after    {len(live) - len(chosen):,}")
     assert len({c[0] for c in chosen}) == len(chosen)
     assert not (set(c[0] for c in chosen) & ended)
+
+    # value is what the account is actually short of, so report it
+    print(f"value freed        GBP {len(chosen) * 11.99:,.0f}  "
+          f"(single-item listings at GBP 11.99)")
 
     HDR = "*Action(SiteID=UK|Country=GB|Currency=GBP|Version=1193),ItemID,EndCode\n"
     p = os.path.join(OUT, "EBAY_END_TSHIRTS_2.csv")
