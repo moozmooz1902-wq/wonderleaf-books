@@ -252,3 +252,68 @@ one model-labelled technique that can be trusted.
 Generate a batch, run `profile_group.py` over it, and compare. If a run does
 not land in these bands it does not look like the market, whatever it looks
 like to us.
+
+---
+
+# FINAL: 212,995 images measured, and the numbers have converged
+
+The colour pass was stopped by its runtime limit at **213 of 400 shards —
+212,995 images**. That lost nothing, and here is the evidence: tripling the
+sample from 66,997 moved every figure by about 0.01 or less.
+
+| group | lightness 67k → 213k | saturation 67k → 213k | border−centre 67k → 213k |
+|---|---|---|---|
+| ALL baseline | 0.537 → 0.537 | 0.296 → 0.296 | +0.018 → +0.018 |
+| UK place | 0.622 → 0.616 | 0.283 → 0.278 | +0.092 → +0.095 |
+| travel poster | 0.590 → 0.600 | 0.337 → 0.327 | +0.122 → +0.130 |
+| charcoal / sketch | 0.723 → 0.717 | 0.099 → 0.106 | +0.178 → +0.185 |
+| linocut | 0.413 → 0.421 | 0.133 → 0.143 | −0.054 → −0.059 |
+| botanical | 0.621 → 0.624 | 0.286 → 0.288 | +0.082 → +0.083 |
+
+The only group that moved materially is dog/cat breed, the smallest
+(108 → 369), and it moved *away* from the charcoal profile toward the
+baseline — a useful correction, since it means "breed portrait" as a category
+is not inherently monochrome; the charcoal treatment is what makes it so.
+
+## Final technique table (n ≥ 300)
+
+| technique | n | lightness | saturation | edge | border−centre | dominant strategy |
+|---|---|---|---|---|---|---|
+| painting | 5,129 | 0.578 | 0.327 | 0.055 | +0.041 | full spectrum 41% |
+| illustration | 4,280 | 0.626 | 0.299 | 0.059 | +0.061 | full spectrum 36% |
+| watercolour | 2,474 | 0.728 | 0.210 | 0.051 | **+0.142** | duotone 34% |
+| ink | 2,384 | 0.653 | 0.293 | 0.047 | +0.059 | duotone 46% |
+| photograph | 911 | 0.537 | 0.176 | 0.053 | **−0.040** | **monochrome 56%** |
+| drawing | 865 | 0.729 | 0.178 | 0.051 | +0.129 | duotone 42% |
+| pastel | 730 | 0.715 | 0.230 | 0.041 | +0.045 | full spectrum 34% |
+| collage | 588 | 0.616 | 0.315 | 0.056 | **+0.141** | full spectrum 55% |
+| oil | 566 | **0.512** | **0.342** | 0.051 | −0.022 | full spectrum 39% |
+| **sketch** | 345 | **0.737** | **0.116** | 0.051 | **+0.176** | **monochrome 63%** |
+| linocut | 343 | 0.421 | 0.143 | **0.104** | −0.059 | monochrome 61% |
+
+`sketch` now separates from `drawing` with enough volume to stand alone, and
+it is the extreme of the whole table: the lightest (0.737), the least
+saturated (0.116), the widest margin (+0.176) and 63% monochrome. It is the
+purest form of the thing the seller's watchers reward most.
+
+## Final per-product targets (use these)
+
+    Product A  vintage UK place poster     (travel poster profile, n=1,328)
+        lightness 0.600   saturation 0.327   edge 0.065
+        border-centre +0.130               monochrome 3.2%
+        strategy: full spectrum 55%, duotone 22%, complementary 18%
+        hue mass: orange 27%, red 24%, cyan 22%
+
+    Product B  charcoal breed portrait     (charcoal/sketch profile, n=387)
+        lightness 0.717   saturation 0.106   edge 0.051
+        border-centre +0.185               monochrome 68.7%
+        strategy: monochrome 69%, duotone 19%
+        hue mass: orange 37%, red 23%, azure 13%
+
+Even the monochrome group's residual colour is warm — orange 37%, red 23% —
+so "monochrome" here means a warm charcoal on cream paper, not neutral grey
+on white. That is a specific, checkable instruction and it would have been
+easy to get wrong.
+
+Everything in this note is reproducible with `wallart-data/colour_pass.py`,
+`technique_profiles.py` and `profile_group.py`.
