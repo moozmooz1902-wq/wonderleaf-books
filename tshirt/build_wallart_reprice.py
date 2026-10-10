@@ -3,7 +3,7 @@
 
   A3, two variations   framed  £29.95 -> £19.99
                        unframed £14.99 ->  £8.99
-  A4, single print              £8.99 ->  £6.99
+  A4, single print              £8.99 ->  £6.99   (only with --include-a4)
 
 Written in the same eBay-active-revise-price-quantity template the export
 arrives in, so it uploads straight back with no conversion.
@@ -28,6 +28,9 @@ SINGLE_NEW = {"8.99": "6.99"}                     # the A4 singles
 
 def main():
     src = sys.argv[1]
+    # default is the variation listings only; the single A4 prints are a
+    # separate decision and are left out unless asked for
+    include_a4 = "--include-a4" in sys.argv[2:]
     f = open(src, newline="", encoding="utf-8-sig", errors="replace")
     info = f.readline().rstrip("\r\n")
     r = csv.reader(f)
@@ -77,6 +80,9 @@ def main():
                 nv.append(v)
             out.append((p, nv)); n_var += 1
         else:
+            if not include_a4:
+                skipped["A4 single (not requested)"] += 1
+                continue
             old = c(parent, PRICE)
             if old not in SINGLE_NEW:
                 skipped["single price %s" % old] += 1
