@@ -192,3 +192,63 @@ lightness **0.62**, saturation **0.30**, edge **0.060**, border−centre
 These are assertable: render a batch, measure it with the same script, and
 compare. A generated set that does not land near these numbers does not look
 like the market, whatever it looks like to us.
+
+---
+
+# Per-product measured targets (66,997 images)
+
+Profiles for the exact groups we intend to build, rather than borrowing a
+generic technique profile. Group membership is decided by the competitor's own
+title; the numbers are measured from the pixels.
+Script: `wallart-data/profile_group.py`.
+
+| group | n | lightness | saturation | edge | border−centre | monochrome | strategy mix | top hues |
+|---|---|---|---|---|---|---|---|---|
+| **ALL (baseline)** | 66,997 | 0.537 | 0.296 | 0.053 | +0.018 | 22.3% | duotone 33% · full 28% · mono 22% | red 26% orange 24% cyan 13% |
+| UK place | 348 | 0.622 | 0.283 | 0.058 | +0.092 | 14.7% | full 39% · duotone 28% · comp 16% | red 26% orange 22% cyan 19% |
+| **travel poster** | 420 | 0.590 | **0.337** | 0.066 | **+0.122** | **2.6%** | **full 61%** · comp 19% | orange 25% cyan 24% red 23% |
+| **charcoal / sketch** | 119 | **0.723** | **0.099** | 0.050 | **+0.178** | **72.3%** | **mono 72%** · duotone 18% | orange 40% red 20% azure 12% |
+| linocut | 134 | **0.413** | 0.133 | **0.102** | **−0.054** | 61.2% | mono 61% · duotone 23% | orange 36% red 21% azure 15% |
+| botanical | 1,916 | 0.621 | 0.286 | 0.062 | +0.082 | 14.9% | duotone 37% · full 34% | red 26% orange 26% yellow 8% |
+| dog / cat breed | 108 | 0.610 | 0.260 | 0.050 | +0.121 | 29.6% | duotone 35% · mono 30% | orange 37% red 34% cyan 9% |
+
+## What this settles
+
+**The two products we picked are opposite poles, which is exactly what a
+catalogue wants.**
+
+- **Travel poster**: saturation **0.337** — the highest of any group — and only
+  **2.6% monochrome**, 61% full-spectrum. Bright, colourful, margined.
+- **Charcoal / sketch**: saturation **0.099**, a third of the baseline, and
+  **72.3% monochrome** with the **widest margin of any group (+0.178)** and
+  the highest lightness (0.723). Pale, almost colourless, lots of paper.
+
+Nothing is gained by blurring them. Two clearly separated looks give a
+catalogue that reads as deliberate rather than as a dump.
+
+**The baseline border−centre is only +0.018.** Most competitor art is
+effectively full-bleed. Every group we want to build sits at +0.08 to +0.18 —
+so **a visible paper margin is itself a differentiator**, not just a style
+detail, and it is free to produce.
+
+**Linocut has double the edge density of everything else** (0.102 against a
+0.053 baseline). That is the gouge-mark texture showing up as a number. It is
+also dark (0.413) and full-bleed (−0.054) — a genuinely distinct third look
+if we ever want one, and the CLIP label agreed 67% of the time, so it is the
+one model-labelled technique that can be trusted.
+
+## Assertable targets
+
+    Product A  vintage UK place poster
+        lightness  0.59-0.62   saturation  0.30-0.34   edge  0.058-0.066
+        border-centre  +0.09 to +0.12      monochrome  under 5%
+        strategy  full spectrum ~60%, complementary ~19%
+
+    Product B  charcoal breed portrait
+        lightness  0.72        saturation  0.10        edge  0.050
+        border-centre  +0.18               monochrome  ~72%
+        strategy  monochrome dominant
+
+Generate a batch, run `profile_group.py` over it, and compare. If a run does
+not land in these bands it does not look like the market, whatever it looks
+like to us.
