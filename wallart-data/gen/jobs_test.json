@@ -1,0 +1,2162 @@
+[
+{
+"kind": "place",
+"subject": "Durdle Door",
+"tech": "linocut",
+"gram": "G2_terrain",
+"pal": "neutral",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of Durdle Door, seen across open land, the horizon pushed to the top of the picture, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000000"
+},
+{
+"kind": "creature",
+"subject": "highland cow",
+"tech": "ink_wash",
+"gram": "G4_portrait",
+"pal": "complementary",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of a highland cow, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000001"
+},
+{
+"kind": "creature",
+"subject": "highland cow",
+"tech": "sketch",
+"gram": "G7_chart",
+"pal": "duotone",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a highland cow, as a specimen chart of nine simplified studies on one flat warm ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000002"
+},
+{
+"kind": "place",
+"subject": "the Yorkshire Dales",
+"tech": "linocut",
+"gram": "G1_window",
+"pal": "duotone",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of the Yorkshire Dales, seen through a window or terrace arch framing the left and right edges, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000003"
+},
+{
+"kind": "creature",
+"subject": "border collie",
+"tech": "ink_wash",
+"gram": "G4_portrait",
+"pal": "duotone",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of a border collie, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000004"
+},
+{
+"kind": "creature",
+"subject": "kingfisher",
+"tech": "palette_knife",
+"gram": "G8_minimal",
+"pal": "complementary",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of a kingfisher, small and centred on a vast expanse of plain paper, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000005"
+},
+{
+"kind": "place",
+"subject": "Snowdonia",
+"tech": "sketch",
+"gram": "G6_poster",
+"pal": "neutral",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of Snowdonia, as a vintage travel poster, the scene inset inside a wide cream margin, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000006"
+},
+{
+"kind": "creature",
+"subject": "stag",
+"tech": "sketch",
+"gram": "G4_portrait",
+"pal": "complementary",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a stag, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000007"
+},
+{
+"kind": "place",
+"subject": "the Cotswolds",
+"tech": "palette_knife",
+"gram": "G6_poster",
+"pal": "duotone",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of the Cotswolds, as a vintage travel poster, the scene inset inside a wide cream margin, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000008"
+},
+{
+"kind": "place",
+"subject": "Snowdonia",
+"tech": "sketch",
+"gram": "G6_poster",
+"pal": "complementary",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of Snowdonia, as a vintage travel poster, the scene inset inside a wide cream margin, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000009"
+},
+{
+"kind": "place",
+"subject": "the Lake District",
+"tech": "ink_wash",
+"gram": "G2_terrain",
+"pal": "duotone",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of the Lake District, seen across open land, the horizon pushed to the top of the picture, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000010"
+},
+{
+"kind": "place",
+"subject": "Durdle Door",
+"tech": "oil_impasto",
+"gram": "G2_terrain",
+"pal": "complementary",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of Durdle Door, seen across open land, the horizon pushed to the top of the picture, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000011"
+},
+{
+"kind": "place",
+"subject": "the Cotswolds",
+"tech": "gouache",
+"gram": "G11_hardedge",
+"pal": "duotone",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of the Cotswolds, as a hard-edge composition of circles, arcs and a horizon split in three flat colours, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000012"
+},
+{
+"kind": "place",
+"subject": "Hope Cove Devon",
+"tech": "screenprint",
+"gram": "G1_window",
+"pal": "neutral",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of Hope Cove Devon, seen through a window or terrace arch framing the left and right edges, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000013"
+},
+{
+"kind": "creature",
+"subject": "stag",
+"tech": "ink_wash",
+"gram": "G7_chart",
+"pal": "complementary",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of a stag, as a specimen chart of nine simplified studies on one flat warm ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000014"
+},
+{
+"kind": "place",
+"subject": "Hope Cove Devon",
+"tech": "ink_wash",
+"gram": "G10_abstract",
+"pal": "complementary",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of Hope Cove Devon, as an all-over painterly abstraction, marks edge to edge, no focal point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000015"
+},
+{
+"kind": "place",
+"subject": "the Yorkshire Dales",
+"tech": "gouache",
+"gram": "G10_abstract",
+"pal": "neutral",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of the Yorkshire Dales, as an all-over painterly abstraction, marks edge to edge, no focal point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000016"
+},
+{
+"kind": "creature",
+"subject": "red fox",
+"tech": "linocut",
+"gram": "G8_minimal",
+"pal": "duotone",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a red fox, small and centred on a vast expanse of plain paper, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000017"
+},
+{
+"kind": "place",
+"subject": "Snowdonia",
+"tech": "collage",
+"gram": "G2_terrain",
+"pal": "duotone",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of Snowdonia, seen across open land, the horizon pushed to the top of the picture, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000018"
+},
+{
+"kind": "place",
+"subject": "the Cotswolds",
+"tech": "pastel",
+"gram": "G10_abstract",
+"pal": "duotone",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of the Cotswolds, as an all-over painterly abstraction, marks edge to edge, no focal point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000019"
+},
+{
+"kind": "creature",
+"subject": "european robin",
+"tech": "gouache",
+"gram": "G3_habitat",
+"pal": "duotone",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of a european robin, set among a dense foreground of seedheads and flowers running off every edge, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000020"
+},
+{
+"kind": "place",
+"subject": "the Cotswolds",
+"tech": "pastel",
+"gram": "G1_window",
+"pal": "neutral",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of the Cotswolds, seen through a window or terrace arch framing the left and right edges, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000021"
+},
+{
+"kind": "place",
+"subject": "Hope Cove Devon",
+"tech": "ink_wash",
+"gram": "G9_naive",
+"pal": "duotone",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of Hope Cove Devon, as a naive flattened townscape in horizontal bands with no vanishing point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000022"
+},
+{
+"kind": "place",
+"subject": "Hope Cove Devon",
+"tech": "linocut",
+"gram": "G11_hardedge",
+"pal": "duotone",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of Hope Cove Devon, as a hard-edge composition of circles, arcs and a horizon split in three flat colours, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000023"
+},
+{
+"kind": "creature",
+"subject": "labrador retriever",
+"tech": "oil_impasto",
+"gram": "G3_habitat",
+"pal": "neutral",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of a labrador retriever, set among a dense foreground of seedheads and flowers running off every edge, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000024"
+},
+{
+"kind": "creature",
+"subject": "puffin",
+"tech": "oil_impasto",
+"gram": "G4_portrait",
+"pal": "duotone",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of a puffin, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000025"
+},
+{
+"kind": "creature",
+"subject": "kingfisher",
+"tech": "screenprint",
+"gram": "G3_habitat",
+"pal": "duotone",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of a kingfisher, set among a dense foreground of seedheads and flowers running off every edge, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000026"
+},
+{
+"kind": "creature",
+"subject": "barn owl",
+"tech": "pastel",
+"gram": "G3_habitat",
+"pal": "duotone",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of a barn owl, set among a dense foreground of seedheads and flowers running off every edge, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000027"
+},
+{
+"kind": "place",
+"subject": "the Yorkshire Dales",
+"tech": "ink_wash",
+"gram": "G2_terrain",
+"pal": "complementary",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of the Yorkshire Dales, seen across open land, the horizon pushed to the top of the picture, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000028"
+},
+{
+"kind": "place",
+"subject": "the Yorkshire Dales",
+"tech": "gouache",
+"gram": "G9_naive",
+"pal": "complementary",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of the Yorkshire Dales, as a naive flattened townscape in horizontal bands with no vanishing point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000029"
+},
+{
+"kind": "place",
+"subject": "Hope Cove Devon",
+"tech": "watercolour",
+"gram": "G2_terrain",
+"pal": "duotone",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of Hope Cove Devon, seen across open land, the horizon pushed to the top of the picture, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000030"
+},
+{
+"kind": "creature",
+"subject": "barn owl",
+"tech": "sketch",
+"gram": "G4_portrait",
+"pal": "duotone",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a barn owl, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000031"
+},
+{
+"kind": "creature",
+"subject": "labrador retriever",
+"tech": "sketch",
+"gram": "G7_chart",
+"pal": "neutral",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a labrador retriever, as a specimen chart of nine simplified studies on one flat warm ground, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000032"
+},
+{
+"kind": "creature",
+"subject": "brown hare",
+"tech": "ink_wash",
+"gram": "G8_minimal",
+"pal": "complementary",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of a brown hare, small and centred on a vast expanse of plain paper, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000033"
+},
+{
+"kind": "creature",
+"subject": "kingfisher",
+"tech": "linocut",
+"gram": "G4_portrait",
+"pal": "complementary",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a kingfisher, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000034"
+},
+{
+"kind": "place",
+"subject": "Sheffield",
+"tech": "screenprint",
+"gram": "G11_hardedge",
+"pal": "duotone",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of Sheffield, as a hard-edge composition of circles, arcs and a horizon split in three flat colours, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000035"
+},
+{
+"kind": "place",
+"subject": "Pembrokeshire coast",
+"tech": "linocut",
+"gram": "G11_hardedge",
+"pal": "duotone",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of Pembrokeshire coast, as a hard-edge composition of circles, arcs and a horizon split in three flat colours, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000036"
+},
+{
+"kind": "creature",
+"subject": "european robin",
+"tech": "oil_impasto",
+"gram": "G3_habitat",
+"pal": "complementary",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of a european robin, set among a dense foreground of seedheads and flowers running off every edge, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000037"
+},
+{
+"kind": "creature",
+"subject": "brown hare",
+"tech": "linocut",
+"gram": "G3_habitat",
+"pal": "duotone",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a brown hare, set among a dense foreground of seedheads and flowers running off every edge, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000038"
+},
+{
+"kind": "place",
+"subject": "the Yorkshire Dales",
+"tech": "linocut",
+"gram": "G6_poster",
+"pal": "duotone",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of the Yorkshire Dales, as a vintage travel poster, the scene inset inside a wide cream margin, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000039"
+},
+{
+"kind": "creature",
+"subject": "barn owl",
+"tech": "charcoal",
+"gram": "G7_chart",
+"pal": "complementary",
+"prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of a barn owl, as a specimen chart of nine simplified studies on one flat warm ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000040"
+},
+{
+"kind": "creature",
+"subject": "highland cow",
+"tech": "linocut",
+"gram": "G8_minimal",
+"pal": "neutral",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a highland cow, small and centred on a vast expanse of plain paper, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000041"
+},
+{
+"kind": "creature",
+"subject": "barn owl",
+"tech": "watercolour",
+"gram": "G8_minimal",
+"pal": "neutral",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of a barn owl, small and centred on a vast expanse of plain paper, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000042"
+},
+{
+"kind": "creature",
+"subject": "labrador retriever",
+"tech": "watercolour",
+"gram": "G4_portrait",
+"pal": "complementary",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of a labrador retriever, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000043"
+},
+{
+"kind": "creature",
+"subject": "kingfisher",
+"tech": "gouache",
+"gram": "G8_minimal",
+"pal": "duotone",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of a kingfisher, small and centred on a vast expanse of plain paper, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000044"
+},
+{
+"kind": "creature",
+"subject": "red fox",
+"tech": "watercolour",
+"gram": "G3_habitat",
+"pal": "duotone",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of a red fox, set among a dense foreground of seedheads and flowers running off every edge, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000045"
+},
+{
+"kind": "creature",
+"subject": "brown hare",
+"tech": "sketch",
+"gram": "G3_habitat",
+"pal": "complementary",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a brown hare, set among a dense foreground of seedheads and flowers running off every edge, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000046"
+},
+{
+"kind": "place",
+"subject": "Whitby harbour",
+"tech": "ink_wash",
+"gram": "G10_abstract",
+"pal": "complementary",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of Whitby harbour, as an all-over painterly abstraction, marks edge to edge, no focal point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000047"
+},
+{
+"kind": "place",
+"subject": "the Yorkshire Dales",
+"tech": "charcoal",
+"gram": "G2_terrain",
+"pal": "neutral",
+"prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of the Yorkshire Dales, seen across open land, the horizon pushed to the top of the picture, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000048"
+},
+{
+"kind": "place",
+"subject": "the Cotswolds",
+"tech": "palette_knife",
+"gram": "G10_abstract",
+"pal": "duotone",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of the Cotswolds, as an all-over painterly abstraction, marks edge to edge, no focal point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000049"
+},
+{
+"kind": "creature",
+"subject": "kingfisher",
+"tech": "oil_impasto",
+"gram": "G3_habitat",
+"pal": "neutral",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of a kingfisher, set among a dense foreground of seedheads and flowers running off every edge, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000050"
+},
+{
+"kind": "creature",
+"subject": "kingfisher",
+"tech": "ink_wash",
+"gram": "G3_habitat",
+"pal": "complementary",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of a kingfisher, set among a dense foreground of seedheads and flowers running off every edge, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000051"
+},
+{
+"kind": "place",
+"subject": "Loch Lomond",
+"tech": "screenprint",
+"gram": "G2_terrain",
+"pal": "duotone",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of Loch Lomond, seen across open land, the horizon pushed to the top of the picture, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000052"
+},
+{
+"kind": "place",
+"subject": "Sheffield",
+"tech": "collage",
+"gram": "G6_poster",
+"pal": "duotone",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of Sheffield, as a vintage travel poster, the scene inset inside a wide cream margin, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000053"
+},
+{
+"kind": "place",
+"subject": "the Cotswolds",
+"tech": "sketch",
+"gram": "G6_poster",
+"pal": "neutral",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of the Cotswolds, as a vintage travel poster, the scene inset inside a wide cream margin, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000054"
+},
+{
+"kind": "creature",
+"subject": "puffin",
+"tech": "sketch",
+"gram": "G8_minimal",
+"pal": "complementary",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a puffin, small and centred on a vast expanse of plain paper, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000055"
+},
+{
+"kind": "creature",
+"subject": "barn owl",
+"tech": "sketch",
+"gram": "G3_habitat",
+"pal": "duotone",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a barn owl, set among a dense foreground of seedheads and flowers running off every edge, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000056"
+},
+{
+"kind": "place",
+"subject": "the Yorkshire Dales",
+"tech": "pastel",
+"gram": "G1_window",
+"pal": "neutral",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of the Yorkshire Dales, seen through a window or terrace arch framing the left and right edges, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000057"
+},
+{
+"kind": "creature",
+"subject": "european robin",
+"tech": "ink_wash",
+"gram": "G7_chart",
+"pal": "complementary",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of a european robin, as a specimen chart of nine simplified studies on one flat warm ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000058"
+},
+{
+"kind": "place",
+"subject": "Sheffield",
+"tech": "pastel",
+"gram": "G6_poster",
+"pal": "duotone",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of Sheffield, as a vintage travel poster, the scene inset inside a wide cream margin, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000059"
+},
+{
+"kind": "place",
+"subject": "Loch Lomond",
+"tech": "collage",
+"gram": "G9_naive",
+"pal": "complementary",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of Loch Lomond, as a naive flattened townscape in horizontal bands with no vanishing point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000060"
+},
+{
+"kind": "place",
+"subject": "Snowdonia",
+"tech": "screenprint",
+"gram": "G1_window",
+"pal": "duotone",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of Snowdonia, seen through a window or terrace arch framing the left and right edges, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000061"
+},
+{
+"kind": "place",
+"subject": "the Lake District",
+"tech": "screenprint",
+"gram": "G2_terrain",
+"pal": "duotone",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of the Lake District, seen across open land, the horizon pushed to the top of the picture, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000062"
+},
+{
+"kind": "place",
+"subject": "the Yorkshire Dales",
+"tech": "sketch",
+"gram": "G6_poster",
+"pal": "neutral",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of the Yorkshire Dales, as a vintage travel poster, the scene inset inside a wide cream margin, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000063"
+},
+{
+"kind": "creature",
+"subject": "european robin",
+"tech": "linocut",
+"gram": "G8_minimal",
+"pal": "duotone",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a european robin, small and centred on a vast expanse of plain paper, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000064"
+},
+{
+"kind": "place",
+"subject": "Whitby harbour",
+"tech": "oil_impasto",
+"gram": "G10_abstract",
+"pal": "duotone",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of Whitby harbour, as an all-over painterly abstraction, marks edge to edge, no focal point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000065"
+},
+{
+"kind": "place",
+"subject": "Durdle Door",
+"tech": "screenprint",
+"gram": "G9_naive",
+"pal": "neutral",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of Durdle Door, as a naive flattened townscape in horizontal bands with no vanishing point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000066"
+},
+{
+"kind": "place",
+"subject": "Whitby harbour",
+"tech": "oil_impasto",
+"gram": "G9_naive",
+"pal": "duotone",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of Whitby harbour, as a naive flattened townscape in horizontal bands with no vanishing point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000067"
+},
+{
+"kind": "creature",
+"subject": "highland cow",
+"tech": "ink_wash",
+"gram": "G7_chart",
+"pal": "duotone",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of a highland cow, as a specimen chart of nine simplified studies on one flat warm ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000068"
+},
+{
+"kind": "place",
+"subject": "the Lake District",
+"tech": "watercolour",
+"gram": "G9_naive",
+"pal": "complementary",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of the Lake District, as a naive flattened townscape in horizontal bands with no vanishing point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000069"
+},
+{
+"kind": "place",
+"subject": "the Cotswolds",
+"tech": "pastel",
+"gram": "G6_poster",
+"pal": "duotone",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of the Cotswolds, as a vintage travel poster, the scene inset inside a wide cream margin, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000070"
+},
+{
+"kind": "place",
+"subject": "Whitby harbour",
+"tech": "gouache",
+"gram": "G2_terrain",
+"pal": "neutral",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of Whitby harbour, seen across open land, the horizon pushed to the top of the picture, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000071"
+},
+{
+"kind": "place",
+"subject": "Snowdonia",
+"tech": "pastel",
+"gram": "G10_abstract",
+"pal": "duotone",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of Snowdonia, as an all-over painterly abstraction, marks edge to edge, no focal point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000072"
+},
+{
+"kind": "place",
+"subject": "Loch Lomond",
+"tech": "collage",
+"gram": "G1_window",
+"pal": "complementary",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of Loch Lomond, seen through a window or terrace arch framing the left and right edges, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000073"
+},
+{
+"kind": "place",
+"subject": "the Cotswolds",
+"tech": "linocut",
+"gram": "G10_abstract",
+"pal": "neutral",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of the Cotswolds, as an all-over painterly abstraction, marks edge to edge, no focal point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000074"
+},
+{
+"kind": "creature",
+"subject": "brown hare",
+"tech": "ink_wash",
+"gram": "G8_minimal",
+"pal": "duotone",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of a brown hare, small and centred on a vast expanse of plain paper, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000075"
+},
+{
+"kind": "place",
+"subject": "Whitby harbour",
+"tech": "ink_wash",
+"gram": "G2_terrain",
+"pal": "duotone",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of Whitby harbour, seen across open land, the horizon pushed to the top of the picture, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000076"
+},
+{
+"kind": "place",
+"subject": "Durdle Door",
+"tech": "collage",
+"gram": "G11_hardedge",
+"pal": "complementary",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of Durdle Door, as a hard-edge composition of circles, arcs and a horizon split in three flat colours, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000077"
+},
+{
+"kind": "place",
+"subject": "the Lake District",
+"tech": "watercolour",
+"gram": "G1_window",
+"pal": "complementary",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of the Lake District, seen through a window or terrace arch framing the left and right edges, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000078"
+},
+{
+"kind": "place",
+"subject": "Hope Cove Devon",
+"tech": "charcoal",
+"gram": "G9_naive",
+"pal": "duotone",
+"prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of Hope Cove Devon, as a naive flattened townscape in horizontal bands with no vanishing point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000079"
+},
+{
+"kind": "place",
+"subject": "Hope Cove Devon",
+"tech": "screenprint",
+"gram": "G10_abstract",
+"pal": "duotone",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of Hope Cove Devon, as an all-over painterly abstraction, marks edge to edge, no focal point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000080"
+},
+{
+"kind": "creature",
+"subject": "puffin",
+"tech": "linocut",
+"gram": "G3_habitat",
+"pal": "complementary",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a puffin, set among a dense foreground of seedheads and flowers running off every edge, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000081"
+},
+{
+"kind": "creature",
+"subject": "red fox",
+"tech": "watercolour",
+"gram": "G8_minimal",
+"pal": "duotone",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of a red fox, small and centred on a vast expanse of plain paper, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000082"
+},
+{
+"kind": "place",
+"subject": "Loch Lomond",
+"tech": "pastel",
+"gram": "G9_naive",
+"pal": "neutral",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of Loch Lomond, as a naive flattened townscape in horizontal bands with no vanishing point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000083"
+},
+{
+"kind": "creature",
+"subject": "stag",
+"tech": "sketch",
+"gram": "G7_chart",
+"pal": "duotone",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a stag, as a specimen chart of nine simplified studies on one flat warm ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000084"
+},
+{
+"kind": "place",
+"subject": "Hope Cove Devon",
+"tech": "screenprint",
+"gram": "G10_abstract",
+"pal": "complementary",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of Hope Cove Devon, as an all-over painterly abstraction, marks edge to edge, no focal point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000085"
+},
+{
+"kind": "creature",
+"subject": "stag",
+"tech": "pastel",
+"gram": "G8_minimal",
+"pal": "neutral",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of a stag, small and centred on a vast expanse of plain paper, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000086"
+},
+{
+"kind": "place",
+"subject": "Durdle Door",
+"tech": "screenprint",
+"gram": "G2_terrain",
+"pal": "neutral",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of Durdle Door, seen across open land, the horizon pushed to the top of the picture, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000087"
+},
+{
+"kind": "creature",
+"subject": "brown hare",
+"tech": "sketch",
+"gram": "G3_habitat",
+"pal": "duotone",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a brown hare, set among a dense foreground of seedheads and flowers running off every edge, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000088"
+},
+{
+"kind": "place",
+"subject": "Loch Lomond",
+"tech": "screenprint",
+"gram": "G6_poster",
+"pal": "duotone",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of Loch Lomond, as a vintage travel poster, the scene inset inside a wide cream margin, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000089"
+},
+{
+"kind": "place",
+"subject": "Hope Cove Devon",
+"tech": "charcoal",
+"gram": "G2_terrain",
+"pal": "neutral",
+"prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of Hope Cove Devon, seen across open land, the horizon pushed to the top of the picture, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000090"
+},
+{
+"kind": "place",
+"subject": "Whitby harbour",
+"tech": "linocut",
+"gram": "G1_window",
+"pal": "complementary",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of Whitby harbour, seen through a window or terrace arch framing the left and right edges, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000091"
+},
+{
+"kind": "creature",
+"subject": "red fox",
+"tech": "sketch",
+"gram": "G3_habitat",
+"pal": "neutral",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a red fox, set among a dense foreground of seedheads and flowers running off every edge, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000092"
+},
+{
+"kind": "place",
+"subject": "Sheffield",
+"tech": "palette_knife",
+"gram": "G9_naive",
+"pal": "neutral",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of Sheffield, as a naive flattened townscape in horizontal bands with no vanishing point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000093"
+},
+{
+"kind": "creature",
+"subject": "kingfisher",
+"tech": "palette_knife",
+"gram": "G3_habitat",
+"pal": "neutral",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of a kingfisher, set among a dense foreground of seedheads and flowers running off every edge, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000094"
+},
+{
+"kind": "place",
+"subject": "the Yorkshire Dales",
+"tech": "watercolour",
+"gram": "G9_naive",
+"pal": "duotone",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of the Yorkshire Dales, as a naive flattened townscape in horizontal bands with no vanishing point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000095"
+},
+{
+"kind": "place",
+"subject": "the Lake District",
+"tech": "collage",
+"gram": "G10_abstract",
+"pal": "complementary",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of the Lake District, as an all-over painterly abstraction, marks edge to edge, no focal point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000096"
+},
+{
+"kind": "place",
+"subject": "the Yorkshire Dales",
+"tech": "watercolour",
+"gram": "G10_abstract",
+"pal": "duotone",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of the Yorkshire Dales, as an all-over painterly abstraction, marks edge to edge, no focal point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000097"
+},
+{
+"kind": "place",
+"subject": "the Cotswolds",
+"tech": "gouache",
+"gram": "G1_window",
+"pal": "duotone",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of the Cotswolds, seen through a window or terrace arch framing the left and right edges, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000098"
+},
+{
+"kind": "place",
+"subject": "the Cotswolds",
+"tech": "watercolour",
+"gram": "G10_abstract",
+"pal": "neutral",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of the Cotswolds, as an all-over painterly abstraction, marks edge to edge, no focal point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000099"
+},
+{
+"kind": "creature",
+"subject": "red fox",
+"tech": "palette_knife",
+"gram": "G8_minimal",
+"pal": "complementary",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of a red fox, small and centred on a vast expanse of plain paper, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000100"
+},
+{
+"kind": "creature",
+"subject": "brown hare",
+"tech": "ink_wash",
+"gram": "G3_habitat",
+"pal": "neutral",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of a brown hare, set among a dense foreground of seedheads and flowers running off every edge, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000101"
+},
+{
+"kind": "place",
+"subject": "Hope Cove Devon",
+"tech": "gouache",
+"gram": "G9_naive",
+"pal": "complementary",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of Hope Cove Devon, as a naive flattened townscape in horizontal bands with no vanishing point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000102"
+},
+{
+"kind": "creature",
+"subject": "red fox",
+"tech": "pastel",
+"gram": "G3_habitat",
+"pal": "duotone",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of a red fox, set among a dense foreground of seedheads and flowers running off every edge, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000103"
+},
+{
+"kind": "creature",
+"subject": "puffin",
+"tech": "screenprint",
+"gram": "G4_portrait",
+"pal": "duotone",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of a puffin, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000104"
+},
+{
+"kind": "creature",
+"subject": "stag",
+"tech": "sketch",
+"gram": "G7_chart",
+"pal": "complementary",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a stag, as a specimen chart of nine simplified studies on one flat warm ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000105"
+},
+{
+"kind": "creature",
+"subject": "border collie",
+"tech": "gouache",
+"gram": "G4_portrait",
+"pal": "duotone",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of a border collie, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000106"
+},
+{
+"kind": "place",
+"subject": "Hope Cove Devon",
+"tech": "watercolour",
+"gram": "G2_terrain",
+"pal": "complementary",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of Hope Cove Devon, seen across open land, the horizon pushed to the top of the picture, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000107"
+},
+{
+"kind": "creature",
+"subject": "border collie",
+"tech": "oil_impasto",
+"gram": "G3_habitat",
+"pal": "complementary",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of a border collie, set among a dense foreground of seedheads and flowers running off every edge, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000108"
+},
+{
+"kind": "creature",
+"subject": "barn owl",
+"tech": "ink_wash",
+"gram": "G7_chart",
+"pal": "complementary",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of a barn owl, as a specimen chart of nine simplified studies on one flat warm ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000109"
+},
+{
+"kind": "place",
+"subject": "Loch Lomond",
+"tech": "collage",
+"gram": "G6_poster",
+"pal": "duotone",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of Loch Lomond, as a vintage travel poster, the scene inset inside a wide cream margin, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000110"
+},
+{
+"kind": "place",
+"subject": "Pembrokeshire coast",
+"tech": "palette_knife",
+"gram": "G11_hardedge",
+"pal": "duotone",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of Pembrokeshire coast, as a hard-edge composition of circles, arcs and a horizon split in three flat colours, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000111"
+},
+{
+"kind": "place",
+"subject": "Whitby harbour",
+"tech": "pastel",
+"gram": "G6_poster",
+"pal": "duotone",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of Whitby harbour, as a vintage travel poster, the scene inset inside a wide cream margin, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000112"
+},
+{
+"kind": "place",
+"subject": "the Lake District",
+"tech": "gouache",
+"gram": "G9_naive",
+"pal": "complementary",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of the Lake District, as a naive flattened townscape in horizontal bands with no vanishing point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000113"
+},
+{
+"kind": "place",
+"subject": "Loch Lomond",
+"tech": "linocut",
+"gram": "G9_naive",
+"pal": "complementary",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of Loch Lomond, as a naive flattened townscape in horizontal bands with no vanishing point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000114"
+},
+{
+"kind": "place",
+"subject": "Durdle Door",
+"tech": "palette_knife",
+"gram": "G1_window",
+"pal": "neutral",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of Durdle Door, seen through a window or terrace arch framing the left and right edges, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000115"
+},
+{
+"kind": "creature",
+"subject": "stag",
+"tech": "linocut",
+"gram": "G8_minimal",
+"pal": "duotone",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a stag, small and centred on a vast expanse of plain paper, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000116"
+},
+{
+"kind": "creature",
+"subject": "kingfisher",
+"tech": "linocut",
+"gram": "G7_chart",
+"pal": "duotone",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a kingfisher, as a specimen chart of nine simplified studies on one flat warm ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000117"
+},
+{
+"kind": "place",
+"subject": "the Cotswolds",
+"tech": "palette_knife",
+"gram": "G1_window",
+"pal": "duotone",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of the Cotswolds, seen through a window or terrace arch framing the left and right edges, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000118"
+},
+{
+"kind": "place",
+"subject": "Pembrokeshire coast",
+"tech": "screenprint",
+"gram": "G11_hardedge",
+"pal": "complementary",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of Pembrokeshire coast, as a hard-edge composition of circles, arcs and a horizon split in three flat colours, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000119"
+},
+{
+"kind": "place",
+"subject": "Loch Lomond",
+"tech": "sketch",
+"gram": "G6_poster",
+"pal": "neutral",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of Loch Lomond, as a vintage travel poster, the scene inset inside a wide cream margin, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000120"
+},
+{
+"kind": "creature",
+"subject": "stag",
+"tech": "pastel",
+"gram": "G8_minimal",
+"pal": "duotone",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of a stag, small and centred on a vast expanse of plain paper, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000121"
+},
+{
+"kind": "creature",
+"subject": "stag",
+"tech": "collage",
+"gram": "G4_portrait",
+"pal": "complementary",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of a stag, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000122"
+},
+{
+"kind": "place",
+"subject": "the Lake District",
+"tech": "watercolour",
+"gram": "G9_naive",
+"pal": "neutral",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of the Lake District, as a naive flattened townscape in horizontal bands with no vanishing point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000123"
+},
+{
+"kind": "place",
+"subject": "the Cotswolds",
+"tech": "charcoal",
+"gram": "G2_terrain",
+"pal": "neutral",
+"prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of the Cotswolds, seen across open land, the horizon pushed to the top of the picture, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000124"
+},
+{
+"kind": "place",
+"subject": "Snowdonia",
+"tech": "oil_impasto",
+"gram": "G10_abstract",
+"pal": "neutral",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of Snowdonia, as an all-over painterly abstraction, marks edge to edge, no focal point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000125"
+},
+{
+"kind": "place",
+"subject": "Pembrokeshire coast",
+"tech": "sketch",
+"gram": "G1_window",
+"pal": "neutral",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of Pembrokeshire coast, seen through a window or terrace arch framing the left and right edges, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000126"
+},
+{
+"kind": "place",
+"subject": "Snowdonia",
+"tech": "watercolour",
+"gram": "G9_naive",
+"pal": "duotone",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of Snowdonia, as a naive flattened townscape in horizontal bands with no vanishing point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000127"
+},
+{
+"kind": "creature",
+"subject": "highland cow",
+"tech": "charcoal",
+"gram": "G4_portrait",
+"pal": "duotone",
+"prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of a highland cow, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000128"
+},
+{
+"kind": "creature",
+"subject": "labrador retriever",
+"tech": "oil_impasto",
+"gram": "G8_minimal",
+"pal": "neutral",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of a labrador retriever, small and centred on a vast expanse of plain paper, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000129"
+},
+{
+"kind": "place",
+"subject": "the Cotswolds",
+"tech": "ink_wash",
+"gram": "G10_abstract",
+"pal": "complementary",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of the Cotswolds, as an all-over painterly abstraction, marks edge to edge, no focal point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000130"
+},
+{
+"kind": "creature",
+"subject": "barn owl",
+"tech": "screenprint",
+"gram": "G3_habitat",
+"pal": "duotone",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of a barn owl, set among a dense foreground of seedheads and flowers running off every edge, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000131"
+},
+{
+"kind": "place",
+"subject": "Durdle Door",
+"tech": "collage",
+"gram": "G11_hardedge",
+"pal": "neutral",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of Durdle Door, as a hard-edge composition of circles, arcs and a horizon split in three flat colours, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000132"
+},
+{
+"kind": "creature",
+"subject": "brown hare",
+"tech": "pastel",
+"gram": "G4_portrait",
+"pal": "duotone",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of a brown hare, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000133"
+},
+{
+"kind": "creature",
+"subject": "labrador retriever",
+"tech": "oil_impasto",
+"gram": "G3_habitat",
+"pal": "duotone",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of a labrador retriever, set among a dense foreground of seedheads and flowers running off every edge, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000134"
+},
+{
+"kind": "creature",
+"subject": "european robin",
+"tech": "sketch",
+"gram": "G3_habitat",
+"pal": "duotone",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a european robin, set among a dense foreground of seedheads and flowers running off every edge, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000135"
+},
+{
+"kind": "creature",
+"subject": "red fox",
+"tech": "linocut",
+"gram": "G8_minimal",
+"pal": "neutral",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a red fox, small and centred on a vast expanse of plain paper, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000136"
+},
+{
+"kind": "creature",
+"subject": "puffin",
+"tech": "ink_wash",
+"gram": "G8_minimal",
+"pal": "duotone",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of a puffin, small and centred on a vast expanse of plain paper, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000137"
+},
+{
+"kind": "creature",
+"subject": "stag",
+"tech": "sketch",
+"gram": "G4_portrait",
+"pal": "duotone",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a stag, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000138"
+},
+{
+"kind": "place",
+"subject": "Loch Lomond",
+"tech": "charcoal",
+"gram": "G9_naive",
+"pal": "complementary",
+"prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of Loch Lomond, as a naive flattened townscape in horizontal bands with no vanishing point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000139"
+},
+{
+"kind": "creature",
+"subject": "labrador retriever",
+"tech": "watercolour",
+"gram": "G4_portrait",
+"pal": "neutral",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of a labrador retriever, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000140"
+},
+{
+"kind": "creature",
+"subject": "barn owl",
+"tech": "linocut",
+"gram": "G7_chart",
+"pal": "neutral",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a barn owl, as a specimen chart of nine simplified studies on one flat warm ground, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000141"
+},
+{
+"kind": "place",
+"subject": "Pembrokeshire coast",
+"tech": "watercolour",
+"gram": "G1_window",
+"pal": "duotone",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of Pembrokeshire coast, seen through a window or terrace arch framing the left and right edges, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000142"
+},
+{
+"kind": "place",
+"subject": "Sheffield",
+"tech": "linocut",
+"gram": "G2_terrain",
+"pal": "complementary",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of Sheffield, seen across open land, the horizon pushed to the top of the picture, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000143"
+},
+{
+"kind": "creature",
+"subject": "border collie",
+"tech": "sketch",
+"gram": "G4_portrait",
+"pal": "duotone",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a border collie, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000144"
+},
+{
+"kind": "place",
+"subject": "Snowdonia",
+"tech": "linocut",
+"gram": "G6_poster",
+"pal": "complementary",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of Snowdonia, as a vintage travel poster, the scene inset inside a wide cream margin, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000145"
+},
+{
+"kind": "place",
+"subject": "Durdle Door",
+"tech": "screenprint",
+"gram": "G10_abstract",
+"pal": "neutral",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of Durdle Door, as an all-over painterly abstraction, marks edge to edge, no focal point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000146"
+},
+{
+"kind": "place",
+"subject": "the Lake District",
+"tech": "watercolour",
+"gram": "G10_abstract",
+"pal": "duotone",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of the Lake District, as an all-over painterly abstraction, marks edge to edge, no focal point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000147"
+},
+{
+"kind": "creature",
+"subject": "puffin",
+"tech": "gouache",
+"gram": "G3_habitat",
+"pal": "duotone",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of a puffin, set among a dense foreground of seedheads and flowers running off every edge, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000148"
+},
+{
+"kind": "creature",
+"subject": "stag",
+"tech": "palette_knife",
+"gram": "G4_portrait",
+"pal": "complementary",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of a stag, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000149"
+},
+{
+"kind": "place",
+"subject": "the Yorkshire Dales",
+"tech": "gouache",
+"gram": "G10_abstract",
+"pal": "complementary",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of the Yorkshire Dales, as an all-over painterly abstraction, marks edge to edge, no focal point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000150"
+},
+{
+"kind": "place",
+"subject": "Whitby harbour",
+"tech": "oil_impasto",
+"gram": "G6_poster",
+"pal": "neutral",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of Whitby harbour, as a vintage travel poster, the scene inset inside a wide cream margin, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000151"
+},
+{
+"kind": "place",
+"subject": "Pembrokeshire coast",
+"tech": "ink_wash",
+"gram": "G1_window",
+"pal": "neutral",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of Pembrokeshire coast, seen through a window or terrace arch framing the left and right edges, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000152"
+},
+{
+"kind": "place",
+"subject": "Whitby harbour",
+"tech": "collage",
+"gram": "G10_abstract",
+"pal": "duotone",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of Whitby harbour, as an all-over painterly abstraction, marks edge to edge, no focal point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000153"
+},
+{
+"kind": "place",
+"subject": "Snowdonia",
+"tech": "ink_wash",
+"gram": "G1_window",
+"pal": "duotone",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of Snowdonia, seen through a window or terrace arch framing the left and right edges, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000154"
+},
+{
+"kind": "place",
+"subject": "Hope Cove Devon",
+"tech": "gouache",
+"gram": "G10_abstract",
+"pal": "neutral",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of Hope Cove Devon, as an all-over painterly abstraction, marks edge to edge, no focal point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000155"
+},
+{
+"kind": "creature",
+"subject": "barn owl",
+"tech": "linocut",
+"gram": "G3_habitat",
+"pal": "neutral",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a barn owl, set among a dense foreground of seedheads and flowers running off every edge, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000156"
+},
+{
+"kind": "place",
+"subject": "Durdle Door",
+"tech": "linocut",
+"gram": "G10_abstract",
+"pal": "complementary",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of Durdle Door, as an all-over painterly abstraction, marks edge to edge, no focal point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000157"
+},
+{
+"kind": "creature",
+"subject": "highland cow",
+"tech": "pastel",
+"gram": "G7_chart",
+"pal": "duotone",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of a highland cow, as a specimen chart of nine simplified studies on one flat warm ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000158"
+},
+{
+"kind": "creature",
+"subject": "european robin",
+"tech": "gouache",
+"gram": "G4_portrait",
+"pal": "complementary",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of a european robin, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000159"
+},
+{
+"kind": "place",
+"subject": "the Cotswolds",
+"tech": "palette_knife",
+"gram": "G1_window",
+"pal": "complementary",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of the Cotswolds, seen through a window or terrace arch framing the left and right edges, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000160"
+},
+{
+"kind": "place",
+"subject": "the Yorkshire Dales",
+"tech": "collage",
+"gram": "G6_poster",
+"pal": "complementary",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of the Yorkshire Dales, as a vintage travel poster, the scene inset inside a wide cream margin, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000161"
+},
+{
+"kind": "place",
+"subject": "Whitby harbour",
+"tech": "screenprint",
+"gram": "G9_naive",
+"pal": "neutral",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of Whitby harbour, as a naive flattened townscape in horizontal bands with no vanishing point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000162"
+},
+{
+"kind": "place",
+"subject": "Hope Cove Devon",
+"tech": "gouache",
+"gram": "G11_hardedge",
+"pal": "complementary",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of Hope Cove Devon, as a hard-edge composition of circles, arcs and a horizon split in three flat colours, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000163"
+},
+{
+"kind": "creature",
+"subject": "kingfisher",
+"tech": "palette_knife",
+"gram": "G4_portrait",
+"pal": "duotone",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of a kingfisher, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000164"
+},
+{
+"kind": "creature",
+"subject": "barn owl",
+"tech": "sketch",
+"gram": "G7_chart",
+"pal": "complementary",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a barn owl, as a specimen chart of nine simplified studies on one flat warm ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000165"
+},
+{
+"kind": "creature",
+"subject": "highland cow",
+"tech": "oil_impasto",
+"gram": "G8_minimal",
+"pal": "duotone",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of a highland cow, small and centred on a vast expanse of plain paper, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000166"
+},
+{
+"kind": "creature",
+"subject": "border collie",
+"tech": "screenprint",
+"gram": "G3_habitat",
+"pal": "duotone",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of a border collie, set among a dense foreground of seedheads and flowers running off every edge, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000167"
+},
+{
+"kind": "place",
+"subject": "Sheffield",
+"tech": "oil_impasto",
+"gram": "G9_naive",
+"pal": "complementary",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of Sheffield, as a naive flattened townscape in horizontal bands with no vanishing point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000168"
+},
+{
+"kind": "place",
+"subject": "Sheffield",
+"tech": "ink_wash",
+"gram": "G6_poster",
+"pal": "neutral",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of Sheffield, as a vintage travel poster, the scene inset inside a wide cream margin, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000169"
+},
+{
+"kind": "creature",
+"subject": "kingfisher",
+"tech": "screenprint",
+"gram": "G3_habitat",
+"pal": "neutral",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of a kingfisher, set among a dense foreground of seedheads and flowers running off every edge, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000170"
+},
+{
+"kind": "place",
+"subject": "Hope Cove Devon",
+"tech": "oil_impasto",
+"gram": "G9_naive",
+"pal": "duotone",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of Hope Cove Devon, as a naive flattened townscape in horizontal bands with no vanishing point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000171"
+},
+{
+"kind": "place",
+"subject": "Pembrokeshire coast",
+"tech": "palette_knife",
+"gram": "G6_poster",
+"pal": "neutral",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of Pembrokeshire coast, as a vintage travel poster, the scene inset inside a wide cream margin, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000172"
+},
+{
+"kind": "creature",
+"subject": "red fox",
+"tech": "gouache",
+"gram": "G3_habitat",
+"pal": "complementary",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of a red fox, set among a dense foreground of seedheads and flowers running off every edge, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000173"
+},
+{
+"kind": "place",
+"subject": "Snowdonia",
+"tech": "collage",
+"gram": "G6_poster",
+"pal": "duotone",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of Snowdonia, as a vintage travel poster, the scene inset inside a wide cream margin, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000174"
+},
+{
+"kind": "place",
+"subject": "Durdle Door",
+"tech": "ink_wash",
+"gram": "G2_terrain",
+"pal": "neutral",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of Durdle Door, seen across open land, the horizon pushed to the top of the picture, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000175"
+},
+{
+"kind": "place",
+"subject": "the Cotswolds",
+"tech": "sketch",
+"gram": "G1_window",
+"pal": "neutral",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of the Cotswolds, seen through a window or terrace arch framing the left and right edges, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000176"
+},
+{
+"kind": "creature",
+"subject": "stag",
+"tech": "screenprint",
+"gram": "G4_portrait",
+"pal": "complementary",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of a stag, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000177"
+},
+{
+"kind": "creature",
+"subject": "barn owl",
+"tech": "watercolour",
+"gram": "G3_habitat",
+"pal": "complementary",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of a barn owl, set among a dense foreground of seedheads and flowers running off every edge, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000178"
+},
+{
+"kind": "place",
+"subject": "the Cotswolds",
+"tech": "watercolour",
+"gram": "G9_naive",
+"pal": "neutral",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of the Cotswolds, as a naive flattened townscape in horizontal bands with no vanishing point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000179"
+},
+{
+"kind": "place",
+"subject": "Durdle Door",
+"tech": "pastel",
+"gram": "G1_window",
+"pal": "complementary",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of Durdle Door, seen through a window or terrace arch framing the left and right edges, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000180"
+},
+{
+"kind": "creature",
+"subject": "red fox",
+"tech": "linocut",
+"gram": "G8_minimal",
+"pal": "complementary",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a red fox, small and centred on a vast expanse of plain paper, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000181"
+},
+{
+"kind": "creature",
+"subject": "red fox",
+"tech": "palette_knife",
+"gram": "G8_minimal",
+"pal": "duotone",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of a red fox, small and centred on a vast expanse of plain paper, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000182"
+},
+{
+"kind": "place",
+"subject": "the Yorkshire Dales",
+"tech": "watercolour",
+"gram": "G1_window",
+"pal": "neutral",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of the Yorkshire Dales, seen through a window or terrace arch framing the left and right edges, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000183"
+},
+{
+"kind": "place",
+"subject": "Hope Cove Devon",
+"tech": "sketch",
+"gram": "G2_terrain",
+"pal": "complementary",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of Hope Cove Devon, seen across open land, the horizon pushed to the top of the picture, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000184"
+},
+{
+"kind": "creature",
+"subject": "puffin",
+"tech": "collage",
+"gram": "G8_minimal",
+"pal": "complementary",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of a puffin, small and centred on a vast expanse of plain paper, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000185"
+},
+{
+"kind": "place",
+"subject": "Loch Lomond",
+"tech": "screenprint",
+"gram": "G2_terrain",
+"pal": "neutral",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of Loch Lomond, seen across open land, the horizon pushed to the top of the picture, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000186"
+},
+{
+"kind": "creature",
+"subject": "brown hare",
+"tech": "charcoal",
+"gram": "G3_habitat",
+"pal": "neutral",
+"prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of a brown hare, set among a dense foreground of seedheads and flowers running off every edge, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000187"
+},
+{
+"kind": "place",
+"subject": "Snowdonia",
+"tech": "oil_impasto",
+"gram": "G9_naive",
+"pal": "duotone",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of Snowdonia, as a naive flattened townscape in horizontal bands with no vanishing point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000188"
+},
+{
+"kind": "place",
+"subject": "the Lake District",
+"tech": "linocut",
+"gram": "G1_window",
+"pal": "duotone",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of the Lake District, seen through a window or terrace arch framing the left and right edges, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000189"
+},
+{
+"kind": "creature",
+"subject": "barn owl",
+"tech": "linocut",
+"gram": "G4_portrait",
+"pal": "complementary",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a barn owl, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000190"
+},
+{
+"kind": "place",
+"subject": "Whitby harbour",
+"tech": "ink_wash",
+"gram": "G1_window",
+"pal": "complementary",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of Whitby harbour, seen through a window or terrace arch framing the left and right edges, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000191"
+},
+{
+"kind": "creature",
+"subject": "labrador retriever",
+"tech": "collage",
+"gram": "G3_habitat",
+"pal": "neutral",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of a labrador retriever, set among a dense foreground of seedheads and flowers running off every edge, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000192"
+},
+{
+"kind": "place",
+"subject": "Loch Lomond",
+"tech": "watercolour",
+"gram": "G10_abstract",
+"pal": "complementary",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of Loch Lomond, as an all-over painterly abstraction, marks edge to edge, no focal point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000193"
+},
+{
+"kind": "place",
+"subject": "Whitby harbour",
+"tech": "oil_impasto",
+"gram": "G1_window",
+"pal": "neutral",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of Whitby harbour, seen through a window or terrace arch framing the left and right edges, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000194"
+},
+{
+"kind": "place",
+"subject": "the Yorkshire Dales",
+"tech": "linocut",
+"gram": "G6_poster",
+"pal": "neutral",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of the Yorkshire Dales, as a vintage travel poster, the scene inset inside a wide cream margin, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000195"
+},
+{
+"kind": "place",
+"subject": "Loch Lomond",
+"tech": "watercolour",
+"gram": "G6_poster",
+"pal": "complementary",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of Loch Lomond, as a vintage travel poster, the scene inset inside a wide cream margin, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000196"
+},
+{
+"kind": "place",
+"subject": "the Yorkshire Dales",
+"tech": "sketch",
+"gram": "G9_naive",
+"pal": "complementary",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of the Yorkshire Dales, as a naive flattened townscape in horizontal bands with no vanishing point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000197"
+},
+{
+"kind": "place",
+"subject": "Sheffield",
+"tech": "linocut",
+"gram": "G1_window",
+"pal": "complementary",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of Sheffield, seen through a window or terrace arch framing the left and right edges, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000198"
+},
+{
+"kind": "place",
+"subject": "the Cotswolds",
+"tech": "linocut",
+"gram": "G9_naive",
+"pal": "duotone",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of the Cotswolds, as a naive flattened townscape in horizontal bands with no vanishing point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000199"
+},
+{
+"kind": "creature",
+"subject": "brown hare",
+"tech": "charcoal",
+"gram": "G7_chart",
+"pal": "complementary",
+"prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of a brown hare, as a specimen chart of nine simplified studies on one flat warm ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000200"
+},
+{
+"kind": "place",
+"subject": "Sheffield",
+"tech": "collage",
+"gram": "G9_naive",
+"pal": "neutral",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of Sheffield, as a naive flattened townscape in horizontal bands with no vanishing point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000201"
+},
+{
+"kind": "place",
+"subject": "Hope Cove Devon",
+"tech": "collage",
+"gram": "G10_abstract",
+"pal": "neutral",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of Hope Cove Devon, as an all-over painterly abstraction, marks edge to edge, no focal point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000202"
+},
+{
+"kind": "creature",
+"subject": "labrador retriever",
+"tech": "charcoal",
+"gram": "G8_minimal",
+"pal": "complementary",
+"prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of a labrador retriever, small and centred on a vast expanse of plain paper, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000203"
+},
+{
+"kind": "creature",
+"subject": "highland cow",
+"tech": "screenprint",
+"gram": "G3_habitat",
+"pal": "complementary",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of a highland cow, set among a dense foreground of seedheads and flowers running off every edge, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000204"
+},
+{
+"kind": "place",
+"subject": "Hope Cove Devon",
+"tech": "watercolour",
+"gram": "G9_naive",
+"pal": "neutral",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of Hope Cove Devon, as a naive flattened townscape in horizontal bands with no vanishing point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000205"
+},
+{
+"kind": "place",
+"subject": "the Lake District",
+"tech": "ink_wash",
+"gram": "G9_naive",
+"pal": "duotone",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of the Lake District, as a naive flattened townscape in horizontal bands with no vanishing point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000206"
+},
+{
+"kind": "place",
+"subject": "Snowdonia",
+"tech": "sketch",
+"gram": "G2_terrain",
+"pal": "complementary",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of Snowdonia, seen across open land, the horizon pushed to the top of the picture, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000207"
+},
+{
+"kind": "place",
+"subject": "the Lake District",
+"tech": "pastel",
+"gram": "G10_abstract",
+"pal": "duotone",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of the Lake District, as an all-over painterly abstraction, marks edge to edge, no focal point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000208"
+},
+{
+"kind": "place",
+"subject": "Sheffield",
+"tech": "charcoal",
+"gram": "G1_window",
+"pal": "complementary",
+"prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of Sheffield, seen through a window or terrace arch framing the left and right edges, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000209"
+},
+{
+"kind": "creature",
+"subject": "labrador retriever",
+"tech": "gouache",
+"gram": "G8_minimal",
+"pal": "neutral",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of a labrador retriever, small and centred on a vast expanse of plain paper, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000210"
+},
+{
+"kind": "place",
+"subject": "the Lake District",
+"tech": "palette_knife",
+"gram": "G1_window",
+"pal": "neutral",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of the Lake District, seen through a window or terrace arch framing the left and right edges, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000211"
+},
+{
+"kind": "place",
+"subject": "Snowdonia",
+"tech": "linocut",
+"gram": "G1_window",
+"pal": "duotone",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of Snowdonia, seen through a window or terrace arch framing the left and right edges, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000212"
+},
+{
+"kind": "creature",
+"subject": "red fox",
+"tech": "gouache",
+"gram": "G8_minimal",
+"pal": "complementary",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of a red fox, small and centred on a vast expanse of plain paper, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000213"
+},
+{
+"kind": "place",
+"subject": "the Yorkshire Dales",
+"tech": "sketch",
+"gram": "G6_poster",
+"pal": "complementary",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of the Yorkshire Dales, as a vintage travel poster, the scene inset inside a wide cream margin, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000214"
+},
+{
+"kind": "place",
+"subject": "Loch Lomond",
+"tech": "charcoal",
+"gram": "G9_naive",
+"pal": "neutral",
+"prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of Loch Lomond, as a naive flattened townscape in horizontal bands with no vanishing point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000215"
+},
+{
+"kind": "place",
+"subject": "Loch Lomond",
+"tech": "screenprint",
+"gram": "G1_window",
+"pal": "duotone",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of Loch Lomond, seen through a window or terrace arch framing the left and right edges, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000216"
+},
+{
+"kind": "place",
+"subject": "Durdle Door",
+"tech": "watercolour",
+"gram": "G2_terrain",
+"pal": "neutral",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of Durdle Door, seen across open land, the horizon pushed to the top of the picture, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000217"
+},
+{
+"kind": "creature",
+"subject": "brown hare",
+"tech": "ink_wash",
+"gram": "G4_portrait",
+"pal": "complementary",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of a brown hare, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000218"
+},
+{
+"kind": "place",
+"subject": "Sheffield",
+"tech": "palette_knife",
+"gram": "G2_terrain",
+"pal": "complementary",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of Sheffield, seen across open land, the horizon pushed to the top of the picture, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000219"
+},
+{
+"kind": "creature",
+"subject": "highland cow",
+"tech": "pastel",
+"gram": "G8_minimal",
+"pal": "complementary",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of a highland cow, small and centred on a vast expanse of plain paper, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000220"
+},
+{
+"kind": "creature",
+"subject": "puffin",
+"tech": "pastel",
+"gram": "G3_habitat",
+"pal": "complementary",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of a puffin, set among a dense foreground of seedheads and flowers running off every edge, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000221"
+},
+{
+"kind": "place",
+"subject": "Whitby harbour",
+"tech": "oil_impasto",
+"gram": "G9_naive",
+"pal": "complementary",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of Whitby harbour, as a naive flattened townscape in horizontal bands with no vanishing point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000222"
+},
+{
+"kind": "creature",
+"subject": "red fox",
+"tech": "screenprint",
+"gram": "G4_portrait",
+"pal": "neutral",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of a red fox, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000223"
+},
+{
+"kind": "creature",
+"subject": "stag",
+"tech": "pastel",
+"gram": "G4_portrait",
+"pal": "complementary",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of a stag, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000224"
+},
+{
+"kind": "creature",
+"subject": "red fox",
+"tech": "ink_wash",
+"gram": "G4_portrait",
+"pal": "neutral",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of a red fox, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000225"
+},
+{
+"kind": "creature",
+"subject": "stag",
+"tech": "collage",
+"gram": "G3_habitat",
+"pal": "duotone",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of a stag, set among a dense foreground of seedheads and flowers running off every edge, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000226"
+},
+{
+"kind": "creature",
+"subject": "highland cow",
+"tech": "charcoal",
+"gram": "G4_portrait",
+"pal": "complementary",
+"prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of a highland cow, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000227"
+},
+{
+"kind": "creature",
+"subject": "kingfisher",
+"tech": "oil_impasto",
+"gram": "G3_habitat",
+"pal": "complementary",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of a kingfisher, set among a dense foreground of seedheads and flowers running off every edge, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000228"
+},
+{
+"kind": "creature",
+"subject": "highland cow",
+"tech": "sketch",
+"gram": "G8_minimal",
+"pal": "neutral",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a highland cow, small and centred on a vast expanse of plain paper, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000229"
+},
+{
+"kind": "creature",
+"subject": "labrador retriever",
+"tech": "collage",
+"gram": "G3_habitat",
+"pal": "complementary",
+"prompt": "cut paper collage, flat torn-edge shapes layered in planes of a labrador retriever, set among a dense foreground of seedheads and flowers running off every edge, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000230"
+},
+{
+"kind": "place",
+"subject": "Whitby harbour",
+"tech": "screenprint",
+"gram": "G6_poster",
+"pal": "duotone",
+"prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of Whitby harbour, as a vintage travel poster, the scene inset inside a wide cream margin, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000231"
+},
+{
+"kind": "place",
+"subject": "Snowdonia",
+"tech": "linocut",
+"gram": "G2_terrain",
+"pal": "neutral",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of Snowdonia, seen across open land, the horizon pushed to the top of the picture, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000232"
+},
+{
+"kind": "creature",
+"subject": "labrador retriever",
+"tech": "watercolour",
+"gram": "G3_habitat",
+"pal": "complementary",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of a labrador retriever, set among a dense foreground of seedheads and flowers running off every edge, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000233"
+},
+{
+"kind": "creature",
+"subject": "labrador retriever",
+"tech": "gouache",
+"gram": "G8_minimal",
+"pal": "complementary",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of a labrador retriever, small and centred on a vast expanse of plain paper, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000234"
+},
+{
+"kind": "creature",
+"subject": "stag",
+"tech": "palette_knife",
+"gram": "G8_minimal",
+"pal": "duotone",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of a stag, small and centred on a vast expanse of plain paper, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000235"
+},
+{
+"kind": "creature",
+"subject": "barn owl",
+"tech": "pastel",
+"gram": "G7_chart",
+"pal": "complementary",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of a barn owl, as a specimen chart of nine simplified studies on one flat warm ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000236"
+},
+{
+"kind": "creature",
+"subject": "red fox",
+"tech": "linocut",
+"gram": "G4_portrait",
+"pal": "duotone",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a red fox, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000237"
+},
+{
+"kind": "place",
+"subject": "Sheffield",
+"tech": "palette_knife",
+"gram": "G9_naive",
+"pal": "complementary",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of Sheffield, as a naive flattened townscape in horizontal bands with no vanishing point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000238"
+},
+{
+"kind": "place",
+"subject": "Snowdonia",
+"tech": "pastel",
+"gram": "G9_naive",
+"pal": "neutral",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of Snowdonia, as a naive flattened townscape in horizontal bands with no vanishing point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark",
+"sku": "WA-0000239"
+}
+]
