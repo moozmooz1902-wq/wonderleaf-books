@@ -12,13 +12,21 @@
 N=$1; MINS=$2; shift 2
 TODO=("$@")
 END=$(( $(date +%s) + MINS * 60 ))
+declare -A SKIP
 while [ ${#TODO[@]} -gt 0 ] && [ "$(date +%s)" -lt "$END" ]; do
   LEFT=()
   for K in "${TODO[@]}"; do
+    if [ -n "${SKIP[$K]}" ] && [ "$(date +%s)" -lt "${SKIP[$K]}" ]; then
+      LEFT+=("$K"); continue
+    fi
     OUT=$(bash relaunch.sh "$N" "$K")
     echo "$(date -u +%H:%M:%S)  $OUT"
     case "$OUT" in
-      *"NO CAPACITY"*|*"OVER CEILING"*) LEFT+=("$K") ;;
+      # A shard that keeps being offered a card over the ceiling will create
+      # and terminate a pod every pass, which is churn for nothing. Back that
+      # one off for a few minutes instead; plain no-capacity retries fast.
+      *"OVER CEILING"*) LEFT+=("$K"); SKIP[$K]=$(( $(date +%s) + 300 )) ;;
+      *"NO CAPACITY"*)  LEFT+=("$K") ;;
     esac
   done
   TODO=("${LEFT[@]}")
