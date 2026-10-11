@@ -18,7 +18,14 @@ N=$1; K=$2
 # TLS-intercepting middlebox, now says so and exits in under four minutes,
 # which costs about two cents, so trying one is cheaper than idling a shard.
 TIER1="NVIDIA RTX A4500,NVIDIA RTX A5000,NVIDIA GeForce RTX 3090,NVIDIA RTX A4000"
-TIER2="NVIDIA RTX 4000 Ada Generation,NVIDIA A30,NVIDIA RTX 5000 Ada Generation,NVIDIA L4"
+# "NVIDIA A30" is NOT a valid gpuTypeId. One invalid name does not get
+# skipped: the whole create is rejected with a schema validation error,
+# which comes back as a bare LIST rather than an object, so the launcher
+# found no id in it and this script printed NO CAPACITY. Five shards sat
+# idle for that reason while RTX 4000 Ada was available at $0.20 the
+# whole time. Probed one name at a time, 11 Oct: RTX 4000 Ada valid and
+# available, RTX 5000 Ada and L4 valid but no instances, A30 not a name.
+TIER2="NVIDIA RTX 4000 Ada Generation,NVIDIA RTX 5000 Ada Generation,NVIDIA L4"
 # Hard price ceiling. The A4500 shards run at $0.17-0.19/hr and the whole
 # budget is built on that; a card at triple the hourly rate is not three
 # times faster, so anything over this is handed back immediately rather

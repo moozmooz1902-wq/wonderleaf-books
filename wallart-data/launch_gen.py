@@ -144,6 +144,12 @@ if __name__ == "__main__":
             "ports": ["8000/http"], "dockerStartCmd": start_cmd(b64, a.jobs, a.extra,
                                            a.pip or None, a.script)}
     r = curl("POST", "/pods", body)
+    # A rejected create does not always answer with an object. Field-level
+    # validation errors come back as a bare LIST, and treating that as a dict
+    # crashed the launcher instead of printing why the pod was refused.
+    if not isinstance(r, dict):
+        print(json.dumps({"error": "create refused", "_raw": r}, indent=1))
+        raise SystemExit(1)
     print(json.dumps({k: r.get(k) for k in ("id", "name", "desiredStatus",
                                             "costPerHr", "error", "_raw")}, indent=1))
     if r.get("id"):
