@@ -1,0 +1,146 @@
+[
+ {
+  "sku": "SAMPLE-00",
+  "kind": "place",
+  "subject": "the Lake District",
+  "tech": "watercolour",
+  "gram": "G2_terrain",
+  "pal": "neutral",
+  "prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of the Lake District, seen across open land, the horizon pushed to the top of the picture, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark"
+ },
+ {
+  "sku": "SAMPLE-01",
+  "kind": "place",
+  "subject": "Whitby harbour",
+  "tech": "screenprint",
+  "gram": "G6_poster",
+  "pal": "complementary",
+  "prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of Whitby harbour, as a vintage travel poster, the scene inset inside a wide cream margin, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark"
+ },
+ {
+  "sku": "SAMPLE-02",
+  "kind": "place",
+  "subject": "Snowdonia",
+  "tech": "charcoal",
+  "gram": "G2_terrain",
+  "pal": "duotone",
+  "prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of Snowdonia, seen across open land, the horizon pushed to the top of the picture, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark"
+ },
+ {
+  "sku": "SAMPLE-03",
+  "kind": "place",
+  "subject": "the Cotswolds",
+  "tech": "linocut",
+  "gram": "G9_naive",
+  "pal": "complementary",
+  "prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of the Cotswolds, as a naive flattened townscape in horizontal bands with no vanishing point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark"
+ },
+ {
+  "sku": "SAMPLE-04",
+  "kind": "place",
+  "subject": "a Cornish fishing village",
+  "tech": "gouache",
+  "gram": "G1_window",
+  "pal": "neutral",
+  "prompt": "flat gouache illustration, every shape outlined with a dark contour line of a Cornish fishing village, seen through a window or terrace arch framing the left and right edges, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark"
+ },
+ {
+  "sku": "SAMPLE-05",
+  "kind": "place",
+  "subject": "Loch Lomond",
+  "tech": "oil_impasto",
+  "gram": "G2_terrain",
+  "pal": "duotone",
+  "prompt": "thick oil painting, visible impasto ridges and brush drag of Loch Lomond, seen across open land, the horizon pushed to the top of the picture, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark"
+ },
+ {
+  "sku": "SAMPLE-06",
+  "kind": "place",
+  "subject": "Brighton seafront",
+  "tech": "collage",
+  "gram": "G9_naive",
+  "pal": "complementary",
+  "prompt": "cut paper collage, flat torn-edge shapes layered in planes of Brighton seafront, as a naive flattened townscape in horizontal bands with no vanishing point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark"
+ },
+ {
+  "sku": "SAMPLE-07",
+  "kind": "place",
+  "subject": "the Yorkshire Dales",
+  "tech": "palette_knife",
+  "gram": "G10_abstract",
+  "pal": "neutral",
+  "prompt": "palette knife painting, angular facets with hard straight edges, no outlines of the Yorkshire Dales, as an all-over painterly abstraction, marks edge to edge, no focal point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark"
+ },
+ {
+  "sku": "SAMPLE-08",
+  "kind": "creature",
+  "subject": "highland cow",
+  "tech": "charcoal",
+  "gram": "G4_portrait",
+  "pal": "duotone",
+  "prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of a highland cow, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark"
+ },
+ {
+  "sku": "SAMPLE-09",
+  "kind": "creature",
+  "subject": "barn owl",
+  "tech": "ink_wash",
+  "gram": "G8_minimal",
+  "pal": "neutral",
+  "prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of a barn owl, small and centred on a vast expanse of plain paper, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark"
+ },
+ {
+  "sku": "SAMPLE-10",
+  "kind": "creature",
+  "subject": "red fox",
+  "tech": "gouache",
+  "gram": "G4_portrait",
+  "pal": "complementary",
+  "prompt": "flat gouache illustration, every shape outlined with a dark contour line of a red fox, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark"
+ },
+ {
+  "sku": "SAMPLE-11",
+  "kind": "creature",
+  "subject": "european robin",
+  "tech": "watercolour",
+  "gram": "G3_habitat",
+  "pal": "neutral",
+  "prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of a european robin, set among a dense foreground of seedheads and flowers running off every edge, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark"
+ },
+ {
+  "sku": "SAMPLE-12",
+  "kind": "creature",
+  "subject": "border collie",
+  "tech": "sketch",
+  "gram": "G4_portrait",
+  "pal": "duotone",
+  "prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a border collie, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark"
+ },
+ {
+  "sku": "SAMPLE-13",
+  "kind": "creature",
+  "subject": "puffin",
+  "tech": "screenprint",
+  "gram": "G4_portrait",
+  "pal": "complementary",
+  "prompt": "flat screen-printed poster, simplified geometric shapes, bold flat colour of a puffin, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark"
+ },
+ {
+  "sku": "SAMPLE-14",
+  "kind": "creature",
+  "subject": "brown hare",
+  "tech": "pastel",
+  "gram": "G8_minimal",
+  "pal": "neutral",
+  "prompt": "soft pastel drawing, visible grain, scribbly open fill of a brown hare, small and centred on a vast expanse of plain paper, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark"
+ },
+ {
+  "sku": "SAMPLE-15",
+  "kind": "creature",
+  "subject": "kingfisher",
+  "tech": "linocut",
+  "gram": "G7_chart",
+  "pal": "duotone",
+  "prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a kingfisher, as a specimen chart of nine simplified studies on one flat warm ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no text, no lettering, no words, no signature, no watermark"
+ }
+]

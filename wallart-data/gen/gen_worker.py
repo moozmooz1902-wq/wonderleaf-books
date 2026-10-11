@@ -13,7 +13,7 @@ stopped - or runs out of balance - restarts where it left off.
 
   python3 gen_worker.py --jobs jobs.json --out /workspace/art --batch 4
 """
-import argparse, json, os, time
+import argparse, json, os, time, zlib
 
 
 def main():
@@ -23,6 +23,14 @@ def main():
     ap.add_argument("--batch", type=int, default=4)
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--steps", type=int, default=4)
+    ap.add_argument("--width", type=int, default=848)
+    ap.add_argument("--height", type=int, default=1200)
+    # black-forest-labs/FLUX.1-schnell became a GATED repo: fetching it now
+    # returns 401 unless an HF account token is supplied. The default here is
+    # an ungated mirror of the same weights. The licence is unaffected -
+    # schnell is Apache-2.0 whoever hosts it - but a mirror is a third party,
+    # so switch back to the official repo once the seller has an HF token.
+    ap.add_argument("--model", default="lzyvegetable/FLUX.1-schnell")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     donep = os.path.join(a.out, "done.txt")
@@ -31,12 +39,12 @@ def main():
     jobs = [j for j in json.load(open(a.jobs)) if j["sku"] not in done]
     if a.limit:
         jobs = jobs[:a.limit]
-    print(f"{len(jobs):,} to generate ({len(done):,} already done)", flush=True)
+    print(f"{len(jobs):,} to generate ({len(done):,} already done) "
+          f"at {a.width}x{a.height}", flush=True)
 
     import torch
     from diffusers import FluxPipeline
-    pipe = FluxPipeline.from_pretrained("black-forest-labs/FLUX.1-schnell",
-                                        torch_dtype=torch.bfloat16)
+    pipe = FluxPipeline.from_pretrained(a.model, torch_dtype=torch.bfloat16)
     free = torch.cuda.mem_get_info()[0] / 2**30 if torch.cuda.is_available() else 0
     print(f"free vram {free:.0f} GB", flush=True)
     if free >= 40:
@@ -49,14 +57,16 @@ def main():
     mf = open(os.path.join(a.out, "manifest.jsonl"), "a", encoding="utf-8")
     for i in range(0, len(jobs), a.batch):
         chunk = jobs[i:i + a.batch]
-        gens = [torch.Generator("cpu").manual_seed(abs(hash(j["sku"])) % 2**31)
-                for j in chunk]
+        # zlib.crc32, not hash(): str hashing is salted per process, so hash()
+        # would give a different image every time a pod restarts a job
+        gens = [torch.Generator("cpu").manual_seed(
+                    zlib.crc32(j["sku"].encode()) % 2**31) for j in chunk]
         imgs = pipe(prompt=[j["prompt"] for j in chunk],
                     num_inference_steps=a.steps, guidance_scale=0.0,
-                    width=848, height=1200, max_sequence_length=256,
+                    width=a.width, height=a.height, max_sequence_length=256,
                     generator=gens).images
         for j, im in zip(chunk, imgs):
-            p = os.path.join(a.out, j["sku"] + ".jpg")
+            p = os.path.join(a.out, f'{j["sku"]}_{a.width}.jpg')
             im.save(p, "JPEG", quality=92)
             df.write(j["sku"] + "\n")
             mf.write(json.dumps(j, ensure_ascii=False) + "\n")

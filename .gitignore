@@ -1,6 +1,8 @@
 
-# The joined upload CSV is 206 MB, over GitHub's 100 MB file limit.
 # EBAY_ONE_FILE.zip holds the same bytes; rebuild the CSV with tshirt/combine.py.
+# The joined upload CSV is 206 MB, over GitHub's 100 MB file limit.
+*.pyc
+__pycache__/
 tshirt/EBAY_ONE_FILE.csv
 tshirt/EBAY_PART1of3.csv
 tshirt/EBAY_PART2of3.csv
