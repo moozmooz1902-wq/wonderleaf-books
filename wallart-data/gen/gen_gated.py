@@ -63,7 +63,34 @@ def sku_for(job, prefix="WA"):
     return f"{prefix}-{hashlib.blake2b(key.encode(), digest_size=8).hexdigest()}"
 
 
-def expand(subjects):
+# Measured on the finished 12,834-panel block: 1.5% of designs have a near
+# twin from a DIFFERENT design, and every one of the closest pairs is a
+# minimal composition - a red fox and a whippet, cow parsley and a curlew,
+# a kingfisher and a barn owl. Different subjects, but "small and centred on
+# a vast expanse of plain paper" looks the same at thumbnail size whatever
+# is in the middle, which is exactly how a buyer sees an eBay search grid.
+# The hash is not being fooled; it is reporting something true.
+#
+# So these compositions are capped. They sell, and they are cheap to make,
+# but at an equal share of the grid they would be a sixth of five million
+# listings all looking alike. The cap is applied by SKU hash, so which ones
+# survive is deterministic and a resumed run makes the same choices.
+THIN_GRAMMARS = {"G8_minimal": 0.35, "B1_specimen": 0.45}
+
+
+def _thin(jobs):
+    kept = []
+    for j in jobs:
+        keep = THIN_GRAMMARS.get(j["gram"])
+        if keep is None:
+            kept.append(j); continue
+        h = int(hashlib.blake2b(j["sku"].encode(), digest_size=4).hexdigest(), 16)
+        if (h % 1000) / 1000.0 < keep:
+            kept.append(j)
+    return kept
+
+
+def expand(subjects, thin=True):
     """Build the full grid from the subject lists, exactly as the planner does,
     so a pod and this machine always agree on which SKU is which job."""
     import itertools, random, prompts as P
@@ -104,6 +131,11 @@ def expand(subjects):
     # of the work is a fair mix of subjects, and adding subjects later
     # interleaves them instead of renumbering anything
     jobs.sort(key=lambda j: j["sku"])
+    if thin:
+        before = len(jobs)
+        jobs = _thin(jobs)
+        print(f"minimal-composition cap: {before - len(jobs):,} of {before:,} dropped",
+              flush=True)
     seen = {}
     for j in jobs:                       # a collision would silently drop work
         seen.setdefault(j["sku"], []).append(j)

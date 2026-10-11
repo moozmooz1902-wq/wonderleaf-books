@@ -480,3 +480,68 @@ Reject held at about 2% on every shard, against 31% before the poster
 grammar was dropped and the gate added. 144 KB a panel means 5,000,000
 listings is about 135 GB of panels, not the 608 GB estimated from the
 pilot's larger files - $2/month on R2, not $9.
+
+---
+
+# The duplicate audit on the finished block, and what it found
+
+12,834 panels, every one hashed, every pair compared - not a sample.
+
+    panels                                   12,834
+    distinct hashes                          12,834   (no exact repeat at all)
+    with a near twin from a DIFFERENT design   1.50%  (<=24 of 256 bits)
+    store 1, which did not sell                 89%
+
+## The 1.5% is real, and it names a composition
+
+The closest pairs were looked at rather than assumed away
+(`wallart-samples/11_closest_pairs.jpg`):
+
+    7 bits apart   red fox / sketch        vs  whippet / screenprint
+    8 bits apart   cow parsley / sketch    vs  curlew / sketch
+   10 bits apart   kingfisher / watercolour vs barn owl / charcoal
+
+Every one is a **different subject**, and every one is the minimal
+composition - G8_minimal "small and centred on a vast expanse of plain
+paper", or B1_specimen, its botanical twin. A fox and a whippet are
+different animals; two centimetres of animal in the middle of an empty
+sheet is the same listing twice in a search grid.
+
+The temptation was to call this a limitation of the hash. It is not. The
+hash is seeing what a buyer scrolling eBay sees, which is the whole point
+of the measurement. These compositions sell, and they are the cheapest
+thing in the catalogue to generate, which is exactly why they would have
+crept up to a sixth of five million listings.
+
+`THIN_GRAMMARS` now caps them: G8_minimal from 8.2% of the grid to 3.2%,
+B1_specimen from 3.7% to 1.7%. The cap is applied by SKU hash, so which
+ones survive is deterministic and a resumed run makes the same choices -
+checked: appending a subject still loses zero surviving SKUs.
+
+The 12,834 already generated keep their uncapped mix. 1.5% is well inside
+tolerance for a block this size; the cap is for the millions.
+
+# r2.dev is rate limited, and that matters for eBay
+
+Pulling the block down for the audit over the public
+`pub-....r2.dev` URL at 32 connections returned **`error code: 1015`** -
+Cloudflare rate limiting - for 7,142 of 12,834 files. They were written to
+disk as 17-byte text files, so a naive script would have hashed them as if
+they were art.
+
+The audit was moved onto a pod and run through the S3 API instead, where
+there is no such limit, and it completed in under two minutes.
+
+**This is a production problem, not just an audit inconvenience.** If five
+million eBay listings point their images at `r2.dev`, eBay's own image
+fetcher will be making exactly the kind of bulk request that triggers 1015,
+and listings will go up with broken images. Cloudflare's own position is
+that r2.dev is for development and a **custom domain** is what production
+traffic should use. Before any of this is uploaded the bucket needs a
+custom domain, and `wallart/plan.json`'s `pic_base` should point at that,
+not at the r2.dev host.
+
+Also worth knowing: the top-up run's reject rate was 9.9%, against ~2% on
+every full shard. Small sample, and the leftovers were the tail of one
+shard rather than a fair mix, so it is not a trend - but it is a reminder
+that the 2% figure is an average over a varied mix, not a floor.
