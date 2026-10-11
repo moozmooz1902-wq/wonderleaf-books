@@ -12,17 +12,21 @@ buildable, and it comes in under $500.**
 
 | | all on community GPUs | 75/25 community/secure |
 |---|---|---|
-| at the measured 7.7% reject | **$244** | $335 |
-| if reject doubles to 15% | **$264** | $361 |
+| at 12% reject | **$249** | $340 |
+| at 16% reject | **$259** | $355 |
 
 Even if every hour had to run on the expensive secure hosts it would be
-$605 - and that is the pessimistic corner of the pessimistic corner.
+$614 - and that is the pessimistic corner of the pessimistic corner.
+
+These figures include everything added for the no-people and eyes
+requirement: generating 11% taller so the signature zone can be cropped off,
+the OCR gate, and the regeneration it causes.
 
 Plus about **$9 a month** of Cloudflare R2 storage, or $23 a month if a
 listing photo is stored for every design instead of drawn on request.
 
-Wall clock: **2.3 to 2.5 days** on twelve GPUs rented at the same time, or
-about 5 days on six. Renting more GPUs does not change the bill, only the
+Wall clock: **2.3 days** on twelve GPUs rented at the same time, or about
+4.6 days on six. Renting more GPUs does not change the bill, only the
 calendar - the work is billed by the GPU-hour either way.
 
 Nothing is generated until you say go.
@@ -40,8 +44,8 @@ This is the whole trick, and it is where the money is.
 | **Framing** | The print sheet and all three frame colours render in 0.22 s on one CPU core. | **zero** |
 
 So 5,000,000 listings need only **937,500 generated images**, and after the
-text gate, about **1.02 million generations**. At 1,549 generations per hour
-per GPU that is 656 GPU-hours.
+text gate, about **1.07 million generations**. At 1,601 generations per hour
+per GPU that is 665 GPU-hours.
 
 Four colourways is not a number I invented. The wall-art branch measured
 store 1's 424,000 listings at 89% near-duplicates and concluded that was the
@@ -58,12 +62,14 @@ Taken from a rented GPU today, not from a price list.
 RTX 4090 + NF4, 704x1008, batch 4    1,782 generations/hour   16.1 GB peak
 RTX 4090 + NF4, 848x1200, batch 4    1,295 generations/hour   18.4 GB peak
 A40 48GB bf16,  848x1200, batch 4      873 generations/hour
-the full gated run, 48 designs       1,863 generations/hour   7.7% rejected
+PRODUCTION: 704x1120 cropped to 1008  1,601 generations/hour  gate on
+the same at 848x1328 -> 848x1200      1,118 generations/hour  43% dearer
 RunPod:  4090 community $0.34/hr    4090 secure $0.89/hr    A40 $0.59/hr
 ```
 
-The budget uses the conservative 1,549/hour from the bench, not the 1,863
-the real run managed with the OCR gate switched on.
+848 was tested head to head against 704 on 24 high-risk bird portraits at
+identical seeds. It costs 43% more and did not correct a single face, so the
+whole catalogue runs at 704.
 
 Three findings worth keeping:
 
@@ -152,38 +158,75 @@ not a limit of the method.
 
 ---
 
-## 6. The one real quality problem, and the fix
+## 6. No people, correct eyes, and nothing that reads as generated
 
-Five of the first sixteen panels came back with writing on them - a garbled
-"W ITBEY" across a harbour, "N2Z1" on a seafront, a fake artist's monogram in
-the corner of a linocut. schnell runs at guidance_scale 0, so negative
-prompts do nothing; there is no wording that reliably fixes it.
+129 panels were generated specifically to test this, weighted toward the
+cells most likely to fail: 66 close-up animal portraits across every
+technique, and 30 townscapes and seafronts, which are the scenes that invite
+figures. Every one was looked at and labelled.
 
-Two changes:
+### Eyes: 7.5%, and the failures have a pattern
 
-- **The vintage-travel-poster grammar is gone.** A travel poster *is* a piece
-  of typography, so the model put a place name on it however the prompt was
-  worded. It produced the two worst defects in the first sample.
-- **The output is read before it is kept.** `gen_gated.py` runs EasyOCR on
-  the same GPU and regenerates anything carrying text with a new seed, up to
-  twice.
+Seven of 93 creature panels had the eyes wrong. **Four of the seven were
+robins** and **five of the seven were wet techniques** - oil impasto,
+watercolour, ink wash, palette knife. A small bird's face is a few dozen
+pixels across and a wet-on-wet wash will not hold an eye at that size.
 
-**Both together took the defect rate from 31% to 7.7%, measured on a run of
-48 designs.** All four rejects were caught on the first attempt and came back
-clean on the retry, so 48 of 48 kept panels are free of writing. What the
-gate actually caught:
+That combination is no longer generated at all. A close-up portrait of a
+small-faced bird in a wet technique is refused; the same birds still appear
+in habitat and minimal compositions, and in the flat graphic techniques,
+where they came out clean every time. Five of the seven failures are
+designed out rather than filtered out.
+
+Every creature prompt now also carries *"exactly two eyes, both eyes clear
+and correctly placed"*.
+
+### People: not one human face in 129 panels
+
+Of 30 townscapes deliberately prompted at places that invite figures, 11 had
+some figure and only 2 had one big enough to read as a person - distant
+staffage on a promenade, the sort of thing a human illustrator would draw.
+**No panel produced a human face.** Every place prompt now says no people,
+no person, no human figures, no faces, deserted and empty of people.
+
+### What I tried that did not work, and is not being shipped
+
+CLIP zero-shot was the obvious gate for both checks. Measured against the
+hand labels, it fails:
+
+- **Eyes.** Catching 71% of the bad ones means regenerating 34% of
+  everything, at 12.8% precision.
+- **People.** The failure score is *lower* on the panels with figures (0.362)
+  than on the ones without (0.593). It is inverted - the captions fire on
+  townscapes in general, not on figures.
+
+So there is no CLIP gate in the pipeline. A gate that does not separate costs
+money and gives false confidence.
+
+### The real defect was the fake signature, and the fix is a crop
+
+Looking at the panels rather than the log: EasyOCR catches printed lettering
+and misses a cursive signature, because a scribble is not characters. About
+one panel in four carried one - a scrawled name, a "(C) T.S.1013", a fake
+date. It is the clearest sign the work is generated, and it credits a painter
+who does not exist.
+
+Painting them out was tried first and only half worked: on flat ground the
+signal separates cleanly, on a splattered or linocut ground the whole area
+reads as marks. So the position of every mark was measured instead:
 
 ```
-WA-0000003   "SKYE"  x2, confidence 1.00 and 0.91      (Isle of Skye, lettered)
-WA-0000018   "LALE", "LOND", "MAW CITT H.16, 2013"     (Loch Lomond, lettered)
-WA-0000013   "Ma2,2018"                                (fake dated signature)
-WA-0000002   "2195 4"                                  (fake inventory number)
+vertical position of the marks:  p10 0.972   p50 0.972   p75 1.000
+
+cropping the bottom  6% removes  91%
+cropping the bottom 10% removes  96%
+cropping the bottom 12% removes 100%
 ```
 
-The gate costs almost nothing in throughput - the gated run measured 1,863
-generations/hour against 1,782 on the ungated bench.
-
----
+The worker now generates 704x1120 and throws the bottom tenth away. It costs
+11% more pixels - 1,601 generations/hour instead of 1,782 - and it is
+deterministic, with no risk of smearing the artwork. The painting-out pass
+stays as a second sweep for the residual on quiet grounds.
 
 ## 7. Still open before the run can start
 
@@ -197,12 +240,18 @@ generations/hour against 1,782 on the ungated bench.
    downloading weights first. Production needs a supervisor that recreates
    the pod elsewhere when that happens. The 75/25 column above is what it
    costs if a quarter of the work has to fall back to secure hosts.
-3. **A Hugging Face token would be worth having.**
+3. **The R2 token cannot make a bucket.** Probed tonight from a pod that
+   inherits the stored keys: it can **write to `tshirt-m12k`** but cannot
+   list buckets and cannot create one. So a wall-art bucket needs you to
+   make it in the Cloudflare dashboard and issue a token that covers it.
+   Until then the pilot writes under a `wallart-pilot/` prefix inside the
+   t-shirt bucket, which is tidy to undo but not where 600 GB should live.
+4. **A Hugging Face token would be worth having.**
    `black-forest-labs/FLUX.1-schnell` is now gated and returns 401. We are
    using `lzyvegetable/FLUX.1-schnell`, an ungated mirror of the same
    Apache-2.0 weights. The licence is fine either way, but it is a third
    party. The token is free - it is just a licence click-through.
-4. **A duplicate audit before upload.** The code-drawn million is the part of
+5. **A duplicate audit before upload.** The code-drawn million is the part of
    this plan most at risk of looking repetitive. It gets measured against the
    same test the research applied to store 1 before any of it goes up.
 

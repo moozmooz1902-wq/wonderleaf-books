@@ -39,6 +39,17 @@ GRAMMAR_CREATURE = {
  "G8_minimal":  "small and centred on a vast expanse of plain paper",
  "G7_chart":    "as a specimen chart of nine simplified studies on one flat warm ground",
 }
+# Botanical is not a minor block. In the mined competitor titles the single
+# biggest group of subject atoms after people is flowers - anemone, daisies,
+# dahlia, tulips, orchid, rose, peony, hydrangea, ranunculus, sunflower - and
+# people are ruled out, so this is the largest block available.
+GRAMMAR_BOTANICAL = {
+ "B1_specimen":  "a single stem laid flat and centred like a pressed herbarium specimen, on plain paper",
+ "B2_vase":      "arranged loosely in a simple ceramic vase on a plain ground, the vase cropped by the lower edge",
+ "B3_scatter":   "several cuttings scattered evenly across the sheet with space between them",
+ "B4_meadow":    "growing in a dense band across the lower half, stems running off both edges",
+ "B5_single":    "one bloom, very large, filling most of the sheet, cropped by the edges",
+}
 PALETTE = {
  "duotone":       "two adjacent colours only",
  "complementary": "burnt orange against petrol blue",
@@ -54,6 +65,7 @@ INCOMPATIBLE = {
     "G11_hardedge": lambda t: t not in FLAT,       # needs flat hard-edged colour
     "G10_abstract": lambda t: t in {"charcoal", "sketch"},   # abstraction needs mass
     "G7_chart":     lambda t: t not in DRAWN,      # a chart is a drawing convention
+    "B1_specimen":  lambda t: t not in DRAWN,      # a herbarium sheet is drawn
 }
 # a few grammars read oddly on large animals
 PERCHING = {"barn owl", "european robin", "kingfisher", "puffin", "goldfinch",
@@ -122,6 +134,11 @@ EYES = ("exactly two eyes, both eyes clear and correctly placed, "
 
 def place_prompt(place, tech, gram, pal):
     return (f"{TECHNIQUE[tech]} of {place}, {GRAMMAR_PLACE[gram]}, "
+            f"{PALETTE[pal]}, {RULES}")
+
+
+def botanical_prompt(name, tech, gram, pal):
+    return (f"{TECHNIQUE[tech]} of {name}, {GRAMMAR_BOTANICAL[gram]}, "
             f"{PALETTE[pal]}, {RULES}")
 
 

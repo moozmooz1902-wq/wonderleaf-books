@@ -63,6 +63,12 @@ def main():
     ap.add_argument("--quant", default="nf4", choices=["none", "nf4"])
     ap.add_argument("--model", default="lzyvegetable/FLUX.1-schnell")
     ap.add_argument("--no-gate", action="store_true")
+    # Upload each kept panel straight to R2 from the pod. The keys arrive as
+    # environment variables from RunPod template vbsgwyibn1, so they live on
+    # the pod and never in this repo or in a Claude session. Probed 11 Oct:
+    # the token can WRITE to tshirt-m12k but cannot list or create buckets,
+    # so until the seller makes a wall-art bucket this writes under a prefix.
+    ap.add_argument("--r2-prefix", default="")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     donep = os.path.join(a.out, "done.txt")
@@ -92,6 +98,19 @@ def main():
     free = torch.cuda.mem_get_info()[0] / 2**30
     print(f"free vram {free:.0f} GB", flush=True)
     pipe.to("cuda") if (a.quant == "nf4" or free >= 40) else pipe.enable_model_cpu_offload()
+
+    s3 = bucket = None
+    if a.r2_prefix:
+        import boto3
+        from botocore.config import Config
+        bucket = os.environ["R2_BUCKET"]
+        s3 = boto3.client(
+            "s3", endpoint_url=f"https://{os.environ['R2_ACCOUNT_ID']}.r2.cloudflarestorage.com",
+            aws_access_key_id=os.environ["R2_ACCESS_KEY_ID"],
+            aws_secret_access_key=os.environ["R2_SECRET_ACCESS_KEY"],
+            config=Config(signature_version="s3v4", max_pool_connections=32),
+            region_name="auto")
+        print(f"uploading to s3://{bucket}/{a.r2_prefix.strip('/')}/", flush=True)
 
     reader = None
     if not a.no_gate:
@@ -133,7 +152,14 @@ def main():
                 rejected += 1
                 rf.write(json.dumps({"sku": j["sku"], "try": "final", "kept_anyway": True,
                                      "marks": marks}) + "\n")
-            im.save(os.path.join(a.out, j["sku"] + a.tag + ".jpg"), "JPEG", quality=92)
+            path = os.path.join(a.out, j["sku"] + a.tag + ".jpg")
+            im.save(path, "JPEG", quality=92)
+            if s3 is not None:
+                key = f"{a.r2_prefix.strip('/')}/{j['sku']}{a.tag}.jpg"
+                with open(path, "rb") as fh:
+                    s3.put_object(Bucket=bucket, Key=key, Body=fh.read(),
+                                  ContentType="image/jpeg")
+                os.remove(path)        # the pod disk will not hold a million
             df.write(j["sku"] + "\n")
             mf.write(json.dumps({**j, "seed": sd, "marks": marks},
                                  ensure_ascii=False) + "\n")
