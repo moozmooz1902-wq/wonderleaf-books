@@ -108,3 +108,57 @@ go up.
 bucket; it was the only one writable when the run started. A copy within
 R2 is server side and free. `tshirt-m12k/wallart/block1/` holds 476
 orphans from before SKUs became content hashes and should be deleted.
+
+
+---
+
+## The split, set by the seller 11 Oct 2026
+
+    luxvia-art          3,000,000   60%
+    posterleaf-store1   1,000,000   20%
+    mercury-usm           500,000   10%
+    lunar-kms             500,000   10%
+    TOTAL               5,000,000
+
+The other four poster buckets - nebula-m12k, prism-rps, orbit-uss,
+velvet-ars - get no generated art. Recorded in `stores.json`.
+
+What that costs, per `allocate.py`:
+
+    store          listings   drawn in code   GPU base images
+    luxvia-art    3,000,000         750,000           562,500
+    posterleaf    1,000,000         250,000           187,500
+    mercury-usm     500,000         125,000            93,750
+    lunar-kms       500,000         125,000            93,750
+    TOTAL         5,000,000       1,250,000           937,500
+
+12,834 of those base images already exist, so 924,666 remain: about
+1,373 GPU-hours and **$261** on A4500s at $0.19/hr, or $680 if only
+secure 4090s are available.
+
+### How a design is assigned to a store
+
+By SKU hash against the quotas, in `allocate.py`. The rule that matters is
+that **a design appears in exactly one store** - four shops selling the
+same picture compete with each other and multiply the near-duplicate
+problem this catalogue exists to avoid.
+
+Hashing rather than hand-splitting buys three things: no overlap by
+construction, a fair mix of subjects and techniques in every store (the
+same reason the generation shards were striped rather than sliced), and
+stability under growth - adding subjects or changing a quota does not move
+anything already placed, because the hash does not depend on list order.
+Measured over 200,000 SKUs the drift from the intended shares is under
+0.13%.
+
+### Two things this differs from, worth a decision
+
+* **Niches.** The old `plan.json` gave each store its own primary niches
+  and took 65% of its rows from them. The hash split does not: every store
+  gets the same spread of subjects. No two stores ever hold the same
+  design, but they will both hold highland cows. That is a commercial
+  choice, not a technical one.
+* **Frame colours.** `lunar-kms` carries only `_framed` and `_raw` today,
+  where posterleaf, mercury and luxvia carry black, white and oak.
+  `stores.json` matches each bucket as it is now; uploading all three
+  everywhere is a one-line change if that is wanted.
