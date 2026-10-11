@@ -35,15 +35,29 @@ def curl(method, path, body=None):
         return {"_raw": out[:800]}
 
 
+# A pod's dockerStartCmd has a hard length limit between 60,000 and 70,000
+# characters - bisected 11 Oct, 60k creates a pod and 70k does not. Over it
+# RunPod answers "Something went wrong. Please try again later or contact
+# support", which reads exactly like a transient fault and which relaunch.sh
+# was classifying as NO CAPACITY. That is what idled six shards for three
+# hours after the subject expansion pushed the embedded bundle from about
+# 25,000 characters to 80,371.
+#
+# Two things keep it under: xz instead of gzip, and subjects.json no longer
+# travelling in the command at all - seed_assets.py puts it in R2 once and
+# the pod curls it. The code bundle alone is about 29,000 characters.
+CMD_LIMIT = 58000
+
+
 def bundle(files):
     buf = io.BytesIO()
-    with tarfile.open(fileobj=buf, mode="w:gz") as t:
+    with tarfile.open(fileobj=buf, mode="w:xz") as t:
         for f in files:
             t.add(f, arcname=os.path.basename(f))
     return base64.b64encode(buf.getvalue()).decode()
 
 
-def start_cmd(b64, jobs, extra, pip=None, script="gen_worker.py"):
+def start_cmd(b64, jobs, extra, pip=None, script="gen_worker.py", fetch=""):
     """Run the job ALONGSIDE the image's own /start.sh, never instead of it.
 
     This is the bug that cost 40 minutes. Overriding dockerStartCmd replaces
@@ -59,9 +73,17 @@ def start_cmd(b64, jobs, extra, pip=None, script="gen_worker.py"):
     flag = "--subjects" if jobs.endswith("subjects.json") else "--jobs"
     script_line = (f"python3 {script} {flag} {os.path.basename(jobs)} "
                    f"--out /workspace/art {extra}") if jobs else f"python3 {script} {extra}"
+    # The fetched file is checked for size before it is used. A truncated or
+    # rate-limited download would otherwise expand into a SHORTER grid, and
+    # a shorter grid silently changes which jobs are in --pool.
+    fetch_line = (f"""curl -sS --retry 5 --retry-delay 3 --max-time 300 -o \
+  /workspace/gen/{os.path.basename(jobs)} '{fetch}'
+python3 -c "import json,sys;d=json.load(open('/workspace/gen/{os.path.basename(jobs)}'));\
+n=sum(len(v) for v in d.values() if isinstance(v,list));print('fetched subjects',n);\
+sys.exit(0 if n > 4000 else 1)" || {{ echo ASSET_FETCH_FAILED; exit 1; }}""") if fetch else ""
     return ["bash", "-c", f"""export PATH=/opt/conda/bin:/usr/local/bin:/usr/bin:/bin:$PATH
 mkdir -p /workspace/gen /workspace/art
-echo '{b64}' | base64 -d | tar xz -C /workspace/gen
+echo '{b64}' | base64 -d | tar xJ -C /workspace/gen
 cat > /workspace/run.sh <<'EOS'
 export PATH=/opt/conda/bin:/usr/local/bin:/usr/bin:/bin:$PATH
 export HF_HUB_ENABLE_HF_TRANSFER=1
@@ -97,6 +119,7 @@ python3 -c "import torch,sys; sys.exit(0 if torch.cuda.is_available() else 1)" 2
 #   transformers 5.x returns BaseModelOutputWithPooling from get_text_features
 #   instead of a tensor, which the colour-label pass tripped over earlier.
 pip install -q --no-input {pip} 2>&1 | tail -3
+{fetch_line}
 python3 -c "import torch,diffusers;print('torch',torch.__version__,'diffusers',diffusers.__version__,'cuda',torch.cuda.is_available())"
 cd /workspace/gen
 {script_line}
@@ -124,10 +147,12 @@ if __name__ == "__main__":
     ap.add_argument("--script", default="gen_worker.py")
     ap.add_argument("--ship", default="")   # extra files for the bundle
     ap.add_argument("--template", default="")
+    # Where the pod gets --jobs from, instead of carrying it in the command.
+    ap.add_argument("--jobs-url", default="")
     a = ap.parse_args()
 
-    files = ["gen/gen_worker.py", "gen/prompts.py"] + \
-            [f for f in ([a.jobs] + a.ship.split(",")) if f]
+    files = ["gen/prompts.py"] + \
+            [f for f in ([] if a.jobs_url else [a.jobs]) + a.ship.split(",") if f]
     # gen_gated.py REFUSES to run without the copyright gate, so it always
     # travels with it. Forgetting it is meant to stop the pod, not be
     # silently skipped.
@@ -142,7 +167,14 @@ if __name__ == "__main__":
             "gpuCount": 1, "cloudType": a.cloud,
             "containerDiskInGb": 80, "volumeInGb": 0,
             "ports": ["8000/http"], "dockerStartCmd": start_cmd(b64, a.jobs, a.extra,
-                                           a.pip or None, a.script)}
+                                           a.pip or None, a.script, a.jobs_url)}
+    n = sum(len(x) for x in body["dockerStartCmd"])
+    if n > CMD_LIMIT:
+        print(json.dumps({"error": f"start command {n:,} chars, over the "
+                                   f"{CMD_LIMIT:,} limit - seed the big file "
+                                   f"to R2 with seed_assets.py and pass "
+                                   f"--jobs-url"}, indent=1))
+        raise SystemExit(2)
     r = curl("POST", "/pods", body)
     # A rejected create does not always answer with an object. Field-level
     # validation errors come back as a bare LIST, and treating that as a dict

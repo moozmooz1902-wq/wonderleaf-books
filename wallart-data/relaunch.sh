@@ -38,13 +38,19 @@ MAXHR=0.32
 # 960,000 of it - the target plus 2.4% - and the remaining 235,000 jobs
 # stay as spare capacity that a later run can switch on by raising this
 # number alone, with nothing regenerated.
+# subjects.json is fetched by the pod, not carried in its start command:
+# at 5,204 subjects it is 90 KB, and the command has a hard limit between
+# 60k and 70k characters. seed_assets.py puts it here; re-run that after
+# any change to the subject lists or the pods will build the OLD grid.
+JOBS_URL="https://pub-4b710c8610a84acc8fad1513f48132fd.r2.dev/wallart/assets/subjects.json"
 EXTRA="--batch 4 --width 704 --height 1008 --quant nf4 --retries 2 --pool 960000 --part $K/$N --stores stores.json --resume --max-hours 10"
 for GPUS in "$TIER1" "$TIER2"; do
   CLOUD=COMMUNITY
   OUT=$(python3 launch_gen.py --name "wa-v3-$K" --cloud $CLOUD --gpu "$GPUS" --template vbsgwyibn1 \
     --image "runpod/pytorch:2.8.0-py3.11-cuda12.8.1-cudnn-devel-ubuntu22.04" \
     --pip "diffusers transformers accelerate bitsandbytes sentencepiece protobuf hf_transfer easyocr boto3" \
-    --script gen_gated.py --jobs gen/subjects.json --ship gen/gen_gated.py --extra "$EXTRA" 2>&1)
+    --script gen_gated.py --jobs gen/subjects.json \
+    --jobs-url "$JOBS_URL" --ship gen/gen_gated.py --extra "$EXTRA" 2>&1)
   ID=$(printf '%s' "$OUT" | python3 -c "import sys,re;d=sys.stdin.read();m=re.search(r'\"id\": \"([a-z0-9]+)\"',d);print(m.group(1) if m else '')")
   CST=$(printf '%s' "$OUT" | python3 -c "import sys,re;d=sys.stdin.read();m=re.search(r'\"costPerHr\": ([0-9.]+)',d);print(m.group(1) if m else '')")
   if [ -n "$ID" ]; then
