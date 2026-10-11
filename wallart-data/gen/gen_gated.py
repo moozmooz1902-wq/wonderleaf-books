@@ -17,7 +17,7 @@ catalogue budget is built on.
 
 Resumable: every finished SKU is appended to done.txt.
 """
-import argparse, json, os, time, zlib
+import argparse, hashlib, json, os, sys, time, zlib
 
 # A detection has to be reasonably confident AND reasonably large before it
 # counts. FLUX leaves faint marks everywhere that OCR will happily read as a
@@ -43,6 +43,26 @@ def text_marks(reader, img):
     return out
 
 
+def sku_for(job, prefix="WA"):
+    """A SKU derived from WHAT the job is, never from where it sits in a list.
+
+    This is what makes the run resumable. The first version numbered jobs by
+    position after a seeded shuffle, which is reproducible only while the
+    subject list never changes - add one flower and every SKU after it moves,
+    so everything already generated looks unfinished and gets made again.
+    Hashing the job content instead means a SKU is the same for ever, lists
+    can be extended at any time, and "what is already done" is simply "what
+    is already in the bucket".
+
+    CRC32 IS NOT WIDE ENOUGH. It collided on the very first run of 12,834
+    jobs - 2^32 means a collision is likely past about 65,000, and 937,500
+    jobs would collide roughly a hundred thousand times, each one silently
+    dropping a design. 64 bits puts that at effectively never.
+    """
+    key = "|".join(str(job[k]) for k in ("kind", "subject", "tech", "gram", "pal"))
+    return f"{prefix}-{hashlib.blake2b(key.encode(), digest_size=8).hexdigest()}"
+
+
 def expand(subjects):
     """Build the full grid from the subject lists, exactly as the planner does,
     so a pod and this machine always agree on which SKU is which job."""
@@ -63,10 +83,33 @@ def expand(subjects):
         if P.ok(t, g, s_):
             jobs.append(dict(kind="botanical", subject=s_, tech=t, gram=g, pal=c,
                              prompt=P.botanical_prompt(s_, t, g, c)))
-    random.Random(subjects.get("seed", 101)).shuffle(jobs)
-    pre = subjects.get("prefix", "WA1")
-    for i, j in enumerate(jobs):
-        j["sku"] = f"{pre}-{i:06d}"
+    # The copyright gate, enforced here rather than reported somewhere else.
+    # A blocked subject must never reach a prompt, let alone a listing.
+    try:
+        # the bundle unpacks flat, so ip_check.py lands beside this file
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import ip_check
+        bad = ip_check.check_subjects(subjects)
+        if bad:
+            raise SystemExit(f"IP BLOCKLIST: refusing to generate {bad}")
+        print(f"ip gate: {len(jobs):,} jobs, no blocked subject", flush=True)
+    except ImportError:
+        print("ip gate: ip_check.py not shipped to this pod - REFUSING", flush=True)
+        raise SystemExit(2)
+
+    pre = subjects.get("prefix", "WA")
+    for j in jobs:
+        j["sku"] = sku_for(j, pre)
+    # ordered by the SKU hash: a stable pseudo-random shuffle, so any prefix
+    # of the work is a fair mix of subjects, and adding subjects later
+    # interleaves them instead of renumbering anything
+    jobs.sort(key=lambda j: j["sku"])
+    seen = {}
+    for j in jobs:                       # a collision would silently drop work
+        seen.setdefault(j["sku"], []).append(j)
+    dup = {k: v for k, v in seen.items() if len(v) > 1}
+    if dup:
+        raise SystemExit(f"SKU collision on {len(dup)} jobs: {list(dup)[:3]}")
     return jobs
 
 
@@ -105,6 +148,10 @@ def main():
     # rather than slicing so every pod gets the same mix of subjects and
     # techniques, and so the rate each one reports is comparable.
     ap.add_argument("--part", default="")      # "k/n", 1-based
+    ap.add_argument("--resume", action="store_true")
+    # Stop cleanly after this long, so a pod cannot quietly run all night if
+    # something downstream is wedged. Work already uploaded is kept.
+    ap.add_argument("--max-hours", type=float, default=0.0)
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     donep = os.path.join(a.out, "done.txt")
@@ -156,6 +203,27 @@ def main():
             config=Config(signature_version="s3v4", max_pool_connections=32),
             region_name="auto")
         print(f"uploading to s3://{bucket}/{a.r2_prefix.strip('/')}/", flush=True)
+        # THE RESUME. done.txt lives on container disk and dies with the pod,
+        # so the bucket is the only durable record of what has been made. If
+        # the balance runs out mid-run, the pods stop, and the next pod picks
+        # up exactly here.
+        if a.resume:
+            pre = a.r2_prefix.strip("/") + "/"
+            tok, n = None, 0
+            while True:
+                kw = {"Bucket": bucket, "Prefix": pre, "MaxKeys": 1000}
+                if tok:
+                    kw["ContinuationToken"] = tok
+                r = s3.list_objects_v2(**kw)
+                for o in r.get("Contents", []):
+                    k = o["Key"].rsplit("/", 1)[-1]
+                    if k.endswith(".jpg"):
+                        done.add(k[:-4]); n += 1
+                if not r.get("IsTruncated"):
+                    break
+                tok = r["NextContinuationToken"]
+            print(f"resume: {n:,} panels already in the bucket", flush=True)
+            jobs = [j for j in jobs if j["sku"] not in done]
 
     reader = None
     if not a.no_gate:
@@ -213,6 +281,9 @@ def main():
         el = time.time() - t0
         print(f"  kept {kept:,} / {gens:,} generated  {gens/el:.2f} img/s  "
               f"reject {rejected/max(gens,1):.0%}  {el/60:.1f} min", flush=True)
+        if a.max_hours and el > a.max_hours * 3600:
+            print(f"STOPPING: hit --max-hours {a.max_hours}", flush=True)
+            break
 
     el = time.time() - t0
     print(f"DONE kept {kept:,} from {gens:,} generations in {el/60:.1f} min", flush=True)

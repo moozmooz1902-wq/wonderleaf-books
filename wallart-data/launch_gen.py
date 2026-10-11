@@ -128,6 +128,11 @@ if __name__ == "__main__":
 
     files = ["gen/gen_worker.py", "gen/prompts.py"] + \
             [f for f in ([a.jobs] + a.ship.split(",")) if f]
+    # gen_gated.py REFUSES to run without the copyright gate, so it always
+    # travels with it. Forgetting it is meant to stop the pod, not be
+    # silently skipped.
+    if any("gen_gated" in f for f in files):
+        files += ["ip_check.py", "displate_brands.txt"]
     b64 = bundle(files)
     body = {"name": a.name, "imageName": a.image,
             # templateId carries the R2_* credentials the seller put on
