@@ -389,3 +389,43 @@ That becomes 51,336 listings with the colourways.
 5,000,000 needs about 21,800 subject atoms. 96 are in the production list
 and 10,563 are in the repo unformatted. Expanding that list is now the thing
 standing between this and the full run - not the model, not the money.
+
+---
+
+# The container was rebuilt mid-run, and nothing was lost
+
+At 08:19 this session's container came back with the working tree reset to
+`c83b779 "Add files via upload"` - a commit from somewhere else entirely -
+with CLAUDE.md gone and every script of the night's work absent from disk.
+
+Nothing was lost, because everything had been pushed.
+`origin/claude/dreamy-hopper-cgp4p4` still had `25b7ded` and the whole
+history, and `git checkout -B claude/dreamy-hopper-cgp4p4
+origin/claude/dreamy-hopper-cgp4p4` put it all back in one command.
+
+Two things this proves rather than asserts:
+
+* **The repo is the memory.** CLAUDE.md says so and this is what it is for.
+  A file that only ever existed on the container would have gone.
+* **The R2 resume design is right.** The four pods kept generating straight
+  through the container being rebuilt, because they do not depend on this
+  machine for anything. One of them restarted too, resumed from the bucket
+  and carried on - the same mechanism that will carry the run across the
+  seller running out of funds.
+
+Worth adding to the habits: push after every working change, not at the end
+of a session.
+
+## Block v1, as it finished
+
+Four of six shards complete. Full-shard rates, which are the ones to quote:
+
+    RTX 4090 secure    1,283 and 1,505 gen/hr    reject 2.0% and 2.3%
+    RTX A4500 comm       768 and   784 gen/hr    reject 2.0% and 2.2%
+
+The A4500 holds 776 gen/hr sustained at $0.19/hr, which is $0.000240 an
+image against the secure 4090's $0.000638. On the full 5,000,000 that is
+$256 versus $680 - the difference between three $100 top-ups and seven.
+
+Reject rate settled at about 2% across every completed shard, against 31%
+before the poster grammar was dropped and the gate was added.
