@@ -43,6 +43,32 @@ def text_marks(reader, img):
     return out
 
 
+# Compositions that are MEANT to be sparse. "Small and centred on a vast
+# expanse of plain paper" is the whole brief for G8_minimal, so it cannot be
+# held to the same floor as a meadow.
+MINIMAL_GRAMS = {"G8_minimal", "B1_specimen", "C2_disc", "S2_single", "B5_single"}
+BUSY_FLOOR = {"minimal": 0.10, "other": 0.18}
+
+
+def busyness(img):
+    """What share of the sheet carries a mark.
+
+    Not ink coverage: a dark ground is not emptiness. This is local contrast -
+    the share of 16x16 tiles whose range is more than 12 levels - so a flat
+    field of any colour reads as empty and a speckled one does not.
+
+    Measured over the 141-panel eval of 11 Oct: median 52%, and the four
+    panels under 15% were the four nobody would buy - a red hot poker alone
+    on a blank sheet at 9%, a star cluster at 11%. Screenprint and the
+    neutral palette sit lowest by technique and palette, which is the pair
+    that produces an empty sheet with one small object on it.
+    """
+    import numpy as np
+    a = np.asarray(img.convert("L").resize((256, 384)), dtype=np.int16)
+    t = a.reshape(24, 16, 16, 16).swapaxes(1, 2).reshape(-1, 256)
+    return float(((t.max(1) - t.min(1)) > 12).mean())
+
+
 def sku_for(job, prefix="WA"):
     """A SKU derived from WHAT the job is, never from where it sits in a list.
 
@@ -176,6 +202,9 @@ def main():
     ap.add_argument("--width", type=int, default=704)
     ap.add_argument("--height", type=int, default=1008)
     ap.add_argument("--retries", type=int, default=2)
+    # A multiplier on BUSY_FLOOR, so 0 turns the emptiness gate off and 1.0
+    # uses the measured floors. It costs about 5% more generations.
+    ap.add_argument("--min-busy", type=float, default=1.0)
     # Generate taller than needed and throw the bottom away. Measured on 129
     # panels: 96% of the fake signatures and stray marks sit below 90% of the
     # panel height, so a 10% crop removes almost all of them for the cost of
@@ -353,6 +382,15 @@ def main():
                     for im in imgs]
         for (j, im, sd) in zip(chunk, imgs, gens_seed):
             marks = text_marks(reader, im) if reader else []
+            # An almost-empty sheet is not a cheap minimal composition, it is
+            # a failed generation, and it is the one defect the OCR gate
+            # cannot see. Same treatment: retry on a different seed.
+            if not marks and a.min_busy:
+                floor = (BUSY_FLOOR["minimal"] if j.get("gram") in MINIMAL_GRAMS
+                         else BUSY_FLOOR["other"]) * a.min_busy
+                b = busyness(im)
+                if b < floor:
+                    marks = [["EMPTY", round(b, 3), round(floor, 3)]]
             if marks and attempt[j["sku"]] < a.retries:
                 attempt[j["sku"]] += 1
                 queue.append(j)
