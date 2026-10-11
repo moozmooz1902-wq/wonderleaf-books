@@ -286,6 +286,17 @@ def main():
             break
 
     el = time.time() - t0
+    # Say plainly whether the shard was FINISHED or merely stopped. The first
+    # run hit --max-hours on one shard, abandoned 245 jobs and still printed
+    # GEN_DONE, so the block looked complete when it was 98.1% complete. An
+    # unfinished shard must be loud, because the only other way to notice is
+    # to count the bucket and subtract.
+    left = len(queue)
+    if left:
+        print(f"UNFINISHED: {left:,} jobs left in this shard - "
+              f"re-run with --resume to finish them", flush=True)
+    else:
+        print("SHARD COMPLETE", flush=True)
     print(f"DONE kept {kept:,} from {gens:,} generations in {el/60:.1f} min", flush=True)
     print(f"RATE: {3600*gens/el:,.0f} generations/hour", flush=True)
     print(f"REJECT_RATE: {rejected/max(gens,1):.4f}", flush=True)

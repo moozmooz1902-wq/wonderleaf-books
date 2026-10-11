@@ -10,9 +10,20 @@ Everything else about t-shirts - the catalogue, the mockup, the eBay
 builder, the RunPod and R2 access - is here. Start with
 `tshirt/ACCESS.md`, then `tshirt/RESUME.md`.
 
-**Wall art and posters live on `claude/hopeful-rubin-u14pgu`**, under
-`wallart/`. That is a separate pipeline with its own stores, buckets and
-compliance rules. It is not duplicated here; read it on that branch.
+**The IMAGE-BASED wall-art pipeline is also on this branch now**, under
+`wallart-data/`, built 10-11 Oct 2026. That is the generated-artwork line:
+FLUX panels, the code-drawn line families, frames, colourways, the
+copyright gate and the RunPod/R2 run. Start with `wallart-data/RESUME.md`
+for how to pause and continue, `wallart-samples/PLAN.md` for the costed
+plan, and
+`research_notes/Wall art catalogue taxonomy harvest/first_real_sample_and_measured_cost.md`
+for everything that was measured and everything that failed first.
+
+**The older typography wall-art pipeline stays on
+`claude/hopeful-rubin-u14pgu`**, under `wallart/`, with its own stores and
+buckets. The two are not duplicated; read that one on that branch. If you
+are looking for generated IMAGES, you are in the right place here; if you
+are looking for the 2.3M typography catalogue, you are not.
 
 ## Why it is split this way
 
@@ -32,14 +43,26 @@ wall-art branch, including corrections it forced.
   and payment. Not `default`.
 - Quantity 1, location United Kingdom.
 - One Cloudflare R2 bucket per eBay account. T-shirts for the M12K account
-  go to `tshirt-m12k`.
+  go to `tshirt-m12k`. **There is no wall-art bucket yet**: the stored R2
+  token can write to `tshirt-m12k` but cannot list or create buckets
+  (probed 11 Oct), so generated panels currently live under the prefix
+  `tshirt-m12k/wallart/v1/`. A copy within R2 is server side and free, so
+  moving them once a bucket exists costs nothing.
 - FLUX.1 **schnell** is the image model, for its Apache-2.0 licence.
   FLUX.1-dev is non-commercial and must never be used on goods that are
   sold.
 - Near-duplicate listings are treated as the main commercial risk. The
   wall-art branch blames 89% near-duplication for 424k listings not
   selling. Any catalogue generated here gets measured against that before
-  it is uploaded.
+  it is uploaded - `wallart-data/pipeline.py audit()` is that measurement.
+  Measure it on a gradient hash of the ARTWORK, excluding a design's own
+  colourways; hashing the framed mockup or using an average hash both give
+  answers that are badly wrong, in opposite directions.
+- No human figures, and animal eyes must be right. The seller's rule,
+  11 Oct. Enforced in `gen/prompts.py`, not left to chance.
+- Nothing claims to be hand-painted, original or artist-signed, and the
+  fake signatures FLUX scrawls on the artwork are cropped off. Both are
+  legal controls, not just quality ones - see `wallart-data/ip_check.py`.
 
 ## Access
 

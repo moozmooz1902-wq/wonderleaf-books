@@ -429,3 +429,54 @@ $256 versus $680 - the difference between three $100 top-ups and seven.
 
 Reject rate settled at about 2% across every completed shard, against 31%
 before the poster grammar was dropped and the gate was added.
+
+---
+
+# Block v1 finished, and the 245 it quietly lost
+
+Counted from the bucket rather than from the pod counters:
+
+    s3://tshirt-m12k/wallart/v1/   12,589 panels   1,774 MB   144.3 KB each
+    s3://tshirt-m12k/wallart/block1/   476 panels      67 MB   (orphans, see below)
+
+12,589 against 12,834 expected. **245 missing, and the block reported
+itself complete.**
+
+Cause: `--max-hours 3`. Shard 1/6's pod started at 05:50 after the first
+two workers on that shard died, hit three hours at about 08:50, broke out
+of the loop and abandoned the rest of its queue - then printed its RATE and
+`GEN_DONE` like every other pod. Every shard said DONE, so the block looked
+finished at 98.1%.
+
+The guard was there to stop a forgotten pod running all night, which is
+right. What was wrong is that it was silent. `gen_gated.py` now ends with
+either `SHARD COMPLETE` or `UNFINISHED: N jobs left in this shard`, because
+otherwise the only way to notice is to count the bucket and subtract - which
+is how this was found, and only because the count was done at all.
+
+Topping it up cost one pod and about 20 minutes: no shard numbers, just
+`--resume`, which lists the 12,589 and generates exactly the difference.
+That is the pause-and-continue design doing the job it was built for, on a
+gap nobody planned.
+
+## The orphans
+
+476 panels under `wallart/block1/` are from the first wave, before SKUs
+became content hashes. They are good images with unreachable names and are
+not part of the catalogue. Deleting them needs a pod, since the token is
+only reachable from one; ~67 MB, so there is no hurry.
+
+## Final rates, every shard complete
+
+    shard  card                 gen/hr   reject
+      1/6  RTX A4500 community     644    2.17%     (restarted twice)
+      2/6  RTX A4500 community     768    1.96%
+      3/6  RTX A4500 community     784    2.24%
+      4/6  RTX A4500 community     784    2.00%
+      5/6  RTX 4090 secure       1,283    2.02%
+      6/6  RTX 4090 secure       1,505    2.27%
+
+Reject held at about 2% on every shard, against 31% before the poster
+grammar was dropped and the gate added. 144 KB a panel means 5,000,000
+listings is about 135 GB of panels, not the 608 GB estimated from the
+pilot's larger files - $2/month on R2, not $9.
