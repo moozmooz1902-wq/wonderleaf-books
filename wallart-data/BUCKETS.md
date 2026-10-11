@@ -47,7 +47,53 @@ So no bucket needs creating by hand. The eight poster buckets already
 exist, so generated art goes into them under a prefix rather than into
 anything new.
 
+## Connection test, 11 Oct - the S3 side is fully working
+
+`r2_conntest.py` on a pod: put -> get -> delete on `nebula-m12k` all
+succeeded, and all eight poster buckets list. Nothing on the S3 side is
+blocking.
+
+## What is already in the poster buckets, and the key convention
+
+Sampling four keys from each shows two conventions, and new work must
+follow whichever the bucket already uses or the seller's crop tooling and
+eBay builder stop matching:
+
+    posterleaf-store1   store1/0000000_framed.jpg  _framed_oak  _framed_white  _raw
+    mercury-usm         store2/...                 (same, three frame colours)
+    nebula-m12k         store3/0000000_framed.jpg  _raw          (black only)
+    velvet-ars          store4/...                 (black only)
+    prism-rps           store5/...                 (black only)
+    orbit-uss           store6/...                 (black only)
+    lunar-kms           store7/...                 (black only)
+    luxvia-art          luxvia/abstract/japandi-calm/1-mockup-black.jpg  -oak  -white
+
+So the stores are numbered 1-7 plus Luxvia on its own nested scheme, and
+only two of the eight currently carry all three frame colours.
+
+## The existing store plan, from the other branch
+
+`git show origin/claude/hopeful-rubin-u14pgu:wallart/plan.json`
+
+    Luxvia Art    luxvia-art          LX   1,000,000   pic_base ""
+    Mercury       mercury-usm         MC     500,000   pic_base ""
+    Lunar         lunar-kms           LN     500,000   pic_base ""
+    Posterleaf    posterleaf-store1   PL     500,000   pic_base ""
+    TOTAL                                  2,500,000
+
+Four stores, 2.5M rows, and **every `pic_base` is empty** - so the public
+image URL was never resolved on that branch either. The seller now wants
+5M across up to eight buckets, so this plan needs replacing, not extending.
+
 ## Still unknown, and not answerable from the S3 API
+
+**The public URL of each bucket, custom domain or not.** Both are a
+Cloudflare-API concept and invisible over S3. `wallart/r2_urls.py` on the
+other branch already solves this, but it needs a **`CF_API_TOKEN`** -
+a Cloudflare API token with Workers R2 Storage permission, separate from
+the S3 keys - and the pod probe confirms no such variable is set today.
+Until it exists there is no way to know what URL to put in an eBay
+listing, or even whether public access is switched on for these buckets.
 
 **Custom domains.** They are a Cloudflare-API concept and invisible here.
 The poster listings are already live, so something serves those images
