@@ -10,8 +10,10 @@ MEASURED, not quoted (see first_real_sample_and_measured_cost.md and
 the bench run of 11 Oct):
 
     RTX 4090 + NF4, 704x1008, batch 4   1,782 generations/hour   16.1 GB peak
-    the same, with the EasyOCR gate on  1,863 generations/hour   (48 kept/52)
-    text rejection with the gate         7.7%  (was 31% before the fixes)
+    with the gate AND the 10% crop      1,601 generations/hour   measured
+    848x1328 -> 848x1200, same config   1,118 generations/hour   43% dearer
+    text rejection, clean subject mix    7.7%  (was 31% before the fixes)
+    text rejection, adversarial mix     15.8%  (peopled towns, portraits)
     RTX 4090 + NF4, 848x1200, batch 4   1,295 generations/hour   18.4 GB peak
     A40 48GB bf16,  848x1200, batch 4     873 generations/hour
     RunPod price    4090 community $0.34/hr   4090 secure $0.89/hr
@@ -27,19 +29,28 @@ TARGET = {"main store": 3_000_000, "store 2": 500_000, "store 3": 500_000,
           "store 4": 500_000, "store 5": 500_000}
 TOTAL = sum(TARGET.values())
 
-RATE = {"704x1008": 1782, "848x1200": 1295}
-SHARE_704 = 0.60               # flat and graphic techniques; detail work gets 848
+# Everything is generated 11% taller than needed and the bottom tenth is
+# thrown away: measured over 129 panels, 96% of the fake signatures sit below
+# 90% of the panel height. These rates are WITH that overhead and with the
+# OCR gate running, so they are the real production rates.
+RATE = {"704x1120 -> 704x1008": 1601, "848x1328 -> 848x1200": 1118}
+# 848 was tested head to head against 704 on 24 high-risk bird portraits at
+# the same seeds. It costs 43% more per image and did not fix a single eye,
+# so the whole catalogue is generated at 704.
+SHARE_704 = 1.00
 PRICE = {"community 4090": 0.34, "secure 4090": 0.89, "mixed 75/25": 0.4775}
 CPU_HR, CPU_CORES = 0.64, 16
 
 PROC_LINE, PROC_GEO = 1_000_000, 250_000      # drawn in code, no GPU at all
 COLOURWAYS = 4                 # the cap the wall-art branch set after measuring
                                # store 1 at 89% near-duplicates
-SEC = {"line": 0.156, "recolour": 0.085, "compose": 0.062, "mockup": 0.221}
+SEC = {"line": 0.156, "recolour": 0.085, "compose": 0.062, "mockup": 0.221,
+       "declutter": 0.080}      # per BASE image, not per listing
 KB = {"panel": 120, "proc_panel": 150, "listing": 190}
 R2 = 0.015                     # $/GB/month, egress free
 
-EFF_RATE = 1 / (SHARE_704 / RATE["704x1008"] + (1 - SHARE_704) / RATE["848x1200"])
+EFF_RATE = 1 / (SHARE_704 / RATE["704x1120 -> 704x1008"]
+                + (1 - SHARE_704) / RATE["848x1328 -> 848x1200"])
 
 
 def report(reject):
@@ -50,6 +61,7 @@ def report(reject):
     gpu_h = gens / EFF_RATE
 
     cpu_s = (proc * SEC["line"] + diff * SEC["recolour"]
+             + bases * SEC["declutter"]
              + TOTAL * (SEC["compose"] + SEC["mockup"]))
     cpu_h = cpu_s / 3600
     cpu_cost = cpu_h / CPU_CORES * CPU_HR
@@ -75,7 +87,7 @@ def report(reject):
 print(f"TARGET {TOTAL:,} listings across {len(TARGET)} stores")
 for k, v in TARGET.items():
     print(f"   {k:<12}{v:>10,}")
-for r in (0.077, 0.15):
+for r in (0.12, 0.16):
     report(r)
 
 print("\n=== storage, Cloudflare R2 ===")

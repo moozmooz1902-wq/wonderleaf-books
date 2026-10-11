@@ -53,6 +53,13 @@ def main():
     ap.add_argument("--width", type=int, default=704)
     ap.add_argument("--height", type=int, default=1008)
     ap.add_argument("--retries", type=int, default=2)
+    # Generate taller than needed and throw the bottom away. Measured on 129
+    # panels: 96% of the fake signatures and stray marks sit below 90% of the
+    # panel height, so a 10% crop removes almost all of them for the cost of
+    # generating 11% more pixels. Trying to paint them out instead was tried
+    # first and only half worked - see declutter.py.
+    ap.add_argument("--crop-bottom", type=float, default=0.10)
+    ap.add_argument("--tag", default="")
     ap.add_argument("--quant", default="nf4", choices=["none", "nf4"])
     ap.add_argument("--model", default="lzyvegetable/FLUX.1-schnell")
     ap.add_argument("--no-gate", action="store_true")
@@ -60,10 +67,14 @@ def main():
     os.makedirs(a.out, exist_ok=True)
     donep = os.path.join(a.out, "done.txt")
     done = {l.strip() for l in open(donep)} if os.path.exists(donep) else set()
+    a.crop_bottom = max(0.0, min(0.25, a.crop_bottom))
 
     jobs = [j for j in json.load(open(a.jobs)) if j["sku"] not in done]
     if a.limit:
         jobs = jobs[:a.limit]
+    gen_h = int(round(a.height / (1 - a.crop_bottom) / 16)) * 16
+    print(f"generating {a.width}x{gen_h}, cropping the bottom "
+          f"{a.crop_bottom:.0%} down to {a.width}x{a.height}", flush=True)
     print(f"{len(jobs):,} to generate at {a.width}x{a.height} "
           f"quant={a.quant} gate={'off' if a.no_gate else 'on'}", flush=True)
 
@@ -102,10 +113,13 @@ def main():
                      for j in chunk]
         imgs = pipe(prompt=[j["prompt"] for j in chunk],
                     num_inference_steps=a.steps, guidance_scale=0.0,
-                    width=a.width, height=a.height, max_sequence_length=256,
+                    width=a.width, height=gen_h, max_sequence_length=256,
                     generator=[torch.Generator("cpu").manual_seed(s) for s in gens_seed]
                     ).images
         gens += len(chunk)
+        if a.crop_bottom > 0:
+            imgs = [im.crop((0, 0, im.width, int(im.height * (1 - a.crop_bottom))))
+                    for im in imgs]
         for (j, im, sd) in zip(chunk, imgs, gens_seed):
             marks = text_marks(reader, im) if reader else []
             if marks and attempt[j["sku"]] < a.retries:
@@ -119,7 +133,7 @@ def main():
                 rejected += 1
                 rf.write(json.dumps({"sku": j["sku"], "try": "final", "kept_anyway": True,
                                      "marks": marks}) + "\n")
-            im.save(os.path.join(a.out, j["sku"] + ".jpg"), "JPEG", quality=92)
+            im.save(os.path.join(a.out, j["sku"] + a.tag + ".jpg"), "JPEG", quality=92)
             df.write(j["sku"] + "\n")
             mf.write(json.dumps({**j, "seed": sd, "marks": marks},
                                  ensure_ascii=False) + "\n")

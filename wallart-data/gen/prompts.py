@@ -59,10 +59,23 @@ INCOMPATIBLE = {
 PERCHING = {"barn owl", "european robin", "kingfisher", "puffin", "goldfinch",
             "wren", "blue tit", "bullfinch", "swallow", "kestrel"}
 
+# Measured on 93 creature panels, 11 Oct 2026: 7 came out with the eyes wrong.
+# Four of the seven were robins and five of the seven were wet painterly
+# techniques. A small bird's face is only a few dozen pixels across, and a
+# wet-on-wet wash is exactly the technique that will not hold an eye at that
+# size. The combination is a tiny slice of the catalogue, so it is simply not
+# generated: no close-up portrait of a small-faced bird in a wet technique.
+SMALL_FACED = {"european robin", "wren", "blue tit", "goldfinch", "bullfinch",
+               "chaffinch", "swallow", "kingfisher", "great tit", "nuthatch",
+               "long-tailed tit", "sparrow", "dunnock", "siskin", "linnet"}
+WET = {"oil_impasto", "watercolour", "ink_wash", "palette_knife", "pastel"}
+
 
 def ok(tech, gram, subject=None):
     rule = INCOMPATIBLE.get(gram)
     if rule and rule(tech):
+        return False
+    if gram == "G4_portrait" and tech in WET and subject in SMALL_FACED:
         return False
     if gram == "G3_habitat" and subject and subject not in PERCHING:
         return True          # wording is generic now, so this is fine either way
@@ -78,11 +91,33 @@ def ok(tech, gram, subject=None):
 # These words sit in the POSITIVE prompt because schnell runs at
 # guidance_scale 0 and ignores the negative prompt entirely. They help a
 # little and are not a gate; gen_gated.py reading the output is the gate.
+# NO PEOPLE. The seller's rule, 11 Oct 2026: human figures and human faces
+# are where generated work looks generated, and a half-formed face in a
+# harbour scene is worse than no figure at all. Nothing in the subject lists
+# is a person, but villages, seafronts and terraces invite staffage, so it is
+# said explicitly and quality_gate.py checks the output as well.
+NO_PEOPLE = ("no people, no person, no human figures, no faces, "
+             "no crowds, deserted and empty of people")
+# A creature portrait must NOT be told "no faces" - that is the subject. The
+# animal variant names humans only.
+NO_PEOPLE_CREATURE = "no people, no human figures, no hands, animal only"
+
+_CLEAN = ("no text, no lettering, no words, no letters, no numbers, "
+         "no signature, no handwriting, no monogram, no watermark, "
+          "unsigned, clean empty corners")
+
 RULES = ("flat fill, no gradient, no airbrushing, "
          "the subject sharp and the surroundings flat, "
-         "no text, no lettering, no words, no letters, no numbers, "
-         "no signature, no handwriting, no monogram, no watermark, "
-         "unsigned, clean empty corners")
+         + NO_PEOPLE + ", " + _CLEAN)
+RULES_CREATURE = ("flat fill, no gradient, no airbrushing, "
+                  "the subject sharp and the surroundings flat, "
+                  + NO_PEOPLE_CREATURE + ", " + _CLEAN)
+
+# Eyes are the other giveaway, and only creatures have them. Asking for them
+# plainly and once beats any amount of negative wording, which schnell
+# ignores at guidance_scale 0.
+EYES = ("exactly two eyes, both eyes clear and correctly placed, "
+        "clean simple eyes")
 
 
 def place_prompt(place, tech, gram, pal):
@@ -92,7 +127,7 @@ def place_prompt(place, tech, gram, pal):
 
 def creature_prompt(name, tech, gram, pal):
     return (f"{TECHNIQUE[tech]} of a {name}, {GRAMMAR_CREATURE[gram]}, "
-            f"{PALETTE[pal]}, {RULES}")
+            f"{PALETTE[pal]}, {EYES}, {RULES_CREATURE}")
 
 
 def build(places, creatures, limit=None, seed=11):

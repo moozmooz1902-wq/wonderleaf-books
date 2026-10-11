@@ -215,3 +215,102 @@ the margin in that colour instead.
 - **`interruptible: true` and `networkVolumeId` both exist on `POST /pods`.**
   Spot pricing and a shared model cache are the two obvious further savings
   and neither has been tried yet.
+
+---
+
+# Update: no people, and eyes that are not wrong
+
+The seller's conditions for going ahead: no human figures, animal eyes that
+are actually eyes, and nothing that reads as generated. 129 panels were made
+specifically to test those, weighted toward the cells most likely to fail -
+66 close-up animal portraits across every technique, and 30 townscapes and
+seafronts, which are the places that invite figures.
+
+## The eyes are mostly fine, and the failures have a pattern
+
+Seven of 93 creature panels came out with the eyes wrong - 7.5%. Four of the
+seven were ROBINS and five of the seven were WET techniques (oil impasto,
+watercolour, ink wash, palette knife). A small bird's face is a few dozen
+pixels across and a wet-on-wet wash will not hold an eye at that size.
+
+That combination is now simply not generated. `prompts.ok()` refuses a
+close-up portrait of a small-faced bird in a wet technique - a tiny slice of
+the grid that accounted for five of the seven failures. The same birds still
+appear in habitat and minimal grammars, and in flat techniques, where they
+came out clean every time.
+
+`EYES = "exactly two eyes, both eyes clear and correctly placed"` is now in
+every creature prompt.
+
+**Resolution does not fix eyes.** 24 high-risk bird portraits were generated
+at 704x1120 and at 848x1328 from the same seeds. 848 costs 43% more per image
+(1,118/hour against 1,601) and did not correct a single face. The whole
+catalogue is generated at 704.
+
+## People: measured, not assumed
+
+Of 30 townscapes deliberately prompted at places that invite figures, 11 had
+some figure and only 2 had one big enough to read as a person. Not one panel
+in 129 produced a human face. `NO_PEOPLE` is in every place prompt;
+creature prompts get a variant that does not say "no faces", because the
+animal's face is the subject.
+
+## CLIP zero-shot does not work as a gate, and is not being shipped
+
+It was the obvious tool and it failed both tests on labelled data:
+
+    EYES   catching 71% of the bad ones means regenerating 34% of
+           everything, at 12.8% precision. Useless.
+    HUMAN  the failure score is LOWER on the panels with figures
+           (0.362) than on the ones without (0.593). Inverted - the
+           captions fire on townscapes in general, not on figures.
+
+`quality_gate.py` is kept because `calibrate()` is how the thresholds in this
+pipeline get set, but no CLIP gate is in the production path. A gate that
+does not separate is worse than no gate: it costs money and gives false
+confidence.
+
+## The real defect was the fake signature, and the fix is a crop
+
+Looking at the panels rather than the OCR log: EasyOCR catches printed
+lettering and does not catch a cursive signature, because a scribble is not
+characters. Roughly one panel in four carried one - a scrawled name, a
+"(C) T.S.1013", a fake date. It is the clearest tell that the work is
+generated, and it credits a painter who does not exist.
+
+Two approaches were tried. **Painting them out** (`declutter.py`) works on
+flat ground and fails on busy ground, and measuring why is the useful part:
+
+    mark density    flat background   signature 0.13-0.83  clean 0.001-0.29
+                    busy artwork      signature 0.49-0.52  clean 0.45-0.85
+
+On a splattered or linocut ground the whole band reads as marks, so density
+cannot separate them. Adding a neighbourhood test - a signature is a busy
+little patch in quiet space, fur is a busy patch among more fur - helped, but
+only cleared about half.
+
+**Cropping works.** The vertical position of every detected mark was
+measured across the labelled set:
+
+    p10 0.972   p50 0.972   p75 1.000   p90 1.000
+
+    cropping the bottom  6% removes  91%
+    cropping the bottom 10% removes  96%
+    cropping the bottom 12% removes 100%
+
+So the worker now generates 704x1120 and throws the bottom tenth away. It
+costs 11% more pixels - measured at 1,601 generations/hour against 1,782 -
+and it is deterministic, with no risk of smearing the artwork. `declutter.py`
+stays as a second pass for the residual on quiet grounds.
+
+An hour was spent trying to be clever before measuring where the marks
+actually were. The measurement took two minutes and answered it.
+
+## Where the budget landed
+
+    5,000,000 listings
+      937,500 base images
+    1,065,341 generations at 12% rejection
+          665 GPU-hours
+         $226 community + $22 CPU  =  $249
+         $333 at a 75/25 community/secure mix + $22  =  $355
