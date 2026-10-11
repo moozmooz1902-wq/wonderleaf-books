@@ -44,6 +44,44 @@ Exactly the same command. The pods list the bucket, see what is there, and
 carry on. Run `python3 status.py <panels in bucket>` first to see where
 things stand and what the next $100 buys.
 
+## The grid, the pool, and why they are different numbers
+
+`gen/subjects.json` holds 5,204 subjects in six kinds. Expanded against 14
+techniques, 26 compositions and 5 palettes, with the contradictions dropped
+and the minimal compositions capped, that is a **grid of 1,176,784 base
+images** - 4,707,136 listings at four colourways.
+
+The catalogue only needs 937,500 bases (5,000,000 listings less the
+1,250,000 drawn in code, over four colourways). So every pod runs with
+
+    --pool 960000
+
+which takes the first 960,000 of the grid in SKU order. That order is a
+stable pseudo-random shuffle, so the pool is a fair mix of every kind,
+technique, composition and palette - checked: 476 distinct subjects in the
+first 500 jobs, longest same-subject run 2, monochrome 20.6% of the pool
+against 21-23% measured in the market.
+
+The 216,784 jobs outside the pool are **spare capacity, not waste.** Raising
+`--pool` is the only change needed to use them, and nothing already
+generated is regenerated, because a SKU is a hash of what a job is.
+
+Rebuild `gen/subjects.json` after editing any subject list:
+
+    python3 build_subjects.py
+
+It refuses to write a list with a repeated subject, because the same subject
+twice inside one kind is the same SKU twice and `expand()` stops the run on
+a collision.
+
+## Adding subjects later is safe, and this was verified
+
+Today's change took the grid from 284,665 to 1,176,784 base images - 2,966
+new subjects, three new kinds, three new techniques, two new palettes - and
+**all 284,665 old SKUs are still jobs in the new grid. Zero lost.** The
+12,834 panels already sitting in the store buckets stay done, and `--resume`
+still sees them.
+
 ## What is NOT resumable yet
 
 The CPU stage (`pipeline.py`) rebuilds its listings from whatever panels it

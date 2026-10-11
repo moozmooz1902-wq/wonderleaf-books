@@ -22,6 +22,13 @@ CARDS = {
     "RTX 4090 24GB secure":     (0.89,   1394),   # two full shards: 1,283 and 1,505
     "RTX 4090 24GB community":  (0.34,   1601),   # when any is available
     "A40 48GB secure":          (0.59,    873),
+    # Measured 11 Oct on seven live shards, which is what community capacity
+    # actually hands out when A4500s are gone: 0.12 to 0.16 img/s, so 432 to
+    # 576 an hour. Cheaper per hour than the A4500 and 24% DEARER per image,
+    # and its 16 GB is right on the 16.1 GB NF4 peak, which is the likely
+    # reason the slow one is slow. Worth taking when nothing better is free,
+    # never worth preferring.
+    "RTX A4000 16GB community": (0.17,    576),
 }
 RATE = CARDS["RTX 4090 24GB secure"][1]
 
