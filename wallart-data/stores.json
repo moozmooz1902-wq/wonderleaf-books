@@ -1,28 +1,64 @@
 {
-  "_note": "Where the generated wall art goes. Set by the seller 11 Oct 2026. Rows are LISTINGS, not base images: four colourways come off one generated panel, and the line and geometric blocks are drawn in code and cost no GPU at all. key_prefix follows whatever convention the bucket already uses, with a gen/ segment so new work cannot collide with the existing sequential numbering.",
+  "_note": "Where the generated wall art goes. Set by the seller 11 Oct 2026, revised same day (luxvia 3M->2.5M, lunar 500k->1M). Rows are LISTINGS, not base images: four colourways come off one generated panel, and the line and geometric blocks are drawn in code and cost no GPU at all. key_prefix follows whatever convention the bucket already uses, with a gen/ segment so new work cannot collide with the existing sequential numbering.",
   "total_listings": 5000000,
   "procedural_share": 0.25,
   "colourways": 4,
   "stores": [
-    { "name": "Luxvia Art", "bucket": "luxvia-art",        "sku": "LX",
-      "listings": 3000000, "key_prefix": "luxvia/gen",
-      "frames": ["black", "white", "oak"],
-      "existing_convention": "luxvia/<category>/<slug>/1-mockup-black.jpg" },
-
-    { "name": "Posterleaf", "bucket": "posterleaf-store1", "sku": "PL",
-      "listings": 1000000, "key_prefix": "store1/gen",
-      "frames": ["black", "white", "oak"],
-      "existing_convention": "store1/0000000_framed.jpg + _framed_oak + _framed_white + _raw" },
-
-    { "name": "Mercury",    "bucket": "mercury-usm",       "sku": "MC",
-      "listings": 500000,  "key_prefix": "store2/gen",
-      "frames": ["black", "white", "oak"],
-      "existing_convention": "store2/0000000_framed.jpg + _framed_oak + _framed_white + _raw" },
-
-    { "name": "Lunar",      "bucket": "lunar-kms",         "sku": "LN",
-      "listings": 500000,  "key_prefix": "store7/gen",
-      "frames": ["black"],
-      "existing_convention": "store7/0000000_framed.jpg + _raw   (black only today)" }
+    {
+      "name": "Luxvia Art",
+      "bucket": "luxvia-art",
+      "sku": "LX",
+      "listings": 2500000,
+      "key_prefix": "luxvia/gen",
+      "frames": [
+        "black",
+        "white",
+        "oak"
+      ],
+      "existing_convention": "luxvia/<category>/<slug>/1-mockup-black.jpg"
+    },
+    {
+      "name": "Posterleaf",
+      "bucket": "posterleaf-store1",
+      "sku": "PL",
+      "listings": 1000000,
+      "key_prefix": "store1/gen",
+      "frames": [
+        "black",
+        "white",
+        "oak"
+      ],
+      "existing_convention": "store1/0000000_framed.jpg + _framed_oak + _framed_white + _raw"
+    },
+    {
+      "name": "Lunar",
+      "bucket": "lunar-kms",
+      "sku": "LN",
+      "listings": 1000000,
+      "key_prefix": "store7/gen",
+      "frames": [
+        "black"
+      ],
+      "existing_convention": "store7/0000000_framed.jpg + _raw   (black only today)"
+    },
+    {
+      "name": "Mercury",
+      "bucket": "mercury-usm",
+      "sku": "MC",
+      "listings": 500000,
+      "key_prefix": "store2/gen",
+      "frames": [
+        "black",
+        "white",
+        "oak"
+      ],
+      "existing_convention": "store2/0000000_framed.jpg + _framed_oak + _framed_white + _raw"
+    }
   ],
-  "not_used_for_generated_art": ["nebula-m12k", "prism-rps", "orbit-uss", "velvet-ars"]
+  "not_used_for_generated_art": [
+    "nebula-m12k",
+    "prism-rps",
+    "orbit-uss",
+    "velvet-ars"
+  ]
 }

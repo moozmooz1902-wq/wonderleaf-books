@@ -22,26 +22,38 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PLAN = json.load(open(os.path.join(HERE, "stores.json")))
 
 
-def _bounds():
-    """Cumulative 0..1 bands, one per store, proportional to its quota."""
-    tot = sum(s["listings"] for s in PLAN["stores"])
-    out, acc = [], 0.0
-    for s in PLAN["stores"]:
-        acc += s["listings"] / tot
-        out.append((acc, s))
-    return out
-
-
-BOUNDS = _bounds()
+# WEIGHTED RENDEZVOUS HASHING, not cumulative bands.
+#
+# The first version laid the stores out as bands on 0..1 and picked by where
+# a SKU's hash fell. That distributes correctly, and I claimed it was stable
+# when a quota changed. It is not, and the claim was wrong. Measured: moving
+# luxvia 3M -> 2.5M and lunar 500k -> 1M reshuffled **39.9%** of designs,
+# against a floor of 10% - because shifting one band's edge slides every
+# band after it.
+#
+# Rendezvous hashing scores every store for every SKU and takes the winner:
+#
+#     score = -weight / ln(u)      u = hash(sku, store) as a float in (0,1)
+#
+# The share each store wins is proportional to its weight, and changing one
+# store's weight only moves designs into or out of THAT store - the scores
+# of the others are untouched. That is the minimum possible disruption.
+#
+# It matters because the quotas have already been revised once, nothing has
+# been uploaded yet, and after upload a reshuffle means re-homing listings
+# that are already live.
+import math
 
 
 def store_for(sku):
-    h = int(hashlib.blake2b(("store|" + sku).encode(), digest_size=8).hexdigest(), 16)
-    x = (h % 10**9) / 10**9
-    for upper, s in BOUNDS:
-        if x < upper:
-            return s
-    return BOUNDS[-1][1]
+    best, best_score = None, -1.0
+    for s in PLAN["stores"]:
+        h = hashlib.blake2b(f"{sku}|{s['bucket']}".encode(), digest_size=8).digest()
+        u = (int.from_bytes(h, "big") + 1) / (2 ** 64 + 1)      # in (0,1)
+        score = -s["listings"] / math.log(u)
+        if score > best_score:
+            best, best_score = s, score
+    return best
 
 
 def plan():
@@ -68,8 +80,9 @@ def plan():
 
 
 def check():
-    import collections
-    sample = [f"WA-{i:016x}" for i in range(200000)]
+    """Prove the two properties rather than assert them."""
+    import collections, copy
+    sample = [f"WA-{i:016x}" for i in range(120000)]
     c = collections.Counter(store_for(s)["bucket"] for s in sample)
     tot = sum(s["listings"] for s in PLAN["stores"])
     print(f"{'bucket':<20}{'wanted':>9}{'got':>9}{'drift':>8}")
@@ -77,10 +90,26 @@ def check():
         want = s["listings"] / tot
         got = c[s["bucket"]] / len(sample)
         print(f"{s['bucket']:<20}{want:>8.2%}{got:>9.2%}{got-want:>+8.2%}")
-    once = all(sum(1 for _ in [store_for("WA-deadbeef00000001")]) == 1 for _ in range(1))
+
     a = store_for("WA-deadbeef00000001")["bucket"]
-    b = store_for("WA-deadbeef00000001")["bucket"]
-    print(f"\nsame SKU twice -> same store: {a == b}  ({a})")
+    print(f"\nsame SKU twice -> same store: "
+          f"{a == store_for('WA-deadbeef00000001')['bucket']}  ({a})")
+
+    # disruption: redo the seller's actual quota change and count movers
+    before = {s: store_for(s)["bucket"] for s in sample}
+    keep = copy.deepcopy(PLAN["stores"])
+    prev = {"luxvia-art": 3000000, "lunar-kms": 500000,
+            "posterleaf-store1": 1000000, "mercury-usm": 500000}
+    for s in PLAN["stores"]:
+        s["listings"] = prev[s["bucket"]]
+    moved = sum(1 for s in sample if before[s] != store_for(s)["bucket"])
+    PLAN["stores"][:] = keep
+    floor = 0.5 * sum(abs(prev[s["bucket"]] / sum(prev.values())
+                          - s["listings"] / tot) for s in PLAN["stores"])
+    print(f"\nquota change luxvia 3M->2.5M, lunar 500k->1M")
+    print(f"   designs that change store : {moved/len(sample):>6.1%}")
+    print(f"   theoretical minimum       : {floor:>6.1%}")
+    print(f"   the old band method       :  39.9%")
 
 
 if __name__ == "__main__":

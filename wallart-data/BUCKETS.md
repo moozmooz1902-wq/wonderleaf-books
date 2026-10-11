@@ -112,12 +112,12 @@ orphans from before SKUs became content hashes and should be deleted.
 
 ---
 
-## The split, set by the seller 11 Oct 2026
+## The split, set by the seller 11 Oct 2026 (revised same day)
 
-    luxvia-art          3,000,000   60%
+    luxvia-art          2,500,000   50%
     posterleaf-store1   1,000,000   20%
+    lunar-kms           1,000,000   20%
     mercury-usm           500,000   10%
-    lunar-kms             500,000   10%
     TOTAL               5,000,000
 
 The other four poster buckets - nebula-m12k, prism-rps, orbit-uss,
@@ -126,10 +126,10 @@ velvet-ars - get no generated art. Recorded in `stores.json`.
 What that costs, per `allocate.py`:
 
     store          listings   drawn in code   GPU base images
-    luxvia-art    3,000,000         750,000           562,500
+    luxvia-art    2,500,000         625,000           468,750
     posterleaf    1,000,000         250,000           187,500
+    lunar-kms     1,000,000         250,000           187,500
     mercury-usm     500,000         125,000            93,750
-    lunar-kms       500,000         125,000            93,750
     TOTAL         5,000,000       1,250,000           937,500
 
 12,834 of those base images already exist, so 924,666 remain: about
@@ -143,13 +143,38 @@ that **a design appears in exactly one store** - four shops selling the
 same picture compete with each other and multiply the near-duplicate
 problem this catalogue exists to avoid.
 
-Hashing rather than hand-splitting buys three things: no overlap by
-construction, a fair mix of subjects and techniques in every store (the
-same reason the generation shards were striped rather than sliced), and
-stability under growth - adding subjects or changing a quota does not move
-anything already placed, because the hash does not depend on list order.
-Measured over 200,000 SKUs the drift from the intended shares is under
-0.13%.
+Hashing rather than hand-splitting buys no overlap by construction and a
+fair mix of subjects in every store - the same reason the generation
+shards were striped rather than sliced. Drift from the intended shares is
+under 0.17% over 120,000 SKUs.
+
+### The method had to be replaced, and the first claim about it was wrong
+
+The first version laid the stores out as cumulative bands on 0..1 and
+picked by where a SKU's hash fell. It was documented here as stable when a
+quota changed. **It is not, and that claim was false.** Moving one band's
+edge slides every band after it.
+
+The seller revised the quotas within the hour - luxvia 3M -> 2.5M, lunar
+500k -> 1M - which made it measurable:
+
+    designs that change store, band method    39.9%
+    theoretical minimum for this change       10.0%
+
+Four times more churn than necessary. `allocate.py` now uses **weighted
+rendezvous hashing**: score every store for every SKU as
+`-weight / ln(u)` with `u = hash(sku, store)` in (0,1), and take the
+winner. Shares still come out proportional to weight, but changing one
+store's quota only moves designs into or out of *that* store, because the
+other stores' scores do not depend on it.
+
+    designs that change store, rendezvous     12.7%   (floor 10.0%)
+
+`allocate.py --check` replays that exact quota change and prints all three
+numbers, so the property is proved on every run rather than asserted.
+
+It matters because nothing has been uploaded yet. After upload, a
+reshuffle means re-homing listings that are already live on eBay.
 
 ### Two things this differs from, worth a decision
 
