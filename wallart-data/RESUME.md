@@ -82,6 +82,20 @@ new subjects, three new kinds, three new techniques, two new palettes - and
 12,834 panels already sitting in the store buckets stay done, and `--resume`
 still sees them.
 
+## Owed: a text sweep over what was made before 11 Oct 22:00
+
+Panels generated before that time were gated on the CROPPED image, so a
+title straddling the crop line could get through - GUATEMALA across the
+foot of an Antigua screenprint is the one that was caught by eye. The gate
+now reads the full generation, but the panels already in the buckets were
+not checked that way.
+
+The sweep is cheap and has not been run yet: on one pod, list the four
+store prefixes, run EasyOCR over the bottom fifth of each panel, and feed
+the offending SKUs back through gen_gated.py with --jobs. At roughly 50 ms
+a panel, a million panels is about 14 GPU-hours, so it is worth doing once
+at the end rather than repeatedly.
+
 ## What is NOT resumable yet
 
 The CPU stage (`pipeline.py`) rebuilds its listings from whatever panels it
