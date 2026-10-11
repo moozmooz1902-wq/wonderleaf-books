@@ -28,7 +28,6 @@ TECHNIQUE = {
 }
 GRAMMAR_PLACE = {
  "G2_terrain":   "seen across open land, the horizon pushed to the top of the picture",
- "G6_poster":    "as a vintage travel poster, the scene inset inside a wide cream margin",
  "G1_window":    "seen through a window or terrace arch framing the left and right edges",
  "G9_naive":     "as a naive flattened townscape in horizontal bands with no vanishing point",
  "G10_abstract": "as an all-over painterly abstraction, marks edge to edge, no focal point",
@@ -70,9 +69,20 @@ def ok(tech, gram, subject=None):
     return True
 
 
+# G6_poster, "as a vintage travel poster", was removed on 11 Oct 2026. It was
+# the single biggest source of lettering - a vintage travel poster IS a piece
+# of typography, so the model put a place name across it however the rules
+# were worded. Of the five defective panels in the first sample of sixteen,
+# the worst two came from it.
+#
+# These words sit in the POSITIVE prompt because schnell runs at
+# guidance_scale 0 and ignores the negative prompt entirely. They help a
+# little and are not a gate; gen_gated.py reading the output is the gate.
 RULES = ("flat fill, no gradient, no airbrushing, "
          "the subject sharp and the surroundings flat, "
-         "no text, no lettering, no words, no signature, no watermark")
+         "no text, no lettering, no words, no letters, no numbers, "
+         "no signature, no handwriting, no monogram, no watermark, "
+         "unsigned, clean empty corners")
 
 
 def place_prompt(place, tech, gram, pal):

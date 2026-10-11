@@ -116,3 +116,102 @@ were already identified in `scale_plan_millions.md`.
 `wallart/plan.json` has `pic_base: ""`. There is no R2 bucket for wall art
 yet, so generated panels have nowhere to live. One bucket per eBay account is
 the established rule; t-shirts for M12K go to `tshirt-m12k`.
+
+---
+
+# Update, same night: the numbers that got it under $500
+
+The target changed to 5,000,000 listings - 3,000,000 on the main store and
+500,000 on each of four others - with a ceiling of $500. It fits, at
+**$244 to $361**. `wallart-samples/PLAN.md` is the costed plan;
+`wallart-data/capacity.py` is the model. What changed:
+
+## 1. A 24 GB card, via NF4
+
+Measured on an RTX 4090 with the transformer and T5 quantised to NF4:
+
+    704x1008 batch 4   1,782 gen/hr   16.1 GB peak
+    848x1200 batch 4   1,295 gen/hr   18.4 GB peak
+    batch 8            no faster than batch 4 at either size, just fatter
+
+Against the A40's 873 gen/hr that is only 1.5x, because NF4 dequantises on
+the fly and gives back about 30% of the speed. The win is not the card, it is
+the **hourly price**: a 4090 rents at $0.34 community against the A40's $0.59
+secure, so the cost per image falls from $0.00068 to $0.00019.
+
+704x1008 is 38% faster than 848x1200 and, inside the mockup, indistinguishable
+(`wallart-samples/06_resolution.jpg`). The art is only ever shown 1,106 px
+wide in the listing photo; the print file is upscaled on order anyway.
+
+## 2. The text defect went from 31% to 7.7%
+
+Two changes, and the second is the one that matters:
+
+- **G6_poster deleted.** "As a vintage travel poster" asks for typography by
+  definition. It produced the two worst defects in the first sixteen.
+- **`gen/gen_gated.py` reads its own output.** EasyOCR on the same GPU, with
+  a confidence and area floor so faint marks do not cause thrashing; anything
+  carrying text is regenerated with a new seed, twice before it is let
+  through. On 48 designs it caught four and all four came back clean:
+
+      WA-0000003   "SKYE" x2 at conf 1.00 / 0.91
+      WA-0000018   "LALE", "LOND", "MAW CITT H.16, 2013"
+      WA-0000013   "Ma2,2018"          a fake dated signature
+      WA-0000002   "2195 4"            a fake inventory number
+
+  Throughput with the gate on was 1,863 gen/hr, slightly *better* than the
+  ungated bench, so the gate is free in practice. The budget still uses the
+  conservative 1,549.
+
+Cost of the gate at 7.7%: 656 GPU-hours instead of 606. Cost of not having
+it: one listing in thirteen with a garbled word printed across it.
+
+## 3. A million designs that cost no GPU at all
+
+`gen_line.py` - thirteen families of minimal line work, 0.156 s each on one
+CPU core, 19,000 per core-hour. This is the block the seller picked out, and
+it carries 20% of the catalogue for nothing.
+
+Two things it does that matter, both in service of the full-bleed request:
+
+- **Terminating vs spanning.** Anything that ends - a sun, a closed contour,
+  the end of an arc - stays inside a 7% safe box. Anything that continues - a
+  horizon, a dune ridge, a wave - is drawn 6% *past* the edge. The moulding
+  eats 1.06% of each side, so a spanning line reads as going behind the frame
+  and a terminating one is never clipped.
+- **An ink-coverage guard.** The random draw can produce a near-blank sheet.
+  Anything under 1.5% or over 93% ink is redrawn with a new seed.
+
+Four families needed fixing after the first look: contour varied only its
+phase and produced three identical designs in thirteen; botanical drew
+chevrons for leaves; arch swept its crown 0 to pi and joined the left foot to
+the right shoulder, drawing an hourglass; one-line used up to six lobes and
+read as a test pattern.
+
+## 4. Margin or full bleed, decided per design
+
+`layout.py`. Margin is 8.5%. Drawn and painted techniques take the margin,
+flat and graphic ones go edge to edge, and 28% of each group takes the other
+treatment so neither look is a rule. Then `edge_risk()` measures the strip the
+moulding will cover against the whole image and overrides to a margin above
+1.05 - calibrated as centred subject 0.09, landscape to the edge 0.95, drawn
+dark border 1.21, subject against the edge 1.45. A false positive costs a
+margin print; a false negative ships a sliced subject.
+
+One thing that only showed up on screen: a code-drawn design on bone paper
+inside a pure white margin reads as a grey rectangle floating in a white one.
+`paper_of()` samples the panel's own border and, if it is near-uniform, prints
+the margin in that colour instead.
+
+## 5. Two more things learned about RunPod
+
+- **Community hosts can be dead on arrival, repeatably.** Two of two tried
+  tonight answered `nvidia-smi`, exposed every `/dev/nvidia*` node, and never
+  gave torch a usable device. The launcher now gives up after 200 s with
+  `CUDA_DEAD_ON_THIS_HOST` instead of going on to download 24 GB of weights
+  first. Production needs a supervisor that recreates the pod elsewhere; the
+  75/25 column in the plan is what it costs if a quarter has to fall back to
+  secure.
+- **`interruptible: true` and `networkVolumeId` both exist on `POST /pods`.**
+  Spot pricing and a shared model cache are the two obvious further savings
+  and neither has been tried yet.

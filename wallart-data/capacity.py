@@ -1,105 +1,96 @@
 #!/usr/bin/env python3
-"""How many wall-art designs we can make, and what the GPU actually costs.
+"""What 5,000,000 wall-art listings cost to build. Every rate is measured.
 
-The seller's target: 2,000,000 listings on the big store and at least
-1,000,000 on each of four others - 6,000,000 in total.
+The seller's target, 11 Oct 2026:
+    main store      3,000,000
+    four others       500,000 each
+    total           5,000,000      under $500
 
-The point of this file is that a listing is NOT a GPU image. Three things
-separate the two, and each one divides the bill:
+MEASURED, not quoted (see first_real_sample_and_measured_cost.md and
+the bench run of 11 Oct):
 
-  1. PALETTE IS FREE.      recolour.py maps a finished panel's lightness
-                           through a different colour ramp in ~25 ms of CPU.
-                           The palette axis is x3 in the catalogue and x1 on
-                           the GPU. Inside the four-colourway cap the wall-art
-                           branch set after measuring 89% near-duplication.
-  2. GEOMETRY IS FREE.     gen_geometric.py draws the hard-edge block in code.
-                           That block is 9.12% of the competitor corpus and
-                           diffusion is worse at it, not better.
-  3. FRAMING IS FREE.      make_sample.py renders the print sheet and all three
-                           frame colours in 0.78 s per design on one CPU core.
+    RTX 4090 + NF4, 704x1008, batch 4   1,782 generations/hour   16.1 GB peak
+    the same, with the EasyOCR gate on  1,863 generations/hour   (48 kept/52)
+    text rejection with the gate         7.7%  (was 31% before the fixes)
+    RTX 4090 + NF4, 848x1200, batch 4   1,295 generations/hour   18.4 GB peak
+    A40 48GB bf16,  848x1200, batch 4     873 generations/hour
+    RunPod price    4090 community $0.34/hr   4090 secure $0.89/hr
 
-Run with the measured seconds-per-image from the generation pod:
-    python3 capacity.py 2.4
+    procedural line design  0.156 s   recolour a panel   0.085 s
+    compose + edge check    0.062 s   listing mockup     0.221 s
+
+Batch 8 is not faster than batch 4 on either size; it only uses more memory.
+A 24 GB card cannot run bf16 at all - the transformer alone is 23.8 GB - so
+NF4 is not an optimisation here, it is the only way onto the cheap hardware.
 """
-import sys, itertools
-sys.path.insert(0, "gen")
-from prompts import TECHNIQUE, GRAMMAR_PLACE, GRAMMAR_CREATURE, PALETTE, ok
+TARGET = {"main store": 3_000_000, "store 2": 500_000, "store 3": 500_000,
+          "store 4": 500_000, "store 5": 500_000}
+TOTAL = sum(TARGET.values())
 
-TARGET = 6_000_000
-# Measured on the pod, not quoted: NVIDIA A40 48GB, RunPod secure, $0.59/hr,
-# FLUX.1 schnell bf16, 4 steps, 848x1200, batch 4 -> 873 images/hour.
-# A 24 GB card is not an option: the transformer alone is 11.9B params =
-# 23.8 GB in bfloat16 and a 4090 OOMs in the first attention block.
-GPU_HR = 0.59
-IMG_HR = 873
-CPU_HR = 0.64                 # 16 vCPU cpu3g, measured on this account
-PROCEDURAL_SHARE = 0.0912     # hard-edge block, measured in the corpus
-# 5 of the 16 sample panels carried lettering or a fake signature - a garbled
-# "W ITBEY", an "N2Z1" on a seafront, a scrawled monogram on two paintings.
-# guidance_scale is 0 so negative prompts do nothing; the only fix is to read
-# the output and generate again. Budget for it.
-GATE_REJECT = 5 / 16
-N_PAL = len(PALETTE)
+RATE = {"704x1008": 1782, "848x1200": 1295}
+SHARE_704 = 0.60               # flat and graphic techniques; detail work gets 848
+PRICE = {"community 4090": 0.34, "secure 4090": 0.89, "mixed 75/25": 0.4775}
+CPU_HR, CPU_CORES = 0.64, 16
 
-# variants per subject, before the palette axis is taken off the GPU
-PV = sum(1 for t, g in itertools.product(TECHNIQUE, GRAMMAR_PLACE) if ok(t, g))
-CV = sum(1 for t, g in itertools.product(TECHNIQUE, GRAMMAR_CREATURE) if ok(t, g))
+PROC_LINE, PROC_GEO = 1_000_000, 250_000      # drawn in code, no GPU at all
+COLOURWAYS = 4                 # the cap the wall-art branch set after measuring
+                               # store 1 at 89% near-duplicates
+SEC = {"line": 0.156, "recolour": 0.085, "compose": 0.062, "mockup": 0.221}
+KB = {"panel": 120, "proc_panel": 150, "listing": 190}
+R2 = 0.015                     # $/GB/month, egress free
 
-HELD = {"UK places": (6155, PV), "creatures": (2908, CV), "botanical": (1500, CV)}
+EFF_RATE = 1 / (SHARE_704 / RATE["704x1008"] + (1 - SHARE_704) / RATE["848x1200"])
 
 
-def report(img_hr=IMG_HR):
-    sec_per_image = 3600 / img_hr
-    print(f"GPU measured at {sec_per_image:.2f} s/image "
-          f"({img_hr:,.0f} images/hour/GPU at ${GPU_HR}/hr)\n")
+def report(reject):
+    proc = PROC_LINE + PROC_GEO
+    diff = TOTAL - proc
+    bases = diff / COLOURWAYS
+    gens = bases / (1 - reject)
+    gpu_h = gens / EFF_RATE
 
-    print("AXES  (designs per subject = techniques x grammars x palettes)")
-    print(f"   place-type subject    {PV:>3} GPU bases x {N_PAL} palettes = {PV*N_PAL:>4} designs")
-    print(f"   creature-type subject {CV:>3} GPU bases x {N_PAL} palettes = {CV*N_PAL:>4} designs\n")
+    cpu_s = (proc * SEC["line"] + diff * SEC["recolour"]
+             + TOTAL * (SEC["compose"] + SEC["mockup"]))
+    cpu_h = cpu_s / 3600
+    cpu_cost = cpu_h / CPU_CORES * CPU_HR
 
-    print("WHAT THE SUBJECT LISTS WE ALREADY HOLD ARE WORTH")
-    tot_d = tot_g = 0
-    for name, (n, v) in HELD.items():
-        d, g = n * v * N_PAL, n * v
-        tot_d += d; tot_g += g
-        print(f"   {name:<14}{n:>7,} subjects -> {d:>10,} designs  ({g:>9,} GPU images)")
-    print(f"   {'TOTAL':<14}{sum(n for n,_ in HELD.values()):>7,} subjects -> "
-          f"{tot_d:>10,} designs  ({tot_g:>9,} GPU images)")
-    print(f"   cost of that, with the text-gate retries: "
-          f"${tot_g/(1-GATE_REJECT)/img_hr*GPU_HR:,.0f}\n")
-
-    print(f"REACHING THE {TARGET:,} TARGET")
-    proc = int(TARGET * PROCEDURAL_SHARE)
-    diff = TARGET - proc
-    bases = diff / N_PAL
-    subs = bases / PV
-    gens = bases / (1 - GATE_REJECT)
-    gpu_h = gens / img_hr
-    cpu_h = TARGET * 0.78 / 3600
-    print(f"   drawn in code (free)        {proc:>10,} designs")
-    print(f"   needing diffusion           {diff:>10,} designs")
-    print(f"   / {N_PAL} palettes, so GPU images   {bases:>10,.0f}")
-    print(f"   + {GATE_REJECT:.0%} regenerated for text  {gens:>10,.0f}")
-    print(f"   subject atoms needed        {subs:>10,.0f}  "
-          f"(we hold {sum(n for n,_ in HELD.values()):,})")
-    print(f"   GPU hours                   {gpu_h:>10,.0f}  = ${gpu_h*GPU_HR:,.0f}")
-    print(f"   CPU hours to frame all      {cpu_h:>10,.0f}  = ${cpu_h/16*CPU_HR:,.0f}"
-          f"  (16 cores)")
-    print(f"   TOTAL COMPUTE               {'':>10} = "
-          f"${gpu_h*GPU_HR + cpu_h/16*CPU_HR:,.0f}\n")
-
-    print("   wall clock, by how many 48 GB GPUs are rented at once")
-    for k in (1, 4, 10, 25, 50):
-        print(f"      {k:>2} GPU(s): {gpu_h/k/24:>6.1f} days   "
-              f"(same ${gpu_h*GPU_HR:,.0f}, just spent faster)")
-
-    print("\nSTORAGE - Cloudflare R2 at $0.015/GB-month, egress free")
-    for label, kb in (("panel, JPEG q92 (MEASURED)", 150),
-                      ("+ 3 frame mockups, JPEG q90", 150 + 3 * 190)):
-        gb = TARGET * kb / 1024 / 1024
-        print(f"   {label:<30}{gb:>8,.0f} GB = ${gb*0.015:>7,.0f}/month")
-    print("   -> keep the panel only; render the three mockups on request.")
+    print(f"\n=== text-gate rejection {reject:.1%} "
+          f"(effective {EFF_RATE:,.0f} generations/hour/GPU) ===")
+    print(f"  drawn in code, free        {proc:>10,}  "
+          f"({PROC_LINE:,} line + {PROC_GEO:,} geometric)")
+    print(f"  from diffusion             {diff:>10,}")
+    print(f"  / {COLOURWAYS} colourways (free)      {bases:>10,.0f}  base images")
+    print(f"  + regenerated for text     {gens:>10,.0f}  generations")
+    print(f"  GPU-hours                  {gpu_h:>10,.0f}")
+    for name, p in PRICE.items():
+        print(f"      on {name:<16} ${gpu_h*p:>8,.0f}"
+              f"   + ${cpu_cost:,.0f} CPU  =  ${gpu_h*p + cpu_cost:>8,.0f}")
+    print(f"  CPU-hours (1 core)         {cpu_h:>10,.0f}  "
+          f"= {cpu_h/CPU_CORES:,.0f} h on a {CPU_CORES}-core pod")
+    for k in (6, 12, 25):
+        print(f"      wall clock on {k:>2} GPUs:  {gpu_h/k/24:>5.1f} days")
+    return gpu_h
 
 
-if __name__ == "__main__":
-    report(float(sys.argv[1]) if len(sys.argv) > 1 else IMG_HR)
+print(f"TARGET {TOTAL:,} listings across {len(TARGET)} stores")
+for k, v in TARGET.items():
+    print(f"   {k:<12}{v:>10,}")
+for r in (0.077, 0.15):
+    report(r)
+
+print("\n=== storage, Cloudflare R2 ===")
+proc, diff = PROC_LINE + PROC_GEO, TOTAL - (PROC_LINE + PROC_GEO)
+g_panel = (diff * KB["panel"] + proc * KB["proc_panel"]) / 1024 / 1024
+g_list = TOTAL * KB["listing"] / 1024 / 1024
+print(f"   panels only                 {g_panel:>8,.0f} GB = ${g_panel*R2:>6,.0f}/month")
+print(f"   + a listing photo each      {g_list:>8,.0f} GB = ${g_list*R2:>6,.0f}/month")
+print(f"   -> keep the panels, draw the three frame colours on request: "
+      f"${g_panel*R2:,.0f}/month")
+
+print("\n=== subject atoms needed ===")
+PV, CV = 47, 38                # bases per subject, after dropping G6_poster
+bases = (TOTAL - proc) / COLOURWAYS
+avg = 0.55 * PV + 0.45 * CV
+print(f"   {bases:,.0f} base images / {avg:.0f} per subject = "
+      f"{bases/avg:,.0f} subjects")
+print(f"   held today 10,563;  identified and IP-free 33,900")

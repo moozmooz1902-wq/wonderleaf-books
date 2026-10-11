@@ -19,6 +19,9 @@ import argparse, base64, io, json, os, subprocess, tarfile, sys
 
 API = "https://rest.runpod.io/v1"
 IMAGE = "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04"
+# torch 2.6+ image, needed for diffusers>=0.33 and its bitsandbytes
+# PipelineQuantizationConfig, which is how a 24 GB card gets to hold FLUX.
+IMAGE_NEW = "runpod/pytorch:2.8.0-py3.11-cuda12.8.1-cudnn-devel-ubuntu22.04"
 
 
 def curl(method, path, body=None):
@@ -40,7 +43,7 @@ def bundle(files):
     return base64.b64encode(buf.getvalue()).decode()
 
 
-def start_cmd(b64, jobs, extra):
+def start_cmd(b64, jobs, extra, pip=None, script="gen_worker.py"):
     """Run the job ALONGSIDE the image's own /start.sh, never instead of it.
 
     This is the bug that cost 40 minutes. Overriding dockerStartCmd replaces
@@ -51,6 +54,10 @@ def start_cmd(b64, jobs, extra):
     even though the pod said RUNNING. Two pods on two different machines and
     two different clouds behaved identically, which is what gave it away.
     """
+    pip = pip or ("'diffusers==0.31.0' 'transformers==4.46.3' 'accelerate==1.1.1' "
+                  "'huggingface_hub==0.26.2' sentencepiece protobuf hf_transfer")
+    script_line = (f"python3 {script} --jobs {os.path.basename(jobs)} "
+                   f"--out /workspace/art {extra}") if jobs else f"python3 {script} {extra}"
     return ["bash", "-c", f"""export PATH=/opt/conda/bin:/usr/local/bin:/usr/bin:/bin:$PATH
 mkdir -p /workspace/gen /workspace/art
 echo '{b64}' | base64 -d | tar xz -C /workspace/gen
@@ -77,16 +84,21 @@ for i in $(seq 1 40); do
   nvidia-modprobe -u -c=0 2>/dev/null
   sleep 5
 done
+# Say so loudly rather than carrying on. Two community hosts answered
+# nvidia-smi correctly and still never gave torch a usable device; without
+# this the pod goes on to spend five minutes downloading 24 GB of weights
+# before failing, and the watcher cannot tell that apart from a slow start.
+python3 -c "import torch,sys; sys.exit(0 if torch.cuda.is_available() else 1)" 2>/dev/null \
+  || {{ echo CUDA_DEAD_ON_THIS_HOST; exit 1; }}
 # Pinned, because the unpinned install broke twice:
 #   diffusers >=0.33 calls torch.accelerator, added in torch 2.6; this image
 #   ships torch 2.4.0 and the import dies with AttributeError.
 #   transformers 5.x returns BaseModelOutputWithPooling from get_text_features
 #   instead of a tensor, which the colour-label pass tripped over earlier.
-pip install -q --no-input 'diffusers==0.31.0' 'transformers==4.46.3' \
-    'accelerate==1.1.1' 'huggingface_hub==0.26.2' sentencepiece protobuf hf_transfer 2>&1 | tail -3
+pip install -q --no-input {pip} 2>&1 | tail -3
 python3 -c "import torch,diffusers;print('torch',torch.__version__,'diffusers',diffusers.__version__,'cuda',torch.cuda.is_available())"
 cd /workspace/gen
-python3 gen_worker.py --jobs {os.path.basename(jobs)} --out /workspace/art {extra}
+{script_line}
 echo GEN_DONE
 EOS
 nohup bash /workspace/run.sh > /workspace/boot.log 2>&1 &
@@ -96,7 +108,7 @@ if [ -x /start.sh ]; then exec /start.sh; else sleep infinity; fi
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--jobs", required=True)
+    ap.add_argument("--jobs", default="")
     ap.add_argument("--name", default="wonderleaf-wallart-gen")
     # 24 GB is not enough. The FLUX transformer alone is 11.9B parameters =
     # 23.8 GB in bfloat16, so a 4090 OOMs during the first attention block
@@ -106,13 +118,20 @@ if __name__ == "__main__":
                                      "NVIDIA L40,NVIDIA A100 80GB PCIe")
     ap.add_argument("--extra", default="--batch 4")
     ap.add_argument("--cloud", default="COMMUNITY", choices=["COMMUNITY","SECURE"])
+    ap.add_argument("--image", default=IMAGE)
+    ap.add_argument("--pip", default="")
+    ap.add_argument("--script", default="gen_worker.py")
+    ap.add_argument("--ship", default="")   # extra files for the bundle
     a = ap.parse_args()
 
-    b64 = bundle(["gen/gen_worker.py", "gen/prompts.py", a.jobs])
-    body = {"name": a.name, "imageName": IMAGE, "gpuTypeIds": [g.strip() for g in a.gpu.split(",")],
+    files = ["gen/gen_worker.py", "gen/prompts.py"] + \
+            [f for f in ([a.jobs] + a.ship.split(",")) if f]
+    b64 = bundle(files)
+    body = {"name": a.name, "imageName": a.image, "gpuTypeIds": [g.strip() for g in a.gpu.split(",")],
             "gpuCount": 1, "cloudType": a.cloud,
             "containerDiskInGb": 80, "volumeInGb": 0,
-            "ports": ["8000/http"], "dockerStartCmd": start_cmd(b64, a.jobs, a.extra)}
+            "ports": ["8000/http"], "dockerStartCmd": start_cmd(b64, a.jobs, a.extra,
+                                           a.pip or None, a.script)}
     r = curl("POST", "/pods", body)
     print(json.dumps({k: r.get(k) for k in ("id", "name", "desiredStatus",
                                             "costPerHr", "error", "_raw")}, indent=1))
