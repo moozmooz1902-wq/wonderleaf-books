@@ -37,42 +37,45 @@ from botocore.exceptions import ClientError
 s3 = boto3.client("s3", endpoint_url=f"https://{os.environ['R2_ACCOUNT_ID']}.r2.cloudflarestorage.com",
                   aws_access_key_id=os.environ["R2_ACCESS_KEY_ID"],
                   aws_secret_access_key=os.environ["R2_SECRET_ACCESS_KEY"],
-                  config=Config(signature_version="s3v4"), region_name="auto")
+                  config=Config(signature_version="s3v4", connect_timeout=15, read_timeout=30, retries={"max_attempts":2}), region_name="auto")
 out = {}
-# 1. the definitive test
 try:
-    out["list_buckets"] = [b["Name"] for b in s3.list_buckets().get("Buckets", [])]
+    bs = s3.list_buckets().get("Buckets", [])
+    out["buckets"] = {}
+    for b in bs:
+        # CAPPED. The first version counted every object in every bucket and
+        # hung for eight minutes: the t-shirt bucket holds a live catalogue,
+        # and paginating all of it is thousands of calls. Three pages is
+        # enough to tell an empty bucket from a used one, which is the
+        # question being asked.
+        n = b["Name"]; cnt = 0; size = 0; tok = None; pages = 0
+        try:
+            while pages < 3:
+                kw = {"Bucket": n, "MaxKeys": 1000}
+                if tok: kw["ContinuationToken"] = tok
+                r = s3.list_objects_v2(**kw)
+                for o in r.get("Contents", []): cnt += 1; size += o["Size"]
+                pages += 1
+                if not r.get("IsTruncated"): break
+                tok = r["NextContinuationToken"]
+            out["buckets"][n] = {"objects": f"{cnt:,}" + ("+" if r.get("IsTruncated") else ""),
+                                 "MB": round(size/1048576, 1),
+                                 "created": str(b.get("CreationDate"))[:10]}
+        except ClientError as e:
+            out["buckets"][n] = {"error": e.response["Error"].get("Code")}
 except ClientError as e:
-    out["list_buckets"] = "DENIED: " + e.response["Error"].get("Code","")
-
-# 2. calibrate: what does an invented name return, vs one we KNOW exists?
-def probe(n):
-    try:
-        s3.head_bucket(Bucket=n); return "OK"
-    except ClientError as e:
-        return str(e.response["ResponseMetadata"]["HTTPStatusCode"])
-    except Exception as e:
-        return "err " + str(e)[:40]
-out["control_known_good"]  = probe("tshirt-m12k")
-out["control_invented"]    = probe("zzq7x-definitely-not-a-bucket-9931")
-
-# 3. a much wider guess list
-accts = ["lunar","kms","lux","viaart","via-art","mercury","usm","nebula","m12k"]
-pats  = ["{a}", "{a}-store", "store-{a}", "wl-{a}", "wonderleaf-{a}", "{a}-uk",
-         "{a}-images","{a}-img","{a}-r2","{a}-prints","{a}-poster","{a}-posters",
-         "tshirt-{a}","tshirts-{a}","wallart-{a}","wall-art-{a}","art-{a}","{a}-art",
-         "{a}-wallart","{a}-tshirt","{a}1","{a}-1","{a}-bucket"]
-names = sorted({p.format(a=a) for a in accts for p in pats})
-res = {}
-for n in names:
-    r = probe(n)
-    if r != "404":
-        res[n] = {"OK":"EXISTS, accessible","403":"EXISTS, not in scope"}.get(r, r)
-out["wider_scan"] = res
-out["names_tried"] = len(names)
-print("PROBE2 " + json.dumps(out))
+    out["buckets"] = "DENIED: " + e.response["Error"].get("Code","")
+# can we create one? make a throwaway and remove it again
+try:
+    s3.create_bucket(Bucket="wl-capability-test-9931")
+    out["can_create_buckets"] = True
+    try: s3.delete_bucket(Bucket="wl-capability-test-9931"); out["can_delete_buckets"] = True
+    except ClientError as e: out["can_delete_buckets"] = e.response["Error"].get("Code")
+except ClientError as e:
+    out["can_create_buckets"] = "DENIED: " + e.response["Error"].get("Code","")
+print("R2CAP " + json.dumps(out, indent=1))
 EOF
-echo PROBE_DONE
+echo CAP_DONE
 EOS
 nohup bash /workspace/run.sh > /workspace/boot.log 2>&1 &
 if [ -x /start.sh ]; then exec /start.sh; else sleep infinity; fi
@@ -91,7 +94,7 @@ def curl(method, path, body=None):
 
 
 if __name__ == "__main__":
-    body = {"name": "wallart-bucket-probe2", "templateId": TEMPLATE,
+    body = {"name": "wallart-r2-cap", "templateId": TEMPLATE,
             "imageName": "runpod/base:0.7.0-ubuntu2404",
             "computeType": "CPU", "cpuFlavorIds": ["cpu3c"], "vcpuCount": 2,
             "containerDiskInGb": 20, "volumeInGb": 0,
