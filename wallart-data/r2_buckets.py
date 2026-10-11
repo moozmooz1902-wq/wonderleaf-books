@@ -38,24 +38,39 @@ s3 = boto3.client("s3", endpoint_url=f"https://{os.environ['R2_ACCOUNT_ID']}.r2.
                   aws_access_key_id=os.environ["R2_ACCESS_KEY_ID"],
                   aws_secret_access_key=os.environ["R2_SECRET_ACCESS_KEY"],
                   config=Config(signature_version="s3v4"), region_name="auto")
-# R2 bucket names are lowercase; try the obvious spellings of each account name
-NAMES = []
-for base in ["lunar","kms","lux","via-art","viaart","mercury","usm","nebula","m12k"]:
-    NAMES += [base, f"{base}-wallart", f"wallart-{base}", f"tshirt-{base}", f"{base}-art"]
-NAMES += ["tshirt-m12k", "wallart", "wall-art"]
 out = {}
-for n in sorted(set(NAMES)):
+# 1. the definitive test
+try:
+    out["list_buckets"] = [b["Name"] for b in s3.list_buckets().get("Buckets", [])]
+except ClientError as e:
+    out["list_buckets"] = "DENIED: " + e.response["Error"].get("Code","")
+
+# 2. calibrate: what does an invented name return, vs one we KNOW exists?
+def probe(n):
     try:
-        s3.head_bucket(Bucket=n); out[n] = "EXISTS + I can access it"
+        s3.head_bucket(Bucket=n); return "OK"
     except ClientError as e:
-        code = e.response["ResponseMetadata"]["HTTPStatusCode"]
-        out[n] = {403: "EXISTS but token not scoped to it",
-                  404: "does not exist",
-                  400: "bad name"}.get(code, f"HTTP {code}")
+        return str(e.response["ResponseMetadata"]["HTTPStatusCode"])
     except Exception as e:
-        out[n] = f"error {str(e)[:60]}"
-hits = {k: v for k, v in out.items() if "does not exist" not in v and "bad name" not in v}
-print("BUCKETPROBE " + json.dumps({"found": hits, "checked": len(out)}))
+        return "err " + str(e)[:40]
+out["control_known_good"]  = probe("tshirt-m12k")
+out["control_invented"]    = probe("zzq7x-definitely-not-a-bucket-9931")
+
+# 3. a much wider guess list
+accts = ["lunar","kms","lux","viaart","via-art","mercury","usm","nebula","m12k"]
+pats  = ["{a}", "{a}-store", "store-{a}", "wl-{a}", "wonderleaf-{a}", "{a}-uk",
+         "{a}-images","{a}-img","{a}-r2","{a}-prints","{a}-poster","{a}-posters",
+         "tshirt-{a}","tshirts-{a}","wallart-{a}","wall-art-{a}","art-{a}","{a}-art",
+         "{a}-wallart","{a}-tshirt","{a}1","{a}-1","{a}-bucket"]
+names = sorted({p.format(a=a) for a in accts for p in pats})
+res = {}
+for n in names:
+    r = probe(n)
+    if r != "404":
+        res[n] = {"OK":"EXISTS, accessible","403":"EXISTS, not in scope"}.get(r, r)
+out["wider_scan"] = res
+out["names_tried"] = len(names)
+print("PROBE2 " + json.dumps(out))
 EOF
 echo PROBE_DONE
 EOS
@@ -76,7 +91,7 @@ def curl(method, path, body=None):
 
 
 if __name__ == "__main__":
-    body = {"name": "wallart-bucket-probe", "templateId": TEMPLATE,
+    body = {"name": "wallart-bucket-probe2", "templateId": TEMPLATE,
             "imageName": "runpod/base:0.7.0-ubuntu2404",
             "computeType": "CPU", "cpuFlavorIds": ["cpu3c"], "vcpuCount": 2,
             "containerDiskInGb": 20, "volumeInGb": 0,

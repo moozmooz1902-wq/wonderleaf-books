@@ -565,6 +565,32 @@ than 403 for buckets outside a token's scope, so the probe can only see
 what the token already covers. The other six may well exist. The result is
 reported as "cannot tell", not "not there".
 
+### Corrected: the token IS all-buckets. The limit is the permission tier.
+
+The seller said the token already applies to every bucket, and they were
+right - the inference that it was scoped to a short list was wrong. A
+second probe, this time with controls, shows why the first one misled:
+
+    list_buckets                DENIED: AccessDenied
+    control, a bucket we know exists   OK      <- the probe works
+    control, an invented name          404     <- it does detect absence
+    207 name variants tried     only tshirt-m12k and tshirt-usm
+
+An R2 token with **Object Read & Write** cannot enumerate buckets *even
+when applied to all buckets*, because listing is an account-level operation
+needing **Admin Read**. So `AccessDenied` on ListBuckets says nothing about
+scope, and reading it as evidence of scope was the error.
+
+What remains genuinely unknown: 207 guesses across all eight account names
+(`lunar`, `lunar-store`, `wl-lunar`, `wallart-lunar`, `lunar-prints`, ...)
+only ever hit the two `tshirt-` buckets. So either the other six are named
+something not guessed, or they live on a **different Cloudflare account**,
+which would need its own `R2_ACCOUNT_ID` and token.
+
+Raising the token to **Admin Read & Write** settles it and also removes a
+manual step: with it the buckets can be created from here rather than by
+hand, eight times, in the dashboard.
+
 Two things it did settle:
 
 * The convention is `tshirt-<account>`, so the wall-art buckets would be
