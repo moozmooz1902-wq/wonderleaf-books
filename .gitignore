@@ -7,3 +7,5 @@ tshirt/EBAY_ONE_FILE.csv
 tshirt/EBAY_PART1of3.csv
 tshirt/EBAY_PART2of3.csv
 tshirt/EBAY_PART3of3.csv
+__pycache__/
+*.pyc

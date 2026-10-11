@@ -25,7 +25,13 @@ TIER2="NVIDIA RTX 4000 Ada Generation,NVIDIA A30,NVIDIA RTX 5000 Ada Generation,
 # than quietly tripling the bill. Dollars per image, never dollars per hour,
 # is what decides a card - this ceiling just stops an accident.
 MAXHR=0.32
-EXTRA="--batch 4 --width 704 --height 1008 --quant nf4 --retries 2 --part $K/$N --stores stores.json --resume --max-hours 10"
+# --pool 960000: status.py puts the GPU requirement at 937,500 base images
+# (5,000,000 listings, less the 1,250,000 drawn in code, over four
+# colourways). The grid is 1,195,035, so the pool takes the first
+# 960,000 of it - the target plus 2.4% - and the remaining 235,000 jobs
+# stay as spare capacity that a later run can switch on by raising this
+# number alone, with nothing regenerated.
+EXTRA="--batch 4 --width 704 --height 1008 --quant nf4 --retries 2 --pool 960000 --part $K/$N --stores stores.json --resume --max-hours 10"
 for GPUS in "$TIER1" "$TIER2"; do
   CLOUD=COMMUNITY
   OUT=$(python3 launch_gen.py --name "wa-v3-$K" --cloud $CLOUD --gpu "$GPUS" --template vbsgwyibn1 \

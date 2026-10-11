@@ -56,7 +56,10 @@ CITIES_ASIA_PACIFIC = [
  "Pokhara","the Everest region","Delhi","Jaipur","Udaipur","Jodhpur",
  "Varanasi","Kerala backwaters","Goa","Mumbai","Darjeeling","Colombo",
  "Kandy","the Maldives","Bali","Ubud","Jakarta","Komodo","Raja Ampat",
- "Manila","Palawan","Boracay","Sydney","Melbourne","Brisbane","Perth",
+ "Manila","Palawan","Boracay","Sydney","Melbourne","Brisbane",
+ # Perth, Western Australia. Perth in Perthshire is in places_uk.py, and the
+ # bare name in both lists is the same subject string, so the same SKU twice.
+ "Perth Australia",
  "Adelaide","Hobart","Cairns","the Great Barrier Reef","Uluru",
  "the Great Ocean Road","Byron Bay","Noosa","Auckland","Wellington",
  "Queenstown","Milford Sound","Rotorua","Christchurch","Fiordland",

@@ -51,6 +51,36 @@ LANDMARKS = ["eiffel tower at night", "eiffel tower illumination", "atomium",
              "hollywood sign", "little mermaid copenhagen", "cloud gate",
              "the bean chicago", "angel of the north"]
 
+# Drink and food brands, added 11 Oct 2026 with the still-life block. The
+# IBA cocktail list is a recipe list and the drink names on it are generic -
+# a negroni is a negroni - but the spirits inside the recipes are trade
+# marks, and a prompt or a title carrying one would be passing our picture
+# off as theirs. stilllife.py names no brand; this is the backstop, and it
+# also catches the ones a future subject list might reach for.
+#
+# "san miguel" on its own blocked San Miguel de Allende, a Mexican town in
+# places_world.py, and the gate is a hard stop - every pod would have refused
+# to start. A brand name that is also a place name has to be blocked as the
+# brand, not as the words: it is listed as "san miguel beer" and
+# "san miguel lager" instead.
+DRINK_BRANDS = ["aperol", "campari", "pimm's", "pimms", "hendrick's",
+                "hendricks", "guinness", "chartreuse", "angostura",
+                "dark 'n' stormy", "dark n stormy", "gosling's",
+                "jack daniel's", "jack daniels", "johnnie walker",
+                "jameson", "bacardi", "smirnoff", "absolut", "grey goose",
+                "bombay sapphire", "tanqueray", "beefeater", "cointreau",
+                "grand marnier", "baileys", "kahlua", "malibu",
+                "moet", "veuve clicquot", "dom perignon", "bollinger",
+                "krug", "taittinger", "laphroaig", "glenfiddich",
+                "glenlivet", "macallan", "ardbeg", "lagavulin", "talisker",
+                "coca cola", "coca-cola", "pepsi", "fanta", "sprite",
+                "red bull", "monster energy", "fever tree", "schweppes",
+                "stella artois", "heineken", "carlsberg", "budweiser",
+                "corona extra", "peroni", "san miguel beer",
+                "san miguel lager", "brewdog",
+                "nespresso", "lavazza", "illy", "starbucks", "costa coffee",
+                "twinings", "yorkshire tea", "pg tips", "tetley"]
+
 # Words that would turn an accurate listing into a misleading one.
 FORBIDDEN_CLAIMS = ["hand painted", "hand-painted", "handpainted", "handmade",
                     "hand made", "original painting", "original artwork",
@@ -68,7 +98,7 @@ def _phrases(path):
 
 
 def blocklist():
-    bl = set(ARTISTS) | set(LANDMARKS)
+    bl = set(ARTISTS) | set(LANDMARKS) | set(DRINK_BRANDS)
     p = os.path.join(HERE, "displate_brands.txt")
     if os.path.exists(p):
         bl |= set(_phrases(p))
@@ -131,7 +161,8 @@ if __name__ == "__main__":
                           else os.path.join(HERE, "gen", "subjects.json")))
     bl = blocklist()
     print(f"blocklist: {len(bl)} phrases "
-          f"({len(ARTISTS)} artists, {len(LANDMARKS)} landmarks, rest brands)\n")
+          f"({len(ARTISTS)} artists, {len(LANDMARKS)} landmarks, "
+          f"{len(DRINK_BRANDS)} drink and food brands, rest brands)\n")
 
     bad = check_subjects(subs)
     n = sum(len(v) for v in subs.values() if isinstance(v, list))

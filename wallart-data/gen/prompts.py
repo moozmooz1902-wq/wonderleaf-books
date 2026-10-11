@@ -25,6 +25,14 @@ TECHNIQUE = {
  "pastel":        "soft pastel drawing, visible grain, scribbly open fill",
  "collage":       "cut paper collage, flat torn-edge shapes layered in planes",
  "screenprint":   "flat screen-printed poster, simplified geometric shapes, bold flat colour",
+ # Added 11 Oct 2026 to widen the grid without leaning harder on any one
+ # subject. Each names a physical artefact nobody else in the measured
+ # competitor corpus is printing much of, and each looks unmistakably unlike
+ # the eleven above - which is the point, since the duplicate audit showed
+ # near-twins come from shared COMPOSITION, not from shared subject.
+ "risograph":     "two-colour risograph print, layers slightly misregistered, coarse halftone dot grain, flat ink",
+ "monotype":      "monotype print pulled from an inked plate, the plate wiped back, soft blurred edges and plate tone",
+ "cyanotype":     "cyanotype photogram, Prussian blue ground with white silhouettes, uneven brushed edges",
 }
 GRAMMAR_PLACE = {
  "G2_terrain":   "seen across open land, the horizon pushed to the top of the picture",
@@ -50,17 +58,69 @@ GRAMMAR_BOTANICAL = {
  "B4_meadow":    "growing in a dense band across the lower half, stems running off both edges",
  "B5_single":    "one bloom, very large, filling most of the sheet, cropped by the edges",
 }
+# Three blocks added 11 Oct 2026. The three kinds above are 2,238 subjects and
+# 284,665 base images; five million listings needs about a million bases, and
+# padding the place list with obscure towns is the wrong way to get there
+# because FLUX has no idea what Tipton looks like and renders a generic
+# British town - three hundred of which would be three hundred near-twins.
+# Celestial, still life and architecture are things the model genuinely
+# knows apart, they are enumerable and IP-free, and each is a block the
+# measured competitor corpus sells and this catalogue had none of.
+GRAMMAR_CELESTIAL = {
+ "C1_vast":     "a vast empty night sky filling the sheet, the land a thin dark band at the foot",
+ "C2_disc":     "one large disc centred on a plain flat ground, nothing else in the picture",
+ "C3_row":      "as a row of three simplified studies across the middle of the sheet",
+ "C4_overland": "above a simplified dark landscape silhouette along the lower third",
+}
+GRAMMAR_STILLLIFE = {
+ "S1_table":   "arranged on a plain table top seen from slightly above, cropped by the lower edge",
+ "S2_single":  "one object, very large and centred, on a flat plain ground",
+ "S3_flatlay": "laid out flat and seen from directly above on a plain ground",
+ "S4_shelf":   "lined up along a single shelf running the full width of the sheet",
+}
+GRAMMAR_ARCH = {
+ "A1_elevation": "drawn flat as a straight-on elevation, centred on plain paper",
+ "A2_street":    "in a row of simplified facades across the lower half, no vanishing point",
+ "A3_detail":    "one architectural detail very large and cropped by every edge",
+ "A4_wide":      "small in a wide empty landscape with the horizon low",
+}
+# measured_colour_and_style.md counted the colour strategy of thousands of
+# competitor images, and the first three here were built from it: duotone or
+# analogous 33%, complementary 14%, warm neutral plus accent 2.5%.
+#
+# The two added on 11 Oct close the gap that count exposed. MONOCHROME is
+# 21-23% of the market - one competitor image in five is essentially
+# colourless - and it was missing from this grid entirely, which is a strange
+# thing to leave out when charcoal and sketch are also the only two
+# techniques beating the seller's own base watch rate. FULL SPECTRUM is 30%
+# and was also absent. Between them they were 51% of what sells and 0% of
+# what we were making.
 PALETTE = {
  "duotone":       "two adjacent colours only",
  "complementary": "burnt orange against petrol blue",
  "neutral":       "cream, bone and oatmeal with one small rust accent",
+ "monochrome":    "no colour at all, warm charcoal black on cream paper",
+ "spectrum":      "a full spectrum of saturated colour, many hues at once",
 }
 # Not every technique suits every grammar. A hard-edge composition of flat
 # colour cannot be a wet-on-wet watercolour, and a specimen chart of nine
 # studies is a drawing convention, not an impasto one. Generating the
 # contradictions wastes GPU and produces mush, so they are excluded.
-FLAT = {"screenprint", "collage", "gouache", "palette_knife", "linocut"}
-DRAWN = {"charcoal", "sketch", "linocut", "ink_wash", "pastel"}
+FLAT = {"screenprint", "collage", "gouache", "palette_knife", "linocut",
+        "risograph", "cyanotype"}
+DRAWN = {"charcoal", "sketch", "linocut", "ink_wash", "pastel", "monotype"}
+# A technique can contradict a palette as flatly as it contradicts a
+# composition, and generating the contradiction wastes a GPU-second and
+# produces mush. A cyanotype is Prussian blue by chemistry - that is what
+# the process IS - so it is only asked for in the two palettes that can
+# hold it. Nothing that is black ink or bare graphite by definition is
+# asked for in full spectrum.
+# Cyanotype is Prussian blue and white by chemistry, so it is only asked
+# for in the one palette that does not argue with it. The monochrome
+# palette says "warm charcoal black on cream paper", which is a
+# different process entirely.
+PAL_ONLY = {"cyanotype": {"duotone"}}
+NO_SPECTRUM = {"charcoal", "sketch", "ink_wash", "cyanotype"}
 INCOMPATIBLE = {
     "G11_hardedge": lambda t: t not in FLAT,       # needs flat hard-edged colour
     "G10_abstract": lambda t: t in {"charcoal", "sketch"},   # abstraction needs mass
@@ -83,7 +143,18 @@ SMALL_FACED = {"european robin", "wren", "blue tit", "goldfinch", "bullfinch",
 WET = {"oil_impasto", "watercolour", "ink_wash", "palette_knife", "pastel"}
 
 
-def ok(tech, gram, subject=None):
+def pal_ok(tech, pal):
+    allow = PAL_ONLY.get(tech)
+    if allow is not None and pal not in allow:
+        return False
+    if pal == "spectrum" and tech in NO_SPECTRUM:
+        return False
+    return True
+
+
+def ok(tech, gram, subject=None, pal=None):
+    if pal is not None and not pal_ok(tech, pal):
+        return False
     rule = INCOMPATIBLE.get(gram)
     if rule and rule(tech):
         return False
@@ -145,6 +216,21 @@ def botanical_prompt(name, tech, gram, pal):
 def creature_prompt(name, tech, gram, pal):
     return (f"{TECHNIQUE[tech]} of a {name}, {GRAMMAR_CREATURE[gram]}, "
             f"{PALETTE[pal]}, {EYES}, {RULES_CREATURE}")
+
+
+def celestial_prompt(name, tech, gram, pal):
+    return (f"{TECHNIQUE[tech]} of {name}, {GRAMMAR_CELESTIAL[gram]}, "
+            f"{PALETTE[pal]}, {RULES}")
+
+
+def stilllife_prompt(name, tech, gram, pal):
+    return (f"{TECHNIQUE[tech]} of {name}, {GRAMMAR_STILLLIFE[gram]}, "
+            f"{PALETTE[pal]}, {RULES}")
+
+
+def architecture_prompt(name, tech, gram, pal):
+    return (f"{TECHNIQUE[tech]} of {name}, {GRAMMAR_ARCH[gram]}, "
+            f"{PALETTE[pal]}, {RULES}")
 
 
 def build(places, creatures, limit=None, seed=11):

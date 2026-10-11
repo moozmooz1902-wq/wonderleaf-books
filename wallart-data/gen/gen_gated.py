@@ -75,7 +75,12 @@ def sku_for(job, prefix="WA"):
 # but at an equal share of the grid they would be a sixth of five million
 # listings all looking alike. The cap is applied by SKU hash, so which ones
 # survive is deterministic and a resumed run makes the same choices.
-THIN_GRAMMARS = {"G8_minimal": 0.35, "B1_specimen": 0.45}
+# C2_disc joined these on 11 Oct. The audit found every near-twin in the
+# first block was a minimal composition - a small subject on an empty
+# sheet - and "one large disc centred on a plain flat ground" is that
+# same picture for all 155 celestial subjects: a circle. Capped like the
+# other two rather than dropped, because the composition does sell.
+THIN_GRAMMARS = {"G8_minimal": 0.35, "B1_specimen": 0.45, "C2_disc": 0.30}
 
 
 def _thin(jobs):
@@ -97,19 +102,30 @@ def expand(subjects, thin=True):
     jobs = []
     for s_, t, g, c in itertools.product(subjects.get("place", []),
                                          P.TECHNIQUE, P.GRAMMAR_PLACE, P.PALETTE):
-        if P.ok(t, g, s_):
+        if P.ok(t, g, s_, c):
             jobs.append(dict(kind="place", subject=s_, tech=t, gram=g, pal=c,
                              prompt=P.place_prompt(s_, t, g, c)))
     for s_, t, g, c in itertools.product(subjects.get("creature", []),
                                          P.TECHNIQUE, P.GRAMMAR_CREATURE, P.PALETTE):
-        if P.ok(t, g, s_):
+        if P.ok(t, g, s_, c):
             jobs.append(dict(kind="creature", subject=s_, tech=t, gram=g, pal=c,
                              prompt=P.creature_prompt(s_, t, g, c)))
     for s_, t, g, c in itertools.product(subjects.get("botanical", []),
                                          P.TECHNIQUE, P.GRAMMAR_BOTANICAL, P.PALETTE):
-        if P.ok(t, g, s_):
+        if P.ok(t, g, s_, c):
             jobs.append(dict(kind="botanical", subject=s_, tech=t, gram=g, pal=c,
                              prompt=P.botanical_prompt(s_, t, g, c)))
+    # The three kinds added 11 Oct 2026. Each carries its own grammars, which
+    # is the point: more compositions that are genuinely different beats more
+    # subjects the model renders the same way.
+    for kind, grams, fn in (("celestial", P.GRAMMAR_CELESTIAL, P.celestial_prompt),
+                            ("stilllife", P.GRAMMAR_STILLLIFE, P.stilllife_prompt),
+                            ("architecture", P.GRAMMAR_ARCH, P.architecture_prompt)):
+        for s_, t, g, c in itertools.product(subjects.get(kind, []),
+                                             P.TECHNIQUE, grams, P.PALETTE):
+            if P.ok(t, g, s_, c):
+                jobs.append(dict(kind=kind, subject=s_, tech=t, gram=g, pal=c,
+                                 prompt=fn(s_, t, g, c)))
     # The copyright gate, enforced here rather than reported somewhere else.
     # A blocked subject must never reach a prompt, let alone a listing.
     try:
@@ -184,6 +200,16 @@ def main():
     # Shard one job file across N pods: each takes every Nth job. Striping
     # rather than slicing so every pod gets the same mix of subjects and
     # techniques, and so the rate each one reports is comparable.
+    # The grid is bigger than the catalogue on purpose. 5,204 subjects expand
+    # to 1,195,035 base images, which is 4.78 million listings at four
+    # colourways - about 20% more than the 5,000,000 target once the
+    # 1,250,000 code-drawn listings are counted. --pool takes the first N of
+    # the SKU-sorted grid, which is a fair mix of every kind, technique,
+    # grammar and palette because that sort is a stable pseudo-random
+    # shuffle. The rest of the grid is spare capacity: raising --pool later
+    # adds listings without regenerating anything, because a SKU is a hash
+    # of what the job IS and never of where it sits.
+    ap.add_argument("--pool", type=int, default=0)
     ap.add_argument("--part", default="")      # "k/n", 1-based
     ap.add_argument("--resume", action="store_true")
     # Stop cleanly after this long, so a pod cannot quietly run all night if
@@ -200,6 +226,12 @@ def main():
         json.dump(jobs, open(os.path.join(a.out, "jobs.json"), "w"))
     else:
         jobs = json.load(open(a.jobs))
+    # --pool is applied BEFORE done.txt and before striping, so every shard
+    # agrees on the same pool whatever each one has already finished.
+    if a.pool:
+        before = len(jobs)
+        jobs = jobs[:a.pool]
+        print(f"pool: {len(jobs):,} of {before:,} grid jobs", flush=True)
     jobs = [j for j in jobs if j["sku"] not in done]
     if a.part:
         k, nparts = (int(x) for x in a.part.split("/"))
