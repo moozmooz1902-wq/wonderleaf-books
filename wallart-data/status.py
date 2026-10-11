@@ -18,8 +18,8 @@ REJECT = 0.12
 # of a secure 4090 and still 2.2x cheaper per image.
 #   card                        $/hr    gen/hr   $/image
 CARDS = {
-    "RTX A4500 20GB community": (0.19,    720),
-    "RTX 4090 24GB secure":     (0.89,   1512),
+    "RTX A4500 20GB community": (0.19,    792),   # measured over a full shard
+    "RTX 4090 24GB secure":     (0.89,   1394),   # two full shards: 1,283 and 1,505
     "RTX 4090 24GB community":  (0.34,   1601),   # when any is available
     "A40 48GB secure":          (0.59,    873),
 }
