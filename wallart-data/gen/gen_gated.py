@@ -43,9 +43,41 @@ def text_marks(reader, img):
     return out
 
 
+def expand(subjects):
+    """Build the full grid from the subject lists, exactly as the planner does,
+    so a pod and this machine always agree on which SKU is which job."""
+    import itertools, random, prompts as P
+    jobs = []
+    for s_, t, g, c in itertools.product(subjects.get("place", []),
+                                         P.TECHNIQUE, P.GRAMMAR_PLACE, P.PALETTE):
+        if P.ok(t, g, s_):
+            jobs.append(dict(kind="place", subject=s_, tech=t, gram=g, pal=c,
+                             prompt=P.place_prompt(s_, t, g, c)))
+    for s_, t, g, c in itertools.product(subjects.get("creature", []),
+                                         P.TECHNIQUE, P.GRAMMAR_CREATURE, P.PALETTE):
+        if P.ok(t, g, s_):
+            jobs.append(dict(kind="creature", subject=s_, tech=t, gram=g, pal=c,
+                             prompt=P.creature_prompt(s_, t, g, c)))
+    for s_, t, g, c in itertools.product(subjects.get("botanical", []),
+                                         P.TECHNIQUE, P.GRAMMAR_BOTANICAL, P.PALETTE):
+        if P.ok(t, g, s_):
+            jobs.append(dict(kind="botanical", subject=s_, tech=t, gram=g, pal=c,
+                             prompt=P.botanical_prompt(s_, t, g, c)))
+    random.Random(subjects.get("seed", 101)).shuffle(jobs)
+    pre = subjects.get("prefix", "WA1")
+    for i, j in enumerate(jobs):
+        j["sku"] = f"{pre}-{i:06d}"
+    return jobs
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--jobs", required=True)
+    # --jobs ships a job file; --subjects ships the subject lists and the pod
+    # expands the grid itself. 12,834 jobs is several MB of base64 inside the
+    # pod's start command and `curl` refuses it with "Argument list too long",
+    # so anything past a few hundred jobs goes by --subjects.
+    ap.add_argument("--jobs", default="")
+    ap.add_argument("--subjects", default="")
     ap.add_argument("--out", required=True)
     ap.add_argument("--batch", type=int, default=4)
     ap.add_argument("--limit", type=int, default=0)
@@ -69,13 +101,26 @@ def main():
     # the token can WRITE to tshirt-m12k but cannot list or create buckets,
     # so until the seller makes a wall-art bucket this writes under a prefix.
     ap.add_argument("--r2-prefix", default="")
+    # Shard one job file across N pods: each takes every Nth job. Striping
+    # rather than slicing so every pod gets the same mix of subjects and
+    # techniques, and so the rate each one reports is comparable.
+    ap.add_argument("--part", default="")      # "k/n", 1-based
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     donep = os.path.join(a.out, "done.txt")
     done = {l.strip() for l in open(donep)} if os.path.exists(donep) else set()
     a.crop_bottom = max(0.0, min(0.25, a.crop_bottom))
 
-    jobs = [j for j in json.load(open(a.jobs)) if j["sku"] not in done]
+    if a.subjects:
+        jobs = expand(json.load(open(a.subjects)))
+        json.dump(jobs, open(os.path.join(a.out, "jobs.json"), "w"))
+    else:
+        jobs = json.load(open(a.jobs))
+    jobs = [j for j in jobs if j["sku"] not in done]
+    if a.part:
+        k, nparts = (int(x) for x in a.part.split("/"))
+        jobs = jobs[k - 1::nparts]
+        print(f"part {k} of {nparts}", flush=True)
     if a.limit:
         jobs = jobs[:a.limit]
     gen_h = int(round(a.height / (1 - a.crop_bottom) / 16)) * 16

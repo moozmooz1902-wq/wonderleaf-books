@@ -85,31 +85,42 @@ def one(args):
 def audit(rows, near=24):
     """The test store 1 failed, which it failed at 89% near-duplicate.
 
-    `near` is the Hamming distance within the 256-bit hash at which two
-    designs count as the same thing to a browsing buyer. 24/256 is under 10%
-    of the bits.
+    Two things this has to get right, and the first version got both wrong:
+
+    * it must count LISTINGS that have a near neighbour, not pairs. Summing
+      pairs reported 135% of the catalogue as duplicated, which is not a
+      number that can exist.
+    * the four colourways of one design ARE near-identical in structure, by
+      design - that is the whole point of the colourway trick and it sits
+      inside the four-per-design cap. Counting them is counting the feature
+      as the bug. Only neighbours from a DIFFERENT base image count.
     """
     from collections import Counter
-    h = Counter(r["hash"] for r in rows)
-    exact = sum(c - 1 for c in h.values() if c > 1)
-    keys = list(h)
-    bits = np.array([[int(c) for c in k] for k in keys], dtype=np.int8)
-    counts = np.array([h[k] for k in keys])
-    nd = 0
-    for i in range(len(keys)):
-        d = (bits[i] != bits[i + 1:]).sum(axis=1)
-        nd += int((counts[i + 1:][d <= near]).sum())
+    n = len(rows)
+    bits = np.array([[int(c) for c in r["hash"]] for r in rows], dtype=np.uint8)
+    base = np.array([r["base"] for r in rows])
+    exact = n - len(set(r["hash"] for r in rows))
+
+    flagged = np.zeros(n, dtype=bool)
+    B = 512
+    for i0 in range(0, n, B):
+        blk = bits[i0:i0 + B]
+        d = (blk[:, None, :] != bits[None, :, :]).sum(axis=2)
+        same = base[i0:i0 + B][:, None] == base[None, :]
+        d[same] = 999                                   # ignore own colourways
+        flagged[i0:i0 + B] = (d <= near).any(axis=1)
+
     trio = Counter((r["subject"], r["tech"], r["gram"]) for r in rows)
-    print(f"\nDUPLICATE AUDIT on {len(rows):,} listings  (256-bit gradient hash "
-          f"of the artwork)")
-    print(f"   distinct images            {len(h):,}")
-    print(f"   exact repeats              {exact/len(rows):>7.2%}")
-    print(f"   near-duplicates (<={near}/256 bits apart)  "
-          f"{nd/len(rows):>7.2%}")
+    print(f"\nDUPLICATE AUDIT on {n:,} listings  (256-bit gradient hash of the artwork,"
+          f" colourways of the same design excluded)")
+    print(f"   distinct images            {len(set(r['hash'] for r in rows)):,}")
+    print(f"   exact repeats              {exact/n:>7.2%}")
+    print(f"   listings with a near twin from another design "
+          f"(<={near}/256 bits)  {flagged.mean():>7.2%}")
     print(f"   distinct subject+technique+composition  {len(trio):,}")
     print(f"   most repeated combination  {trio.most_common(1)[0][1]}x")
     print(f"   store 1, which did not sell:  89% near-duplicate")
-    return exact / len(rows)
+    return float(flagged.mean())
 
 
 if __name__ == "__main__":

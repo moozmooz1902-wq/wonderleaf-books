@@ -56,7 +56,8 @@ def start_cmd(b64, jobs, extra, pip=None, script="gen_worker.py"):
     """
     pip = pip or ("'diffusers==0.31.0' 'transformers==4.46.3' 'accelerate==1.1.1' "
                   "'huggingface_hub==0.26.2' sentencepiece protobuf hf_transfer")
-    script_line = (f"python3 {script} --jobs {os.path.basename(jobs)} "
+    flag = "--subjects" if jobs.endswith("subjects.json") else "--jobs"
+    script_line = (f"python3 {script} {flag} {os.path.basename(jobs)} "
                    f"--out /workspace/art {extra}") if jobs else f"python3 {script} {extra}"
     return ["bash", "-c", f"""export PATH=/opt/conda/bin:/usr/local/bin:/usr/bin:/bin:$PATH
 mkdir -p /workspace/gen /workspace/art
@@ -122,12 +123,16 @@ if __name__ == "__main__":
     ap.add_argument("--pip", default="")
     ap.add_argument("--script", default="gen_worker.py")
     ap.add_argument("--ship", default="")   # extra files for the bundle
+    ap.add_argument("--template", default="")
     a = ap.parse_args()
 
     files = ["gen/gen_worker.py", "gen/prompts.py"] + \
             [f for f in ([a.jobs] + a.ship.split(",")) if f]
     b64 = bundle(files)
-    body = {"name": a.name, "imageName": a.image, "gpuTypeIds": [g.strip() for g in a.gpu.split(",")],
+    body = {"name": a.name, "imageName": a.image,
+            # templateId carries the R2_* credentials the seller put on
+            # RunPod. The pod inherits them; this session never holds them.
+            **({"templateId": a.template} if a.template else {}), "gpuTypeIds": [g.strip() for g in a.gpu.split(",")],
             "gpuCount": 1, "cloudType": a.cloud,
             "containerDiskInGb": 80, "volumeInGb": 0,
             "ports": ["8000/http"], "dockerStartCmd": start_cmd(b64, a.jobs, a.extra,

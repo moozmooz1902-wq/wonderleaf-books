@@ -314,3 +314,78 @@ actually were. The measurement took two minutes and answered it.
           665 GPU-hours
          $226 community + $22 CPU  =  $249
          $333 at a 75/25 community/secure mix + $22  =  $355
+
+---
+
+# Pilot, end to end, and block 1 started
+
+## The pilot: 600 base images, the whole chain
+
+    600 kept from 608 generations    1,615 generations/hour
+    text rejection                   1.3%   (was 31% at the start of the night)
+
+1.3% is on the real production subject mix - UK places, creatures,
+botanical - with the poster grammar gone, the no-people and two-eyes wording
+in, and the small-faced-bird exclusion. The 15.8% measured earlier was on a
+deliberately adversarial mix of peopled towns and close-up portraits.
+
+Through `pipeline.py` those 600 panels became 2,400 listings in 3.2 minutes
+on four cores - 79 ms a listing, which is the figure the CPU budget uses.
+Layout came out 1,354 margin to 1,046 full bleed, close to the intended mix.
+
+## The duplicate audit was wrong twice, and both errors flattered or damned
+
+The audit is the one number that decides whether this catalogue repeats
+store 1's failure, so getting it wrong matters more than most things here.
+
+**First version** hashed the framed mockup with a 12x12 average hash. The
+wall, the moulding and the white margin are identical in every listing and
+swamp the artwork; an average hash on pale line work asks "brighter than the
+mean" and answers no almost everywhere. It reported 18.5% duplication in the
+line block, and inspecting the groups showed a single bucket of 26 holding a
+rings, a dunes, a contour, an arch and a hatch - visibly different work.
+
+**Second version** used a 256-bit gradient hash of the artwork alone, which
+is right, but counted pairs rather than listings and compared colourways of
+the same design against each other. It reported 135% - a number that cannot
+exist - because the four colourways of one design are near-identical in
+structure by construction. That is the feature, not the bug, and it sits
+inside the four-per-design cap.
+
+**Third version**, the one in the file: gradient hash of the artwork, count
+listings with a near twin from a DIFFERENT base image.
+
+    diffusion block, 2,400 listings    0.50% exact,  0.00% near-duplicate
+    code-drawn line block, 200          0.00% exact,  5.50% near-duplicate
+    store 1, which did not sell                      89%  near-duplicate
+
+The line block is the one to watch. 5.5% at 200 designs will rise with
+volume - thirteen families cannot hold a million designs without a
+collision index rejecting a new draw that lands too close to an existing
+one. Procedural generation costs 0.23 s, so resampling on collision is
+nearly free; it just has to be built before the line block scales.
+
+## R2: the token can write but cannot create
+
+Probed from a pod that inherits the stored keys, so this session never held
+them:
+
+    list buckets      AccessDenied
+    write tshirt-m12k ok
+    create a bucket   AccessDenied
+
+So a wall-art bucket needs the seller to make it in the Cloudflare dashboard
+and issue a token that covers it. Until then block 1 writes to
+`s3://tshirt-m12k/wallart/block1/`, which is a prefix inside the t-shirt
+bucket. A copy within R2 is server side and free, so moving it later costs
+nothing.
+
+## Block 1 is running
+
+12,834 base images from the 96 subject atoms held today, across four 4090s,
+striped 1/4 .. 4/4 so each pod sees the same mix. About two hours and $7.
+That becomes 51,336 listings with the colourways.
+
+5,000,000 needs about 21,800 subject atoms. 96 are in the production list
+and 10,563 are in the repo unformatted. Expanding that list is now the thing
+standing between this and the full run - not the model, not the money.
