@@ -132,7 +132,8 @@ if __name__ == "__main__":
     # travels with it. Forgetting it is meant to stop the pod, not be
     # silently skipped.
     if any("gen_gated" in f for f in files):
-        files += ["ip_check.py", "displate_brands.txt"]
+        files += ["ip_check.py", "displate_brands.txt",
+                  "allocate.py", "stores.json"]
     b64 = bundle(files)
     body = {"name": a.name, "imageName": a.image,
             # templateId carries the R2_* credentials the seller put on

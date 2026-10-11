@@ -176,6 +176,11 @@ def main():
     # the token can WRITE to tshirt-m12k but cannot list or create buckets,
     # so until the seller makes a wall-art bucket this writes under a prefix.
     ap.add_argument("--r2-prefix", default="")
+    # Route every panel to the bucket of the store that owns it, instead of
+    # dumping the whole run in one place. allocate.py decides, by SKU hash,
+    # and a design lands in exactly one store - four shops selling the same
+    # picture compete with each other.
+    ap.add_argument("--stores", default="")
     # Shard one job file across N pods: each takes every Nth job. Striping
     # rather than slicing so every pod gets the same mix of subjects and
     # techniques, and so the rate each one reports is comparable.
@@ -223,38 +228,54 @@ def main():
     print(f"free vram {free:.0f} GB", flush=True)
     pipe.to("cuda") if (a.quant == "nf4" or free >= 40) else pipe.enable_model_cpu_offload()
 
+    route = None
+    if a.stores:
+        import allocate
+        route = allocate.store_for
+        print("routing by store: " + ", ".join(
+            f"{x['bucket']}={x['listings']:,}" for x in allocate.PLAN["stores"]), flush=True)
+
     s3 = bucket = None
-    if a.r2_prefix:
+    if a.r2_prefix or a.stores:
         import boto3
         from botocore.config import Config
-        bucket = os.environ["R2_BUCKET"]
+        bucket = os.environ.get("R2_BUCKET", "")
         s3 = boto3.client(
             "s3", endpoint_url=f"https://{os.environ['R2_ACCOUNT_ID']}.r2.cloudflarestorage.com",
             aws_access_key_id=os.environ["R2_ACCESS_KEY_ID"],
             aws_secret_access_key=os.environ["R2_SECRET_ACCESS_KEY"],
             config=Config(signature_version="s3v4", max_pool_connections=32),
             region_name="auto")
-        print(f"uploading to s3://{bucket}/{a.r2_prefix.strip('/')}/", flush=True)
+        if not route:
+            print(f"uploading to s3://{bucket}/{a.r2_prefix.strip('/')}/", flush=True)
         # THE RESUME. done.txt lives on container disk and dies with the pod,
         # so the bucket is the only durable record of what has been made. If
         # the balance runs out mid-run, the pods stop, and the next pod picks
         # up exactly here.
         if a.resume:
-            pre = a.r2_prefix.strip("/") + "/"
-            tok, n = None, 0
-            while True:
-                kw = {"Bucket": bucket, "Prefix": pre, "MaxKeys": 1000}
-                if tok:
-                    kw["ContinuationToken"] = tok
-                r = s3.list_objects_v2(**kw)
-                for o in r.get("Contents", []):
-                    k = o["Key"].rsplit("/", 1)[-1]
-                    if k.endswith(".jpg"):
-                        done.add(k[:-4]); n += 1
-                if not r.get("IsTruncated"):
-                    break
-                tok = r["NextContinuationToken"]
-            print(f"resume: {n:,} panels already in the bucket", flush=True)
+            if route:
+                import allocate
+                targets = [(x["bucket"], x["key_prefix"].strip("/") + "/")
+                           for x in allocate.PLAN["stores"]]
+            else:
+                targets = [(bucket, a.r2_prefix.strip("/") + "/")]
+            n = 0
+            for bkt, pre in targets:
+                tok = None
+                while True:
+                    kw = {"Bucket": bkt, "Prefix": pre, "MaxKeys": 1000}
+                    if tok:
+                        kw["ContinuationToken"] = tok
+                    r = s3.list_objects_v2(**kw)
+                    for o in r.get("Contents", []):
+                        k = o["Key"].rsplit("/", 1)[-1]
+                        if k.endswith(".jpg"):
+                            done.add(k[:-4]); n += 1
+                    if not r.get("IsTruncated"):
+                        break
+                    tok = r["NextContinuationToken"]
+            print(f"resume: {n:,} panels already across {len(targets)} bucket(s)",
+                  flush=True)
             jobs = [j for j in jobs if j["sku"] not in done]
 
     reader = None
@@ -300,9 +321,15 @@ def main():
             path = os.path.join(a.out, j["sku"] + a.tag + ".jpg")
             im.save(path, "JPEG", quality=92)
             if s3 is not None:
-                key = f"{a.r2_prefix.strip('/')}/{j['sku']}{a.tag}.jpg"
+                if route:
+                    st = route(j["sku"])
+                    bkt = st["bucket"]
+                    key = f"{st['key_prefix'].strip('/')}/{j['sku']}{a.tag}.jpg"
+                else:
+                    bkt = bucket
+                    key = f"{a.r2_prefix.strip('/')}/{j['sku']}{a.tag}.jpg"
                 with open(path, "rb") as fh:
-                    s3.put_object(Bucket=bucket, Key=key, Body=fh.read(),
+                    s3.put_object(Bucket=bkt, Key=key, Body=fh.read(),
                                   ContentType="image/jpeg")
                 os.remove(path)        # the pod disk will not hold a million
             df.write(j["sku"] + "\n")
