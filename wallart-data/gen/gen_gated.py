@@ -27,16 +27,35 @@ MIN_AREA = 0.0012          # share of the panel
 MIN_CHARS = 2
 
 
-def text_marks(reader, img):
+def text_marks(reader, img, keep=1.0):
+    """Read the WHOLE panel, then ignore what the crop is about to remove.
+
+    This is read on the uncropped generation, not on the cropped panel, and
+    the difference is not academic. A screenprint of Antigua Guatemala went
+    into a store bucket with GUATEMALA across the foot in inch-high caps.
+    The gate had run after the crop, so all it saw was the top two
+    millimetres of a row of letters - mutilated shapes that OCR will not
+    read confidently - while the full letters sat just below the cut. Text
+    that STRADDLES the crop line was invisible to a gate that only ever saw
+    one side of it.
+
+    So: detect on the full image, where the letters are whole, and then
+    reject only the marks that reach into the part being kept. A signature
+    lying entirely in the discarded tenth is still not a rejection, which is
+    the whole reason the crop exists.
+    """
     import numpy as np
     a = np.asarray(img.convert("RGB"))
     H, W = a.shape[:2]
+    cut = H * keep
     out = []
     for box, txt, conf in reader.readtext(a):
         t = "".join(c for c in txt if c.isalnum())
         if len(t) < MIN_CHARS or conf < MIN_CONF:
             continue
         xs = [p[0] for p in box]; ys = [p[1] for p in box]
+        if min(ys) >= cut:            # wholly inside the discarded strip
+            continue
         area = (max(xs) - min(xs)) * (max(ys) - min(ys)) / (W * H)
         if area >= MIN_AREA:
             out.append((txt, round(float(conf), 2), round(area, 4)))
@@ -67,6 +86,36 @@ def busyness(img):
     a = np.asarray(img.convert("L").resize((256, 384)), dtype=np.int16)
     t = a.reshape(24, 16, 16, 16).swapaxes(1, 2).reshape(-1, 256)
     return float(((t.max(1) - t.min(1)) > 12).mean())
+
+
+def backup_meta(s3, bucket, a):
+    """Copy the run's metadata to R2 beside the panels.
+
+    Every panel goes to R2 the moment it is made and is then deleted from the
+    container disk, so the ARTWORK already survives any pod loss. The
+    metadata did not: manifest.jsonl says which SKU is which subject,
+    technique, composition, palette and seed, and it lived only on that disk.
+
+    Most of it is recomputable - a SKU is a hash of the job, so re-expanding
+    the grid recovers everything except the seed and the OCR marks - but
+    "most of it is recomputable" is not a backup, and a pod that vanishes
+    should not cost anything that cannot be bought back for a fraction of a
+    penny. A failure here is reported and never stops the run; losing the
+    backup is not a reason to stop making panels.
+    """
+    if s3 is None or not bucket:
+        return
+    tag = f"{(a.part or 'all').replace('/', 'of')}-{os.environ.get('RUNPOD_POD_ID', 'nopod')}"
+    for fn in ("manifest.jsonl", "done.txt", "rejects.jsonl"):
+        fp = os.path.join(a.out, fn)
+        if not os.path.exists(fp):
+            continue
+        try:
+            with open(fp, "rb") as fh:
+                s3.put_object(Bucket=bucket, Key=f"wallart/manifests/{tag}-{fn}",
+                              Body=fh.read(), ContentType="text/plain")
+        except Exception as e:
+            print(f"  manifest backup failed: {e}", flush=True)
 
 
 def sku_for(job, prefix="WA"):
@@ -296,7 +345,7 @@ def main():
         print("routing by store: " + ", ".join(
             f"{x['bucket']}={x['listings']:,}" for x in allocate.PLAN["stores"]), flush=True)
 
-    s3 = bucket = None
+    s3 = bucket = mani_bucket = None
     if a.r2_prefix or a.stores:
         import boto3
         from botocore.config import Config
@@ -321,6 +370,7 @@ def main():
                 print("R2_TLS_INTERCEPTED_ON_THIS_HOST", flush=True)
                 raise SystemExit(3)
             raise
+        mani_bucket = (allocate.PLAN["stores"][0]["bucket"] if route else bucket)
         if not route:
             print(f"uploading to s3://{bucket}/{a.r2_prefix.strip('/')}/", flush=True)
         # THE RESUME. done.txt lives on container disk and dies with the pod,
@@ -364,6 +414,7 @@ def main():
     df = open(donep, "a")
     mf = open(os.path.join(a.out, "manifest.jsonl"), "a", encoding="utf-8")
     rf = open(os.path.join(a.out, "rejects.jsonl"), "a", encoding="utf-8")
+    batches = 0
 
     queue = list(jobs)
     attempt = {j["sku"]: 0 for j in jobs}
@@ -377,11 +428,16 @@ def main():
                     generator=[torch.Generator("cpu").manual_seed(s) for s in gens_seed]
                     ).images
         gens += len(chunk)
+        # The OCR gate reads the FULL generation; only the saved copy is
+        # cropped. See text_marks(): a title straddling the crop line is
+        # unreadable on the cropped panel and obvious on the whole one.
+        full = imgs
         if a.crop_bottom > 0:
             imgs = [im.crop((0, 0, im.width, int(im.height * (1 - a.crop_bottom))))
                     for im in imgs]
-        for (j, im, sd) in zip(chunk, imgs, gens_seed):
-            marks = text_marks(reader, im) if reader else []
+        for (j, im, sd, whole) in zip(chunk, imgs, gens_seed, full):
+            marks = (text_marks(reader, whole, keep=1 - a.crop_bottom)
+                     if reader else [])
             # An almost-empty sheet is not a cheap minimal composition, it is
             # a failed generation, and it is the one defect the OCR gate
             # cannot see. Same treatment: retry on a different seed.
@@ -421,6 +477,18 @@ def main():
                                  ensure_ascii=False) + "\n")
             kept += 1
         df.flush(); mf.flush(); rf.flush()
+        # THE MANIFEST IS NOT SAFE ON THE POD. Every panel goes to R2 the
+        # moment it is made and is then deleted from the container disk, so
+        # the artwork survives any pod loss - but manifest.jsonl, which says
+        # which SKU is which subject, technique, composition, palette and
+        # seed, lived only on that disk and died with it. Most of it is
+        # recomputable, because a SKU is a hash of the job and re-expanding
+        # the grid recovers everything but the seed and the OCR marks. "Most
+        # of it" is not a backup. It goes to R2 too, every 25 batches, and a
+        # pod that is lost now costs at most 25 batches of metadata.
+        batches += 1
+        if batches % 25 == 0:
+            backup_meta(s3, mani_bucket, a)
         el = time.time() - t0
         print(f"  kept {kept:,} / {gens:,} generated  {gens/el:.2f} img/s  "
               f"reject {rejected/max(gens,1):.0%}  {el/60:.1f} min", flush=True)
@@ -434,6 +502,7 @@ def main():
     # GEN_DONE, so the block looked complete when it was 98.1% complete. An
     # unfinished shard must be loud, because the only other way to notice is
     # to count the bucket and subtract.
+    backup_meta(s3, mani_bucket, a)          # always, finished or not
     left = len(queue)
     if left:
         print(f"UNFINISHED: {left:,} jobs left in this shard - "
