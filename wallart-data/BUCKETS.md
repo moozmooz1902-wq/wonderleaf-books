@@ -231,3 +231,32 @@ upload can proceed on these URLs today.
 The lesson is the same one the duplicate audit taught: measure the thing
 before describing its consequences. One three-minute test would have
 avoided sending the seller to buy a domain he may not need.
+
+
+---
+
+## Which community GPUs actually work, 11 Oct
+
+Sixteen community pods in one evening, same image, same start command:
+
+    RTX A4500   4 / 4  worked
+    RTX 3090    2 / 2  worked
+    RTX 4090    0 / 7  CUDA_DEAD
+    L40S        0 / 3  CUDA_DEAD
+
+On the dead ones `nvidia-smi` answers correctly, the card is listed, and
+every `/dev/nvidia*` node including `nvidia-uvm` is present - and torch
+still cannot initialise CUDA after forty retries over 200 seconds. It is
+not a race and it is not the image: the A4500 and 3090 pods come up with
+"GPU READY after 1 tries" from the identical script.
+
+This costs real money, because a dead pod bills at full rate while
+producing nothing, and RunPod reports it as RUNNING. `relaunch.sh` now
+asks only for A4500, A5000, 3090 and A4000 on community, and the
+`CUDA_DEAD_ON_THIS_HOST` guard in launch_gen.py is what makes the failure
+visible within four minutes instead of after a 24 GB model download.
+
+The trade is capacity: those card types are scarcer, so fewer shards run
+at once. Slower, and roughly a third of the price - 5 pods at about
+$1.00/hour against $3.60/hour for the mixed set, for work that is not
+noticeably slower in aggregate because the dead pods were doing none of it.
