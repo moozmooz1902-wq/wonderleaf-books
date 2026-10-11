@@ -545,3 +545,40 @@ Also worth knowing: the top-up run's reject rate was 9.9%, against ~2% on
 every full shard. Small sample, and the leftovers were the tail of one
 shard rather than a fair mix, so it is not a trend - but it is a reminder
 that the 2% figure is an average over a varied mix, not a floor.
+
+---
+
+# Which R2 buckets exist, and why the probe cannot answer it
+
+The seller keeps one bucket per eBay account and named eight: Lunar, KMS,
+Lux, Via Art, Mercury, USM, Nebula, M12K. The stored token cannot
+`ListBuckets`, so `r2_buckets.py` tried `HeadBucket` on 47 spellings
+instead, on the theory that S3 answers 404 for a bucket that does not exist
+and 403 for one that exists but is out of scope.
+
+    tshirt-m12k   EXISTS, token can access
+    tshirt-usm    EXISTS, token can access
+    everything else                        404
+
+**That 404 is not evidence of absence.** R2 appears to answer 404 rather
+than 403 for buckets outside a token's scope, so the probe can only see
+what the token already covers. The other six may well exist. The result is
+reported as "cannot tell", not "not there".
+
+Two things it did settle:
+
+* The convention is `tshirt-<account>`, so the wall-art buckets would be
+  `wallart-lunar`, `wallart-m12k` and so on.
+* The token covers **two** accounts, not one, so it is scoped to a list of
+  buckets rather than to a single bucket.
+
+What unblocks it: an `Object Read & Write` token scoped to **all buckets in
+the account**, which is what production needs anyway when panels have to be
+written to five or more buckets. Then listing is one call and no token has
+to be re-issued each time a store is added.
+
+Still separate, still the real blocker: every bucket that serves listing
+images needs a **custom domain**. That includes `tshirt-m12k` and
+`tshirt-usm`, which are presumably serving live t-shirt listings off
+rate-limited `r2.dev` URLs today - the same `error 1015` that corrupted
+7,142 of 12,834 downloads during the audit.
