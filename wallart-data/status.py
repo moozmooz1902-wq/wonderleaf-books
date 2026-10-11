@@ -11,8 +11,19 @@ TARGET_LISTINGS = 5_000_000
 COLOURWAYS = 4
 PROCEDURAL = 1_250_000                 # drawn in code, no GPU
 BASES_NEEDED = (TARGET_LISTINGS - PROCEDURAL) / COLOURWAYS
-RATE = 1601                            # measured generations/hour/GPU
 REJECT = 0.12
+
+# Measured per card on the real job, not quoted. What matters is dollars per
+# image, and the cheap slow card wins: an A4500 is less than half the speed
+# of a secure 4090 and still 2.2x cheaper per image.
+#   card                        $/hr    gen/hr   $/image
+CARDS = {
+    "RTX A4500 20GB community": (0.19,    720),
+    "RTX 4090 24GB secure":     (0.89,   1512),
+    "RTX 4090 24GB community":  (0.34,   1601),   # when any is available
+    "A40 48GB secure":          (0.59,    873),
+}
+RATE = CARDS["RTX 4090 24GB secure"][1]
 
 
 def curl(path):
@@ -59,9 +70,12 @@ if __name__ == "__main__":
     print(f"   base images needed       {BASES_NEEDED:,.0f}")
     print(f"   generations (with retries){gens_total:,.0f}")
     print(f"   GPU-hours                {hours_total:,.0f}")
-    for label, rate in (("community $0.34", 0.34), ("secure $0.89", 0.89)):
-        print(f"      on {label:<16} ${hours_total*rate:,.0f}"
-              f"   = {hours_total*rate/100:.1f} x $100 top-ups")
+    print(f"\n   {'card':<28}{'$/hr':>6}{'gen/hr':>8}{'$/image':>10}"
+          f"{'GPU-hrs':>9}{'TOTAL':>8}{'x $100':>8}")
+    for name, (price, rate) in sorted(CARDS.items(), key=lambda kv: kv[1][0] / kv[1][1]):
+        h = gens_total / rate
+        print(f"   {name:<28}{price:>6.2f}{rate:>8,}{price/rate:>10.6f}"
+              f"{h:>9,.0f}{'$%.0f' % (h*price):>8}{h*price/100:>8.1f}")
 
     print(f"\nRIGHT NOW")
     print(f"   base images in the bucket {done:,}  "
@@ -73,9 +87,9 @@ if __name__ == "__main__":
     if on:
         print("      " + ", ".join(f"{p['id']} ({p.get('name')})" for p in on))
 
-    print(f"\nWHAT THE NEXT $100 BUYS")
-    for label, rate in (("community $0.34/hr", 0.34), ("secure $0.89/hr", 0.89)):
-        h = 100 / rate
-        b = h * RATE * (1 - REJECT)
-        print(f"   {label:<20} {h:,.0f} GPU-hours -> {b:,.0f} base images "
-              f"-> {b*COLOURWAYS:,.0f} listings")
+    print(f"\nWHAT ONE $100 TOP-UP BUYS")
+    for name, (price, rate) in sorted(CARDS.items(), key=lambda kv: kv[1][0] / kv[1][1]):
+        h = 100 / price
+        b = h * rate * (1 - REJECT)
+        print(f"   {name:<28}{h:>7,.0f} GPU-hours  {b:>9,.0f} base images"
+              f"  {b*COLOURWAYS:>11,.0f} listings")
