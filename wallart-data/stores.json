@@ -15,7 +15,9 @@
         "white",
         "oak"
       ],
-      "existing_convention": "luxvia/<category>/<slug>/1-mockup-black.jpg"
+      "existing_convention": "luxvia/<category>/<slug>/1-mockup-black.jpg",
+      "pic_base": "https://pub-6004b56e7a254092b7bfec9a24cf9484.r2.dev",
+      "pic_base_verified": "2026-10-11 HTTP 200, image/jpeg, <1.5s"
     },
     {
       "name": "Posterleaf",
@@ -28,7 +30,9 @@
         "white",
         "oak"
       ],
-      "existing_convention": "store1/0000000_framed.jpg + _framed_oak + _framed_white + _raw"
+      "existing_convention": "store1/0000000_framed.jpg + _framed_oak + _framed_white + _raw",
+      "pic_base": "https://pub-0ad8669f94ce487499368f153cdb0c1b.r2.dev",
+      "pic_base_verified": "2026-10-11 HTTP 200, image/jpeg, <1.5s"
     },
     {
       "name": "Lunar",
@@ -39,7 +43,9 @@
       "frames": [
         "black"
       ],
-      "existing_convention": "store7/0000000_framed.jpg + _raw   (black only today)"
+      "existing_convention": "store7/0000000_framed.jpg + _raw   (black only today)",
+      "pic_base": "https://pub-1f879b9875164bf59a4806f4026100d0.r2.dev",
+      "pic_base_verified": "2026-10-11 HTTP 200, image/jpeg, <1.5s"
     },
     {
       "name": "Mercury",
@@ -52,7 +58,9 @@
         "white",
         "oak"
       ],
-      "existing_convention": "store2/0000000_framed.jpg + _framed_oak + _framed_white + _raw"
+      "existing_convention": "store2/0000000_framed.jpg + _framed_oak + _framed_white + _raw",
+      "pic_base": "https://pub-0393733d8d814d7395f37e1eaf666e62.r2.dev",
+      "pic_base_verified": "2026-10-11 HTTP 200, image/jpeg, <1.5s"
     }
   ],
   "not_used_for_generated_art": [
@@ -60,5 +68,6 @@
     "prism-rps",
     "orbit-uss",
     "velvet-ars"
-  ]
+  ],
+  "_pic_base_note": "r2.dev managed URLs, all four verified serving real JPEGs. They are rate limited under SUSTAINED bulk - 7,142 of 12,834 came back as Cloudflare error 1015 at roughly 70 req/s - but 600 distinct objects at 48 concurrent and 19 req/s passed 599/600. A custom domain removes the ceiling and is worth ~GBP 8/yr, but it is NOT a blocker on this evidence."
 }

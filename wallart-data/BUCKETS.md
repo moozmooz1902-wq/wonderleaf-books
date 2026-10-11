@@ -187,3 +187,47 @@ reshuffle means re-homing listings that are already live on eBay.
   where posterleaf, mercury and luxvia carry black, white and oak.
   `stores.json` matches each bucket as it is now; uploading all three
   everywhere is a one-line change if that is wanted.
+
+
+---
+
+## Public URLs, verified 11 Oct
+
+    lunar-kms           https://pub-1f879b9875164bf59a4806f4026100d0.r2.dev
+    luxvia-art          https://pub-6004b56e7a254092b7bfec9a24cf9484.r2.dev
+    mercury-usm         https://pub-0393733d8d814d7395f37e1eaf666e62.r2.dev
+    posterleaf-store1   https://pub-0ad8669f94ce487499368f153cdb0c1b.r2.dev
+
+All four fetched a real existing object: HTTP 200, `image/jpeg`, under
+1.5 s. Public access is on. These are now in `stores.json` as `pic_base`,
+which was empty on the other branch, so the eBay files finally have a
+picture URL to use.
+
+## CORRECTION: r2.dev is not the blocker I twice said it was
+
+Earlier notes, and two messages to the seller, said a custom domain was a
+**hard blocker** because r2.dev would break listing images. That was
+stated far more confidently than the evidence supported, and testing it
+properly shows it is wrong.
+
+What was actually measured:
+
+    600 distinct objects, 48 concurrent, 19 req/s    599 of 600 ok
+                                                     (1 curl connection error,
+                                                      no 1015 at all)
+    160 distinct objects, bursts to 32 concurrent    160 of 160 ok
+    12,834 distinct objects, ~70 req/s for 3 min     7,142 failed with 1015
+
+So the limit is a **sustained rate**, somewhere between 19 and 70 req/s -
+not a concurrency cap, and not something a normal fetch pattern meets. The
+original failure was caused by my own bulk download being unusually
+aggressive, and generalising from it to "eBay will break" was a leap.
+
+A custom domain is still worth having: Cloudflare documents r2.dev as a
+development URL, it removes the ceiling entirely, and a domain is about
+GBP 8/year. But it is a **nice to have, not a prerequisite**, and the
+upload can proceed on these URLs today.
+
+The lesson is the same one the duplicate audit taught: measure the thing
+before describing its consequences. One three-minute test would have
+avoided sending the seller to buy a domain he may not need.
