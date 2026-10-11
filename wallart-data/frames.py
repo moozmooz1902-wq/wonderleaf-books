@@ -56,7 +56,11 @@ def _grain(im, box):
         d.line([x, y, x, y + h], fill=(193 + v, 154 + v, 107 + v), width=1)
 
 
-DEFAULT_STYLE = "B"          # the seller picked B from the option sheet
+# The seller first picked B, then clarified that their frames have NO physical
+# mount - they are plain black mouldings. The white border people see is paper
+# around the printed image, so it belongs in the artwork (art_border.py) and
+# the mockup frames the whole sheet edge to edge. That is style A.
+DEFAULT_STYLE = "A"
 
 
 def mockup(art, colour="black", style=DEFAULT_STYLE):
