@@ -246,6 +246,20 @@ def main():
             aws_secret_access_key=os.environ["R2_SECRET_ACCESS_KEY"],
             config=Config(signature_version="s3v4", max_pool_connections=32),
             region_name="auto")
+        # Some community hosts sit behind a TLS-intercepting middlebox and
+        # every R2 call dies with "certificate verify failed: self-signed
+        # certificate". Verification is NOT disabled - that would hand the
+        # bucket's traffic to whatever is doing the intercepting. The pod
+        # says so and stops, the same way it does for a dead CUDA runtime,
+        # so it is relaunched elsewhere instead of billing while failing.
+        try:
+            s3.list_objects_v2(Bucket=(allocate.PLAN["stores"][0]["bucket"]
+                                       if route else bucket), MaxKeys=1)
+        except Exception as e:
+            if "CERTIFICATE_VERIFY_FAILED" in str(e) or "SSLError" in type(e).__name__:
+                print("R2_TLS_INTERCEPTED_ON_THIS_HOST", flush=True)
+                raise SystemExit(3)
+            raise
         if not route:
             print(f"uploading to s3://{bucket}/{a.r2_prefix.strip('/')}/", flush=True)
         # THE RESUME. done.txt lives on container disk and dies with the pod,
