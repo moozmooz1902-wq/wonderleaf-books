@@ -13,7 +13,7 @@ Every style below keeps that outer edge identical and varies only what happens
 INSIDE it, so the cropper is unaffected whichever is chosen.
 
     A  thin moulding, art to the edge      - modern, most art per listing
-    B  thin moulding + white mount         - gallery look
+    B  thin moulding + white mount         - CHOSEN by the seller, 11 Oct 2026
     C  wide moulding, art to the edge      - bolder, more substantial
     D  wide moulding + white mount         - most traditional
 
@@ -56,7 +56,10 @@ def _grain(im, box):
         d.line([x, y, x, y + h], fill=(193 + v, 154 + v, 107 + v), width=1)
 
 
-def mockup(art, colour="black", style="A"):
+DEFAULT_STYLE = "B"          # the seller picked B from the option sheet
+
+
+def mockup(art, colour="black", style=DEFAULT_STYLE):
     moulding, lip, grain = COLOURS[colour]
     fw = max(8, int(PW * STYLES[style][0]))
     mw = int(PW * STYLES[style][1])
