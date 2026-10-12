@@ -158,7 +158,7 @@ if __name__ == "__main__":
     # silently skipped.
     if any("gen_gated" in f for f in files):
         files += ["ip_check.py", "displate_brands.txt",
-                  "allocate.py", "stores.json"]
+                  "allocate.py", "stores.json", "quality_gate.py"]
     b64 = bundle(files)
     body = {"name": a.name, "imageName": a.image,
             # templateId carries the R2_* credentials the seller put on

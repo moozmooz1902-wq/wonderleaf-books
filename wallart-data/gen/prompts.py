@@ -221,6 +221,61 @@ RULES_CREATURE = ("flat fill, no gradient, no airbrushing, "
 EYES = ("exactly two eyes, both eyes clear and correctly placed, "
         "clean simple eyes")
 
+# Creatures that HAVE NO FACE, and what asking for eyes anyway produced.
+#
+# The eyes clause was being applied to every creature, and FLUX did as it
+# was told: a sea anemone with two human eyes, a fan coral with two eyes, a
+# limpet with cartoon eyes, a chambered nautilus with two big ones, krill
+# and an aphid colony as geometric blobs with eyes. Measured on 1,609
+# creature panels, these were most of the worst-scoring ones. Nothing was
+# wrong with the model; the prompt asked for eyes on an animal that has
+# none.
+#
+# Matched on words rather than listed by name, because the subject lists
+# will keep growing and a name list would quietly stop covering them.
+NO_FACE_WORDS = (
+    "coral", "anemone", "sponge", "jellyfish", "man o war", "comb jelly",
+    "salp", "krill", "plankton", "barnacle", "urchin", "sand dollar",
+    "starfish", "sea star", "brittle star", "basket star", "feather star",
+    "sea cucumber", "sea squirt", "tube worm", "tube worms",
+    "barnacles", "christmas tree worm",
+    "earthworm", "aphid colony", "limpet", "periwinkle", "mussel", "scallop",
+    "oyster", "cockle", "razor clam", "whelk", "snail shell", "nautilus",
+    "sea slug", "nudibranch", "sea hare", "mermaid's purse", "egg case",
+    "kelp", "sea grass", "seagrass", "stonewort", "maerl", "slime mould",
+    "lichen", "wasp nest", "honeycomb", "bird's nest", "fossil", "ammonite",
+    "trilobite", "shell",
+)
+
+
+# Things that CONTAIN one of those words and plainly do have a face. Plain
+# substring matching put the no-eyes wording on an oystercatcher, a
+# tortoiseshell cat, a barnacle goose and an australian kelpie. Word
+# boundaries fix three of those on their own - "oyster" does not end a word
+# inside "oystercatcher", nor "shell" inside "tortoiseshell", nor "kelp"
+# inside "kelpie" - and the goose needs saying.
+FACE_ANYWAY = ("barnacle goose", "oystercatcher", "shellduck", "shelduck",
+               "coral snake")   # a snake, and it has a face
+_NO_FACE_RX = None
+
+
+def has_face(subject):
+    global _NO_FACE_RX
+    s = (subject or "").lower()
+    if any(x in s for x in FACE_ANYWAY):
+        return True
+    if _NO_FACE_RX is None:
+        import re as _re
+        _NO_FACE_RX = _re.compile(
+            r"\b(" + "|".join(_re.escape(w) for w in NO_FACE_WORDS) + r")\b")
+    return not _NO_FACE_RX.search(s)
+
+
+# What to say instead. Saying nothing is not enough - "animal only" and a
+# portrait grammar still invite a face - so it is said plainly.
+NO_EYES = ("no face, no eyes, no features added, "
+           "the natural form only")
+
 
 def place_prompt(place, tech, gram, pal):
     return (f"{TECHNIQUE[tech]} of {place}, {GRAMMAR_PLACE[gram]}, "
@@ -233,8 +288,9 @@ def botanical_prompt(name, tech, gram, pal):
 
 
 def creature_prompt(name, tech, gram, pal):
+    eyes = EYES if has_face(name) else NO_EYES
     return (f"{TECHNIQUE[tech]} of a {name}, {GRAMMAR_CREATURE[gram]}, "
-            f"{PALETTE[pal]}, {EYES}, {RULES_CREATURE}")
+            f"{PALETTE[pal]}, {eyes}, {RULES_CREATURE}")
 
 
 def celestial_prompt(name, tech, gram, pal):

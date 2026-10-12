@@ -88,6 +88,24 @@ def busyness(img):
     return float(((t.max(1) - t.min(1)) > 12).mean())
 
 
+# Measured on 6,000 random panels from the live buckets, 12 Oct 2026.
+#
+# PEOPLE, all kinds. Of the eight highest-scoring panels six held real human
+# figures - a cyanotype whose white silhouettes came out as little people, a
+# street full of them, a row of silhouettes along the foot of a seaweed
+# scatter. 0.85 is the 98th percentile and flags about 2.3%. Recall is
+# worth more than precision here: a regenerated panel costs $0.0003 and a
+# listing with a person in it breaks the seller's rule outright.
+#
+# EYES, creature panels ONLY. Run over everything this check is noise - of
+# the 48 highest scores in the first scan, exactly one was an animal, and it
+# was really measuring how faceted the brushwork was. On creatures it works:
+# at 0.85 it flags about 2% of them, and what it flags is mostly invertebrates
+# that FLUX gave a face to.
+QUALITY_HUMAN = 0.85
+QUALITY_EYES = 0.85
+
+
 def backup_meta(s3, bucket, a):
     """Copy the run's metadata to R2 beside the panels.
 
@@ -259,6 +277,11 @@ def main():
     # A multiplier on BUSY_FLOOR, so 0 turns the emptiness gate off and 1.0
     # uses the measured floors. It costs about 5% more generations.
     ap.add_argument("--min-busy", type=float, default=1.0)
+    # The people and eyes gate. CLIP ViT-L/14 is about 1.7 GB and will not
+    # fit beside the NF4 transformer on a 16 GB card, so it runs on CPU
+    # while the GPU makes the next batch. Thresholds were measured, not
+    # chosen: see QUALITY_* below.
+    ap.add_argument("--clip-gate", type=int, default=1)
     # Generate taller than needed and throw the bottom away. Measured on 129
     # panels: 96% of the fake signatures and stray marks sit below 90% of the
     # panel height, so a 10% crop removes almost all of them for the cost of
@@ -342,6 +365,18 @@ def main():
     free = torch.cuda.mem_get_info()[0] / 2**30
     print(f"free vram {free:.0f} GB", flush=True)
     pipe.to("cuda") if (a.quant == "nf4" or free >= 40) else pipe.enable_model_cpu_offload()
+
+    gate = None
+    if a.clip_gate:
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import quality_gate
+            t_gate = time.time()
+            gate = quality_gate.Gate(device="cpu")
+            print(f"people/eyes gate ready on cpu in {time.time()-t_gate:.0f}s",
+                  flush=True)
+        except Exception as e:
+            print(f"people/eyes gate UNAVAILABLE: {e}", flush=True)
 
     route = None
     if a.stores:
@@ -446,6 +481,22 @@ def main():
             # An almost-empty sheet is not a cheap minimal composition, it is
             # a failed generation, and it is the one defect the OCR gate
             # cannot see. Same treatment: retry on a different seed.
+            # People, and eyes on creatures that have a face. Both are
+            # rejections like any other, retried on a fresh seed.
+            if not marks and gate is not None:
+                try:
+                    import prompts as _P
+                    sc = gate.scores([im])
+                    h = float(sc["human"][0])
+                    if h >= QUALITY_HUMAN:
+                        marks = [["PEOPLE", round(h, 3), QUALITY_HUMAN]]
+                    elif (j.get("kind") == "creature"
+                          and _P.has_face(j.get("subject", ""))):
+                        e = float(sc["eyes"][0])
+                        if e >= QUALITY_EYES:
+                            marks = [["EYES", round(e, 3), QUALITY_EYES]]
+                except Exception as e:
+                    print(f"  gate error, panel kept: {e}", flush=True)
             if not marks and a.min_busy:
                 floor = (BUSY_FLOOR["minimal"] if j.get("gram") in MINIMAL_GRAMS
                          else BUSY_FLOOR["other"]) * a.min_busy
