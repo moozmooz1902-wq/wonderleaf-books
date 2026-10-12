@@ -475,28 +475,38 @@ def main():
         if a.crop_bottom > 0:
             imgs = [im.crop((0, 0, im.width, int(im.height * (1 - a.crop_bottom))))
                     for im in imgs]
-        for (j, im, sd, whole) in zip(chunk, imgs, gens_seed, full):
-            marks = (text_marks(reader, whole, keep=1 - a.crop_bottom)
-                     if reader else [])
+        # The text gate first, on every panel in the batch.
+        all_marks = [text_marks(reader, w, keep=1 - a.crop_bottom) if reader else []
+                     for w in full]
+        # Then people, and eyes on creatures that have a face - in ONE call
+        # for the whole batch. Scoring the four panels one at a time cost
+        # 12.5% of throughput on an A4500; CLIP on CPU at this size is
+        # mostly per-call overhead, so the batch is close to free by
+        # comparison. Only panels the text gate has not already rejected
+        # are scored. A failure here is reported and keeps the batch -
+        # losing the gate is not a reason to stop making panels.
+        if gate is not None:
+            need = [i for i, m in enumerate(all_marks) if not m]
+            if need:
+                try:
+                    import prompts as _P
+                    sc = gate.scores([imgs[i] for i in need])
+                    for pos, i in enumerate(need):
+                        jj = chunk[i]
+                        h = float(sc["human"][pos])
+                        if h >= QUALITY_HUMAN:
+                            all_marks[i] = [["PEOPLE", round(h, 3), QUALITY_HUMAN]]
+                        elif (jj.get("kind") == "creature"
+                              and _P.has_face(jj.get("subject", ""))):
+                            e = float(sc["eyes"][pos])
+                            if e >= QUALITY_EYES:
+                                all_marks[i] = [["EYES", round(e, 3), QUALITY_EYES]]
+                except Exception as e:
+                    print(f"  gate error, batch kept: {e}", flush=True)
+        for (j, im, sd, whole, marks) in zip(chunk, imgs, gens_seed, full, all_marks):
             # An almost-empty sheet is not a cheap minimal composition, it is
             # a failed generation, and it is the one defect the OCR gate
             # cannot see. Same treatment: retry on a different seed.
-            # People, and eyes on creatures that have a face. Both are
-            # rejections like any other, retried on a fresh seed.
-            if not marks and gate is not None:
-                try:
-                    import prompts as _P
-                    sc = gate.scores([im])
-                    h = float(sc["human"][0])
-                    if h >= QUALITY_HUMAN:
-                        marks = [["PEOPLE", round(h, 3), QUALITY_HUMAN]]
-                    elif (j.get("kind") == "creature"
-                          and _P.has_face(j.get("subject", ""))):
-                        e = float(sc["eyes"][0])
-                        if e >= QUALITY_EYES:
-                            marks = [["EYES", round(e, 3), QUALITY_EYES]]
-                except Exception as e:
-                    print(f"  gate error, panel kept: {e}", flush=True)
             if not marks and a.min_busy:
                 floor = (BUSY_FLOOR["minimal"] if j.get("gram") in MINIMAL_GRAMS
                          else BUSY_FLOOR["other"]) * a.min_busy
