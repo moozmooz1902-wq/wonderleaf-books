@@ -24,7 +24,12 @@ TECHNIQUE = {
  "ink_wash":      "black ink wash painting, hard dry edges, deliberate splatter dots",
  "pastel":        "soft pastel drawing, visible grain, scribbly open fill",
  "collage":       "cut paper collage, flat torn-edge shapes layered in planes",
- "screenprint":   "flat screen-printed poster, simplified geometric shapes, bold flat colour",
+ # "poster" was in this description until 12 Oct, and it was the second
+ # word CLIP read on every screenprint. A travel poster IS a piece of
+ # typography - that is exactly why the G6_poster grammar was deleted on
+ # 11 Oct - so asking for one and then asking for no lettering is asking
+ # for two different pictures.
+ "screenprint":   "flat screen-printed artwork, hand-pulled ink, simplified geometric shapes, bold flat colour",
  # Added 11 Oct 2026 to widen the grid without leaning harder on any one
  # subject. Each names a physical artefact nobody else in the measured
  # competitor corpus is printing much of, and each looks unmistakably unlike
@@ -208,12 +213,26 @@ _CLEAN = ("no text, no lettering, no words, no letters, no numbers, "
          "no signature, no handwriting, no monogram, no watermark, "
           "unsigned, clean empty corners")
 
+# _CLEAN USED TO LIVE AT THE END OF THESE, AND THAT WAS THE BUG.
+#
+# FLUX reads a prompt with two encoders: T5 takes 256 tokens, CLIP takes
+# 77. A full prompt is about 82 words, and the no-text clause started at
+# word 60 - past CLIP's limit. The pod logs said so in plain language on
+# every batch, "the following part of your input was truncated because
+# CLIP can only handle sequences up to 77 tokens", and the text it printed
+# as truncated was exactly "no text, no lettering, no words...". I read
+# those lines for two days as noise.
+#
+# So CLIP, which carries the global look, never saw the instruction not to
+# write on the picture - while "poster" was the second word it did see. The
+# clause now goes immediately after the subject, inside the window, and
+# only the wordier composition rules are left to trail off the end where
+# T5 still reads them.
 RULES = ("flat fill, no gradient, no airbrushing, "
-         "the subject sharp and the surroundings flat, "
-         + NO_PEOPLE + ", " + _CLEAN)
+         "the subject sharp and the surroundings flat, " + NO_PEOPLE)
 RULES_CREATURE = ("flat fill, no gradient, no airbrushing, "
                   "the subject sharp and the surroundings flat, "
-                  + NO_PEOPLE_CREATURE + ", " + _CLEAN)
+                  + NO_PEOPLE_CREATURE)
 
 # Eyes are the other giveaway, and only creatures have them. Asking for them
 # plainly and once beats any amount of negative wording, which schnell
@@ -278,34 +297,34 @@ NO_EYES = ("no face, no eyes, no features added, "
 
 
 def place_prompt(place, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {place}, {GRAMMAR_PLACE[gram]}, "
-            f"{PALETTE[pal]}, {RULES}")
+    return (f"{TECHNIQUE[tech]} of {place}, {_CLEAN}, "
+            f"{GRAMMAR_PLACE[gram]}, {PALETTE[pal]}, {RULES}")
 
 
 def botanical_prompt(name, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {name}, {GRAMMAR_BOTANICAL[gram]}, "
-            f"{PALETTE[pal]}, {RULES}")
+    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, "
+            f"{GRAMMAR_BOTANICAL[gram]}, {PALETTE[pal]}, {RULES}")
 
 
 def creature_prompt(name, tech, gram, pal):
     eyes = EYES if has_face(name) else NO_EYES
-    return (f"{TECHNIQUE[tech]} of a {name}, {GRAMMAR_CREATURE[gram]}, "
-            f"{PALETTE[pal]}, {eyes}, {RULES_CREATURE}")
+    return (f"{TECHNIQUE[tech]} of a {name}, {_CLEAN}, "
+            f"{GRAMMAR_CREATURE[gram]}, {PALETTE[pal]}, {eyes}, {RULES_CREATURE}")
 
 
 def celestial_prompt(name, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {name}, {GRAMMAR_CELESTIAL[gram]}, "
-            f"{PALETTE[pal]}, {RULES}")
+    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, "
+            f"{GRAMMAR_CELESTIAL[gram]}, {PALETTE[pal]}, {RULES}")
 
 
 def stilllife_prompt(name, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {name}, {GRAMMAR_STILLLIFE[gram]}, "
-            f"{PALETTE[pal]}, {RULES}")
+    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, "
+            f"{GRAMMAR_STILLLIFE[gram]}, {PALETTE[pal]}, {RULES}")
 
 
 def architecture_prompt(name, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {name}, {GRAMMAR_ARCH[gram]}, "
-            f"{PALETTE[pal]}, {RULES}")
+    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, "
+            f"{GRAMMAR_ARCH[gram]}, {PALETTE[pal]}, {RULES}")
 
 
 def build(places, creatures, limit=None, seed=11):
