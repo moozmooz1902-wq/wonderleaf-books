@@ -11,19 +11,35 @@ Measured 11 Oct 2026, 22:50 UTC, twelve live shards:
     burn            $2.12/hour
     output          7,672 kept panels/hour
     so              $0.000276 a kept panel
-    spent to date   $52.64   (includes the t-shirt work and the failed
+    spent to date   $73.96   (includes the t-shirt work and the failed
                               experiments, not just this run)
-    done            41,599 base images of the 960,000 pool
+    done            107,000 base images of the 960,000 pool (estimated from
+                    the exact 82,646 at 05:00 UTC plus the measured rate)
 """
 BURN, RATE = 2.12, 7672          # $/hour and kept panels/hour, measured
-SPENT, DONE = 52.64, 41_599
+SPENT, DONE = 73.96, 107_000
 POOL = 960_000
 COLOURWAYS, PROCEDURAL = 4, 1_250_000
 
-# Two gates were added after these twelve pods started, so they are not in
-# the measured rate. Both throw work away on purpose and both are worth it.
-EMPTINESS = 0.050                # measured on the 141-panel eval: 7 of 141
-CLIPPED_TEXT = 0.010             # the straddling-title class, estimated
+# The full gate stack, measured on 219 generations through an RTX A4500,
+# twice, with identical results both times because the seeds are derived
+# from the SKU:
+#
+#     TEXT     7   3.2%    the only gate the twelve pods carry today
+#     EMPTY    7   3.2%
+#     PEOPLE   4   1.8%
+#     EYES     1   0.5%
+#     total   19   8.7%
+#
+# So the fleet's measured rate, which already nets out text rejections at
+# about 3.2%, has to lose a further 5.5 points of keep rate AND some
+# throughput: the same card does 0.216 img/s with no gates and 0.18 to 0.19
+# with all four. Batching the CLIP call across the chunk did not help - the
+# cost is the model's forward pass, not the per-call overhead - so it is
+# taken as real.
+GATE_KEEP = 1 - 0.087            # keep rate with all four gates
+OLD_KEEP = 1 - 0.032             # keep rate already inside the measured rate
+GATE_SPEED = 0.185 / 0.216       # throughput, gated against ungated
 
 PANEL_KB = 157                   # measured over 189 real panels
 R2_PER_GB_MONTH = 0.015
@@ -33,7 +49,7 @@ SWEEP_GPU_HOURS = 14             # the owed text sweep over the finished set
 
 def main():
     per = BURN / RATE
-    per_gated = per * (1 + EMPTINESS + CLIPPED_TEXT)
+    per_gated = per / GATE_SPEED / (GATE_KEEP / OLD_KEEP)
     left = POOL - DONE
     gpu_left = left * per_gated
     cpu = CPU_CORE_HOURS / CPU_CORES * CPU_PER_HR
@@ -46,8 +62,8 @@ def main():
           f"{POOL:,} base images at {COLOURWAYS} colourways\n")
     print(f"   measured now          ${per:.6f} a panel  "
           f"({BURN:.2f}/hr over {RATE:,}/hr)")
-    print(f"   with the two new gates ${per_gated:.6f} a panel  "
-          f"(+{EMPTINESS:.0%} empty, +{CLIPPED_TEXT:.0%} clipped text)\n")
+    print(f"   with all four gates    ${per_gated:.6f} a panel  "
+          f"({(1-GATE_SPEED):.0%} slower, keep {GATE_KEEP:.1%} not {OLD_KEEP:.1%})\n")
     print(f"   already spent                       ${SPENT:>7.2f}")
     print(f"   GPU for the remaining {left:,}     ${gpu_left:>7.2f}")
     print(f"   CPU stage, {CPU_CORE_HOURS} core-hours           ${cpu:>7.2f}")
@@ -65,7 +81,7 @@ def main():
                               ("RTX A4500 $0.19, 776/hr", 0.19, 776),
                               ("RTX A4000 $0.17, 576/hr  <- today", 0.17, 576),
                               ("secure 4090 $0.89, 1,394/hr", 0.89, 1394)):
-        p = price / rate * (1 + EMPTINESS + CLIPPED_TEXT)
+        p = price / rate / GATE_SPEED / (GATE_KEEP / OLD_KEEP)
         print(f"      {name:<36} ${SPENT + left * p + cpu + sweep:>7.0f}")
 
 
