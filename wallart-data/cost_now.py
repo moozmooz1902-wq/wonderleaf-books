@@ -11,13 +11,12 @@ Measured 11 Oct 2026, 22:50 UTC, twelve live shards:
     burn            $2.12/hour
     output          7,672 kept panels/hour
     so              $0.000276 a kept panel
-    spent to date   $73.96   (includes the t-shirt work and the failed
+    spent to date   $94.27   (includes the t-shirt work and the failed
                               experiments, not just this run)
-    done            107,000 base images of the 960,000 pool (estimated from
-                    the exact 82,646 at 05:00 UTC plus the measured rate)
+    done            155,971 base images of the 960,000 pool, counted
 """
 BURN, RATE = 2.12, 7672          # $/hour and kept panels/hour, measured
-SPENT, DONE = 73.96, 107_000
+SPENT, DONE = 94.27, 155_971
 POOL = 960_000
 COLOURWAYS, PROCEDURAL = 4, 1_250_000
 
@@ -37,7 +36,11 @@ COLOURWAYS, PROCEDURAL = 4, 1_250_000
 # with all four. Batching the CLIP call across the chunk did not help - the
 # cost is the model's forward pass, not the per-call overhead - so it is
 # taken as real.
-GATE_KEEP = 1 - 0.087            # keep rate with all four gates
+# 0.087 was the bench figure on 219 panels of OLD material. Measured on
+# the live fleet after the 12 Oct fixes, over 476 generations of the work
+# that is actually LEFT: 19%, of which TEXT 12.0, EMPTY 4.4, PEOPLE 2.5.
+# Text is the one still above where it should be.
+GATE_KEEP = 1 - 0.19             # keep rate with all four gates, measured live
 OLD_KEEP = 1 - 0.032             # keep rate already inside the measured rate
 GATE_SPEED = 0.185 / 0.216       # throughput, gated against ungated
 
