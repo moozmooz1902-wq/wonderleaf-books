@@ -91,6 +91,18 @@ for bkt,pre in STORES:
         if not r.get("IsTruncated"): break
         tok=r["NextContinuationToken"]
 print("listed", len(items), flush=True)
+# ONLY_SKUS, when not empty, restricts the sample to those SKUs. The first
+# run showed why this is needed: of the 48 highest EYES scores, exactly ONE
+# was a creature - 25 were places and 15 botanical. Asking "is this an
+# animal with three eyes or an animal with two" about a picture with no
+# animal in it is not a question, and the softmax over those captions is
+# noise. It fired on palette-knife and collage work, because faceted,
+# fragmented paint reads to CLIP as "distorted and wrong". The eyes check
+# is only meaningful on creature panels.
+ONLY = set(json.loads(os.environ.get("ONLY_SKUS", "[]")))
+if ONLY:
+    items = [it for it in items if it[1].rsplit("/", 1)[-1][:-4] in ONLY]
+    print("restricted to", len(items), flush=True)
 random.Random(11).shuffle(items)
 items = items[:SAMPLE_N]
 
@@ -127,7 +139,14 @@ for i in range(0,len(pairs),B):
         sc[name]+= list(pr[:,:nf].sum(axis=1).astype(float))
     if i%480==0: print("scored",i,flush=True)
 
-out={"n":len(skus)}
+# Every score, keyed by SKU. The first run only brought back the worst 48
+# and that was not enough: attributing them locally showed the EYES check
+# was scoring almost nothing but landscapes, and there was no way to see
+# what it did on creatures without the full list. Six thousand rows of
+# {sku: [human, eyes]} is a 300 KB file.
+out={"n":len(skus),
+     "all":{s_: [round(float(sc["human"][i]),4), round(float(sc["eyes"][i]),4)]
+            for i, s_ in enumerate(skus)}}
 for name in sc:
     a=np.array(sc[name])
     out[name]={"mean":round(float(a.mean()),4),
