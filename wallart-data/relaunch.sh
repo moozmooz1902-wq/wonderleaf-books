@@ -43,7 +43,14 @@ MAXHR=0.32
 # 60k and 70k characters. seed_assets.py puts it here; re-run that after
 # any change to the subject lists or the pods will build the OLD grid.
 JOBS_URL="https://pub-4b710c8610a84acc8fad1513f48132fd.r2.dev/wallart/assets/subjects.json"
-EXTRA="--batch 4 --width 704 --height 1008 --quant nf4 --retries 2 --pool 960000 --part $K/$N --stores stores.json --resume --max-hours 10"
+# CLIP_GATE=0 in the environment turns the people/eyes gate off for every
+# shard this script launches. Added 12 Oct when three shards relaunched
+# with it came up rejecting 100% of panels while the nine older ones
+# stayed at 8-10%; the switch is here so the fleet can keep running at
+# the known-good behaviour while that is diagnosed, rather than having
+# to choose between a broken gate and no shards.
+CLIP="${CLIP_GATE:-1}"
+EXTRA="--batch 4 --width 704 --height 1008 --quant nf4 --retries 2 --pool 960000 --part $K/$N --stores stores.json --resume --clip-gate $CLIP --max-hours 10"
 for GPUS in "$TIER1" "$TIER2"; do
   CLOUD=COMMUNITY
   OUT=$(python3 launch_gen.py --name "wa-v3-$K" --cloud $CLOUD --gpu "$GPUS" --template vbsgwyibn1 \
