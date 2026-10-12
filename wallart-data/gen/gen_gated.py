@@ -54,11 +54,24 @@ def text_marks(reader, img, keep=1.0):
         if len(t) < MIN_CHARS or conf < MIN_CONF:
             continue
         xs = [p[0] for p in box]; ys = [p[1] for p in box]
-        if min(ys) >= cut:            # wholly inside the discarded strip
+        # Judge what SURVIVES the crop, not what was generated. Reading the
+        # whole panel is right - a title straddling the cut is unreadable on
+        # the cropped copy - but rejecting on the mark's full size was an
+        # over-correction: a signature sitting at 88-96% of the height keeps
+        # only a two-percent sliver after the bottom tenth goes, and that
+        # sliver is not what anyone will see. So the box is clipped to the
+        # kept area and MIN_AREA is applied to what is left of it.
+        top, bot = min(ys), min(max(ys), cut)
+        if bot <= top:                # wholly inside the discarded strip
             continue
-        area = (max(xs) - min(xs)) * (max(ys) - min(ys)) / (W * H)
+        area = (max(xs) - min(xs)) * (bot - top) / (W * cut)
         if area >= MIN_AREA:
-            out.append((txt, round(float(conf), 2), round(area, 4)))
+            # y is where the mark sits, as a fraction of the KEPT height.
+            # Without it a rejection record says what was read but not
+            # where, and "is this a title across the picture or speckle in
+            # the bottom corner" is the whole question.
+            out.append((txt, round(float(conf), 2), round(area, 4),
+                        round(top / cut, 2)))
     return out
 
 
