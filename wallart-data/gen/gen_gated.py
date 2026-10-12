@@ -66,7 +66,28 @@ def text_marks(reader, img, keep=1.0):
 # expanse of plain paper" is the whole brief for G8_minimal, so it cannot be
 # held to the same floor as a meadow.
 MINIMAL_GRAMS = {"G8_minimal", "B1_specimen", "C2_disc", "S2_single", "B5_single"}
-BUSY_FLOOR = {"minimal": 0.10, "other": 0.18}
+# RECALIBRATED 12 Oct, against the panels the first floor threw away.
+#
+# The first numbers, 0.10 and 0.18, were fitted to a 141-panel eval whose
+# median busyness was 52% - and that sample was nearly all old-grid
+# material. The work the fleet has LEFT is heavily the new kinds and the
+# flat techniques, which are legitimately flatter: screenprint's own median
+# is 28.9%. So the floor started rejecting 46% of generations, and three
+# shards came up at 100%.
+#
+# 80 of the rejected panels were regenerated with every gate off and looked
+# at (wallart-samples/17_called_empty.jpg). The bottom of that range is
+# genuinely failed - two dots on a blue field, a red smear, an unreadable
+# blob, all under 0.045. Everything from about 0.05 up is the minimal
+# poster the catalogue is partly MADE of: a pelican, a barred owl, a
+# collared dove, a quarter moon, a watering can, each small and centred on
+# a plain ground. Those sell. Throwing them away was the bug.
+#
+# Busyness cannot tell a tiny RECOGNISABLE subject from a tiny smear - that
+# is beyond what a contrast measure can see - so the floor is set where it
+# only catches the near-blank, and "small but legible" is allowed through.
+# At these numbers 4 of those 80 stay rejected, and they are the right 4.
+BUSY_FLOOR = {"minimal": 0.035, "other": 0.055}
 
 
 def busyness(img):
