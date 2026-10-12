@@ -96,6 +96,33 @@ the offending SKUs back through gen_gated.py with --jobs. At roughly 50 ms
 a panel, a million panels is about 14 GPU-hours, so it is worth doing once
 at the end rather than repeatedly.
 
+## The 12 Oct gate incident, and what each fix was worth
+
+Three shards relaunched with the full gate stack came up rejecting 100%.
+It was three separate faults wearing one coat, and the measurements are
+worth keeping because each was found the same way: regenerate the rejected
+panels with the gates off and LOOK at them.
+
+    1. BUSY_FLOOR fitted to the wrong material. 0.10/0.18 was measured on
+       141 old-grid panels at 52% median busyness. The work left is the new
+       kinds and the flat techniques - screenprint's own median is 28.9% -
+       so the floor rejected 46% of generations, including every minimal
+       poster in the catalogue. Now 0.035/0.055, which rejects 4 of the 80
+       it was shown and they are the right 4.
+
+    2. The crop-line fix over-correcting. Reading the whole panel is right,
+       but rejecting on a mark's FULL size threw a panel away for a 2%
+       sliver that the crop removes anyway. The box is now clipped to what
+       survives.
+
+    3. CLIP NEVER SAW "no text". FLUX reads with T5 at 256 tokens and CLIP
+       at 77. The clause started at word 60 of an 82-word prompt, and every
+       batch printed that it had been truncated. Moving it to word 14, and
+       taking the word "poster" out of the screenprint description, took
+       text rejection from 60% to 28% on the same jobs.
+
+Still above the 8-12% a healthy shard runs at, so text is not finished.
+
 ## What is NOT resumable yet
 
 The CPU stage (`pipeline.py`) rebuilds its listings from whatever panels it
