@@ -155,7 +155,12 @@ def sku_for(job, prefix="WA"):
 # sheet - and "one large disc centred on a plain flat ground" is that
 # same picture for all 155 celestial subjects: a circle. Capped like the
 # other two rather than dropped, because the composition does sell.
-THIN_GRAMMARS = {"G8_minimal": 0.35, "B1_specimen": 0.45, "C2_disc": 0.30}
+# G10_abstract joined on 12 Oct. Even reworded to build the abstraction
+# FROM the place, an all-over field with no focal point is the
+# composition least able to tell one subject from another, and it was
+# 8 of the 28 panels in the audit's closest-pair list.
+THIN_GRAMMARS = {"G8_minimal": 0.35, "B1_specimen": 0.45, "C2_disc": 0.30,
+                 "G10_abstract": 0.50}
 
 
 def _thin(jobs):

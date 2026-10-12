@@ -38,7 +38,14 @@ GRAMMAR_PLACE = {
  "G2_terrain":   "seen across open land, the horizon pushed to the top of the picture",
  "G1_window":    "seen through a window or terrace arch framing the left and right edges",
  "G9_naive":     "as a naive flattened townscape in horizontal bands with no vanishing point",
- "G10_abstract": "as an all-over painterly abstraction, marks edge to edge, no focal point",
+ # Reworded 12 Oct. The old wording was "as an all-over painterly
+ # abstraction, marks edge to edge, no focal point", which removes the
+ # subject from the picture by instruction - so the subject axis contributed
+ # nothing and every place collapsed to the same beige field. The audit found
+ # Topsham, Split, Bidean nam Bian, Fowey, Curbar Edge, Dungeness and Saltash
+ # all within 8 bits of each other, three of them IDENTICAL. The abstraction
+ # now has to be derived from the place rather than replace it.
+ "G10_abstract": "as an all-over painterly abstraction built from the colours and shapes of the place itself, marks edge to edge, no focal point",
  "G11_hardedge": "as a hard-edge composition of circles, arcs and a horizon split in three flat colours",
 }
 GRAMMAR_CREATURE = {
@@ -120,6 +127,16 @@ DRAWN = {"charcoal", "sketch", "linocut", "ink_wash", "pastel", "monotype"}
 # palette says "warm charcoal black on cream paper", which is a
 # different process entirely.
 PAL_ONLY = {"cyanotype": {"duotone"}}
+# Compositions that must not meet the neutral palette. Measured on 63,533
+# live panels: the near-duplicate cluster was almost entirely
+# G10_abstract and G8_minimal in "cream, bone and oatmeal", and the reason
+# is plain once seen. Both compositions deliberately suppress detail, and
+# the neutral palette suppresses contrast, so what is left is a pale sheet
+# with very little in it - and a 256-bit gradient hash cannot tell two pale
+# sheets apart, which is also the point: neither can a buyer scrolling eBay.
+# The compositions still run in the other four palettes.
+GRAM_NOT_PAL = {("G10_abstract", "neutral"), ("G8_minimal", "neutral"),
+                ("B1_specimen", "neutral")}
 NO_SPECTRUM = {"charcoal", "sketch", "ink_wash", "cyanotype"}
 INCOMPATIBLE = {
     "G11_hardedge": lambda t: t not in FLAT,       # needs flat hard-edged colour
@@ -154,6 +171,8 @@ def pal_ok(tech, pal):
 
 def ok(tech, gram, subject=None, pal=None):
     if pal is not None and not pal_ok(tech, pal):
+        return False
+    if pal is not None and (gram, pal) in GRAM_NOT_PAL:
         return False
     rule = INCOMPATIBLE.get(gram)
     if rule and rule(tech):
