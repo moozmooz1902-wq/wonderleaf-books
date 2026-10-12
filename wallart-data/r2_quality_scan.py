@@ -43,6 +43,16 @@ from botocore.config import Config
 from PIL import Image
 from transformers import CLIPModel, CLIPProcessor
 
+def unwrap(x):
+    # transformers 5.x returns BaseModelOutputWithPooling from
+    # get_text_features / get_image_features, not a tensor. quality_gate.py
+    # has carried a _unwrap for exactly this since 11 Oct and this script
+    # was written without it, so the first run died on .norm after paying
+    # to fetch all 3,000 panels. Copied rather than imported because the
+    # pod gets this file as a string, not the repo.
+    return getattr(x, "pooler_output", x)
+
+
 HUMAN = {"fail": ["a person standing in the scene",
                   "people walking, human figures",
                   "a human face, a portrait of a man or woman",
@@ -101,7 +111,7 @@ banks={}
 for name,bank in (("human",HUMAN),("eyes",EYES)):
     t=p(text=bank["fail"]+bank["pass"],return_tensors="pt",padding=True).to(dev)
     with torch.no_grad():
-        f=m.get_text_features(**t); f=f/f.norm(dim=-1,keepdim=True)
+        f=unwrap(m.get_text_features(**t)); f=f/f.norm(dim=-1,keepdim=True)
     banks[name]=(f,len(bank["fail"]))
 
 skus=[x[0] for x in pairs]
@@ -111,7 +121,7 @@ for i in range(0,len(pairs),B):
     ims=[x[1] for x in pairs[i:i+B]]
     with torch.no_grad():
         inp=p(images=ims,return_tensors="pt").to(dev)
-        v=m.get_image_features(**inp); v=v/v.norm(dim=-1,keepdim=True)
+        v=unwrap(m.get_image_features(**inp)); v=v/v.norm(dim=-1,keepdim=True)
     for name,(f,nf) in banks.items():
         pr=(100.0*v@f.T).softmax(dim=-1).cpu().numpy()
         sc[name]+= list(pr[:,:nf].sum(axis=1).astype(float))
