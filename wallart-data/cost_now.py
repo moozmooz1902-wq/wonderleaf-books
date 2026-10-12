@@ -11,12 +11,12 @@ Measured 11 Oct 2026, 22:50 UTC, twelve live shards:
     burn            $2.12/hour
     output          7,672 kept panels/hour
     so              $0.000276 a kept panel
-    spent to date   $94.27   (includes the t-shirt work and the failed
+    spent to date   $96.32   (includes the t-shirt work and the failed
                               experiments, not just this run)
-    done            155,971 base images of the 960,000 pool, counted
+    done            162,204 base images of the 960,000 pool, counted
 """
 BURN, RATE = 2.12, 7672          # $/hour and kept panels/hour, measured
-SPENT, DONE = 94.27, 155_971
+SPENT, DONE = 96.32, 162_204
 POOL = 960_000
 COLOURWAYS, PROCEDURAL = 4, 1_250_000
 
@@ -40,7 +40,10 @@ COLOURWAYS, PROCEDURAL = 4, 1_250_000
 # the live fleet after the 12 Oct fixes, over 476 generations of the work
 # that is actually LEFT: 19%, of which TEXT 12.0, EMPTY 4.4, PEOPLE 2.5.
 # Text is the one still above where it should be.
-GATE_KEEP = 1 - 0.19             # keep rate with all four gates, measured live
+# 19% was read too early: a pod's first batches include the hard jobs at
+# the front of its queue, and the rate falls as it works through. Over
+# 960-990 generations on three shards it settles at 11-14%.
+GATE_KEEP = 1 - 0.125           # keep rate with all four gates, measured live
 OLD_KEEP = 1 - 0.032             # keep rate already inside the measured rate
 GATE_SPEED = 0.185 / 0.216       # throughput, gated against ungated
 
