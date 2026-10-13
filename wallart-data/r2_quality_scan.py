@@ -61,7 +61,18 @@ HUMAN = {"fail": ["a person standing in the scene",
                   "a deserted village with nobody in the street",
                   "an animal on a plain background",
                   "an abstract pattern with no figures",
-                  "a plant or flower study"]}
+                  "a plant or flower study",
+                  # KEEP IN STEP WITH quality_gate.py, which is the gate the
+                  # pods actually run. This copy exists because the pod gets
+                  # this file as a string and cannot import the repo, and it
+                  # had already drifted once: these four object labels were
+                  # added to the gate on 13 Oct and this scan would have gone
+                  # on scoring with the old bank and reporting numbers that
+                  # did not describe the live catalogue.
+                  "a still life of objects arranged on a table",
+                  "a bowl, cup or vessel on a plain background",
+                  "the moon, a planet or a star chart",
+                  "a bird, moth or insect specimen study"]}
 EYES  = {"fail": ["an animal with three eyes",
                   "an animal with deformed melted eyes",
                   "an animal face that is distorted and wrong",
