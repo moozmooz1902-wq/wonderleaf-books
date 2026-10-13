@@ -355,7 +355,23 @@ def main():
     # Stop cleanly after this long, so a pod cannot quietly run all night if
     # something downstream is wedged. Work already uploaded is kept.
     ap.add_argument("--max-hours", type=float, default=0.0)
+    # ONE SHARD AT A TIME. Moves the no-text clause back to the end of the
+    # prompt, outside CLIP's 77-token window, which is where it lived before
+    # 12 Oct. The point is to find out whether having it inside the window
+    # suppresses text or produces it: this file's own first paragraph says
+    # negative prompts are inert at guidance_scale 0, and the people
+    # experiment on 13 Oct showed a negation moved into the attended part of
+    # the prompt made the thing it named MORE common. Text is about half of
+    # all rejections, so the answer is worth a shard.
+    ap.add_argument("--clean-at-end", action="store_true")
     a = ap.parse_args()
+    # Before anything builds a prompt. prompts.py is imported inside expand(),
+    # so the flag has to be pushed into the module there, not here - this
+    # import is the same module object either way.
+    if a.clean_at_end:
+        import prompts as _PP
+        _PP.CLEAN_AT_END = True
+        print("PROMPT VARIANT: _CLEAN at the end, outside CLIP's window", flush=True)
     os.makedirs(a.out, exist_ok=True)
     donep = os.path.join(a.out, "done.txt")
     done = {l.strip() for l in open(donep)} if os.path.exists(donep) else set()

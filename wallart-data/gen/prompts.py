@@ -247,6 +247,13 @@ _CLEAN = ("no text, no lettering, no words, no letters, no numbers, "
 # naming what should not. That is untested and is a job for one shard and a
 # contact sheet, not for the fleet.
 #
+# And the answer was already written down. gen_gated.py has said in its
+# opening paragraph since the gate was first built: "guidance_scale is 0 for
+# schnell, so negative prompts are inert and there is no prompt wording that
+# fixes it. The only thing that works is looking at the result." I spent a
+# shard and two and a half hours re-deriving the first eight lines of the
+# worker I was editing.
+#
 # THE SAME DOUBT NOW HANGS OVER _CLEAN. It is built the same way, out of
 # eleven negations, and it sits inside the window by my own hand. The text
 # rejection rate fell after I moved it and I credited the move, but I never
@@ -269,6 +276,30 @@ _CLEAN = ("no text, no lettering, no words, no letters, no numbers, "
 # clause now goes immediately after the subject, inside the window, and
 # only the wordier composition rules are left to trail off the end where
 # T5 still reads them.
+# Set by gen_gated.py --clean-at-end, for one shard at a time, to test
+# whether _CLEAN inside CLIP's window is HELPING or CAUSING the text that
+# half of all rejections are for. The people result says a negation moved
+# into the attended part of the prompt increases the thing it names, and
+# _CLEAN names text, lettering, words, letters, numbers, signature,
+# handwriting, monogram and watermark - nine ways of putting "writing" in
+# front of the encoder that decides what the picture looks like.
+#
+# False is the shipped behaviour. Do not flip the default on a hunch; flip
+# it on one shard and read the marginal text-reject rate against the other
+# eleven.
+CLEAN_AT_END = False
+
+
+def _early():
+    """The clause, or nothing, at the position right after the subject."""
+    return "" if CLEAN_AT_END else _CLEAN + ", "
+
+
+def _late():
+    """The clause, or nothing, at the very end where CLIP cannot reach."""
+    return ", " + _CLEAN if CLEAN_AT_END else ""
+
+
 RULES = ("flat fill, no gradient, no airbrushing, "
          "the subject sharp and the surroundings flat, " + NO_PEOPLE)
 RULES_CREATURE = ("flat fill, no gradient, no airbrushing, "
@@ -338,34 +369,34 @@ NO_EYES = ("no face, no eyes, no features added, "
 
 
 def place_prompt(place, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {place}, {_CLEAN}, "
-            f"{GRAMMAR_PLACE[gram]}, {PALETTE[pal]}, {RULES}")
+    return (f"{TECHNIQUE[tech]} of {place}, {_early()}"
+            f"{GRAMMAR_PLACE[gram]}, {PALETTE[pal]}, {RULES}{_late()}")
 
 
 def botanical_prompt(name, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, "
-            f"{GRAMMAR_BOTANICAL[gram]}, {PALETTE[pal]}, {RULES}")
+    return (f"{TECHNIQUE[tech]} of {name}, {_early()}"
+            f"{GRAMMAR_BOTANICAL[gram]}, {PALETTE[pal]}, {RULES}{_late()}")
 
 
 def creature_prompt(name, tech, gram, pal):
     eyes = EYES if has_face(name) else NO_EYES
-    return (f"{TECHNIQUE[tech]} of a {name}, {_CLEAN}, "
-            f"{GRAMMAR_CREATURE[gram]}, {PALETTE[pal]}, {eyes}, {RULES_CREATURE}")
+    return (f"{TECHNIQUE[tech]} of a {name}, {_early()}"
+            f"{GRAMMAR_CREATURE[gram]}, {PALETTE[pal]}, {eyes}, {RULES_CREATURE}{_late()}")
 
 
 def celestial_prompt(name, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, "
-            f"{GRAMMAR_CELESTIAL[gram]}, {PALETTE[pal]}, {RULES}")
+    return (f"{TECHNIQUE[tech]} of {name}, {_early()}"
+            f"{GRAMMAR_CELESTIAL[gram]}, {PALETTE[pal]}, {RULES}{_late()}")
 
 
 def stilllife_prompt(name, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, "
-            f"{GRAMMAR_STILLLIFE[gram]}, {PALETTE[pal]}, {RULES}")
+    return (f"{TECHNIQUE[tech]} of {name}, {_early()}"
+            f"{GRAMMAR_STILLLIFE[gram]}, {PALETTE[pal]}, {RULES}{_late()}")
 
 
 def architecture_prompt(name, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, "
-            f"{GRAMMAR_ARCH[gram]}, {PALETTE[pal]}, {RULES}")
+    return (f"{TECHNIQUE[tech]} of {name}, {_early()}"
+            f"{GRAMMAR_ARCH[gram]}, {PALETTE[pal]}, {RULES}{_late()}")
 
 
 def build(places, creatures, limit=None, seed=11):
