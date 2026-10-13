@@ -250,6 +250,44 @@ The first attempt at this audit crashed and reported success; see the
 commit "the duplicate audit crashed at 222k and reported success" for what
 was wrong and what was fixed. The fixed version lost zero of 226,992.
 
+## The _CLEAN clause A/B: no detectable effect, and why that is the finding
+
+Ran 13 Oct 08:33-11:20. One shard with the no-text clause at the END of the
+prompt, outside CLIP's window, against eleven with it inside - the shipped
+behaviour since 12 Oct.
+
+    interval 1 (09:19-10:17)   test 5.73% text/gen   controls 3.67%
+    interval 2 (10:17-11:18)   test 2.42% text/gen   controls 3.17%
+
+The two intervals disagree in direction. Interval 1 was contaminated - it
+starts at the test shard's 373rd panel and a fresh shard carries its retry
+backlog to about its 700th. Interval 2 is clean, and on it the test shard
+sits 1.09 standard deviations below the control mean, inside the control
+range:
+
+    2.42 TEST | 2.54 2.62 2.81 2.91 2.98 3.02 3.07 3.13 3.14 4.58 4.80
+    controls: mean 3.24%, sd 0.75%
+
+**So the answer is no effect this design can see, and the design is the
+limitation.** Shards work different slices of the subject grid, and
+different subjects and techniques carry very different text propensity -
+the controls alone spread from 2.54% to 4.80%, nearly a factor of two. One
+shard against eleven detects a large effect (the people experiment was
+59.3% against 41.7%, impossible to miss) and cannot resolve a small one.
+
+**Reverted to the shipped prompt and not pursued further, on value.** Text
+is about 3.2% of generations. Eliminating it entirely would save roughly
+$8 of the remaining GPU budget, and the measurement needed to settle a
+difference this small - a paired design running both arms over the same
+slice, or many more shard-hours - costs a real fraction of that. The lever
+is too small to be worth the instrument.
+
+What this does settle: the 12 Oct move of _CLEAN into the window is not
+doing harm, so the doubt raised after the people result can be closed. It
+is also not demonstrably doing good. It stays because it is shipped and
+there is no evidence to change it, which is a different and weaker reason
+than the one I had for it yesterday.
+
 ## What is NOT resumable yet
 
 The CPU stage (`pipeline.py`) rebuilds its listings from whatever panels it
