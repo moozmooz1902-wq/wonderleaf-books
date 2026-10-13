@@ -77,7 +77,22 @@ if __name__ == "__main__":
                    "vcpuCount": 4},
                   {"gpuTypeIds": ["NVIDIA RTX A4000", "NVIDIA RTX A4500",
                                   "NVIDIA GeForce RTX 3090"],
-                   "gpuCount": 1, "cloudType": "COMMUNITY"}):
+                   "gpuCount": 1, "cloudType": "COMMUNITY"},
+                  # Both of the above came back empty at 20:20 on 13 Oct and
+                  # the hourly check had no count at all - the one number the
+                  # seller actually reads. The twelve shards were running fine
+                  # on exactly these cards, so this is community capacity
+                  # fluctuating, not an outage. Two more tiers: the cards the
+                  # shards use, and then SECURE, which costs more per hour but
+                  # this job lives for about a minute and is billed by the
+                  # second. Paying $0.01 instead of $0.003 beats reporting an
+                  # estimate.
+                  {"gpuTypeIds": ["NVIDIA RTX 4000 Ada Generation",
+                                  "NVIDIA RTX A5000", "NVIDIA L4"],
+                   "gpuCount": 1, "cloudType": "COMMUNITY"},
+                  {"gpuTypeIds": ["NVIDIA RTX A4000", "NVIDIA RTX A4500",
+                                  "NVIDIA RTX A5000"],
+                   "gpuCount": 1, "cloudType": "SECURE"}):
         r = curl("POST", "/pods", dict(common, **extra))
         if isinstance(r, dict) and r.get("id"):
             pid = r["id"]
