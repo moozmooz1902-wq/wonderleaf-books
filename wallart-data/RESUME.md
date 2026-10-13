@@ -165,13 +165,22 @@ against all 60 manifest rows, zero SKUs move.
 
 ### The score bank, which is the small one
 
-Worth about 11-15 of 60 rejections, so roughly 0.5% of total generation.
-Measured on the 60, NOT guessed, and the first draft was wrong in a way
-worth recording: adding "a building or architectural detail with nobody in
-it" to the pass side halved the false alarms AND cut true catches from 34
-to 19, because that label describes exactly the townscapes that DO have
-pedestrians. Dropping that one label and keeping the object ones gives
-33/36 caught and 9/24 false alarms.
+SHIPPED, commit b89a04c. Four object labels added to the pass side:
+false alarms 18 -> 9, true catches 34 -> 33. The one catch lost is a
+risograph of ligularia with a five-pixel figure in it, 0.875 -> 0.333. The
+three catastrophic panels are untouched - 0.927 -> 0.907, 0.992, 0.993.
+Freed: a champagne flute, a flat white, a gargoyle spout, a bowl of
+cherries, a lappet moth, dried chillies, a cup of matcha, a bee-eater, and
+Dartmouth harbour at 0.829, which is close enough to the line to be worth
+a second look if harbour scenes start showing figures.
+
+The first draft was wrong in a way worth recording: adding "a building or
+architectural detail with nobody in it" to the pass side halved the false
+alarms AND cut true catches from 34 to 19, because that label describes
+exactly the townscapes that DO have pedestrians and hands every one of them
+a strong pass match. It was the most plausible label in the set and the only
+harmful one. The comment in quality_gate.py says so at the point of
+temptation.
 
 **That test set cannot measure the miss rate.** Every panel in it was
 chosen because the live gate rejected it, so it is selected for high
