@@ -213,6 +213,20 @@ _CLEAN = ("no text, no lettering, no words, no letters, no numbers, "
          "no signature, no handwriting, no monogram, no watermark, "
           "unsigned, clean empty corners")
 
+# AND THE SAME BUG WAS STILL IN HERE FOR PEOPLE. Found 13 Oct by looking at
+# sixty panels the people gate had rejected: measured on those sixty, the
+# clause "no people, no person, no human figures..." starts at word 62 and
+# runs to word 87, so CLIP - which never saw it - was free to put pedestrians
+# in every street. Thirty-six of the sixty had figures, and three had a whole
+# person where the subject should have been: a mushroom, a lily, a town.
+#
+# The long clause stays at the end for T5, which reads all of it. This short
+# one goes next to _CLEAN, inside the window, where CLIP reads it. Short on
+# purpose: the grammar and the palette have to fit in the window too, and
+# they are what the picture actually looks like.
+_NO_PPL_EARLY = "unpeopled, empty of people"
+_NO_PPL_EARLY_CREATURE = "the animal alone, no people"
+
 # _CLEAN USED TO LIVE AT THE END OF THESE, AND THAT WAS THE BUG.
 #
 # FLUX reads a prompt with two encoders: T5 takes 256 tokens, CLIP takes
@@ -297,33 +311,33 @@ NO_EYES = ("no face, no eyes, no features added, "
 
 
 def place_prompt(place, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {place}, {_CLEAN}, "
+    return (f"{TECHNIQUE[tech]} of {place}, {_CLEAN}, {_NO_PPL_EARLY}, "
             f"{GRAMMAR_PLACE[gram]}, {PALETTE[pal]}, {RULES}")
 
 
 def botanical_prompt(name, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, "
+    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, {_NO_PPL_EARLY}, "
             f"{GRAMMAR_BOTANICAL[gram]}, {PALETTE[pal]}, {RULES}")
 
 
 def creature_prompt(name, tech, gram, pal):
     eyes = EYES if has_face(name) else NO_EYES
-    return (f"{TECHNIQUE[tech]} of a {name}, {_CLEAN}, "
+    return (f"{TECHNIQUE[tech]} of a {name}, {_CLEAN}, {_NO_PPL_EARLY_CREATURE}, "
             f"{GRAMMAR_CREATURE[gram]}, {PALETTE[pal]}, {eyes}, {RULES_CREATURE}")
 
 
 def celestial_prompt(name, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, "
+    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, {_NO_PPL_EARLY}, "
             f"{GRAMMAR_CELESTIAL[gram]}, {PALETTE[pal]}, {RULES}")
 
 
 def stilllife_prompt(name, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, "
+    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, {_NO_PPL_EARLY}, "
             f"{GRAMMAR_STILLLIFE[gram]}, {PALETTE[pal]}, {RULES}")
 
 
 def architecture_prompt(name, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, "
+    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, {_NO_PPL_EARLY}, "
             f"{GRAMMAR_ARCH[gram]}, {PALETTE[pal]}, {RULES}")
 
 
