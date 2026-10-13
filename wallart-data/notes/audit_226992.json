@@ -1,0 +1,227 @@
+{
+ "panels": 226992,
+ "distinct_hashes": 226990,
+ "exact_repeats": 2,
+ "near_dupe_pct": 0.648,
+ "threshold_bits": 24,
+ "per_bucket": {
+  "posterleaf-store1": {
+   "panels": 45752,
+   "near_dupe_pct": 0.627
+  },
+  "lunar-kms": {
+   "panels": 45418,
+   "near_dupe_pct": 0.599
+  },
+  "mercury-usm": {
+   "panels": 22569,
+   "near_dupe_pct": 0.682
+  },
+  "luxvia-art": {
+   "panels": 113253,
+   "near_dupe_pct": 0.669
+  }
+ },
+ "closest_pairs": [
+  {
+   "bits": 0,
+   "a": "WA-01348c62ac493673",
+   "b": "WA-07cf4acbc3c108aa"
+  },
+  {
+   "bits": 0,
+   "a": "WA-07cf4acbc3c108aa",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 0,
+   "a": "WA-184f66110d030c38",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 2,
+   "a": "WA-091f95f94ca2565c",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 2,
+   "a": "WA-113f8c38890be398",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 3,
+   "a": "WA-278b13bf710a1da9",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 3,
+   "a": "WA-2b43885f85dab645",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 4,
+   "a": "WA-1735d0cb1a939501",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 5,
+   "a": "WA-130eaa969fd8847e",
+   "b": "WA-21f7a658852363fb"
+  },
+  {
+   "bits": 5,
+   "a": "WA-21f7a658852363fb",
+   "b": "WA-130eaa969fd8847e"
+  },
+  {
+   "bits": 6,
+   "a": "WA-0810260201b68e9c",
+   "b": "WA-3b650404d6b3d3d2"
+  },
+  {
+   "bits": 6,
+   "a": "WA-0a0a2ff4f5f622e7",
+   "b": "WA-21f7a658852363fb"
+  },
+  {
+   "bits": 6,
+   "a": "WA-3b650404d6b3d3d2",
+   "b": "WA-0810260201b68e9c"
+  },
+  {
+   "bits": 7,
+   "a": "WA-01233db1d9e2ef82",
+   "b": "WA-21f7a658852363fb"
+  },
+  {
+   "bits": 7,
+   "a": "WA-1863d0e13e08d822",
+   "b": "WA-d8121ccb23e141ac"
+  },
+  {
+   "bits": 7,
+   "a": "WA-1dfe54bda93cdfd0",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 7,
+   "a": "WA-23d7e2341c943dba",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 7,
+   "a": "WA-2e69b0350106c75f",
+   "b": "WA-904cb252b966a8ba"
+  },
+  {
+   "bits": 7,
+   "a": "WA-75e914b2c883f1f9",
+   "b": "WA-bf21a200763a874b"
+  },
+  {
+   "bits": 7,
+   "a": "WA-904cb252b966a8ba",
+   "b": "WA-2e69b0350106c75f"
+  },
+  {
+   "bits": 7,
+   "a": "WA-bf21a200763a874b",
+   "b": "WA-75e914b2c883f1f9"
+  },
+  {
+   "bits": 7,
+   "a": "WA-d8121ccb23e141ac",
+   "b": "WA-1863d0e13e08d822"
+  },
+  {
+   "bits": 7,
+   "a": "WA-d8d10683357991d7",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 8,
+   "a": "WA-186f7f9dbc185406",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 8,
+   "a": "WA-1dbd8e438efcf0eb",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 8,
+   "a": "WA-2b10631ec9cca4f5",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 8,
+   "a": "WA-2c1398660119897f",
+   "b": "WA-31cc2fe89e568f21"
+  },
+  {
+   "bits": 8,
+   "a": "WA-2facbb88f76a35e8",
+   "b": "WA-c47ae27a17fdbd1a"
+  },
+  {
+   "bits": 8,
+   "a": "WA-2fe8276598a2d50f",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 8,
+   "a": "WA-31cc2fe89e568f21",
+   "b": "WA-2c1398660119897f"
+  },
+  {
+   "bits": 8,
+   "a": "WA-36c57a3120f692b8",
+   "b": "WA-c47ae27a17fdbd1a"
+  },
+  {
+   "bits": 8,
+   "a": "WA-bdf5ab9dd91feec2",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 8,
+   "a": "WA-c47ae27a17fdbd1a",
+   "b": "WA-36c57a3120f692b8"
+  },
+  {
+   "bits": 9,
+   "a": "WA-017979c4af2176fd",
+   "b": "WA-2c04f985e62ad3dc"
+  },
+  {
+   "bits": 9,
+   "a": "WA-0ad1b9e57408a684",
+   "b": "WA-61432acc362e8e24"
+  },
+  {
+   "bits": 9,
+   "a": "WA-0da855dd93e5fdd1",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 9,
+   "a": "WA-11ba9bbe640b9cac",
+   "b": "WA-21f7a658852363fb"
+  },
+  {
+   "bits": 9,
+   "a": "WA-150151ef01154731",
+   "b": "WA-2c1398660119897f"
+  },
+  {
+   "bits": 9,
+   "a": "WA-1eca9abb6854849d",
+   "b": "WA-2c660ae217c85241"
+  },
+  {
+   "bits": 9,
+   "a": "WA-200d5bea43b694bc",
+   "b": "WA-01348c62ac493673"
+  }
+ ]
+}

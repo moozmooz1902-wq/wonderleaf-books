@@ -223,6 +223,33 @@ Also noted while measuring, neither acted on: `_CLEAN` spends 24 of CLIP's
 not reach CLIP at all - T5 carries the colour on its own. Both measurable
 with the offline bench, both one-change-at-a-time jobs for later.
 
+## Duplicate audit at 226,992 panels, 13 Oct
+
+    panels            226,992
+    distinct hashes   226,990   (exact repeats: 2)
+    near duplicates     0.648%  at 24 bits of 256
+    per bucket        lunar-kms 0.599  posterleaf-store1 0.627
+                      luxvia-art 0.669  mercury-usm 0.682
+
+Against 0.67% at 168,515 and 0.826% at 63,533, so it is still falling as
+the catalogue grows, which is what the expanded grid was for. The wall-art
+branch blames 89% near-duplication for 424k listings not selling; this is
+two orders of magnitude under that.
+
+Full result in `notes/audit_226992.json`, including the closest pairs.
+
+The comparison pass took 95 minutes for 227k panels and the pod ran 2h20m
+in all. It is O(n^2) - the code has said since the first audit that it will
+not scale to a million - and this run is where that stopped being
+theoretical. **Do not simply run it again at 500k**: four times the work, so
+roughly six hours and $2, and at 960,000 it is nearer a day. The next audit
+needs the LSH bucketing pass the comment describes, or a random sample of
+100k rather than the whole catalogue.
+
+The first attempt at this audit crashed and reported success; see the
+commit "the duplicate audit crashed at 222k and reported success" for what
+was wrong and what was fixed. The fixed version lost zero of 226,992.
+
 ## What is NOT resumable yet
 
 The CPU stage (`pipeline.py`) rebuilds its listings from whatever panels it
