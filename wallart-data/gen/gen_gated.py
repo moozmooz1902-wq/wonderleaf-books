@@ -549,7 +549,23 @@ def main():
                     marks = [["EMPTY", round(b, 3), round(floor, 3)]]
             if marks and attempt[j["sku"]] < a.retries:
                 attempt[j["sku"]] += 1
-                queue.append(j)
+                # RETRY AT THE FRONT, NOT THE BACK.
+                #
+                # queue.append put a rejected job behind ~70,000 others, so a
+                # pod never reached it again before --max-hours stopped it.
+                # The job therefore never used its second and third attempts
+                # and was never kept-anyway; it stayed "not done", and the
+                # NEXT pod picked it up first, failed it once more, and threw
+                # it to the back again. Hard jobs accumulated at the head of
+                # every relaunch and were re-attempted for ever.
+                #
+                # Measured on the 13 Oct rotation: three fresh shards spent
+                # their first few hundred generations on this backlog at
+                # 31-57% rejection, and the rejections then nearly stopped -
+                # 316 of 343 on the first shard happened before its 700th
+                # panel. Retrying in place spends the retries while the pod
+                # still has them and settles the job either way.
+                queue.insert(0, j)
                 rejected += 1
                 rf.write(json.dumps({"sku": j["sku"], "try": attempt[j["sku"]],
                                      "marks": marks}) + "\n")
