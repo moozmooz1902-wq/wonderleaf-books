@@ -123,6 +123,79 @@ panels with the gates off and LOOK at them.
 
 Still above the 8-12% a healthy shard runs at, so text is not finished.
 
+## The people gate, settled 13 Oct
+
+The gate was rejecting panels for PEOPLE at roughly 2.5% of everything
+generated, which on one shard read as 39% of all rejections against a
+measured 2.3% people rate - a gap big enough that it was either the gate
+misfiring or real figures, and guessing either way was expensive.
+
+So: 60 people-rejected panels regenerated with every gate off, written to
+`wallart/pplaudit/`, downloaded through the public r2.dev URL, laid out
+three to a contact sheet and LOOKED AT. The pod was deleted straight after;
+it bills until deleted.
+
+**36 of the 60 genuinely had people in them.** Three had a whole person
+where the subject should have been - "shaggy ink cap" came back a boy's
+portrait, "lily asiatic" a dozen human silhouettes, "Helmsley" a man in a
+checked shirt. The other 33 were pedestrians in townscapes. Turning the
+gate off would have shipped all of them.
+
+**24 were false alarms** - a bowl of cherries, a cup of coffee, a moth, the
+moon. The score bank in quality_gate.py had no label for "an object on a
+table", so a still life matched nothing on the pass side and "a person
+standing in the scene" won by default.
+
+Two things came out of it, and they are very different sizes.
+
+### The prompt, which is the big one
+
+The no-people clause started at word 62 and ran to word 87. CLIP stops at
+about word 55. **This is the same bug as the no-text clause, in the same
+place, found a day later** - I moved `_CLEAN` into the window, watched the
+text rejects fall, and did not think to look at the clause sitting next to
+it. For the whole run so far FLUX has been drawing streets having never
+been told to leave them empty.
+
+Fixed by putting a short form - "unpeopled, empty of people" - beside
+`_CLEAN`, keeping the long one at the end for T5. Verified against the real
+CLIP tokeniser for all six builders. SKUs hash kind|subject|tech|gram|pal
+and never the prompt text, so nothing already made is remade - checked
+against all 60 manifest rows, zero SKUs move.
+
+### The score bank, which is the small one
+
+Worth about 11-15 of 60 rejections, so roughly 0.5% of total generation.
+Measured on the 60, NOT guessed, and the first draft was wrong in a way
+worth recording: adding "a building or architectural detail with nobody in
+it" to the pass side halved the false alarms AND cut true catches from 34
+to 19, because that label describes exactly the townscapes that DO have
+pedestrians. Dropping that one label and keeping the object ones gives
+33/36 caught and 9/24 false alarms.
+
+**That test set cannot measure the miss rate.** Every panel in it was
+chosen because the live gate rejected it, so it is selected for high
+scores. It can say which rejections a changed bank would stop making, and
+whether the three catastrophic panels still fail. It cannot say what a
+changed bank would start letting through, and nothing here should be read
+as if it could.
+
+The 60 panels, the labels I read off them by eye, and the calibration
+scripts are in the scratchpad, not the repo - they are a 11 MB test set
+that costs about $0.02 of GPU to rebuild from `wallart/pplaudit/`.
+
+### What is NOT fixed
+
+Thirteen of the 24 false alarms are townscapes with no visible figures -
+Vilnius, Hong Kong, the Norfolk coast. The gate cannot tell those from a
+street with three-pixel pedestrians, and neither could I at a glance.
+Leave them rejected: the cost of being wrong is shipping people.
+
+Also noted while measuring, neither acted on: `_CLEAN` spends 24 of CLIP's
+77 tokens on eleven ways of saying "no text", and the palette clause does
+not reach CLIP at all - T5 carries the colour on its own. Both measurable
+with the offline bench, both one-change-at-a-time jobs for later.
+
 ## What is NOT resumable yet
 
 The CPU stage (`pipeline.py`) rebuilds its listings from whatever panels it

@@ -7,16 +7,21 @@ seven probed went CUDA_DEAD, and the fleet that is really running is RTX
 A4000 and RTX 4000 Ada. So this file prices the same plan against the
 measured fleet instead, and is the number to quote.
 
-Measured 11 Oct 2026, 22:50 UTC, twelve live shards:
-    burn            $2.12/hour
-    output          7,672 kept panels/hour
-    so              $0.000276 a kept panel
-    spent to date   $104.75   (includes the t-shirt work and the failed
+Measured 13 Oct 2026, 05:05 UTC, twelve live shards:
+    burn            $2.20/hour
+    output          7,672 kept panels/hour (unchanged, remeasured)
+    so              $0.000287 a kept panel
+    spent to date   $120.00   (includes the t-shirt work and the failed
                               experiments, not just this run)
-    done            187,591 base images of the 960,000 pool, counted
+    done            221,788 base images of the 960,000 pool, counted
+
+RunPod has no balance endpoint on either API - every path checked, and the
+GraphQL myself{} query returns null for this key. So spend is carried here
+by hand and is only as fresh as the last edit. It is a floor, not a balance:
+it does not know about the $100 the seller added on 13 Oct.
 """
-BURN, RATE = 2.12, 7672          # $/hour and kept panels/hour, measured
-SPENT, DONE = 104.75, 187_591
+BURN, RATE = 2.20, 7672          # $/hour and kept panels/hour, measured
+SPENT, DONE = 120.00, 221_788
 POOL = 960_000
 COLOURWAYS, PROCEDURAL = 4, 1_250_000
 
