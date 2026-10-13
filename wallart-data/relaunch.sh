@@ -57,7 +57,19 @@ CLIP="${CLIP_GATE:-1}"
 # set it in fill_shards.sh - a change every shard carries has no control.
 CLEAN=""
 [ "${CLEAN_AT_END:-0}" = "1" ] && CLEAN=" --clean-at-end"
-EXTRA="--batch 4 --width 704 --height 1008 --quant nf4 --retries 2 --pool 960000 --part $K/$N --stores stores.json --resume --clip-gate $CLIP --max-hours 10$CLEAN"
+# STAGGER THE EXPIRY. Every shard ran --max-hours 10, so shards started
+# together expired together: ten of the twelve rotated inside fifteen
+# minutes at 12:30 on 13 Oct, and the fleet produced 4,044 panels that hour
+# against the usual 7,000 while ten pods all downloaded FLUX and worked
+# through their retry backlogs at once. The pods were never idle and nothing
+# was lost - it is just that the warm-up is paid ten times over in one hour
+# instead of spread across ten.
+#
+# 9.15 to 10.80 hours by shard number spreads the next rotation over about
+# an hour and three quarters, and they drift further apart with each cycle
+# rather than reconverging.
+MAXH=$(python3 -c "print(round(9.0 + $K * 0.15, 2))")
+EXTRA="--batch 4 --width 704 --height 1008 --quant nf4 --retries 2 --pool 960000 --part $K/$N --stores stores.json --resume --clip-gate $CLIP --max-hours $MAXH$CLEAN"
 for GPUS in "$TIER1" "$TIER2"; do
   CLOUD=COMMUNITY
   OUT=$(python3 launch_gen.py --name "wa-v3-$K" --cloud $CLOUD --gpu "$GPUS" --template vbsgwyibn1 \
