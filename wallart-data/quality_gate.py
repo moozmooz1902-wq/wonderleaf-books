@@ -31,7 +31,23 @@ HUMAN = {
              "a deserted village with nobody in the street",
              "an animal on a plain background",
              "an abstract pattern with no figures",
-             "a plant or flower study"],
+             "a plant or flower study",
+             # Added 13 Oct after reading 60 rejected panels by eye. Twenty-four
+             # of them had no person anywhere - a bowl of cherries, a cup of
+             # matcha, a moth, the moon. The pass side had no label for an
+             # object on a table, so an object study matched nothing here and
+             # "a person standing in the scene" took the softmax by default.
+             # Measured on those 60: false alarms 18 -> 9, true catches 34 -> 33.
+             "a still life of objects arranged on a table",
+             "a bowl, cup or vessel on a plain background",
+             "the moon, a planet or a star chart",
+             "a bird, moth or insect specimen study"],
+             # DO NOT ADD "a building or architectural detail with nobody in
+             # it", however obviously right it looks. Tried first, measured,
+             # and it cut true catches from 34 to 19 - it describes exactly the
+             # townscapes that DO have pedestrians in them, and it hands every
+             # one of them a strong pass match. It was the single most
+             # plausible label in the set and the only harmful one.
 }
 
 EYES = {
