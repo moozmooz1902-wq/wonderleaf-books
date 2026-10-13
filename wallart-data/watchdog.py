@@ -15,8 +15,24 @@ DONE = ("SHARD COMPLETE", "UNFINISHED:")
 
 
 def curl(*args):
-    return subprocess.run(["curl", "-sS", "--max-time", "60", *args],
-                          capture_output=True, text=True).stdout
+    """Decode with errors="replace", because these downloads get cut off.
+
+    boot.log is multi-megabyte and curl --max-time stops it part way through.
+    Stopping part way through means stopping part way through a UTF-8
+    character, and text=True then raised UnicodeDecodeError out of
+    subprocess.run - which killed the watchdog, the one process whose job is
+    to notice a dead pod. It had run for hours before a log grew big enough
+    for the cut to land mid-character; the failure was always available and
+    just needed the right number of bytes.
+
+    Nothing here needs byte-perfect text - the log is searched for fixed
+    markers and done.txt is counted by newline - so a replacement character
+    at the truncation point costs nothing and crashing costs a pod that bills
+    while producing nothing.
+    """
+    r = subprocess.run(["curl", "-sS", "--max-time", "60", *args],
+                       capture_output=True)
+    return r.stdout.decode("utf-8", errors="replace")
 
 
 def pods():
