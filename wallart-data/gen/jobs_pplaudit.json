@@ -1,0 +1,542 @@
+[
+{
+"kind": "botanical",
+"subject": "shaggy ink cap",
+"tech": "sketch",
+"gram": "B3_scatter",
+"pal": "monochrome",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of shaggy ink cap, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, several cuttings scattered evenly across the sheet with space between them, no colour at all, warm charcoal black on cream paper, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-008373c09ec53f8f"
+},
+{
+"kind": "place",
+"subject": "Broadstairs",
+"tech": "linocut",
+"gram": "G9_naive",
+"pal": "monochrome",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of Broadstairs, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, no colour at all, warm charcoal black on cream paper, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-01672d81d8f89b39"
+},
+{
+"kind": "architecture",
+"subject": "a wrought iron gate scroll",
+"tech": "monotype",
+"gram": "A3_detail",
+"pal": "spectrum",
+"prompt": "monotype print pulled from an inked plate, the plate wiped back, soft blurred edges and plate tone of a wrought iron gate scroll, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, one architectural detail very large and cropped by every edge, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-057a82ec28a3fb5f"
+},
+{
+"kind": "place",
+"subject": "Dubrovnik",
+"tech": "pastel",
+"gram": "G2_terrain",
+"pal": "duotone",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of Dubrovnik, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen across open land, the horizon pushed to the top of the picture, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-0bcea4d044cf2bb5"
+},
+{
+"kind": "stilllife",
+"subject": "a champagne flute",
+"tech": "risograph",
+"gram": "S4_shelf",
+"pal": "neutral",
+"prompt": "two-colour risograph print, layers slightly misregistered, coarse halftone dot grain, flat ink of a champagne flute, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, lined up along a single shelf running the full width of the sheet, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-0e79469bd1554acc"
+},
+{
+"kind": "place",
+"subject": "Framlingham Castle",
+"tech": "monotype",
+"gram": "G1_window",
+"pal": "monochrome",
+"prompt": "monotype print pulled from an inked plate, the plate wiped back, soft blurred edges and plate tone of Framlingham Castle, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen through a window or terrace arch framing the left and right edges, no colour at all, warm charcoal black on cream paper, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-15505b019764bfd6"
+},
+{
+"kind": "botanical",
+"subject": "orange bonnet",
+"tech": "screenprint",
+"gram": "B3_scatter",
+"pal": "monochrome",
+"prompt": "flat screen-printed artwork, hand-pulled ink, simplified geometric shapes, bold flat colour of orange bonnet, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, several cuttings scattered evenly across the sheet with space between them, no colour at all, warm charcoal black on cream paper, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-1b592bbcb37726a6"
+},
+{
+"kind": "stilllife",
+"subject": "fresh pasta sheets",
+"tech": "risograph",
+"gram": "S3_flatlay",
+"pal": "duotone",
+"prompt": "two-colour risograph print, layers slightly misregistered, coarse halftone dot grain, flat ink of fresh pasta sheets, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, laid out flat and seen from directly above on a plain ground, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-1cb105455f4e8237"
+},
+{
+"kind": "place",
+"subject": "Vilnius",
+"tech": "screenprint",
+"gram": "G9_naive",
+"pal": "neutral",
+"prompt": "flat screen-printed artwork, hand-pulled ink, simplified geometric shapes, bold flat colour of Vilnius, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-1ead32ee4a452864"
+},
+{
+"kind": "stilllife",
+"subject": "a flat white in a stoneware cup",
+"tech": "sketch",
+"gram": "S4_shelf",
+"pal": "duotone",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a flat white in a stoneware cup, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, lined up along a single shelf running the full width of the sheet, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-1eba539a559aa624"
+},
+{
+"kind": "place",
+"subject": "Blackpool Sands Devon",
+"tech": "sketch",
+"gram": "G9_naive",
+"pal": "duotone",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of Blackpool Sands Devon, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-20f9f75ac8d0c980"
+},
+{
+"kind": "botanical",
+"subject": "ligularia",
+"tech": "linocut",
+"gram": "B3_scatter",
+"pal": "complementary",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of ligularia, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, several cuttings scattered evenly across the sheet with space between them, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-217ea1c77087961b"
+},
+{
+"kind": "place",
+"subject": "Muck",
+"tech": "oil_impasto",
+"gram": "G10_abstract",
+"pal": "monochrome",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of Muck, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as an all-over painterly abstraction built from the colours and shapes of the place itself, marks edge to edge, no focal point, no colour at all, warm charcoal black on cream paper, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-21aa11d53e03a8e9"
+},
+{
+"kind": "place",
+"subject": "Harrogate",
+"tech": "ink_wash",
+"gram": "G1_window",
+"pal": "complementary",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of Harrogate, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen through a window or terrace arch framing the left and right edges, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-21b58a3fee3552a6"
+},
+{
+"kind": "place",
+"subject": "a harbour at dawn",
+"tech": "palette_knife",
+"gram": "G1_window",
+"pal": "complementary",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of a harbour at dawn, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen through a window or terrace arch framing the left and right edges, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-21cac38bc630bde7"
+},
+{
+"kind": "architecture",
+"subject": "a terrazzo floor pattern",
+"tech": "oil_impasto",
+"gram": "A3_detail",
+"pal": "complementary",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of a terrazzo floor pattern, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, one architectural detail very large and cropped by every edge, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-21daa2ae0a2a0e3c"
+},
+{
+"kind": "place",
+"subject": "Knaresborough",
+"tech": "watercolour",
+"gram": "G1_window",
+"pal": "duotone",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of Knaresborough, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen through a window or terrace arch framing the left and right edges, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-21f59a38acedc6e1"
+},
+{
+"kind": "place",
+"subject": "Blackpool sands",
+"tech": "sketch",
+"gram": "G9_naive",
+"pal": "monochrome",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of Blackpool sands, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, no colour at all, warm charcoal black on cream paper, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-2206cf5863daec06"
+},
+{
+"kind": "place",
+"subject": "Edinburgh",
+"tech": "oil_impasto",
+"gram": "G2_terrain",
+"pal": "spectrum",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of Edinburgh, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen across open land, the horizon pushed to the top of the picture, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-221f312561e65224"
+},
+{
+"kind": "place",
+"subject": "Cordoba",
+"tech": "watercolour",
+"gram": "G9_naive",
+"pal": "monochrome",
+"prompt": "wet-on-wet watercolour, soft bleeds and blooms, pigment pooling at the edge of the wash of Cordoba, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, no colour at all, warm charcoal black on cream paper, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-222c4c0445414cbe"
+},
+{
+"kind": "architecture",
+"subject": "a market hall arcade",
+"tech": "ink_wash",
+"gram": "A3_detail",
+"pal": "duotone",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of a market hall arcade, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, one architectural detail very large and cropped by every edge, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-223db9cc22951b8e"
+},
+{
+"kind": "place",
+"subject": "Rotterdam",
+"tech": "pastel",
+"gram": "G9_naive",
+"pal": "duotone",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of Rotterdam, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-223e4ced58654f65"
+},
+{
+"kind": "place",
+"subject": "Derry",
+"tech": "oil_impasto",
+"gram": "G1_window",
+"pal": "duotone",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of Derry, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen through a window or terrace arch framing the left and right edges, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-223f3588e2573ef9"
+},
+{
+"kind": "architecture",
+"subject": "a gargoyle spout",
+"tech": "pastel",
+"gram": "A1_elevation",
+"pal": "neutral",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of a gargoyle spout, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, drawn flat as a straight-on elevation, centred on plain paper, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-2244bd9f5aa404f0"
+},
+{
+"kind": "place",
+"subject": "Muck",
+"tech": "gouache",
+"gram": "G1_window",
+"pal": "spectrum",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of Muck, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen through a window or terrace arch framing the left and right edges, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-225064469901e6d6"
+},
+{
+"kind": "place",
+"subject": "Portrush",
+"tech": "risograph",
+"gram": "G2_terrain",
+"pal": "spectrum",
+"prompt": "two-colour risograph print, layers slightly misregistered, coarse halftone dot grain, flat ink of Portrush, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen across open land, the horizon pushed to the top of the picture, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-2255f8ed7371c266"
+},
+{
+"kind": "place",
+"subject": "Street",
+"tech": "oil_impasto",
+"gram": "G9_naive",
+"pal": "duotone",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of Street, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-226d4c2d4018bdf9"
+},
+{
+"kind": "place",
+"subject": "Guanajuato",
+"tech": "risograph",
+"gram": "G10_abstract",
+"pal": "monochrome",
+"prompt": "two-colour risograph print, layers slightly misregistered, coarse halftone dot grain, flat ink of Guanajuato, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as an all-over painterly abstraction built from the colours and shapes of the place itself, marks edge to edge, no focal point, no colour at all, warm charcoal black on cream paper, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-2290446444d3bae8"
+},
+{
+"kind": "stilllife",
+"subject": "a bowl of cherries",
+"tech": "linocut",
+"gram": "S2_single",
+"pal": "monochrome",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a bowl of cherries, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, one object, very large and centred, on a flat plain ground, no colour at all, warm charcoal black on cream paper, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-2294f2bef2b38d24"
+},
+{
+"kind": "place",
+"subject": "Quebec City",
+"tech": "palette_knife",
+"gram": "G1_window",
+"pal": "neutral",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of Quebec City, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen through a window or terrace arch framing the left and right edges, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-22ad3b79ccb9220e"
+},
+{
+"kind": "architecture",
+"subject": "a park railing and finials",
+"tech": "palette_knife",
+"gram": "A4_wide",
+"pal": "duotone",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of a park railing and finials, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, small in a wide empty landscape with the horizon low, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-22d6b753ced726a3"
+},
+{
+"kind": "place",
+"subject": "Settle",
+"tech": "palette_knife",
+"gram": "G10_abstract",
+"pal": "complementary",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of Settle, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as an all-over painterly abstraction built from the colours and shapes of the place itself, marks edge to edge, no focal point, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-2333e8fc5fa41169"
+},
+{
+"kind": "place",
+"subject": "Baku",
+"tech": "monotype",
+"gram": "G10_abstract",
+"pal": "spectrum",
+"prompt": "monotype print pulled from an inked plate, the plate wiped back, soft blurred edges and plate tone of Baku, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as an all-over painterly abstraction built from the colours and shapes of the place itself, marks edge to edge, no focal point, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-236401e4bc3e68f9"
+},
+{
+"kind": "architecture",
+"subject": "a glazed station canopy",
+"tech": "palette_knife",
+"gram": "A3_detail",
+"pal": "complementary",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of a glazed station canopy, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, one architectural detail very large and cropped by every edge, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-23c8f0fc09b331ba"
+},
+{
+"kind": "place",
+"subject": "Nice",
+"tech": "palette_knife",
+"gram": "G1_window",
+"pal": "neutral",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of Nice, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen through a window or terrace arch framing the left and right edges, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-240d0746b9049923"
+},
+{
+"kind": "place",
+"subject": "the Avenue of the Baobabs",
+"tech": "linocut",
+"gram": "G2_terrain",
+"pal": "neutral",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of the Avenue of the Baobabs, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen across open land, the horizon pushed to the top of the picture, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-2421fcf3aeacd287"
+},
+{
+"kind": "place",
+"subject": "Deal",
+"tech": "risograph",
+"gram": "G1_window",
+"pal": "duotone",
+"prompt": "two-colour risograph print, layers slightly misregistered, coarse halftone dot grain, flat ink of Deal, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen through a window or terrace arch framing the left and right edges, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-243cef622987c104"
+},
+{
+"kind": "creature",
+"subject": "lappet moth",
+"tech": "sketch",
+"gram": "G7_chart",
+"pal": "neutral",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of a lappet moth, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a specimen chart of nine simplified studies on one flat warm ground, cream, bone and oatmeal with one small rust accent, exactly two eyes, both eyes clear and correctly placed, clean simple eyes, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no human figures, no hands, animal only",
+"sku": "WA-2442f3522a16b971"
+},
+{
+"kind": "stilllife",
+"subject": "a bowl of dried chillies",
+"tech": "palette_knife",
+"gram": "S4_shelf",
+"pal": "monochrome",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of a bowl of dried chillies, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, lined up along a single shelf running the full width of the sheet, no colour at all, warm charcoal black on cream paper, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-244da11ae1c4faa5"
+},
+{
+"kind": "botanical",
+"subject": "waxcap pink",
+"tech": "linocut",
+"gram": "B4_meadow",
+"pal": "spectrum",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of waxcap pink, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, growing in a dense band across the lower half, stems running off both edges, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-2487bc8d2d4260e2"
+},
+{
+"kind": "place",
+"subject": "Edinburgh Castle rock",
+"tech": "charcoal",
+"gram": "G9_naive",
+"pal": "duotone",
+"prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of Edinburgh Castle rock, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-248b3596b902d58a"
+},
+{
+"kind": "stilllife",
+"subject": "a cup of matcha",
+"tech": "risograph",
+"gram": "S4_shelf",
+"pal": "neutral",
+"prompt": "two-colour risograph print, layers slightly misregistered, coarse halftone dot grain, flat ink of a cup of matcha, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, lined up along a single shelf running the full width of the sheet, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-2497fda4e9ef222f"
+},
+{
+"kind": "place",
+"subject": "Richmond",
+"tech": "palette_knife",
+"gram": "G1_window",
+"pal": "monochrome",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of Richmond, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen through a window or terrace arch framing the left and right edges, no colour at all, warm charcoal black on cream paper, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-24caee4c453d8ab8"
+},
+{
+"kind": "place",
+"subject": "Puzzlewood",
+"tech": "gouache",
+"gram": "G10_abstract",
+"pal": "spectrum",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of Puzzlewood, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as an all-over painterly abstraction built from the colours and shapes of the place itself, marks edge to edge, no focal point, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-24e74e37e1a8073d"
+},
+{
+"kind": "creature",
+"subject": "bee-eater",
+"tech": "ink_wash",
+"gram": "G7_chart",
+"pal": "monochrome",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of a bee-eater, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a specimen chart of nine simplified studies on one flat warm ground, no colour at all, warm charcoal black on cream paper, exactly two eyes, both eyes clear and correctly placed, clean simple eyes, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no human figures, no hands, animal only",
+"sku": "WA-24ec7da34c729487"
+},
+{
+"kind": "botanical",
+"subject": "lily asiatic",
+"tech": "cyanotype",
+"gram": "B3_scatter",
+"pal": "duotone",
+"prompt": "cyanotype photogram, Prussian blue ground with white silhouettes, uneven brushed edges of lily asiatic, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, several cuttings scattered evenly across the sheet with space between them, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-25012be3b8e27c4e"
+},
+{
+"kind": "place",
+"subject": "Street",
+"tech": "oil_impasto",
+"gram": "G1_window",
+"pal": "spectrum",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of Street, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen through a window or terrace arch framing the left and right edges, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-25274dd598f26c81"
+},
+{
+"kind": "place",
+"subject": "Belgrade",
+"tech": "palette_knife",
+"gram": "G10_abstract",
+"pal": "spectrum",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of Belgrade, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as an all-over painterly abstraction built from the colours and shapes of the place itself, marks edge to edge, no focal point, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-2543af02e3aa32ce"
+},
+{
+"kind": "place",
+"subject": "Hong Kong",
+"tech": "palette_knife",
+"gram": "G9_naive",
+"pal": "spectrum",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of Hong Kong, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-256da6688f25278f"
+},
+{
+"kind": "place",
+"subject": "Dartmouth harbour",
+"tech": "ink_wash",
+"gram": "G1_window",
+"pal": "monochrome",
+"prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of Dartmouth harbour, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen through a window or terrace arch framing the left and right edges, no colour at all, warm charcoal black on cream paper, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-25c73d121a68acfe"
+},
+{
+"kind": "place",
+"subject": "Savannah",
+"tech": "pastel",
+"gram": "G9_naive",
+"pal": "spectrum",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of Savannah, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-25d206e02c05ee5c"
+},
+{
+"kind": "place",
+"subject": "San Miguel de Allende",
+"tech": "oil_impasto",
+"gram": "G1_window",
+"pal": "spectrum",
+"prompt": "thick oil painting, visible impasto ridges and brush drag of San Miguel de Allende, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen through a window or terrace arch framing the left and right edges, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-25d53be0dc9b691f"
+},
+{
+"kind": "stilllife",
+"subject": "a cup of black coffee and a spoon",
+"tech": "linocut",
+"gram": "S4_shelf",
+"pal": "spectrum",
+"prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a cup of black coffee and a spoon, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, lined up along a single shelf running the full width of the sheet, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-25d73fa90d3b3ad6"
+},
+{
+"kind": "place",
+"subject": "Winchester",
+"tech": "screenprint",
+"gram": "G10_abstract",
+"pal": "duotone",
+"prompt": "flat screen-printed artwork, hand-pulled ink, simplified geometric shapes, bold flat colour of Winchester, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as an all-over painterly abstraction built from the colours and shapes of the place itself, marks edge to edge, no focal point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-2623f2600dbc4776"
+},
+{
+"kind": "stilllife",
+"subject": "a darkroom tray",
+"tech": "gouache",
+"gram": "S4_shelf",
+"pal": "duotone",
+"prompt": "flat gouache illustration, every shape outlined with a dark contour line of a darkroom tray, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, lined up along a single shelf running the full width of the sheet, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-262a7cef77819c0e"
+},
+{
+"kind": "place",
+"subject": "Chengdu",
+"tech": "pastel",
+"gram": "G2_terrain",
+"pal": "spectrum",
+"prompt": "soft pastel drawing, visible grain, scribbly open fill of Chengdu, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen across open land, the horizon pushed to the top of the picture, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-2674a39622b20444"
+},
+{
+"kind": "place",
+"subject": "the Norfolk Coast",
+"tech": "palette_knife",
+"gram": "G9_naive",
+"pal": "monochrome",
+"prompt": "palette knife painting, angular facets with hard straight edges, no outlines of the Norfolk Coast, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, no colour at all, warm charcoal black on cream paper, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-267f8d751b192f25"
+},
+{
+"kind": "place",
+"subject": "Botany Bay Kent",
+"tech": "risograph",
+"gram": "G1_window",
+"pal": "duotone",
+"prompt": "two-colour risograph print, layers slightly misregistered, coarse halftone dot grain, flat ink of Botany Bay Kent, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen through a window or terrace arch framing the left and right edges, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-268c475280574584"
+},
+{
+"kind": "place",
+"subject": "Helmsley",
+"tech": "sketch",
+"gram": "G2_terrain",
+"pal": "monochrome",
+"prompt": "loose pencil sketch, visible construction lines, soft graphite shading of Helmsley, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen across open land, the horizon pushed to the top of the picture, no colour at all, warm charcoal black on cream paper, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-26bc8e3a4da08ad5"
+},
+{
+"kind": "celestial",
+"subject": "the far side of the moon",
+"tech": "cyanotype",
+"gram": "C4_overland",
+"pal": "duotone",
+"prompt": "cyanotype photogram, Prussian blue ground with white silhouettes, uneven brushed edges of the far side of the moon, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, above a simplified dark landscape silhouette along the lower third, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+"sku": "WA-26bde196b6370038"
+}
+]
