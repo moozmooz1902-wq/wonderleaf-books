@@ -288,6 +288,57 @@ is also not demonstrably doing good. It stays because it is shipped and
 there is no evidence to change it, which is a different and weaker reason
 than the one I had for it yesterday.
 
+## The 13 Oct afternoon reject spike - OPEN, not understood
+
+At 14:20 the fleet went from 6.5% rejected to 43%, text-dominated, and it
+did NOT come back down. Ten minutes on it read 43.1%. Every shard that
+relaunched in the 12:30 rotation is affected; the two that had not rotated
+were clean.
+
+                           place share of output    reject rate
+    wa-v3-1  (up 8 hrs)        22%, flat                0%
+    wa-v3-10 (up 3 hrs)        17-23%, flat             4.5%
+    the ten that rotated    40% rising to 61%         42-55%
+
+The pool is 25.4% place. The unaffected shards sit on that baseline; the
+affected ones produce double it and climbing. Places are where FLUX writes
+shop signs and street names, so the text rejections follow from the
+material rather than from anything wrong with the gate - the marks are real
+garbled lettering ("CANNON CHASSE", "INETRECLNE"), nearly all in the bottom
+signature band.
+
+RULED OUT, each checked rather than assumed:
+  * different grid - both broken and healthy log "ip gate: 1,243,137 jobs"
+    and "pool: 960,000 of 1,124,581", so subjects.json is the same file;
+  * different launch args - identical apart from --part;
+  * changed code - no shipped file changed between 11:18 (healthy relaunch)
+    and 12:30 (the broken batch);
+  * broken resume - every shard logged "resume: 271,217-279,702 panels
+    already across 4 bucket(s)", so nothing is being regenerated;
+  * a slice effect - striping is jobs[k-1::nparts] over a hash-ordered grid,
+    so every stripe is a fair sample;
+  * thrashing - 481 distinct SKUs rejected, 122 reaching try 2, 59 using all
+    retries and then kept_anyway and uploaded. The retry path works.
+
+HYPOTHESIS, NOT CONFIRMED: --max-hours cuts a run mid-queue, and what is
+left unfinished is enriched in the jobs that take three generations instead
+of one. Each rotation concentrates that further, so a stripe's remainder
+drifts towards places. It fits every number above, including why the two
+unrotated shards are clean.
+
+**Its prediction is testable and cheap: wa-v3-1 should spike when it next
+rotates.** If it does not, the hypothesis is wrong and this is still open.
+Nothing was changed on the fleet while this is half understood.
+
+THE COST, which is the part that matters:
+
+    at  6.5% reject    88 hrs   $209 GPU for the remaining 674,000
+    at 43%  reject    144 hrs   $343
+
+So a sustained 43% is about $134 more than the $404 projection. Not a
+reason to stop, and the panels being made are fine - this is wasted
+generation, not bad output.
+
 ## What is NOT resumable yet
 
 The CPU stage (`pipeline.py`) rebuilds its listings from whatever panels it
