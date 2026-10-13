@@ -213,19 +213,46 @@ _CLEAN = ("no text, no lettering, no words, no letters, no numbers, "
          "no signature, no handwriting, no monogram, no watermark, "
           "unsigned, clean empty corners")
 
-# AND THE SAME BUG WAS STILL IN HERE FOR PEOPLE. Found 13 Oct by looking at
-# sixty panels the people gate had rejected: measured on those sixty, the
-# clause "no people, no person, no human figures..." starts at word 62 and
-# runs to word 87, so CLIP - which never saw it - was free to put pedestrians
-# in every street. Thirty-six of the sixty had figures, and three had a whole
-# person where the subject should have been: a mushroom, a lily, a town.
+# I TRIED THE SAME FIX FOR PEOPLE AND IT MADE THINGS WORSE. TRIED AND
+# REVERTED 13 OCT - DO NOT TRY IT AGAIN WITHOUT READING THIS.
 #
-# The long clause stays at the end for T5, which reads all of it. This short
-# one goes next to _CLEAN, inside the window, where CLIP reads it. Short on
-# purpose: the grammar and the palette have to fit in the window too, and
-# they are what the picture actually looks like.
-_NO_PPL_EARLY = "unpeopled, empty of people"
-_NO_PPL_EARLY_CREATURE = "the animal alone, no people"
+# The reasoning looked airtight. Sixty panels the people gate had rejected
+# were regenerated and read by eye: 36 really had figures. Measured on those
+# sixty prompts, "no people, no person, no human figures..." starts at word
+# 62 and runs to word 87, and CLIP stops at about word 55 - so the encoder
+# carrying the global look had never once been told to leave the street
+# empty. Identical in shape to the no-text bug found the day before.
+#
+# So a short form, "unpeopled, empty of people", went in beside _CLEAN,
+# inside the window, with the long clause left at the end for T5. One shard
+# was relaunched onto it while the other eleven stayed on the old prompt,
+# which is a free A/B because both arms make saleable panels.
+#
+# PEOPLE rejections went UP. Marginal, past the retry backlog:
+#     new prompt  +189 rejections, +112 PEOPLE  = 59.3%
+#     old prompt  +139 rejections,  +58 PEOPLE  = 41.7%
+# and the new arm was also carrying the score-bank fix, which pushes the
+# other way, so the prompt alone did more than that 17-point gap.
+#
+# The mechanism, after the fact: schnell runs at guidance_scale 0.0, which
+# means NO classifier-free guidance, which means negation is not handled at
+# all. "No people" is not a negative instruction to this model - it is the
+# token "people", and I moved it from a place the image encoder cannot read
+# into the most attended part of the prompt. I asked for people.
+#
+# The long clause stays where it is, at the end, where it is harmless and
+# where T5 can make what little it can of it. If people rejections are ever
+# worth attacking from the prompt side, it has to be by saying what SHOULD
+# be there - "empty streets at dawn", "before the town wakes" - and not by
+# naming what should not. That is untested and is a job for one shard and a
+# contact sheet, not for the fleet.
+#
+# THE SAME DOUBT NOW HANGS OVER _CLEAN. It is built the same way, out of
+# eleven negations, and it sits inside the window by my own hand. The text
+# rejection rate fell after I moved it and I credited the move, but I never
+# ran this comparison on it - and this result is a reason to think moving it
+# may have been neutral or worse. Measure it the same way before trusting
+# either direction.
 
 # _CLEAN USED TO LIVE AT THE END OF THESE, AND THAT WAS THE BUG.
 #
@@ -311,33 +338,33 @@ NO_EYES = ("no face, no eyes, no features added, "
 
 
 def place_prompt(place, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {place}, {_CLEAN}, {_NO_PPL_EARLY}, "
+    return (f"{TECHNIQUE[tech]} of {place}, {_CLEAN}, "
             f"{GRAMMAR_PLACE[gram]}, {PALETTE[pal]}, {RULES}")
 
 
 def botanical_prompt(name, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, {_NO_PPL_EARLY}, "
+    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, "
             f"{GRAMMAR_BOTANICAL[gram]}, {PALETTE[pal]}, {RULES}")
 
 
 def creature_prompt(name, tech, gram, pal):
     eyes = EYES if has_face(name) else NO_EYES
-    return (f"{TECHNIQUE[tech]} of a {name}, {_CLEAN}, {_NO_PPL_EARLY_CREATURE}, "
+    return (f"{TECHNIQUE[tech]} of a {name}, {_CLEAN}, "
             f"{GRAMMAR_CREATURE[gram]}, {PALETTE[pal]}, {eyes}, {RULES_CREATURE}")
 
 
 def celestial_prompt(name, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, {_NO_PPL_EARLY}, "
+    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, "
             f"{GRAMMAR_CELESTIAL[gram]}, {PALETTE[pal]}, {RULES}")
 
 
 def stilllife_prompt(name, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, {_NO_PPL_EARLY}, "
+    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, "
             f"{GRAMMAR_STILLLIFE[gram]}, {PALETTE[pal]}, {RULES}")
 
 
 def architecture_prompt(name, tech, gram, pal):
-    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, {_NO_PPL_EARLY}, "
+    return (f"{TECHNIQUE[tech]} of {name}, {_CLEAN}, "
             f"{GRAMMAR_ARCH[gram]}, {PALETTE[pal]}, {RULES}")
 
 
