@@ -50,7 +50,14 @@ JOBS_URL="https://pub-4b710c8610a84acc8fad1513f48132fd.r2.dev/wallart/assets/sub
 # the known-good behaviour while that is diagnosed, rather than having
 # to choose between a broken gate and no shards.
 CLIP="${CLIP_GATE:-1}"
-EXTRA="--batch 4 --width 704 --height 1008 --quant nf4 --retries 2 --pool 960000 --part $K/$N --stores stores.json --resume --clip-gate $CLIP --max-hours 10"
+# CLEAN_AT_END=1 in the environment moves the no-text clause to the end of
+# the prompt, outside CLIP's 77-token window, for THIS shard only. It is how
+# the A/B is run: one shard carries it, fill_shards.sh launches the other
+# eleven without it, and the marginal text-reject rates are compared. Never
+# set it in fill_shards.sh - a change every shard carries has no control.
+CLEAN=""
+[ "${CLEAN_AT_END:-0}" = "1" ] && CLEAN=" --clean-at-end"
+EXTRA="--batch 4 --width 704 --height 1008 --quant nf4 --retries 2 --pool 960000 --part $K/$N --stores stores.json --resume --clip-gate $CLIP --max-hours 10$CLEAN"
 for GPUS in "$TIER1" "$TIER2"; do
   CLOUD=COMMUNITY
   OUT=$(python3 launch_gen.py --name "wa-v3-$K" --cloud $CLOUD --gpu "$GPUS" --template vbsgwyibn1 \
