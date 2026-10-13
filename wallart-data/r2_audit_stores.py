@@ -32,7 +32,7 @@ export PATH=/opt/conda/bin:/usr/local/bin:/usr/bin:/bin:$PATH
 ( while true; do python3 -m http.server 8000 --directory /workspace >/dev/null 2>&1; sleep 3; done ) &
 set -x
 python3 -m pip install -q --no-input --break-system-packages boto3 pillow numpy 2>&1 | tail -2
-python3 - <<'EOF'
+(python3 - <<'EOF'
 import os, io, json, numpy as np, boto3
 from concurrent.futures import ThreadPoolExecutor
 from botocore.config import Config
@@ -42,7 +42,17 @@ s3 = boto3.client("s3",
     endpoint_url=f"https://{os.environ['R2_ACCOUNT_ID']}.r2.cloudflarestorage.com",
     aws_access_key_id=os.environ["R2_ACCESS_KEY_ID"],
     aws_secret_access_key=os.environ["R2_SECRET_ACCESS_KEY"],
-    config=Config(signature_version="s3v4", max_pool_connections=64),
+    # ONE SLOW OBJECT USED TO KILL THE WHOLE RUN. At 168k panels the defaults
+    # held; at 222k a single GET hit the default 60s read timeout with no
+    # retries configured, the exception came back out of ex.map, and every
+    # hash computed up to that point was thrown away. The pod then printed
+    # AUDIT_DONE anyway, because that echo is the next line of the shell
+    # script and never looked at python's exit status - so a crash was
+    # indistinguishable from success until the boot log was read, and the
+    # pod billed on at $0.32/hr in the meantime.
+    config=Config(signature_version="s3v4", max_pool_connections=64,
+                  connect_timeout=20, read_timeout=90,
+                  retries={"max_attempts": 8, "mode": "adaptive"}),
     region_name="auto")
 
 STORES = [("luxvia-art", "luxvia/gen/"), ("posterleaf-store1", "store1/gen/"),
@@ -67,14 +77,27 @@ def dhash(im, n=16):
 
 def one(it):
     bkt, k = it
-    b = s3.get_object(Bucket=bkt, Key=k)["Body"].read()
-    return bkt, k.rsplit("/", 1)[-1][:-4], dhash(Image.open(io.BytesIO(b)))
+    try:
+        b = s3.get_object(Bucket=bkt, Key=k)["Body"].read()
+        return bkt, k.rsplit("/", 1)[-1][:-4], dhash(Image.open(io.BytesIO(b)))
+    except Exception:
+        return None          # a panel that will not come down is one panel
 
-rows = []
+rows, missed = [], 0
 with ThreadPoolExecutor(max_workers=48) as ex:
     for i, r in enumerate(ex.map(one, items), 1):
-        rows.append(r)
-        if i % 5000 == 0: print(f"hashed {i}", flush=True)
+        if r is None:
+            missed += 1
+        else:
+            rows.append(r)
+        if i % 5000 == 0:
+            print(f"hashed {i}  missed {missed}", flush=True)
+# A handful of unreadable objects does not change a duplication percentage.
+# Losing a tenth of the catalogue does, so that is a failure, not a result.
+if missed > 0.05 * max(len(items), 1):
+    raise SystemExit(f"AUDIT_UNRELIABLE: {missed:,} of {len(items):,} panels "
+                     f"could not be fetched")
+print(f"hashed {len(rows):,}, missed {missed:,}", flush=True)
 
 bks  = [r[0] for r in rows]
 skus = [r[1] for r in rows]
@@ -112,7 +135,7 @@ open("/workspace/flagged.txt", "w").write("\n".join(
     s for s, f in zip(skus, flag) if f))
 print("AUDIT " + json.dumps({k: v for k, v in out.items() if k != "closest_pairs"}), flush=True)
 EOF
-echo AUDIT_DONE
+) && echo AUDIT_DONE || echo AUDIT_FAILED
 EOS
 nohup bash /workspace/run.sh > /workspace/boot.log 2>&1 &
 if [ -x /start.sh ]; then exec /start.sh; else sleep infinity; fi
