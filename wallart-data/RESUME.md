@@ -148,20 +148,38 @@ standing in the scene" won by default.
 
 Two things came out of it, and they are very different sizes.
 
-### The prompt, which is the big one
+### The prompt, which I got wrong
 
-The no-people clause started at word 62 and ran to word 87. CLIP stops at
-about word 55. **This is the same bug as the no-text clause, in the same
-place, found a day later** - I moved `_CLEAN` into the window, watched the
-text rejects fall, and did not think to look at the clause sitting next to
-it. For the whole run so far FLUX has been drawing streets having never
-been told to leave them empty.
+The no-people clause starts at word 62 and runs to word 87; CLIP stops at
+about word 55. That part is true. The conclusion drawn from it - that this
+was the same bug as the no-text clause and wanted the same fix - was not.
 
-Fixed by putting a short form - "unpeopled, empty of people" - beside
-`_CLEAN`, keeping the long one at the end for T5. Verified against the real
-CLIP tokeniser for all six builders. SKUs hash kind|subject|tech|gram|pal
-and never the prompt text, so nothing already made is remade - checked
-against all 60 manifest rows, zero SKUs move.
+A short form, "unpeopled, empty of people", went in beside `_CLEAN`, one
+shard was relaunched onto it, and the other eleven were left on the old
+prompt as the control. Marginal, past the retry backlog:
+
+    new prompt  +189 rejections, +112 PEOPLE  = 59.3%
+    old prompt  +139 rejections,  +58 PEOPLE  = 41.7%
+
+**It made people MORE common**, and the new arm was carrying the score-bank
+fix too, which pushes the other way, so the prompt alone did more than that
+17-point gap. Reverted in d9ca0d9 after two and a half hours, before the
+other eleven shards could rotate onto it.
+
+schnell runs at guidance_scale 0.0. No classifier-free guidance means
+negation is not handled at all: "no people" is not an instruction, it is
+the token "people", and moving it into the most attended part of the prompt
+asks for exactly what it names. Attacking this from the prompt side at all
+means saying what SHOULD be there - "empty streets at dawn" - never what
+should not, and that is untested.
+
+**This casts doubt on the no-text fix as well.** `_CLEAN` is eleven
+negations sitting inside the window by the same reasoning. The text reject
+rate fell after it moved and I credited the move, but no controlled
+comparison was ever run, and this result is a reason to suspect it was
+neutral or worse. The note is at the top of prompts.py. Measure it the same
+way - one shard, eleven controls, marginal rates - before trusting either
+direction.
 
 ### The score bank, which is the small one
 
