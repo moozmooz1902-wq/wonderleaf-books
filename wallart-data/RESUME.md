@@ -288,7 +288,7 @@ is also not demonstrably doing good. It stays because it is shipped and
 there is no evidence to change it, which is a different and weaker reason
 than the one I had for it yesterday.
 
-## The 13 Oct afternoon reject spike - OPEN, not understood
+## The 13 Oct afternoon reject spike - transient, and a lesson in reading it
 
 At 14:20 the fleet went from 6.5% rejected to 43%, text-dominated, and it
 did NOT come back down. Ten minutes on it read 43.1%. Every shard that
@@ -326,18 +326,35 @@ of one. Each rotation concentrates that further, so a stripe's remainder
 drifts towards places. It fits every number above, including why the two
 unrotated shards are clean.
 
-**Its prediction is testable and cheap: wa-v3-1 should spike when it next
-rotates.** If it does not, the hypothesis is wrong and this is still open.
-Nothing was changed on the fleet while this is half understood.
+RESOLVED AT 15:20, AND IT WAS TRANSIENT AFTER ALL. The fleet read 28.1%
+an hour later and the recovery is per-shard, in the order they rotated:
 
-THE COST, which is the part that matters:
+    wa-v3-5   3.9%   wa-v3-4   7.0%   wa-v3-7  12.5%   wa-v3-9  22.0%
+    wa-v3-2  34.5%   wa-v3-8  44.2%   wa-v3-6  46.7%   wa-v3-3  55.2%
 
-    at  6.5% reject    88 hrs   $209 GPU for the remaining 674,000
-    at 43%  reject    144 hrs   $343
+That is exactly what the hypothesis predicts and it is now the working
+explanation rather than a guess. **The clearing takes about three hours per
+shard, not one** - which is the thing I had wrong, in both directions
+within an hour.
 
-So a sustained 43% is about $134 more than the $404 projection. Not a
-reason to stop, and the panels being made are fine - this is wasted
-generation, not bad output.
+A LESSON ABOUT THE JUDGEMENT, NOT THE SYSTEM. I called it transient, then
+at 14:35 called that wrong on a ten-minute window, and quoted the seller a
+$134 overrun computed by treating a transient as permanent. Ten minutes and
+forty minutes are both far too short to see a three-hour decay, and I knew
+the decay existed - it is documented two sections up. The rule that was
+already written down for reject rates applies to everything: a reading
+shorter than the process you are watching tells you nothing, and quoting a
+cost off one is worse than saying "I do not know yet".
+
+THE COST, on a cycle average rather than on the worst reading:
+
+    baseline 6.5%          88 hr  $208
+    cycle average 13.6%    95 hr  $225   <- 3 hr elevated, 7 hr normal
+    sustained 43%         144 hr  $342   <- what I wrongly quoted
+
+So about $17 over the standing projection, not $134. The staggered
+--max-hours committed at 13:25 should also flatten this, since it stops ten
+shards entering the elevated phase at once.
 
 ## What is NOT resumable yet
 
