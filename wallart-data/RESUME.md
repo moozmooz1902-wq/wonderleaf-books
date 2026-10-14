@@ -356,6 +356,42 @@ So about $17 over the standing projection, not $134. The staggered
 --max-hours committed at 13:25 should also flatten this, since it stops ten
 shards entering the elevated phase at once.
 
+## 14 Oct: a fix that crashed the fleet, and the check that would have caught it
+
+Three shards died overnight on an unhandled EndpointConnectionError from a
+single R2 upload, printed GEN_DONE as though they had finished, and billed
+idle for forty-five minutes because the watchdog only knew the markers a
+tidy finish prints. Three fixes went in: retries around the upload, an exit
+status instead of an unconditional echo, and GEN_DONE/GEN_CRASHED added to
+the watchdog's kill list.
+
+**The retry loop used the name `attempt`, which is the per-SKU retry
+COUNTER** - a dict built at line 519 and read at 575 as attempt[j["sku"]].
+The loop rebound it to an int and the next job in the chunk died on 'int'
+object is not subscriptable. Every shard crashed within minutes of
+starting: 32 kills in 90 minutes, 3,135 panels in the hour instead of
+5,700, the whole fleet in a relaunch loop.
+
+IT PARSED. The checks run before shipping it to twelve pods were "does the
+file parse" and "does the bundle still fit under the command limit". Both
+passed. A name collision two hundred lines apart is exactly what those
+cannot see.
+
+**Before changing gen_gated.py again, run the loop, not the parser.** Four
+seconds, no pod, no GPU:
+
+    attempt = {j["sku"]: 0 for j in jobs}
+    for j in jobs:
+        assert attempt[j["sku"]] < retries   # the line that died
+        ...the changed block, with a stub that always fails
+           and a stub that always succeeds...
+    assert isinstance(attempt, dict)
+
+The one good part: GEN_CRASHED worked. It is the only reason the pods were
+killed rather than left idling, and the only reason the kill log said what
+was happening. The diagnostic was right and the fix beside it was wrong,
+which is worth remembering about any commit that does two things at once.
+
 ## What is NOT resumable yet
 
 The CPU stage (`pipeline.py`) rebuilds its listings from whatever panels it
