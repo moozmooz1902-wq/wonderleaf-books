@@ -615,8 +615,15 @@ def main():
                 # --resume picks it up. What must not happen is the whole
                 # run ending here.
                 body = open(path, "rb").read()
-                sent = False
-                for attempt in range(3):
+                sent, err = False, None
+                # NOT `attempt` - that name is the per-SKU retry COUNTER, a
+                # dict built at line 519 and read two screens up as
+                # attempt[j["sku"]]. Using it as a loop variable here rebound
+                # it to an int, and the next job in the chunk died on
+                # 'int' object is not subscriptable. Every shard crashed
+                # within minutes, 32 times in 90 minutes, and the fleet made
+                # 3,135 panels in the hour instead of 5,700.
+                for try_n in range(3):
                     try:
                         s3.put_object(Bucket=bkt, Key=key, Body=body,
                                       ContentType="image/jpeg")
@@ -624,7 +631,7 @@ def main():
                         break
                     except Exception as e:
                         err = e
-                        time.sleep(2 ** attempt)
+                        time.sleep(2 ** try_n)
                 os.remove(path)        # the pod disk will not hold a million
                 if not sent:
                     print(f"  UPLOAD FAILED after 3 tries, {j['sku']} left "
