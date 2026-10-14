@@ -11,7 +11,13 @@ import json, re, subprocess, sys, time
 
 API = "https://rest.runpod.io/v1"
 DEAD = ("CUDA_DEAD_ON_THIS_HOST", "R2_TLS_INTERCEPTED_ON_THIS_HOST")
-DONE = ("SHARD COMPLETE", "UNFINISHED:")
+# GEN_DONE and GEN_CRASHED both mean the worker process has EXITED. A pod
+# whose worker has exited produces nothing and bills until deleted, and on
+# 14 Oct three of them sat that way for forty-five minutes because the
+# watchdog only knew the two markers the worker prints on a tidy finish -
+# and a crash prints neither. Whatever the reason the process is gone, the
+# pod's job here is over.
+DONE = ("SHARD COMPLETE", "UNFINISHED:", "GEN_DONE", "GEN_CRASHED")
 
 
 def curl(*args):

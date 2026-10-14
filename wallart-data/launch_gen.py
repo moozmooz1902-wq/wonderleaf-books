@@ -123,7 +123,18 @@ pip install -q --no-input {pip} 2>&1 | tail -3
 python3 -c "import torch,diffusers;print('torch',torch.__version__,'diffusers',diffusers.__version__,'cuda',torch.cuda.is_available())"
 cd /workspace/gen
 {script_line}
-echo GEN_DONE
+# THE WORKER'S EXIT STATUS, not a line that runs either way. Three shards
+# crashed on 14 Oct with an unhandled EndpointConnectionError uploading a
+# panel to R2, printed GEN_DONE on the next line as though they had
+# finished, and then sat there billing: the watchdog kills on SHARD
+# COMPLETE and UNFINISHED and had no reason to touch them. Forty-five
+# minutes at $0.19/hr each before a frozen done.txt gave them away.
+#
+# This is the third time today the same shape of bug has cost something -
+# an echo after a command that reports success whatever happened. The
+# duplicate audit had it, and before that the reject rate was read from a
+# log line that kept printing after the number behind it stopped moving.
+if [ $? -eq 0 ]; then echo GEN_DONE; else echo GEN_CRASHED; fi
 EOS
 nohup bash /workspace/run.sh > /workspace/boot.log 2>&1 &
 if [ -x /start.sh ]; then exec /start.sh; else sleep infinity; fi

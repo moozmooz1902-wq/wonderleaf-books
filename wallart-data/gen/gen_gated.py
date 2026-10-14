@@ -444,7 +444,16 @@ def main():
             "s3", endpoint_url=f"https://{os.environ['R2_ACCOUNT_ID']}.r2.cloudflarestorage.com",
             aws_access_key_id=os.environ["R2_ACCESS_KEY_ID"],
             aws_secret_access_key=os.environ["R2_SECRET_ACCESS_KEY"],
-            config=Config(signature_version="s3v4", max_pool_connections=32),
+            # RETRIES, because one dropped connection used to end the run.
+            # Three shards died on 14 Oct with EndpointConnectionError on a
+            # single put_object and took four to six thousand panels of
+            # remaining work with them. boto3's default here is almost no
+            # retrying; a pod generating for ten hours over a community
+            # host's network will see a connection fail, and that must cost
+            # one panel and a retry, not the shard.
+            config=Config(signature_version="s3v4", max_pool_connections=32,
+                          connect_timeout=20, read_timeout=90,
+                          retries={"max_attempts": 8, "mode": "adaptive"}),
             region_name="auto")
         # Some community hosts sit behind a TLS-intercepting middlebox and
         # every R2 call dies with "certificate verify failed: self-signed
@@ -600,10 +609,28 @@ def main():
                 else:
                     bkt = bucket
                     key = f"{a.r2_prefix.strip('/')}/{j['sku']}{a.tag}.jpg"
-                with open(path, "rb") as fh:
-                    s3.put_object(Bucket=bkt, Key=key, Body=fh.read(),
-                                  ContentType="image/jpeg")
+                # Even with retries configured, a put can still come back
+                # as an exception, and losing the shard over one panel is a
+                # bad trade: the SKU simply stays undone and the next
+                # --resume picks it up. What must not happen is the whole
+                # run ending here.
+                body = open(path, "rb").read()
+                sent = False
+                for attempt in range(3):
+                    try:
+                        s3.put_object(Bucket=bkt, Key=key, Body=body,
+                                      ContentType="image/jpeg")
+                        sent = True
+                        break
+                    except Exception as e:
+                        err = e
+                        time.sleep(2 ** attempt)
                 os.remove(path)        # the pod disk will not hold a million
+                if not sent:
+                    print(f"  UPLOAD FAILED after 3 tries, {j['sku']} left "
+                          f"undone: {err}", flush=True)
+                    continue           # NOT written to done.txt - --resume
+                                       # will make this SKU again later
             df.write(j["sku"] + "\n")
             mf.write(json.dumps({**j, "seed": sd, "marks": marks},
                                  ensure_ascii=False) + "\n")
