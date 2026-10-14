@@ -25,9 +25,21 @@ GATE_MARKS = ("PEOPLE", "EYES", "EMPTY")
 
 
 def curl(url, timeout=40):
+    """errors="replace", for the same reason watchdog.py does it.
+
+    This script reads each pod's boot.log to find which prompt variant it is
+    running. That log is multi-megabyte, curl --max-time cuts it off part
+    way, and a cut part way through the file is a cut part way through a
+    UTF-8 character - so text=True raised UnicodeDecodeError and took the
+    whole hourly reading with it.
+
+    I fixed exactly this in watchdog.py on 13 Oct and did not look for the
+    other script that reads the same log the same way. Both are now the only
+    two places that fetch boot.log; if a third appears, it needs this too.
+    """
     r = subprocess.run(["curl", "-sS", "--max-time", str(timeout), url],
-                       capture_output=True, text=True)
-    return r.stdout
+                       capture_output=True)
+    return r.stdout.decode("utf-8", errors="replace")
 
 
 def pods():
