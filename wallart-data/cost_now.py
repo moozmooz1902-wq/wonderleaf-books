@@ -85,7 +85,13 @@ GATE_SPEED = 0.185 / 0.216       # throughput, gated against ungated
 PANEL_KB = 157                   # measured over 189 real panels
 R2_PER_GB_MONTH = 0.015
 CPU_CORE_HOURS, CPU_CORES, CPU_PER_HR = 557, 16, 0.64
-SWEEP_GPU_HOURS = 14             # the owed text sweep over the finished set
+# The owed text sweep. This was 14, which priced sweeping the whole finished
+# catalogue. It only has to cover panels written before 11 Oct 22:00, when the
+# text gate still read the cropped image - 35,925 of them, counted from
+# LastModified by r2_age_histogram.py on 15 Oct, and that set cannot grow.
+# 35,925 at 50 ms is 0.50 GPU-hours, so this line was overstating the total by
+# about $2.50 for days on a population nobody had counted.
+SWEEP_GPU_HOURS = 0.5
 
 
 def main():
