@@ -16,6 +16,32 @@ Method, and each part of it was got wrong once before:
 Near is <= 24 bits of 256, the same threshold as the first audit, so the
 numbers are comparable.
 
+SCALE, rewritten 15 Oct at 609,478 panels. The comparison was every panel
+against every other with a popcount lookup table: 95 minutes at 227k and,
+being O(n^2), about eleven hours at 609k and a day at 960k. Two changes:
+
+  * distances come from a MATRIX PRODUCT. Each code as +-1 gives
+    a.b = BITS - 2*hamming, and float32 holds every value exactly, so it is
+    the same distance 13x faster - verified against the lookup table on
+    256 x 40,000 pairs, maximum difference 0. The exact audit is now about
+    two hours at 609k rather than eleven, and is still available: --full.
+  * the default samples ONE SIDE. 40,000 random probes, each compared
+    against the whole catalogue, estimates the same statistic without bias
+    in about sixteen minutes, to roughly +-0.08 points.
+
+Sampling BOTH sides - hashing a subsample and looking for twins inside it -
+is the cheap-looking option and it does not work. On a planted set whose
+true rate was 0.800% it reported 0.000% at a 12% sample and 0.167% at 50%,
+because a panel whose only twin was not sampled looks unique. The earlier
+note in the hourly routine suggesting "a 100k random sample" meant this and
+should not be followed.
+
+Exact repeats are still counted over the WHOLE catalogue either way:
+identical codes are identical bytes, so they need no pairwise work and
+there is no reason to estimate them.
+
+The download is now the slow part - 609k GETs - so it runs 160 threads.
+
 Runs on a pod because this machine has no R2 credentials. Nothing is
 written to the buckets and nothing is deleted.
 """
@@ -50,7 +76,7 @@ s3 = boto3.client("s3",
     # script and never looked at python's exit status - so a crash was
     # indistinguishable from success until the boot log was read, and the
     # pod billed on at $0.32/hr in the meantime.
-    config=Config(signature_version="s3v4", max_pool_connections=64,
+    config=Config(signature_version="s3v4", max_pool_connections=192,
                   connect_timeout=20, read_timeout=90,
                   retries={"max_attempts": 8, "mode": "adaptive"}),
     region_name="auto")
@@ -84,7 +110,13 @@ def one(it):
         return None          # a panel that will not come down is one panel
 
 rows, missed = [], 0
-with ThreadPoolExecutor(max_workers=48) as ex:
+# 48 was chosen when the comparison stage took hours and the download
+# did not matter. It does now: hashing 609,478 panels at 40 objects a
+# second is over four hours, and the comparison it feeds takes sixteen
+# minutes. This stage is entirely network-bound - the work per object is
+# one 16x16 resize - so the thread count is about how many GETs R2 will
+# serve at once, not about this pod's cores.
+with ThreadPoolExecutor(max_workers=160) as ex:
     for i, r in enumerate(ex.map(one, items), 1):
         if r is None:
             missed += 1
@@ -101,38 +133,114 @@ print(f"hashed {len(rows):,}, missed {missed:,}", flush=True)
 
 bks  = [r[0] for r in rows]
 skus = [r[1] for r in rows]
-bits = np.packbits(np.array([r[2] for r in rows], dtype=np.uint8), axis=1)
-POP = np.unpackbits(np.arange(256, dtype=np.uint8)[:, None], axis=1).sum(1).astype(np.uint16)
-n, NEAR = len(skus), 24
-# Block of 64, not 256: the comparison array is block x n x 32 uint16, which
-# at 57,000 panels is 233 MB a block at 64 and would be 933 MB at 256.
-# This whole approach is O(n^2) and will NOT scale to a million panels - at
-# that size it has to become an LSH bucketing pass. Fine for an audit now.
-flag = np.zeros(n, bool); worst = []
-for i0 in range(0, n, 64):
-    blk = bits[i0:i0+64]
-    d = POP[np.bitwise_xor(blk[:, None, :], bits[None, :, :])].sum(2)
-    for r in range(d.shape[0]): d[r, i0+r] = 999
-    flag[i0:i0+64] = (d <= NEAR).any(1)
-    mn = d.min(1)
-    for r in np.argsort(mn)[:2]:
-        worst.append((int(mn[r]), skus[i0+int(r)], skus[int(d[r].argmin())]))
-    if i0 % 6400 == 0: print(f"compared {i0}", flush=True)
-worst.sort()
+raw  = np.array([r[2] for r in rows], dtype=np.uint8)      # n x 256 of 0/1
+n, NEAR, BITS = len(skus), 24, 256
+
+# EXACT REPEATS come from the whole catalogue, always. They need no pairwise
+# work at all - identical codes are identical bytes - so there is no reason
+# to estimate them.
+packed = np.packbits(raw, axis=1)
+nd = len(set(map(bytes, packed)))
+
+# DISTANCES COME FROM A MATRIX PRODUCT. Writing each code as +-1 makes
+# a.b = BITS - 2*hamming, so hamming = (BITS - a.b)/2, and every value is an
+# integer within +-256 which float32 holds exactly. This is the Hamming
+# distance, not an approximation of it: checked against the popcount lookup
+# table on 256 x 40,000 pairs, maximum difference 0. It is 13x faster, and
+# that is the whole reason this audit is minutes rather than hours.
+pm = raw.astype(np.float32) * 2.0 - 1.0
+
+
+def wilson(k, m):
+    """95% interval for a proportion. Not k/m +- 1.96*se: the count here is
+    small - about 130 hits in 20,000 - and the normal approximation puts the
+    lower bound below zero at these rates."""
+    if m == 0:
+        return 0.0, 0.0, 0.0
+    z, q = 1.959964, k / m
+    den = 1 + z * z / m
+    mid = (q + z * z / (2 * m)) / den
+    half = z * ((q * (1 - q) / m + z * z / (4 * m * m)) ** 0.5) / den
+    return q, max(0.0, mid - half), min(1.0, mid + half)
+
+
+# SAMPLE ONE SIDE, NEVER BOTH. The statistic is "percentage of PANELS with a
+# near twin anywhere in the catalogue". Taking random probes and comparing
+# each against the WHOLE set is unbiased, because each probe's answer is
+# exactly the answer the full scan would give that panel. Hashing a sample
+# and looking for twins inside it is the obvious shortcut and it is wrong by
+# an order of magnitude: on a planted set whose true rate was 0.800% it
+# reported 0.000% at a 12% sample and 0.167% at 50%, because a panel whose
+# only twin was not sampled looks unique. Measured, not reasoned about.
+PROBES = __PROBES__          # 0 means every panel, the exact O(n^2) audit
+flag_all = None
+if PROBES and PROBES < n:
+    rng = np.random.default_rng(0)        # fixed, so an audit is repeatable
+    idx = np.sort(rng.choice(n, size=PROBES, replace=False))
+    mode, PBLOCK, RBLOCK = "probe", 256, 100_000
+else:
+    idx = np.arange(n)
+    mode, PBLOCK, RBLOCK = "exact", 512, n
+
+hit  = np.zeros(len(idx), bool)
+best = np.full(len(idx), 999, np.int32)
+mate = np.zeros(len(idx), np.int64)
+for p0 in range(0, len(idx), PBLOCK):
+    pi = idx[p0:p0 + PBLOCK]
+    a = pm[pi]
+    got = np.zeros(len(pi), bool)
+    bst = np.full(len(pi), 999, np.int32)
+    mt  = np.zeros(len(pi), np.int64)
+    for r0 in range(0, n, RBLOCK):
+        d = (BITS - a @ pm[r0:r0 + RBLOCK].T) * 0.5
+        hi = r0 + d.shape[1]              # the last slice may be short
+        for r, gi in enumerate(pi):
+            if r0 <= gi < hi:
+                d[r, gi - r0] = 999       # never a panel against itself
+        got |= (d <= NEAR).any(1)
+        j = d.argmin(1)
+        v = d[np.arange(d.shape[0]), j].astype(np.int32)
+        better = v < bst
+        bst = np.where(better, v, bst)
+        mt  = np.where(better, j + r0, mt)
+    hit[p0:p0 + PBLOCK]  = got
+    best[p0:p0 + PBLOCK] = bst
+    mate[p0:p0 + PBLOCK] = mt
+    print(f"compared {p0 + len(pi)} of {len(idx)}", flush=True)
+
+k = int(hit.sum())
+rate, lo, hi_ci = wilson(k, len(idx))
+order = np.argsort(best)
+worst = [{"bits": int(best[t]), "a": skus[int(idx[t])], "b": skus[int(mate[t])]}
+         for t in order[:40]]
+
+# Per bucket, from the probes that fell in each one. The count is reported
+# next to the rate so a bucket with too few probes to say anything is
+# obvious rather than quietly noisy.
 seen = {}
-for b in set(bks):
-    m = np.array([x == b for x in bks])
-    seen[b] = {"panels": int(m.sum()), "near_dupe_pct": round(float(flag[m].mean())*100, 3)}
+pb = [bks[int(i)] for i in idx]
+for bucket in sorted(set(bks)):
+    m = np.array([x == bucket for x in pb])
+    kk = int(hit[m].sum())
+    r2, l2, h2 = wilson(kk, int(m.sum()))
+    seen[bucket] = {"panels": int(sum(1 for x in bks if x == bucket)),
+                    "probes": int(m.sum()),
+                    "near_dupe_pct": round(r2 * 100, 3),
+                    "ci95": [round(l2 * 100, 3), round(h2 * 100, 3)]}
+
 out = {"panels": n,
-       "distinct_hashes": len(set(map(bytes, bits))),
-       "exact_repeats": n - len(set(map(bytes, bits))),
-       "near_dupe_pct": round(float(flag.mean())*100, 3),
+       "mode": mode,
+       "probes": int(len(idx)),
+       "distinct_hashes": nd,
+       "exact_repeats": n - nd,
+       "near_dupe_pct": round(rate * 100, 3),
+       "near_dupe_ci95": [round(lo * 100, 3), round(hi_ci * 100, 3)],
        "threshold_bits": NEAR,
        "per_bucket": seen,
-       "closest_pairs": [{"bits": w[0], "a": w[1], "b": w[2]} for w in worst[:40]]}
+       "closest_pairs": worst}
 open("/workspace/audit.json", "w").write(json.dumps(out, indent=1))
 open("/workspace/flagged.txt", "w").write("\n".join(
-    s for s, f in zip(skus, flag) if f))
+    skus[int(i)] for i, f in zip(idx, hit) if f))
 print("AUDIT " + json.dumps({k: v for k, v in out.items() if k != "closest_pairs"}), flush=True)
 EOF
 ) && echo AUDIT_DONE || echo AUDIT_FAILED
@@ -154,10 +262,43 @@ def curl(method, path, body=None):
 
 
 if __name__ == "__main__":
+    # --probes N  sample N panels and compare each against the WHOLE
+    #             catalogue. Default 40,000: about sixteen minutes at 609k
+    #             panels and a 95% interval of roughly +-0.08 points at the
+    #             rates seen so far, which is finer than the 0.826 -> 0.670
+    #             -> 0.648 trend being tracked.
+    # --full      every panel against every other. The exact answer and the
+    #             thing the probe pass is checked against; about two hours at
+    #             609k and five at 960k, so it is a deliberate choice now
+    #             rather than the only option.
+    probes = 40_000
+    if "--full" in sys.argv:
+        probes = 0
+    if "--probes" in sys.argv:
+        probes = int(sys.argv[sys.argv.index("--probes") + 1])
+    script = SCRIPT.replace("__PROBES__", str(probes))
+    assert "__PROBES__" not in script
+    print(f"mode: {'exact, every panel' if probes == 0 else f'{probes:,} probes'}")
+    # --dry-run creates NOTHING. This script's first action is to start a pod
+    # that bills, and on 15 Oct it was run with a made-up "--dry" flag, which
+    # it ignored on its way to creating one. Unknown flags are now refused
+    # rather than ignored, and there is a real way to look without spending.
+    known = {"--probes", "--full", "--dry-run"}
+    bad = [a for a in sys.argv[1:]
+           if a.startswith("-") and a not in known]
+    if bad:
+        print(f"unknown flag {bad[0]} - this script starts a billing pod, so "
+              f"it will not run with a flag it does not understand. "
+              f"Known: {' '.join(sorted(known))}")
+        sys.exit(2)
+    if "--dry-run" in sys.argv:
+        print(f"dry run, nothing created. start command "
+              f"{len(script):,} chars, PROBES={probes}")
+        sys.exit(0)
     common = {"name": "wallart-audit", "templateId": TEMPLATE,
               "imageName": "runpod/base:0.7.0-ubuntu2404",
               "containerDiskInGb": 40, "volumeInGb": 0,
-              "ports": ["8000/http"], "dockerStartCmd": ["bash", "-c", SCRIPT]}
+              "ports": ["8000/http"], "dockerStartCmd": ["bash", "-c", script]}
     # A CPU pod is the right shape and is often unavailable, so fall back to
     # the cheapest GPU and simply not use the GPU.
     for extra in ({"computeType": "CPU", "cpuFlavorIds": ["cpu3g", "cpu3c"],
