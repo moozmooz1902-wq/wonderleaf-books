@@ -43,11 +43,26 @@ def curl(*args):
 
 
 def pods():
+    """The shard list, or None when the API could not be read.
+
+    These must not be the same value. This returned [] on any failure - a
+    curl that timed out, a truncated body, a rate-limit page - and the loop
+    below treated an empty list as "the run is over" and exited. On 15 Oct
+    at 19:03 one unreadable response ended the watchdog two minutes after it
+    had polled twelve healthy pods, and the fleet ran unsupervised until a
+    person noticed. Nothing was wrong with the pods.
+
+    None means "ask again". [] means the API answered and there are no
+    shards, which is the only reading worth stopping for.
+    """
     try:
         d = json.loads(curl(f"{API}/pods"))
     except Exception:
-        return []
-    d = d if isinstance(d, list) else d.get("pods", [])
+        return None
+    if isinstance(d, dict):
+        d = d.get("pods")
+    if not isinstance(d, list):
+        return None
     return [p for p in d if p.get("desiredStatus") == "RUNNING"
             and str(p.get("name", "")).startswith("wa-v3-")]
 
@@ -114,11 +129,27 @@ def kill(pid, why):
 
 
 deadline = time.time() + float(sys.argv[1] if len(sys.argv) > 1 else 1500)
+# Stop on a real empty fleet, not on one bad reading, and not on one pass
+# that happened to land between a shard expiring and fill_shards.sh putting
+# the next one up - which at twelve staggered expiries is a normal moment.
+EMPTY_PASSES_BEFORE_STOP = 3
+empty = 0
 while time.time() < deadline:
     on = pods()
+    if on is None:
+        print(f"{time.strftime('%H:%M:%S')}  pod list unreadable, retrying",
+              flush=True)
+        time.sleep(30)
+        continue
     if not on:
-        print(f"{time.strftime('%H:%M:%S')}  no wa-v3 pods running", flush=True)
-        break
+        empty += 1
+        print(f"{time.strftime('%H:%M:%S')}  no wa-v3 pods running "
+              f"({empty} of {EMPTY_PASSES_BEFORE_STOP})", flush=True)
+        if empty >= EMPTY_PASSES_BEFORE_STOP:
+            break
+        time.sleep(60)
+        continue
+    empty = 0
     for p in on:
         pid, name = p["id"], p.get("name")
         t = log(pid)
