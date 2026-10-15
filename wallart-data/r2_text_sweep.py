@@ -76,10 +76,11 @@ for bkt, pre in STORES:
             if not o["Key"].endswith(".jpg"): continue
             t = o["LastModified"]
             if t.tzinfo is None: t = t.replace(tzinfo=timezone.utc)
-            if t < CUT: items.append((bkt, o["Key"]))
+            if (t >= CUT) if __AFTER__ else (t < CUT):
+                items.append((bkt, o["Key"]))
         if not r.get("IsTruncated"): break
         tok = r["NextContinuationToken"]
-print(f"pre-cutoff panels: {len(items)}", flush=True)
+print(f"{'post' if __AFTER__ else 'pre'}-cutoff panels: {len(items)}", flush=True)
 random.Random(0).shuffle(items)
 if SAMPLE: items = items[:SAMPLE]
 print(f"examining {len(items)}", flush=True)
@@ -190,7 +191,13 @@ def curl(method, path, body=None):
 
 
 if __name__ == "__main__":
-    known = {"--dry-run", "--sample"}
+    # --after samples panels written AFTER the cutoff instead of before it.
+    # The pre-cutoff sample found fake signatures sitting ABOVE the crop line,
+    # which is not the straddling-title case the 12 Oct fix addressed and
+    # which the live gate would therefore still pass. Whether that is a
+    # historical problem or a running one is a different question from the
+    # one this script was written for, and it is answered the same way.
+    known = {"--dry-run", "--sample", "--after"}
     bad = [a for a in sys.argv[1:] if a.startswith("-") and a not in known]
     if bad:
         print(f"unknown flag {bad[0]} - this script starts a billing pod. "
@@ -199,14 +206,18 @@ if __name__ == "__main__":
     sample = 0
     if "--sample" in sys.argv:
         sample = int(sys.argv[sys.argv.index("--sample") + 1].replace(",", ""))
+    after = "--after" in sys.argv
     script = (SCRIPT.replace("__SAMPLE__", str(sample))
+                    .replace("__AFTER__", "True" if after else "False")
                     .replace("__CUTOFF__", CUTOFF))
-    assert "__SAMPLE__" not in script and "__CUTOFF__" not in script
-    print(f"sweep: {'all pre-cutoff panels' if not sample else f'{sample:,} sampled'}")
+    for ph in ("__SAMPLE__", "__CUTOFF__", "__AFTER__"):
+        assert ph not in script, ph
+    print(f"sweep: {'all' if not sample else f'{sample:,} sampled'} panels "
+          f"written {'AFTER' if after else 'before'} {CUTOFF}")
     if "--dry-run" in sys.argv:
         print(f"dry run, nothing created. {len(script):,} chars")
         sys.exit(0)
-    common = {"name": "wallart-sweep", "templateId": TEMPLATE,
+    common = {"name": "wallart-sweep-after" if after else "wallart-sweep", "templateId": TEMPLATE,
               "imageName": "runpod/pytorch:2.8.0-py3.11-cuda12.8.1-cudnn-devel-ubuntu22.04",
               "containerDiskInGb": 40, "volumeInGb": 0,
               "ports": ["8000/http"], "dockerStartCmd": ["bash", "-c", script]}

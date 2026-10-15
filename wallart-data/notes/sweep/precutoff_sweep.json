@@ -1,0 +1,166 @@
+{
+ "pre_cutoff_total": null,
+ "examined": 1500,
+ "missed": 0,
+ "old_gate_rerun_hits": 3,
+ "old_gate_rerun_pct": 0.2,
+ "detector_hits": 34,
+ "detector_pct": 2.267,
+ "strip": 0.1,
+ "min_box_area": 0.0008,
+ "recog_examples": [
+  {
+   "sku": "WA-47198da34f3e1c91",
+   "txt": "0,2",
+   "conf": 0.69
+  },
+  {
+   "sku": "WA-dd9056eb66e36bab",
+   "txt": "@Bo W",
+   "conf": 0.48
+  },
+  {
+   "sku": "WA-1ea2ed5c6bb16049",
+   "txt": "L   K  E",
+   "conf": 0.37
+  }
+ ],
+ "detector_examples": [
+  {
+   "sku": "WA-0f67865c12d373a2",
+   "area": 0.452
+  },
+  {
+   "sku": "WA-0981a4cb341cf39c",
+   "area": 0.2854
+  },
+  {
+   "sku": "WA-1cf3a9bf12dc33ac",
+   "area": 0.1975
+  },
+  {
+   "sku": "WA-1d22600a68911944",
+   "area": 0.1792
+  },
+  {
+   "sku": "WA-02d6c968d1155276",
+   "area": 0.1732
+  },
+  {
+   "sku": "WA-05bf7fc1c6c5977b",
+   "area": 0.1664
+  },
+  {
+   "sku": "WA-322c62df4f864e08",
+   "area": 0.1209
+  },
+  {
+   "sku": "WA-ba494e0dea3ca23f",
+   "area": 0.1053
+  },
+  {
+   "sku": "WA-1ec4ef5e56d4184e",
+   "area": 0.1047
+  },
+  {
+   "sku": "WA-dd9056eb66e36bab",
+   "area": 0.0882
+  },
+  {
+   "sku": "WA-90a698e9b1d1f9b7",
+   "area": 0.072
+  },
+  {
+   "sku": "WA-0baacfa9228ef86c",
+   "area": 0.0698
+  },
+  {
+   "sku": "WA-dfb7ca86cffa3424",
+   "area": 0.0641
+  },
+  {
+   "sku": "WA-06808cec1cc3af95",
+   "area": 0.0557
+  },
+  {
+   "sku": "WA-0d8c33b003a35a6e",
+   "area": 0.0526
+  },
+  {
+   "sku": "WA-124fa3fd24205ea3",
+   "area": 0.0504
+  },
+  {
+   "sku": "WA-1b9ee950721d36b3",
+   "area": 0.0459
+  },
+  {
+   "sku": "WA-2006c45b9ebfa71a",
+   "area": 0.043
+  },
+  {
+   "sku": "WA-0220bef908c55b9d",
+   "area": 0.0399
+  },
+  {
+   "sku": "WA-1875caeebd1d8549",
+   "area": 0.0395
+  },
+  {
+   "sku": "WA-3496123065f3d179",
+   "area": 0.0395
+  },
+  {
+   "sku": "WA-042b4c4d7ab60124",
+   "area": 0.0343
+  },
+  {
+   "sku": "WA-07376d38424d655f",
+   "area": 0.0263
+  },
+  {
+   "sku": "WA-19ba3dd31d926bfc",
+   "area": 0.0248
+  },
+  {
+   "sku": "WA-09b747af26447d6c",
+   "area": 0.0245
+  },
+  {
+   "sku": "WA-47198da34f3e1c91",
+   "area": 0.0236
+  },
+  {
+   "sku": "WA-004055f759f4b642",
+   "area": 0.0219
+  },
+  {
+   "sku": "WA-01a615d3517c3873",
+   "area": 0.0201
+  },
+  {
+   "sku": "WA-c8ea8f58fb45be81",
+   "area": 0.0167
+  },
+  {
+   "sku": "WA-0d863d402f4678b8",
+   "area": 0.0142
+  },
+  {
+   "sku": "WA-1db07d864035c14f",
+   "area": 0.0128
+  },
+  {
+   "sku": "WA-1a44ee22a16ff46d",
+   "area": 0.009
+  },
+  {
+   "sku": "WA-0a92fa712c04fc48",
+   "area": 0.0052
+  },
+  {
+   "sku": "WA-16595181326792b5",
+   "area": 0.0047
+  }
+ ]
+}
