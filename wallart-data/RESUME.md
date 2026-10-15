@@ -455,6 +455,66 @@ anywhere in whatever the proxy returned - but CUDA_DEAD is exempt, since
 `run.sh` prints it before the worker is ever invoked and that pod bills with
 no usable device.
 
+## The duplicate audit, rewritten 15 Oct, and one wrong shortcut ruled out
+
+The audit compared every panel against every other through a popcount lookup
+table. That was 95 minutes at 226,992 panels and it is O(n^2), so at the
+current 609,478 it would be about eleven hours and at 960,000 about a day.
+The open-work note said it needed "the LSH bucketing pass or a 100k random
+sample". Neither is what it got, and the sample idea is actively wrong.
+
+**Distances now come from a matrix product.** Write each 256-bit code as
++-1 and a.b = BITS - 2*hamming, so hamming = (BITS - a.b)/2. Every value is
+an integer within +-256 and float32 holds those exactly, so this is the
+Hamming distance and not an approximation of it - checked against the lookup
+table on 256 x 40,000 pairs, maximum difference 0. BLAS does the work
+instead of a fancy-indexed intermediate, which is 13x faster. np.bitwise_count
+was tried first and is only 1.3x, because the cost was never the popcount,
+it was materialising a probes x panels x 32 array.
+
+That alone puts the EXACT audit at about two hours at 609k, so it stays as
+`--full` rather than being abandoned.
+
+**The default samples one side.** 40,000 random probes, each compared against
+the WHOLE catalogue: about sixteen minutes, with a Wilson interval of roughly
++-0.08 points at the rates being tracked. This is unbiased, because each
+probe's answer is exactly the answer the full scan would give that panel.
+
+**Sampling BOTH sides does not work, and "100k random sample" meant that.**
+Hashing a subsample and looking for twins inside it understates the rate by
+an order of magnitude, because a panel whose only twin was not sampled looks
+unique. On a planted set whose true rate was 0.800%:
+
+    12% subsample, both sides   0.000%    0.00x the truth
+    25% subsample, both sides   0.000%    0.00x
+    50% subsample, both sides   0.167%    0.21x
+    probes against full set     0.800%    unbiased
+
+It would have reported a clean catalogue and the number would have looked
+like good news, which is the worst kind of wrong for a figure the whole
+no-duplicates control rests on. The hourly routine still carries that
+suggestion; the script's docstring now says not to follow it.
+
+Exact repeats are counted over the whole catalogue in both modes - identical
+codes are identical bytes, so there is nothing to estimate and no reason to.
+
+The download is the slow stage now, not the comparison: 609k GETs. Threads
+went 48 -> 160, which is about how many R2 will serve at once, since the work
+per object is one 16x16 resize.
+
+Tested by slicing the comparison stage out of the SCRIPT string the pod
+actually receives and executing THAT - exact mode reproduces brute force to
+the digit, probe mode over every panel reproduces exact mode, and both find
+the planted exact repeat. Parsing is not running; that is the 14 Oct lesson
+and it cost twelve shards.
+
+**The structural fix is not done.** Every audit still downloads the entire
+catalogue to hash it, which is the hour. The worker already has each panel in
+memory when it gates it, so it could write the gradient hash into the
+manifest and an audit would never download anything again. That is a change
+to the production worker and was not worth making during a run; it only helps
+panels made after it ships, so the sooner it ships the more it covers.
+
 ## What is NOT resumable yet
 
 The CPU stage (`pipeline.py`) rebuilds its listings from whatever panels it
