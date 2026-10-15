@@ -7,7 +7,7 @@ Three ways a community pod ends up costing money and producing none:
   SHARD COMPLETE / UNFINISHED     the work is done or the clock ran out
 All four end the pod. Everything else is left alone.
 """
-import json, re, subprocess, sys, time
+import json, os, re, subprocess, sys, time
 
 API = "https://rest.runpod.io/v1"
 DEAD = ("CUDA_DEAD_ON_THIS_HOST", "R2_TLS_INTERCEPTED_ON_THIS_HOST")
@@ -71,6 +71,28 @@ def done_count(pid):
     return t.count("\n")
 
 
+CRASHDIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                        "notes", "crashlogs")
+# Kept because the log dies with the pod. wa-v3-9 crashed four times in ten
+# minutes on 15 Oct and all four pods were deleted here, unexamined, before
+# anyone could fetch a log - the 14 Oct shadowed-variable bug was only ever
+# caught because it was watched live. The text is already in memory when the
+# marker is matched, so keeping it costs one write and no extra request.
+def keep(pid, name, why, text):
+    try:
+        os.makedirs(CRASHDIR, exist_ok=True)
+        stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+        f = os.path.join(CRASHDIR, f"{stamp}_{name}_{pid}.log")
+        with open(f, "w") as fh:
+            fh.write(f"# {why}\n# saved by watchdog before deleting the pod\n")
+            fh.write(text[-40000:])
+        print(f"{time.strftime('%H:%M:%S')}  kept log {f}", flush=True)
+    except Exception as e:
+        # Never let bookkeeping stop a kill - an undeleted pod bills.
+        print(f"{time.strftime('%H:%M:%S')}  could not keep log: {e}",
+              flush=True)
+
+
 def kill(pid, why):
     curl("-X", "DELETE", f"{API}/pods/{pid}")
     print(f"{time.strftime('%H:%M:%S')}  KILLED {pid}  {why}", flush=True)
@@ -87,6 +109,8 @@ while time.time() < deadline:
         t = log(pid)
         hit = next((m for m in DEAD + DONE if m in t), None)
         if hit:
+            if hit == "GEN_CRASHED" or hit in DEAD:
+                keep(pid, name, f"{name} {hit}", t)
             kill(pid, f"{name} {hit}")
             continue
         n = done_count(pid)
