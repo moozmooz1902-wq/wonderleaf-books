@@ -15,7 +15,7 @@ pods already serve.
     python3 ab_track.py                 # snapshot and print deltas
     python3 ab_track.py --label "clean-at-end started"
 """
-import argparse, json, os, subprocess, sys, time
+import argparse, json, os, re, subprocess, sys, time
 from concurrent.futures import ThreadPoolExecutor
 
 API = "https://rest.runpod.io/v1"
@@ -55,10 +55,20 @@ def pods():
             and str(p.get("name", "")).startswith("wa-v3-")]
 
 
+SKU_LINE = re.compile(r"^WA-[0-9a-f]{16}$")
+
+
 def read_shard(p):
     pid, name = p["id"], p["name"]
     base = f"https://{pid}-8000.proxy.runpod.net/art"
-    kept = sum(1 for l in curl(f"{base}/done.txt").splitlines() if l.strip())
+    # Match the SKU shape, do not count lines. Before the first panel is
+    # uploaded done.txt does not exist, and python -m http.server answers with
+    # a 404 page whose thirteen non-blank lines counted as thirteen kept
+    # panels - so a shard that had generated nothing reported progress, and a
+    # shard rotated mid-hour then had 13 subtracted from its first real
+    # reading. Same fault, same fix, in watchdog.py done_count().
+    kept = sum(1 for l in curl(f"{base}/done.txt").splitlines()
+               if SKU_LINE.match(l.strip()))
     counts = {"text": 0, "PEOPLE": 0, "EYES": 0, "EMPTY": 0}
     n = 0
     for line in curl(f"{base}/rejects.jsonl").splitlines():

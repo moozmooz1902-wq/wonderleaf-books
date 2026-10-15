@@ -11,6 +11,7 @@ import json, os, re, subprocess, sys, time
 
 API = "https://rest.runpod.io/v1"
 DEAD = ("CUDA_DEAD_ON_THIS_HOST", "R2_TLS_INTERCEPTED_ON_THIS_HOST")
+SKU_LINE = re.compile(r"^WA-[0-9a-f]{16}$")
 # GEN_DONE and GEN_CRASHED both mean the worker process has EXITED. A pod
 # whose worker has exited produces nothing and bills until deleted, and on
 # 14 Oct three of them sat that way for forty-five minutes because the
@@ -67,8 +68,22 @@ def log(pid):
 
 
 def done_count(pid):
+    """Count SKU lines, not lines.
+
+    done.txt does not exist until the first panel is uploaded, and until then
+    python -m http.server answers with its 404 page - which is thirteen lines
+    long. Counting newlines therefore reported "13 panels" for every pod that
+    had got its web server up and generated nothing, and the number sat at 13
+    without moving, which is indistinguishable from the frozen done.txt that
+    gave away three stalled shards on 14 Oct. It read as progress on 15 Oct
+    and was taken for it.
+
+    Every real line is a SKU: "WA-" and sixteen hex characters. Requiring
+    that shape costs nothing, ignores the error page, and also drops the
+    half-line left when curl --max-time cuts the download mid-write.
+    """
     t = curl(f"https://{pid}-8000.proxy.runpod.net/art/done.txt")
-    return t.count("\n")
+    return sum(1 for ln in t.splitlines() if SKU_LINE.match(ln))
 
 
 CRASHDIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),

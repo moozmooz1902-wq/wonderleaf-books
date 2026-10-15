@@ -25,7 +25,7 @@ every bucket receives the same mixture continuously, from the first hour.
 
     python3 bucket_mix.py            # reads the pods' done.txt lists
 """
-import collections, glob, json, os, subprocess, sys
+import collections, glob, json, os, re, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -42,13 +42,20 @@ def pods():
             and str(p.get("name", "")).startswith("wa-v3-")]
 
 
+SKU_LINE = re.compile(r"^WA-[0-9a-f]{16}$")
+
+
 def skus_from_pods():
     out = set()
     for p in pods():
         t = subprocess.run(["curl", "-sS", "--max-time", "90",
                             f"https://{p['id']}-8000.proxy.runpod.net/art/done.txt"],
                            capture_output=True, text=True).stdout
-        out |= {l.strip() for l in t.splitlines() if l.strip()}
+        # The SKU shape, not every non-blank line: done.txt is absent until
+        # the first upload and http.server serves a 404 page in its place,
+        # which would otherwise put thirteen lines of HTML into the SKU set.
+        out |= {l.strip() for l in t.splitlines()
+                if SKU_LINE.match(l.strip())}
     return out
 
 
