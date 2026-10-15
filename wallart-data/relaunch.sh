@@ -59,12 +59,20 @@ JOBS_URL="https://pub-4b710c8610a84acc8fad1513f48132fd.r2.dev/wallart/assets/sub
 # bad shard until the log is read. An unpinned install means the fleet can
 # only be relaunched for as long as upstream does not publish.
 #
-# 5.19.0 is not a guess: the eleven shards producing at the time were launched
-# between 06:33 and 17:39, all of them after 5.19.0 went up on 6 Oct and all
-# before 5.20.0, so it is the version the working fleet is measured on.
-# diffusers is pinned to the 0.41.0 those same pods report for the same reason.
-# The rest of the list is left unpinned because no version of it is known to
-# be good; pin each one the same way the first time it breaks.
+# All nine are pinned, and none of the versions is a guess. 5.19.0 was first
+# inferred from launch times - the eleven shards still producing had all been
+# started after 5.19.0 went up on 6 Oct and before 5.20.0 - and then read
+# directly off two pods once launch_gen.py started writing pip freeze to
+# /workspace/pip_freeze.txt. uqwdm6cy3kox1i and ua8n9l6h47plaq, launched
+# under the pin at 19:05 on 15 Oct and both generating, report exactly these
+# nine. That file is why the other seven could be pinned at all: before it
+# existed there was no way to ask a working pod what it had, so they were left
+# bare, and any one of them publishing an incompatible release would have
+# stopped every new pod the way transformers did.
+#
+# A pin is not a licence to forget: if an install ever fails outright rather
+# than importing wrong, read /workspace/pip_freeze.txt off a pod that still
+# works before changing anything here.
 # CLIP_GATE=0 in the environment turns the people/eyes gate off for every
 # shard this script launches. Added 12 Oct when three shards relaunched
 # with it came up rejecting 100% of panels while the nine older ones
@@ -96,7 +104,7 @@ for GPUS in "$TIER1" "$TIER2"; do
   CLOUD=COMMUNITY
   OUT=$(python3 launch_gen.py --name "wa-v3-$K" --cloud $CLOUD --gpu "$GPUS" --template vbsgwyibn1 \
     --image "runpod/pytorch:2.8.0-py3.11-cuda12.8.1-cudnn-devel-ubuntu22.04" \
-    --pip "diffusers==0.41.0 transformers==5.19.0 accelerate bitsandbytes sentencepiece protobuf hf_transfer easyocr boto3" \
+    --pip "diffusers==0.41.0 transformers==5.19.0 accelerate==1.15.0 bitsandbytes==0.50.2 sentencepiece==0.2.2 protobuf==7.36.2 hf_transfer==0.1.9 easyocr==1.7.2 boto3==1.43.114" \
     --script gen_gated.py --jobs gen/subjects.json \
     --jobs-url "$JOBS_URL" --ship gen/gen_gated.py --extra "$EXTRA" 2>&1)
   ID=$(printf '%s' "$OUT" | python3 -c "import sys,re;d=sys.stdin.read();m=re.search(r'\"id\": \"([a-z0-9]+)\"',d);print(m.group(1) if m else '')")
