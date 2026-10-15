@@ -1,0 +1,217 @@
+{
+ "pre_cutoff_total": null,
+ "examined": 1500,
+ "missed": 0,
+ "old_gate_rerun_hits": 14,
+ "old_gate_rerun_pct": 0.933,
+ "detector_hits": 33,
+ "detector_pct": 2.2,
+ "strip": 0.1,
+ "min_box_area": 0.0008,
+ "recog_examples": [
+  {
+   "sku": "WA-725d6668eafc8038",
+   "txt": "Hopvy",
+   "conf": 0.5
+  },
+  {
+   "sku": "WA-2e3c85cdca04c719",
+   "txt": "@ .|ora]",
+   "conf": 0.36
+  },
+  {
+   "sku": "WA-1dfa083700b86ab5",
+   "txt": "Rerlk , Sin",
+   "conf": 0.41
+  },
+  {
+   "sku": "WA-9a60d8bd0fa62ecb",
+   "txt": "Roatches",
+   "conf": 0.83
+  },
+  {
+   "sku": "WA-69eebb9349fa024b",
+   "txt": "CIARCINS",
+   "conf": 1.0
+  },
+  {
+   "sku": "WA-361f2f9b38d69aeb",
+   "txt": "[4r",
+   "conf": 0.39
+  },
+  {
+   "sku": "WA-9cbbcee0a0ad2deb",
+   "txt": "VZ",
+   "conf": 0.38
+  },
+  {
+   "sku": "WA-8c94a6c4a8046151",
+   "txt": "Jafota",
+   "conf": 0.52
+  },
+  {
+   "sku": "WA-6dad35cbdd623d75",
+   "txt": "Nevsona",
+   "conf": 0.41
+  },
+  {
+   "sku": "WA-63c8f312020a8e94",
+   "txt": "63in5",
+   "conf": 0.57
+  },
+  {
+   "sku": "WA-904cd3e424473627",
+   "txt": "Ai",
+   "conf": 0.4
+  },
+  {
+   "sku": "WA-4944cdfc48f2fc08",
+   "txt": "LOs ANGELLLES",
+   "conf": 0.41
+  },
+  {
+   "sku": "WA-6f9a3cf7f2067659",
+   "txt": "Ukdah",
+   "conf": 0.39
+  },
+  {
+   "sku": "WA-4d5e564af4bae9c5",
+   "txt": "20.22",
+   "conf": 0.83
+  }
+ ],
+ "detector_examples": [
+  {
+   "sku": "WA-3822c0e9c658cfeb",
+   "area": 0.4388
+  },
+  {
+   "sku": "WA-3984d856307ddec3",
+   "area": 0.2734
+  },
+  {
+   "sku": "WA-22a2190337516073",
+   "area": 0.2613
+  },
+  {
+   "sku": "WA-3fe2d6b42b2fa6fc",
+   "area": 0.2426
+  },
+  {
+   "sku": "WA-28a919494637e0bb",
+   "area": 0.1602
+  },
+  {
+   "sku": "WA-5338c7c134e4cc25",
+   "area": 0.083
+  },
+  {
+   "sku": "WA-8a74729d7986a305",
+   "area": 0.0716
+  },
+  {
+   "sku": "WA-5d39a84503460590",
+   "area": 0.0668
+  },
+  {
+   "sku": "WA-252783bdb9520413",
+   "area": 0.0583
+  },
+  {
+   "sku": "WA-47440aef2cb0e306",
+   "area": 0.0491
+  },
+  {
+   "sku": "WA-0e3a8be7e172afce",
+   "area": 0.0356
+  },
+  {
+   "sku": "WA-20311773e78fb9ed",
+   "area": 0.0351
+  },
+  {
+   "sku": "WA-8a7c34483bcd886b",
+   "area": 0.0339
+  },
+  {
+   "sku": "WA-3eb9c9b561dc730d",
+   "area": 0.0307
+  },
+  {
+   "sku": "WA-6c009b045787be95",
+   "area": 0.0306
+  },
+  {
+   "sku": "WA-36f32968576829dc",
+   "area": 0.0297
+  },
+  {
+   "sku": "WA-1dfa083700b86ab5",
+   "area": 0.0233
+  },
+  {
+   "sku": "WA-2e3c85cdca04c719",
+   "area": 0.0214
+  },
+  {
+   "sku": "WA-5983235d86f3bd24",
+   "area": 0.0208
+  },
+  {
+   "sku": "WA-7838573190907004",
+   "area": 0.0194
+  },
+  {
+   "sku": "WA-2fb3892493a9d5c5",
+   "area": 0.0192
+  },
+  {
+   "sku": "WA-04ecfa2a074f5cd6",
+   "area": 0.0182
+  },
+  {
+   "sku": "WA-0153a19e326fd463",
+   "area": 0.0172
+  },
+  {
+   "sku": "WA-5b820d2c95651ba8",
+   "area": 0.0162
+  },
+  {
+   "sku": "WA-339b785b65a0db21",
+   "area": 0.0137
+  },
+  {
+   "sku": "WA-63c8f312020a8e94",
+   "area": 0.0124
+  },
+  {
+   "sku": "WA-6f9e73cf7b341756",
+   "area": 0.0118
+  },
+  {
+   "sku": "WA-5a48ad7f24fe58d4",
+   "area": 0.0117
+  },
+  {
+   "sku": "WA-6fc7affe4a8f0eed",
+   "area": 0.0104
+  },
+  {
+   "sku": "WA-178e015c10dc2600",
+   "area": 0.0101
+  },
+  {
+   "sku": "WA-9515c0b3f911cc2f",
+   "area": 0.0091
+  },
+  {
+   "sku": "WA-1f3e299fb35a2318",
+   "area": 0.0081
+  },
+  {
+   "sku": "WA-1d7ebbbf0ed6d649",
+   "area": 0.0071
+  }
+ ]
+}

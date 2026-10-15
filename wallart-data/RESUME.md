@@ -635,6 +635,66 @@ Same shape as the _CLEAN A/B, one step earlier: there the instrument cost
 more than the lever was worth, here the lever costs more than it can return.
 Both were worth an hour of arithmetic before any GPU time.
 
+## Fake signatures are a LIVE gap, not a historical one - 15 Oct
+
+The owed sweep was supposed to be a tidy-up of 35,925 old panels. It found
+something still happening.
+
+Two samples of 1,500 panels each, same detector, 0 missed either time:
+
+                        before 11 Oct 22:00     after it (current panels)
+      detector hits        34  (2.27%)             33  (2.20%)
+      old gate re-run       3  (0.20%)             14  (0.93%)
+
+**The rate is the same on panels being made now.** Every candidate in both
+samples was looked at by eye, not counted and trusted -
+notes/sweep/precutoff_sheet.jpg and postcutoff_sheet.jpg - and most are
+real: cursive artist signatures along the bottom edge (Naughie, Saltlord,
+Mathilson, Sidby Saffron 1974, Dykeasm, Angfresen and a dozen more), edition
+marks, a red seal, one panel carrying the word Copyright. A minority are
+text inside the depicted scene - a SLIGACHAN road sign, a RECORDS shopfront -
+which is a legitimate part of an illustrated street and not a false claim of
+authorship. The rest is texture the threshold was too fine to exclude.
+
+Reading the sheets, roughly 19 of 33 post-cutoff hits are fake signatures or
+edition marks: about **1.27% of panels, so around 7,900 of 622,226, about
+31,600 listings.**
+
+**Why the gate misses them, precisely.** It is not the crop-line case
+777dae2 fixed, and the signatures sit ABOVE the crop line, so a deeper crop
+would not reach them either. A small cursive signature fails the gate twice
+over:
+
+  * MIN_CONF 0.35 - cursive does not read, which is the whole reason
+    detection finds these and recognition does not;
+  * MIN_AREA 0.0012 - that is 852 px of a 704x1008 panel, about 106x8 px.
+    Anything smaller is admitted deliberately, because FLUX leaves faint
+    marks everywhere and rejecting on them throws away good work.
+
+The floor is not wrong. It was set against speckle, and a signature is
+simply smaller than it while being perfectly visible to a buyer. CLAUDE.md
+makes both of these legal controls - nothing may claim to be hand-painted or
+artist-signed, and the fake signatures are meant to be cropped off.
+
+**The cheap remedy, and why it does not slow the run.** Regenerating a SKU
+reproduces the same image, because seeds are derived from the SKU - so a
+regeneration pass only helps if the gate it runs under catches the defect.
+That gate does NOT have to go on the fleet:
+
+      detection pass over the whole catalogue   2.1 GPU-hours   $0.39
+      regenerate the ~7,900 flagged             $2.79
+      ------------------------------------------------------------
+      under $4, and no throughput cost at all
+
+Tightening the live gate instead would raise the reject rate on all twelve
+shards for the whole remaining run, to catch panels a single end-of-run pass
+catches for three dollars. The sweep is the right shape; it just has to be
+the detector and not the reader.
+
+NOT DONE, and deliberately not started: this is a legal control and the
+decision is the seller's, so it is written up here and reported rather than
+acted on.
+
 ## What is NOT resumable yet
 
 The CPU stage (`pipeline.py`) rebuilds its listings from whatever panels it
