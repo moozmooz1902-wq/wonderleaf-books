@@ -18,15 +18,13 @@
 N=$1; MINS=$2; shift 2
 AUTO=0
 [ "$1" = "auto" ] && AUTO=1
+# Prints the shard numbers that are up, or the single word ERR when the
+# answer cannot be trusted. See shards_up.py for why those must not be the
+# same thing: an unreadable response used to come out as an empty list, which
+# auto mode reads as "every shard is missing".
 running_shards() {
-  curl -sS --max-time 60 https://rest.runpod.io/v1/pods | python3 -c "
-import sys, json, re
-d = json.load(sys.stdin); d = d if isinstance(d, list) else d.get('pods', [])
-print(' '.join(sorted(
-    re.sub(r'^wa-v3-', '', p['name'])
-    for p in d
-    if p.get('desiredStatus') == 'RUNNING'
-    and str(p.get('name', '')).startswith('wa-v3-'))))"
+  curl -sS --max-time 60 https://rest.runpod.io/v1/pods \
+    | python3 "$(dirname "$0")/shards_up.py"
 }
 if [ "$AUTO" = "1" ]; then
   TODO=()
@@ -35,9 +33,22 @@ else
 fi
 END=$(( $(date +%s) + MINS * 60 ))
 declare -A SKIP
+# A pod that has just been created is not RUNNING yet, so the next pass 45
+# seconds later sees that shard missing and launches ANOTHER one. The
+# confirm-read does not help here, because both reads are telling the truth -
+# the pod genuinely is not running yet. So remember what was just launched
+# and leave it alone long enough to come up. Measured on 15 Oct: a shard
+# takes about two minutes to reach RUNNING, so four is a safe floor.
+declare -A JUST
+LAUNCH_COOLDOWN=240
 while [ "$(date +%s)" -lt "$END" ]; do
   if [ "$AUTO" = "1" ]; then
-    UP=" $(running_shards) "
+    UP_RAW="$(running_shards)"
+    if [ "$UP_RAW" = "ERR" ]; then
+      echo "$(date -u +%H:%M:%S)  pod list unreadable, skipping this pass"
+      sleep 60; continue
+    fi
+    UP=" $UP_RAW "
     TODO=()
     for K in $(seq 1 "$N"); do
       case "$UP" in *" $K "*) ;; *) TODO+=("$K") ;; esac
@@ -53,7 +64,30 @@ while [ "$(date +%s)" -lt "$END" ]; do
     if [ -n "${SKIP[$K]}" ] && [ "$(date +%s)" -lt "${SKIP[$K]}" ]; then
       LEFT+=("$K"); continue
     fi
+    if [ -n "${JUST[$K]}" ] && \
+       [ $(( $(date +%s) - ${JUST[$K]} )) -lt $LAUNCH_COOLDOWN ]; then
+      echo "$(date -u +%H:%M:%S)  shard $K launched $(( $(date +%s) - ${JUST[$K]} ))s ago, still coming up"
+      LEFT+=("$K"); continue
+    fi
+    # CONFIRM IT IS STILL MISSING, from a second independent read, before
+    # spending money on it. The 22:05 duplicates on 15 Oct came from acting
+    # on one reading; a shard that is actually up appears in both, and a
+    # reading that cannot be trusted is skipped rather than acted on.
+    CONFIRM="$(running_shards)"
+    if [ "$CONFIRM" = "ERR" ]; then
+      echo "$(date -u +%H:%M:%S)  shard $K: second read failed, not launching"
+      LEFT+=("$K"); continue
+    fi
+    case " $CONFIRM " in
+      *" $K "*)
+        echo "$(date -u +%H:%M:%S)  shard $K is up after all, not launching"
+        continue ;;
+    esac
     OUT=$(bash relaunch.sh "$N" "$K")
+    case "$OUT" in
+      *NO\ CAPACITY*|*OVER\ CEILING*) ;;      # nothing was created
+      *) JUST[$K]=$(date +%s) ;;
+    esac
     echo "$(date -u +%H:%M:%S)  $OUT"
     case "$OUT" in
       # A shard that keeps being offered a card over the ceiling will create
