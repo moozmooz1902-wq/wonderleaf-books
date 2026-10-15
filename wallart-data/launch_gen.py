@@ -57,6 +57,27 @@ def bundle(files):
     return base64.b64encode(buf.getvalue()).decode()
 
 
+# WHY THE --pip LIST IS PINNED, and where. The pins live in relaunch.sh,
+# which writes the list; the run.sh line below installs whatever it is handed
+# and guarantees nothing. It carried the comment "Pinned, because the unpinned
+# install broke twice" for days while being passed bare package names, which
+# read as a guarantee nothing kept and made the dependency list the last place
+# looked when it broke a third time.
+#
+# The three breakages:
+#   diffusers >=0.33 calls torch.accelerator, added in torch 2.6; this image
+#   ships torch 2.4.0 and the import dies with AttributeError.
+#   transformers 5.x returns BaseModelOutputWithPooling from get_text_features
+#   instead of a tensor, which the colour-label pass tripped over.
+#   transformers 5.20.0, published 15 Oct at 18:01:01 UTC, imports
+#   torch.distributed.checkpoint.hf_storage, which torch 2.8.0.dev20250319
+#   does not have - so every pod created after that minute died under "from
+#   diffusers import FluxPipeline" before generating anything, while the
+#   eleven launched earlier kept running on 5.19.0.
+#
+# Comments in the run.sh heredoc below are SHIPPED: they are part of
+# dockerStartCmd and count against CMD_LIMIT, which had 5,107 characters of
+# headroom at the 15 Oct pin. Long explanations belong here, not in there.
 def start_cmd(b64, jobs, extra, pip=None, script="gen_worker.py", fetch=""):
     """Run the job ALONGSIDE the image's own /start.sh, never instead of it.
 
@@ -113,20 +134,12 @@ done
 # before failing, and the watcher cannot tell that apart from a slow start.
 python3 -c "import torch,sys; sys.exit(0 if torch.cuda.is_available() else 1)" 2>/dev/null \
   || {{ echo CUDA_DEAD_ON_THIS_HOST; exit 1; }}
-# This line installs whatever it is handed and pins nothing itself - the pins
-# are in relaunch.sh, which is where the --pip list is written. It said
-# "Pinned, because the unpinned install broke twice" for days while the list
-# it received held bare package names, so the note read as a guarantee that
-# was not being kept anywhere. Two breakages it refers to:
-#   diffusers >=0.33 calls torch.accelerator, added in torch 2.6; this image
-#   ships torch 2.4.0 and the import dies with AttributeError.
-#   transformers 5.x returns BaseModelOutputWithPooling from get_text_features
-#   instead of a tensor, which the colour-label pass tripped over earlier.
-# And the third, on 15 Oct, which actually stopped the fleet: transformers
-# 5.20.0 published mid-run, importing a torch.distributed path this image does
-# not have, so every pod launched after 18:01 UTC crashed before generating.
-# Check relaunch.sh for the versions and why each is pinned.
+# Installs whatever it is handed; the pins are in relaunch.sh. See the note
+# above start_cmd() in launch_gen.py for the three breakages behind them.
 pip install -q --no-input {pip} 2>&1 | tail -3
+# What was actually installed, served next to boot.log, so a working pod can
+# be asked rather than PyPI timestamps read against launch times.
+pip freeze > /workspace/pip_freeze.txt 2>/dev/null
 {fetch_line}
 python3 -c "import torch,diffusers;print('torch',torch.__version__,'diffusers',diffusers.__version__,'cuda',torch.cuda.is_available())"
 cd /workspace/gen
