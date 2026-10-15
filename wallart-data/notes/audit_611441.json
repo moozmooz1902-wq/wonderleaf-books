@@ -1,0 +1,253 @@
+{
+ "panels": 611441,
+ "mode": "probe",
+ "probes": 40000,
+ "distinct_hashes": 611437,
+ "exact_repeats": 4,
+ "near_dupe_pct": 0.758,
+ "near_dupe_ci95": [
+  0.677,
+  0.847
+ ],
+ "threshold_bits": 24,
+ "per_bucket": {
+  "lunar-kms": {
+   "panels": 122622,
+   "probes": 7958,
+   "near_dupe_pct": 0.767,
+   "ci95": [
+    0.597,
+    0.983
+   ]
+  },
+  "luxvia-art": {
+   "panels": 305391,
+   "probes": 20033,
+   "near_dupe_pct": 0.754,
+   "ci95": [
+    0.643,
+    0.883
+   ]
+  },
+  "mercury-usm": {
+   "panels": 60982,
+   "probes": 3941,
+   "near_dupe_pct": 0.837,
+   "ci95": [
+    0.597,
+    1.174
+   ]
+  },
+  "posterleaf-store1": {
+   "panels": 122446,
+   "probes": 8068,
+   "near_dupe_pct": 0.719,
+   "ci95": [
+    0.557,
+    0.928
+   ]
+  }
+ },
+ "closest_pairs": [
+  {
+   "bits": 3,
+   "a": "WA-130eaa969fd8847e",
+   "b": "WA-51f50c27fed88af1"
+  },
+  {
+   "bits": 5,
+   "a": "WA-72ecb5f084032636",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 6,
+   "a": "WA-429a2b3f01ab553e",
+   "b": "WA-21f7a658852363fb"
+  },
+  {
+   "bits": 7,
+   "a": "WA-01233db1d9e2ef82",
+   "b": "WA-21f7a658852363fb"
+  },
+  {
+   "bits": 7,
+   "a": "WA-41ff57c42a8ace41",
+   "b": "WA-21f7a658852363fb"
+  },
+  {
+   "bits": 8,
+   "a": "WA-62f4a91454f3b87f",
+   "b": "WA-4a63fc4b7ea4828a"
+  },
+  {
+   "bits": 9,
+   "a": "WA-2e4937e382ad3c38",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 9,
+   "a": "WA-7521f31184b6a9c2",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 9,
+   "a": "WA-7891ceff81672ea4",
+   "b": "WA-37fa8f7d22057eb7"
+  },
+  {
+   "bits": 10,
+   "a": "WA-1f7484a99c68ba5a",
+   "b": "WA-01348c62ac493673"
+  },
+  {
+   "bits": 10,
+   "a": "WA-1966063707f5cd56",
+   "b": "WA-0b3295260932aaec"
+  },
+  {
+   "bits": 10,
+   "a": "WA-393fc5ee63f8fb0d",
+   "b": "WA-40ff35753f104e56"
+  },
+  {
+   "bits": 11,
+   "a": "WA-8ffcb950861f4cc9",
+   "b": "WA-2facbb88f76a35e8"
+  },
+  {
+   "bits": 11,
+   "a": "WA-615711b64de9898f",
+   "b": "WA-7aa12d426aab272a"
+  },
+  {
+   "bits": 11,
+   "a": "WA-2e3cbbc73f127fa0",
+   "b": "WA-306e12055c63cf32"
+  },
+  {
+   "bits": 11,
+   "a": "WA-4c44835d38a7ae14",
+   "b": "WA-c47ae27a17fdbd1a"
+  },
+  {
+   "bits": 12,
+   "a": "WA-0ba4e9a9a245a08e",
+   "b": "WA-11a58f1da5981e02"
+  },
+  {
+   "bits": 12,
+   "a": "WA-1cd776999dae2480",
+   "b": "WA-6d25b91439a929f8"
+  },
+  {
+   "bits": 12,
+   "a": "WA-5550d2e424a6f189",
+   "b": "WA-16ce7782595003bc"
+  },
+  {
+   "bits": 12,
+   "a": "WA-c76c8b7320920b5d",
+   "b": "WA-13aff5ad3ee67743"
+  },
+  {
+   "bits": 12,
+   "a": "WA-001ac1716e092aa5",
+   "b": "WA-24dc021a269eb36a"
+  },
+  {
+   "bits": 13,
+   "a": "WA-60b8d30c1095b173",
+   "b": "WA-8245210bd634bde8"
+  },
+  {
+   "bits": 13,
+   "a": "WA-64e3ae9f78975168",
+   "b": "WA-999030e9e1bfb02f"
+  },
+  {
+   "bits": 13,
+   "a": "WA-417746a50b09378c",
+   "b": "WA-39bac2f19aa2dd04"
+  },
+  {
+   "bits": 13,
+   "a": "WA-1bc0ee51091db050",
+   "b": "WA-2c6eb6a571b5729b"
+  },
+  {
+   "bits": 13,
+   "a": "WA-2c6eb6a571b5729b",
+   "b": "WA-1bc0ee51091db050"
+  },
+  {
+   "bits": 13,
+   "a": "WA-a95e713f0af8d309",
+   "b": "WA-d8121ccb23e141ac"
+  },
+  {
+   "bits": 13,
+   "a": "WA-688879c08a2d8b16",
+   "b": "WA-51d74ba451f530d6"
+  },
+  {
+   "bits": 13,
+   "a": "WA-49d56878a28d527e",
+   "b": "WA-46f5921094d4ba11"
+  },
+  {
+   "bits": 13,
+   "a": "WA-34e258891120e6cd",
+   "b": "WA-57f1ac034233e737"
+  },
+  {
+   "bits": 13,
+   "a": "WA-0016ef9890749fcf",
+   "b": "WA-21f7a658852363fb"
+  },
+  {
+   "bits": 14,
+   "a": "WA-56d6289c8e0655b2",
+   "b": "WA-16ce7782595003bc"
+  },
+  {
+   "bits": 14,
+   "a": "WA-02f9b091e0a93728",
+   "b": "WA-74c45e057d2234f8"
+  },
+  {
+   "bits": 14,
+   "a": "WA-6c9ce2322ca6579a",
+   "b": "WA-0e0fbd43749d2e84"
+  },
+  {
+   "bits": 14,
+   "a": "WA-070f72cfaf8de19a",
+   "b": "WA-2476486bb88df6fa"
+  },
+  {
+   "bits": 14,
+   "a": "WA-5b8bd507a3965416",
+   "b": "WA-615711b64de9898f"
+  },
+  {
+   "bits": 14,
+   "a": "WA-0a2e449e0183dcb1",
+   "b": "WA-061e565f775fb454"
+  },
+  {
+   "bits": 14,
+   "a": "WA-14aee84c299a7123",
+   "b": "WA-1b848bc928e191bc"
+  },
+  {
+   "bits": 15,
+   "a": "WA-8b029517f01e500a",
+   "b": "WA-bf21a200763a874b"
+  },
+  {
+   "bits": 15,
+   "a": "WA-2df9d70043cddeea",
+   "b": "WA-01348c62ac493673"
+  }
+ ]
+}

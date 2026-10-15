@@ -131,6 +131,34 @@ if missed > 0.05 * max(len(items), 1):
                      f"could not be fetched")
 print(f"hashed {len(rows):,}, missed {missed:,}", flush=True)
 
+# KEEP THE HASHES. Downloading and hashing the catalogue is the whole cost of
+# this audit - 611,441 GETs, about seventy minutes - and the 15 Oct run threw
+# them away the moment it had printed a percentage. Every question asked
+# afterwards (does the rate rise because the generator got worse or only
+# because the catalogue got bigger? what does the trend look like against a
+# fixed reference size?) needed the hashes and could not be answered without
+# paying the seventy minutes again.
+#
+# They are 32 bytes a panel: 19.6 MB at 611k, trivial next to the 154 GB of
+# panels they describe. Written under audit/, which is outside the luxvia/gen/
+# prefix this script lists, so a later audit cannot mistake one for a panel.
+import numpy as _np, io as _io
+try:
+    _buf = _io.BytesIO()
+    _np.save(_buf, _np.packbits(_np.array([r[2] for r in rows],
+                                          dtype=_np.uint8), axis=1))
+    s3.put_object(Bucket="luxvia-art", Key=f"audit/hashes_{len(rows)}.npy",
+                  Body=_buf.getvalue(),
+                  ContentType="application/octet-stream")
+    s3.put_object(Bucket="luxvia-art", Key=f"audit/skus_{len(rows)}.txt",
+                  Body=("\n".join(f"{b}\t{k}" for b, k, _ in rows)).encode(),
+                  ContentType="text/plain")
+    print(f"kept hashes: audit/hashes_{len(rows)}.npy "
+          f"({_buf.getbuffer().nbytes:,} bytes)", flush=True)
+except Exception as _e:
+    # Not worth failing the audit over - the percentage is still the answer.
+    print(f"could not keep hashes: {_e}", flush=True)
+
 bks  = [r[0] for r in rows]
 skus = [r[1] for r in rows]
 raw  = np.array([r[2] for r in rows], dtype=np.uint8)      # n x 256 of 0/1
@@ -173,14 +201,32 @@ def wilson(k, m):
 # reported 0.000% at a 12% sample and 0.167% at 50%, because a panel whose
 # only twin was not sampled looks unique. Measured, not reasoned about.
 PROBES = __PROBES__          # 0 means every panel, the exact O(n^2) audit
-flag_all = None
+REF_SIZE = __REF_SIZE__      # 0 means the whole catalogue as the reference
+
+# WHY A FIXED REFERENCE SIZE. "Percentage of panels with a near twin" is NOT
+# comparable across catalogue sizes. If near pairs arise at roughly constant
+# probability q per pair, the rate is about q*n, so it grows linearly with the
+# catalogue even when the generator has not changed. The series read 0.826% at
+# 63,533 panels, 0.670% at 168,515, 0.648% at 226,992 and then 0.758% at
+# 611,441, and that last rise was read as the catalogue getting worse. It was
+# not: q fell 0.43x over the same step, and had q stayed where it was at
+# 226,992 the rate would have been 1.75%. Holding the reference set at a fixed
+# size takes n out of it, so the number can be compared with the one before.
+rng = np.random.default_rng(0)            # fixed, so an audit is repeatable
+if REF_SIZE and REF_SIZE < n:
+    ref = np.sort(rng.choice(n, size=REF_SIZE, replace=False))
+else:
+    ref, REF_SIZE = np.arange(n), 0
 if PROBES and PROBES < n:
-    rng = np.random.default_rng(0)        # fixed, so an audit is repeatable
     idx = np.sort(rng.choice(n, size=PROBES, replace=False))
-    mode, PBLOCK, RBLOCK = "probe", 256, 100_000
+    mode, PBLOCK = "probe", 256
 else:
     idx = np.arange(n)
-    mode, PBLOCK, RBLOCK = "exact", 512, n
+    mode, PBLOCK = "exact", 512
+RBLOCK = 100_000
+pm_ref = pm[ref] if REF_SIZE else pm
+# Global index of each reference row, so a panel is never matched to itself.
+ref_gid = ref if REF_SIZE else np.arange(n)
 
 hit  = np.zeros(len(idx), bool)
 best = np.full(len(idx), 999, np.int32)
@@ -191,18 +237,20 @@ for p0 in range(0, len(idx), PBLOCK):
     got = np.zeros(len(pi), bool)
     bst = np.full(len(pi), 999, np.int32)
     mt  = np.zeros(len(pi), np.int64)
-    for r0 in range(0, n, RBLOCK):
-        d = (BITS - a @ pm[r0:r0 + RBLOCK].T) * 0.5
-        hi = r0 + d.shape[1]              # the last slice may be short
-        for r, gi in enumerate(pi):
-            if r0 <= gi < hi:
-                d[r, gi - r0] = 999       # never a panel against itself
+    for r0 in range(0, len(pm_ref), RBLOCK):
+        gids = ref_gid[r0:r0 + RBLOCK]
+        d = (BITS - a @ pm_ref[r0:r0 + RBLOCK].T) * 0.5
+        # Never a panel against itself. The reference may be a subset, so this
+        # matches on the GLOBAL id rather than on position.
+        same = gids[None, :] == pi[:, None]
+        if same.any():
+            d[same] = 999
         got |= (d <= NEAR).any(1)
         j = d.argmin(1)
         v = d[np.arange(d.shape[0]), j].astype(np.int32)
         better = v < bst
         bst = np.where(better, v, bst)
-        mt  = np.where(better, j + r0, mt)
+        mt  = np.where(better, gids[j], mt)
     hit[p0:p0 + PBLOCK]  = got
     best[p0:p0 + PBLOCK] = bst
     mate[p0:p0 + PBLOCK] = mt
@@ -231,6 +279,8 @@ for bucket in sorted(set(bks)):
 out = {"panels": n,
        "mode": mode,
        "probes": int(len(idx)),
+       "reference_size": int(len(pm_ref)),
+       "per_pair_q": (rate / (len(pm_ref) - 1)) if len(pm_ref) > 1 else 0.0,
        "distinct_hashes": nd,
        "exact_repeats": n - nd,
        "near_dupe_pct": round(rate * 100, 3),
@@ -271,19 +321,27 @@ if __name__ == "__main__":
     #             thing the probe pass is checked against; about two hours at
     #             609k and five at 960k, so it is a deliberate choice now
     #             rather than the only option.
-    probes = 40_000
+    # --ref-size N  compare each probe against a random N-panel reference
+    #               instead of the whole catalogue, so the rate can be
+    #               compared with an earlier audit at a different size.
+    #               226992 reproduces the conditions of the 13 Oct audit.
+    probes, ref_size = 40_000, 0
     if "--full" in sys.argv:
         probes = 0
     if "--probes" in sys.argv:
         probes = int(sys.argv[sys.argv.index("--probes") + 1])
-    script = SCRIPT.replace("__PROBES__", str(probes))
-    assert "__PROBES__" not in script
-    print(f"mode: {'exact, every panel' if probes == 0 else f'{probes:,} probes'}")
+    if "--ref-size" in sys.argv:
+        ref_size = int(sys.argv[sys.argv.index("--ref-size") + 1]
+                       .replace(",", ""))
+    script = (SCRIPT.replace("__PROBES__", str(probes))
+                    .replace("__REF_SIZE__", str(ref_size)))
+    assert "__PROBES__" not in script and "__REF_SIZE__" not in script
+    print(f"mode: {'exact, every panel' if probes == 0 else f'{probes:,} probes'} against {'the whole catalogue' if ref_size == 0 else f'a {ref_size:,}-panel reference'}")
     # --dry-run creates NOTHING. This script's first action is to start a pod
     # that bills, and on 15 Oct it was run with a made-up "--dry" flag, which
     # it ignored on its way to creating one. Unknown flags are now refused
     # rather than ignored, and there is a real way to look without spending.
-    known = {"--probes", "--full", "--dry-run"}
+    known = {"--probes", "--full", "--dry-run", "--ref-size"}
     bad = [a for a in sys.argv[1:]
            if a.startswith("-") and a not in known]
     if bad:

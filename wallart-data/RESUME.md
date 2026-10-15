@@ -515,6 +515,58 @@ manifest and an audit would never download anything again. That is a change
 to the production worker and was not worth making during a run; it only helps
 panels made after it ships, so the sooner it ships the more it covers.
 
+## Duplicate audit at 611,441 panels, 15 Oct - and why the rise is not a rise
+
+    0.758% of panels have a near twin, 95% CI [0.677, 0.847]
+    40,000 probes against the whole catalogue, threshold 24 bits of 256
+    4 exact repeats in 611,441
+    per bucket 0.719% to 0.837%, every interval overlapping every other
+    notes/audit_611441.json
+
+The series now reads 0.826% (63,533) -> 0.670% (168,515) -> 0.648%
+(226,992) -> 0.758% (611,441), and the last step is a genuine rise in the
+headline number: the interval does not include 0.648%.
+
+**It is not a rise in duplication.** "Percentage of panels with a near twin"
+is not comparable across catalogue sizes. If near pairs arise at roughly
+constant probability q per PAIR, the rate is about q*n, so it grows linearly
+with the catalogue even when the generator has not changed at all. Dividing
+it out:
+
+      panels     rate   per-pair q   vs previous
+      63,533   0.826%    1.300e-07        -
+     168,515   0.670%    3.976e-08      0.31x
+     226,992   0.648%    2.855e-08      0.72x
+     611,441   0.758%    1.240e-08      0.43x
+
+q has fallen at every step, including this one. Had it stayed where it was at
+226,992, the rate at 611,441 would be 1.75%, and had it stayed at its
+63,533 value it would be 7.95%. The generator is getting more diverse faster
+than the catalogue is growing; the headline barely moved because the two
+effects nearly cancel.
+
+Both numbers are now reported - `per_pair_q` alongside `near_dupe_pct` - and
+`--ref-size N` compares each probe against a random N-panel reference instead
+of the whole catalogue, which takes n out of it directly. `--ref-size 226992`
+reproduces the conditions of the 13 Oct audit. Checked empirically, not just
+argued: on a planted set, halving the reference halves the rate (ratio 0.48)
+while per_pair_q moves 4% (0.96x).
+
+For scale, the typography branch blames 89% near-duplication for 424,000
+listings not selling. 0.758% is two orders of magnitude below that. The
+closest pairs are 3 to 9 bits apart and a handful of SKUs appear as the twin
+of several others, so what exists is small clusters rather than isolated
+pairs - worth a look if the figure ever climbs, not now.
+
+**The hashes were thrown away, and that was the real mistake of this run.**
+Downloading and hashing 611,441 panels is the entire cost of the audit -
+about seventy minutes - and the script printed a percentage and discarded
+them. Every question asked afterwards needed them and none could be answered
+without paying the seventy minutes again. They are 32 bytes a panel, 19.6 MB
+at this size, against the 154 GB of panels they describe. The audit now
+writes them to R2 under `audit/hashes_<n>.npy` before comparing, outside the
+`luxvia/gen/` prefix it lists so a later run cannot mistake one for a panel.
+
 ## What is NOT resumable yet
 
 The CPU stage (`pipeline.py`) rebuilds its listings from whatever panels it
