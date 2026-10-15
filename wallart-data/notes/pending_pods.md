@@ -6,7 +6,12 @@ container has restarted several times, so this file is the record that
 survives. The hourly check's stray sweep is the backstop: anything listed
 here that is still RUNNING should be dealt with as described.
 
-## x4b5r05fv0vak4 - wallart-audit, launched 19:23 UTC 15 Oct, $0.32/hr
+## DONE - x4b5r05fv0vak4, wallart-audit, 19:23-20:32 UTC 15 Oct, $0.32/hr
+
+AUDIT_DONE at 20:32:42. Result in notes/audit_611441.json, pod deleted,
+confirmed gone from the pod list. Nothing outstanding.
+
+Original entry:
 
 Duplicate audit at 609,478 panels, 40,000 probes, the first run of the
 rewritten comparison stage (83018ca).
