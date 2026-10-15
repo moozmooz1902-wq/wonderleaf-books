@@ -92,9 +92,38 @@ not checked that way.
 
 The sweep is cheap and has not been run yet: on one pod, list the four
 store prefixes, run EasyOCR over the bottom fifth of each panel, and feed
-the offending SKUs back through gen_gated.py with --jobs. At roughly 50 ms
-a panel, a million panels is about 14 GPU-hours, so it is worth doing once
-at the end rather than repeatedly.
+the offending SKUs back through gen_gated.py with --jobs.
+
+**SIZED 15 Oct, and it is 28x smaller than this note used to say.** The old
+figure here was "at roughly 50 ms a panel, a million panels is about 14
+GPU-hours, so it is worth doing once at the end rather than repeatedly" -
+which priced sweeping the WHOLE catalogue. Only panels written before the
+cutoff need it; everything after was gated on the full generation. Nobody had
+counted them, and the deferral rested on the wrong number.
+
+`r2_age_histogram.py` counts them from LastModified in one listing pass, no
+GETs, nothing downloaded. At 621,532 panels listed:
+
+      before 11 Oct 22:00      35,925     <- the whole job
+        luxvia-art             17,946
+        posterleaf-store1       7,280
+        lunar-kms               7,062
+        mercury-usm             3,637
+
+      by day   11 Oct    49,801
+               12 Oct   148,546
+               13 Oct   139,046
+               14 Oct   147,216
+               15 Oct   136,923
+
+35,925 panels at 50 ms is **0.50 GPU-hours, about $0.09** - not 14 hours and
+not $2.57. It does not need to wait for the end of the run, and it never did;
+the set it covers stopped growing on 11 Oct and cannot grow again.
+
+The lesson is the arithmetic, not the OCR: a job was deferred for days on an
+estimate of the wrong population, and the right population was one listing
+pass away. cost_now.py still carries $2.57 for this and is now overstating
+the total by about $2.50.
 
 ## The 12 Oct gate incident, and what each fix was worth
 
