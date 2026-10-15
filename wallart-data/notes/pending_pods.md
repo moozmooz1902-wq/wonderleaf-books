@@ -38,3 +38,24 @@ WHAT TO DO:
 Delete with:
   curl -sS -X DELETE -H "Authorization: Bearer $RUNPOD_API_KEY" \
        https://rest.runpod.io/v1/pods/x4b5r05fv0vak4
+
+## dcw129pdyp2dwf - wallart-sweep, launched 21:16 UTC 15 Oct, $0.17/hr
+
+Text sweep CALIBRATION run: 1,500 of the 35,925 pre-11-Oct-22:00 panels,
+measuring how many carry a clipped-letter sliver along the bottom edge.
+Its launcher reaps it in a finally, but a container restart kills the
+launcher, which is how a pod leaks.
+
+  log:    https://dcw129pdyp2dwf-8000.proxy.runpod.net/boot.log
+  result: https://dcw129pdyp2dwf-8000.proxy.runpod.net/sweep.json
+  sheet:  https://dcw129pdyp2dwf-8000.proxy.runpod.net/sheet.jpg
+
+Prints SWEEP_DONE or SWEEP_FAILED. Expect a few minutes to install easyocr
+and fetch its models, then "examined N" every 200 panels, then one SWEEP
+line. 1,500 panels is well under ten minutes of work.
+
+WHAT TO DO: save sweep.json and sheet.jpg, then DELETE the pod. If it is
+still RUNNING with no progress line advancing, delete it.
+
+  curl -sS -X DELETE -H "Authorization: Bearer $RUNPOD_API_KEY" \
+       https://rest.runpod.io/v1/pods/dcw129pdyp2dwf
