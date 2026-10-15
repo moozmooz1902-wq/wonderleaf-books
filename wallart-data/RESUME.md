@@ -392,6 +392,69 @@ killed rather than left idling, and the only reason the kill log said what
 was happening. The diagnostic was right and the fix beside it was wrong,
 which is worth remembering about any commit that does two things at once.
 
+## 15 Oct: an upstream release stopped every new pod, and it looked like one bad shard
+
+`transformers 5.20.0` was published to PyPI at 18:01:01 UTC. The pod start
+command's `pip install` was unpinned, so every pod created after that minute
+installed it, and 5.20.0 imports `torch.distributed.checkpoint.hf_storage`,
+which this image's `torch 2.8.0.dev20250319` does not have. It surfaces
+several frames deep, under `from diffusers import FluxPipeline`:
+
+    ModuleNotFoundError: No module named
+    'torch.distributed.checkpoint.hf_storage'
+
+The worker exits non-zero before generating anything and `run.sh` prints
+GEN_CRASHED. wa-v3-9 came off its ten-hour clock at 18:28 and four
+replacements died inside ten minutes: 65y3lillu5qg2l, t0btjelg789u06,
+sqoahq1rgkfl6p, brew9anhay8y0s.
+
+**It presented as one bad shard and it was the whole fleet.** The eleven
+shards still producing had all been launched between 06:33 and 17:39, before
+the upload, on 5.19.0; nothing was wrong with them, the cards, the account or
+the repo. Each would have died the same way at its own staggered expiry over
+the following hours, one at a time, several hours apart - which is the most
+misleading shape a fleet-wide fault can take. Twelve shards failing at once
+gets diagnosed in minutes. One failing every forty minutes gets diagnosed as
+a flaky host, and the stagger that was added on 13 Oct to smooth the warm-up
+cost is what spreads it out.
+
+The pin is in `relaunch.sh`: `diffusers==0.41.0 transformers==5.19.0`. 5.19.0
+is not a guess - it is the version the producing fleet was measured on, since
+those pods were launched after 5.19.0 went up on 6 Oct and before 5.20.0. The
+rest of the list is deliberately left unpinned: no version of it is known to
+be good, so pin each one the same way the first time it breaks.
+
+Two things made this slower to find than it should have been.
+
+`launch_gen.py` carried the comment "Pinned, because the unpinned install
+broke twice" directly above a `pip install` that was being handed bare
+package names. The note had been true of an intention and never of the
+command; it read as a guarantee, so the dependency list was the last place
+looked. A comment that claims a property nothing enforces is worse than no
+comment.
+
+And the watchdog deleted the first three pods with their logs, so the only
+copy of the traceback was gone. It now keeps the last 40 KB of the log under
+`notes/crashlogs/` before killing on GEN_CRASHED or a dead-host marker - the
+text is already in memory when the marker matches, so it costs one local
+write and no extra request. The fourth pod's log was only readable because it
+was being downloaded every twelve seconds by hand at the time.
+
+One wrong turn on the way, left here because the correction is the useful
+part. Those first three kills happened when the pods were 76, 170 and 170
+seconds old, and that looked impossible - the fourth pod took two full
+minutes just to reach `nvidia-smi` - so the conclusion was that the watchdog
+had matched GEN_CRASHED in something that was not the pod's own log, and a
+guard was written on that basis. The timing was real and the explanation was
+wrong: on a host that already has the container image cached, a pod can boot,
+pip install and fail the diffusers import inside 76 seconds. One slow pod is
+not the floor for all of them. The guard was kept, because requiring the
+worker's own invocation line in the body before honouring a DONE marker means
+a DELETE needs positive evidence from this run rather than a substring
+anywhere in whatever the proxy returned - but CUDA_DEAD is exempt, since
+`run.sh` prints it before the worker is ever invoked and that pod bills with
+no usable device.
+
 ## What is NOT resumable yet
 
 The CPU stage (`pipeline.py`) rebuilds its listings from whatever panels it

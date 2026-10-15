@@ -107,17 +107,25 @@ while time.time() < deadline:
     for p in on:
         pid, name = p["id"], p.get("name")
         t = log(pid)
-        # A marker only counts in a log that belongs to a real run. wa-v3-9
-        # was killed on GEN_CRASHED at 18:30:44 on 15 Oct when the pod was
-        # 76 seconds old, and again twice in the next eight minutes - and a
-        # 76-second-old pod has an EMPTY boot.log: measured on the fourth
-        # one, nvidia-smi does not run until two minutes in and the first
-        # bytes appear after that. So whatever was matched did not come from
-        # that pod's own worker, and three paid-for pods were deleted on the
-        # strength of it. The worker's own invocation line is printed before
-        # any marker can be and survives the truncation that eats the tail,
-        # so requiring it costs nothing and rules out an empty body, a proxy
-        # error page and anything else that is not this run.
+        # A marker only counts in a log that belongs to a real run: the
+        # worker's own invocation line has to be in the same body. It is
+        # printed before any marker can be and survives the truncation that
+        # eats the tail, so requiring it costs nothing and rules out an
+        # empty body, a proxy error page, and anything else that did not
+        # come from this run.
+        #
+        # This started as a wrong reading and the guard is worth keeping
+        # anyway. Three wa-v3-9 pods were killed on GEN_CRASHED at 76, 170
+        # and 170 seconds old on 15 Oct, and that looked impossible because
+        # the fourth one took two minutes just to reach nvidia-smi - so the
+        # match seemed to be coming from something other than the pod's own
+        # log. It was not: the cause was transformers 5.20.0, published at
+        # 18:01 that day, and on a host with the container image already
+        # cached a pod really can boot, pip install and fail the diffusers
+        # import inside 76 seconds. One slow pod is not the floor for all of
+        # them. What the guard actually buys is that a DELETE needs positive
+        # evidence from this run rather than a substring anywhere in
+        # whatever the proxy returned.
         started = "gen_gated.py --subjects" in t
         # CUDA_DEAD is printed by run.sh BEFORE the worker is invoked, so it
         # must never be gated on the run line - that pod has no working
