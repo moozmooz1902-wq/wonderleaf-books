@@ -596,6 +596,45 @@ at this size, against the 154 GB of panels they describe. The audit now
 writes them to R2 under `audit/hashes_<n>.npy` before comparing, outside the
 `luxvia/gen/` prefix it lists so a later run cannot mistake one for a panel.
 
+## The crop lever is closed, on arithmetic, without spending a shard-hour
+
+Open work carried "--crop-bottom 0.14 instead of 0.10 - one shard, never the
+fleet" for days. It does not need running. The cost side settles it before
+the benefit side is even measured.
+
+A deeper crop does not shrink the panel - the stored panel stays 704x1008
+and the GENERATION grows, because gen height is height/(1-crop) rounded to
+16:
+
+      crop 10%   generate 704x1120  for a 704x1008 panel
+      crop 14%   generate 704x1168  for a 704x1008 panel
+
+That is 4.3% more pixels on every single generation, and since attention is
+superlinear in sequence length, 4.3% is a floor on the extra cost, not an
+estimate. On the $119.49 of GPU left it is **+$5.12, certain**.
+
+The benefit is a share of the text rejects, which are wasted generations. The
+text rate averages 4.60% of generations across 561 shard-hour readings in
+notes/ab_snapshots.jsonl. So:
+
+      halve the text rejects    saves $2.75   <- the best case
+      cut them by 30%           saves $1.65
+
+**The best imaginable outcome saves half what the lever certainly costs.**
+There is no version of this experiment that pays, so there is no reason to
+run it.
+
+And had it been worth running, it was barely measurable. The spread between
+shard-hour readings is 4.05 points against a 4.60 point mean, so detecting
+even a halving takes about 26 shard-hours on one treated shard, a 30% cut
+about 73, and a 20% cut 165. That spread is inflated by freshly rotated
+shards, which read 40-55% for about three hours - but the verdict does not
+rest on it. The cost exceeds the maximum benefit whatever the variance is.
+
+Same shape as the _CLEAN A/B, one step earlier: there the instrument cost
+more than the lever was worth, here the lever costs more than it can return.
+Both were worth an hour of arithmetic before any GPU time.
+
 ## What is NOT resumable yet
 
 The CPU stage (`pipeline.py`) rebuilds its listings from whatever panels it
