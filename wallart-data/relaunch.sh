@@ -43,6 +43,28 @@ MAXHR=0.32
 # 60k and 70k characters. seed_assets.py puts it here; re-run that after
 # any change to the subject lists or the pods will build the OLD grid.
 JOBS_URL="https://pub-4b710c8610a84acc8fad1513f48132fd.r2.dev/wallart/assets/subjects.json"
+# PIN diffusers AND transformers. This list was unpinned until 15 Oct and a
+# release on PyPI stopped the fleet mid-run: transformers 5.20.0 was uploaded
+# at 18:01:01 UTC that day, wa-v3-9 rotated at 18:29 and every pod launched
+# after that died before generating anything -
+#   ModuleNotFoundError: No module named 'torch.distributed.checkpoint.hf_storage'
+# raised under "from diffusers import FluxPipeline", because 5.20.0 imports a
+# torch.distributed path this image's torch 2.8.0.dev20250319 does not have.
+# Four pods were created and killed in ten minutes before it was read.
+#
+# The shape of this matters more than the version. Nothing was wrong with the
+# repo, the card or the account: an unpinned dependency changed under a run
+# that was already going, so the eleven shards launched before 18:01 kept
+# working on 5.19.0 while every new one failed - which looks exactly like one
+# bad shard until the log is read. An unpinned install means the fleet can
+# only be relaunched for as long as upstream does not publish.
+#
+# 5.19.0 is not a guess: the eleven shards producing at the time were launched
+# between 06:33 and 17:39, all of them after 5.19.0 went up on 6 Oct and all
+# before 5.20.0, so it is the version the working fleet is measured on.
+# diffusers is pinned to the 0.41.0 those same pods report for the same reason.
+# The rest of the list is left unpinned because no version of it is known to
+# be good; pin each one the same way the first time it breaks.
 # CLIP_GATE=0 in the environment turns the people/eyes gate off for every
 # shard this script launches. Added 12 Oct when three shards relaunched
 # with it came up rejecting 100% of panels while the nine older ones
@@ -74,7 +96,7 @@ for GPUS in "$TIER1" "$TIER2"; do
   CLOUD=COMMUNITY
   OUT=$(python3 launch_gen.py --name "wa-v3-$K" --cloud $CLOUD --gpu "$GPUS" --template vbsgwyibn1 \
     --image "runpod/pytorch:2.8.0-py3.11-cuda12.8.1-cudnn-devel-ubuntu22.04" \
-    --pip "diffusers transformers accelerate bitsandbytes sentencepiece protobuf hf_transfer easyocr boto3" \
+    --pip "diffusers==0.41.0 transformers==5.19.0 accelerate bitsandbytes sentencepiece protobuf hf_transfer easyocr boto3" \
     --script gen_gated.py --jobs gen/subjects.json \
     --jobs-url "$JOBS_URL" --ship gen/gen_gated.py --extra "$EXTRA" 2>&1)
   ID=$(printf '%s' "$OUT" | python3 -c "import sys,re;d=sys.stdin.read();m=re.search(r'\"id\": \"([a-z0-9]+)\"',d);print(m.group(1) if m else '')")

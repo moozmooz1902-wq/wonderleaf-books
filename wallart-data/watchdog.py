@@ -107,7 +107,25 @@ while time.time() < deadline:
     for p in on:
         pid, name = p["id"], p.get("name")
         t = log(pid)
-        hit = next((m for m in DEAD + DONE if m in t), None)
+        # A marker only counts in a log that belongs to a real run. wa-v3-9
+        # was killed on GEN_CRASHED at 18:30:44 on 15 Oct when the pod was
+        # 76 seconds old, and again twice in the next eight minutes - and a
+        # 76-second-old pod has an EMPTY boot.log: measured on the fourth
+        # one, nvidia-smi does not run until two minutes in and the first
+        # bytes appear after that. So whatever was matched did not come from
+        # that pod's own worker, and three paid-for pods were deleted on the
+        # strength of it. The worker's own invocation line is printed before
+        # any marker can be and survives the truncation that eats the tail,
+        # so requiring it costs nothing and rules out an empty body, a proxy
+        # error page and anything else that is not this run.
+        started = "gen_gated.py --subjects" in t
+        # CUDA_DEAD is printed by run.sh BEFORE the worker is invoked, so it
+        # must never be gated on the run line - that pod has no working
+        # device and bills until it is deleted. R2_TLS comes out of the
+        # worker itself (gen/gen_gated.py:469), so it is covered either way.
+        hit = next((m for m in DEAD if m in t), None)
+        if hit is None and started:
+            hit = next((m for m in DONE if m in t), None)
         if hit:
             if hit == "GEN_CRASHED" or hit in DEAD:
                 keep(pid, name, f"{name} {hit}", t)
@@ -118,7 +136,8 @@ while time.time() < deadline:
             print(f"{time.strftime('%H:%M:%S')}  {pid} {name}  {n:,} panels",
                   flush=True)
         else:
-            mark = "booting" if "GPU" in t or "pip" in t or not t.strip() else "?"
+            mark = ("booting" if "GPU" in t or "pip" in t or not t.strip()
+                    else "running" if started else "NO RUN LINE IN LOG")
             print(f"{time.strftime('%H:%M:%S')}  {pid} {name}  {mark}"
                   f"  ({len(t)} bytes of log)", flush=True)
     time.sleep(120)

@@ -113,11 +113,19 @@ done
 # before failing, and the watcher cannot tell that apart from a slow start.
 python3 -c "import torch,sys; sys.exit(0 if torch.cuda.is_available() else 1)" 2>/dev/null \
   || {{ echo CUDA_DEAD_ON_THIS_HOST; exit 1; }}
-# Pinned, because the unpinned install broke twice:
+# This line installs whatever it is handed and pins nothing itself - the pins
+# are in relaunch.sh, which is where the --pip list is written. It said
+# "Pinned, because the unpinned install broke twice" for days while the list
+# it received held bare package names, so the note read as a guarantee that
+# was not being kept anywhere. Two breakages it refers to:
 #   diffusers >=0.33 calls torch.accelerator, added in torch 2.6; this image
 #   ships torch 2.4.0 and the import dies with AttributeError.
 #   transformers 5.x returns BaseModelOutputWithPooling from get_text_features
 #   instead of a tensor, which the colour-label pass tripped over earlier.
+# And the third, on 15 Oct, which actually stopped the fleet: transformers
+# 5.20.0 published mid-run, importing a torch.distributed path this image does
+# not have, so every pod launched after 18:01 UTC crashed before generating.
+# Check relaunch.sh for the versions and why each is pinned.
 pip install -q --no-input {pip} 2>&1 | tail -3
 {fetch_line}
 python3 -c "import torch,diffusers;print('torch',torch.__version__,'diffusers',diffusers.__version__,'cuda',torch.cuda.is_available())"
