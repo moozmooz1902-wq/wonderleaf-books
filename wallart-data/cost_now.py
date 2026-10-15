@@ -11,9 +11,15 @@ Measured 13 Oct 2026, 07:25 UTC, twelve live shards:
     burn            $2.20/hour
     output          7,672 kept panels/hour (unchanged, remeasured)
     so              $0.000287 a kept panel
-    spent to date   $126.00   (includes the t-shirt work and the failed
+    spent to date   $254.06   (includes the t-shirt work and the failed
                               experiments, not just this run)
-    done            242,174 base images of the 960,000 pool, counted
+    done            604,938 base images of the 960,000 pool, counted
+
+SPENT was last anchored by hand at $126.00 / 242,174 panels on 13 Oct. It is
+carried forward, not remeasured: 604,938 - 242,174 = 362,764 panels since, at
+the gated $0.000353 each, is $128.06, so $254.06 on 15 Oct 18:20 UTC. That
+unit cost is not a guess - the fleet put 6,517 panels into R2 in the hour to
+18:20 at $2.32/hour, which is $0.000356 a panel, within 1% of it.
 
 RunPod has no balance endpoint on either API - every path checked, and the
 GraphQL myself{} query returns null for this key. So spend is carried here
@@ -21,7 +27,7 @@ by hand and is only as fresh as the last edit. It is a floor, not a balance:
 it does not know about the $100 the seller added on 13 Oct.
 """
 BURN, RATE = 2.20, 7672          # $/hour and kept panels/hour, measured
-SPENT, DONE = 126.00, 242_174
+SPENT, DONE = 254.06, 604_938
 POOL = 960_000
 COLOURWAYS, PROCEDURAL = 4, 1_250_000
 
