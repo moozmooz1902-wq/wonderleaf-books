@@ -72,8 +72,7 @@ if __name__ == "__main__":
               "imageName": "runpod/base:0.7.0-ubuntu2404",
               "containerDiskInGb": 20, "volumeInGb": 0,
               "ports": ["8000/http"], "dockerStartCmd": ["bash", "-c", SCRIPT]}
-    pid = None
-    for extra in ({"computeType": "CPU", "cpuFlavorIds": ["cpu3g", "cpu3c"],
+    TIERS = ({"computeType": "CPU", "cpuFlavorIds": ["cpu3g", "cpu3c"],
                    "vcpuCount": 4},
                   {"gpuTypeIds": ["NVIDIA RTX A4000", "NVIDIA RTX A4500",
                                   "NVIDIA GeForce RTX 3090"],
@@ -92,16 +91,19 @@ if __name__ == "__main__":
                    "gpuCount": 1, "cloudType": "COMMUNITY"},
                   {"gpuTypeIds": ["NVIDIA RTX A4000", "NVIDIA RTX A4500",
                                   "NVIDIA RTX A5000"],
-                   "gpuCount": 1, "cloudType": "SECURE"}):
-        r = curl("POST", "/pods", dict(common, **extra))
-        if isinstance(r, dict) and r.get("id"):
-            pid = r["id"]
-            print(f"pod {pid} ${r.get('costPerHr')}/hr", flush=True)
-            break
-    if not pid:
-        sys.exit("no pod")
-    try:
-        for i in range(45):
+                   "gpuCount": 1, "cloudType": "SECURE"})
+
+    def start():
+        for extra in TIERS:
+            r = curl("POST", "/pods", dict(common, **extra))
+            if isinstance(r, dict) and r.get("id"):
+                print(f"pod {r['id']} ${r.get('costPerHr')}/hr", flush=True)
+                return r["id"]
+        return None
+
+    def wait(pid, limit):
+        """Poll for count.json. True if it answered, False if it never did."""
+        for _ in range(limit):
             time.sleep(20)
             out = subprocess.run(
                 ["curl", "-sS", "--max-time", "60",
@@ -113,8 +115,28 @@ if __name__ == "__main__":
                 continue
             print(json.dumps(d, indent=1))
             print(f"\n{d['total']:,} panels  ->  {d['listings']:,} listings")
-            sys.exit(0)
-        print("gave up waiting")
-    finally:
-        curl("DELETE", f"/pods/{pid}")
-        print(f"pod {pid} deleted")
+            return True
+        return False
+
+    # GIVE UP ON A POD THAT WILL NOT BOOT, rather than waiting out the clock.
+    # About one run in three gets a host where the pod never serves anything;
+    # this used to sit through all fifteen minutes of polling, and twice today
+    # the surrounding task was killed first - once by a container restart and
+    # once by the 30-minute background limit - which left the pod billing with
+    # its finally never reached. A pod that has said nothing in five minutes
+    # is not slow, it is the bad case: kill it and take a different host.
+    # Two attempts, because the second one has always worked.
+    FIRST_CONTACT, ATTEMPTS = 15, 2          # 15 polls x 20s = 5 minutes
+    for attempt in range(1, ATTEMPTS + 1):
+        pid = start()
+        if not pid:
+            sys.exit("no pod")
+        try:
+            if wait(pid, FIRST_CONTACT):
+                sys.exit(0)
+            print(f"attempt {attempt}: pod {pid} never answered in "
+                  f"{FIRST_CONTACT * 20 // 60} minutes", flush=True)
+        finally:
+            curl("DELETE", f"/pods/{pid}")
+            print(f"pod {pid} deleted", flush=True)
+    sys.exit("no count after two attempts")
