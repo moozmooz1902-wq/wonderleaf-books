@@ -59,3 +59,34 @@ still RUNNING with no progress line advancing, delete it.
 
   curl -sS -X DELETE -H "Authorization: Bearer $RUNPOD_API_KEY" \
        https://rest.runpod.io/v1/pods/dcw129pdyp2dwf
+
+## 16 Oct 14:02 UTC - THE RUN STOPPED: account balance exhausted
+
+All twelve shards were terminated by RunPod inside about two minutes.
+The watchdog saw them generating at 14:01:48 and saw none at 14:03:49,
+having itself killed only three all window, hours apart, on their normal
+ten-hour clocks. Nothing here did this.
+
+The create API says it plainly:
+
+    "create pod: Your account balance is too low to rent a pod."
+
+Probed across tiers: community A4500, community RTX 4000 Ada and CPU all
+return the balance error; community 3090 and all three SECURE types
+return "no instances currently available", which is ordinary capacity
+and not the cause. The balance is the cause.
+
+NOTHING IS LOST. Every panel is in R2 - 734,760 of them, 2,939,040
+listings - and the buckets are the bookmark. gen_gated.py --resume lists
+them and skips what is done, so the run continues from where it stopped
+the moment there is credit.
+
+WHAT IS NEEDED: about $102 to finish all five million, being $79.52 of
+GPU for the remaining 225,240 panels, $22.28 for the CPU listing stage
+and $0.09 for the owed text sweep. $100 is marginally short; $110 to
+$120 covers it with room for the card prices moving.
+
+The shard filler is deliberately left running. It retries every 45
+seconds, each attempt is a rejected API call that costs nothing, and it
+means the fleet refills by itself within a minute of a top-up landing
+rather than waiting for the next hourly check.
