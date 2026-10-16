@@ -118,24 +118,34 @@ if __name__ == "__main__":
             return True
         return False
 
-    # GIVE UP ON A POD THAT WILL NOT BOOT, rather than waiting out the clock.
-    # About one run in three gets a host where the pod never serves anything;
-    # this used to sit through all fifteen minutes of polling, and twice today
-    # the surrounding task was killed first - once by a container restart and
-    # once by the 30-minute background limit - which left the pod billing with
-    # its finally never reached. A pod that has said nothing in five minutes
-    # is not slow, it is the bad case: kill it and take a different host.
-    # Two attempts, because the second one has always worked.
-    FIRST_CONTACT, ATTEMPTS = 15, 2          # 15 polls x 20s = 5 minutes
-    for attempt in range(1, ATTEMPTS + 1):
+    # HOW LONG TO WAIT, measured rather than assumed. About one run in three
+    # lands on a host that takes far longer than the usual minute, and the
+    # first version of this retry gave up after five - which would have
+    # aborted every slow run that actually succeeded. Today's three slow
+    # counts took 10, 11 and 14 minutes and all three returned a real number:
+    #
+    #     01:17 -> 01:31   14 min   650,524 panels
+    #     04:18 -> 04:28   10 min   669,605
+    #     09:19 -> 09:30   11 min   706,336
+    #
+    # So slow is not dead, and the cutoff has to sit above 14. Fifteen minutes
+    # on the first attempt, ten on the second, which keeps the whole run under
+    # the 30-minute limit that killed one of these and left a pod billing.
+    #
+    # The retry still earns its place: it was two consecutive non-answers at
+    # 10:34 that showed the five-minute figure was wrong, and a host that
+    # really is dead now costs fifteen minutes instead of an open-ended wait.
+    # reap_orphans.py is the backstop for the case this cannot cover - being
+    # killed outright, so that the finally below never runs at all.
+    for attempt, limit in ((1, 45), (2, 30)):      # polls x 20s = 15, 10 min
         pid = start()
         if not pid:
             sys.exit("no pod")
         try:
-            if wait(pid, FIRST_CONTACT):
+            if wait(pid, limit):
                 sys.exit(0)
             print(f"attempt {attempt}: pod {pid} never answered in "
-                  f"{FIRST_CONTACT * 20 // 60} minutes", flush=True)
+                  f"{limit * 20 // 60} minutes", flush=True)
         finally:
             curl("DELETE", f"/pods/{pid}")
             print(f"pod {pid} deleted", flush=True)
