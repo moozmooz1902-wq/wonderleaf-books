@@ -137,7 +137,25 @@ if __name__ == "__main__":
     # really is dead now costs fifteen minutes instead of an open-ended wait.
     # reap_orphans.py is the backstop for the case this cannot cover - being
     # killed outright, so that the finally below never runs at all.
-    for attempt, limit in ((1, 45), (2, 30)):      # polls x 20s = 15, 10 min
+    # ONE ATTEMPT, AND IT MUST FIT INSIDE WHATEVER WRAPS THIS. The two-attempt
+    # version budgeted 15 + 10 minutes, and it was being invoked as
+    # `timeout 900 python3 r2_count_stores.py` - a 15-minute wrapper around a
+    # 25-minute script. On every slow run the wrapper's SIGTERM landed exactly
+    # as attempt 1 gave up, so the finally below never ran and the pod was
+    # left billing: 99j8mee6om3ly4 on 17 Oct, and the same shape twice before.
+    # The stranded pods were never the harness, they were this mismatch.
+    #
+    # Sixteen minutes covers every slow success measured - 10, 11 and 14 -
+    # with margin. THAT IS 960 SECONDS, SO DO NOT WRAP THIS IN `timeout 900`:
+    # a 900s wrapper is the same mismatch again, just smaller, and the test
+    # that was meant to confirm the fix printed "inside a 900s wrapper? False"
+    # and caught it. Invoke it as `timeout 1500 python3 r2_count_stores.py`,
+    # which clears 960s plus pod-creation overhead and still sits well inside
+    # the 30-minute background limit. The retry is dropped rather than squeezed:
+    # it only ever helped on a host that was never going to answer, and the
+    # honest response to that is to re-run the count at the next check rather
+    # than to overrun the clock that guarantees cleanup.
+    for attempt, limit in ((1, 48),):             # 48 polls x 20s = 16 min
         pid = start()
         if not pid:
             sys.exit("no pod")
@@ -149,4 +167,4 @@ if __name__ == "__main__":
         finally:
             curl("DELETE", f"/pods/{pid}")
             print(f"pod {pid} deleted", flush=True)
-    sys.exit("no count after two attempts")
+    sys.exit("no count: the pod never answered in 16 minutes")
