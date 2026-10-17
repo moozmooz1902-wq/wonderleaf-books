@@ -847,3 +847,31 @@ real fault would get waved through. It is a reason to WITHHOLD JUDGEMENT and
 re-read, not a reason to expect a spike: nine rotations today produced none.
 Judge a high reading on the gate split in rejects.jsonl, not on whether a
 rotation happens to be in the window.
+
+## 17 Oct, 14:33 UTC - launch BOTH loops with nohup setsid, not as a plain job
+
+The container restarted at about 14:30. The watchdog survived it; the
+filler loop did not, and it has died on every restart today while the
+watchdog has not. The difference is only how they were started:
+
+    nohup python3 watchdog.py 7000 > watch80.log 2>&1 &   survived
+    bash fill_shards.sh 12 110 auto > fill_new65.log 2>&1  died
+
+A plain background job stays in the session's process group and goes down
+with it. So the filler is now started the same way as the watchdog:
+
+    CLIP_GATE=1 nohup setsid bash /home/user/wonderleaf-books/wallart-data/\
+        fill_shards.sh 12 110 auto > .../fill_new66.log 2>&1 < /dev/null &
+
+`setsid` puts it in its own session, `< /dev/null` stops it dying on a
+closed stdin. The shell prints "Done" for the nohup wrapper immediately -
+that is the wrapper exiting, not the loop; check the real pid with
+`ps -eo pid,args | grep fill_shards`.
+
+THE PODS ARE NEVER AFFECTED BY A RESTART. Twelve were still running and
+generating throughout, and the stray sweep found nothing to reap. Only the
+two local loops need restarting, and the only cost of the gap is that an
+expired shard waits for the filler to come back before it is replaced.
+
+Note the hourly routine still prints the old plain-`bash` form for the
+filler. It works, but it will die on the next restart; use the form above.
