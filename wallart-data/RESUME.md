@@ -804,3 +804,46 @@ allocation.
 Note `cost_now.py` models spend from the panel count and read $319.73 while
 the RunPod API read $338.90 - about $19 low. SPEND IS REPORTED FROM THE API.
 The modelled figure is for projecting what is LEFT, not for what is gone.
+
+## 17 Oct, 13:20 UTC - rotation did NOT spike, and the 13 Oct hypothesis fails
+
+Between 11:53 and 12:40 seven shards rotated, and by 13:17 two more, nine of
+twelve inside ninety minutes. All of them stopped the same way: `UNFINISHED`,
+which is `--max-hours 10` expiring with jobs still in the block. None crashed,
+nothing was archived to crashlogs, no pod failed to boot and no API read came
+back unreadable.
+
+I TOLD THE SELLER TO EXPECT A BAD READING AND IT DID NOT COME. The four
+earliest rotations, 1.1 to 1.4 hours old at 13:17, read:
+
+    wa-v3-1  7.9%    wa-v3-2  9.6%    wa-v3-3  7.2%    wa-v3-4  8.2%
+
+That is indistinguishable from the shards that never rotated, and the fleet
+sat at 8.0% - the same figure as 12:18 and 11:18.
+
+So the hypothesis recorded for the 13 Oct spike is CONTRADICTED by this run:
+
+    "--max-hours cuts a run mid-queue, and what is left unfinished is
+     enriched in the jobs that take three generations instead of one.
+     Each rotation concentrates that further."
+
+Today's nine rotations were all exactly that cut, and there was no
+enrichment visible at all. A second prediction of the same hypothesis also
+fails: the pool is now 83% consumed (796,704 of 960,000 base images), so a
+remainder drifting towards hard jobs should show up as a rising fleet reject
+rate across the whole day. It has not moved off 8%.
+
+WHAT THIS ESTABLISHES: `--max-hours` rotation on its own does not produce
+the 40-55% break-in. WHAT IT DOES NOT: the cause of 13 Oct. Ten shards
+rotated simultaneously that day against nine staggered over ninety minutes
+here, and that difference is untested. Nothing is being changed on the
+strength of one clean run.
+
+THE OPERATIONAL CONSEQUENCE IS THE POINT. The standing hourly guidance says
+a rotated shard reads 40-55% for about three hours, with "do not diagnose,
+do not change anything". Read as a blanket rule it is a licence to excuse
+any high reading for three hours after any rotation - which is exactly how a
+real fault would get waved through. It is a reason to WITHHOLD JUDGEMENT and
+re-read, not a reason to expect a spike: nine rotations today produced none.
+Judge a high reading on the gate split in rejects.jsonl, not on whether a
+rotation happens to be in the window.
