@@ -875,3 +875,36 @@ expired shard waits for the filler to come back before it is replaced.
 
 Note the hourly routine still prints the old plain-`bash` form for the
 filler. It works, but it will die on the next restart; use the form above.
+
+CORRECTION, 15:20 - THAT ONLY SURVIVES THE LIGHTER RESTART. There are two
+different events and nohup/setsid only helps with one:
+
+  * agent/session restart (14:30): the nohup'd watchdog lived, the plain
+    background filler died. This is the case the form above fixes.
+  * full container replacement (about 14:55): everything local died,
+    setsid included. The new loops came up as pid 230 and 236 - pids that
+    low only happen in a fresh container.
+
+So do not treat the detached form as restart-proof. It narrows the window;
+it does not close it. The only durable record is still R2, and the only
+real protection is checking both loops every hour, which the routine does.
+
+WHAT THE 14:35-14:53 BLACKOUT SHOWED. Before that container died it lost
+outbound network for eighteen minutes: watch80.log has 37 consecutive
+"pod list unreadable, retrying" lines from 14:35:29 to 14:53:29 and then
+stops mid-window. The watchdog killed NOTHING across all 37. That is the
+pods()-returns-None fix working as intended - an unreadable read is not an
+empty fleet, and EMPTY_PASSES_BEFORE_STOP never armed. All twelve pods
+were still RUNNING and generating when the new container came up. Had the
+old code been in place it would have exited on the first failure, or read
+[] and begun stopping healthy shards during a network outage.
+
+wa-v3-9 ALSO BURNED THREE HOSTS ON CUDA. It expired at 13:19 and then hit
+CUDA_DEAD_ON_THIS_HOST on three consecutive replacements - 13:30, 13:37,
+13:44 - before the fourth host held. The watchdog caught each one and the
+filler replaced it; total lost time about 25 minutes on one twelfth of the
+fleet. CUDA_DEAD is deliberately ungated in the DONE markers because
+run.sh prints it before the worker starts, and that is why it was caught
+at all. Worth watching if one shard starts doing this repeatedly, but
+three bad community hosts in a row is a capacity-quality problem, not a
+bug here.
