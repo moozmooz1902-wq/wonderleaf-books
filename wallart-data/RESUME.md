@@ -908,3 +908,42 @@ run.sh prints it before the worker starts, and that is why it was caught
 at all. Worth watching if one shard starts doing this repeatedly, but
 three bad community hosts in a row is a capacity-quality problem, not a
 bug here.
+
+## 17 Oct, 17:20 UTC - the container is now recycled between every check
+
+Measured window lifetimes, from the first and last timestamped line of each
+watchdog log:
+
+    watch79   10:55:21 -> 12:44:14    109 min   full window, ended normally
+    watch80   12:58:03 -> 14:53:29    115 min   full window (blackout at end)
+    watch81   15:18:38 -> 15:24:19      6 min   container replaced
+    watch82   16:18:27 -> 16:24:02      6 min   container replaced
+
+So this is NOT how it has always behaved. The container lived continuously
+from 10:55 to 14:53, across two hourly checks. Since about 15:00 it has been
+replaced between every check, about six minutes after the check finishes and
+the session goes idle - which matches a container reclaimed on inactivity.
+
+CONSEQUENCE: the loops cannot be kept alive, by any launch method. nohup and
+setsid are irrelevant to a container replacement. The hourly check IS the
+supervisor, and there is a blind window of roughly 54 minutes after each one.
+
+WHAT THE BLIND WINDOW ACTUALLY COSTS, measured rather than feared:
+
+  * Nothing while all twelve shards are healthy. The pods do not depend on
+    this container at all. The two blind hours delivered +6,488 and +6,264
+    panels, at or above the 6,500/hr healthy figure.
+  * When a shard expires or dies inside the window it idles and bills until
+    the next check kills it. One event so far: wa-v3-11, killed 45 seconds
+    after the 16:18 restart, upper bound $0.17.
+  * Worst realistic case is a whole rotation burst landing in a blind window:
+    twelve pods idling under an hour, about $2.40, once per ten-hour cycle.
+
+NOT CHANGING --max-hours TO AVOID IT. Raising it so the shards never rotate
+again would remove the exposure, and it is the wrong trade: the whole
+exposure is about $2.40 at worst against $353 spent, the system self-heals
+within one hour unaided, and --max-hours is also the bound that stops a bad
+pod running forever. Same arithmetic that closed the crop lever and the
+_CLEAN clause - the fix costs more risk than the fault costs money. Revisit
+only if a burst actually lands in a blind window and the real figure comes
+in far above the estimate above.
