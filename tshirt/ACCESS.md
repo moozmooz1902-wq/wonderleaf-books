@@ -32,6 +32,23 @@ Useful endpoints (full spec at `GET /v1/openapi.json`):
 There is **no secrets endpoint**. Credentials reach a pod either through
 `env` on pod creation or through a template's env.
 
+## Topping up: there is no route, and this has been checked
+
+The seller offered Claude permission to add $100 on 17 Oct. Permission was
+never the obstacle and the offer does not change anything, because no
+mechanism exists:
+
+  * RunPod's REST API has no billing surface at all. Probed 17 Oct:
+    /v1/billing, /v1/credits, /v1/balance, /v1/account, /v1/payments,
+    /v1/user, /v1/me and /v1/wallet all return 400, i.e. no such route.
+    The API creates and deletes pods and that is the whole of it.
+  * This environment holds a pod API key and nothing else. No card, no
+    Cloudflare token, no browser session on the RunPod account.
+
+So a top-up is the seller's to make in the RunPod console, and that is a
+fact about the tooling rather than a policy position. Do not spend time
+looking for a way round it, and do not go looking for stored card details.
+
 ## Cloudflare R2 - NOT connected
 
 Bucket `tshirt-m12k`, account M12K.
