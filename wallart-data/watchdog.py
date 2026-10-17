@@ -134,6 +134,22 @@ deadline = time.time() + float(sys.argv[1] if len(sys.argv) > 1 else 1500)
 # the next one up - which at twelve staggered expiries is a normal moment.
 EMPTY_PASSES_BEFORE_STOP = 3
 empty = 0
+
+# A POD THAT NEVER BOOTS IS INVISIBLE TO EVERY OTHER RULE HERE. Each marker
+# this watchdog kills on is printed BY the pod, so a pod that never starts
+# prints none of them and is never killed. wa-v3-11 sat at "booting (0 bytes
+# of log)" for 171 minutes on 17 Oct while this loop reported it faithfully
+# every two minutes and did nothing, because there was nothing to match.
+#
+# Worse than the $0.63 it burned: --max-hours is enforced by the worker, and
+# the worker never ran, so its ten-hour clock never started either. Left
+# alone it would have billed until a person noticed.
+#
+# Measured boot times: nvidia-smi at about two minutes, first panels by
+# eight to ten. Fifteen consecutive empty polls at 120s apart is thirty
+# minutes, which is three times the slowest healthy boot seen.
+DEAD_BOOT_POLLS = 15
+silent = {}
 while time.time() < deadline:
     on = pods()
     if on is None:
@@ -187,12 +203,28 @@ while time.time() < deadline:
             continue
         n = done_count(pid)
         if n:
+            silent.pop(pid, None)
             print(f"{time.strftime('%H:%M:%S')}  {pid} {name}  {n:,} panels",
                   flush=True)
         else:
+            # Nothing in the log AND nothing generated. One such reading is a
+            # pod still coming up; fifteen in a row is a pod that never will.
+            if not t.strip():
+                silent[pid] = silent.get(pid, 0) + 1
+                if silent[pid] >= DEAD_BOOT_POLLS:
+                    kill(pid, f"{name} NEVER BOOTED "
+                              f"({silent[pid]} polls, no log, no panels)")
+                    silent.pop(pid, None)
+                    continue
+            else:
+                silent.pop(pid, None)
             mark = ("booting" if "GPU" in t or "pip" in t or not t.strip()
                     else "running" if started else "NO RUN LINE IN LOG")
+            extra = (f"  [silent {silent[pid]}/{DEAD_BOOT_POLLS}]"
+                     if silent.get(pid) else "")
             print(f"{time.strftime('%H:%M:%S')}  {pid} {name}  {mark}"
-                  f"  ({len(t)} bytes of log)", flush=True)
+                  f"  ({len(t)} bytes of log){extra}", flush=True)
+    # Pods that have gone away should not keep a counter alive.
+    silent = {k: v for k, v in silent.items() if k in {p["id"] for p in on}}
     time.sleep(120)
 print("watchdog window over", flush=True)
