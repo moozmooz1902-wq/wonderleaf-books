@@ -695,6 +695,59 @@ NOT DONE, and deliberately not started: this is a legal control and the
 decision is the seller's, so it is written up here and reported rather than
 acted on.
 
+## Data check, 17 Oct 00:50 UTC - verified from outside RunPod entirely
+
+Asked to confirm the panels are safe on Cloudflare and the run can continue
+at any time. Both checked rather than assumed, and checked WITHOUT RunPod,
+which matters: the account is empty, so the usual route (spin a pod that
+holds the R2 keys) was not available. The keys live only on template
+vbsgwyibn1 and never in this environment.
+
+The way round it is that each store bucket has a public read base in
+stores.json. Eight real SKUs taken from the 611,441-panel audit were
+requested over plain HTTPS:
+
+    luxvia-art          3 of 8 present
+    posterleaf-store1   2 of 8
+    lunar-kms           2 of 8
+    mercury-usm         1 of 8
+                        8 of 8 total, each in exactly one bucket
+
+Each panel appearing in one bucket and only one is the right answer - a SKU
+is allocated to a single store - so this is a check of the allocation as
+well as of the storage. Two were downloaded in full: both 704x1008 JPEG,
+RGB, the correct panel dimensions, real artwork rather than an error page.
+
+CONTINUING IS SAFE AND NEEDS NOTHING KEPT HERE. gen_gated.py --resume lists
+the four buckets and drops every SKU already present (gen/gen_gated.py:479).
+It reads no local state at all; done.txt is per-pod scratch that dies with
+the pod. The code's own comment anticipated exactly this: "If the balance
+runs out mid-run, the pods stop, and the next pod picks up exactly here."
+
+WHAT THIS IS NOT. The panels are ON Cloudflare, durably, in one place. That
+is storage, not a backup: there is a single copy, so it does not protect
+against a bucket being deleted, a bad script, a leaked key, or the
+Cloudflare account lapsing. Nothing here can make a second copy - 154 GB,
+no credentials in this environment, and no pod to run it on.
+
+THE RISK WORTH NAMING. RunPod went to zero on 16 Oct and took twelve
+running shards with it inside two minutes. The same thing happening to the
+Cloudflare account would take the entire catalogue, not an afternoon of
+compute. Storage is about $2.32 a month for the 154 GB. It is by far the
+cheapest thing in this project and the only one that is irreplaceable.
+Claude cannot see Cloudflare billing from here - there is no CF token in
+this environment - so that one has to be checked by the seller.
+
+WORTH DOING WHEN THERE IS CREDIT AGAIN, cheapest first:
+  * keep the Cloudflare account funded - this is the whole ballgame
+  * a second R2 bucket as a copy. CLAUDE.md records that a copy within R2
+    is server side and free, so this costs only the extra storage
+  * object versioning or a delete lifecycle rule on the four buckets, which
+    turns an accidental delete into something recoverable
+  * the hashes the audit now keeps (audit/hashes_<n>.npy) are a cheap
+    integrity record: 32 bytes a panel against 154 GB of panels, enough to
+    tell later whether anything changed or went missing
+
 ## What is NOT resumable yet
 
 The CPU stage (`pipeline.py`) rebuilds its listings from whatever panels it
