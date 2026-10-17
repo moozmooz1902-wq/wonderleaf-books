@@ -753,3 +753,54 @@ WORTH DOING WHEN THERE IS CREDIT AGAIN, cheapest first:
 The CPU stage (`pipeline.py`) rebuilds its listings from whatever panels it
 is given, so it is cheap to re-run and does not need resuming. The eBay
 upload files are not written yet.
+
+## 17 Oct, 11:20 UTC - the count stopped answering, and it was our own data
+
+Three consecutive non-answers from `r2_count_stores.py` at 16 minutes, after
+three successes the same morning at 10, 11 and 14. Two wrong explanations
+were reached for first and both are written down here so neither is tried
+again:
+
+1. "RunPod's CPU hosts have slowed." Plausible, and it would have been
+   answered by raising the window - a parameter already changed twice that
+   day, once wrongly. No measurement supported it.
+2. "`pip install boto3` is unpinned, so this is `transformers 5.20.0`
+   again." A good hypothesis on shape - the shards pin `boto3==1.43.114` and
+   survive, the count pod does not pin and started failing - and wrong.
+
+What settled it was reading `boot.log` instead of only `count.json`.
+`wait()` polls `count.json` alone, so a crashed pod and a slow pod are the
+same event: nothing arrives. A diagnostic that printed `boot.log` each poll
+showed `status=RUNNING`, pip **finished**, the Python body running, and at
+7.8 minutes not one of the four buckets listed. `count.json` reading 335
+bytes was `http.server`'s 404 page, not output.
+
+The cause is that the listing was serial: each bucket walked end to end,
+one after another, 1,000 keys per LIST call. At 790k panels that is about
+790 sequential round trips at ~0.75s, and it grows with the catalogue. It
+was always going to cross 16 minutes; it crossed it that morning.
+
+The fix is a partition, not a bigger timeout. Eighteen contiguous half-open
+ranges `(lo, hi]` per bucket, boundaries at `WA-0`..`WA-f` plus one range
+below the first and one above the last, all four buckets at once: 72 ranges,
+72 threads, one boto3 client each. 72 LIST calls replaced ~790 serial ones
+and it answered in under a minute.
+
+The ranges partition the LEXICOGRAPHIC keyspace and do not assume the key
+shape. Sharding on "the SKU is a hash so the prefixes are even" would have
+been shorter and would silently miss any key of another form, reading the
+total LOW - and the total is the one number the seller reads. The boundaries
+are covered by a test that runs the shipped heredoc body unedited against a
+fake R2 honouring Prefix/StartAfter/ContinuationToken, with keys sitting
+exactly on a boundary, keys sorting before `WA-0` and after `WA-g`, a
+non-`.jpg`, and an empty bucket. All four buckets exact.
+
+Two independent checks on the first real run, 790,956 panels: it is +10,681
+on the 09:34 figure over about two hours, ~5,340/hr, inside the healthy
+band; and the bucket split is 50.0 / 20.0 / 20.0 / 10.0 percent against a
+configured 50 / 20 / 20 / 10. A broken partition does not reproduce the
+allocation.
+
+Note `cost_now.py` models spend from the panel count and read $319.73 while
+the RunPod API read $338.90 - about $19 low. SPEND IS REPORTED FROM THE API.
+The modelled figure is for projecting what is LEFT, not for what is gone.

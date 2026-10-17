@@ -23,7 +23,8 @@ export PATH=/opt/conda/bin:/usr/local/bin:/usr/bin:/bin:$PATH
 set -x
 python3 -m pip install -q --no-input --break-system-packages boto3 2>&1 | tail -1
 python3 - <<'EOF'
-import os, json, boto3
+import os, json, time, boto3
+import concurrent.futures as cf
 from botocore.config import Config
 s3 = boto3.client("s3",
     endpoint_url=f"https://{os.environ['R2_ACCOUNT_ID']}.r2.cloudflarestorage.com",
@@ -32,18 +33,77 @@ s3 = boto3.client("s3",
     config=Config(signature_version="s3v4"), region_name="auto")
 STORES = [("luxvia-art","luxvia/gen/"), ("posterleaf-store1","store1/gen/"),
           ("mercury-usm","store2/gen/"), ("lunar-kms","store7/gen/")]
-out, tot = {}, 0
-for bkt, pre in STORES:
-    n, tok = 0, None
+
+# PARTITIONED, NOT SERIAL. The old loop walked each bucket end to end, one
+# bucket after another, 1,000 keys per LIST call. At 800k panels that is
+# about 800 sequential round trips at ~0.75s each, and it grows with the
+# catalogue: it took 10, 11 and 14 minutes on 17 Oct and then stopped
+# answering inside 16 altogether. Three non-answers were nearly blamed on
+# slower RunPod hosts and on an unpinned boto3; a diagnostic that read
+# boot.log instead of only count.json showed the pod healthy, pip finished,
+# and not one of the four buckets done at 5 minutes. It was our own data.
+#
+# The keyspace splits on the SKU, which is a blake2b hash, so the shards are
+# even. But the split must not ASSUME that shape, or a key of some other
+# form would be silently uncounted and the total would read low - the one
+# number the seller actually reads. So it partitions the lexicographic range
+# instead: eighteen contiguous half-open ranges (lo, hi] per bucket whose
+# union is the whole prefix. Every key under the prefix falls in exactly one
+# range whatever it is called, including anything sorting before "WA-0" or
+# after "WA-f". StartAfter is exclusive and the stop test is inclusive, so
+# the boundaries neither double-count nor drop a key.
+EDGES = ["WA-" + c for c in "0123456789abcdef"] + ["WA-g"]
+
+
+def ranges(pre):
+    lo = pre
+    for e in EDGES:
+        yield lo, pre + e
+        lo = pre + e
+    yield lo, None            # everything sorting after the last boundary
+
+
+def span(args):
+    """Count .jpg keys in one half-open range. Its own client: boto3 clients
+    are not documented thread safe, and one shared client across 72 threads
+    is exactly the kind of saving that costs a wrong number."""
+    bkt, pre, lo, hi = args
+    c = boto3.client("s3",
+        endpoint_url=f"https://{os.environ['R2_ACCOUNT_ID']}.r2.cloudflarestorage.com",
+        aws_access_key_id=os.environ["R2_ACCESS_KEY_ID"],
+        aws_secret_access_key=os.environ["R2_SECRET_ACCESS_KEY"],
+        config=Config(signature_version="s3v4", retries={"max_attempts": 10,
+                      "mode": "adaptive"}), region_name="auto")
+    n, tok, after = 0, None, lo
     while True:
         kw = {"Bucket": bkt, "Prefix": pre, "MaxKeys": 1000}
         if tok: kw["ContinuationToken"] = tok
-        r = s3.list_objects_v2(**kw)
-        n += sum(1 for o in r.get("Contents", []) if o["Key"].endswith(".jpg"))
-        if not r.get("IsTruncated"): break
+        else: kw["StartAfter"] = after
+        r = c.list_objects_v2(**kw)
+        done = False
+        for o in r.get("Contents", []):
+            k = o["Key"]
+            if hi is not None and k > hi:
+                done = True
+                break
+            if k.endswith(".jpg"):
+                n += 1
+        if done or not r.get("IsTruncated"):
+            break
         tok = r["NextContinuationToken"]
-    out[bkt] = n; tot += n
-    print(bkt, n, flush=True)
+    return bkt, n
+
+
+jobs = [(b, p, lo, hi) for b, p in STORES for lo, hi in ranges(p)]
+out, tot = {b: 0 for b, _ in STORES}, 0
+t0 = time.time()
+with cf.ThreadPoolExecutor(max_workers=len(jobs)) as ex:
+    for b, n in ex.map(span, jobs):
+        out[b] += n
+for b, _ in STORES:
+    print(b, out[b], flush=True)
+tot = sum(out[b] for b, _ in STORES)
+print(f"listed in {time.time() - t0:.1f}s over {len(jobs)} ranges", flush=True)
 out["total"] = tot
 out["listings"] = tot * 4
 open("/workspace/count.json","w").write(json.dumps(out, indent=1))
