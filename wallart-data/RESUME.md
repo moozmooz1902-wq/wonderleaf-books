@@ -947,3 +947,49 @@ pod running forever. Same arithmetic that closed the crop lever and the
 _CLEAN clause - the fix costs more risk than the fault costs money. Revisit
 only if a burst actually lands in a blind window and the real figure comes
 in far above the estimate above.
+
+## 18 Oct, 04:20 UTC - the run starts ENDING, one stripe at a time
+
+wa-v3-1 came up at 03:19, ran 53 minutes and printed:
+
+    pool: 960,000 of 1,124,581 grid jobs
+    part 1 of 12
+    resume: 888,026 panels already across 4 bucket(s)
+    SHARD COMPLETE
+    DONE kept 0 from 0 generations in 0.0 min
+
+That is not an expiry and not a fault. Stripe 1 of 12 is EXHAUSTED. This is
+how the run ends: `--part k/12` slices the pool, the slices drain at
+different rates because the shards rotate onto different cards at different
+times, and they finish one by one rather than together.
+
+WITHOUT HANDLING IT THIS COSTS MONEY FOR NOTHING. The watchdog kills a
+SHARD COMPLETE pod (it is in the DONE markers) and the filler, maintaining
+twelve, immediately launches another, which boots, downloads FLUX, reads the
+buckets, finds nothing and exits. Forever, for the rest of the run.
+
+SO fill_shards.sh NOW TAKES `DONE_SHARDS`, a space-separated list of
+finished stripes, and never launches them. Started as:
+
+    DONE_SHARDS="1" CLIP_GATE=1 ... fill_shards.sh 12 110 auto
+
+EVERY HOURLY CHECK MUST NOW READ EACH POD'S MARKER AND ADD ANY NEW
+`SHARD COMPLETE` TO THAT LIST. A stripe that finishes and is not added
+churns pods until someone notices.
+
+WHY DROP THE SHARD RATHER THAN RE-PARTITION THE REMAINDER. Running eleven
+shards instead of twelve costs NO extra money - the GPU-hours for the jobs
+that remain are the same however many shards share them out, only the
+wall-clock stretches. Re-striping the remainder across a new `--part`
+count would keep twelve busy, but two live shards could then pick the same
+job; that is merely idempotent rather than harmful, because the SKU and the
+seed are both hashes of the job, and it still pays for the same panel
+twice. Churn costs money for zero panels, so churn is what gets removed.
+
+The exclusion is covered by test_done_shards.sh, which runs the shipped
+stripe_done and TODO-loop text against a faked pod list. It includes the
+substring traps that matter: skipping "1" must not also skip 11 and 12, and
+skipping "2" must not skip 12.
+
+Remaining at this point: 960,000 - 888,026 = 71,974 jobs across eleven
+live stripes, about 6,500 each, roughly eleven hours on eleven shards.

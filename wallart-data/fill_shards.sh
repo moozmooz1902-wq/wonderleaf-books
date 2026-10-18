@@ -41,6 +41,26 @@ declare -A SKIP
 # takes about two minutes to reach RUNNING, so four is a safe floor.
 declare -A JUST
 LAUNCH_COOLDOWN=240
+# SHARDS WHOSE STRIPE IS FINISHED, as a space-separated list in DONE_SHARDS.
+#
+# At 04:17 on 18 Oct wa-v3-1 came up and printed SHARD COMPLETE with
+# "DONE kept 0 from 0 generations in 0.0 min": --part 1/12 of the 960,000
+# pool was exhausted, with resume reporting 888,026 panels already in the
+# buckets. That is the end of the run arriving one stripe at a time, not a
+# fault - but without this list the loop relaunches that shard forever, and
+# every replacement pays a full boot and model download to generate nothing.
+#
+# Running FEWER shards costs no extra money, only wall-clock: the GPU-hours
+# for the jobs that remain are the same whether eleven shards or twelve
+# share them out. Churning a dead shard costs real money for zero panels.
+# So a finished stripe is dropped, not re-partitioned - re-striping the
+# remainder across a new --part count would keep twelve busy but risks two
+# live shards picking the same job, which is only idempotent because the SKU
+# and seed are hashes of the job, and still wastes the GPU time twice.
+DONE_SHARDS="${DONE_SHARDS:-}"
+stripe_done() {
+  case " $DONE_SHARDS " in *" $1 "*) return 0 ;; *) return 1 ;; esac
+}
 while [ "$(date +%s)" -lt "$END" ]; do
   if [ "$AUTO" = "1" ]; then
     UP_RAW="$(running_shards)"
@@ -51,6 +71,7 @@ while [ "$(date +%s)" -lt "$END" ]; do
     UP=" $UP_RAW "
     TODO=()
     for K in $(seq 1 "$N"); do
+      stripe_done "$K" && continue
       case "$UP" in *" $K "*) ;; *) TODO+=("$K") ;; esac
     done
     if [ ${#TODO[@]} -eq 0 ]; then
