@@ -993,3 +993,31 @@ skipping "2" must not skip 12.
 
 Remaining at this point: 960,000 - 888,026 = 71,974 jobs across eleven
 live stripes, about 6,500 each, roughly eleven hours on eleven shards.
+
+## 18 Oct, 08:18 UTC - the stagger is PARTIAL, read ages as a multiset
+
+At 01:18 I wrote in a commit message that "THE STAGGER IS FULLY RESTORED",
+counting pod ages running 0.94h to 11.58h in eight distinct steps. Too
+kind, and this morning proved it: shards 2, 3, 4 and 5 were all launched
+at 22:19 in the burst and all four read UNFINISHED together at 09.97h -
+a four-pod mini-burst, $0.63 worst case for the window.
+
+The dispersal is real but it only separates shards that expired
+SEPARATELY. Shards replaced in the same minute come back to the limit in
+the same minute ten hours later, forever, until something separates them.
+
+SO READ THE AGES AS A MULTISET, NOT A RANGE. "Eight distinct steps across
+eleven hours" sounds dispersed and is not: at 01:18 four shards shared the
+2.97h step and that was the group that fired this morning. The question to
+ask of an age list is how many shards share each value, not how wide the
+spread is.
+
+Nothing in the pipeline changes for this. $0.63 is the same order as every
+other window, the replacement path cleared the last four-pod group in 63
+seconds, and --max-hours stays as it is for the reasons in the 17:20 entry.
+The correction is to how the numbers are read.
+
+(Also recorded for honesty: the commit that first described this
+correction, 04e44f3, says "RESUME.md now says to read the ages as a
+multiset". It did not - the edit it describes failed on a bad match and
+the commit went through anyway. This section is that text, added properly.)
