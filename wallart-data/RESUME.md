@@ -1566,3 +1566,23 @@ had to be got right:
   The guard matched that and skipped the import, and the run died on
   NameError. A test for the presence of a string in a file that contains
   two programs is not a test of either one.
+
+## 19 Oct, 07:40 UTC - the pictures live INSIDE the panel prefix
+
+`COUNT_SUFFIX=listing/` returned a clean, confident zero for all four
+buckets. The pictures are not missing: `render_worker` writes them to
+`{key_prefix}/listing/`, and key_prefix already ends in `gen`, so the real
+place is `<store>/gen/listing/`. The URLs in the CSVs were right - they are
+built from the same `key_prefix` - the COUNT was pointed at a prefix that
+does not exist.
+
+The consequence that matters more than the wrong count: the pictures sit
+INSIDE the panels' own prefix, so counting `<store>/gen/` would include
+them and the catalogue number would inflate twelvefold the moment
+rendering started. The panel count now excludes any key with `/listing/`
+in it, and the picture count includes them because its prefix says so.
+
+Not moving them. A server-side copy inside R2 is free of egress but not of
+operations: eleven and a half million copies plus eleven and a half
+million deletes is about $50 of Class A writes to fix a tidiness problem
+that costs nothing where it is.

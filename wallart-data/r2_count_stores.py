@@ -93,7 +93,12 @@ def span(args):
             if hi is not None and k > hi:
                 done = True
                 break
-            if k.endswith(".jpg"):
+            # The render stage writes its pictures to <prefix>/listing/,
+            # which is INSIDE <prefix> - so a plain count of the panels would
+            # start including them the moment rendering began and the
+            # catalogue number would inflate twelvefold. Counting the pictures
+            # is the opposite case, and there the prefix itself says so.
+            if k.endswith(".jpg") and ("listing/" in pre or "/listing/" not in k):
                 n += 1
         if done or not r.get("IsTruncated"):
             break
