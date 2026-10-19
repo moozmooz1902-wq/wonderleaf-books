@@ -48,7 +48,7 @@ def bundle(files):
     return base64.b64encode(buf.getvalue()).decode()
 
 
-def start_cmd(b64, part, hours, procs):
+def start_cmd(b64, part, hours, procs, extra=""):
     # Runs ALONGSIDE the image's own /start.sh: replacing the entrypoint kills
     # RunPod's in-container agent, and without it the HTTP proxy has no route
     # and every request to port 8000 comes back 404 while the pod says
@@ -62,7 +62,7 @@ set -x
 ( while true; do python3 -m http.server 8000 --directory /workspace >/dev/null 2>&1; sleep 3; done ) &
 python3 -m pip install -q --no-input --break-system-packages boto3 pillow numpy 2>&1 | tail -2
 cd /workspace/r
-python3 render_worker.py --part {part} --max-hours {hours} --procs {procs} --stores stores.json
+python3 render_worker.py --part {part} --max-hours {hours} --procs {procs} {extra} --stores stores.json
 echo RENDER_EXIT
 EOS
 nohup bash /workspace/run.sh > /workspace/boot.log 2>&1 &
@@ -91,6 +91,8 @@ def main():
     # flight; the cgroup still caps the CPU, so the only real cost is memory,
     # about 150 MB per child.
     ap.add_argument("--oversub", type=int, default=2)
+    ap.add_argument("--hash-only", action="store_true",
+                    help="run the hash repair instead of rendering")
     a = ap.parse_args()
     b64 = bundle(FILES)
     print(f"bundle {len(b64):,} chars")
@@ -104,7 +106,9 @@ def main():
                       "volumeInGb": 0, "ports": ["8000/http"],
                       "dockerStartCmd": start_cmd(b64, f"{k}/{a.parts}",
                                                   a.max_hours,
-                                                  extra["vcpuCount"] * a.oversub)}
+                                                  extra["vcpuCount"] * a.oversub,
+                                                  "--hash-only" if a.hash_only
+                                                  else "")}
             n = sum(len(x) for x in common["dockerStartCmd"])
             if n > 60000:
                 sys.exit(f"start command {n:,} chars - over the pod limit")

@@ -163,6 +163,19 @@ def _init():
     _C = client()
 
 
+def _hash_one(args):
+    """Download and hash one panel. No pictures are written."""
+    bucket, pre, key, sku = args
+    try:
+        body = _C.get_object(Bucket=bucket, Key=key)["Body"].read()
+        im = Image.open(io.BytesIO(body))
+        w, h = im.size
+        return sku, dhash(im.crop((0, 0, w, int(h * (1 - CROP)))))
+    except Exception as e:
+        print(f"  FAILED {bucket}/{key}: {e}", flush=True)
+        return sku, None
+
+
 def _one(args):
     """Download, render, upload one panel. Returns (sku, hash, pictures) or
     (sku, None, 0) - a failure must not take the pool down with it, because
@@ -177,11 +190,68 @@ def _one(args):
         return sku, None, 0
 
 
+def hash_only(c, mine, procs, stop):
+    """Fill in the hashes that the render pass lost.
+
+    The authority for 'this panel has pictures' is the bucket, and the
+    authority for 'this panel has a hash' is the range's hash file. Where
+    they disagree, this closes the gap without re-rendering anything.
+    """
+    fixed = 0
+    for bucket, pre, lo, hi in mine:
+        panels = [k for k in keys_in(c, bucket, pre, lo, hi)
+                  if "/listing/" not in k]
+        tag = f"{bucket}-{lo.replace('/', '_')}"
+        key = f"wallart/hashes/{tag}.jsonl"
+        have = {}
+        try:
+            for line in c.get_object(Bucket=bucket, Key=key)["Body"]\
+                    .read().decode().splitlines():
+                if line.strip():
+                    r = json.loads(line)
+                    have[r["sku"]] = line
+        except Exception:
+            pass                       # no file yet is not an error
+        # a panel counts as rendered when its first black mockup is there
+        rendered = {k.rsplit("/", 1)[-1][:-len("-0-black.jpg")]
+                    for k in keys_in(c, bucket, pre + "listing/",
+                                     pre + "listing/", None)
+                    if k.endswith("-0-black.jpg")}
+        todo = [(bucket, pre, k, k.rsplit("/", 1)[-1][:-4]) for k in panels
+                if k.rsplit("/", 1)[-1][:-4] in rendered
+                and k.rsplit("/", 1)[-1][:-4] not in have]
+        print(f"  {bucket} {lo}  {len(panels):,} panels, {len(have):,} hashed,"
+              f" {len(rendered):,} rendered, {len(todo):,} to fix", flush=True)
+        if not todo:
+            continue
+        with mp.Pool(procs, initializer=_init) as pool:
+            for sku, h in pool.imap_unordered(_hash_one, todo, chunksize=8):
+                if h:
+                    have[sku] = f'{{"sku":"{sku}","bucket":"{bucket}","h":"{h}"}}'
+                    fixed += 1
+                if time.time() > stop:
+                    print("UNFINISHED: clock expired", flush=True)
+                    break
+        c.put_object(Bucket=bucket, Key=key,
+                     Body=("\n".join(have[k] for k in sorted(have)) + "\n")
+                     .encode(), ContentType="text/plain")
+        print(f"  {tag}: {len(have):,} hashes written", flush=True)
+    print(f"HASH REPAIR COMPLETE  filled {fixed:,}", flush=True)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--part", required=True)          # k/N
     ap.add_argument("--stores", default="stores.json")
     ap.add_argument("--max-hours", type=float, default=10.0)
+    ap.add_argument("--hash-only", action="store_true",
+                    help="do not render; just compute the hashes that are "
+                         "missing. Panels rendered by a pod that was deleted "
+                         "mid-range have pictures but no hash, and the hash "
+                         "is what the duplicate audit and the CSV builder "
+                         "both read. Downloads each missing panel, crops it "
+                         "the same 11%, hashes it, merges into the range's "
+                         "file. No uploads of pictures, so it is minutes.")
     ap.add_argument("--procs", type=int, default=0,
                     help="default: the pod's cgroup CPU quota. NOT "
                          "os.cpu_count(), which on a 16-vCPU RunPod CPU pod "
@@ -205,6 +275,9 @@ def main():
     print(f"part {k}/{N}: {len(mine)} of {len(work)} ranges, "
           f"{procs} processes", flush=True)
 
+    if a.hash_only:
+        return hash_only(c, mine, procs, stop)
+
     done_total = made = skipped = 0
     for bucket, pre, lo, hi in mine:
         panels = keys_in(c, bucket, pre, lo, hi)
@@ -226,6 +299,26 @@ def main():
             else:
                 todo.append((bucket, pre, key, sku))
         expired = False
+        # FLUSH AS WE GO. The first version kept a range's hashes in memory
+        # and wrote them when the range finished. Measured at 09:26: luxvia-art
+        # was 99.98% rendered but only 92.6% of its hashes existed, because a
+        # pod deleted mid-range takes its unwritten hashes with it - and two
+        # pods WERE deleted mid-range, deliberately, for being slow. The
+        # pictures survive, because they are uploaded one at a time; the
+        # record of them did not.
+        #
+        # Rewriting the same object on each flush keeps the file names
+        # enumerable, which is what lets dup_audit fetch them without a
+        # credential, and bounds the loss to one flush interval.
+        FLUSH = 500
+        tag = f"{bucket}-{lo.replace('/', '_')}"
+
+        def put_hashes():
+            if hashes:
+                c.put_object(Bucket=bucket, Key=f"wallart/hashes/{tag}.jsonl",
+                             Body=("\n".join(hashes) + "\n").encode(),
+                             ContentType="text/plain")
+
         with mp.Pool(procs, initializer=_init) as pool:
             for sku, h256, n in pool.imap_unordered(_one, todo, chunksize=4):
                 if h256:
@@ -233,6 +326,8 @@ def main():
                     hashes.append(
                         f'{{"sku":"{sku}","bucket":"{bucket}","h":"{h256}"}}')
                     done_total += 1
+                if hashes and len(hashes) % FLUSH == 0:
+                    put_hashes()
                 if done_total and done_total % 200 == 0:
                     el = time.time() - t0
                     print(f"  {done_total:,} panels, {made:,} pictures, "
@@ -253,10 +348,7 @@ def main():
             # audit can enumerate the file names without being told how many
             # pods there were, and a rerun with a different --parts
             # overwrites the same object instead of leaving two.
-            tag = f"{bucket}-{lo.replace('/', '_')}"
-            c.put_object(Bucket=bucket, Key=f"wallart/hashes/{tag}.jsonl",
-                         Body=("\n".join(hashes) + "\n").encode(),
-                         ContentType="text/plain")
+            put_hashes()
             print(f"  hashes {len(hashes):,} -> wallart/hashes/{tag}.jsonl",
                   flush=True)
         if expired:
