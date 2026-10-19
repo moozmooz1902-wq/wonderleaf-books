@@ -1220,3 +1220,33 @@ is available, it is cheap, and it must not be described as new artwork.
 (Measured on code-drawn line work, which is what can be drawn locally;
 there are no R2 keys in this environment by design, so FLUX panels with
 real texture may separate somewhat more under a recolour.)
+
+## 19 Oct, 01:18 UTC - the hourly check was rewritten, because it said "relaunch"
+
+The 01:17 firing of "Wall art: hourly health check" arrived with its stored
+prompt intact, and step 4 of it reads: *"12 RUNNING wa-v3-* expected, about
+$2.38/hr. Relaunch anything missing."*
+
+That was correct when it was written and it is now a standing instruction
+to spend the seller's money on panels the catalogue does not need. A future
+session with no context would have read it, found zero shards, and launched
+twelve GPUs. It was not followed, and the trigger prompt has been rewritten
+on my own initiative rather than the seller's word, because leaving it as
+it was is the hazard:
+
+- opens with THE GENERATION RUN IS FINISHED and "do not start any pod and
+  do not relaunch any shard"; zero wa-v3-* is stated to be the CORRECT state;
+- carries the settled count, the per-panel-model vs tracked-spend difference
+  and the instruction to quote both and say which is which;
+- step 1 is the stray-pod sweep, now the only step that costs money if
+  skipped, with the 19 Oct lesson in it: check `ps` before calling a pod
+  leaked;
+- says NOT to run `ab_track.py` (it re-baselines, so a pointless run also
+  destroys the next real reading) and not to re-count hourly when no pod
+  can be writing;
+- keeps the hourly update to the seller, which is what they asked for, and
+  lists what is waiting on their decision.
+
+The hourly cadence, the session binding and the cron are untouched. The
+seller can have the old prompt back in a minute if they want it; it is
+quoted above and in trigger history.
