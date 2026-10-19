@@ -1466,3 +1466,42 @@ Two things to carry forward:
   rule is that an empty log means "still installing", which is right for
   the first few minutes and wrong after an hour. A NEVER-BOOTED rule like
   the generation watchdog's belongs here too.
+
+## 19 Oct, 05:20 UTC - hand-read 30 whole panels. Three defects, measured.
+
+The render runs for hours with nothing to decide, so the hour went on the
+open question: how often does a human figure get through? Thirty random
+panels from the live buckets, read whole rather than by their bottom band,
+because a figure can be anywhere. `ebay/FIGURES_AND_DUPES_1.jpg` and `_2`.
+
+**Human figures: 5 of 30, about 17%.** Not one is a portrait - they are
+the small distant kind that a composition puts in for scale: two walkers
+on a dune horizon, pedestrians in two street scenes, figures crossing a
+plaza, a traveller under an arch. The CLIP gate rejects about 40% of
+generations for PEOPLE and still lets these through, which makes sense -
+at that size the picture is not "a person", it is a street. On 960,517
+panels, 17% is about 160,000. The earlier 1-in-12 reading was the same
+thing seen in a smaller sample.
+
+The seller's rule is no human figures, set 11 Oct, and this is the first
+measurement of how well it is being kept. It is not a regeneration: a
+CLIP people-score sweep over the panels, writing a score per SKU, lets the
+CSV builder drop them. One GPU pod, a few hours, a dollar or two.
+
+**Near-duplicates are visible by eye.** Panels 5, 15 and 28 of the thirty
+are all orange flowers on a blue-teal ground, and 21 is close behind. Four
+in thirty is not the 0.648% measured at 226,992 panels. Two cautions
+before anyone acts on that: thirty is a small sample, and the audit's
+threshold is 24 of 256 bits on a gradient hash, which is a stricter test
+than "these look alike to me". The real number comes from the hashes the
+render pass is writing, over all 960,517, and that is the point of
+collecting them.
+
+**One panel in thirty has an anatomy fault**: number 29 is an animal face
+with THREE eyes, and the seller's rule since 11 Oct is that animal eyes
+must be right. Same remedy - a score, then a drop.
+
+None of this stops the render, and none of it is a reason to regenerate
+anything. All three are drops at CSV-build time, and the builder already
+has the machinery: it skips any listing whose pictures are not present,
+so a drop list is the same mechanism.
