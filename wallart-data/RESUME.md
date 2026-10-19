@@ -1135,3 +1135,82 @@ expensive mistake; this is the other way round.
 
 That leaves the two live pods at $0.36/hr, ending within the hour on their
 own clocks, and no path by which another pod starts.
+
+## 19 Oct, 01:05 UTC - GENERATION FINISHED. Fleet at zero.
+
+Final position from the buckets, counted with the partitioned reader:
+
+    luxvia-art         480,343
+    posterleaf-store1  192,022
+    mercury-usm         95,784
+    lunar-kms          192,318
+    ------------------------------
+    total              960,467 base panels  ->  3,841,868 listings
+
+Against the 937,500 bases `status.py` asks for, that is 102.4%.
+
+Both remaining pods were deleted at 01:04 and the API confirms zero RUNNING
+pods and zero wa-v3-* shards. The watchdog and the fill loop are both
+stopped. Burn is $0.00/hr. Spend all time $408 and change.
+
+Why stripes 9 and 11 were stopped by hand rather than left to their
+markers: **the bucket count is not pool progress.** `--pool N` takes the
+first N of the SKU-sorted grid (gen_gated.py:387-389), and earlier runs
+used different pool sizes, so the buckets hold panels whose SKUs are
+outside the current 960,000 - which is why the total reads 960,467, ABOVE
+the pool, while both shards still had unfinished stripe jobs. Stripe 9 had
+roughly eight hours left on its own clock. Those would have been panels
+beyond a target already exceeded, so they were not worth $1.50 and another
+eight hours of an unattended GPU.
+
+One number that is NOT what it looks like: the 3,841,868 listings are not
+3.8M files. R2 holds 960,467 objects, one .jpg per job - `--tag` is empty,
+so the key is `{key_prefix}/{sku}.jpg` and nothing else. The four
+colourways are produced by `pipeline.py` when the eBay files are built.
+
+## 19 Oct, 01:05 UTC - what the code-drawn 1.25M can actually carry
+
+`procedural_dup.py` is new, and it is the measurement that should have
+existed before `PROCEDURAL = 1_250_000` was ever written down. Same
+instrument as the real audit: 256-bit gradient hash of the artwork, near is
+<= 24 of 256 bits.
+
+                       no gate                    gated, seed order
+    line        11.2% near at n=500        920 kept of first 1,000
+                38.9% near at n=12,000   8,975 kept of 12,000  (75%)
+    geometric   50.8% near at n=500        632 kept of first 1,000
+                91.4% near at n=6,000    1,910 kept of 6,000   (32%)
+
+The diffusion side, for contrast: **0.648% near-duplicates at 226,992
+panels.**
+
+Three things follow, and they are not the same thing.
+
+1. **The generators have no duplicate gate.** As written they draw from a
+   seed and save. The "no gate" column is therefore what the block would
+   look like if it were built today: at 1.25M, overwhelmingly duplicated.
+   A gate is not an improvement, it is a precondition.
+
+2. **The geometric grammar is nearly spent.** Its keep rate falls 63% ->
+   32% across 1k -> 6k draws and its survivor curve is flattening; one pair
+   of 6,000 hashes was already identical. Five shape kinds and three palette
+   strategies is a small space. It can contribute a few thousand designs,
+   not hundreds of thousands, and no amount of drawing changes that.
+
+3. **The line families are the only candidate, and they are not saturated
+   at 12,000.** Keep rate 92% -> 75% over 1k -> 12k, survivor curve still
+   nearly linear. That is encouraging and it is NOT a licence to extrapolate
+   a hundredfold. A 100,000-draw run is measuring the keep rate further out
+   as this is written; the honest statement until it lands is that the line
+   block's ceiling is unmeasured above 12,000.
+
+Also measured, because it bears on the cheap route to five million: the
+four colourways of ONE design sit **3.6 to 10.4 bits apart** out of 256,
+well inside the 24-bit threshold. A recolour is the same picture to this
+instrument. That is exactly why `r2_audit_stores.py` excludes a design's own
+colourways - and it means adding a fifth colourway would lift the listing
+count to 4.8M for almost nothing while adding not one distinct design. It
+is available, it is cheap, and it must not be described as new artwork.
+(Measured on code-drawn line work, which is what can be drawn locally;
+there are no R2 keys in this environment by design, so FLUX panels with
+real texture may separate somewhat more under a recolour.)
