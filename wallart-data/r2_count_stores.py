@@ -233,7 +233,14 @@ if __name__ == "__main__":
     # it only ever helped on a host that was never going to answer, and the
     # honest response to that is to re-run the count at the next check rather
     # than to overrun the clock that guarantees cleanup.
-    for attempt, limit in ((1, 48),):             # 48 polls x 20s = 16 min
+    # 48 polls x 20s = 16 minutes, which was sized for the PANEL count -
+    # about 960,000 keys. The picture count walks <store>/gen/listing/, which
+    # is twelve times that, and at 9.4M keys it started timing out. So the
+    # window is settable, and the wrapper must always clear it: run the
+    # picture count as
+    #     COUNT_POLLS=100 COUNT_SUFFIX=gen/listing/ timeout 2400 python3 ...
+    polls = int(os.environ.get("COUNT_POLLS", "48"))
+    for attempt, limit in ((1, polls),):
         pid = start()
         if not pid:
             sys.exit("no pod")
@@ -245,4 +252,4 @@ if __name__ == "__main__":
         finally:
             curl("DELETE", f"/pods/{pid}")
             print(f"pod {pid} deleted", flush=True)
-    sys.exit("no count: the pod never answered in 16 minutes")
+    sys.exit(f"no count: the pod never answered in {polls * 20 // 60} minutes")
