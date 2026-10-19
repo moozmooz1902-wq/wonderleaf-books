@@ -1149,6 +1149,12 @@ Final position from the buckets, counted with the partitioned reader:
 
 Against the 937,500 bases `status.py` asks for, that is 102.4%.
 
+Counted again at 01:06 with every pod already deleted, which is the number
+that settles: **960,517 panels -> 3,842,068 listings** (luxvia-art 480,367,
+posterleaf-store1 192,029, mercury-usm 95,793, lunar-kms 192,328). The 50
+extra are the last uploads that landed between the 01:00 count and the
+kill. Nothing can change it now - there is no pod left to write.
+
 Both remaining pods were deleted at 01:04 and the API confirms zero RUNNING
 pods and zero wa-v3-* shards. The watchdog and the fill loop are both
 stopped. Burn is $0.00/hr. Spend all time $408 and change.
