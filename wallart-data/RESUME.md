@@ -1586,3 +1586,23 @@ Not moving them. A server-side copy inside R2 is free of egress but not of
 operations: eleven and a half million copies plus eleven and a half
 million deletes is about $50 of Class A writes to fix a tidiness problem
 that costs nothing where it is.
+
+## 19 Oct, 07:45 UTC - 57.6% rendered, counted from the buckets
+
+    bucket                 pictures          of    done
+    luxvia-art            5,183,457   5,764,404   89.9%
+    posterleaf-store1       771,237   2,304,348   33.5%
+    lunar-kms               513,788   2,307,936   22.3%
+    mercury-usm             168,120   1,149,516   14.6%
+    TOTAL                 6,636,602  11,526,204   57.6%
+
+That is 553,050 panels of 960,517. The number comes from
+`COUNT_SUFFIX=gen/listing/ python3 r2_count_stores.py`, which is the only
+trustworthy source now that pods are being replaced.
+
+The per-bucket spread is the striping again, seen from the other side. The
+72 ranges are handed out in store order, so a part's six ranges are mostly
+one store's - and luxvia-art, the biggest store, drew the parts that landed
+on the fastest machines. It evens out by the end; nothing to fix. But it
+does mean the per-store percentages are not a progress bar for the stage,
+and the total is.
