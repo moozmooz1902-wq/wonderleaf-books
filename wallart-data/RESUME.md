@@ -1505,3 +1505,37 @@ None of this stops the render, and none of it is a reason to regenerate
 anything. All three are drops at CSV-build time, and the builder already
 has the machinery: it skips any listing whose pictures are not present,
 so a drop list is the same mechanism.
+
+## 19 Oct, 06:25 UTC - the render has a TAIL problem, not a speed problem
+
+448,200 of 960,517 rendered, 47%. Part 1 printed RENDER COMPLETE and the
+reaper deleted it. But the fleet will not finish together, and the reason
+is worth writing down before the next stage is partitioned the same way.
+
+The 72 ranges are handed out round-robin to 12 parts, so each part gets
+six - but the ranges are NOT the same size. luxvia-art holds 480,367
+panels and mercury-usm 95,793, so a luxvia range is about 30,000 panels
+and a mercury one about 6,000, and two of the 72 are empty (everything
+sorting before WA-0 and after WA-g). Part 1 drew two empty ranges and
+finished in four hours. Part 5 drew TWO luxvia ranges and is the biggest
+of the twelve at roughly 102,000 panels.
+
+Then the machines differ as much as the parts do. Measured this hour:
+18,405 panels/hr down to 4,066, a four-and-a-half-fold spread, and it does
+not track the vCPU count - wa-render-3 at 16 vCPU and $0.64/hr was doing
+8,222, the same as wa-render-7 at 8 vCPU and half the price.
+
+So the finish time is set by the slowest machine holding the largest part,
+not by the fleet average. Part 5 at 4,066/hr would have needed another
+twenty hours while eleven other pods sat finished.
+
+Done about it: wa-render-5 and wa-render-11, the two slowest, were deleted
+so the fill loop takes their parts again on different machines. The work
+is resumable - the worker skips any SKU whose <ci>=0 black mockup is
+already in the bucket - so a replacement costs a boot and loses nothing.
+This is the cheap lever and it is worth pulling whenever the spread gets
+this wide.
+
+What would have avoided it: partition by PANEL COUNT rather than by range
+count, or hand out the 72 ranges to a work queue instead of striping them
+in advance. Striping is right when the pieces are equal, and these are not.
