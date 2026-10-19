@@ -1441,3 +1441,28 @@ thousand designs and no more.
 Recorded because the seller has since said to stop at 3.8M and not build
 this block. If that is ever revisited, this is the answer: yes, it works,
 with a gate, for a few dollars.
+
+## 19 Oct, 03:18 UTC - render stage, first hour
+
+88,000 of 960,517 panels rendered in 55 minutes across eleven working
+pods, 97,300 panels an hour, so the stage lands around 12:20 UTC for about
+$50 of RunPod in total. The two 16-vCPU pods run at 16,500-17,300 an hour;
+the 8-vCPU ones at 4,000-8,000.
+
+Two things to carry forward:
+
+* The container restarted at about 02:31 and killed BOTH loops. The pods
+  never noticed - they are not in this container - but for 47 minutes
+  nothing would have deleted a pod that finished, and nothing would have
+  replaced one that died. Restarted at 03:18. This is the same failure as
+  every other container restart in this file; the only defence is the
+  hourly check, which is why its stored prompt now lists both loops and
+  the exact command to restart each.
+* wa-render-6 had `runtime: null` for 55 minutes and never served a byte
+  of log. That is the documented symptom in launch_gen.py:82 - the pod's
+  in-container agent never started, so the HTTP proxy has no route, and
+  the pod bills while being unreachable. Deleted; the fill loop takes the
+  part again. Worth noting the reaper cannot catch this on its own: its
+  rule is that an empty log means "still installing", which is right for
+  the first few minutes and wrong after an hour. A NEVER-BOOTED rule like
+  the generation watchdog's belongs here too.
