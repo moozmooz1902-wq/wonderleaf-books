@@ -212,16 +212,19 @@ def hash_only(c, mine, procs, stop):
                     have[r["sku"]] = line
         except Exception:
             pass                       # no file yet is not an error
-        # a panel counts as rendered when its first black mockup is there
-        rendered = {k.rsplit("/", 1)[-1][:-len("-0-black.jpg")]
-                    for k in keys_in(c, bucket, pre + "listing/",
-                                     pre + "listing/", None)
-                    if k.endswith("-0-black.jpg")}
+        # EVERY panel lacking a hash, with no check that it was rendered.
+        #
+        # The first version listed <pre>listing/ to find out which panels had
+        # pictures and hashed only those. That is the right question while a
+        # bucket is half rendered - and the wrong amount of work: 360 LIST
+        # calls per range just to answer it. Run this AFTER a bucket's render
+        # is complete and the question does not arise, because every panel
+        # has its pictures. The caller is responsible for that ordering; it
+        # is why --bucket exists.
         todo = [(bucket, pre, k, k.rsplit("/", 1)[-1][:-4]) for k in panels
-                if k.rsplit("/", 1)[-1][:-4] in rendered
-                and k.rsplit("/", 1)[-1][:-4] not in have]
+                if k.rsplit("/", 1)[-1][:-4] not in have]
         print(f"  {bucket} {lo}  {len(panels):,} panels, {len(have):,} hashed,"
-              f" {len(rendered):,} rendered, {len(todo):,} to fix", flush=True)
+              f" {len(todo):,} to fix", flush=True)
         if not todo:
             continue
         with mp.Pool(procs, initializer=_init) as pool:
@@ -244,6 +247,10 @@ def main():
     ap.add_argument("--part", required=True)          # k/N
     ap.add_argument("--stores", default="stores.json")
     ap.add_argument("--max-hours", type=float, default=10.0)
+    ap.add_argument("--bucket", help="only this bucket's ranges. Used to run "
+                                     "the hash repair on a store whose render "
+                                     "has finished while others are still "
+                                     "going.")
     ap.add_argument("--hash-only", action="store_true",
                     help="do not render; just compute the hashes that are "
                          "missing. Panels rendered by a pod that was deleted "
@@ -275,6 +282,9 @@ def main():
     print(f"part {k}/{N}: {len(mine)} of {len(work)} ranges, "
           f"{procs} processes", flush=True)
 
+    if a.bucket:
+        mine = [w for w in mine if w[0] == a.bucket]
+        print(f"limited to {a.bucket}: {len(mine)} ranges", flush=True)
     if a.hash_only:
         return hash_only(c, mine, procs, stop)
 

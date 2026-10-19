@@ -93,6 +93,7 @@ def main():
     ap.add_argument("--oversub", type=int, default=2)
     ap.add_argument("--hash-only", action="store_true",
                     help="run the hash repair instead of rendering")
+    ap.add_argument("--bucket", help="restrict to one bucket's ranges")
     a = ap.parse_args()
     b64 = bundle(FILES)
     print(f"bundle {len(b64):,} chars")
@@ -107,8 +108,8 @@ def main():
                       "dockerStartCmd": start_cmd(b64, f"{k}/{a.parts}",
                                                   a.max_hours,
                                                   extra["vcpuCount"] * a.oversub,
-                                                  "--hash-only" if a.hash_only
-                                                  else "")}
+                                                  (("--hash-only " if a.hash_only else "")
+                                                   + (f"--bucket {a.bucket} " if a.bucket else "")).strip())}
             n = sum(len(x) for x in common["dockerStartCmd"])
             if n > 60000:
                 sys.exit(f"start command {n:,} chars - over the pod limit")
