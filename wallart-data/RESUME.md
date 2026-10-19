@@ -1413,3 +1413,31 @@ another bucket's host.
 skips any listing whose three mockups are not all there. A row whose
 picture 404s is a listing eBay rejects or shows blank, and across millions
 of rows that is not recoverable by hand.
+
+## 19 Oct, 02:25 UTC - the line families CAN carry 1.25M, with a gate
+
+The 100,000-draw measurement finished. Keep rate under the 24-bit gate, in
+seed order, per 10,000 drawn:
+
+    75.9  66.3  63.4  61.8  60.7  59.3  58.6  58.5  57.0  56.4
+    total 61,791 kept of 100,000 (61.8%)
+
+The decline is slow and roughly linear in log(n) - about twenty points per
+decade of draws. Carried forward, 1,250,000 survivors needs somewhere
+around three to four million draws, which at the measured 0.045 s each is
+about 45 core-hours: a few hours on one CPU pod, well under a dollar.
+
+So the earlier reading - 38.9% near-duplicates at 12,000 with no gate - was
+the right alarm about the wrong thing. The families are not short of
+distinct designs. What is missing is the GATE: the generators as written
+draw from a seed and save, with nothing comparing a new design to the ones
+already kept. That is the whole gap, and it is a day of work, not a
+regeneration.
+
+The geometric grammar is still spent either way: 1,910 survivors of 6,000
+draws with its keep rate falling 63% -> 32%. It can contribute a few
+thousand designs and no more.
+
+Recorded because the seller has since said to stop at 3.8M and not build
+this block. If that is ever revisited, this is the answer: yes, it works,
+with a gate, for a few dollars.
