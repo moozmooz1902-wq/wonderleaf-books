@@ -1822,3 +1822,44 @@ unrelated python process is.
 Same lesson as `pods()` returning None, one layer further out: a test
 whose false answer is indistinguishable from its true answer is not a
 test.
+
+## 19 Oct, 16:18 UTC - THE RUNPOD BALANCE IS EXHAUSTED. Second time.
+
+Every pod vanished between 15:25 and 16:18 and new ones would not start.
+My launcher reported "NO CAPACITY", which is what it says when every tier
+comes back without an id - and that was my own message hiding the real one.
+The raw API says:
+
+    "Your account balance is too low to rent a pod. Please add funds."
+
+So it is the 16 Oct outage again, at a different stage. Nothing is lost:
+every rendered picture is in R2, the hashes are in R2, and the render
+worker skips what is already done, so the fleet resumes exactly where it
+stopped.
+
+**What was finished before it ran out:** luxvia-art, complete, checked and
+uploaded at 13:31 - 1,884,908 listings in 16 files. That store is ready to
+upload to eBay and is unaffected by any of this.
+
+**What is left:** parts 3, 8, 10 and 12, covering posterleaf-store1,
+lunar-kms and mercury-usm. At the rates those four pods were showing when
+the lights went out - 1,791, 4,385, 7,603 and 3,437 panels/hr, 17,216
+between them - and with roughly 85,000 panels still to render, that is
+about five hours of four pods at $2.72/hr: **$14, call it $25 with
+headroom for slow machines, the three store builds at about $0.50 each,
+and a couple of picture counts.**
+
+That is an estimate, not a measurement, and it is worth saying why: the
+count that would make it exact needs a pod, and pods need balance.
+
+`wait_for_balance.sh` is armed and probing every two minutes. It creates
+the smallest possible CPU pod, reads the refusal, and deletes the pod
+immediately if it unexpectedly succeeds - there is no balance endpoint on
+either RunPod API, so attempting to rent something is the only honest
+probe. The moment the refusal changes it hands over to the render filler
+and the fleet comes back by itself.
+
+Changed while arming it: it used to hand over to `fill_shards.sh`, the
+GENERATION filler, which is finished. It now hands over to
+`render/fill_render.sh`, and the target is settable, because the next
+outage will probably interrupt something else again.

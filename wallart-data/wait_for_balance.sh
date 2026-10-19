@@ -36,8 +36,14 @@ while true; do
       ID=$(printf '%s' "$OUT" | python3 -c "import sys,re;d=sys.stdin.read();m=re.search(r'\"id\": ?\"([a-z0-9]+)\"',d);print(m.group(1) if m else '')")
       [ -n "$ID" ] && curl -sS -X DELETE -H "Authorization: Bearer $KEY" "$API/pods/$ID" >/dev/null 2>&1
       echo "$(date -u +%H:%M:%S)  BALANCE IS BACK - probe pod $ID created and deleted"
-      echo "$(date -u +%H:%M:%S)  starting the shard filler"
-      exec env CLIP_GATE=1 bash "$(dirname "$0")/fill_shards.sh" 12 110 auto
+      echo "$(date -u +%H:%M:%S)  starting the render filler"
+      # 16 Oct this handed over to fill_shards.sh, the GENERATION filler.
+      # Generation finished on 19 Oct and the stage that was interrupted by
+      # the second outage is the render, so it hands over to that one. The
+      # target is settable, because the next outage will probably interrupt
+      # something else again.
+      exec bash "$(dirname "$0")/${HANDOVER:-render/fill_render.sh}" \
+           ${HANDOVER_ARGS:-12 600}
       ;;
     *"no instances currently available"*)
       # Capacity, not money. Says nothing about the balance either way, so
