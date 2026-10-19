@@ -45,7 +45,30 @@ import argparse, csv, json, os, sys, zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import re
 import allocate, listing_text as LT
+
+# ONLY THIS RUN'S WORK GETS A LISTING. The buckets are not empty and never
+# were: alongside <store>/gen/ they hold the seller's EXISTING catalogue -
+# luxvia/abstract/, luxvia/birds/, luxvia/boho/, luxvia/botanical/,
+# luxvia/cats/, luxvia/celestial/, and loose sequential files like
+# store1/0000000_framed.jpg and store2/0000000_raw.jpg. Those are already
+# listed on eBay. Putting them in an upload file would list them a second
+# time.
+#
+# The separation is structural rather than a filter, which is why it holds:
+# this builder is driven by the rebuilt job GRID, not by listing a bucket.
+# Every SKU it can emit is "WA-" plus sixteen hex characters of blake2b over
+# the job, plus the colourway index, and every picture it can reference is
+# <prefix>/gen/listing/<that SKU>-<colour>.jpg, written by this run's render
+# stage. Nothing else in the bucket has that shape, so no old file can be
+# reached even in principle.
+#
+# These two patterns assert it anyway, on every row written and again in
+# --check, because "it cannot happen" is how it happens.
+SKU_RE = re.compile(r"^WA-[0-9a-f]{16}-[0-3]$")
+PIC_RE = re.compile(r"^https://[^/]+/[^/]+/gen/listing/WA-[0-9a-f]{16}-[0-3]-"
+                    r"(black|white|oak)\.jpg$")
 
 EB = json.load(open(os.path.join(HERE, "ebay_plan.json")))
 STORES = {s["bucket"]: s for s in
@@ -99,6 +122,8 @@ def rows_for(job, store):
         if bad:
             return None, bad
         pics = [pic(store, sku, c) for c in EB["colours"]]
+        if not SKU_RE.match(sku) or not all(PIC_RE.match(u) for u in pics):
+            return None, [f"not this run's work: {sku}"]
         p = dict.fromkeys(HEADER, "")
         p.update({
             ACTION: "Add", "CustomLabel": sku, "*Category": EB["category"],
@@ -209,7 +234,7 @@ def check(out_root):
     """Structure, row cap, and the two things that would mix the data:
     a SKU in more than one bucket, and a picture URL whose host is not the
     bucket's own."""
-    bad = cap = cross = wrongpic = rows_tot = 0
+    bad = cap = cross = wrongpic = notours = rows_tot = 0
     seen = {}
     for b in sorted(os.listdir(out_root)):
         d = os.path.join(out_root, b)
@@ -237,6 +262,9 @@ def check(out_root):
                     bad += 1
                 if not p["PicURL"].startswith(base):
                     wrongpic += 1
+                if not SKU_RE.match(p["CustomLabel"]) or \
+                        not all(PIC_RE.match(u) for u in p["PicURL"].split("|")):
+                    notours += 1
                 if seen.setdefault(p["CustomLabel"], b) != b:
                     cross += 1
                 i += 1 + len(kids)
@@ -244,7 +272,8 @@ def check(out_root):
           f"files over {EB['max_rows_per_file']:,} rows: {cap}")
     print(f"SKUs appearing in more than one bucket: {cross}")
     print(f"pictures pointing at another bucket's host: {wrongpic}")
-    return bad + cap + cross + wrongpic
+    print(f"rows that are NOT this run's generated work: {notours}")
+    return bad + cap + cross + wrongpic + notours
 
 
 def main():

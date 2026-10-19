@@ -1606,3 +1606,39 @@ one store's - and luxvia-art, the biggest store, drew the parts that landed
 on the fastest machines. It evens out by the end; nothing to fix. But it
 does mean the per-store percentages are not a progress bar for the stage,
 and the total is.
+
+## 19 Oct, 08:45 UTC - only THIS run's work gets a listing (seller's point)
+
+The seller's warning, in their words: "in the buckets there was data before
+as well... the previous data is already uploaded, so we don't want to
+upload them again". Right, and worth proving rather than asserting.
+
+The separation is structural, not a filter, which is why it holds:
+`build_ebay.py` is driven by the rebuilt job GRID, never by listing a
+bucket. Every SKU it can emit is `WA-` plus sixteen hex characters of
+blake2b over the job, plus the colourway index; every picture it can
+reference is `<prefix>/gen/listing/<that SKU>-<colour>.jpg`, written by
+this run's render stage. The pre-existing catalogue has none of that
+shape - it is `luxvia/abstract/`, `luxvia/birds/`, `luxvia/boho/`,
+`luxvia/botanical/`, `luxvia/cats/`, `luxvia/celestial/` and loose
+sequential files like `store1/0000000_framed.jpg` - so no old object can
+be reached even in principle.
+
+Asserted anyway, because "it cannot happen" is how it happens:
+
+    SKU_RE  ^WA-[0-9a-f]{16}-[0-3]$
+    PIC_RE  ^https://<host>/<store>/gen/listing/WA-<16 hex>-<0-3>-(black|white|oak)\.jpg$
+
+Both are checked on every row as it is written - a row that fails is
+refused, not silently dropped - and again by `--check`, which now reports
+"rows that are NOT this run's generated work" alongside the row cap and
+the cross-bucket test. Verified on a five-design build: 80 rows, zero.
+
+ONE THING THE SELLER STILL HAS TO CONFIRM, because the repo cannot know
+it: whether any of the `WA-` panels from the EARLIER sessions of this same
+project were ever uploaded. The buckets hold 960,517 panels and the
+current pool is 960,000, so a few hundred come from runs with a different
+--pool setting. They are all this project's generated work and all have
+the WA- shape, so the guard above does not separate them. Nothing in this
+repo records an eBay upload of any of them, and nothing outward-facing has
+been done in this session, but that is absence of evidence.
