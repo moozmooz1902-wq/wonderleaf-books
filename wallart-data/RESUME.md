@@ -1765,3 +1765,33 @@ Counts, for the record:
       4,471 skipped, no pictures rendered
       4,433 dropped as near-duplicates
     471,227 listed -> 1,884,908 listings at four colourways
+
+## 19 Oct, 13:31 UTC - luxvia-art is DONE and uploaded
+
+    1,884,908 listings   7,539,632 rows   16 files   114 MB zipped
+
+    structure problems                         0
+    files over 500,000 rows                    0
+    SKUs appearing in more than one bucket     0
+    pictures pointing at another bucket's host 0
+    rows that are not this run's work          0
+
+    480,131 designs in the pool for this store
+     -4,471 no pictures rendered
+     -4,433 near-duplicates dropped
+    471,227 listed, at four colourways
+
+Where it is:
+
+    zip    <luxvia pic_base>/ebay/luxvia-art_ebay_upload.zip
+    loose  <luxvia pic_base>/ebay/luxvia-art/luxvia-art_0001.csv .. _0016.csv
+
+Verified after upload, not just reported: HTTP 200 on the zip, and the
+first file's description now reads "Size: A3 (29.7 x 42 cm)" with no
+mention of A4 or A2.
+
+`ebay/LUXVIA_TEST_10.csv` is ten listings cut out of the live file - the
+same rows, not a reconstruction - for uploading first. Its twelve picture
+URLs were fetched and all answered 200. If File Exchange accepts the
+variation layout at all it will accept it here, and forty rows is a cheap
+way to find out before 7.5 million.
