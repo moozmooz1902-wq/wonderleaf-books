@@ -1021,3 +1021,92 @@ The correction is to how the numbers are read.
 correction, 04e44f3, says "RESUME.md now says to read the ages as a
 multiset". It did not - the edit it describes failed on a bad match and
 the commit went through anyway. This section is that text, added properly.)
+
+## 19 Oct, 00:30 UTC - the 5,000,000 is NOT a panel shortfall. Retraction.
+
+Two things I said yesterday were wrong and both need to stand corrected
+here, not only in the chat, because the chat is not the memory.
+
+**First retraction.** Through the evening I projected "five million by
+about 23:30". Then at 23:18, with 958,549 panels counted, I said the
+opposite - "3.83-3.84M rather than 5M, roughly 96% of target". Both are
+wrong, and they are wrong in opposite directions, which means neither was
+read off the plan.
+
+The plan is in `status.py:10-13` and `cost_now.py:49`:
+
+    TARGET_LISTINGS = 5_000_000
+    PROCEDURAL      = 1_250_000      # drawn in code, no GPU
+    BASES_NEEDED    = (5_000_000 - 1_250_000) / 4 = 937,500 panels
+
+So the five million was never 5,000,000 diffusion panels. It is
+**3,750,000 listings from 937,500 FLUX panels at four colourways, PLUS
+1,250,000 drawn in code.** Against that, the image side at 958,549 panels
+is not 96% of anything - it is 102% of its own share, 3,834,196 listings
+against 3,750,000 asked for. The image pipeline has OVERSHOT and is
+finishing.
+
+**Second retraction, and the real finding.** The gap to five million is
+therefore the 1,250,000 code-drawn listings - and those are **not built.**
+I probed the buckets rather than trusting the number:
+
+- `<store>/gen/` holds this run's FLUX output, in all four buckets.
+- Alongside it is the seller's PRE-EXISTING content: `luxvia/abstract/`,
+  `luxvia/birds/`, `luxvia/boho/`, `luxvia/botanical/`, `luxvia/cats/`,
+  `luxvia/celestial/`, and loose sequential files like
+  `store1/0000000_framed.jpg`, `store2/0000000_raw.jpg`,
+  `store7/0000001_framed.jpg`.
+- There is **no code-drawn block anywhere in R2.** Not under a prefix of
+  its own, not mixed into `gen/`.
+
+`PROCEDURAL = 1_250_000` is a planned number in a costing script. Nothing
+has ever generated it. `gen_line.py` (twelve line families) and
+`gen_geometric.py` (grammar G11) are both written and both standalone -
+they draw to disk - but there is no bulk runner, no SKU scheme, no R2
+upload path and no quality or duplicate gate wired to either. The block is
+designed, not made.
+
+What it would take, so the seller can decide rather than be told:
+
+- GPU cost: none. It is PIL on a CPU, about 0.2 s per design per core.
+  1,250,000 designs is roughly 70 core-hours - a few wall-clock hours on
+  one many-core CPU pod, for well under a dollar of compute.
+- R2 cost is the part that is not free: 1.25M new objects is about
+  $5.60 of Class A writes at $4.50/million, plus storage.
+- The real risk is NOT cost, it is **near-duplication**, which this repo
+  already treats as the main commercial danger (CLAUDE.md; 89% blamed for
+  424k unsold listings on the typography line). Twelve line families and
+  one geometric grammar asked for 1.25M distinct designs is exactly the
+  shape that produces it. The last measured figure on the image side is
+  0.648% near-duplicates at 226,992 panels. A code-drawn block would have
+  to be audited the same way - gradient hash of the artwork, excluding a
+  design's own colourways - BEFORE any of it is uploaded, and the family
+  parameter spaces widened until it passes.
+
+So the honest position: the images are done and slightly over target; the
+remaining 1.25M is a separate build that costs almost nothing in compute
+and needs a duplication answer first. It is not a shortfall to be fixed by
+running more GPU.
+
+## 19 Oct, 00:25 UTC - an empty boot.log is not a leaked pod. Check ps.
+
+Picking the run back up I found `wallart-count` RUNNING with an empty
+boot.log after a 90-second fetch, and the 00:17 count log holding only its
+pod line. I read that as a pod the orchestrator had leaked when the
+container was replaced, and deleted it.
+
+It was not leaked. The orchestrating `r2_count_stores.py` was still alive -
+`ps` showed it at 9m56s, waiting for that pod to answer. I deleted a pod
+that was still in use and killed my own in-flight count.
+
+The mistake is the same shape as the two already recorded here: an empty
+network read is not evidence. `pods()` returning None rather than [] fixed
+it for the pod list; the snapshot printing UNREADABLE rather than
+"running" fixed it for boot.log. This one is the orchestrator side of it.
+
+**Rule: before deleting a pod as leaked, check whether a local process
+still owns it.** `ps -eo pid,etime,args | grep r2_count_stores` is the
+whole test, and the grep that misled me only looked for
+`fill_shards|health|monitor`. Cost here was a few cents and one lost
+count, but the same reflex aimed at a generating shard would throw away
+hours of panels.
