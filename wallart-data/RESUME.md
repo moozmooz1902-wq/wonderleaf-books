@@ -1250,3 +1250,72 @@ it was is the hazard:
 The hourly cadence, the session binding and the cron are untouched. The
 seller can have the old prompt back in a minute if they want it; it is
 quoted above and in trigger history.
+
+## 19 Oct, 02:05 UTC - the eBay files, and two defects found while building them
+
+The seller asked for CSVs ready to upload, all three frame colours with
+black as the main image, and sample listings. What exists now:
+
+- `listing_text.py` - titles and descriptions. eBay's 80-character title
+  limit is hard, so titles are built, MEASURED and trimmed here; six
+  templates picked by SKU hash so 3.8M listings are not one shape (eBay
+  suppresses near-identical titles long before a buyer sees them). Checked
+  across 200,000 jobs: longest title exactly 80, zero failures.
+- `build_ebay.py` - the File Exchange writer. One panel becomes four
+  listings (the colourways), and each listing is a MULTI-VARIATION
+  fixed-price listing on frame colour, so four rows: a parent carrying the
+  title, description, all three pictures and
+  `Frame Colour=Black;White;Oak`, then three variation rows each with its
+  own picture, price and quantity. Black is first everywhere, which makes
+  it the gallery image. Category 360, policies `1`, quantity 1, United
+  Kingdom. Built across 20,000 designs = 80,000 listings with zero
+  refusals from the forbidden-claims gate.
+- `ebay/EBAY_WALLART_TEST_3.csv` - three designs, 48 rows, to be uploaded
+  FIRST. The variation layout comes from eBay seller-community threads,
+  not the official manual, and File Exchange rejects a whole file rather
+  than a bad row. Finding that out on 15 million rows is the wrong way.
+- Files are split BY BYTES, not rows: File Exchange caps an upload around
+  15 MB and a parent row carries a kilobyte of description, so a fixed row
+  count gives wildly different file sizes. 9 MB target, measured largest
+  9.2 MB.
+
+The local reconstruction is exact, which is what makes any of this
+possible: `expand()` rebuilds the 1,124,581-job grid from subjects.json,
+`allocate.store_for` reproduces each bucket's share within 0.05%
+(480,131 vs 480,367 and so on), and twelve panels fetched from the live
+buckets each depicted exactly what the grid said that SKU was - crab
+apple/pastel/B5_single, Saltaire/collage/G9_naive, Sarajevo/screenprint/
+monochrome, copper saucepan/sketch/S1_table. `ebay/MAPPING_CHECK.jpg`.
+
+### Not a blocker, but it cost an hour: Cloudflare 403s the Python UA
+
+Fetching panels from the r2.dev hostnames returned 403 for every request
+until the User-Agent was changed. The same object is 200 with curl's UA
+and 403 with `Python-urllib/3.11`; a missing key answers 404. So it is
+neither "the bucket is not public" nor the 1015 rate limit recorded in
+stores.json - both of which it looks exactly like. Any bulk reader here
+needs a real User-Agent.
+
+### TWO DEFECTS, found by looking at the pictures rather than the counters
+
+`ebay/SIGNATURE_AND_FIGURE_EVIDENCE.jpg` is the bottom 12% of all twelve
+sampled panels, which is where both problems live.
+
+1. **A fake signature AND a fake copyright line survived.** One panel of
+   twelve carries a scrawled signature bottom-left and "(C) <name> 2.1x4"
+   bottom-right. `declutter.strip_marks` returned 0.0009 and cropped
+   nothing. The planned end-of-run signature pass was costed at ~7,900
+   panels, which is 0.8%; one in twelve is 8%, ten times that. Twelve is a
+   tiny sample and the true rate must be MEASURED before anyone believes
+   either number - but a fake copyright mark naming an artist is a legal
+   problem, not a cosmetic one, and it is now known to reach the framed
+   mockup.
+2. **A human figure passed the gate.** The Sarajevo screenprint has a
+   clear standing silhouette in the lower third. The seller's rule is no
+   human figures; the CLIP gate rejects about 40% PEOPLE but let this one
+   through, presumably because it is small and in silhouette.
+
+Neither is a reason to change the catalogue's size and neither affects the
+960,517 panels already made. Both are reasons NOT to upload yet: the fix
+is a sweep over the panels, not a regeneration, and the sweep needs a
+measured rate first.
