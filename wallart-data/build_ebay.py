@@ -25,11 +25,19 @@ FRAME COLOURS - Black, White, Oak - and the listing carries one picture per
 colour with BLACK FIRST, because eBay shows the first picture in search and
 the seller asked for black to be the main image.
 
-NO LISTING WITHOUT A PICTURE. --require-pictures takes a file listing the
-keys actually in the bucket and skips any listing whose three mockups are
-not all there. A row whose PicURL 404s is a listing eBay will either reject
-or show blank, and finding that out across millions of rows is not
-recoverable by hand.
+NO LISTING WITHOUT A PICTURE. --rendered points at the hash files the
+render stage wrote to `wallart/hashes/`, which hold one line per panel
+whose twelve pictures were made. That is the right authority and it is
+also the small one: listing eleven and a half million picture keys to
+answer "is this panel done" means eleven thousand LIST calls and half a
+gigabyte of text, while the hashes are 960,000 lines and already have to
+be fetched for the duplicate audit. A row whose PicURL 404s is a listing
+eBay rejects or shows blank, and finding that out across millions of rows
+is not recoverable by hand.
+
+--store builds one bucket. luxvia-art is 40% of the catalogue and finishes
+rendering well before the others, so its folder can go to that account
+while the rest are still being made.
 
 ONE DESIGN GOES TO ONE STORE. allocate.store_for decides, the same hash the
 generation run used, so a design cannot appear in two accounts - the seller's
@@ -162,7 +170,7 @@ def rows_for(job, store):
     return out, None
 
 
-def build(jobs, out_root, have=None, limit=0):
+def build(jobs, out_root, have=None, limit=0, drop=frozenset()):
     os.makedirs(out_root, exist_ok=True)
     buf, files, stats = {}, {}, {}
     def flush(b, final=False):
@@ -183,11 +191,12 @@ def build(jobs, out_root, have=None, limit=0):
     for job in jobs:
         b = allocate.store_for(job["sku"])["bucket"]
         st = STORES[b]
-        s = stats.setdefault(b, dict(listings=0, blocked=0, nopic=0))
+        s = stats.setdefault(b, dict(listings=0, blocked=0, nopic=0, dup=0))
+        if (b, job["sku"]) in drop:
+            s["dup"] += 1
+            continue
         if have is not None:
-            want = [key_for(st, f'{job["sku"]}-{ci}', c)
-                    for ci in range(EB["colourways"]) for c in EB["colours"]]
-            if not all(k in have for k in want):
+            if (b, job["sku"]) not in have:
                 s["nopic"] += 1
                 continue
         rows, bad = rows_for(job, st)
@@ -205,12 +214,12 @@ def build(jobs, out_root, have=None, limit=0):
         flush(b, True)
 
     print(f"{'bucket':<20}{'listings':>12}{'rows':>14}{'files':>7}"
-          f"{'blocked':>9}{'no picture':>12}")
+          f"{'blocked':>9}{'no picture':>12}{'duplicate':>11}")
     for b in sorted(stats):
         s = stats[b]
         print(f"{b:<20}{s['listings']:>12,}"
               f"{s['listings']*ROWS_PER_LISTING:>14,}{files.get(b,0):>7}"
-              f"{s['blocked']:>9,}{s['nopic']:>12,}")
+              f"{s['blocked']:>9,}{s['nopic']:>12,}{s['dup']:>11,}")
     tot = sum(s["listings"] for s in stats.values())
     print(f"{'TOTAL':<20}{tot:>12,}{tot*ROWS_PER_LISTING:>14,}"
           f"{sum(files.values()):>7}")
@@ -282,21 +291,45 @@ def main():
     ap.add_argument("--out", default=os.path.join(HERE, "out", "ebay"))
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--test", type=int, default=0)
-    ap.add_argument("--require-pictures",
-                    help="file of keys present in the buckets, one per line")
+    ap.add_argument("--rendered", metavar="DIR",
+                    help="folder of wallart/hashes/*.jsonl - the panels whose "
+                         "pictures exist")
+    ap.add_argument("--store", help="build one bucket only")
     ap.add_argument("--check", metavar="DIR")
+    ap.add_argument("--drop", metavar="FILE",
+                    help="SKUs to leave out, '<bucket>\\t<sku>' per line, "
+                         "as dup_audit.py --drop writes them")
     ap.add_argument("--zip", action="store_true")
     a = ap.parse_args()
     if a.check:
         sys.exit(1 if check(a.check) else 0)
     jobs = json.load(open(a.jobs))
     have = None
-    if a.require_pictures:
-        have = {l.strip() for l in open(a.require_pictures) if l.strip()}
-        print(f"pictures known present: {len(have):,} keys")
+    if a.rendered:
+        have = set()
+        for fn in sorted(os.listdir(a.rendered)):
+            if not fn.endswith(".jsonl"):
+                continue
+            for line in open(os.path.join(a.rendered, fn)):
+                line = line.strip()
+                if line:
+                    r = json.loads(line)
+                    have.add((r["bucket"], r["sku"]))
+        print(f"panels with pictures rendered: {len(have):,}")
+    drop = set()
+    if a.drop:
+        for line in open(a.drop):
+            parts = line.strip().split("\t")
+            if len(parts) == 2:
+                drop.add((parts[0], parts[1]))
+        print(f"near-duplicates to leave out: {len(drop):,}")
     if a.test:
         jobs = jobs[:a.test]
-    build(jobs, a.out, have, a.limit)
+    if a.store:
+        jobs = [j for j in jobs
+                if allocate.store_for(j["sku"])["bucket"] == a.store]
+        print(f"{a.store}: {len(jobs):,} designs")
+    build(jobs, a.out, have, a.limit, drop)
     if a.zip:
         zip_stores(a.out)
 

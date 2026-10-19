@@ -1642,3 +1642,38 @@ current pool is 960,000, so a few hundred come from runs with a different
 the WA- shape, so the guard above does not separate them. Nothing in this
 repo records an eBay upload of any of them, and nothing outward-facing has
 been done in this session, but that is absence of evidence.
+
+## 19 Oct, 09:20 UTC - the builder now takes the render's own record
+
+Two changes, both because the seller wants files as soon as they exist.
+
+**`--rendered <dir>` replaces `--require-pictures`.** The question "does
+this panel have its twelve pictures?" was going to be answered by listing
+every picture key - eleven and a half million of them, about eleven
+thousand LIST calls and half a gigabyte of text. The render stage already
+writes one line per finished panel to `wallart/hashes/`, which is 960,000
+lines and has to be fetched anyway for the duplicate audit. Same answer,
+a twelfth of the work, and it comes from the process that did the writing
+rather than from a second opinion about it.
+
+**`--store <bucket>` builds one account's files.** luxvia-art is 40% of
+the catalogue by design count and was 98% rendered at 08:18, hours ahead
+of the others, because the range striping handed its chunks to the fastest
+machines. There is no reason to make the seller wait for mercury-usm to
+finish before they can start uploading their biggest account.
+
+**`--drop <file>`** takes `<bucket>\t<sku>` lines, which is what
+`dup_audit.py --drop` writes, and the per-bucket summary gained a
+`duplicate` column so the number left out is visible rather than implied.
+
+Verified on a rigged set: 40 jobs, 30 marked rendered, 5 of those marked
+duplicate -> 25 designs and 100 listings written, 5 counted as duplicate,
+the rest as no-picture, and --check clean on all five tests.
+
+Abandoned: counting every object in every bucket to tabulate the seller's
+pre-existing content. The pod never answered in sixteen minutes, which is
+what the 72-range partition does when one range holds all the old keys -
+they sort together, so the split that makes the panel count fast does
+nothing for this one. The question it would have answered is already
+answered structurally by SKU_RE and PIC_RE, so it is not worth a bespoke
+partition.
