@@ -1110,3 +1110,28 @@ whole test, and the grep that misled me only looked for
 `fill_shards|health|monitor`. Cost here was a few cents and one lost
 count, but the same reflex aimed at a generating shard would throw away
 hours of panels.
+
+## 19 Oct, 00:45 UTC - the run is CLOSED. No more launches.
+
+At 00:30 the count read 959,845 panels -> 3,839,380 listings, and
+`status.py` asks for 937,500 bases. The pool of 960,000 jobs was always
+larger than the bases needed; that margin is now spent and then some, by
+22,345 panels.
+
+So the fill loop is stopped - not paused, stopped. Stripes 9 and 11 are
+left to reach their own end, whichever marker they print, and neither is
+replaced:
+
+- if a stripe prints SHARD COMPLETE its jobs are exhausted and there is
+  nothing to relaunch into;
+- if it prints UNFINISHED at --max-hours there are jobs left in that
+  stripe, and they are jobs the catalogue does not need. A replacement pod
+  pays a boot and a model download to generate panels beyond a target
+  already exceeded.
+
+The watchdog stays up, because it is what DELETES a pod on either marker.
+Stopping the watchdog and keeping the fill loop would have been the
+expensive mistake; this is the other way round.
+
+That leaves the two live pods at $0.36/hr, ending within the hour on their
+own clocks, and no path by which another pod starts.
