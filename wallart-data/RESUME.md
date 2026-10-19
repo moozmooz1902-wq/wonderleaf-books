@@ -1677,3 +1677,29 @@ they sort together, so the split that makes the panel count fast does
 nothing for this one. The question it would have answered is already
 answered structurally by SKU_RE and PIC_RE, so it is not worth a bespoke
 partition.
+
+## 19 Oct, 11:25 UTC - a reaper that reaps one kind of pod is not a reaper
+
+Five hash-repair pods printed HASH REPAIR COMPLETE and then sat there
+billing $0.64/hr each, because `reap.py` matched names starting with
+"wa-render" and they were called "wa-fixhash". Caught at the hourly check
+and deleted; the waste is roughly $2.
+
+The fix is not "add wa-fixhash". It is that the reaper now matches every
+short-lived pod this project starts - wa-render, wa-fixhash, wa-build -
+and knows every line any of them prints when it stops: RENDER COMPLETE,
+UNFINISHED, RENDER_EXIT, HASH REPAIR COMPLETE, BUILD COMPLETE, BUILD_EXIT
+and REFUSING to upload. A list that has to be remembered when a new kind
+of pod is added is a list that will not be.
+
+Only `wa-render` COMPLETE still records a finished part, because only
+rendering has parts that must never be relaunched.
+
+The repair itself worked: 35,608 luxvia-art panels had pictures but no
+hash, exactly the ones lost when two slow pods were deleted mid-range this
+morning, and they now have one. Of the ranges it checked, WA-e and WA-f
+hold only a few hundred panels each and WA-d about 19,500 against 35,000
+for the rest - which is the pool boundary showing through: --pool takes
+the first 960,000 of the SKU-sorted grid, so the top of the keyspace was
+never generated. Expected, and worth recognising rather than investigating
+a second time.

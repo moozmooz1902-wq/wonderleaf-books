@@ -15,8 +15,16 @@ Same two rules the generation watchdog learned the hard way:
 import json, os, re, subprocess, sys, time
 
 API = "https://rest.runpod.io/v1"
-DONE = ("RENDER COMPLETE", "UNFINISHED:", "RENDER_EXIT")
-PREFIX = "wa-render"
+DONE = ("RENDER COMPLETE", "UNFINISHED:", "RENDER_EXIT",
+        "HASH REPAIR COMPLETE", "BUILD COMPLETE", "BUILD_EXIT",
+        "REFUSING to upload")
+# Every short-lived pod this project starts, not just the renderers. The
+# hash-repair pods printed HASH REPAIR COMPLETE and then billed $3.84/hr
+# between two hourly checks on 19 Oct because this said "wa-render" and
+# they were called "wa-fixhash". A reaper that only reaps one kind of pod
+# is a reaper you have to remember to extend, which is the same as not
+# having one.
+PREFIX = ("wa-render", "wa-fixhash", "wa-build")
 DONEFILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                         "done_parts.txt")
 
@@ -68,7 +76,7 @@ while time.time() < deadline:
             # fill_shards.sh learned about, where every replacement pays a
             # boot to generate nothing. UNFINISHED means the clock ran out
             # with work left, so that part SHOULD come back.
-            if hit == "RENDER COMPLETE":
+            if hit == "RENDER COMPLETE" and name.startswith("wa-render"):
                 try:
                     k = name.rsplit("-", 1)[-1]
                     with open(DONEFILE, "a") as fh:
