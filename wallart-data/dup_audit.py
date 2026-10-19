@@ -116,16 +116,27 @@ def audit(skus, V, drop_path=None):
         starts = np.flatnonzero(np.r_[True, ks[1:] != ks[:-1]])
         ends = np.r_[starts[1:], n]
         for s, e in zip(starts, ends):
-            if e - s < 2 or e - s > 4000:       # a huge group is a flat image
+            if e - s < 2:
                 continue
             g = order[s:e]
             P = packed[g]
-            x = P[:, None, :] ^ P[None, :, :]
-            d = POP[x].sum(2)
-            np.fill_diagonal(d, BITS)
-            hit = (d <= NEAR).any(1)
-            pairs += int((d <= NEAR).sum() // 2)
-            flagged[g[hit]] = True
+            # BLOCKED, because a group's size is not under our control. The
+            # band keys are 16 bits of a hash, so groups average about
+            # fifteen - but a flat colour field hashes to the same slice as
+            # every other flat colour field, and one such group can hold
+            # thousands. P[:, None, :] ^ P[None, :, :] on 4,000 rows is half
+            # a gigabyte; on 20,000 it is thirteen. Skipping big groups
+            # instead would drop exactly the designs most likely to BE
+            # duplicates.
+            B = 512
+            for i in range(0, len(g), B):
+                x = P[i:i + B, None, :] ^ P[None, :, :]
+                d = POP[x].sum(2)
+                for r in range(d.shape[0]):
+                    d[r, i + r] = BITS
+                hit = (d <= NEAR).any(1)
+                pairs += int((d <= NEAR).sum() // 2)
+                flagged[g[i:i + B][hit]] = True
         print(f"  band {b+1}/{BANDS}  flagged so far {flagged.sum():,}"
               f"  {time.time()-t0:.0f}s", flush=True)
     print(f"\nnear-duplicate listings: {flagged.mean():.3%} "
