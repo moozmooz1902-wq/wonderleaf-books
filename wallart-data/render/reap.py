@@ -24,7 +24,7 @@ DONE = ("RENDER COMPLETE", "UNFINISHED:", "RENDER_EXIT",
 # they were called "wa-fixhash". A reaper that only reaps one kind of pod
 # is a reaper you have to remember to extend, which is the same as not
 # having one.
-PREFIX = ("wa-render", "wa-fixhash", "wa-build")
+PREFIX = ("wa-render", "wa-fixhash", "wa-build", "wallart-count")
 DONEFILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                         "done_parts.txt")
 
@@ -32,6 +32,27 @@ DONEFILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
 def curl(*a):
     return subprocess.run(["curl", "-sS", "--max-time", "60", *a],
                           capture_output=True, text=True).stdout
+
+
+def owned(script):
+    """Is a local PYTHON process still waiting on this pod?
+
+    Matching the bare string is not enough and the first version proved it:
+    asked whether `r2_count_stores` was running it answered yes, because the
+    SHELL that ran the question had the string in its own command line. A
+    wrapper that merely mentions a script is not that script running. So the
+    test is an interpreter plus the .py file, and anything that looks like a
+    shell or a grep is excluded.
+    """
+    out = subprocess.run(["ps", "-eo", "args"], capture_output=True,
+                         text=True).stdout
+    for ln in out.splitlines():
+        if f"{script}.py" not in ln or "grep" in ln:
+            continue
+        head = ln.split()[0] if ln.split() else ""
+        if "python" in head:
+            return True
+    return False
 
 
 def pods():
@@ -65,6 +86,20 @@ while time.time() < deadline:
     empty = 0
     for p in on:
         pid, name = p["id"], p["name"]
+        # A COUNT POD DELETES ITSELF - unless the container restarts and
+        # kills the script that is waiting for it, which happens roughly
+        # hourly here. Then it bills on, unowned. But an unowned pod and a
+        # pod whose script is mid-poll look identical from the API, and
+        # deleting one of those on 19 Oct killed a count that was still
+        # running. The difference is visible locally and nowhere else, so
+        # that is where it is checked.
+        if name.startswith("wallart-count"):
+            if owned("r2_count_stores"):
+                print(f"{time.strftime('%H:%M:%S')}  {name} still owned by a "
+                      f"local process, left alone", flush=True)
+            else:
+                kill(pid, f"{name} orphaned (no local r2_count_stores)")
+            continue
         t = curl(f"https://{pid}-8000.proxy.runpod.net/boot.log")
         hit = next((m for m in DONE if m in t), None)
         if hit:

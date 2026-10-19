@@ -1795,3 +1795,30 @@ same rows, not a reconstruction - for uploading first. Its twelve picture
 URLs were fetched and all answered 200. If File Exchange accepts the
 variation layout at all it will accept it here, and forty rows is a cheap
 way to find out before 7.5 million.
+
+## 19 Oct, 15:25 UTC - an orphaned count pod, and a test that lied
+
+The container restarts roughly hourly and kills whatever is running in it.
+That now includes `r2_count_stores.py`, which creates a pod, waits for it
+and deletes it - so when the restart lands mid-count the pod survives its
+own orchestrator and bills at $0.16/hr until somebody notices. Found one
+at 15:20, deleted it.
+
+The reaper now covers `wallart-count` too, but not blindly: an orphaned
+count pod and a pod whose script is still mid-poll look identical from the
+RunPod API, and deleting one of the second kind on 19 Oct killed a count
+that was running fine. The difference is only visible locally, so the
+reaper asks `ps` before killing one.
+
+**And the first version of that test lied.** Asked whether
+`r2_count_stores` was running it answered yes, because the shell that ran
+the question had the string in its own command line - the same self-match
+that `[r]2_count_stores` avoids for grep but not for a parent process.
+A wrapper that MENTIONS a script is not that script running. It now
+requires an interpreter in argv[0] and a `.py` on the name, and that is
+checked both ways: no match when nothing is running, and no match when an
+unrelated python process is.
+
+Same lesson as `pods()` returning None, one layer further out: a test
+whose false answer is indistinguishable from its true answer is not a
+test.
