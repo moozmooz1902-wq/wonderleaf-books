@@ -1737,3 +1737,31 @@ Two other things the run showed:
   against 0.648% measured at 226,992 panels. Higher, and expected: more
   designs means more chances of a near neighbour. It is still a long way
   from the 89% that sank the old typography catalogue.
+
+## 19 Oct, 12:55 UTC - luxvia-art built, and one thing no check could catch
+
+The build came out clean on every structural test - 1,884,908 listings,
+7,539,632 rows, 16 files, nothing over the row cap, no SKU in two buckets,
+no picture pointing at another bucket's host, nothing that is not this
+run's work - and uploaded a 114 MB zip.
+
+Then I read the file, and the description said:
+
+    Sizes: A4 (21 x 29.7 cm), A3 (29.7 x 42 cm), A2 (42 x 59.4 cm)
+
+while the listing offers exactly one size as a variation: A3. A listing
+that advertises three sizes and sells one is a dispute waiting to happen,
+and nothing in check() could ever have found it - no structural test knows
+what the prose is claiming. The size in the description now comes from the
+same `ebay_plan.json` entry the variation rows use, so the two cannot
+drift apart again.
+
+Worth keeping in mind for the rest: the checks prove the FILE is
+well-formed. Whether it says true things is a separate question and the
+only instrument for it is reading one.
+
+Counts, for the record:
+    480,131 designs in the pool for luxvia-art
+      4,471 skipped, no pictures rendered
+      4,433 dropped as near-duplicates
+    471,227 listed -> 1,884,908 listings at four colourways

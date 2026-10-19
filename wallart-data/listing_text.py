@@ -20,7 +20,7 @@ Three things this has to get right, and they pull against each other.
    is the list. check() below runs it on every title and description, and
    build_ebay.py refuses to write a row that fails.
 """
-import os, re, sys
+import json, os, re, sys
 import hashlib
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -107,7 +107,14 @@ def title(job):
     return t[:MAX_TITLE].rstrip(" -")
 
 
-SIZES = ("A4 (21 x 29.7 cm)", "A3 (29.7 x 42 cm)", "A2 (42 x 59.4 cm)")
+# THE SIZE THE LISTING ACTUALLY SELLS, read from the same place the
+# variation rows get it. The first version listed all three A sizes in the
+# description while the listing offered only A3 as a variation - a listing
+# that advertises three sizes and sells one is a dispute waiting to happen,
+# and it was caught by reading the finished file rather than by any check,
+# because no check knows what the prose is claiming.
+SIZE = json.load(open(os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "ebay_plan.json")))["size"]
 
 
 def description(job, t):
@@ -130,7 +137,7 @@ def description(job, t):
       '<h3>Details</h3><ul>'
       '<li>Giclee-style print on heavyweight matte art paper</li>'
       '<li>Wooden moulding, glazed front, hanging fixture fitted</li>'
-      f'<li>Sizes: {", ".join(SIZES)}</li>'
+      f'<li>Size: {SIZE}</li>'
       '<li>Printed and framed in the United Kingdom</li>'
       '<li>Dispatched carefully packed in protective board</li>'
       '</ul>'
