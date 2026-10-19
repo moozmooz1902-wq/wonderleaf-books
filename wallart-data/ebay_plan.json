@@ -7,9 +7,17 @@
   "quantity": 1,
   "brand": "Unbranded",
   "size": "A3 (29.7 x 42 cm)",
-  "colours": ["Black", "White", "Oak"],
+  "colours": [
+    "Black",
+    "White",
+    "Oak"
+  ],
   "price": 19.99,
-  "profiles": {"shipping": "1", "returns": "1", "payment": "1"},
+  "profiles": {
+    "shipping": "1",
+    "returns": "1",
+    "payment": "1"
+  },
   "max_rows_per_file": 500000,
   "colourways": 4
 }

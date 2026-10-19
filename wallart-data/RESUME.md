@@ -1703,3 +1703,37 @@ for the rest - which is the pool boundary showing through: --pool takes
 the first 960,000 of the SKU-sorted grid, so the top of the keyspace was
 never generated. Expected, and worth recognising rather than investigating
 a second time.
+
+## 19 Oct, 12:05 UTC - the first real build REFUSED to upload, correctly
+
+luxvia-art built 1,887,488 listings and then stopped at its own check:
+"files over 500,000 rows: 15". The check was right and the splitter was
+wrong.
+
+One panel is FOUR listings, so rows arrive sixteen at a time. The flush
+test was `len(buf) >= LISTINGS_PER_FILE * ROWS_PER_LISTING`, i.e. 499,996,
+and the buffer is only inspected after a whole panel has gone in - so it
+overshot to 500,008 data rows, plus the header. Every full file was nine
+rows over the cap the seller stated twice.
+
+Now expressed as what it is: MAX_DATA_ROWS is the cap minus one for the
+header, and the flush happens when one more panel's sixteen rows would not
+fit. Proved at the boundary rather than by reasoning - the cap was
+temporarily set to 1,000, 16,000 listings were built across 66 files, and
+the largest came out at 993 lines.
+
+That this was caught by the build refusing to upload, rather than by the
+seller's first File Exchange rejection, is the whole reason check() runs
+before the upload instead of after it.
+
+Two other things the run showed:
+
+* **The builder was walking the whole grid, not the pool.** 562,293
+  luxvia-art designs exist in the 1,124,581-job grid, but generation took
+  only the first 960,000, so 85,984 of them correctly came out as "no
+  picture". True, and noise: --pool now trims the grid the same way the
+  generation did.
+* **luxvia-art's near-duplicate rate is 0.950%** (4,564 of 480,367),
+  against 0.648% measured at 226,992 panels. Higher, and expected: more
+  designs means more chances of a near neighbour. It is still a long way
+  from the 89% that sank the old typography catalogue.

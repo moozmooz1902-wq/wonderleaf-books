@@ -46,7 +46,7 @@ def bundle():
     return base64.b64encode(buf.getvalue()).decode()
 
 
-def start_cmd(b64, store, prefix):
+def start_cmd(b64, store, prefix, pool):
     return ["bash", "-c", f"""export PATH=/opt/conda/bin:/usr/local/bin:/usr/bin:/bin:$PATH
 mkdir -p /workspace/b
 echo '{b64}' | base64 -d | tar xJ -C /workspace/b
@@ -56,7 +56,7 @@ set -x
 ( while true; do python3 -m http.server 8000 --directory /workspace >/dev/null 2>&1; sleep 3; done ) &
 python3 -m pip install -q --no-input --break-system-packages boto3 numpy 2>&1 | tail -2
 cd /workspace/b
-python3 build_pod.py --store {store} --prefix {prefix} --out /workspace/ebay
+python3 build_pod.py --store {store} --prefix {prefix} --pool {pool} --out /workspace/ebay
 echo BUILD_EXIT
 EOS
 nohup bash /workspace/run.sh > /workspace/boot.log 2>&1 &
@@ -76,9 +76,10 @@ def main():
     ap.add_argument("--store", required=True)
     ap.add_argument("--prefix", default="ebay")
     ap.add_argument("--disk", type=int, default=120)
+    ap.add_argument("--pool", type=int, default=960000)
     a = ap.parse_args()
     b64 = bundle()
-    cmd = start_cmd(b64, a.store, a.prefix)
+    cmd = start_cmd(b64, a.store, a.prefix, a.pool)
     n = sum(len(x) for x in cmd)
     print(f"bundle {len(b64):,} chars, start command {n:,}")
     if n > 60000:

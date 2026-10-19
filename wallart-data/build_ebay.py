@@ -94,7 +94,17 @@ HEADER = [ACTION, "CustomLabel", "*Category", "StoreCategory", "*Title",
           "C:Features", "C:Unit Type"]
 
 ROWS_PER_LISTING = 1 + len(EB["colours"])
-LISTINGS_PER_FILE = (EB["max_rows_per_file"] - 1) // ROWS_PER_LISTING
+# ONE PANEL IS FOUR LISTINGS, so rows arrive sixteen at a time, not four.
+# The first version flushed at LISTINGS_PER_FILE * ROWS_PER_LISTING, which
+# is 499,996 - and since the buffer is only ever checked after a whole
+# panel has been added, it overshot to 500,008 rows, plus the header. All
+# fifteen full files came out over the seller's 500,000 cap and --check
+# refused the upload. It was right to.
+#
+# So the cap is expressed as what it is: the most DATA rows a file may
+# hold, with room left for one more panel's worth before the next check.
+ROWS_PER_PANEL = COLOURWAYS_ROWS = (1 + len(EB["colours"])) * EB["colourways"]
+MAX_DATA_ROWS = EB["max_rows_per_file"] - 1          # the header is a row
 
 # eBay wants a Theme a buyer would browse, not our grammar codes.
 THEME = {"botanical": "Flowers & Plants", "creature": "Animals",
@@ -205,7 +215,7 @@ def build(jobs, out_root, have=None, limit=0, drop=frozenset()):
             continue
         buf.setdefault(b, []).extend(rows)
         s["listings"] += EB["colourways"]
-        if len(buf[b]) >= LISTINGS_PER_FILE * ROWS_PER_LISTING:
+        if len(buf[b]) + ROWS_PER_PANEL > MAX_DATA_ROWS:
             flush(b)
         n += 1
         if limit and n >= limit:

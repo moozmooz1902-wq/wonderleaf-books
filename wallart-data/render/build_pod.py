@@ -85,6 +85,7 @@ def main():
     ap.add_argument("--store", required=True)
     ap.add_argument("--out", default="/workspace/ebay")
     ap.add_argument("--prefix", default="ebay")
+    ap.add_argument("--pool", type=int, default=960000)
     a = ap.parse_args()
     t0 = time.time()
     c = client()
@@ -97,6 +98,13 @@ def main():
         sys.exit(f"subjects.json looks truncated: {n} subjects")
     jobs = grid.expand(subs)
     print(f"grid {len(jobs):,} jobs in {time.time()-t0:.0f}s", flush=True)
+    # THE POOL, not the whole grid. --pool took the first 960,000 of the
+    # SKU-sorted grid and the rest was never generated; without this the
+    # builder walks 1,124,581 jobs and reports 85,984 of luxvia-art's as
+    # "no picture", which is true but is noise rather than a finding.
+    if a.pool:
+        jobs = jobs[:a.pool]
+        print(f"pool: first {len(jobs):,}", flush=True)
 
     skus, V = read_hashes(c, a.store)
     have = set((b, s) for s, b in skus)
