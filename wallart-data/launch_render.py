@@ -48,7 +48,7 @@ def bundle(files):
     return base64.b64encode(buf.getvalue()).decode()
 
 
-def start_cmd(b64, part, hours):
+def start_cmd(b64, part, hours, procs):
     # Runs ALONGSIDE the image's own /start.sh: replacing the entrypoint kills
     # RunPod's in-container agent, and without it the HTTP proxy has no route
     # and every request to port 8000 comes back 404 while the pod says
@@ -62,7 +62,7 @@ set -x
 ( while true; do python3 -m http.server 8000 --directory /workspace >/dev/null 2>&1; sleep 3; done ) &
 python3 -m pip install -q --no-input --break-system-packages boto3 pillow numpy 2>&1 | tail -2
 cd /workspace/r
-python3 render_worker.py --part {part} --max-hours {hours} --stores stores.json
+python3 render_worker.py --part {part} --max-hours {hours} --procs {procs} --stores stores.json
 echo RENDER_EXIT
 EOS
 nohup bash /workspace/run.sh > /workspace/boot.log 2>&1 &
@@ -84,19 +84,30 @@ def main():
     ap.add_argument("--only", type=int, default=0)
     ap.add_argument("--name", default="wa-render")
     ap.add_argument("--max-hours", type=float, default=10.0)
+    # The work is not CPU bound, it is NETWORK bound: one GET and twelve PUTs
+    # per panel. Measured on a 16-vCPU pod at one process per vCPU: 8,962
+    # panels an hour, which is 30 uploads a second - far short of what the
+    # cores could encode. Oversubscribing the pool keeps more requests in
+    # flight; the cgroup still caps the CPU, so the only real cost is memory,
+    # about 150 MB per child.
+    ap.add_argument("--oversub", type=int, default=2)
     a = ap.parse_args()
     b64 = bundle(FILES)
     print(f"bundle {len(b64):,} chars")
     todo = [a.only] if a.only else range(1, a.parts + 1)
     for k in todo:
-        common = {"name": f"{a.name}-{k}", "templateId": TEMPLATE,
-                  "imageName": IMAGE, "containerDiskInGb": 30, "volumeInGb": 0,
-                  "ports": ["8000/http"],
-                  "dockerStartCmd": start_cmd(b64, f"{k}/{a.parts}", a.max_hours)}
-        n = sum(len(x) for x in common["dockerStartCmd"])
-        if n > 60000:
-            sys.exit(f"start command {n:,} chars - over the pod limit")
         for extra in TIERS:
+            # --procs is told to the worker rather than guessed inside it: the
+            # pod knows how many vCPU it asked for, the container does not.
+            common = {"name": f"{a.name}-{k}", "templateId": TEMPLATE,
+                      "imageName": IMAGE, "containerDiskInGb": 30,
+                      "volumeInGb": 0, "ports": ["8000/http"],
+                      "dockerStartCmd": start_cmd(b64, f"{k}/{a.parts}",
+                                                  a.max_hours,
+                                                  extra["vcpuCount"] * a.oversub)}
+            n = sum(len(x) for x in common["dockerStartCmd"])
+            if n > 60000:
+                sys.exit(f"start command {n:,} chars - over the pod limit")
             r = curl("POST", "/pods", dict(common, **extra))
             if isinstance(r, dict) and r.get("id"):
                 print(f"  {a.name}-{k}  {r['id']}  ${r.get('costPerHr')}/hr  "

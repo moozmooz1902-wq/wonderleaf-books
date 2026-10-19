@@ -50,6 +50,30 @@ Q = {"black": 82, "white": 82, "oak": 82}
 EDGES = ["WA-" + c for c in "0123456789abcdef"] + ["WA-g"]
 
 
+def cpu_quota():
+    """How many cores this container may actually use.
+
+    cgroup v2 puts "<quota> <period>" in cpu.max; v1 splits it across two
+    files; "max" means unlimited, and then there is nothing better than
+    os.cpu_count(). Capped at 32 regardless, because the memory per child
+    is what bites first.
+    """
+    try:
+        q, per = open("/sys/fs/cgroup/cpu.max").read().split()
+        if q != "max":
+            return max(1, min(32, int(int(q) / int(per))))
+    except Exception:
+        pass
+    try:
+        q = int(open("/sys/fs/cgroup/cpu/cpu.cfs_quota_us").read())
+        per = int(open("/sys/fs/cgroup/cpu/cpu.cfs_period_us").read())
+        if q > 0:
+            return max(1, min(32, q // per))
+    except Exception:
+        pass
+    return max(1, min(32, os.cpu_count() or 4))
+
+
 def client():
     return boto3.client(
         "s3",
@@ -159,11 +183,14 @@ def main():
     ap.add_argument("--stores", default="stores.json")
     ap.add_argument("--max-hours", type=float, default=10.0)
     ap.add_argument("--procs", type=int, default=0,
-                    help="default: one per vCPU, which is what a CPU pod is "
-                         "rented for - a serial worker on 16 vCPU pays for "
-                         "sixteen and uses one")
+                    help="default: the pod's cgroup CPU quota. NOT "
+                         "os.cpu_count(), which on a 16-vCPU RunPod CPU pod "
+                         "reports the HOST's 192 cores - a pool that size "
+                         "needs about 19 GB just to import PIL and boto3 in "
+                         "every child, and the first attempt sat there "
+                         "spawning instead of rendering.")
     a = ap.parse_args()
-    procs = a.procs or (os.cpu_count() or 4)
+    procs = a.procs or cpu_quota()
     k, N = (int(x) for x in a.part.split("/"))
     plan = json.load(open(a.stores))
     c = client()
@@ -221,7 +248,12 @@ def main():
         if hashes:
             # one object per range, named so a rerun overwrites rather than
             # duplicates - the bucket stays the record, as everywhere else
-            tag = f"{k}of{N}-{bucket}-{lo.replace('/', '_')}"
+            # named by BUCKET AND RANGE ONLY, never by part: a range
+            # belongs to exactly one part whatever the fleet size, so the
+            # audit can enumerate the file names without being told how many
+            # pods there were, and a rerun with a different --parts
+            # overwrites the same object instead of leaving two.
+            tag = f"{bucket}-{lo.replace('/', '_')}"
             c.put_object(Bucket=bucket, Key=f"wallart/hashes/{tag}.jsonl",
                          Body=("\n".join(hashes) + "\n").encode(),
                          ContentType="text/plain")
