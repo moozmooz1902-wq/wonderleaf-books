@@ -1,0 +1,15 @@
+{
+  "_note": "eBay settings for the IMAGE-BASED wall-art catalogue. Taken from the seller's LIVE listings, not invented: WALLART_REPRICE.csv is built from their active-listings export and shows category 'Art Prints (360)', variations on Color and Size, and framed A3 now selling at 19.99 after the reprice (it was 29.95). plan.json on claude/hopeful-rubin-u14pgu supplies condition, dispatch, profiles and the 500,000-row cap. Change price here and every row changes.",
+  "category": "360",
+  "condition_id": "1000",
+  "location": "United Kingdom",
+  "dispatch_days": 3,
+  "quantity": 1,
+  "brand": "Unbranded",
+  "size": "A3 (29.7 x 42 cm)",
+  "colours": ["Black", "White", "Oak"],
+  "price": 19.99,
+  "profiles": {"shipping": "1", "returns": "1", "payment": "1"},
+  "max_rows_per_file": 500000,
+  "colourways": 4
+}

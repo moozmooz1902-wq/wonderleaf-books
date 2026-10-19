@@ -1319,3 +1319,97 @@ Neither is a reason to change the catalogue's size and neither affects the
 960,517 panels already made. Both are reasons NOT to upload yet: the fix
 is a sweep over the panels, not a regeneration, and the sweep needs a
 measured rate first.
+
+## 19 Oct, 03:10 UTC - strip_marks DOES NOT WORK. The fix is a crop.
+
+The seller asked for upload files with no copyright problems, so the fake
+signatures had to be dealt with before anything was rendered. Measured, by
+hand-reading the bottom 10% of 30 random panels from the live buckets: four
+carried a mark - a cursive signature, a "(C) <name>" line, a word of
+invented lettering ("Beethurr"), and a pair of East-Asian seal stamps.
+Call it 10-13%, not the 0.8% the planned end-of-run pass was costed for.
+
+Then the important part. Running the shipped `declutter.strip_marks` on
+those four:
+
+    #4   monogram LEFT, and a white hole gouged out of the mouse's back
+    #9   "Beethurr" LEFT, plus a black artefact added at the right edge
+    #16  cursive signature LEFT, almost untouched
+    #23  seal stamps partly left, two white gouges and two black blobs added
+
+So it damages good artwork and does not remove the marks. On a busy ground
+its QUIET=0.055 neighbourhood test refuses to fire, which is the case it
+most needs to handle, and where it does fire it eats the subject. It must
+not run over 3.8M listings. `ebay/STRIP_MARKS_VS_CROP.jpg` is the evidence.
+
+**The fix is to crop the bottom 11% of every panel.** Verified by eye on
+the same four: every mark gone, nothing else touched, and the compositions
+read as a tighter crop rather than a mutilation - a specimen plant, a
+landscape, a mouse study and an ink-wash arch all survive it. It is
+certain where the eraser is probabilistic, it cannot gouge a hole in the
+middle of an animal, and it costs nothing to compute. One residual: #23
+keeps a small orange seal higher up in the picture, which is a stylistic
+chop mark rather than a claim of authorship by a named painter.
+
+`render/render_worker.py` does the crop. `declutter.py` is left in the
+repo, unused by this path, with this entry as the reason.
+
+## 19 Oct, 03:10 UTC - the render stage, and what it costs
+
+`render/render_worker.py` + `launch_render.py` build the listing pictures
+on CPU pods - PIL and JPEG, so renting a GPU would be renting a card to
+leave it idle. Per panel: crop, four colourways, compose, three frame
+mockups, upload to `<prefix>/listing/<SKU>-<ci>-<colour>.jpg` in the
+SAME bucket the panel came from, so no store's pictures can land in
+another store's account.
+
+Measured on a real panel locally - twelve pictures in 2.2 s, 1.08 MB:
+
+    580 core-hours          the whole catalogue
+    1.04 TB                 11,526,204 objects at 88 KB average
+    $51.87                  R2 Class A writes at $4.50 per million
+    $15.60/month            R2 storage
+    ~$23                    CPU pods at $0.64/hr for 16 vCPU
+
+Black is made at 1600px because it is the main image and the one a buyer
+zooms; white and oak are variation pictures seen small, so they are 1000px
+and cost 40% of the storage for no visible difference.
+
+The pass also computes the 256-bit artwork hash of every panel and writes
+it back as `wallart/hashes/*.jsonl`. It has the panel decoded in memory
+anyway, and that turns the next duplicate audit from a six-hour job that
+re-downloads the catalogue into a local numpy job with nothing to fetch.
+That is the "no duplicates" check, and it runs before the CSVs are built.
+
+## 19 Oct, 03:10 UTC - the upload files follow the seller's LIVE format
+
+Rewritten, because the first version was my own invention. The seller's
+warning was that one wrong thing ruins the lot, so every structural choice
+now comes from a file eBay has already accepted on these accounts:
+
+- `tshirt/WALLART_REPRICE.csv` is built from their ACTIVE LISTINGS export.
+  It shows category "Art Prints (360)" and a parent row reading
+  `Color=Black;Unframed Print Only|Size=A3 (29.7x42 cm)` followed by one
+  Variation row per value carrying the price. So the variation axis on
+  these accounts is **Color**, and **Size** is an axis even with one value.
+  Framed A3 sells at 19.99 there now, so that is the price here.
+- `wallart/build_ebay.py` on claude/hopeful-rubin-u14pgu gives the column
+  list, in its order, including `CC=UTF-8` in the Action field, and the
+  parent/child split: a child row leaves Action AND CustomLabel empty.
+- `wallart/plan.json` gives condition 1000, dispatch 3 days, quantity 1,
+  policies all named "1", and the 500,000-row cap the seller repeated.
+
+Only one thing here is new: the variation values are the three frame
+colours, and the parent carries all three pictures with BLACK FIRST,
+because eBay shows the first picture in search.
+
+`build_ebay.py --check` proves the three things that would ruin an upload:
+every parent is followed by exactly its variations and no title is over 80
+characters; no file exceeds 500,000 rows; and - the seller's "don't mix
+data" - no SKU appears under two buckets and no picture URL points at
+another bucket's host.
+
+`--require-pictures` takes the list of keys actually in the buckets and
+skips any listing whose three mockups are not all there. A row whose
+picture 404s is a listing eBay rejects or shows blank, and across millions
+of rows that is not recoverable by hand.

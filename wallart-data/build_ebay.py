@@ -1,168 +1,275 @@
 #!/usr/bin/env python3
-"""Build eBay File Exchange upload files for the wall-art catalogue.
+"""eBay File Exchange upload files for the image-based wall-art catalogue.
 
-WHAT A ROW IS. One generated panel becomes four listings, one per
-colourway, exactly as pipeline.py composes them. Each listing is a
-MULTI-VARIATION fixed-price listing whose variation axis is the frame
-colour - black, white, oak - with the BLACK mockup as the listing's main
-image, which is the seller's instruction and also what eBay shows in
-search. So each listing is four CSV rows: one parent and three variations.
+THE FORMAT IS COPIED, NOT INVENTED. The seller's warning was that one wrong
+thing in a file can ruin the lot, so every structural choice here comes from
+files that eBay has already accepted on these accounts:
 
-THE VARIATION FORMAT is the part worth being careful about, because File
-Exchange rejects the whole file rather than the bad row:
+  * `tshirt/WALLART_REPRICE.csv` is built from their ACTIVE LISTINGS export.
+    It shows the live shape: category "Art Prints (360)", a parent row whose
+    Relationship details read `Color=Black;Unframed Print Only|Size=A3
+    (29.7x42 cm)`, then one Variation row per value carrying only the price.
+    So the variation axis on these accounts is **Color**, with the framing
+    option as its value, and **Size** is an axis even when it has one value.
+  * `wallart/build_ebay.py` on claude/hopeful-rubin-u14pgu is the builder for
+    the 2.3M typography catalogue. The column list below is its header, in
+    its order, including `CC=UTF-8` in the Action field; the parent/child
+    split is its split - a child row leaves Action AND CustomLabel empty and
+    carries Relationship, its own details, price, quantity and its own
+    aspects, nothing else.
+  * `wallart/plan.json` supplies condition 1000, dispatch 3 days, quantity 1,
+    business policies all named "1", and the 500,000-row cap per file.
 
-  parent row     *Action=Add, the title, the description, every picture,
-                 and RelationshipDetails listing ALL the values -
-                 "Frame Colour=Black;White;Oak"
-  variation rows Action and ItemID EMPTY, Relationship=Variation,
-                 RelationshipDetails="Frame Colour=Black", the price, the
-                 quantity and that frame's own picture
+WHAT IS NEW HERE, and it is only this: the variation values are the three
+FRAME COLOURS - Black, White, Oak - and the listing carries one picture per
+colour with BLACK FIRST, because eBay shows the first picture in search and
+the seller asked for black to be the main image.
 
-The parent's value list and the children's values must match character for
-character - no space after the semicolon, none around the equals sign.
-This layout is from eBay seller-community threads rather than the official
-manual, which is why build_ebay.py writes a THREE-DESIGN test file as well
-as the full set: upload the test file first, confirm eBay accepts it, and
-only then upload the rest. Getting this wrong on 3.8M rows is a bad way to
-find out.
+NO LISTING WITHOUT A PICTURE. --require-pictures takes a file listing the
+keys actually in the bucket and skips any listing whose three mockups are
+not all there. A row whose PicURL 404s is a listing eBay will either reject
+or show blank, and finding that out across millions of rows is not
+recoverable by hand.
 
-WHAT THIS DOES NOT DO. It does not upload anything, and it does not create
-the mockups - it writes the URLs they will have. render_listings.py makes
-the images. A CSV whose pictures are not in R2 yet will upload rows whose
-images 404, so the images go first.
+ONE DESIGN GOES TO ONE STORE. allocate.store_for decides, the same hash the
+generation run used, so a design cannot appear in two accounts - the seller's
+"don't mix data". Files are written per bucket into their own folder so a
+folder can be handed to one account and nothing else.
 
-  usage: build_ebay.py --test 3            three designs, one file
-         build_ebay.py --limit 50          a 50-design sample
-         build_ebay.py                     everything, split per store
+  usage: build_ebay.py --test 3
+         build_ebay.py --limit 1000
+         build_ebay.py --require-pictures keys.txt
+         build_ebay.py --check out/ebay
 """
-import argparse, csv, json, os, sys
+import argparse, csv, json, os, sys, zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import allocate, listing_text as LT
 
-# ---- the things the seller sets. One edit changes every row. ------------
-PRICE     = "24.99"      # <-- ASSUMPTION. Not given. A3 framed print.
-QUANTITY  = "1"          # the seller's standing rule
-LOCATION  = "United Kingdom"
-CATEGORY  = "360"        # eBay UK wall art, per CLAUDE.md
-CONDITION = "1000"       # New
-POLICY    = "1"          # shipping / returns / payment profile names
-FORMAT    = "FixedPrice" # variations are fixed-price only
-DURATION  = "GTC"
-SIZE      = "A3 (29.7 x 42 cm)"
-FRAMES    = ["Black", "White", "Oak"]      # Black FIRST = the main image
-VAR_NAME  = "Frame Colour"
-COLOURWAYS = 4
-# ------------------------------------------------------------------------
+EB = json.load(open(os.path.join(HERE, "ebay_plan.json")))
+STORES = {s["bucket"]: s for s in
+          json.load(open(os.path.join(HERE, "stores.json")))["stores"]}
 
-HEADER = ["*Action(SiteID=UK|Country=GB|Currency=GBP|Version=1193)",
-          "CustomLabel", "*Category", "*Title", "*Description", "*ConditionID",
-          "PicURL", "*Quantity", "*StartPrice", "*Format", "*Duration",
-          "*Location", "ShippingProfileName", "ReturnProfileName",
-          "PaymentProfileName", "Relationship", "RelationshipDetails",
-          "C:Brand", "C:Type", "C:Subject", "C:Style", "C:Colour",
-          "C:Material", "C:Frame Colour", "C:Orientation", "C:Features",
-          "C:Originality", "C:Date of Creation", "C:Size"]
+ACTION = "*Action(SiteID=UK|Country=GB|Currency=GBP|Version=1193|CC=UTF-8)"
+HEADER = [ACTION, "CustomLabel", "*Category", "StoreCategory", "*Title",
+          "Subtitle", "Relationship", "RelationshipDetails", "*ConditionID",
+          "*Description", "PicURL", "*Format", "*Duration", "*StartPrice",
+          "*Quantity", "*Location", "PostalCode", "DispatchTimeMax",
+          "ShippingProfileName", "ReturnProfileName", "PaymentProfileName",
+          "C:Brand", "C:Artist", "C:Type", "C:Size", "C:Frame", "C:Framing",
+          "C:Subject", "C:Style", "C:Theme", "C:Room", "C:Colour",
+          "C:Material", "C:Production Technique", "C:Orientation",
+          "C:Features", "C:Unit Type"]
 
-STORES = {s["bucket"]: s for s in json.load(open(os.path.join(HERE, "stores.json")))["stores"]}
+ROWS_PER_LISTING = 1 + len(EB["colours"])
+LISTINGS_PER_FILE = (EB["max_rows_per_file"] - 1) // ROWS_PER_LISTING
+
+# eBay wants a Theme a buyer would browse, not our grammar codes.
+THEME = {"botanical": "Flowers & Plants", "creature": "Animals",
+         "place": "Landscapes", "celestial": "Astronomy & Space",
+         "stilllife": "Still Life", "architecture": "Architecture"}
+ROOM = {"botanical": "Living Room", "creature": "Bedroom",
+        "place": "Living Room", "celestial": "Bedroom",
+        "stilllife": "Kitchen", "architecture": "Study"}
 
 
-def pic(store, sku, frame):
-    """Where render_listings.py will put this mockup."""
-    return (f'{store["pic_base"]}/{store["key_prefix"].strip("/")}/'
-            f'listing/{sku}-{frame.lower()}.jpg')
+def key_for(store, sku, colour):
+    return (f'{store["key_prefix"].strip("/")}/listing/'
+            f'{sku}-{colour.lower()}.jpg')
+
+
+def pic(store, sku, colour):
+    """The Cloudflare public URL, which is what eBay fetches."""
+    return f'{store["pic_base"].rstrip("/")}/{key_for(store, sku, colour)}'
 
 
 def rows_for(job, store):
-    """Four listings for one panel; four CSV rows each."""
+    """Four listings for one panel - one per colourway - each a parent plus
+    one Variation row per frame colour."""
     out = []
-    for ci in range(COLOURWAYS):
+    size = EB["size"]
+    vals = ";".join(EB["colours"])
+    for ci in range(EB["colourways"]):
         sku = f'{job["sku"]}-{ci}'
         j = {**job, "sku": sku}
         title = LT.title(j)
         desc = LT.description(j, title)
         bad = LT.check(title, desc)
         if bad:
-            raise SystemExit(f"REFUSING {sku}: {bad}")
-        pics = [pic(store, sku, f) for f in FRAMES]
-        allvals = ";".join(FRAMES)
-        out.append(["Add", sku, CATEGORY, title, desc, CONDITION,
-                    "|".join(pics), "", "", FORMAT, DURATION, LOCATION,
-                    POLICY, POLICY, POLICY, "", f"{VAR_NAME}={allvals}",
-                    "Unbranded", "Print", LT._sub(job["subject"]),
-                    LT.GRAM.get(job["gram"], "Contemporary"),
-                    LT.PAL.get(job["pal"], ""), "Paper", "",
-                    "Portrait", "Framed", "Reproduction", "2020-Now", SIZE])
-        for f, p in zip(FRAMES, pics):
-            out.append(["", f"{sku}-{f.lower()}", "", "", "", "", p,
-                        QUANTITY, PRICE, "", "", "", "", "", "",
-                        "Variation", f"{VAR_NAME}={f}",
-                        "", "", "", "", "", "", f, "", "", "", "", ""])
-    return out
+            return None, bad
+        pics = [pic(store, sku, c) for c in EB["colours"]]
+        p = dict.fromkeys(HEADER, "")
+        p.update({
+            ACTION: "Add", "CustomLabel": sku, "*Category": EB["category"],
+            "*Title": title,
+            "RelationshipDetails": f"Color={vals}|Size={size}",
+            "*ConditionID": EB["condition_id"], "*Description": desc,
+            "PicURL": "|".join(pics),            # black first = main image
+            "*Format": "FixedPrice", "*Duration": "GTC",
+            "*Location": EB["location"],
+            "DispatchTimeMax": str(EB["dispatch_days"]),
+            "ShippingProfileName": EB["profiles"]["shipping"],
+            "ReturnProfileName": EB["profiles"]["returns"],
+            "PaymentProfileName": EB["profiles"]["payment"],
+            "C:Brand": EB["brand"], "C:Artist": store["name"],
+            "C:Type": "Print",
+            "C:Subject": LT._sub(job["subject"]),
+            "C:Style": LT.GRAM.get(job["gram"], "Contemporary"),
+            "C:Theme": THEME.get(job["kind"], "Abstract"),
+            "C:Room": ROOM.get(job["kind"], "Living Room"),
+            "C:Material": "Paper",
+            "C:Production Technique": "Digital Print",
+            "C:Orientation": "Portrait",
+            "C:Features": "Framed", "C:Unit Type": "Unit",
+        })
+        out.append(p)
+        for c in EB["colours"]:
+            k = dict.fromkeys(HEADER, "")
+            k.update({"Relationship": "Variation",
+                      "RelationshipDetails": f"Color={c}|Size={size}",
+                      "*StartPrice": f'{EB["price"]:.2f}',
+                      "*Quantity": str(EB["quantity"]),
+                      "PicURL": pic(store, sku, c),
+                      "C:Size": size, "C:Frame": c, "C:Framing": "Framed",
+                      "C:Colour": c})
+            out.append(k)
+    return out, None
 
 
-def write(path, rows):
-    with open(path, "w", newline="", encoding="utf-8") as fh:
-        w = csv.writer(fh)
-        w.writerow(HEADER)
-        w.writerows(rows)
-    return path
+def build(jobs, out_root, have=None, limit=0):
+    os.makedirs(out_root, exist_ok=True)
+    buf, files, stats = {}, {}, {}
+    def flush(b, final=False):
+        rows = buf.get(b) or []
+        if not rows:
+            return
+        d = os.path.join(out_root, b)
+        os.makedirs(d, exist_ok=True)
+        files[b] = files.get(b, 0) + 1
+        path = os.path.join(d, f"{b}_{files[b]:04d}.csv")
+        with open(path, "w", newline="", encoding="utf-8") as fh:
+            w = csv.DictWriter(fh, fieldnames=HEADER, extrasaction="ignore")
+            w.writeheader()
+            w.writerows(rows)
+        buf[b] = []
+
+    n = 0
+    for job in jobs:
+        b = allocate.store_for(job["sku"])["bucket"]
+        st = STORES[b]
+        s = stats.setdefault(b, dict(listings=0, blocked=0, nopic=0))
+        if have is not None:
+            want = [key_for(st, f'{job["sku"]}-{ci}', c)
+                    for ci in range(EB["colourways"]) for c in EB["colours"]]
+            if not all(k in have for k in want):
+                s["nopic"] += 1
+                continue
+        rows, bad = rows_for(job, st)
+        if bad:
+            s["blocked"] += 1
+            continue
+        buf.setdefault(b, []).extend(rows)
+        s["listings"] += EB["colourways"]
+        if len(buf[b]) >= LISTINGS_PER_FILE * ROWS_PER_LISTING:
+            flush(b)
+        n += 1
+        if limit and n >= limit:
+            break
+    for b in list(buf):
+        flush(b, True)
+
+    print(f"{'bucket':<20}{'listings':>12}{'rows':>14}{'files':>7}"
+          f"{'blocked':>9}{'no picture':>12}")
+    for b in sorted(stats):
+        s = stats[b]
+        print(f"{b:<20}{s['listings']:>12,}"
+              f"{s['listings']*ROWS_PER_LISTING:>14,}{files.get(b,0):>7}"
+              f"{s['blocked']:>9,}{s['nopic']:>12,}")
+    tot = sum(s["listings"] for s in stats.values())
+    print(f"{'TOTAL':<20}{tot:>12,}{tot*ROWS_PER_LISTING:>14,}"
+          f"{sum(files.values()):>7}")
+    return files
+
+
+def zip_stores(out_root):
+    for b in sorted(os.listdir(out_root)):
+        d = os.path.join(out_root, b)
+        if not os.path.isdir(d):
+            continue
+        z = os.path.join(out_root, f"{b}_ebay_upload.zip")
+        with zipfile.ZipFile(z, "w", zipfile.ZIP_DEFLATED, compresslevel=6) as zf:
+            for f in sorted(os.listdir(d)):
+                if f.endswith(".csv"):
+                    zf.write(os.path.join(d, f), f"{b}/{f}")
+        print(f"  {z}  {os.path.getsize(z)/1e6:.1f} MB")
+
+
+def check(out_root):
+    """Structure, row cap, and the two things that would mix the data:
+    a SKU in more than one bucket, and a picture URL whose host is not the
+    bucket's own."""
+    bad = cap = cross = wrongpic = rows_tot = 0
+    seen = {}
+    for b in sorted(os.listdir(out_root)):
+        d = os.path.join(out_root, b)
+        if not os.path.isdir(d):
+            continue
+        base = STORES[b]["pic_base"].rstrip("/")
+        for fn in sorted(os.listdir(d)):
+            if not fn.endswith(".csv"):
+                continue
+            with open(os.path.join(d, fn), encoding="utf-8") as fh:
+                rows = list(csv.DictReader(fh))
+            rows_tot += len(rows)
+            if len(rows) + 1 > EB["max_rows_per_file"]:
+                cap += 1
+            i = 0
+            while i < len(rows):
+                p = rows[i]
+                kids = rows[i + 1:i + 1 + len(EB["colours"])]
+                if (p[ACTION] != "Add" or not p["CustomLabel"]
+                        or not p["PicURL"] or len(p["*Title"]) > 80
+                        or len(kids) != len(EB["colours"])
+                        or any(k[ACTION] or k["CustomLabel"]
+                               or k["Relationship"] != "Variation"
+                               or not k["*StartPrice"] for k in kids)):
+                    bad += 1
+                if not p["PicURL"].startswith(base):
+                    wrongpic += 1
+                if seen.setdefault(p["CustomLabel"], b) != b:
+                    cross += 1
+                i += 1 + len(kids)
+    print(f"rows {rows_tot:,}   structure problems {bad}   "
+          f"files over {EB['max_rows_per_file']:,} rows: {cap}")
+    print(f"SKUs appearing in more than one bucket: {cross}")
+    print(f"pictures pointing at another bucket's host: {wrongpic}")
+    return bad + cap + cross + wrongpic
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--jobs", default=os.path.join(HERE, "pool_jobs.json"))
-    ap.add_argument("--out", default=os.path.join(HERE, "ebay"))
+    ap.add_argument("--out", default=os.path.join(HERE, "out", "ebay"))
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--test", type=int, default=0)
-    # eBay File Exchange caps an upload at about 15 MB uncompressed, and a
-    # parent row carries a kilobyte of description HTML, so the split has to
-    # be by BYTES, not rows: 20,000 rows is 2 MB of children or 25 MB of
-    # parents depending on where the chunk falls. Measured on 20,000 designs:
-    # 170 MB for 320,000 rows, about 531 bytes a row on average.
-    ap.add_argument("--max-bytes", type=int, default=9_000_000)
-    ap.add_argument("--rows-per-file", type=int, default=0)
+    ap.add_argument("--require-pictures",
+                    help="file of keys present in the buckets, one per line")
+    ap.add_argument("--check", metavar="DIR")
+    ap.add_argument("--zip", action="store_true")
     a = ap.parse_args()
+    if a.check:
+        sys.exit(1 if check(a.check) else 0)
     jobs = json.load(open(a.jobs))
-    os.makedirs(a.out, exist_ok=True)
-
+    have = None
+    if a.require_pictures:
+        have = {l.strip() for l in open(a.require_pictures) if l.strip()}
+        print(f"pictures known present: {len(have):,} keys")
     if a.test:
-        rows = []
-        for j in jobs[:a.test]:
-            rows += rows_for(j, STORES[allocate.store_for(j["sku"])["bucket"]])
-        p = write(os.path.join(a.out, f"EBAY_WALLART_TEST_{a.test}.csv"), rows)
-        print(f"{p}  {len(rows):,} rows  "
-              f"({a.test} designs x {COLOURWAYS} colourways x "
-              f"{1+len(FRAMES)} rows)")
-        return
-
-    if a.limit:
-        jobs = jobs[:a.limit]
-    per, counts = {}, {}
-    files = []
-    for j in jobs:
-        b = allocate.store_for(j["sku"])["bucket"]
-        per.setdefault(b, []).extend(rows_for(j, STORES[b]))
-        counts[b] = counts.get(b, 0) + COLOURWAYS
-        if (a.rows_per_file and len(per[b]) >= a.rows_per_file) or \
-           (not a.rows_per_file and
-                sum(len(x) for r in per[b] for x in r) >= a.max_bytes):
-            n = len([f for f in files if f[0] == b]) + 1
-            files.append((b, write(os.path.join(
-                a.out, f"EBAY_{b}_{n:04d}.csv"), per[b]), len(per[b])))
-            per[b] = []
-    for b, rows in per.items():
-        if rows:
-            n = len([f for f in files if f[0] == b]) + 1
-            files.append((b, write(os.path.join(
-                a.out, f"EBAY_{b}_{n:04d}.csv"), rows), len(rows)))
-    print(f"{'bucket':<20}{'files':>7}{'rows':>14}{'listings':>12}")
-    for b in sorted(counts):
-        fs = [f for f in files if f[0] == b]
-        print(f"{b:<20}{len(fs):>7}{sum(f[2] for f in fs):>14,}{counts[b]:>12,}")
-    print(f"{'TOTAL':<20}{len(files):>7}{sum(f[2] for f in files):>14,}"
-          f"{sum(counts.values()):>12,}")
+        jobs = jobs[:a.test]
+    build(jobs, a.out, have, a.limit)
+    if a.zip:
+        zip_stores(a.out)
 
 
 if __name__ == "__main__":
