@@ -1539,3 +1539,30 @@ this wide.
 What would have avoided it: partition by PANEL COUNT rather than by range
 count, or hand out the 72 ranges to a work queue instead of striping them
 in advance. Striping is right when the pieces are equal, and these are not.
+
+## 19 Oct, 07:25 UTC - summing the pods' counters is NOT progress
+
+The 07:20 check read "436,800 panels rendered", DOWN from 448,200 an hour
+earlier. Nothing went backwards. Two slow pods had been replaced and a
+third had finished and been deleted, and a fresh pod's counter starts at
+zero, so the sum of what the live pods report is the work done by the
+CURRENT pods, not by the stage.
+
+This is the same trap `r2_count_stores.py` was written for on the
+generation side, arriving again one stage later. The bucket is the record.
+
+So the counter now takes a prefix: `COUNT_SUFFIX=listing/` counts the
+rendered pictures under `<store>/listing/` with the same 72-range
+partition that counts the panels under `<store>/gen/`. Two things that
+had to be got right:
+
+* the suffix is substituted into the shipped script BEFORE it is sent, not
+  read from the pod's environment - the pod is fresh and the variable
+  would simply be unset there, and the count would silently be of the
+  wrong prefix;
+* `os` had to be imported at module level, and the obvious guard against
+  double-importing it ("is '\nimport os' already in the file?") was wrong,
+  because the POD's inlined script contains `import os, json, time, boto3`.
+  The guard matched that and skipped the import, and the run died on
+  NameError. A test for the presence of a string in a file that contains
+  two programs is not a test of either one.

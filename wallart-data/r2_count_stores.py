@@ -9,7 +9,7 @@ number exact again without running the whole duplicate audit.
 
 Writes count.json and deletes its own pod.
 """
-import json, subprocess, sys, time
+import json, os, subprocess, sys, time
 
 API = "https://rest.runpod.io/v1"
 TEMPLATE = "vbsgwyibn1"
@@ -31,8 +31,15 @@ s3 = boto3.client("s3",
     aws_access_key_id=os.environ["R2_ACCESS_KEY_ID"],
     aws_secret_access_key=os.environ["R2_SECRET_ACCESS_KEY"],
     config=Config(signature_version="s3v4"), region_name="auto")
-STORES = [("luxvia-art","luxvia/gen/"), ("posterleaf-store1","store1/gen/"),
-          ("mercury-usm","store2/gen/"), ("lunar-kms","store7/gen/")]
+# SUFFIX lets the same partitioned reader count the RENDERED pictures under
+# <prefix>/listing/ as well as the panels under <prefix>/gen/. The pods'
+# own counters restart at zero whenever a pod is replaced, so summing them
+# is not progress - it went DOWN by 11,400 between two hourly checks on
+# 19 Oct because two slow pods had been swapped out. The bucket is the
+# record, here as everywhere else.
+SUFFIX = "__SUFFIX__"            # substituted BEFORE the script is shipped
+STORES = [("luxvia-art","luxvia/"+SUFFIX), ("posterleaf-store1","store1/"+SUFFIX),
+          ("mercury-usm","store2/"+SUFFIX), ("lunar-kms","store7/"+SUFFIX)]
 
 # PARTITIONED, NOT SERIAL. The old loop walked each bucket end to end, one
 # bucket after another, 1,000 keys per LIST call. At 800k panels that is
@@ -128,10 +135,16 @@ def curl(method, path, body=None):
 
 
 if __name__ == "__main__":
+    # The suffix is baked in HERE, not read from the pod's environment: the
+    # script runs on a fresh pod where COUNT_SUFFIX would simply be unset,
+    # and the count would silently be of the wrong prefix.
+    suffix = os.environ.get("COUNT_SUFFIX", "gen/")
+    script = SCRIPT.replace("__SUFFIX__", suffix)
+    print(f"counting <store>/{suffix}", flush=True)
     common = {"name": "wallart-count", "templateId": TEMPLATE,
               "imageName": "runpod/base:0.7.0-ubuntu2404",
               "containerDiskInGb": 20, "volumeInGb": 0,
-              "ports": ["8000/http"], "dockerStartCmd": ["bash", "-c", SCRIPT]}
+              "ports": ["8000/http"], "dockerStartCmd": ["bash", "-c", script]}
     TIERS = ({"computeType": "CPU", "cpuFlavorIds": ["cpu3g", "cpu3c"],
                    "vcpuCount": 4},
                   {"gpuTypeIds": ["NVIDIA RTX A4000", "NVIDIA RTX A4500",
