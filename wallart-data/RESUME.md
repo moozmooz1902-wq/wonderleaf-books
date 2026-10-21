@@ -1890,3 +1890,12 @@ logging to `<scratchpad>/wait_balance3.log`. A `tail` on it failed twice
 because `$S` was empty in the asking shell, not because the log was
 missing - `readlink /proc/<pid>/fd/1` is the way to find where a
 background process is really writing, and it settled it in one call.
+
+**The watcher cannot be the only net.** It died to a container restart at
+both the 14:18 and 15:18 checks, within an hour of being armed each time.
+So `wait_for_balance.sh` only ever covers part of an hour, and its
+handover to `render/fill_render.sh` may never fire at all. The hourly
+scheduled check is the thing that actually catches the balance returning;
+the watcher just narrows the delay inside the hour it happens to survive.
+Re-arm it every check, but do not report it as "the fleet will restart by
+itself" without saying the check is what guarantees that.
