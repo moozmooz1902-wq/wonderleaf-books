@@ -1934,3 +1934,42 @@ project has ever seen eBay accept.
 **So `ebay/LUXVIA_TEST_10.csv` is not a formality.** If it returns 21919053,
 the fix is to repeat those three fields on every child row, and the build
 has to be re-run on a pod. Ten listings now, or 1.88M failures later.
+
+### 21 Oct: sampled the BUCKETS instead of the log - the render is nearly done
+
+`render/done_parts.txt` lists 8 of 12 parts and I had been reporting "about
+85,000 panels left across three stores" from it. **That is wrong, and the
+log is the reason.** done_parts.txt is a LOCAL file; a pod that finished its
+ranges and was reaped before the marker was written, or a container restart,
+loses the entry. The panels are in R2 either way.
+
+Reads over the public `r2.dev` URLs need no credentials, so coverage can be
+measured directly. 150 panels sampled per bucket, colourway 0, black frame
+(`scratchpad/cov2.py`, allocation reproduced locally from `grid.py` +
+`allocate.py`):
+
+| bucket | hosted | rate | 95% CI | panels | listings |
+|---|---|---|---|---|---|
+| luxvia-art | 148/150 | 98.7% | 96.8-100% | ~473,729 | ~1,894,916 |
+| posterleaf-store1 | 150/150 | 100.0% | 100-100% | 191,837 | 767,348 |
+| lunar-kms | 148/150 | 98.7% | 96.8-100% | ~189,713 | ~758,852 |
+| mercury-usm | 132/150 | 88.0% | 82.8-93.2% | ~84,264 | ~337,056 |
+
+So **mercury-usm is the only real gap**, roughly 11,500 panels, not 85,000
+across three stores. luxvia's 98.7% cross-checks against the delivered file:
+1,884,908 listings is 471,227 panels of 480,131 allocated, 98.1%, and
+`--require-pictures` is what excluded the rest. The mechanism works; only my
+reading of the log was wrong.
+
+**Revised cost: about $10 finishes everything, not $25.** One pod for an
+hour or two on mercury's remainder (<$1), three store builds at ~$0.50 each,
+a count. $25 was sized against a render ten times larger than what is left.
+
+### All three frames confirmed live in all four buckets
+
+`stores.json` gives `lunar-kms` `"frames": ["black"]`. That describes
+lunar's EXISTING listings, not a limit on new work: `FRAMES` in
+`render/render_worker.py` is hardcoded `["black", "white", "oak"]` and runs
+for every store. Checked rather than inferred - 5 panels per bucket,
+colourways 0 and 3, all three frames, **120/120 HTTP 206 image/jpeg**,
+lunar included. A reader of stores.json alone would get this wrong.
