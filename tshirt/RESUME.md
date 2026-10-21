@@ -87,10 +87,18 @@ tried and failed. RunPod is wired up and needs no setup from the seller.
 
 ## 2026-10-06 - the upload set is finished
 
-`EBAY_PARTS_CLEAN.zip` is the file to push. 115,966 listings, 579,830
-variations, every one with a listing photo and a print master in the bucket,
-checked by diffing the file's SKUs against a real listing of the bucket
-rather than against a render log. `PUSH.md` says what to do with it.
+`EBAY_PARTS_CLEAN.zip` was the file to push AT THAT DATE. **It is
+superseded - do not push it.** It holds 115,966 listings at £12.99 with
+shipping policy 1, and predates both the variation-set fix for error
+21919053 and the title de-duplication.
+
+**The file to push is `EBAY_ONE_FILE.zip`** (7 Oct): 105,573 listings,
+527,865 variations, £11.99, shipping policy 2. The 10,393 fewer listings
+are redundant copies of titles that still collided after a distinguishing
+noun was appended, dropped on the seller's standing instruction - see
+PUSH.md. Every one of the 105,573 custom labels was verified to resolve to
+both `art/mock/<label>.jpg` and `art/raw/<label>.png` in `tshirt-m12k`.
+`PUSH.md` has the order of operations.
 
 Three things were added since the last entry:
 
@@ -113,3 +121,25 @@ Still open:
 - The seller has not yet run `EBAY_TEST_50.csv`.
 - A print-size bump of 10-15% was offered once the placement settled at
   mid-chest and has not been answered. The geometry is untouched.
+
+## 2026-10-21 - re-verified before hand-off
+
+Checked, not assumed, before telling the seller to push:
+
+- `EBAY_ONE_FILE.zip` passes `unzip -t`; the CSV re-parses to exactly
+  105,573 parent rows, 527,865 variation rows, 633,438 data rows, 30
+  columns, 105,573 distinct parent SKUs, zero parents without a PicURL.
+- Every variation is £11.99; every parent carries shipping 2 / returns 1 /
+  payment 1; parent `RelationshipDetails` is `Size=S;M;L;XL;2XL` and the
+  children repeat `*Category`/`*ConditionID`/`*Title`, so the 21919053 fix
+  is present in this file.
+- 8 listing photos sampled at random from the file: all HTTP 206 from
+  `pub-4b710c8610a84acc8fad1513f48132fd.r2.dev`. The bucket is still live
+  two weeks on.
+
+**Open conflict the seller must settle: the shipping policy.** This file
+uses `2`, on the seller's word recorded in PUSH.md. The repo-root
+`CLAUDE.md` states as a shared fact that on EVERY account the shipping,
+returns and payment policies are all named `1`. Both cannot be right, and
+it is one field. If a test upload returns a business-policy error, flip
+`ShippingProfileName` to 1 and nothing else changes.
