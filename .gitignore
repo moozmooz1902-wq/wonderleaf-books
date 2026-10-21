@@ -9,3 +9,9 @@ tshirt/EBAY_PART2of3.csv
 tshirt/EBAY_PART3of3.csv
 __pycache__/
 *.pyc
+
+# The gradient hashes dup_audit.py --fetch pulls down: 275 MB and growing,
+# one .jsonl per bucket-range. Re-derivable in one command from the panels
+# in R2, which are the real record, so committing it buys nothing and would
+# push individual files toward GitHub's limit.
+wallart-data/hashes/
