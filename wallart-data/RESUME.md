@@ -1899,3 +1899,38 @@ scheduled check is the thing that actually catches the balance returning;
 the watcher just narrows the delay inside the hour it happens to survive.
 Re-arm it every check, but do not report it as "the fleet will restart by
 itself" without saying the check is what guarantees that.
+
+### 21 Oct: luxvia re-verified, and one unresolved format risk
+
+Re-checked the delivered zip end to end, not from notes:
+
+- downloads at HTTP 200, 114,362,413 bytes, `unzip -t` clean
+- 16 CSVs, 4.3 GB unzipped, 7,539,632 data rows, 37 columns
+- **largest file 499,984 data rows** - every file under the 500,000 cap,
+  16 rows of headroom, which is the boundary fix holding
+- parent `PicURL` lists black first, so black is the main image as asked
+- shipping / returns / payment all `1`, price 19.99, category 360,
+  `RelationshipDetails = Color=Black;White;Oak|Size=A3 (29.7 x 42 cm)`
+- 6 listing pictures sampled at random from file 8: all HTTP 206 image/jpeg
+
+**THE RISK, unresolved and worth a test upload.** Our variation children
+carry their own specifics plus price and quantity, but do NOT repeat
+`*Category`, `*ConditionID` and `*Title`. Two sources in this repo disagree
+about whether that matters:
+
+- `wallart/build_ebay.py` on `claude/hopeful-rubin-u14pgu` says the child is
+  "price + quantity only", and claims it "matches the live tee files".
+- `tshirt/PUSH.md` says the tee file that ACTUALLY uploaded successfully
+  repeats `*Category`/`*ConditionID`/`*Title` on every child - found by
+  diffing field by field against a working file the seller supplied, after
+  error 21919053 killed all fifty rows of the first attempt.
+
+The second is the stronger evidence: it came from a confirmed-working file,
+not from a comment. The essential half of the 21919053 fix - the parent
+declaring the whole variation set - IS present here, so this may well be
+fine. But the luxvia file differs from the only multi-variation format this
+project has ever seen eBay accept.
+
+**So `ebay/LUXVIA_TEST_10.csv` is not a formality.** If it returns 21919053,
+the fix is to repeat those three fields on every child row, and the build
+has to be re-run on a pod. Ten listings now, or 1.88M failures later.
