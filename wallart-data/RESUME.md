@@ -1973,3 +1973,49 @@ lunar's EXISTING listings, not a limit on new work: `FRAMES` in
 for every store. Checked rather than inferred - 5 panels per bucket,
 colourways 0 and 3, all three frames, **120/120 HTTP 206 image/jpeg**,
 lunar included. A reader of stores.json alone would get this wrong.
+
+### 21 Oct: proved again that only THIS run's work can reach a CSV
+
+The seller asked a second time, so here is the evidence rather than the
+assurance. Four independent facts, each checked today.
+
+**1. The build is GRID-driven, not BUCKET-driven.** This is the structural
+guarantee and it is the one that actually matters. Rows come from
+`grid.expand(subjects)` - the deterministic job list - and the bucket is
+only ever used to FILTER it. A pre-existing object has no grid job, so no
+code path exists by which it could emit a row. The bucket cannot inject
+anything; it can only remove.
+
+**2. The SKU gate.** `SKU_RE = ^WA-[0-9a-f]{16}-[0-3]$` in build_ebay.py.
+The pre-existing catalogues use `M12K-*`, `WLT-*`, `hb_*`, `oc*`, `br*` and
+bare sequential numbers. None can match.
+
+**3. The path gate.** `PIC_RE` requires
+`https://<host>/<prefix>/gen/listing/WA-<16 hex>-<0-3>-(black|white|oak).jpg`.
+The `gen/` segment exists for exactly this reason, per stores.json. All 240
+pictures across the four test files sit under `luxvia/gen`, `store1/gen`,
+`store7/gen`, `store2/gen` - **zero outside the gen/ namespace**.
+
+**4. The old data is real, and it is somewhere else.** Probed today:
+
+    posterleaf-store1   store1/0000001_framed.jpg   206
+    lunar-kms           store7/0000001_framed.jpg   206
+    mercury-usm         store2/0000001_framed.jpg   206
+    luxvia-art          luxvia/0000001_framed.jpg   404
+
+Three buckets serve their old sequential files, confirming the pre-existing
+catalogues are live and untouched at paths `PIC_RE` rejects outright.
+luxvia 404s because its old convention is
+`luxvia/<category>/<slug>/1-mockup-black.jpg`, not sequential - which is
+what stores.json already said, so the 404 corroborates the record.
+
+**5. No WA- listing is live on the account the seller exported.** Their
+67 MB active-listings download holds 186,071 SKUs across 11 prefixes
+(M 74,117 / WLT 61,214 / hb 14,331 / oc 13,252 / br 8,477 / bd 4,365 /
+mo 3,817 / slg 2,910 / pl 1,669 / nt 1,663 / gp 256). **WA- count: 0.**
+
+So open question (d) - "were WA- panels from an earlier session already
+uploaded?" - is now answered NO for that account. It remains unverified for
+the other three, because no export of those was supplied. If the seller
+wants it closed, an active-listings download per account settles it in
+minutes by the same grep.
