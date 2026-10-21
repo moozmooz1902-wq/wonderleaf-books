@@ -2019,3 +2019,31 @@ uploaded?" - is now answered NO for that account. It remains unverified for
 the other three, because no export of those was supplied. If the seller
 wants it closed, an active-listings download per account settles it in
 minutes by the same grep.
+
+### 21 Oct 22:45 - the balance landed; two things bit on the way up
+
+**Order matters: do NOT start `render/reap.py` before the pods exist.** It
+gives up after three consecutive polls that see no render pods ("no render
+pods (3/3)", then "reaper window over") and exits. Capacity was dry when the
+balance first arrived, so the reaper I started alongside the fill loop was
+dead four minutes later, while the fill loop kept trying and eventually won
+four pods - which would then have billed idle with nothing to delete them.
+Start the fill loop first, wait until `/v1/pods` actually shows a
+`wa-render-*` RUNNING, and start the reaper only then. Check it is alive at
+every single check, not just when something looks wrong.
+
+**"NO CAPACITY" was real this time, and the raw probe is what proved it.**
+Within two minutes of the top-up: a 16-vCPU `cpu3g` pod rented fine at
+$0.64/hr, and ninety seconds later every tier - including the one that had
+just worked - answered "There are no longer any instances available with
+the requested specifications." Community CPU capacity is momentary, exactly
+what `fill_render.sh` was written for. It had all four parts up within half
+an hour. The lesson is not to stop probing raw; it is that the same message
+has two causes and only the raw body distinguishes them.
+
+**dup_audit.py prints nothing for a long time and that is normal.** The
+`--fetch` of 64 hash files (16 ranges x 4 buckets, 275 MB) completes, then
+the banded compare runs silently. A 40-minute wrapper killed it mid-compare
+having printed nothing at all, which reads like a hang. Run it with
+`python3 -u`, and once `hashes/` holds 64 .jsonl files drop `--fetch`
+entirely - the download is the cheap half and needs no repeating.
