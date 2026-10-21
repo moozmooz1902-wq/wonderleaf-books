@@ -1863,3 +1863,28 @@ Changed while arming it: it used to hand over to `fill_shards.sh`, the
 GENERATION filler, which is finished. It now hands over to
 `render/fill_render.sh`, and the target is settable, because the next
 outage will probably interrupt something else again.
+
+### 21 Oct: the Claude subscription came back, the RunPod balance did not
+
+The session was paused for about two days - 45 hourly checks queued up and
+arrived at once when it resumed. The seller said "its back on the
+subscription", which is the CLAUDE subscription. The two are unrelated
+accounts and the RunPod one is still empty: a raw create against
+`rest.runpod.io/v1/pods` on 21 Oct 13:3x still answers
+
+    {"error":"create pod: Your account balance is too low to rent a pod.
+     Please add funds to your account.","status":500}
+
+`launch_render.py` prints only "NO CAPACITY" for this, because it reports
+that whenever no tier returns an id. **Do not read NO CAPACITY as absent
+capacity - probe the API raw to get the reason.** The launcher swallowing
+the error body is the single most misleading thing in this pipeline.
+
+Nothing was lost by the two-day pause. Zero pods are billing (the eleven
+pods the API lists are EXITED t-shirt-line pods, not this line's), burn is
+$0.00/hr, and the eight finished render parts are in R2 where they were.
+Still to render: parts 3, 8, 10, 12, about 85,000 panels.
+
+`wait_for_balance.sh` re-armed, handing over to `render/fill_render.sh`.
+Its log went to `/wait_balance3.log` rather than the scratchpad - the same
+`$S`-unset quirk as before, harmless.
