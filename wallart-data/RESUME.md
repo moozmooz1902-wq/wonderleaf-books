@@ -1885,6 +1885,8 @@ pods the API lists are EXITED t-shirt-line pods, not this line's), burn is
 $0.00/hr, and the eight finished render parts are in R2 where they were.
 Still to render: parts 3, 8, 10, 12, about 85,000 panels.
 
-`wait_for_balance.sh` re-armed, handing over to `render/fill_render.sh`.
-Its log went to `/wait_balance3.log` rather than the scratchpad - the same
-`$S`-unset quirk as before, harmless.
+`wait_for_balance.sh` re-armed, handing over to `render/fill_render.sh`,
+logging to `<scratchpad>/wait_balance3.log`. A `tail` on it failed twice
+because `$S` was empty in the asking shell, not because the log was
+missing - `readlink /proc/<pid>/fd/1` is the way to find where a
+background process is really writing, and it settled it in one call.
