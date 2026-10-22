@@ -2257,13 +2257,16 @@ way and that buyers understand it. Rendering 3,772,980 unframed images
 would have been about $35 one-off plus ~$13/month, and was declined. Do not
 re-propose it.
 
-**Titles no longer say "Framed."** All six templates did. That was right
-when the listing sold a framed A3 and nothing else; with three of twelve
-variations unframed it would be false for part of what the buyer can
-choose, and the title is the strongest claim a listing makes. The seller's
-own live titles do not say it either ("Corgi Line Art Continuous Sage Green
-A4 Wall Art Print"), so this matches their convention. The keyword tail
-still carries "wall art print" and "picture".
+**Titles DO say "Framed" - I removed it and the seller put it back.**
+I argued that with three of twelve variations unframed, a title promising
+"Framed" is false for part of what the buyer can choose. They overruled it
+on 22 Oct and the reason is better than mine: the framed print is what
+these listings actually sell, those exact titles are the ones proven to
+convert on their account, and the unframed option exists for the minority
+who deliberately go looking for it. Their listings have sold this way for
+a long time. The description still states both options plainly, so the
+listing as a whole does not mislead. **Do not remove it again without
+asking them.**
 
 Description rewritten to name all three sizes and both options, and the
 "message us for a different size" line dropped - it sells all three now.

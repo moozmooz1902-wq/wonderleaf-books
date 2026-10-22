@@ -68,22 +68,29 @@ PAL = {"duotone": "Duotone", "complementary": "Bold Colour",
 # Each template is (parts...) joined with spaces; {s} subject, {t} technique,
 # {k} kind, {g} composition, {p} palette. The tail carries the keywords a
 # buyer actually types.
-# NO TEMPLATE SAYS "FRAMED". Every one of them used to, and that was right
-# while the listing sold a framed A3 and nothing else. It now sells twelve
-# variations and three of them are Unframed Print Only, so a title promising
-# "Framed Wall Art Picture" would be false for a quarter of what a buyer can
-# put in the basket - and it is the title, not the photograph, that eBay
-# reads as the description of the item. The seller's own live listings do
-# not say it either ("Corgi Line Art Continuous Sage Green A4 Wall Art
-# Print"), so this follows their convention rather than departing from it.
-# The keyword tail still carries "wall art print" and "picture".
+# THESE TITLES SAY "FRAMED" ON PURPOSE - the seller's instruction, 22 Oct.
+#
+# I removed the word when the listing gained three Unframed Print Only
+# variations, reasoning that a title promising "Framed" is false for part
+# of what the buyer can choose. The seller overruled it, and their reason
+# is better than mine: the framed print IS the product these listings sell,
+# the titles are the ones already proven to convert on their account, and
+# the unframed option exists for the minority of buyers who come looking
+# for it and who select it deliberately. Their existing listings have sold
+# this way for a long time.
+#
+# The description still states both options plainly, including that the
+# photographs show the framed versions and the unframed option has no frame
+# and no mount, so the listing as a whole is not claiming otherwise.
+#
+# DO NOT remove "Framed" again without asking the seller.
 TEMPLATES = [
-    "{s} {t} {k} Print - Wall Art Picture",
-    "{s} Wall Art Print - {t} {k} Picture",
-    "{t} Print - {s} {k} Wall Art Picture",
-    "{s} {g} {t} Print - Wall Art",
-    "{s} {k} Wall Art - {p} {t} Print",
-    "{t} {s} Print - {k} Wall Art Picture",
+    "{s} {t} {k} Print - Framed Wall Art Picture",
+    "{s} Wall Art Print - {t} {k} Framed Picture",
+    "Framed {t} Print - {s} {k} Wall Art Picture",
+    "{s} {g} {t} Print - Framed Wall Art",
+    "{s} {k} Wall Art - {p} {t} Framed Print",
+    "{t} {s} Print - {k} Framed Wall Art Picture",
 ]
 
 
@@ -98,7 +105,7 @@ def _sub(s):
 def title(job):
     """Build a title, then make it FIT. Trimming drops the optional middle
     before it touches the subject or the keyword tail: a buyer searches for
-    the subject and for "wall art print", and neither may be the
+    the subject and for "framed wall art print", and neither may be the
     thing that falls off the end."""
     f = dict(s=_sub(job["subject"]), t=TECH.get(job["tech"], _sub(job["tech"])),
              k=KIND.get(job["kind"], ""), g=GRAM.get(job["gram"], ""),
@@ -112,7 +119,7 @@ def title(job):
             return t
     # Every template too long: keep the subject and the keywords, drop the
     # rest. Still measured, never assumed.
-    t = f"{f['s']} Wall Art Print"
+    t = f"{f['s']} Framed Wall Art Print"
     return t[:MAX_TITLE].rstrip(" -")
 
 
