@@ -2289,3 +2289,37 @@ than three, and eBay may require a picture for every value of the
 picture-defining specific - which would reject the empty unframed PicURL.
 The 10-listing tests must answer that BEFORE ~$5 of rebuild is spent, or it
 gets spent twice.
+
+### 22 Oct 06:05 - ALL FOUR REBUILT AND VERIFIED at the new pricing
+
+    store               listings     files      rows   zip
+    luxvia-art         1,884,908        50  24,503,804  173 MB
+    lunar-kms            756,452        20   9,833,876   70 MB
+    posterleaf-store1    754,812        20   9,812,556   70 MB
+    mercury-usm          376,808        10   4,898,504   35 MB
+    -----------------------------------------------------------
+    TOTAL              3,772,980       100  49,048,740
+
+Same 3,772,980 listings as before - repricing changes rows per listing,
+not how many listings exist. 13 rows each now (1 parent + 12 variations)
+against 4 before, so the row count roughly triples and the file count goes
+from 34 to 100.
+
+Verified from the DOWNLOADED zips, never the pods' own reports:
+- all four pass `unzip -t`
+- largest file **499,980 data rows**, under the 500,000 cap, in every store
+- `build_ebay.py --check` on each: **0** structure problems, **0** files
+  over the cap, **0** SKUs in two buckets, **0** pictures on another
+  bucket's host, **0 rows that are not this run's generated work**
+- titles contain "Framed" in all four (the seller's wording, restored)
+- all six prices present: 8.99 12.99 18.99 24.99 29.99 34.99
+- unframed rows carry an EMPTY PicURL; every framed row has one
+- 48/48 sampled pictures live across the four stores
+- 49,048,740 / 3,772,980 = exactly 13.0 rows per listing
+
+Every pod deleted, burn $0.00/hr. The reprice round cost about $2; the
+whole top-up is down roughly $8.
+
+One wasted build in the middle: three stores finished with titles that had
+"Framed" removed before the seller overruled that change, so they were
+built twice. About $0.40.
