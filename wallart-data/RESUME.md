@@ -2121,3 +2121,33 @@ matching pod's done marker - the `wa-render` test on line 114 only gates
 whether the part is recorded in done_parts.txt. Verified before launching
 eight pods at $5.12/hr, because idle fixhash pods are what leaked ~$2 on
 19 Oct.
+
+### 22 Oct 02:40 - the hash gap was in ALL THREE stores, and the repair closed it
+
+The repair worked, measured by re-fetching every hash file and recounting
+against the panels each store is allocated:
+
+    posterleaf-store1   181,142 -> 192,029   +10,887   100.0% hashed
+    lunar-kms           162,243 -> 192,327   +30,084   100.0% hashed
+
+Both built after that, not before.
+
+**mercury-usm had the same gap and I nearly missed it**, because its hash
+count had looked consistent with its sampled picture rate (85,835 against
+an estimated 84,264) and I built it on that basis. Two things were wrong.
+First, that sample was taken BEFORE part 3 and the other parts finished, so
+mercury's real picture coverage had risen well above the 88% measured.
+Second, and unexplained: mercury's hash count **went DOWN** across the
+re-fetch, 85,835 to 82,731. Possibly a merge rewriting a range file while
+it was being read, possibly a stale r2.dev response. Not diagnosed.
+
+What settled it was the probe, not the arithmetic: of 50 hash-less mercury
+panels, **48 had live pictures (96%)**. So 13,891 hash-less panels, about
+13,300 with pictures, roughly **53,000 listings** the running build was
+discarding. That build was deleted (204) and four repair pods launched.
+
+**The rule, now that it has bitten three times out of three:** before
+building ANY store, count its hashes and probe a sample of the hash-less
+panels for pictures. A count that merely looks plausible is not enough -
+mercury's did, and it was wrong by 13,000 panels. Do not infer the gap from
+a coverage sample taken at a different time.
