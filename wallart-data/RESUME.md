@@ -2080,3 +2080,44 @@ Also: do NOT pipe a background command through `tail` for monitoring.
 `bash run_audits.sh 2>&1 | tail -40` holds every line until the pipe closes,
 so the task output file stayed empty for twenty minutes while the script was
 working fine. The drop files appearing on disk were the only honest signal.
+
+### 22 Oct 01:30 - the two builds would have silently lost 156,000 listings
+
+Caught before delivery, and only because the local audit's panel counts
+looked too small. **`build_pod.py` decides "this panel has pictures" from
+the HASHES, not from the pictures:**
+
+    skus, V = read_hashes(c, a.store)
+    have = set((b, s) for s, b in skus)
+
+A panel rendered by a pod that was deleted mid-range has pictures and no
+hash, so it is excluded with no error anywhere. This is the same fault that
+cost luxvia 35,608 panels, already in this file - it just had never been
+checked for the other stores.
+
+Hashes against pictures, and then PROVED rather than inferred by sampling
+hash-less panels and fetching their pictures:
+
+    posterleaf-store1  181,142 hashed of 191,837   12,559 hash-less, 85% have pictures
+    lunar-kms          162,243 hashed of 192,277   31,611 hash-less, 90% have pictures
+    mercury-usm         85,835 hashed              no gap
+
+That is roughly 10,700 + 28,400 panels, about **156,000 listings** that both
+builds were in the middle of dropping. Both build pods were deleted (204)
+rather than left to finish a file that would have to be thrown away, and
+eight `--hash-only --bucket` repair pods launched instead. The repair reads
+the range's existing hash file, processes only the panels missing from it,
+and uploads no pictures, so it is bounded by the 44,000-panel gap rather
+than the 384,000 panels in the two stores.
+
+**Check this for every store before trusting any build.** The count the
+local audit prints - "N panels, 256-bit hashes" - is the hash count. Compare
+it against the allocated panel count; a gap of more than a per-cent means
+run the repair first. The build gives no warning, and a short file looks
+exactly like a correct one.
+
+Reaper note: `PREFIX` already covers `wa-fixhash`, and the kill fires on any
+matching pod's done marker - the `wa-render` test on line 114 only gates
+whether the part is recorded in done_parts.txt. Verified before launching
+eight pods at $5.12/hr, because idle fixhash pods are what leaked ~$2 on
+19 Oct.
