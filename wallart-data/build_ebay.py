@@ -146,6 +146,13 @@ def rows_for(job, store):
     frames = EB["frames"]
     unframed = EB["print_only"]
     sizes = EB["sizes"]
+    # PER-STORE PRICING. The base prices in ebay_plan.json are what most
+    # buckets sell at; a bucket named in store_price_adjust adds its own
+    # amount on top. lunar-kms is +10 framed / +5 unframed, set by the
+    # seller on 22 Oct. Added rather than overridden so a change to a base
+    # price moves every store together and the gap survives it.
+    adj = EB.get("store_price_adjust", {}).get(store["bucket"],
+                                               {"framed": 0.0, "print": 0.0})
     vals = ";".join(frames + [unframed])
     size_vals = ";".join(s["label"] for s in sizes)
     for ci in range(EB["colourways"]):
@@ -207,12 +214,13 @@ def rows_for(job, store):
         for c in frames + [unframed]:
             framed = c in frames
             for s in sizes:
+                price = (s["framed"] + adj["framed"] if framed
+                         else s["print"] + adj["print"])
                 k = dict.fromkeys(HEADER, "")
                 k.update({"Relationship": "Variation",
                           "RelationshipDetails":
                               f'Color={c}|Size={s["label"]}',
-                          "*StartPrice":
-                              f'{(s["framed"] if framed else s["print"]):.2f}',
+                          "*StartPrice": f"{price:.2f}",
                           "*Quantity": str(EB["quantity"]),
                           # one declaration per row until all three are
                           # placed; every later row leaves PicURL empty.

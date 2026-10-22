@@ -18,6 +18,11 @@
     {"label": "A2 (42x59.4 cm)", "framed": 34.99, "print": 18.99}
   ],
 
+  "_store_price_note": "Per-store adjustment in GBP, added to every price for that bucket. The seller set lunar-kms higher on 22 Oct: +10 on framed, +5 on unframed. A bucket with no entry here uses the base prices above. Adjustments are ADDED, so changing a base price moves every store together and keeps the gap.",
+  "store_price_adjust": {
+    "lunar-kms": {"framed": 10.00, "print": 5.00}
+  },
+
   "profiles": {
     "shipping": "1",
     "returns": "1",

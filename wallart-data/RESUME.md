@@ -2371,3 +2371,24 @@ specifics this catalogue does not - `C:Item Length`, `C:Item Width`,
 required by eBay with a `*`, though some are empty in their own data rows.
 They said everything apart from the picture format was fine, so these are
 left alone. If a test upload returns item-specific warnings, start here.
+
+### 22 Oct: lunar-kms sells higher than the rest
+
+Seller's instruction: lunar-kms is **+10 framed and +5 unframed** against
+the base prices.
+
+    bucket              framed A4/A3/A2        unframed A4/A3/A2
+    luxvia-art          24.99 29.99 34.99       8.99 12.99 18.99
+    posterleaf-store1   24.99 29.99 34.99       8.99 12.99 18.99
+    mercury-usm         24.99 29.99 34.99       8.99 12.99 18.99
+    lunar-kms           34.99 39.99 44.99      13.99 17.99 23.99
+
+Done as `store_price_adjust` in ebay_plan.json, an amount ADDED per bucket
+rather than a second price list. A bucket with no entry uses the base
+prices, and changing a base price moves every store together so the gap
+survives it. `rows_for` reads it from `store["bucket"]`.
+
+Caught lunar's build mid-flight and deleted that pod rather than let it
+finish at the wrong prices; the other three were already correct and were
+left running. `build_all.sh` was stopped too so it could not relaunch lunar
+from the old plan.
