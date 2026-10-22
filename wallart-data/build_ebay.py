@@ -93,7 +93,8 @@ HEADER = [ACTION, "CustomLabel", "*Category", "StoreCategory", "*Title",
           "C:Material", "C:Production Technique", "C:Orientation",
           "C:Features", "C:Unit Type"]
 
-ROWS_PER_LISTING = 1 + len(EB["colours"])
+VARIATIONS = (len(EB["frames"]) + 1) * len(EB["sizes"])   # 4 colours x 3 sizes
+ROWS_PER_LISTING = 1 + VARIATIONS
 # ONE PANEL IS FOUR LISTINGS, so rows arrive sixteen at a time, not four.
 # The first version flushed at LISTINGS_PER_FILE * ROWS_PER_LISTING, which
 # is 499,996 - and since the buffer is only ever checked after a whole
@@ -103,7 +104,8 @@ ROWS_PER_LISTING = 1 + len(EB["colours"])
 #
 # So the cap is expressed as what it is: the most DATA rows a file may
 # hold, with room left for one more panel's worth before the next check.
-ROWS_PER_PANEL = COLOURWAYS_ROWS = (1 + len(EB["colours"])) * EB["colourways"]
+ROWS_PER_PANEL = COLOURWAYS_ROWS = (
+    (1 + (len(EB["frames"]) + 1) * len(EB["sizes"])) * EB["colourways"])
 MAX_DATA_ROWS = EB["max_rows_per_file"] - 1          # the header is a row
 
 # eBay wants a Theme a buyer would browse, not our grammar codes.
@@ -127,10 +129,25 @@ def pic(store, sku, colour):
 
 def rows_for(job, store):
     """Four listings for one panel - one per colourway - each a parent plus
-    one Variation row per frame colour."""
+    one Variation row per frame colour PER SIZE.
+
+    Twelve variations: Black, White, Oak and Unframed Print Only, each in
+    A4, A3 and A2. The shape and the "Unframed Print Only" wording are
+    copied from the seller's live listings (WALLART_REPRICE.csv), not
+    invented.
+
+    The unframed rows carry NO PicURL. That is deliberate and is the
+    seller's call: no unframed photograph was ever rendered, so eBay falls
+    back to the listing's main image, the black frame. Pointing the
+    unframed rows at a framed photograph instead would be a picture of a
+    frame on a product that has none.
+    """
     out = []
-    size = EB["size"]
-    vals = ";".join(EB["colours"])
+    frames = EB["frames"]
+    unframed = EB["print_only"]
+    sizes = EB["sizes"]
+    vals = ";".join(frames + [unframed])
+    size_vals = ";".join(s["label"] for s in sizes)
     for ci in range(EB["colourways"]):
         sku = f'{job["sku"]}-{ci}'
         j = {**job, "sku": sku}
@@ -139,14 +156,14 @@ def rows_for(job, store):
         bad = LT.check(title, desc)
         if bad:
             return None, bad
-        pics = [pic(store, sku, c) for c in EB["colours"]]
+        pics = [pic(store, sku, c) for c in frames]
         if not SKU_RE.match(sku) or not all(PIC_RE.match(u) for u in pics):
             return None, [f"not this run's work: {sku}"]
         p = dict.fromkeys(HEADER, "")
         p.update({
             ACTION: "Add", "CustomLabel": sku, "*Category": EB["category"],
             "*Title": title,
-            "RelationshipDetails": f"Color={vals}|Size={size}",
+            "RelationshipDetails": f"Color={vals}|Size={size_vals}",
             "*ConditionID": EB["condition_id"], "*Description": desc,
             "PicURL": "|".join(pics),            # black first = main image
             "*Format": "FixedPrice", "*Duration": "GTC",
@@ -164,19 +181,30 @@ def rows_for(job, store):
             "C:Material": "Paper",
             "C:Production Technique": "Digital Print",
             "C:Orientation": "Portrait",
-            "C:Features": "Framed", "C:Unit Type": "Unit",
+            # No C:Features: the listing sells framed AND unframed, so
+            # stating "Framed" as an item specific would be false for a
+            # third of what it offers.
+            "C:Unit Type": "Unit",
         })
         out.append(p)
-        for c in EB["colours"]:
-            k = dict.fromkeys(HEADER, "")
-            k.update({"Relationship": "Variation",
-                      "RelationshipDetails": f"Color={c}|Size={size}",
-                      "*StartPrice": f'{EB["price"]:.2f}',
-                      "*Quantity": str(EB["quantity"]),
-                      "PicURL": pic(store, sku, c),
-                      "C:Size": size, "C:Frame": c, "C:Framing": "Framed",
-                      "C:Colour": c})
-            out.append(k)
+        for c in frames + [unframed]:
+            framed = c in frames
+            for s in sizes:
+                k = dict.fromkeys(HEADER, "")
+                k.update({"Relationship": "Variation",
+                          "RelationshipDetails":
+                              f'Color={c}|Size={s["label"]}',
+                          "*StartPrice":
+                              f'{(s["framed"] if framed else s["print"]):.2f}',
+                          "*Quantity": str(EB["quantity"]),
+                          # framed rows show their own frame; the unframed
+                          # row shows nothing, so eBay uses the main image
+                          "PicURL": pic(store, sku, c) if framed else "",
+                          "C:Size": s["label"],
+                          "C:Frame": c if framed else "",
+                          "C:Framing": "Framed" if framed else "Unframed",
+                          "C:Colour": c})
+                out.append(k)
     return out, None
 
 
@@ -271,10 +299,10 @@ def check(out_root):
             i = 0
             while i < len(rows):
                 p = rows[i]
-                kids = rows[i + 1:i + 1 + len(EB["colours"])]
+                kids = rows[i + 1:i + 1 + VARIATIONS]
                 if (p[ACTION] != "Add" or not p["CustomLabel"]
                         or not p["PicURL"] or len(p["*Title"]) > 80
-                        or len(kids) != len(EB["colours"])
+                        or len(kids) != VARIATIONS
                         or any(k[ACTION] or k["CustomLabel"]
                                or k["Relationship"] != "Variation"
                                or not k["*StartPrice"] for k in kids)):

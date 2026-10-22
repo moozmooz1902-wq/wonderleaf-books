@@ -12,7 +12,7 @@ for fn in sorted(os.listdir(D)):
     probs=[]
     parents=[r for r in rows if r.get("Relationship")!="Variation"]
     kids=[r for r in rows if r.get("Relationship")=="Variation"]
-    if len(kids)!=len(parents)*len(B.EB["colours"]):
+    if len(kids)!=len(parents)*B.VARIATIONS:
         probs.append(f"{len(parents)} parents but {len(kids)} children")
     # parent followed by exactly its own children
     i=0
@@ -21,7 +21,7 @@ for fn in sorted(os.listdir(D)):
             probs.append(f"row {i}: variation with no parent"); break
         n=0; j=i+1
         while j<len(rows) and rows[j].get("Relationship")=="Variation": n+=1; j+=1
-        if n!=len(B.EB["colours"]): probs.append(f"parent at {i} has {n} children")
+        if n!=B.VARIATIONS: probs.append(f"parent at {i} has {n} children")
         i=j
     for r in rows:
         for u in (r.get("PicURL") or "").split("|"):

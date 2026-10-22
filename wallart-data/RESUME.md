@@ -2228,3 +2228,61 @@ repeat *Category/*ConditionID/*Title; the tee file eBay actually accepted
 does. Four 10-listing test files exist in ebay/tests/ for exactly this. If
 one returns 21919053, all four store builds need re-running - which is now
 cheap and well understood, but it is four pods, so the test comes first.
+
+### 22 Oct 05:00 - repriced to the seller's go-to structure, 12 variations
+
+The flat A3-framed-19.99 listing is replaced by twelve variations, taken
+from the seller's prices given 22 Oct:
+
+    Framed   Black / White / Oak      A4 24.99   A3 29.99   A2 34.99
+    Unframed "Unframed Print Only"    A4  8.99   A3 12.99   A2 18.99
+
+**The shape was copied from their live listings, not invented.**
+`tshirt/WALLART_REPRICE.csv` is their active-listings export, and it shows
+their real wall-art listings written as
+
+    parent   Color=Black;Unframed Print Only|Size=A3 (29.7x42 cm)
+    child    Color=Black|Size=A3 (29.7x42 cm)              19.99
+    child    Color=Unframed Print Only|Size=A3 (29.7x42 cm) 8.99
+
+So "Unframed Print Only" is a COLOUR value on their account, and the size
+string has no spaces around the x. Both copied exactly. The old flat prices
+there are the cheaper structure they used while an account had lower
+selling limits.
+
+**No unframed picture is rendered, by the seller's decision.** The unframed
+rows carry an empty PicURL, so eBay falls back to the listing's main image,
+the black frame. They confirmed their existing listings already work this
+way and that buyers understand it. Rendering 3,772,980 unframed images
+would have been about $35 one-off plus ~$13/month, and was declined. Do not
+re-propose it.
+
+**Titles no longer say "Framed."** All six templates did. That was right
+when the listing sold a framed A3 and nothing else; with three of twelve
+variations unframed it would be false for part of what the buyer can
+choose, and the title is the strongest claim a listing makes. The seller's
+own live titles do not say it either ("Corgi Line Art Continuous Sage Green
+A4 Wall Art Print"), so this matches their convention. The keyword tail
+still carries "wall art print" and "picture".
+
+Description rewritten to name all three sizes and both options, and the
+"message us for a different size" line dropped - it sells all three now.
+`C:Features` is no longer "Framed" on the parent, because the parent sells
+both.
+
+Checked locally before any pod: one panel yields 52 rows (4 colourways x
+(1 parent + 12 variations)); all six prices appear; the unframed rows have
+no picture and the framed ones point at their own colour; `--check` passes
+on four regenerated 10-listing test files with 0 problems and 30/30
+pictures live each.
+
+**Pre-existing wording, not introduced here:** the description can read "in
+colourful" where the palette word is an adjective. It is in the delivered
+3.77M too. Worth a pass over PAL some time.
+
+**NOT yet rebuilt.** The four store files still carry the old flat 19.99
+A3-only structure. Twelve variations is a much bigger structural change
+than three, and eBay may require a picture for every value of the
+picture-defining specific - which would reject the empty unframed PicURL.
+The 10-listing tests must answer that BEFORE ~$5 of rebuild is spent, or it
+gets spent twice.

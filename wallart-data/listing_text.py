@@ -68,13 +68,22 @@ PAL = {"duotone": "Duotone", "complementary": "Bold Colour",
 # Each template is (parts...) joined with spaces; {s} subject, {t} technique,
 # {k} kind, {g} composition, {p} palette. The tail carries the keywords a
 # buyer actually types.
+# NO TEMPLATE SAYS "FRAMED". Every one of them used to, and that was right
+# while the listing sold a framed A3 and nothing else. It now sells twelve
+# variations and three of them are Unframed Print Only, so a title promising
+# "Framed Wall Art Picture" would be false for a quarter of what a buyer can
+# put in the basket - and it is the title, not the photograph, that eBay
+# reads as the description of the item. The seller's own live listings do
+# not say it either ("Corgi Line Art Continuous Sage Green A4 Wall Art
+# Print"), so this follows their convention rather than departing from it.
+# The keyword tail still carries "wall art print" and "picture".
 TEMPLATES = [
-    "{s} {t} {k} Print - Framed Wall Art Picture",
-    "{s} Wall Art Print - {t} {k} Framed Picture",
-    "Framed {t} Print - {s} {k} Wall Art Picture",
-    "{s} {g} {t} Print - Framed Wall Art",
-    "{s} {k} Wall Art - {p} {t} Framed Print",
-    "{t} {s} Print - {k} Framed Wall Art Picture",
+    "{s} {t} {k} Print - Wall Art Picture",
+    "{s} Wall Art Print - {t} {k} Picture",
+    "{t} Print - {s} {k} Wall Art Picture",
+    "{s} {g} {t} Print - Wall Art",
+    "{s} {k} Wall Art - {p} {t} Print",
+    "{t} {s} Print - {k} Wall Art Picture",
 ]
 
 
@@ -89,7 +98,7 @@ def _sub(s):
 def title(job):
     """Build a title, then make it FIT. Trimming drops the optional middle
     before it touches the subject or the keyword tail: a buyer searches for
-    the subject and for "framed wall art print", and neither may be the
+    the subject and for "wall art print", and neither may be the
     thing that falls off the end."""
     f = dict(s=_sub(job["subject"]), t=TECH.get(job["tech"], _sub(job["tech"])),
              k=KIND.get(job["kind"], ""), g=GRAM.get(job["gram"], ""),
@@ -103,18 +112,23 @@ def title(job):
             return t
     # Every template too long: keep the subject and the keywords, drop the
     # rest. Still measured, never assumed.
-    t = f"{f['s']} Framed Wall Art Print"
+    t = f"{f['s']} Wall Art Print"
     return t[:MAX_TITLE].rstrip(" -")
 
 
-# THE SIZE THE LISTING ACTUALLY SELLS, read from the same place the
-# variation rows get it. The first version listed all three A sizes in the
-# description while the listing offered only A3 as a variation - a listing
-# that advertises three sizes and sells one is a dispute waiting to happen,
-# and it was caught by reading the finished file rather than by any check,
-# because no check knows what the prose is claiming.
-SIZE = json.load(open(os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "ebay_plan.json")))["size"]
+# WHAT THE LISTING ACTUALLY SELLS, read from the same place the variation
+# rows get it, so the prose and the rows cannot drift apart. An early
+# version listed all three A sizes in the description while the listing
+# offered only A3 as a variation - a listing that advertises three sizes
+# and sells one is a dispute waiting to happen, and no check caught it
+# because no check knows what the prose is claiming. The listing now really
+# does sell all three sizes, framed and unframed, so the description says
+# so and names the unframed option explicitly.
+_EB = json.load(open(os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "ebay_plan.json")))
+SIZES = [s["label"] for s in _EB["sizes"]]
+FRAMES = _EB["frames"]
+PRINT_ONLY = _EB["print_only"]
 
 
 def description(job, t):
@@ -129,24 +143,27 @@ def description(job, t):
       f'<h2>{H.escape(t)}</h2>'
       f'<p>A {kind} wall art print in a {tech} style, '
       f'{"composed as " + H.escape(comp.lower()) + ", " if comp else ""}'
-      f'in {pal}. Printed to order on heavyweight art paper and supplied '
-      f'framed and ready to hang.</p>'
-      '<h3>Frame</h3>'
-      '<p>Choose <b>black</b>, <b>white</b> or <b>oak</b> at checkout. '
-      'The main photograph shows the black frame.</p>'
+      f'in {pal}. Printed to order on heavyweight art paper, available '
+      f'framed and ready to hang or as an unframed print.</p>'
+      '<h3>Choose at checkout</h3>'
+      f'<p><b>Framed</b> in {", ".join(x.lower() for x in FRAMES[:-1])} or '
+      f'{FRAMES[-1].lower()}, or <b>{H.escape(PRINT_ONLY.lower())}</b> if '
+      'you would rather use a frame of your own. The photographs show the '
+      'framed versions; the unframed option is the print on its own, with '
+      'no frame and no mount.</p>'
+      f'<p>Sizes: <b>{"</b>, <b>".join(H.escape(x) for x in SIZES)}</b>.</p>'
       '<h3>Details</h3><ul>'
       '<li>Giclee-style print on heavyweight matte art paper</li>'
-      '<li>Wooden moulding, glazed front, hanging fixture fitted</li>'
-      f'<li>Size: {SIZE}</li>'
-      '<li>Printed and framed in the United Kingdom</li>'
+      '<li>Framed: wooden moulding, glazed front, hanging fixture fitted</li>'
+      '<li>Unframed: the print only, no frame and no mount</li>'
+      '<li>Printed in the United Kingdom</li>'
       '<li>Dispatched carefully packed in protective board</li>'
       '</ul>'
       '<h3>Please note</h3>'
       '<p>This is a printed reproduction of digitally created artwork. '
       'It is not a painting and it is not signed. Colours can vary slightly '
       'between screens and print.</p>'
-      '<p>Message us before ordering if you need a different size and we '
-      'will do our best to help.</p></div>')
+      '</div>')
 
 
 def check(t, d=""):

@@ -49,7 +49,7 @@ for bucket, cand in bybucket.items():
     while len(picked) < PANELS_PER_BUCKET and i < len(cand):
         j = cand[i]; i += 1
         urls = [B.pic(st, f'{j["sku"]}-{ci}', c)
-                for ci in range(B.EB["colourways"]) for c in B.EB["colours"]]
+                for ci in range(B.EB["colourways"]) for c in B.EB["frames"]]
         with ThreadPoolExecutor(max_workers=6) as ex:
             oks = list(ex.map(live, urls))
         if all(oks):

@@ -1,18 +1,23 @@
 {
-  "_note": "eBay settings for the IMAGE-BASED wall-art catalogue. Taken from the seller's LIVE listings, not invented: WALLART_REPRICE.csv is built from their active-listings export and shows category 'Art Prints (360)', variations on Color and Size, and framed A3 now selling at 19.99 after the reprice (it was 29.95). plan.json on claude/hopeful-rubin-u14pgu supplies condition, dispatch, profiles and the 500,000-row cap. Change price here and every row changes.",
+  "_note": "eBay settings for the IMAGE-BASED wall-art catalogue. Taken from the seller's LIVE listings, not invented. WALLART_REPRICE.csv is their active-listings export; it shows category 'Art Prints (360)' and variations written as Color=Black;Unframed Print Only|Size=A3 (29.7x42 cm), with Black at 19.99 and Unframed Print Only at 8.99. That is where the 'Unframed Print Only' colour value and the no-space 'A3 (29.7x42 cm)' size string come from - both copied, not guessed. plan.json on claude/hopeful-rubin-u14pgu supplies condition, dispatch, profiles and the 500,000-row cap.",
+  "_pricing_note": "The seller's go-to prices, given 22 Oct. The old flat 19.99 framed / 8.99 print was a cheaper structure used while an account had lower selling limits, and is superseded.",
   "category": "360",
   "condition_id": "1000",
   "location": "United Kingdom",
   "dispatch_days": 3,
   "quantity": 1,
   "brand": "Unbranded",
-  "size": "A3 (29.7 x 42 cm)",
-  "colours": [
-    "Black",
-    "White",
-    "Oak"
+
+  "frames": ["Black", "White", "Oak"],
+  "print_only": "Unframed Print Only",
+  "_print_only_note": "No separate picture is rendered for the unframed option, by the seller's decision on 22 Oct: the variation carries no PicURL, so eBay falls back to the listing's main image, which is the black frame. This matches how their existing listings already sell unframed prints.",
+
+  "sizes": [
+    {"label": "A4 (21x29.7 cm)", "framed": 24.99, "print": 8.99},
+    {"label": "A3 (29.7x42 cm)", "framed": 29.99, "print": 12.99},
+    {"label": "A2 (42x59.4 cm)", "framed": 34.99, "print": 18.99}
   ],
-  "price": 19.99,
+
   "profiles": {
     "shipping": "1",
     "returns": "1",
