@@ -6,7 +6,7 @@ D=os.path.join(HERE,"ebay","tests")
 bad_total=0
 for fn in sorted(os.listdir(D)):
     if not fn.endswith(".csv"): continue
-    bucket=fn[:-len("_TEST_10.csv")]
+    bucket=fn.rsplit("_TEST_",1)[0]
     st=B.STORES[bucket]; base=st["pic_base"].rstrip("/")
     rows=list(csv.DictReader(open(os.path.join(D,fn),encoding="utf-8-sig")))
     probs=[]

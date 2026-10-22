@@ -14,8 +14,12 @@ HERE = "/home/user/wonderleaf-books/wallart-data"
 sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(HERE, "gen"))
 import grid, allocate, build_ebay as B
 
-PANELS_PER_BUCKET = 6          # 6 panels x 4 colourways = 24 candidate listings
-WANT_LISTINGS = 10             # cut to this, matching LUXVIA_TEST_10
+# How many listings the test file holds. Pass it as argv[1]; the seller
+# asked for 5 so a rejection is short enough to read row by row.
+WANT_LISTINGS = int(sys.argv[1]) if len(sys.argv) > 1 else 10
+# Enough panels to cover it even when some are dropped for a missing
+# picture: each panel yields 4 listings (one per colourway).
+PANELS_PER_BUCKET = max(2, -(-WANT_LISTINGS // 4) + 2)
 UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
                     "(KHTML, like Gecko) Chrome/125.0 Safari/537.36"}
 
@@ -71,7 +75,7 @@ for bucket, cand in bybucket.items():
             listings += 1
         cut.append(r)
     import csv
-    path = os.path.join(out_root, f"{bucket}_TEST_10.csv")
+    path = os.path.join(out_root, f"{bucket}_TEST_{WANT_LISTINGS}.csv")
     with open(path, "w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=B.HEADER, extrasaction="ignore")
         w.writeheader(); w.writerows(cut)
