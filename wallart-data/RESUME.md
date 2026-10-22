@@ -2185,3 +2185,46 @@ the SHORT one, built from 82,731 hashes. Its repair has since taken it to
 **Do not hand the seller the mercury zip until it has been rebuilt and
 re-checked** - the file exists and looks plausible, which is exactly the
 trap.
+
+### 22 Oct 03:10 - ALL FOUR STORES DELIVERED
+
+    store               listings     files   zip
+    luxvia-art         1,884,908        16   114 MB
+    lunar-kms            756,452         7    44 MB
+    posterleaf-store1    754,812         7    44 MB
+    mercury-usm          376,808         4    22 MB
+    ------------------------------------------------
+    TOTAL              3,772,980        34
+
+    https://pub-6004b56e7a254092b7bfec9a24cf9484.r2.dev/ebay/luxvia-art_ebay_upload.zip
+    https://pub-1f879b9875164bf59a4806f4026100d0.r2.dev/ebay/lunar-kms_ebay_upload.zip
+    https://pub-0ad8669f94ce487499368f153cdb0c1b.r2.dev/ebay/posterleaf-store1_ebay_upload.zip
+    https://pub-0393733d8d814d7395f37e1eaf666e62.r2.dev/ebay/mercury-usm_ebay_upload.zip
+
+3,772,980 against the 3,842,068 planned, 98.2%. The 69,088 difference is
+near-duplicates dropped, panels the IP gate or title check refused, and
+panels never rendered - all of it deliberate, none of it the silent hash
+loss that nearly shipped.
+
+Mercury's rebuild verified the same way as the others, from the downloaded
+zip: 22,909,975 bytes against the short build's 19,775,808; 4 files,
+1,507,232 rows, largest 499,984; `--check` reports 0 structure problems,
+0 files over the cap, 0 cross-bucket SKUs, 0 cross-bucket pictures, 0 rows
+that are not this run's work; 12/12 sampled pictures live; frames in
+Black, White, Oak order with black as the main image.
+
+Every pod deleted, every loop stopped, burn $0.00/hr. The whole finish cost
+roughly $5 of the seller's top-up, against the $10 estimated.
+
+**What is still the seller's to decide, all of it unchanged:**
+  (a) which bucket goes to which eBay account - still not recorded anywhere
+  (b) A3 only at GBP 19.99, or add A4/A2 as variations
+  (c) the people sweep (~$1-2) over the ~160,000 listings carrying human
+      figures, which breaks their own no-human-figures rule
+  (d) nothing has been uploaded to eBay and nothing will be without them
+
+**And the format risk is STILL unproven.** Our Variation children do not
+repeat *Category/*ConditionID/*Title; the tee file eBay actually accepted
+does. Four 10-listing test files exist in ebay/tests/ for exactly this. If
+one returns 21919053, all four store builds need re-running - which is now
+cheap and well understood, but it is four pods, so the test comes first.
