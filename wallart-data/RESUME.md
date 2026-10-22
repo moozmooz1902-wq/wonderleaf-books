@@ -2047,3 +2047,36 @@ the banded compare runs silently. A 40-minute wrapper killed it mid-compare
 having printed nothing at all, which reads like a hang. Run it with
 `python3 -u`, and once `hashes/` holds 64 .jsonl files drop `--fetch`
 entirely - the download is the cheap half and needs no repeating.
+
+### 22 Oct 01:20 - the local audit was never a prerequisite for the build
+
+I serialised the two store builds behind a local `dup_audit.py` run and
+lost about two hours to it, including an hour of compute killed twice.
+**`render/build_pod.py` does the audit ITSELF, on the pod**: it lists that
+one bucket's `wallart/hashes/*.jsonl`, runs `dup_audit.audit` over them, and
+passes the result straight into `build_ebay.build` as `drop`. Read it:
+
+    skus, V = read_hashes(c, a.store)      # this store's hashes only
+    flags   = dup_audit.audit(skus, V, None)
+    drop    = {(skus[i][1], skus[i][0]) for i in np.flatnonzero(flags)}
+    build_ebay.build(jobs, a.out, have, 0, drop)
+
+So the builds could have been launched the minute the balance landed. The
+pod's audit is also already per-store, which is the same scoping I had just
+reasoned my way to locally - the code had been right about it all along.
+
+The local drop lists are not wasted: they are an INDEPENDENT cross-check on
+what the pods compute. Local numbers, from the hashes fetched over the
+public URLs:
+
+    posterleaf-store1   1,366 panels dropped of 191,837   0.71%
+    lunar-kms           1,176 panels dropped of 189,713   0.62%
+
+Both sit in the band measured before (0.832% over 642k, 0.950% for luxvia).
+If a pod reports a materially different count for the same store, something
+is wrong and the build should not be trusted.
+
+Also: do NOT pipe a background command through `tail` for monitoring.
+`bash run_audits.sh 2>&1 | tail -40` holds every line until the pipe closes,
+so the task output file stayed empty for twenty minutes while the script was
+working fine. The drop files appearing on disk were the only honest signal.
