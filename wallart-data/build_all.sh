@@ -4,7 +4,12 @@
 # launcher means only that no tier returned an id, never that the balance
 # is gone. Check the balance with a raw create before assuming.
 cd "$(dirname "$0")"
-for b in luxvia-art posterleaf-store1 lunar-kms mercury-usm; do
+# Stores to build. Pass them as arguments; with none it does all four.
+# On 22 Oct the seller was already uploading lunar-kms, so it was left
+# alone while the other three were rebuilt with shuffled listings -
+# rebuilding a file someone is mid-upload with would be worse than useless.
+STORES="${@:-luxvia-art posterleaf-store1 lunar-kms mercury-usm}"
+for b in $STORES; do
   for try in 1 2 3 4 5 6 7 8 9 10 11 12; do
     out=$(timeout 180 python3 launch_build.py --store "$b" 2>&1)
     echo "$out" | tail -1

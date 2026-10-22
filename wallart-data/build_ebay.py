@@ -49,7 +49,7 @@ folder can be handed to one account and nothing else.
          build_ebay.py --require-pictures keys.txt
          build_ebay.py --check out/ebay
 """
-import argparse, csv, json, os, sys, zipfile
+import argparse, csv, hashlib, json, os, sys, zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -127,7 +127,7 @@ def pic(store, sku, colour):
     return f'{store["pic_base"].rstrip("/")}/{key_for(store, sku, colour)}'
 
 
-def rows_for(job, store):
+def rows_for(job, store, only_ci=None):
     """Four listings for one panel - one per colourway - each a parent plus
     one Variation row per frame colour PER SIZE.
 
@@ -155,7 +155,9 @@ def rows_for(job, store):
                                                {"framed": 0.0, "print": 0.0})
     vals = ";".join(frames + [unframed])
     size_vals = ";".join(s["label"] for s in sizes)
-    for ci in range(EB["colourways"]):
+    # only_ci lets the builder emit ONE listing so the four colourways
+    # of a design can be written far apart instead of back to back.
+    for ci in (range(EB["colourways"]) if only_ci is None else (only_ci,)):
         sku = f'{job["sku"]}-{ci}'
         j = {**job, "sku": sku}
         title = LT.title(j)
@@ -254,8 +256,29 @@ def build(jobs, out_root, have=None, limit=0, drop=frozenset()):
             w.writerows(rows)
         buf[b] = []
 
-    n = 0
+    # SHUFFLE THE LISTING ORDER. One design becomes four listings, one per
+    # colourway, and written panel by panel they land next to each other -
+    # the same picture four times running in anything sorted by newest.
+    # Subjects were already well mixed: a hash orders the grid, so even the
+    # first 500 listings carry close to the catalogue's true share of
+    # Animals, Flowers, Landscapes and the rest. The blocks of four were
+    # the real thing the seller would notice on eBay.
+    #
+    # So the unit written is the LISTING, not the panel, and the order uses
+    # a SECOND hash with its own salt. It has to be independent of the SKU
+    # hash that put the designs in grid order, or the four colourways would
+    # simply travel together again. Deterministic, so a rebuild reproduces
+    # the same file rather than reshuffling listings that are already live.
+    order = []
     for job in jobs:
+        for ci in range(EB["colourways"]):
+            k = hashlib.blake2b(f'mix|{job["sku"]}-{ci}'.encode(),
+                                digest_size=8).digest()
+            order.append((k, job, ci))
+    order.sort(key=lambda t: t[0])
+
+    n = 0
+    for _, job, ci in order:
         b = allocate.store_for(job["sku"])["bucket"]
         st = STORES[b]
         s = stats.setdefault(b, dict(listings=0, blocked=0, nopic=0, dup=0))
@@ -266,13 +289,15 @@ def build(jobs, out_root, have=None, limit=0, drop=frozenset()):
             if (b, job["sku"]) not in have:
                 s["nopic"] += 1
                 continue
-        rows, bad = rows_for(job, st)
+        rows, bad = rows_for(job, st, only_ci=ci)
         if bad:
             s["blocked"] += 1
             continue
         buf.setdefault(b, []).extend(rows)
-        s["listings"] += EB["colourways"]
-        if len(buf[b]) + ROWS_PER_PANEL > MAX_DATA_ROWS:
+        s["listings"] += 1
+        # a LISTING is the indivisible unit now - a parent plus its twelve
+        # variation rows must never be split across two files
+        if len(buf[b]) + ROWS_PER_LISTING > MAX_DATA_ROWS:
             flush(b)
         n += 1
         if limit and n >= limit:

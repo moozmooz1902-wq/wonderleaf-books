@@ -2392,3 +2392,43 @@ Caught lunar's build mid-flight and deleted that pod rather than let it
 finish at the wrong prices; the other three were already correct and were
 left running. `build_all.sh` was stopped too so it could not relaunch lunar
 from the old plan.
+
+### 22 Oct: listings SHUFFLED so colourways do not sit together
+
+The seller asked whether a file is a real mix or clumps by subject.
+Measured rather than assumed, and the answer was two different things.
+
+**Subjects were already well mixed.** The grid is ordered by a hash, so
+even the first 500 listings carry close to the catalogue's true share:
+Animals 33%, Flowers & Plants 28%, Landscapes 25%, Still Life 6%,
+Architecture 3%, Astronomy & Space 2% - the same to within a point or two
+as the whole file. No category clumping anywhere.
+
+**But the four colourways of one design sat back to back**, because rows
+were written panel by panel. Exactly 25 distinct subjects per 100 listings,
+never 26 - the same picture four times running in anything sorted by
+newest. That is what the seller would have seen on eBay, and it is worse
+than a category clump because the four are near-identical images.
+
+Fixed by writing the LISTING rather than the panel, ordered by a second
+blake2b with its own salt. The salt matters: reusing the SKU hash would put
+the colourways straight back together. Deterministic, so a rebuild
+reproduces the same order instead of reshuffling live listings.
+
+Measured on a 16,000-listing build:
+
+    longest run of the same design   4  ->  2
+    distinct subjects per 100       25  -> 98
+    theme mix                        unchanged, to the percent
+
+A run of 2 is what chance gives in a shuffle this size, not a bug.
+
+`ROWS_PER_LISTING` now guards the file boundary instead of
+`ROWS_PER_PANEL`, so a parent and its twelve variations are never split
+across two files.
+
+**lunar-kms was NOT rebuilt.** The seller was already downloading and
+uploading it when the shuffle was agreed, so it keeps panel order and its
++10/+5 prices. Rebuilding a file someone is mid-upload with would be worse
+than useless. `build_all.sh` now takes store names so three could be built
+without it.
