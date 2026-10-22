@@ -2151,3 +2151,37 @@ building ANY store, count its hashes and probe a sample of the hash-less
 panels for pictures. A count that merely looks plausible is not enough -
 mercury's did, and it was wrong by 13,000 panels. Do not infer the gap from
 a coverage sample taken at a different time.
+
+### 22 Oct 02:55 - posterleaf and lunar DELIVERED and verified
+
+    posterleaf-store1   754,812 listings   7 files   44 MB
+    lunar-kms           756,452 listings   7 files   44 MB
+
+    https://pub-0ad8669f94ce487499368f153cdb0c1b.r2.dev/ebay/posterleaf-store1_ebay_upload.zip
+    https://pub-1f879b9875164bf59a4806f4026100d0.r2.dev/ebay/lunar-kms_ebay_upload.zip
+
+Checked by downloading the zips, not from the pod's own report:
+
+- both pass `unzip -t`; 7 CSVs each, 1.72 GB unzipped
+- largest file **499,984 data rows** in both, under the 500,000 cap
+- `build_ebay.py --check` over both: 6,045,056 rows, **0** structure
+  problems, **0** files over the cap, **0** SKUs in more than one bucket,
+  **0** pictures pointing at another bucket's host, and **0 rows that are
+  not this run's generated work** - the last one is the seller's own
+  concern, checked by the builder rather than argued
+- 10 pictures sampled from each store's first file: 20/20 live
+
+That lunar figure is the proof the repair mattered. Without it the build
+would have emitted roughly 646,000 listings instead of 756,452 - about
+110,000 lost, with nothing anywhere to say so.
+
+Both land about 1% under the theoretical maximum (panels x 4 minus
+near-duplicates), which is the IP gate and title checks doing their work.
+
+**mercury-usm still owes a rebuild.** Its first build finished and uploaded
+BEFORE that pod was deleted, so the zip now in R2 at 19,775,808 bytes is
+the SHORT one, built from 82,731 hashes. Its repair has since taken it to
+95,793 (100%), and a retry loop is waiting for 16-vCPU capacity to rebuild.
+**Do not hand the seller the mercury zip until it has been rebuilt and
+re-checked** - the file exists and looks plausible, which is exactly the
+trap.
