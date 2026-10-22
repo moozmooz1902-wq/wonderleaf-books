@@ -2323,3 +2323,51 @@ whole top-up is down roughly $8.
 One wasted build in the middle: three stores finished with titles that had
 "Framed" removed before the seller overruled that change, so they were
 built twice. About $0.40.
+
+### 22 Oct: the variation pictures were in the WRONG FORMAT, caught by the seller
+
+The seller sent a file of theirs that uploads and works
+(`/root/.claude/uploads/.../Untitled_spreadsheet_-_Sheet1_1.csv`). It shows
+eBay wants the variation pictures **declared once per value**, not repeated:
+
+    PARENT                              https://.../...-black.jpg
+    Variation Color=Black|Size=A4   Oak=https://.../...-oak.jpg
+    Variation Color=Black|Size=A3 White=https://.../...-white.jpg
+    Variation Color=Black|Size=A2 Black=https://.../...-black.jpg
+    Variation Color=White|Size=A4   (empty)
+    ... the remaining nine rows empty
+
+One plain url on the parent, three `<Colour>=<url>` declarations spread
+across the first three variation rows, nothing after. Which row holds which
+declaration does not matter - eBay collects them across the block.
+
+**Mine put a bare url on all nine framed rows.** A bare url names no
+colour, so eBay could not have tied a picture to White or Oak and the
+photograph would never have changed when a buyer picked a frame - the three
+frame colours would have been decoration. Nothing in the build or the check
+would have said a word; it would have surfaced only after listing.
+
+Fixed in `rows_for`: parent carries `pics[0]` alone, and the three
+declarations go on the first three variation rows. Unframed Print Only
+still declares nothing, so eBay falls back to the main image.
+
+**`check()` now validates it, and the validator was itself tested against
+deliberate corruptions** - a check that cannot fail is worth nothing:
+
+    correct file                    0 flagged, passes
+    bare urls (the original bug)   16 flagged
+    one colour's picture missing    4 flagged
+    wrong colour named on a url    12 flagged
+
+`badpic` counts toward check()'s return value, so a build with broken
+declarations REFUSES to upload.
+
+`make_test_files.py` and `verify_test_files.py` both strip the
+`<Colour>=` prefix before treating a cell as a url.
+
+**Not changed, but noted:** the seller's working file carries item
+specifics this catalogue does not - `C:Item Length`, `C:Item Width`,
+`C:Mounting`, `C:Transparency`, `C:Pattern`, `C:MPN`, several marked
+required by eBay with a `*`, though some are empty in their own data rows.
+They said everything apart from the picture format was fine, so these are
+left alone. If a test upload returns item-specific warnings, start here.

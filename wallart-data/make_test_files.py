@@ -90,7 +90,9 @@ for bucket, (li, nr, _np, path) in summary.items():
     urls = set()
     for r in csv.DictReader(open(path, encoding="utf-8-sig")):
         for u in (r.get("PicURL") or "").split("|"):
-            if u.strip(): urls.add(u.strip())
+            u=u.strip()
+            if "=" in u: u=u.split("=",1)[1]   # "<Colour>=<url>"
+            if u: urls.add(u)
     with ThreadPoolExecutor(max_workers=8) as ex:
         oks = list(ex.map(live, sorted(urls)))
     print(f"{bucket:<20} {sum(oks)}/{len(urls)} pictures live"

@@ -26,6 +26,8 @@ for fn in sorted(os.listdir(D)):
     for r in rows:
         for u in (r.get("PicURL") or "").split("|"):
             u=u.strip()
+            # variation rows declare "<Colour>=<url>"; take the url
+            if "=" in u: u=u.split("=",1)[1]
             if not u: continue
             if not u.startswith(base+"/"):
                 probs.append(f"picture on another host: {u[:70]}")
@@ -41,6 +43,7 @@ for fn in sorted(os.listdir(D)):
     qty={r.get("*Quantity") for r in kids}
     frames=[r.get("C:Frame") for r in kids[:3]]
     firstpic=parents[0]["PicURL"].split("|")[0]
+    if "=" in firstpic: firstpic=firstpic.split("=",1)[1]
     print(f"{bucket:<20} {len(parents)} listings  {len(rows)} rows  "
           f"price={prices}  qty={qty}  first3frames={frames}")
     print(f"{'':<20} main image is black: {'black.jpg' in firstpic}")

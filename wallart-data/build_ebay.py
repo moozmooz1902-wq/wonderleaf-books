@@ -165,7 +165,11 @@ def rows_for(job, store):
             "*Title": title,
             "RelationshipDetails": f"Color={vals}|Size={size_vals}",
             "*ConditionID": EB["condition_id"], "*Description": desc,
-            "PicURL": "|".join(pics),            # black first = main image
+            # ONE picture on the parent, the black frame, matching the
+            # working file. White and oak reach the buyer as variation
+            # declarations below, which is what makes the photograph
+            # change when they pick a frame.
+            "PicURL": pics[0],
             "*Format": "FixedPrice", "*Duration": "GTC",
             "*Location": EB["location"],
             "DispatchTimeMax": str(EB["dispatch_days"]),
@@ -187,6 +191,19 @@ def rows_for(job, store):
             "C:Unit Type": "Unit",
         })
         out.append(p)
+        # VARIATION PICTURES ARE DECLARED, NOT REPEATED. eBay wants one
+        # "<value>=<url>" per value of the picture-defining specific, laid
+        # out across the variation rows - NOT a bare url on every row. A
+        # bare url says nothing about which colour it belongs to, so the
+        # photograph would not change when the buyer picks White or Oak,
+        # which is the whole point of having three of them. Copied from a
+        # file of the seller's that uploads and works: its parent carries
+        # one plain url and its first three variation rows carry
+        # Oak=..., White=..., Black=..., with the remaining nine empty.
+        # Which row holds which declaration does not matter; eBay collects
+        # them across the block.
+        decls = [f"{c}={pic(store, sku, c)}" for c in frames]
+        n = 0
         for c in frames + [unframed]:
             framed = c in frames
             for s in sizes:
@@ -197,13 +214,17 @@ def rows_for(job, store):
                           "*StartPrice":
                               f'{(s["framed"] if framed else s["print"]):.2f}',
                           "*Quantity": str(EB["quantity"]),
-                          # framed rows show their own frame; the unframed
-                          # row shows nothing, so eBay uses the main image
-                          "PicURL": pic(store, sku, c) if framed else "",
+                          # one declaration per row until all three are
+                          # placed; every later row leaves PicURL empty.
+                          # Nothing is declared for Unframed Print Only -
+                          # the seller's call - so eBay shows the main
+                          # image for it.
+                          "PicURL": decls[n] if n < len(decls) else "",
                           "C:Size": s["label"],
                           "C:Frame": c if framed else "",
                           "C:Framing": "Framed" if framed else "Unframed",
                           "C:Colour": c})
+                n += 1
                 out.append(k)
     return out, None
 
@@ -281,7 +302,7 @@ def check(out_root):
     """Structure, row cap, and the two things that would mix the data:
     a SKU in more than one bucket, and a picture URL whose host is not the
     bucket's own."""
-    bad = cap = cross = wrongpic = notours = rows_tot = 0
+    bad = cap = cross = wrongpic = notours = rows_tot = badpic = 0
     seen = {}
     for b in sorted(os.listdir(out_root)):
         d = os.path.join(out_root, b)
@@ -314,13 +335,38 @@ def check(out_root):
                     notours += 1
                 if seen.setdefault(p["CustomLabel"], b) != b:
                     cross += 1
+                # THE VARIATION PICTURE DECLARATIONS. Exactly one
+                # "<colour>=<url>" per frame colour across the whole
+                # variation block, each url this run's work and on this
+                # bucket's host, each colour declared once and no other
+                # colour named. Without this the frame picture silently
+                # stops changing when the buyer picks White or Oak, and
+                # nothing else here would notice.
+                got = {}
+                for k in kids:
+                    u = (k["PicURL"] or "").strip()
+                    if not u:
+                        continue
+                    if "=" not in u:
+                        badpic += 1
+                        continue
+                    name, url = u.split("=", 1)
+                    if (name in got or name not in EB["frames"]
+                            or not PIC_RE.match(url)
+                            or not url.startswith(base)
+                            or f"-{name.lower()}.jpg" not in url):
+                        badpic += 1
+                    got[name] = url
+                if set(got) != set(EB["frames"]):
+                    badpic += 1
                 i += 1 + len(kids)
+    print(f"variation picture declarations wrong: {badpic}")
     print(f"rows {rows_tot:,}   structure problems {bad}   "
           f"files over {EB['max_rows_per_file']:,} rows: {cap}")
     print(f"SKUs appearing in more than one bucket: {cross}")
     print(f"pictures pointing at another bucket's host: {wrongpic}")
     print(f"rows that are NOT this run's generated work: {notours}")
-    return bad + cap + cross + wrongpic + notours
+    return bad + cap + cross + wrongpic + notours + badpic
 
 
 def main():
