@@ -143,13 +143,34 @@ def main():
             for d in public["fulfilment"]["delivery"]]
     json.dump(public, open(os.path.join(data_dir, "business.json"), "w"),
               indent=1)
+    # THE SITE'S TAXONOMY IS WHAT ACTUALLY HAS STOCK, not the whole tree.
+    #
+    # The full taxonomy has 53 niches in 6 sections. A narrow launch draws
+    # from 12 of them, and if the navigation still carried all six sections
+    # then four of its links would open a category with nothing in it.
+    # Google's editorial requirements make that a violation twice over -
+    # links must "point to relevant content", and a site with empty pages is
+    # one that "needs improvement". So the menus are built from the
+    # products, and shrink and grow with the range on their own.
+    live_niches = {p["niche"] for p in products}
+    live_sections = {p["section"] for p in products}
+    live_styles = {p["style"] for p in products}
+    live_colours = {p["colour"] for p in products}
+    live_rooms = {r for p in products for r in p["rooms"]}
     json.dump(dict(
-        sections=[dict(slug=s, title=t) for s, t, _ in T.SECTIONS],
-        niches=T.NICHES,
-        styles=[dict(slug=s, title=t, blurb=b) for s, t, _, b in T.STYLES],
-        colours=[dict(slug=s, title=t, blurb=b) for s, t, _, b in T.COLOURS],
-        rooms=[dict(slug=s, title=t) for s, t, _ in T.ROOMS],
+        sections=[dict(slug=s, title=t) for s, t, _ in T.SECTIONS
+                  if s in live_sections],
+        niches={k: v for k, v in T.NICHES.items() if k in live_niches},
+        styles=[dict(slug=s, title=t, blurb=b) for s, t, _, b in T.STYLES
+                if s in live_styles],
+        colours=[dict(slug=s, title=t, blurb=b) for s, t, _, b in T.COLOURS
+                 if s in live_colours],
+        rooms=[dict(slug=s, title=t) for s, t, _ in T.ROOMS
+               if s in live_rooms],
     ), open(os.path.join(data_dir, "taxonomy.json"), "w"), indent=1)
+    print(f"live taxonomy: {len(live_sections)} sections, "
+          f"{len(live_niches)} niches, {len(live_styles)} styles, "
+          f"{len(live_colours)} colours, {len(live_rooms)} rooms")
 
     rows = [SCHEMA]
     rows.append("DELETE FROM product_rooms; DELETE FROM variants; "

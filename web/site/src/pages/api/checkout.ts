@@ -103,6 +103,36 @@ export const POST: APIRoute = async ({ request, locals }) => {
         },
       ],
       phone_number_collection: { enabled: false },
+
+      // THE POLICIES MUST BE REACHABLE DURING CHECKOUT, NOT JUST BEFORE IT.
+      //
+      // Google's checkout requirements are explicit: "Customers must be
+      // able to find refund and return policies, terms and conditions, and
+      // a way to contact you throughout checkout", and omitting them is
+      // "treated as misrepresentation, which can lead to ad or free listing
+      // disapproval or account suspension".
+      //
+      // Our checkout is Stripe's hosted page, so our own footer is not on
+      // it. These two settings put the terms acceptance and the policy
+      // links on Stripe's page itself. Without them the shop would satisfy
+      // the rule everywhere except the one page where Google states it.
+      consent_collection: { terms_of_service: 'required' },
+      custom_text: {
+        terms_of_service_acceptance: {
+          message:
+            `I agree to the [terms and conditions](${base}/terms), the ` +
+            `[returns policy](${base}/returns) ` +
+            `(${B.returns.window_days} days from delivery, any reason) and ` +
+            `the [privacy policy](${base}/privacy).`,
+        },
+        submit: {
+          message:
+            `Printed and framed in ${B.fulfilment.made_in} and dispatched ` +
+            `within ${B.fulfilment.dispatch_working_days} working days. ` +
+            `Questions: ${B.email}`,
+        },
+      },
+
       success_url: `${base}/order-confirmed?session={CHECKOUT_SESSION_ID}`,
       cancel_url: `${base}/cart`,
       metadata: { items: JSON.stringify(record).slice(0, 480) },

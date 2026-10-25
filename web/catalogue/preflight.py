@@ -144,6 +144,42 @@ def check_identity(cfg):
     elif ph:
         ok("telephone number well formed", cfg["phone"])
 
+    # Brand. "We make it ourselves so there's no brand" is true about the
+    # world and wrong about the feed: [brand] is required on new products,
+    # Google permits your own name when you manufacture the goods, and the
+    # three words people reach for instead are the ones it rejects.
+    brand = (cfg.get("brand") or "").strip()
+    if brand:
+        if brand.lower() in ("n/a", "na", "generic", "none", "unbranded",
+                             "no brand", "unknown"):
+            fail("brand is a real name",
+                 f"{brand!r} is explicitly disallowed by Google. Because you "
+                 f"manufacture these yourself, your own trading name is the "
+                 f"correct brand.")
+        elif len(brand) > 70:
+            fail("brand is a real name", f"{len(brand)} chars, limit 70")
+        else:
+            ok("brand is a real name", brand)
+        dom = (cfg.get("domain") or "").split(".")[0].replace("-", "")
+        if dom and brand.lower().replace(" ", "")[:6] not in dom.lower() \
+                and dom.lower()[:6] not in brand.lower().replace(" ", ""):
+            fail("brand matches the domain",
+                 f"brand {brand!r} and domain {cfg.get('domain')!r} do not "
+                 f"look like the same business. Merchant Center verification "
+                 f"cross-checks the business name against the site.")
+        elif dom:
+            ok("brand matches the domain")
+
+    if not cfg.get("order_confirmation_email"):
+        fail("order confirmation email is actually sent",
+             "order_confirmation_email is false. The order-confirmed page "
+             "tells the buyer an email is coming. Switch on 'Successful "
+             "payments' receipts in Stripe (Settings -> Customer emails), "
+             "then set this true. A promise the site does not keep is the "
+             "whole problem in miniature.")
+    else:
+        ok("order confirmation email is actually sent")
+
     if (cfg.get("social_proof") or {}).get("reviews") != "none-yet":
         fail("no unearned social proof",
              "social_proof.reviews is not 'none-yet'. Only set this once "
@@ -307,6 +343,60 @@ def check_catalogue(cat, cfg):
              "mismatch there is.")
     else:
         ok("framed only - every photograph shows what is sold")
+
+    # Restricted products. A print of a negroni is not a negroni, but
+    # Shopping's restricted-product screening is automated and reads the
+    # title and description.
+    import re as _re
+    rx = _re.compile(
+        r"\b(negroni|martini|whisky|whiskey|gin|rum|vodka|tequila|mezcal|"
+        r"brandy|cognac|wine|champagne|prosecco|beer|ale|lager|stout|cider|"
+        r"cocktail|aperol|campari|absinthe|vermouth|liqueur|bourbon|sake|"
+        r"margarita|mojito|daiquiri|tobacco|cigar|cigarette|vape)\b", _re.I)
+    hits = [p["slug"] for p in cat["products"]
+            if rx.search(f'{p["title"]} {p["subject"]} {p["description"]}')]
+    if hits:
+        fail("no restricted subjects in the feed",
+             f"{len(hits)} product(s) name alcohol or tobacco, e.g. "
+             f"{hits[:3]}. A picture of a drink is not a drink, but the "
+             f"screening is automated. Re-run select.py, which filters "
+             f"these by rule.")
+    else:
+        ok("no restricted subjects in the feed")
+
+    # Every niche/section/style the navigation offers must have stock.
+    # Google treats links that do not "point to relevant content", and
+    # pages with nothing on them, as website-quality violations.
+    tax_path = os.path.join(WEB, "site", "src", "data", "taxonomy.json")
+    if os.path.exists(tax_path):
+        tax = json.load(open(tax_path))
+        have_n = {p["niche"] for p in cat["products"]}
+        have_s = {p["section"] for p in cat["products"]}
+        have_st = {p["style"] for p in cat["products"]}
+        have_c = {p["colour"] for p in cat["products"]}
+        empty = ([f"niche {k}" for k in tax["niches"] if k not in have_n]
+                 + [f"section {s['slug']}" for s in tax["sections"]
+                    if s["slug"] not in have_s]
+                 + [f"style {s['slug']}" for s in tax["styles"]
+                    if s["slug"] not in have_st]
+                 + [f"colour {c['slug']}" for c in tax["colours"]
+                    if c["slug"] not in have_c])
+        if empty:
+            fail("every category in the navigation has stock",
+                 f"{len(empty)} empty: {empty[:5]}. Re-run build_db.py, "
+                 f"which builds the menus from the products.")
+        else:
+            ok("every category in the navigation has stock",
+               f'{len(tax["niches"])} niches, {len(tax["sections"])} sections')
+        thin = [k for k in tax["niches"]
+                if sum(1 for p in cat["products"] if p["niche"] == k) < 6]
+        if thin:
+            fail("no category looks unfinished",
+                 f"{len(thin)} niche(s) hold fewer than 6 designs: "
+                 f"{thin[:5]}. A near-empty category reads as a site under "
+                 f"construction, which is a quality violation in itself.")
+        else:
+            ok("no category looks unfinished")
 
     titles = [p["title"] for p in cat["products"]]
     if len(set(titles)) != len(titles):
@@ -504,6 +594,84 @@ def check_live(cat, cfg, sample):
                 fail("checkout endpoint is live", f"HTTP {e.code}")
     except Exception as e:
         fail("checkout endpoint is live", repr(e))
+
+    # 4e2. A missing page must look like the shop, not like a broken server.
+    # "Repair or redirect broken URLs, such as those returning 404 or 500"
+    # is listed under website quality.
+    try:
+        status, _h, body = get(base + "/art/this-does-not-exist-12345")
+        fail("a missing page renders the shop's 404 page",
+             f"expected 404, got HTTP {status}")
+    except urllib.error.HTTPError as e:
+        text = e.read().decode("utf-8", "replace")
+        if e.code != 404:
+            fail("a missing page renders the shop's 404 page",
+                 f"HTTP {e.code}")
+        elif cfg["brand"].lower() not in text.lower() or len(text) < 2000:
+            fail("a missing page renders the shop's 404 page",
+                 f"got a bare {len(text)}-byte response rather than a page "
+                 f"with the shop's navigation on it")
+        else:
+            ok("a missing page renders the shop's 404 page")
+    except Exception as e:
+        fail("a missing page renders the shop's 404 page", repr(e))
+
+    # 4e3. Every internal link must work. "Ensure all links across the
+    # website are working and point to relevant content."
+    import html as _html
+    seen_links, broken = set(), []
+    for seed in ("/", "/delivery", "/returns", "/contact", "/style",
+                 "/rooms", f'/c/{cat["products"][0]["section"]}'):
+        try:
+            _s, _h, body = get(base + seed)
+        except Exception:
+            continue
+        for m in re.finditer(r'href="(/[^"#?]*)"',
+                             body.decode("utf-8", "replace")):
+            seen_links.add(_html.unescape(m.group(1)).rstrip("/") or "/")
+
+    def probe(path):
+        try:
+            s, _h, _b = get(base + path)
+            return None if s == 200 else f"{path} -> HTTP {s}"
+        except urllib.error.HTTPError as e:
+            return f"{path} -> HTTP {e.code}"
+        except Exception as e:
+            return f"{path} -> {e!r}"
+
+    links = sorted(l for l in seen_links if not l.startswith("/api"))
+    with cf.ThreadPoolExecutor(max_workers=8) as ex:
+        broken = [b for b in ex.map(probe, links) if b]
+    if broken:
+        fail("every internal link works",
+             f"{len(broken)} of {len(links)} broken: {broken[:5]}")
+    else:
+        ok("every internal link works", f"{len(links)} checked")
+
+    # 4e4. The structured data a reviewer and the crawler both read.
+    try:
+        _s, _h, body = get(base + "/")
+        t = body.decode("utf-8", "replace")
+        missing = [k for k in ('"@type":"Organization"', cfg["company_number"],
+                               cfg["email"]) if k not in t.replace(" ", "")
+                   and k not in t]
+        if missing:
+            fail("home page carries the business identity in markup",
+                 f"missing {missing}")
+        else:
+            ok("home page carries the business identity in markup")
+    except Exception as e:
+        fail("home page carries the business identity in markup", repr(e))
+    try:
+        p0 = cat["products"][0]
+        _s, _h, body = get(f'{base}/art/{p0["slug"]}')
+        t = body.decode("utf-8", "replace").replace(" ", "")
+        if '"@type":"BreadcrumbList"' not in t:
+            fail("product pages carry breadcrumb markup", "not found")
+        else:
+            ok("product pages carry breadcrumb markup")
+    except Exception as e:
+        fail("product pages carry breadcrumb markup", repr(e))
 
     # 4f. No reference to the suspended Shopify shop.
     try:

@@ -6,7 +6,8 @@ import { getDb, bySection, nicheCounts } from '../../../lib/db';
 
 const { section } = Astro.params;
 const sec = TAX.sections.find((s) => s.slug === section);
-if (!sec) return new Response('Not found', { status: 404 });
+if (!sec)
+  return Astro.rewrite('/404');
 
 const db = getDb(Astro.locals);
 const { results: counts } = await nicheCounts(db);
@@ -18,6 +19,10 @@ const total = niches.reduce((a, n) => a + n.n, 0);
 <Base
   title={`${sec.title} Wall Art - Framed Prints | ${TAX.sections.length ? '' : ''}`.trim() + ` ${sec.title}`}
   description={`${total} framed ${sec.title.toLowerCase()} prints across ${niches.length} ranges. Printed and framed to order in the UK, in black, white or oak, A4 to A2.`}
+  crumbs={[
+    { name: 'Home', url: '/' },
+    { name: sec.title, url: `/c/${section}` },
+  ]}
 >
   <section class="hero">
     <div class="wrap">

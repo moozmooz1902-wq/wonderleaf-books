@@ -10,16 +10,18 @@
 // information" - so the cure is to present a true one, everywhere, without
 // being asked.
 import '../styles/global.css';
-import { B, TAX, deliveryLine, returnsLine } from '../lib/shop';
+import { B, TAX, deliveryLine, returnsLine, money } from '../lib/shop';
 
 interface Props {
   title: string;
   description: string;
   canonical?: string;
   jsonLd?: unknown;
+  /** [{name, url}] - rendered as BreadcrumbList for Search. */
+  crumbs?: { name: string; url: string }[];
   noindex?: boolean;
 }
-const { title, description, canonical, jsonLd, noindex } = Astro.props;
+const { title, description, canonical, jsonLd, crumbs, noindex } = Astro.props;
 const env = (Astro.locals as any)?.runtime?.env;
 const base = (env?.SITE_URL || `https://${B.domain}`).replace(/\/$/, '');
 const canon = canonical ?? base + Astro.url.pathname;
@@ -27,6 +29,65 @@ const year = new Date().getFullYear();
 
 const addr = B.registered_address ?? [];
 const trading = B.trading_address_same ? addr : (B.trading_address ?? addr);
+const d = B.fulfilment.delivery[0];
+
+// ORGANIZATION MARKUP ON EVERY PAGE, not just /contact.
+//
+// Google's editorial requirements say contact details must be clear,
+// accessible, and must match the Merchant Center account. The footer says
+// it to humans; this says the same thing, from the same config, to the
+// crawler - so there is one set of business facts on the site and it is
+// machine-readable wherever a reviewer or a bot happens to land.
+const org = {
+  '@type': 'Organization',
+  '@id': `${base}/#organization`,
+  name: B.legal_name,
+  alternateName: B.brand,
+  url: base,
+  email: B.email,
+  telephone: B.phone,
+  vatID: B.vat_number,
+  identifier: B.company_number,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: addr.slice(0, -2).join(', '),
+    addressLocality: addr[addr.length - 2] ?? '',
+    postalCode: addr[addr.length - 1] ?? '',
+    addressCountry: 'GB',
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer service',
+    email: B.email,
+    telephone: B.phone,
+    areaServed: 'GB',
+    availableLanguage: 'English',
+  },
+};
+
+const graph: any[] = [
+  org,
+  {
+    '@type': 'WebSite',
+    '@id': `${base}/#website`,
+    url: base,
+    name: B.brand,
+    publisher: { '@id': `${base}/#organization` },
+    inLanguage: 'en-GB',
+  },
+];
+if (crumbs?.length)
+  graph.push({
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbs.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      item: c.url.startsWith('http') ? c.url : base + c.url,
+    })),
+  });
+if (jsonLd) graph.push(jsonLd);
+const ld = { '@context': 'https://schema.org', '@graph': graph };
 ---
 
 <!doctype html>
@@ -48,7 +109,7 @@ const trading = B.trading_address_same ? addr : (B.trading_address ?? addr);
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23edeae3'/%3E%3Crect x='6' y='4' width='20' height='24' fill='none' stroke='%231b1a18' stroke-width='2'/%3E%3Crect x='10' y='8' width='12' height='16' fill='%23c49a62'/%3E%3C/svg%3E"
     />
-    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
   </head>
   <body>
     <div class="head-note">{deliveryLine()} {returnsLine()}</div>
@@ -116,15 +177,44 @@ const trading = B.trading_address_same ? addr : (B.trading_address ?? addr);
           </div>
         </div>
 
+        {/* THE DELIVERY AND RETURNS TERMS, STATED IN THE FOOTER ITSELF.
+            Google asks for the return policy to be consistent "in the
+            footer, returns page and web banner" - so it is written out
+            here in full rather than only linked, and every number comes
+            from the same config the returns page and the feed read. */}
+        <div class="legal">
+          <strong>Delivery &amp; returns.</strong>{' '}
+          {d.price === 0 ? 'Free UK delivery' : `UK delivery ${money(d.price)}`}.
+          Made to order and dispatched within
+          {' '}{B.fulfilment.dispatch_working_days} working days, then
+          {' '}{d.min_days}&ndash;{d.max_days} working days in the post.
+          {' '}{B.returns.window_days} days to return anything from the day
+          it arrives, for any reason;
+          {B.returns.who_pays_return_postage === 'customer'
+            ? ' return postage is paid by you unless the item is faulty'
+            : ' we pay the return postage'}{B.returns.restocking_fee === 0
+            ? ', and there is no restocking fee.'
+            : '.'}
+          Refunds go back to your original payment method within 5 working
+          days of the parcel reaching us. Full detail on our
+          {' '}<a href="/returns">returns page</a> and
+          {' '}<a href="/delivery">delivery page</a>.
+        </div>
+
         <div class="legal">
           <strong>{B.legal_name}</strong> &middot; a company registered in
           England and Wales, company number {B.company_number} &middot; VAT
           registration {B.vat_number}.<br />
           Registered office: {addr.join(', ')}.<br />
           {!B.trading_address_same && <>Goods are dispatched from: {trading.join(', ')}.<br /></>}
+          Contact: <a href={`mailto:${B.email}`}>{B.email}</a> &middot;
+          {' '}<a href={`tel:${(B.phone || '').replace(/\s/g, '')}`}>{B.phone}</a>
+          {' '}&middot; {B.support_hours}.<br />
           All prices include VAT at the UK standard rate. Orders are printed
           and framed in {B.fulfilment.made_in}. We currently deliver to the
           United Kingdom only.<br />
+          If something goes wrong, email us first — we aim to resolve
+          complaints within 5 working days.<br />
           &copy; {year} {B.legal_name}. Artwork is digitally created and
           printed to order; it is not a painting, an original or a signed
           work.

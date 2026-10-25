@@ -16,7 +16,7 @@ const { section, niche } = Astro.params;
 const n = getNiche(niche!);
 const sec = TAX.sections.find((s) => s.slug === section);
 if (!n || !sec || n.section !== section)
-  return new Response('Not found', { status: 404 });
+  return Astro.rewrite('/404');
 
 const db = getDb(Astro.locals);
 const page = Math.max(1, Number(Astro.url.searchParams.get('page') || 1));
@@ -32,6 +32,11 @@ const siblings = counts.filter((c) => c.section === section && c.niche !== niche
   title={`${n.title} Wall Art - Framed Prints | ${sec.title}`}
   description={`${n.blurb} ${total} framed prints, made to order in the UK.`.slice(0, 320)}
   noindex={page > 1}
+  crumbs={[
+    { name: 'Home', url: '/' },
+    { name: sec.title, url: `/c/${section}` },
+    { name: n.title, url: `/c/${section}/${niche}` },
+  ]}
 >
   <section class="hero">
     <div class="wrap">

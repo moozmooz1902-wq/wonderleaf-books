@@ -45,7 +45,7 @@ AND THREE HARD FILTERS, which are refusals rather than weights:
 * Framed only. See FRAMES_ONLY below - this one is a Google policy decision
   and it is the most important line in the file.
 """
-import argparse, glob, json, os, random, sys, collections
+import argparse, glob, json, os, random, re, sys, collections
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 WALLART = os.environ.get(
@@ -117,6 +117,48 @@ MIN_DISTANCE = 48       # of 256 bits. The eBay audit calls <=24 "near".
 PER_NICHE_MIN = 12      # every category page must be worth opening
 PER_NICHE_MAX = 28      # and none may dominate the range
 
+# THE OPENING RANGE IS NARROW AND DEEP, NOT SMALL AND SPARSE.
+#
+# The seller's instruction on 25 Oct was to launch with very few products
+# and add more once the account is accepted. Right call - but "fewer
+# products" must not become "the same 53 categories with two prints in
+# each". Google's editorial requirements make a site that looks unfinished
+# a violation in its own right: placeholders, empty pages and links that do
+# not "point to relevant content" are all listed under website quality. A
+# category holding two items reads as exactly that.
+#
+# So a small launch narrows the RANGE rather than thinning the shelves.
+# These twelve niches are the ones the measured demand actually points at -
+# UK places (aggregate z=+12.6, the strongest result in the project) and the
+# moon (z=+4.1) - plus the animal and botanical niches with the broadest
+# general appeal. Twenty designs each is a shop that looks stocked.
+#
+# Deliberately absent: Still Life (which is where the alcohol subjects live,
+# see RESTRICTED below) and Architecture. They come back at the next stage.
+LAUNCH_NICHES = [
+    "british-coast", "mountains-hills", "national-parks", "lakes-rivers",
+    "the-moon", "constellations",
+    "british-birds", "british-wildlife", "dogs",
+    "garden-flowers", "wildflowers", "trees",
+]
+
+# RESTRICTED SUBJECTS - never submitted to Google, at any catalogue size.
+#
+# A print DEPICTING a negroni is not an alcoholic drink, and a human being
+# would never confuse the two. Shopping's restricted-products screening is
+# automated and reads the title and description, where the words "negroni",
+# "whisky" and "champagne" sit in plain text. The downside of a wrong call
+# is a restricted-product action on a young account; the upside of keeping
+# eleven cocktail prints is nothing. So they are excluded by rule rather
+# than by luck, and the rule survives the catalogue growing.
+RESTRICTED = (
+    r"\b(negroni|martini|old[- ]fashioned|whisky|whiskey|gin|rum|vodka|"
+    r"tequila|mezcal|brandy|cognac|wine|champagne|prosecco|beer|ale|lager|"
+    r"stout|cider|cocktail|aperol|campari|absinthe|sherry|vermouth|liqueur|"
+    r"bourbon|sake|spritz|margarita|mojito|daiquiri|highball|negroni|"
+    r"tobacco|cigar|cigarette|pipe smoke|vape)\b"
+)
+
 # TARGET MIX, AND WHY THE WINNERS DO NOT GET THE WHOLE SHOP.
 #
 # Scored on weights alone, the selection came out 99% charcoal and 100%
@@ -186,11 +228,24 @@ def load_panels():
     return list(seen.values())
 
 
-def score(p):
+_RESTRICTED_RE = re.compile(RESTRICTED, re.I)
+
+
+def restricted(p):
+    """True if this design must never be submitted. Checked on the subject,
+    which is what the title and description are built from."""
+    return bool(_RESTRICTED_RE.search(str(p.get("subject", ""))))
+
+
+def score(p, allow=None):
     hit = T.niche_for(p)
     if not hit:
         return 0.0, None
     _section, niche = hit
+    if allow is not None and niche not in allow:
+        return 0.0, None
+    if restricted(p):
+        return 0.0, None
     s = (TECH_WEIGHT.get(p["tech"], 0.2)
          * PAL_WEIGHT.get(p["pal"], 0.4)
          * NICHE_WEIGHT[niche]
@@ -200,7 +255,7 @@ def score(p):
 
 
 def pick(panels, want, min_distance=MIN_DISTANCE,
-         per_min=PER_NICHE_MIN, per_max=PER_NICHE_MAX):
+         per_min=PER_NICHE_MIN, per_max=PER_NICHE_MAX, allow=None):
     """Highest-scoring designs, spread across niches, no two visually close.
 
     Two passes. The first guarantees every niche reaches per_min so no
@@ -210,7 +265,7 @@ def pick(panels, want, min_distance=MIN_DISTANCE,
     """
     scored = []
     for p in panels:
-        s, niche = score(p)
+        s, niche = score(p, allow)
         if s > 0:
             scored.append((s, niche, p))
     scored.sort(key=lambda t: (-t[0], t[2]["sku"]))
@@ -339,14 +394,33 @@ def scale_plan():
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("-n", "--want", type=int, default=1000)
+    ap.add_argument("-n", "--want", type=int, default=240)
     ap.add_argument("--min-distance", type=int, default=MIN_DISTANCE)
     ap.add_argument("--out", default=os.path.join(HERE, "selection.json"))
+    ap.add_argument("--niches", default=",".join(LAUNCH_NICHES),
+                    help="comma-separated niche slugs to draw from, or "
+                         "'all' to use the whole taxonomy")
+    ap.add_argument("--per-min", type=int, default=PER_NICHE_MIN)
+    ap.add_argument("--per-max", type=int, default=PER_NICHE_MAX)
     a = ap.parse_args()
+
+    allow = None
+    if a.niches and a.niches != "all":
+        allow = [s.strip() for s in a.niches.split(",") if s.strip()]
+        unknown = [n for n in allow if n not in T.NICHES]
+        if unknown:
+            raise SystemExit(f"select: unknown niche(s) {unknown}. "
+                             f"Run `python3 taxonomy.py` for the list.")
+        allow = set(allow)
+        print(f"drawing from {len(allow)} niche(s): {', '.join(sorted(allow))}")
 
     panels = load_panels()
     print(f"rendered panels available: {len(panels):,}")
-    chosen, stats = pick(panels, a.want, a.min_distance)
+    n_restricted = sum(1 for p in panels if restricted(p))
+    print(f"excluded as restricted subjects (alcohol/tobacco): "
+          f"{n_restricted:,}")
+    chosen, stats = pick(panels, a.want, a.min_distance,
+                         a.per_min, a.per_max, allow)
     print(f"candidates scored: {stats['candidates']:,}   "
           f"rejected as visually close: {stats['rejected_close']:,}")
     print(f"chosen: {len(chosen):,}")

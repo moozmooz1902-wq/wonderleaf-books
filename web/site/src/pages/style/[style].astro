@@ -6,7 +6,8 @@ import { getDb, byStyle, countWhere } from '../../lib/db';
 
 const { style } = Astro.params;
 const s = TAX.styles.find((x) => x.slug === style);
-if (!s) return new Response('Not found', { status: 404 });
+if (!s)
+  return Astro.rewrite('/404');
 
 const db = getDb(Astro.locals);
 const page = Math.max(1, Number(Astro.url.searchParams.get('page') || 1));

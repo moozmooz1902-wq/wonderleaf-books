@@ -72,6 +72,15 @@ the business identity misrepresents who is selling.
 
 1. **Brand / trading name** — the name on the site and in Merchant Center.
    Must match across the domain, the site, the account and Stripe.
+
+   > *"We make it ourselves so there's no brand"* — that is true about the
+   > world and wrong about the feed. Google requires `brand` on new
+   > products and **explicitly permits your own name when you manufacture
+   > the goods**, which you do. What gets you disapproved is putting
+   > `Generic`, `Unbranded` or `N/A` in that field. So your trading name
+   > *is* the brand. Preflight rejects all three of those words, and also
+   > checks the brand resembles the domain, because verification
+   > cross-checks the business name against the site.
 2. **The new domain** — see Step 3 for how to choose.
 3. **VAT number** — `GB` plus 9 digits. You said you are registered.
 4. **A support email on that domain** — `hello@yourdomain.co.uk`. Not
@@ -90,6 +99,29 @@ to **free**. On a £24.99–£34.99 framed print it converts better than a
 £4.95 line, it makes the feed's shipping attribute trivially correct, and
 it removes the undisclosed-delivery-cost risk completely. One number in
 `business.config.json` changes it everywhere.
+
+---
+
+## Step 2b — The product category (already set, here is the proof)
+
+Every item is submitted as:
+
+```
+google_product_category = 500044
+  Home & Garden > Decor > Artwork > Posters, Prints & Visual Artwork
+```
+
+Taken from Google's own published taxonomy file, not from memory — I
+downloaded `taxonomy-with-ids.en-GB.txt` and grepped it. Worth stating
+because the neighbouring id is a trap: **500045 is Decorative Tapestries**,
+and 597 is Picture Frames. A framed print is not a picture frame; you are
+selling the artwork, and the frame is how it is supplied. Getting this
+wrong puts your products in the wrong comparison set and can look like
+miscategorisation.
+
+Alongside it each product carries a `product_type` of your own, e.g.
+`Wall Art > Landscapes & Places > British Coast > Charcoal Drawings`,
+which is what Google uses for reporting and bidding.
 
 ---
 
@@ -169,9 +201,26 @@ npx wrangler secret put STRIPE_SECRET_KEY
 npx wrangler secret put STRIPE_WEBHOOK_SECRET
 ```
 
-In the Stripe dashboard add a webhook to
-`https://yourdomain/api/stripe-webhook` for the event
-`checkout.session.completed`.
+In the Stripe dashboard:
+
+1. Add a webhook to `https://yourdomain/api/stripe-webhook` for the event
+   `checkout.session.completed`.
+2. **Settings → Customer emails → turn on "Successful payments".** The
+   order-confirmed page tells the buyer an email is coming. If Stripe is not
+   sending one, the site is stating something untrue. Once it is on, set
+   `order_confirmation_email: true` in `business.config.json` — preflight
+   fails until you do.
+3. **Settings → Public details**: business name, support email, phone and
+   address, all matching Companies House and Merchant Center.
+4. **Statement descriptor** = your brand. A card statement showing a name
+   the customer does not recognise produces chargebacks, and chargebacks
+   feed back into Google's view of you.
+
+The checkout page itself already shows the terms, returns and privacy
+links and requires acceptance — Google's checkout rules say customers must
+be able to reach those "throughout checkout", and omitting them is
+"treated as misrepresentation". That is set in `api/checkout.ts`; do not
+remove it.
 
 **The business name, address and company number in Stripe must match
 Companies House and Merchant Center exactly.** Verification cross-checks
@@ -300,23 +349,28 @@ the refund lands. Now the returns policy is true too.
 The catalogue tool can produce any number of products. The staged plan is
 in `catalogue/select.py`:
 
-| Stage | Products | When |
-|---|---|---|
-| **1,000** | now | Launch. Change nothing else until the account is healthy. |
-| 5,000 | | Only after free listings are serving and there have been **zero** policy issues for 14 straight days. |
-| 25,000 | | After another 30 clean days, and once Search is actually indexing category pages. |
-| 100,000 | | Add the other three colourways here — as a Colourway option inside existing products, not as new products. |
-| 500,000+ | | Only with real unframed photographs if you want unframed, and only on a boringly healthy account. |
+| Stage | Designs | Niches | When |
+|---|---|---|---|
+| **240** | now | 12 | Launch. 2,160 feed items. Change nothing else until the account is healthy. |
+| 600 | | 20 | Only after free listings are serving and there have been **zero** policy issues for 14 straight days. Adds Still Life and Architecture. |
+| 2,500 | | 40 | After another 30 clean days, and once Search is actually indexing category pages. |
+| 10,000 | | 53 | The whole taxonomy. |
+| 40,000 | | 53 | Add the other three colourways here — as a Colourway option inside existing products, not as new products. |
+| 100,000+ | | 53 | Only on a boringly healthy account, and only with real unframed photographs if you want unframed. |
 
-To regenerate at a bigger size:
+Growing is one command, and the menus grow with it — they are built from
+whatever is in stock, so a stage that adds Still Life adds its nav link too:
 
 ```bash
 cd web/catalogue
-python3 select.py -n 5000
+python3 select.py -n 600 --niches all --per-min 14 --per-max 40
 python3 build_db.py
 python3 preflight.py && python3 feed.py --tsv
 cd ../site && npm run db:seed:remote && npm run deploy
 ```
+
+**Every stage needs the eye-check in Step 5b again** on the designs that are
+new. The defect rate does not fall just because the account is healthy.
 
 **Why not go straight to millions,** given that is the whole point of the
 data: a brand-new domain carrying millions of near-identical pages is the
@@ -347,6 +401,16 @@ is handled.
 | Images unavailable to the crawler | Served from your own domain out of R2 with a long cache, not from the rate-limited r2.dev hosts. `robots.txt` explicitly allows Googlebot-Image. |
 | Placeholder / template copy | Preflight scans the site source, `wrangler.toml` and the config for 15 placeholder patterns and fails on any hit. |
 | Copyright | No named IP in the subject lists; the generator's copyright gate already blocks it; nothing claims to be hand-made or signed. |
+| "Customers must be able to find refund and return policies, terms and conditions, and a way to contact you **throughout checkout**" | Stripe Checkout is configured with required terms acceptance linking to `/terms`, `/returns` and `/privacy`, plus a line carrying the dispatch time and support email. |
+| Return policy consistent "in the footer, returns page and web banner" | All three, generated from one config: the banner at the top of every page, the returns page, and the footer states the terms in full rather than only linking them. |
+| "Repair or redirect broken URLs, such as those returning 404 or 500" | A missing page renders the shop's own 404 with full navigation, verified returning status 404. |
+| "Ensure all links across the website are working and point to relevant content" | Menus are generated from the products, so a category the range does not cover is not linked at all. `preflight --live` crawls every internal link; 70 checked locally, 0 broken. |
+| Site must be "fully-functional", no pages that look unfinished | Preflight fails if any niche in the navigation holds fewer than 6 designs. |
+| Restricted products (alcohol, tobacco) | A print of a negroni is not a negroni, but the screening is automated and reads the title. 6,401 panels excluded by rule in `select.py`, and preflight re-checks the built feed. |
+| Contact details must match Merchant Center | Organization markup with the legal name, company number, VAT number, address, email and phone is on **every** page, generated from the same config the footer uses. |
+| Guest checkout; business fields optional | Stripe Checkout, guest by default. We collect no company name. |
+| Price must not increase between listing and checkout | The browser sends only variant ids and quantities; the server looks up every price. A posted price is impossible. |
+| "Show the local currency ... consistently from product page through checkout" | GBP throughout, VAT inclusive, set once in config. |
 
 ---
 

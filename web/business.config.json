@@ -25,7 +25,7 @@
   "_phone": "A working UK telephone number that a person answers or that has voicemail. Google's 'present a false identity, business name, or contact information' rule covers a dead number.",
   "support_hours": "Monday to Friday, 9am to 5pm UK time",
   "fulfilment": {
-    "made_in": "United Kingdom",
+    "made_in": "the United Kingdom",
     "dispatch_working_days": 3,
     "_dispatch_working_days": "Matches the eBay DispatchTimeMax of 3 that you already run. Do not shorten it to look better: 'hiding processing delays behind a stated delivery time' is listed under dishonest transaction conditions.",
     "delivery": [
@@ -55,5 +55,7 @@
   "social_proof": {
     "reviews": "none-yet",
     "_reviews": "KEEP THIS AS 'none-yet' UNTIL REAL REVIEWS EXIST. No star ratings, no 'loved by 10,000 customers', no invented bestseller badges, no countdown timers on prices that never expire. Fake reviews became a criminal matter in the UK under the Digital Markets, Competition and Consumers Act 2024, and on Google's side invented social proof sits under misrepresentation. A new shop with no reviews is normal; a new shop with 400 five-star reviews is a suspension."
-  }
+  },
+  "order_confirmation_email": false,
+  "_order_confirmation_email": "Set to true ONLY after you have switched on 'Successful payments' email receipts in the Stripe dashboard (Settings -> Customer emails). The order-confirmed page tells the buyer an email is coming; if Stripe is not sending one then the site is making a statement that is not true, which is the definition of the problem this whole build exists to avoid. preflight fails while this is false."
 }

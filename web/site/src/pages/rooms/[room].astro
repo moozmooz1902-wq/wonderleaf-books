@@ -6,7 +6,8 @@ import { getDb, byRoom } from '../../lib/db';
 
 const { room } = Astro.params;
 const r = TAX.rooms.find((x) => x.slug === room);
-if (!r) return new Response('Not found', { status: 404 });
+if (!r)
+  return Astro.rewrite('/404');
 
 const db = getDb(Astro.locals);
 const page = Math.max(1, Number(Astro.url.searchParams.get('page') || 1));

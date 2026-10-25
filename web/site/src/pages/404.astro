@@ -1,0 +1,43 @@
+---
+// A real 404 page.
+//
+// The dynamic routes used to answer a bad slug with `new Response('Not
+// found')` - a white page with two words on it. Google's editorial
+// requirements treat broken URLs and pages that look unfinished as a site
+// quality violation, and a reviewer who mistypes a URL should land on
+// something that looks like a shop rather than something that looks
+// broken. The routes now rewrite to this page instead.
+import Base from '../layouts/Base.astro';
+import { TAX, B } from '../lib/shop';
+---
+
+<Base
+  title="Page not found"
+  description="That page does not exist. Browse the ranges instead."
+  noindex={true}
+>
+  <div class="wrap page narrow">
+    <p class="kicker">404</p>
+    <h1>We could not find that page</h1>
+    <p class="prose">
+      The link may be out of date, or the address may have a typo in it.
+      Nothing is lost — everything we sell is a click or two from here.
+    </p>
+
+    <h2>Browse the ranges</h2>
+    <div class="chips">
+      {TAX.sections.map((s) => (
+        <a class="chip" href={`/c/${s.slug}`}><b>{s.title}</b></a>
+      ))}
+      <a class="chip" href="/style"><b>Shop by style</b></a>
+      <a class="chip" href="/rooms"><b>Shop by room</b></a>
+    </div>
+
+    <h2>Or ask us</h2>
+    <p class="prose">
+      If you were looking for something specific, email
+      {' '}<a href={`mailto:${B.email}`}>{B.email}</a> or call {B.phone} and
+      we will point you at it.
+    </p>
+  </div>
+</Base>

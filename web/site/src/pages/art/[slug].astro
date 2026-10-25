@@ -21,7 +21,8 @@ import { getDb, product, variantOf, alsoIn } from '../../lib/db';
 const { slug } = Astro.params;
 const db = getDb(Astro.locals);
 const p = await product(db, slug!);
-if (!p) return new Response('Not found', { status: 404 });
+if (!p)
+  return Astro.rewrite('/404');
 
 const frame = Astro.url.searchParams.get('frame');
 const size = Astro.url.searchParams.get('size');
@@ -109,6 +110,12 @@ const jsonLd = {
   description={p.description.split('\n')[0].slice(0, 300)}
   canonical={abs(`/art/${p.slug}`, env)}
   jsonLd={jsonLd}
+  crumbs={[
+    { name: 'Home', url: '/' },
+    { name: p.section_title, url: `/c/${p.section}` },
+    { name: p.niche_title, url: `/c/${p.section}/${p.niche}` },
+    { name: p.title, url: `/art/${p.slug}` },
+  ]}
 >
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb">
