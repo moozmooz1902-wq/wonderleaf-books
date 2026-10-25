@@ -1,0 +1,87 @@
+---
+// The returns policy, and a deliberate decision inside it.
+//
+// Made-to-order goods can be exempt from the 14-day cancellation right in
+// the Consumer Contracts Regulations 2013, and a shop printing to order
+// could argue that exemption. This one does not. It offers 30 days from
+// delivery, no reason needed.
+//
+// Partly because it sells more. Mostly because the alternative - a shop
+// with no returns, selling on Google, on a brand-new domain - is the exact
+// profile Merchant Center reviewers are trained to be suspicious of, and
+// "denying return and refund for a product despite having a clear refund or
+// return policy" is an egregious violation with no warning stage. A policy
+// generous enough to honour without argument is cheaper than an appeal.
+import Base from '../layouts/Base.astro';
+import { B, money } from '../lib/shop';
+const customerPays = B.returns.who_pays_return_postage === 'customer';
+---
+
+<Base
+  title="Returns and refunds"
+  description={`${B.returns.window_days} days to return anything from the day it arrives, for any reason. Refunds go back to your original payment method within 5 working days of the parcel reaching us.`}
+>
+  <div class="wrap page narrow">
+    <h1>Returns and refunds</h1>
+
+    <p class="prose">
+      <strong>{B.returns.window_days} days from the day it arrives, for any
+      reason.</strong> You do not have to tell us why. If you have changed
+      your mind, if the colour is not what you pictured, if it does not suit
+      the wall — send it back.
+    </p>
+
+    <h2>How to do it</h2>
+    <ol class="prose">
+      <li>Email <a href={`mailto:${B.email}`}>{B.email}</a> with your order
+        number and say what you are sending back.</li>
+      <li>We reply with the return address, usually the same working day.</li>
+      <li>Post it back in packaging that will protect the glazing. The
+        board it arrived in is ideal.</li>
+      <li>We refund within 5 working days of the parcel reaching us.</li>
+    </ol>
+
+    <h2>What it costs you</h2>
+    <table class="plain">
+      <tr>
+        <th>Return postage</th>
+        <td>
+          {customerPays
+            ? 'Paid by you, unless the item is faulty, damaged or not what you ordered — then we pay.'
+            : 'We pay. We will send you a prepaid label.'}
+        </td>
+      </tr>
+      <tr><th>Restocking fee</th><td>{B.returns.restocking_fee === 0 ? 'None. We do not charge one.' : money(B.returns.restocking_fee)}</td></tr>
+      <tr><th>Original delivery charge</th><td>Refunded in full if you return the whole order.</td></tr>
+      <tr><th>Refund method</th><td>Back to the card or account you paid with. We cannot refund to anything else.</td></tr>
+    </table>
+
+    <h2>Damaged, faulty or wrong</h2>
+    <p class="prose">
+      Send a photograph to <a href={`mailto:${B.email}`}>{B.email}</a>. We
+      remake and resend at our cost, and you do not need to post the
+      original back. If you would rather have the money, we refund in full
+      including delivery.
+    </p>
+
+    <h2>Your legal rights</h2>
+    <p class="prose">
+      Our {B.returns.window_days}-day policy is offered on top of your legal
+      rights, not instead of them. Under the Consumer Contracts Regulations
+      2013 you generally have 14 days to cancel an online order; prints made
+      to order can be exempt from that, so we give everyone
+      {' '}{B.returns.window_days} days voluntarily and do not rely on the
+      exemption. Under the Consumer Rights Act 2015 you are entitled to a
+      remedy if goods are faulty, and nothing here limits that.
+    </p>
+
+    <h2>What we cannot take back</h2>
+    <p class="prose">
+      Nothing, within the window, provided it arrives back in a condition we
+      could reasonably resell — so please do not hang it with adhesive
+      strips that tear the frame, and keep the glazing intact. If a returned
+      print arrives damaged because it was posted loose in a bag, we will
+      contact you before refunding rather than quietly reducing it.
+    </p>
+  </div>
+</Base>

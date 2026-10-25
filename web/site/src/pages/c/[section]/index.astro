@@ -1,0 +1,42 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Grid from '../../../components/Grid.astro';
+import { TAX, sectionTitle } from '../../../lib/shop';
+import { getDb, bySection, nicheCounts } from '../../../lib/db';
+
+const { section } = Astro.params;
+const sec = TAX.sections.find((s) => s.slug === section);
+if (!sec) return new Response('Not found', { status: 404 });
+
+const db = getDb(Astro.locals);
+const { results: counts } = await nicheCounts(db);
+const niches = counts.filter((c) => c.section === section);
+const { results: items } = await bySection(db, section!, 24);
+const total = niches.reduce((a, n) => a + n.n, 0);
+---
+
+<Base
+  title={`${sec.title} Wall Art - Framed Prints | ${TAX.sections.length ? '' : ''}`.trim() + ` ${sec.title}`}
+  description={`${total} framed ${sec.title.toLowerCase()} prints across ${niches.length} ranges. Printed and framed to order in the UK, in black, white or oak, A4 to A2.`}
+>
+  <section class="hero">
+    <div class="wrap">
+      <nav class="crumbs"><a href="/">Home</a> / {sec.title}</nav>
+      <h1>{sec.title}</h1>
+      <p class="lede">
+        {total} designs in {niches.length} ranges. Pick a range to narrow it
+        down, or scroll for a sample of everything.
+      </p>
+      <div class="chips">
+        {niches.map((n) => (
+          <a class="chip" href={`/c/${section}/${n.niche}`}>
+            <b>{n.niche_title}</b><i>{n.n}</i>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  <div class="wrap">
+    <Grid items={items} />
+  </div>
+</Base>

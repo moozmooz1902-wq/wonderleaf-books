@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import Grid from '../../components/Grid.astro';
+import { TAX } from '../../lib/shop';
+import { getDb, byStyle, countWhere } from '../../lib/db';
+
+const { style } = Astro.params;
+const s = TAX.styles.find((x) => x.slug === style);
+if (!s) return new Response('Not found', { status: 404 });
+
+const db = getDb(Astro.locals);
+const page = Math.max(1, Number(Astro.url.searchParams.get('page') || 1));
+const per = 48;
+const { results: items } = await byStyle(db, style!, per, (page - 1) * per);
+const total = await countWhere(db, 'style', style!);
+const pages = Math.ceil(total / per);
+---
+
+<Base
+  title={`${s.title} - Framed Art Prints`}
+  description={`${s.blurb} ${total} designs, framed in black, white or oak and made to order in the UK.`.slice(0, 320)}
+  noindex={page > 1}
+>
+  <section class="hero">
+    <div class="wrap">
+      <nav class="crumbs"><a href="/">Home</a> / <a href="/style">Styles</a> / {s.title}</nav>
+      <h1>{s.title}</h1>
+      <p class="lede">{s.blurb}</p>
+      <p class="meta" style="color:var(--ink-3);font-size:0.86rem">{total} designs</p>
+    </div>
+  </section>
+  <div class="wrap">
+    <Grid items={items} />
+    {pages > 1 && (
+      <nav class="chips" style="padding:10px 0 40px" aria-label="Pages">
+        {Array.from({ length: pages }, (_, i) => i + 1).map((i) => (
+          <a class="chip" href={i === 1 ? `/style/${style}` : `/style/${style}?page=${i}`} aria-current={i === page ? 'true' : 'false'}><b>{i}</b></a>
+        ))}
+      </nav>
+    )}
+    <div class="section-block">
+      <p class="kicker">Other styles</p>
+      <div class="chips">
+        {TAX.styles.filter((x) => x.slug !== style).map((x) => (
+          <a class="chip" href={`/style/${x.slug}`}><b>{x.title}</b></a>
+        ))}
+      </div>
+    </div>
+  </div>
+</Base>

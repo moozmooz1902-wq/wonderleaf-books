@@ -1,0 +1,77 @@
+---
+// A privacy policy that is short because the site genuinely does very
+// little. No analytics, no advertising pixels, no social embeds, no
+// third-party fonts. That is a design decision with a privacy policy as its
+// receipt - and a policy that can be read in two minutes and is actually
+// true is worth more than four pages of boilerplate describing trackers
+// this shop does not run.
+import Base from '../layouts/Base.astro';
+import { B } from '../lib/shop';
+const addr = (B.registered_address ?? []).join(', ');
+---
+
+<Base
+  title="Privacy and cookies"
+  description={`How ${B.legal_name} handles your data. No analytics, no advertising trackers, no third-party fonts. One cookie-free basket stored in your own browser.`}
+>
+  <div class="wrap page narrow">
+    <h1>Privacy and cookies</h1>
+
+    <p class="prose">
+      {B.legal_name} is the data controller for this website. We can be
+      reached at <a href={`mailto:${B.email}`}>{B.email}</a> or by post at
+      {' '}{addr}.
+    </p>
+
+    <h2>What we collect, and only when you order</h2>
+    <table class="plain">
+      <tr><th>Name and delivery address</th><td>To make and post your order. Kept for 6 years, because HMRC requires us to keep records of sales.</td></tr>
+      <tr><th>Email address</th><td>To send your order confirmation and tell you when it is posted.</td></tr>
+      <tr><th>Order details</th><td>So we can honour the returns policy and answer questions about what you bought.</td></tr>
+    </table>
+    <p class="prose">
+      The lawful basis is performance of a contract — we cannot send you a
+      print without knowing where to send it — and, for the records we are
+      required to keep, legal obligation.
+    </p>
+
+    <h2>What we do not do</h2>
+    <ul class="prose">
+      <li>No Google Analytics or any other analytics.</li>
+      <li>No advertising or remarketing pixels. Nothing follows you around.</li>
+      <li>No third-party fonts, icon services or social embeds — this page
+        loads from one server, ours.</li>
+      <li>No marketing emails unless you explicitly ask for them. There is
+        no mailing list.</li>
+      <li>We never sell or rent your data. To anyone, for any price.</li>
+    </ul>
+
+    <h2>Cookies</h2>
+    <p class="prose">
+      This site sets <strong>no tracking cookies</strong>, which is why you
+      have not been asked to accept any. Your basket is stored in your own
+      browser using local storage and never reaches us until you check out.
+      Stripe sets its own cookies on its payment page to prevent fraud; that
+      happens on Stripe's page, under
+      {' '}<a href="https://stripe.com/gb/privacy" rel="noopener nofollow">Stripe's privacy policy</a>.
+    </p>
+
+    <h2>Who else sees your data</h2>
+    <table class="plain">
+      <tr><th>Stripe Payments UK Ltd</th><td>Takes the payment. They receive your name, email and card details; we never see the card number.</td></tr>
+      <tr><th>Our delivery courier</th><td>Receives your name and address to deliver the parcel.</td></tr>
+      <tr><th>Cloudflare</th><td>Hosts this website and serves the images. Processes your IP address to deliver the page and block attacks.</td></tr>
+    </table>
+    <p class="prose">That is the complete list.</p>
+
+    <h2>Your rights</h2>
+    <p class="prose">
+      You can ask us for a copy of your data, ask us to correct it, or ask
+      us to delete it — except for the sales records HMRC requires us to
+      keep. Email <a href={`mailto:${B.email}`}>{B.email}</a> and we will
+      respond within one month. If you are unhappy with how we have handled
+      it you can complain to the Information Commissioner's Office at
+      {' '}<a href="https://ico.org.uk" rel="noopener nofollow">ico.org.uk</a>.
+    </p>
+  </div>
+</Base>

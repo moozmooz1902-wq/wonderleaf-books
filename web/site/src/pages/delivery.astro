@@ -1,0 +1,67 @@
+---
+// Every number on this page comes from business.config.json, which is the
+// same file the feed's shipping attribute is built from. They cannot
+// disagree, which is the point: "misrepresenting shipping locations",
+// "hiding processing delays behind a stated delivery time" and failing to
+// disclose delivery cost are three separate named violations.
+import Base from '../layouts/Base.astro';
+import { B, money } from '../lib/shop';
+const d = B.fulfilment.delivery[0];
+const total = (n: number) => n + B.fulfilment.dispatch_working_days;
+---
+
+<Base
+  title="Delivery"
+  description={`UK delivery for ${d.price === 0 ? 'free' : money(d.price)}. Made to order and dispatched within ${B.fulfilment.dispatch_working_days} working days, then ${d.min_days}-${d.max_days} working days in the post.`}
+>
+  <div class="wrap page narrow">
+    <h1>Delivery</h1>
+
+    <p class="prose">
+      Every print is made after you order it. That means there are two parts
+      to the wait: the time we take to print and frame it, and the time it
+      spends with the courier. We show both, because the second number on
+      its own would be misleading.
+    </p>
+
+    <table class="plain">
+      <tr><th>Where we deliver</th><td>United Kingdom only</td></tr>
+      <tr><th>Cost</th><td>{d.price === 0 ? 'Free' : money(d.price)} per order, including VAT</td></tr>
+      <tr><th>Printing and framing</th><td>Up to {B.fulfilment.dispatch_working_days} working days</td></tr>
+      <tr><th>In the post</th><td>{d.min_days}–{d.max_days} working days</td></tr>
+      <tr>
+        <th>Total, order to doorstep</th>
+        <td><strong>{total(d.min_days)}–{total(d.max_days)} working days</strong></td>
+      </tr>
+    </table>
+
+    <h2>Where it is made and sent from</h2>
+    <p class="prose">
+      Printing, framing and dispatch all happen in {B.fulfilment.made_in}.
+      Nothing is drop-shipped from overseas, and nothing is posted from
+      outside the UK.
+    </p>
+
+    <h2>We do not deliver outside the UK yet</h2>
+    <p class="prose">
+      Framed glass is awkward and expensive to send abroad and we would
+      rather not quote a delivery time we cannot keep. If you are outside
+      the UK, <a href={`mailto:${B.email}`}>email us</a> and we will tell you
+      honestly whether we can help.
+    </p>
+
+    <h2>If something goes wrong</h2>
+    <p class="prose">
+      If your order has not arrived {total(d.max_days) + 3} working days
+      after you placed it, email <a href={`mailto:${B.email}`}>{B.email}</a>
+      with your order number. If it arrives damaged, send us a photograph
+      and we will remake and resend it at our cost — you do not need to
+      return a broken one first.
+    </p>
+
+    <p class="meta" style="font-size:0.85rem;color:var(--ink-3)">
+      Working days are Monday to Friday, excluding UK public holidays.
+      Orders placed at a weekend start on the next working day.
+    </p>
+  </div>
+</Base>

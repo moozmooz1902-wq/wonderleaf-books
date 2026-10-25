@@ -1,0 +1,12 @@
+node_modules/
+site/dist/
+site/.astro/
+site/.wrangler/
+site/src/data/business.json
+site/src/data/taxonomy.json
+catalogue/catalogue.json
+catalogue/catalogue.db
+catalogue/seed.sql
+catalogue/sheets/
+catalogue/taxonomy.json
+feed/

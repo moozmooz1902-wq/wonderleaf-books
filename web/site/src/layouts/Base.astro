@@ -1,0 +1,135 @@
+---
+// The shell every page wears.
+//
+// The footer carries the full legal identity on EVERY page. That is not
+// decoration: a UK limited company must publish its registered name, number
+// and office address (Companies Act 2006, E-Commerce Regulations 2002), and
+// the same block is the first thing a Merchant Center reviewer looks for
+// when deciding whether this is a real business. Google's misrepresentation
+// policy leads with "present a false identity, business name, or contact
+// information" - so the cure is to present a true one, everywhere, without
+// being asked.
+import '../styles/global.css';
+import { B, TAX, deliveryLine, returnsLine } from '../lib/shop';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  jsonLd?: unknown;
+  noindex?: boolean;
+}
+const { title, description, canonical, jsonLd, noindex } = Astro.props;
+const env = (Astro.locals as any)?.runtime?.env;
+const base = (env?.SITE_URL || `https://${B.domain}`).replace(/\/$/, '');
+const canon = canonical ?? base + Astro.url.pathname;
+const year = new Date().getFullYear();
+
+const addr = B.registered_address ?? [];
+const trading = B.trading_address_same ? addr : (B.trading_address ?? addr);
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canon} />
+    {noindex && <meta name="robots" content="noindex,follow" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={B.brand} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canon} />
+    <meta name="theme-color" content="#edeae3" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23edeae3'/%3E%3Crect x='6' y='4' width='20' height='24' fill='none' stroke='%231b1a18' stroke-width='2'/%3E%3Crect x='10' y='8' width='12' height='16' fill='%23c49a62'/%3E%3C/svg%3E"
+    />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <div class="head-note">{deliveryLine()} {returnsLine()}</div>
+    <header class="site-head">
+      <div class="wrap head-row">
+        <a class="logo" href="/">{B.brand}<span>.</span></a>
+        <nav class="nav" aria-label="Main">
+          {TAX.sections.map((s) => (
+            <a href={`/c/${s.slug}`}>{s.title}</a>
+          ))}
+          <a href="/style">Styles</a>
+          <a href="/rooms">Rooms</a>
+        </nav>
+        <a class="nav" href="/cart" style="text-decoration:none">
+          <span>Basket</span>
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-foot">
+      <div class="wrap">
+        <div class="foot-cols">
+          <div>
+            <h4>Shop</h4>
+            <ul>
+              {TAX.sections.map((s) => (
+                <li><a href={`/c/${s.slug}`}>{s.title}</a></li>
+              ))}
+              <li><a href="/style">Shop by style</a></li>
+              <li><a href="/rooms">Shop by room</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Help</h4>
+            <ul>
+              <li><a href="/delivery">Delivery</a></li>
+              <li><a href="/returns">Returns &amp; refunds</a></li>
+              <li><a href="/contact">Contact us</a></li>
+              <li><a href="/faq">Frequently asked</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>About</h4>
+            <ul>
+              <li><a href="/about">About {B.brand}</a></li>
+              <li><a href="/how-its-made">How it is made</a></li>
+              <li><a href="/terms">Terms &amp; conditions</a></li>
+              <li><a href="/privacy">Privacy &amp; cookies</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Contact</h4>
+            <ul>
+              <li><a href={`mailto:${B.email}`}>{B.email}</a></li>
+              <li><a href={`tel:${(B.phone || '').replace(/\s/g, '')}`}>{B.phone}</a></li>
+              <li>{B.support_hours}</li>
+            </ul>
+            <div class="pay">
+              <span>Card, Apple Pay &amp; Google Pay via Stripe</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="legal">
+          <strong>{B.legal_name}</strong> &middot; a company registered in
+          England and Wales, company number {B.company_number} &middot; VAT
+          registration {B.vat_number}.<br />
+          Registered office: {addr.join(', ')}.<br />
+          {!B.trading_address_same && <>Goods are dispatched from: {trading.join(', ')}.<br /></>}
+          All prices include VAT at the UK standard rate. Orders are printed
+          and framed in {B.fulfilment.made_in}. We currently deliver to the
+          United Kingdom only.<br />
+          &copy; {year} {B.legal_name}. Artwork is digitally created and
+          printed to order; it is not a painting, an original or a signed
+          work.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import { TAX } from '../../lib/shop';
+import { getDb } from '../../lib/db';
+
+const db = getDb(Astro.locals);
+const { results } = await db
+  .prepare('SELECT room, COUNT(*) n FROM product_rooms GROUP BY room')
+  .all<{ room: string; n: number }>();
+const count = (slug: string) => results.find((r) => r.room === slug)?.n ?? 0;
+---
+
+<Base
+  title="Shop by Room - Wall Art for Every Room"
+  description="Framed prints suggested by room: living room, bedroom, kitchen, hallway, study and nursery. A suggestion of where each range suits, not a different product."
+>
+  <section class="hero">
+    <div class="wrap">
+      <nav class="crumbs"><a href="/">Home</a> / Rooms</nav>
+      <h1>Shop by room</h1>
+      <p class="lede">
+        A starting point rather than a rule. These are the same prints
+        grouped by where they tend to suit — nothing about the product
+        changes.
+      </p>
+      <div class="chips">
+        {TAX.rooms.map((r) => (
+          <a class="chip" href={`/rooms/${r.slug}`}><b>{r.title}</b><i>{count(r.slug)}</i></a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

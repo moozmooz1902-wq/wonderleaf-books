@@ -1,0 +1,49 @@
+---
+import Base from '../../layouts/Base.astro';
+import Grid from '../../components/Grid.astro';
+import { TAX } from '../../lib/shop';
+import { getDb, byRoom } from '../../lib/db';
+
+const { room } = Astro.params;
+const r = TAX.rooms.find((x) => x.slug === room);
+if (!r) return new Response('Not found', { status: 404 });
+
+const db = getDb(Astro.locals);
+const page = Math.max(1, Number(Astro.url.searchParams.get('page') || 1));
+const per = 48;
+const { results: items } = await byRoom(db, room!, per, (page - 1) * per);
+const tot = await db
+  .prepare('SELECT COUNT(*) n FROM product_rooms WHERE room = ?')
+  .bind(room)
+  .first<{ n: number }>();
+const total = tot?.n ?? items.length;
+const pages = Math.ceil(total / per);
+---
+
+<Base
+  title={`${r.title} Wall Art - Framed Prints`}
+  description={`Framed prints that suit a ${r.title.toLowerCase()} - ${total} designs, made to order in the UK in black, white or oak, A4 to A2.`}
+  noindex={page > 1}
+>
+  <section class="hero">
+    <div class="wrap">
+      <nav class="crumbs"><a href="/">Home</a> / <a href="/rooms">Rooms</a> / {r.title}</nav>
+      <h1>Wall art for the {r.title.toLowerCase()}</h1>
+      <p class="lede">
+        {total} designs from the ranges that tend to suit this room. It is a
+        suggestion — the prints themselves are the same whichever wall they
+        end up on.
+      </p>
+    </div>
+  </section>
+  <div class="wrap">
+    <Grid items={items} />
+    {pages > 1 && (
+      <nav class="chips" style="padding:10px 0 40px" aria-label="Pages">
+        {Array.from({ length: pages }, (_, i) => i + 1).map((i) => (
+          <a class="chip" href={i === 1 ? `/rooms/${room}` : `/rooms/${room}?page=${i}`} aria-current={i === page ? 'true' : 'false'}><b>{i}</b></a>
+        ))}
+      </nav>
+    )}
+  </div>
+</Base>

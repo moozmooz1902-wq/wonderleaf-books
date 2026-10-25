@@ -1,0 +1,104 @@
+---
+import Base from '../layouts/Base.astro';
+import { B, money } from '../lib/shop';
+const d = B.fulfilment.delivery[0];
+const addr = (B.registered_address ?? []).join(', ');
+---
+
+<Base
+  title="Terms and conditions"
+  description={`The terms on which ${B.legal_name} sells framed art prints.`}
+>
+  <div class="wrap page narrow">
+    <h1>Terms and conditions</h1>
+    <p class="meta" style="color:var(--ink-3);font-size:0.86rem">
+      These terms apply to every order placed on this website.
+    </p>
+
+    <h2>1. Who we are</h2>
+    <p class="prose">
+      This shop is operated by <strong>{B.legal_name}</strong>, a company
+      registered in England and Wales under company number
+      {' '}{B.company_number}, registered office {addr}. Our VAT
+      registration number is {B.vat_number}. You can reach us at
+      {' '}<a href={`mailto:${B.email}`}>{B.email}</a> or {B.phone}.
+    </p>
+
+    <h2>2. What we sell</h2>
+    <p class="prose">
+      Framed printed reproductions of digitally created artwork, made to
+      order. They are not paintings, originals, limited editions or signed
+      works. Sizes and frame options are stated on each product page, and
+      the size given is the framed size.
+    </p>
+
+    <h2>3. Prices</h2>
+    <p class="prose">
+      All prices are in pounds sterling and <strong>include VAT</strong> at
+      the UK standard rate. Delivery is
+      {d.price === 0 ? ' free' : ` ${money(d.price)} per order`} and is shown
+      before you pay. The price you see at checkout is the total you will be
+      charged — there are no surcharges, handling fees or customs charges
+      for UK delivery.
+    </p>
+
+    <h2>4. Your order</h2>
+    <p class="prose">
+      Placing an order is an offer to buy. The contract forms when we email
+      you to confirm. If we cannot fulfil an order — for example if a design
+      has to be withdrawn — we will tell you and refund you in full. We
+      reserve the right to decline an order, in which case you are not
+      charged.
+    </p>
+
+    <h2>5. Payment</h2>
+    <p class="prose">
+      Payment is taken at checkout by Stripe Payments UK Ltd. We do not see
+      or store your card number. Your order is made once payment has
+      cleared.
+    </p>
+
+    <h2>6. Delivery</h2>
+    <p class="prose">
+      We deliver to the United Kingdom only. Printing and framing take up to
+      {' '}{B.fulfilment.dispatch_working_days} working days and delivery a
+      further {d.min_days}–{d.max_days} working days. These are honest
+      estimates, not guarantees; if an order is going to be materially late
+      we will tell you. Risk passes to you on delivery.
+    </p>
+
+    <h2>7. Cancellation and returns</h2>
+    <p class="prose">
+      You may return anything within {B.returns.window_days} days of
+      delivery for a full refund, for any reason. That is offered in
+      addition to your statutory rights under the Consumer Contracts
+      Regulations 2013 and the Consumer Rights Act 2015, and nothing in
+      these terms restricts those rights. Full detail, including who pays
+      return postage, is on the <a href="/returns">returns page</a>.
+    </p>
+
+    <h2>8. Intellectual property</h2>
+    <p class="prose">
+      The artwork, the photographs and this website belong to us. You are
+      buying a physical print for private use. You are not buying the
+      copyright, and the print may not be reproduced, resold as a digital
+      file or used commercially without our written permission.
+    </p>
+
+    <h2>9. If we have got something wrong</h2>
+    <p class="prose">
+      Tell us. We would much rather fix it than argue about it. Email
+      {' '}<a href={`mailto:${B.email}`}>{B.email}</a> and we will reply
+      within one working day. We do not limit our liability for death or
+      personal injury caused by negligence, for fraud, or for anything else
+      that cannot lawfully be limited.
+    </p>
+
+    <h2>10. Law</h2>
+    <p class="prose">
+      These terms are governed by the law of England and Wales, and the
+      courts of England and Wales have jurisdiction. If you live elsewhere
+      in the UK you may bring proceedings in your own country.
+    </p>
+  </div>
+</Base>

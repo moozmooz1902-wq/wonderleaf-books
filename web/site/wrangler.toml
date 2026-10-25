@@ -1,0 +1,60 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "wallart-shop"
+main = "./dist/_worker.js/index.js"
+compatibility_date = "2026-09-01"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+
+[observability]
+enabled = true
+
+# The catalogue. Create it once with:
+#   wrangler d1 create wallart
+# then paste the database_id it prints in here.
+[[d1_databases]]
+binding = "DB"
+database_name = "wallart"
+database_id = "00000000-0000-0000-0000-000000000000"
+
+# THE FOUR PICTURE BUCKETS, BOUND DIRECTLY.
+#
+# The generated mockups are spread across four buckets because that is how
+# the eBay stores were split, and a product in the shop can come from any of
+# them. Two ways to serve them, and the choice matters more than it looks:
+#
+#  - the pub-*.r2.dev hostnames the eBay files use. Rejected. They are rate
+#    limited: a measured run got Cloudflare error 1015 on 7,142 of 12,834
+#    requests at about 70 req/s. Google crawls product images hard and in
+#    bursts, and an image that returns 1015 to the crawler is an image
+#    Google records as unavailable - which disapproves the product.
+#  - R2 custom domains. One custom domain attaches to one bucket, so four
+#    buckets would mean four image hostnames on the shop.
+#
+# So the Worker reads the buckets through these bindings and serves them all
+# under one path on the shop's own domain, /img/<bucket>/<key>. One hostname,
+# no rate limit, edge cached, and the images are crawled on our domain rather
+# than a shared r2.dev one.
+[[r2_buckets]]
+binding = "IMG_LUXVIA"
+bucket_name = "luxvia-art"
+
+[[r2_buckets]]
+binding = "IMG_POSTERLEAF"
+bucket_name = "posterleaf-store1"
+
+[[r2_buckets]]
+binding = "IMG_LUNAR"
+bucket_name = "lunar-kms"
+
+[[r2_buckets]]
+binding = "IMG_MERCURY"
+bucket_name = "mercury-usm"
+
+# Secrets - set with `wrangler secret put NAME`, never in this file:
+#   STRIPE_SECRET_KEY
+#   STRIPE_WEBHOOK_SECRET
+[vars]
+SITE_URL = "https://REPLACE_WITH_YOUR_DOMAIN"

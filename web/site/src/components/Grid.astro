@@ -1,0 +1,34 @@
+---
+// A grid of product cards. Used by every listing page so a card looks and
+// behaves the same everywhere.
+//
+// The card shows "from GBP 24.99" because the card is the PRODUCT, not one
+// variant, and A4 really is the cheapest option. Saying a flat price on the
+// card and a higher one on the page is the small dishonesty that becomes a
+// price-mismatch complaint, so the card says "from" and means it.
+import { money, img } from '../lib/shop';
+import type { Card } from '../lib/db';
+
+interface Props { items: Card[]; }
+const { items } = Astro.props;
+---
+
+<div class="grid">
+  {items.map((p) => (
+    <a class="card" href={`/art/${p.slug}`}>
+      <div class="shot">
+        <img
+          src={img(p.image_path)}
+          alt={`${p.title} shown in a black frame`}
+          width="700"
+          height="700"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <h3>{p.title}</h3>
+      <div class="meta">{p.niche_title} &middot; {p.style_title}</div>
+      <div class="price">from {money(p.price_from)}</div>
+    </a>
+  ))}
+</div>

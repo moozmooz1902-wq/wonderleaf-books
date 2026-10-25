@@ -1,0 +1,242 @@
+---
+// THE PRODUCT PAGE. The page the Merchant Center feed points nine URLs at.
+//
+// It reads ?frame= and ?size= ON THE SERVER and renders that variant's
+// title, price, image and JSON-LD into the HTML. That is the single most
+// important behaviour on the site. If this page ignored the parameters and
+// always showed the cheapest variant, then eight of every nine feed rows
+// would link to a page quoting a different price, Google would record a
+// price mismatch on each, and repeated mismatches is how a feed earns a
+// misrepresentation finding rather than a simple disapproval.
+//
+// The canonical tag still points at the clean /art/<slug> URL. That is
+// deliberate and it is the standard pattern: one page is indexed in Search
+// (so nine variants are not nine thin duplicates), while Shopping reads the
+// price from the URL it was given. The two jobs do not conflict.
+import Base from '../../layouts/Base.astro';
+import Grid from '../../components/Grid.astro';
+import { B, money, img, abs } from '../../lib/shop';
+import { getDb, product, variantOf, alsoIn } from '../../lib/db';
+
+const { slug } = Astro.params;
+const db = getDb(Astro.locals);
+const p = await product(db, slug!);
+if (!p) return new Response('Not found', { status: 404 });
+
+const frame = Astro.url.searchParams.get('frame');
+const size = Astro.url.searchParams.get('size');
+const v = variantOf(p, frame, size);
+
+const env = (Astro.locals as any)?.runtime?.env;
+const frames = [...new Map(p.variants.map((x) => [x.frame, x])).values()];
+const sizes = [...new Map(p.variants.map((x) => [x.size, x])).values()].sort(
+  (a, b) => a.price - b.price
+);
+const priceFor = (f: string, s: string) =>
+  p.variants.find((x) => x.frame === f && x.size === s)!.price;
+
+const { results: more } = await alsoIn(db, p.niche, p.slug, 8);
+const d = B.fulfilment.delivery[0];
+
+// Built from the same numbers the feed carries. Generated here rather than
+// hand-written so a JSON-LD price can never drift from the visible one.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: v.title,
+  description: p.description,
+  sku: v.id,
+  mpn: p.mpn,
+  brand: { '@type': 'Brand', name: p.brand },
+  image: [abs(img(v.image_path), env)],
+  category: p.product_type,
+  material: 'Wood frame, matte art paper',
+  color: v.frame_label,
+  size: `${v.size_label} (${v.size_cm})`,
+  offers: {
+    '@type': 'Offer',
+    url: abs(`/art/${p.slug}?frame=${v.frame}&size=${v.size}`, env),
+    priceCurrency: B.currency,
+    price: v.price.toFixed(2),
+    itemCondition: 'https://schema.org/NewCondition',
+    availability: 'https://schema.org/InStock',
+    seller: { '@type': 'Organization', name: B.legal_name },
+    hasMerchantReturnPolicy: {
+      '@type': 'MerchantReturnPolicy',
+      applicableCountry: 'GB',
+      returnPolicyCategory:
+        'https://schema.org/MerchantReturnFiniteReturnWindow',
+      merchantReturnDays: B.returns.window_days,
+      returnMethod: 'https://schema.org/ReturnByMail',
+      returnFees:
+        B.returns.who_pays_return_postage === 'customer'
+          ? 'https://schema.org/ReturnShippingFees'
+          : 'https://schema.org/FreeReturn',
+    },
+    shippingDetails: {
+      '@type': 'OfferShippingDetails',
+      shippingRate: {
+        '@type': 'MonetaryAmount',
+        value: d.price.toFixed(2),
+        currency: B.currency,
+      },
+      shippingDestination: {
+        '@type': 'DefinedRegion',
+        addressCountry: 'GB',
+      },
+      deliveryTime: {
+        '@type': 'ShippingDeliveryTime',
+        handlingTime: {
+          '@type': 'QuantitativeValue',
+          minValue: 1,
+          maxValue: B.fulfilment.dispatch_working_days,
+          unitCode: 'DAY',
+        },
+        transitTime: {
+          '@type': 'QuantitativeValue',
+          minValue: d.min_days,
+          maxValue: d.max_days,
+          unitCode: 'DAY',
+        },
+      },
+    },
+  },
+};
+---
+
+<Base
+  title={`${v.title} | ${B.brand}`}
+  description={p.description.split('\n')[0].slice(0, 300)}
+  canonical={abs(`/art/${p.slug}`, env)}
+  jsonLd={jsonLd}
+>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href={`/c/${p.section}`}>{p.section_title}</a> /
+      <a href={`/c/${p.section}/${p.niche}`}>{p.niche_title}</a>
+    </nav>
+
+    <div class="pdp">
+      <div class="shot">
+        <img
+          src={img(v.image_path)}
+          alt={`${p.title} in a ${v.frame_label.toLowerCase()} frame`}
+          width="1200"
+          height="1200"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </div>
+
+      <div>
+        <h1>{p.title}</h1>
+        <div class="price-now">{money(v.price)}</div>
+        <p class="vat-note">
+          Includes VAT. {d.price === 0 ? 'Free UK delivery' : `${money(d.price)} UK delivery`}.
+          {' '}{v.size_label} — {v.size_cm}, {v.frame_label.toLowerCase()} frame.
+        </p>
+
+        <fieldset>
+          <legend>Frame</legend>
+          <div class="opts">
+            {frames.map((f) => (
+              <a
+                class="opt"
+                href={`/art/${p.slug}?frame=${f.frame}&size=${v.size}`}
+                aria-current={f.frame === v.frame ? 'true' : 'false'}
+                rel="nofollow"
+              >
+                <span class={`sw sw-${f.frame}`} aria-hidden="true"></span>
+                {f.frame_label}
+              </a>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Size</legend>
+          <div class="opts">
+            {sizes.map((s) => (
+              <a
+                class="opt"
+                href={`/art/${p.slug}?frame=${v.frame}&size=${s.size}`}
+                aria-current={s.size === v.size ? 'true' : 'false'}
+                rel="nofollow"
+              >
+                {s.size_label}
+                <span class="mm">{s.size_cm}</span>
+                <span class="mm">{money(priceFor(v.frame, s.size))}</span>
+              </a>
+            ))}
+          </div>
+        </fieldset>
+
+        <button
+          class="btn"
+          id="add"
+          data-id={v.id}
+          data-title={v.title}
+          data-price={v.price}
+          data-img={img(v.image_path)}
+        >
+          Add to basket — {money(v.price)}
+        </button>
+
+        <ul class="facts">
+          <li>Printed to order in {B.fulfilment.made_in} on heavyweight matte art paper.</li>
+          <li>Framed behind glazing in {v.frame_label.toLowerCase()} wood, hanging fixture fitted.</li>
+          <li>Dispatched within {B.fulfilment.dispatch_working_days} working days, then {d.min_days}–{d.max_days} working days in the post.</li>
+          <li>
+            {B.returns.window_days}-day returns from the day it arrives.
+            {B.returns.who_pays_return_postage === 'customer'
+              ? ' Return postage is paid by you unless the item is faulty.'
+              : ' We pay the return postage.'}
+          </li>
+          <li>Digitally created artwork, printed as a reproduction. Not a painting, not an original, not signed or numbered.</li>
+        </ul>
+
+        <div class="prose" style="margin-top:26px">
+          {p.description.split('\n').filter(Boolean).map((para) => <p>{para}</p>)}
+        </div>
+
+        <p class="meta" style="font-size:0.8rem;color:var(--ink-3)">
+          Product code {v.id} &middot; {p.product_type}
+        </p>
+      </div>
+    </div>
+
+    {more.length > 0 && (
+      <div class="section-block">
+        <p class="kicker">More from this range</p>
+        <h2>{p.niche_title}</h2>
+        <Grid items={more} />
+      </div>
+    )}
+  </div>
+
+  <script is:inline>
+    // The basket lives in localStorage. No account, no tracking, nothing
+    // sent anywhere until checkout - which keeps the privacy policy short
+    // and true.
+    document.getElementById('add')?.addEventListener('click', (e) => {
+      const b = e.currentTarget;
+      let cart = [];
+      try {
+        cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      } catch (_) {}
+      const id = b.dataset.id;
+      const line = cart.find((l) => l.id === id);
+      if (line) line.qty += 1;
+      else
+        cart.push({
+          id,
+          title: b.dataset.title,
+          price: Number(b.dataset.price),
+          img: b.dataset.img,
+          qty: 1,
+        });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      location.href = '/cart';
+    });
+  </script>
+</Base>

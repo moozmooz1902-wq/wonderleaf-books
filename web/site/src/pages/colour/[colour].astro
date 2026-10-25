@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import Grid from '../../components/Grid.astro';
+import { TAX } from '../../lib/shop';
+import { getDb, byColour, countWhere } from '../../lib/db';
+
+const { colour } = Astro.params;
+const c = TAX.colours.find((x) => x.slug === colour);
+if (!c) return new Response('Not found', { status: 404 });
+
+const db = getDb(Astro.locals);
+const page = Math.max(1, Number(Astro.url.searchParams.get('page') || 1));
+const per = 48;
+const { results: items } = await byColour(db, colour!, per, (page - 1) * per);
+const total = await countWhere(db, 'colour', colour!);
+const pages = Math.ceil(total / per);
+---
+
+<Base
+  title={`${c.title} Wall Art - Framed Prints`}
+  description={`${c.blurb} ${total} framed prints in this colour range, made to order in the UK.`.slice(0, 320)}
+  noindex={page > 1}
+>
+  <section class="hero">
+    <div class="wrap">
+      <nav class="crumbs"><a href="/">Home</a> / {c.title}</nav>
+      <h1>{c.title}</h1>
+      <p class="lede">{c.blurb}</p>
+      <p class="meta" style="color:var(--ink-3);font-size:0.86rem">{total} designs</p>
+    </div>
+  </section>
+  <div class="wrap">
+    <Grid items={items} />
+    {pages > 1 && (
+      <nav class="chips" style="padding:10px 0 40px" aria-label="Pages">
+        {Array.from({ length: pages }, (_, i) => i + 1).map((i) => (
+          <a class="chip" href={i === 1 ? `/colour/${colour}` : `/colour/${colour}?page=${i}`} aria-current={i === page ? 'true' : 'false'}><b>{i}</b></a>
+        ))}
+      </nav>
+    )}
+    <div class="section-block">
+      <p class="kicker">Other colour ranges</p>
+      <div class="chips">
+        {TAX.colours.filter((x) => x.slug !== colour).map((x) => (
+          <a class="chip" href={`/colour/${x.slug}`}><b>{x.title}</b></a>
+        ))}
+      </div>
+    </div>
+  </div>
+</Base>

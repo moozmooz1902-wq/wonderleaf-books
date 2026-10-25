@@ -1,0 +1,115 @@
+---
+import Base from '../layouts/Base.astro';
+import { B, money, deliveryLine } from '../lib/shop';
+
+const d = B.fulfilment.delivery[0];
+---
+
+<Base
+  title="Your basket"
+  description="Your basket."
+  noindex={true}
+>
+  <div class="wrap page narrow">
+    <h1>Your basket</h1>
+    <div id="lines"></div>
+    <div id="totals"></div>
+    <p class="notice">{deliveryLine()}</p>
+    <button class="btn" id="pay" disabled>Continue to payment</button>
+    <p class="meta" style="font-size:0.82rem;color:var(--ink-3);margin-top:14px">
+      Payment is taken by Stripe. We never see or store your card details.
+      Delivery to the United Kingdom only. By continuing you agree to our
+      <a href="/terms">terms</a>.
+    </p>
+    <p id="err" class="notice" style="display:none;border-color:#a33"></p>
+  </div>
+
+  <script is:inline define:vars={{ delivery: d.price, currency: B.currency }}>
+    const fmt = (n) =>
+      new Intl.NumberFormat('en-GB', { style: 'currency', currency }).format(n);
+    const read = () => {
+      try {
+        return JSON.parse(localStorage.getItem('cart') || '[]');
+      } catch (_) {
+        return [];
+      }
+    };
+    const write = (c) => localStorage.setItem('cart', JSON.stringify(c));
+
+    function render() {
+      const cart = read();
+      const lines = document.getElementById('lines');
+      const totals = document.getElementById('totals');
+      const pay = document.getElementById('pay');
+      if (!cart.length) {
+        lines.innerHTML =
+          '<p class="empty">Your basket is empty. <a href="/">Browse the prints</a>.</p>';
+        totals.innerHTML = '';
+        pay.disabled = true;
+        return;
+      }
+      lines.innerHTML = cart
+        .map(
+          (l, i) => `
+        <div class="cart-line">
+          <img src="${l.img}" alt="" width="72" height="72">
+          <div class="grow">
+            <div>${l.title}</div>
+            <div class="meta" style="font-size:0.8rem;color:var(--ink-3)">${l.id}</div>
+          </div>
+          <div>${fmt(l.price)} &times; ${l.qty}</div>
+          <button class="opt" data-rm="${i}" aria-label="Remove">Remove</button>
+        </div>`
+        )
+        .join('');
+      const goods = cart.reduce((a, l) => a + l.price * l.qty, 0);
+      totals.innerHTML = `
+        <table class="plain" style="margin:18px 0">
+          <tr><th>Items</th><td>${fmt(goods)}</td></tr>
+          <tr><th>UK delivery</th><td>${delivery === 0 ? 'Free' : fmt(delivery)}</td></tr>
+          <tr><th>Total including VAT</th><td><strong>${fmt(goods + delivery)}</strong></td></tr>
+        </table>`;
+      pay.disabled = false;
+      lines.querySelectorAll('[data-rm]').forEach((b) =>
+        b.addEventListener('click', () => {
+          const c = read();
+          c.splice(Number(b.dataset.rm), 1);
+          write(c);
+          render();
+        })
+      );
+    }
+    render();
+
+    document.getElementById('pay').addEventListener('click', async () => {
+      const btn = document.getElementById('pay');
+      const err = document.getElementById('err');
+      btn.disabled = true;
+      btn.textContent = 'Taking you to payment...';
+      err.style.display = 'none';
+      try {
+        // Only ids and quantities are sent. The server looks the prices up
+        // in the catalogue - a browser must never be able to tell the shop
+        // what something costs, and the price charged has to be the price
+        // published or the whole feed is a lie.
+        const res = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            items: read().map((l) => ({ id: l.id, qty: l.qty })),
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data.url) throw new Error(data.error || 'Checkout failed');
+        location.href = data.url;
+      } catch (e) {
+        err.textContent =
+          'Sorry, we could not start the payment: ' + e.message +
+          '. Nothing has been charged. Please try again or email us.';
+        err.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Continue to payment';
+      }
+    });
+  </script>
+</Base>

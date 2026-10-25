@@ -1,0 +1,53 @@
+---
+// Where Stripe returns the buyer. Deliberately does not claim the order is
+// paid on the strength of the URL alone - the webhook is what records a
+// payment, and this page only says what it can honestly say.
+import Base from '../layouts/Base.astro';
+import { B } from '../lib/shop';
+const d = B.fulfilment.delivery[0];
+const session = Astro.url.searchParams.get('session');
+---
+
+<Base title="Thank you - your order is in" description="Your order has been received." noindex={true}>
+  <div class="wrap page narrow">
+    <h1>Thank you — your order is in</h1>
+    <p class="prose" style="font-size:1.05rem">
+      We have your order and we will email your confirmation in the next few
+      minutes. If it has not arrived within an hour, check your spam folder
+      and then email us — we would rather hear from you twice than not at
+      all.
+    </p>
+
+    <h2>What happens now</h2>
+    <ol class="prose">
+      <li>We print your artwork on heavyweight matte art paper.</li>
+      <li>We frame it behind glazing and fit the hanging fixture.</li>
+      <li>It is packed in protective board and posted. Up to
+        {B.fulfilment.dispatch_working_days} working days to make, then
+        {' '}{d.min_days}–{d.max_days} working days in the post.</li>
+    </ol>
+
+    <p class="notice">
+      Changed your mind? You have {B.returns.window_days} days from delivery
+      to send it back for a full refund — see
+      {' '}<a href="/returns">returns</a>. If you want to cancel before it
+      ships, email us quickly and we will stop it if we can.
+    </p>
+
+    {session && (
+      <p class="meta" style="font-size:0.82rem;color:var(--ink-3)">
+        Reference: {session.slice(0, 24)}… — quote this if you contact us.
+      </p>
+    )}
+
+    <p class="prose">
+      <a class="opt" href="/">Back to the shop</a>
+    </p>
+  </div>
+
+  <script is:inline>
+    // The basket has been paid for, so empty it. Leaving it full means a
+    // returning customer accidentally buying the same print twice.
+    try { localStorage.removeItem('cart'); } catch (_) {}
+  </script>
+</Base>

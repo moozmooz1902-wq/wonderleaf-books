@@ -1,0 +1,79 @@
+---
+// A niche page. This is where a buyer actually shops, so it carries real
+// copy rather than just a grid.
+//
+// The blurb comes from taxonomy.py and is different for all 53 niches. That
+// is not polish: 53 category pages whose only difference is the product
+// photos is the thin-content pattern that stops a new domain being indexed,
+// and an un-indexed category page sends no free traffic. One paragraph of
+// genuine description per page is the cheapest fix there is.
+import Base from '../../../layouts/Base.astro';
+import Grid from '../../../components/Grid.astro';
+import { TAX, niche as getNiche } from '../../../lib/shop';
+import { getDb, byNiche, nicheCounts } from '../../../lib/db';
+
+const { section, niche } = Astro.params;
+const n = getNiche(niche!);
+const sec = TAX.sections.find((s) => s.slug === section);
+if (!n || !sec || n.section !== section)
+  return new Response('Not found', { status: 404 });
+
+const db = getDb(Astro.locals);
+const page = Math.max(1, Number(Astro.url.searchParams.get('page') || 1));
+const per = 48;
+const { results: items } = await byNiche(db, niche!, per, (page - 1) * per);
+const { results: counts } = await nicheCounts(db);
+const total = counts.find((c) => c.niche === niche)?.n ?? items.length;
+const pages = Math.ceil(total / per);
+const siblings = counts.filter((c) => c.section === section && c.niche !== niche);
+---
+
+<Base
+  title={`${n.title} Wall Art - Framed Prints | ${sec.title}`}
+  description={`${n.blurb} ${total} framed prints, made to order in the UK.`.slice(0, 320)}
+  noindex={page > 1}
+>
+  <section class="hero">
+    <div class="wrap">
+      <nav class="crumbs">
+        <a href="/">Home</a> / <a href={`/c/${section}`}>{sec.title}</a> / {n.title}
+      </nav>
+      <h1>{n.title}</h1>
+      <p class="lede">{n.blurb}</p>
+      <p class="meta" style="color:var(--ink-3);font-size:0.86rem">
+        {total} designs &middot; black, white or oak frame &middot; A4, A3 or A2
+      </p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <Grid items={items} />
+
+    {pages > 1 && (
+      <nav class="chips" style="padding:10px 0 40px" aria-label="Pages">
+        {Array.from({ length: pages }, (_, i) => i + 1).map((i) => (
+          <a
+            class="chip"
+            href={i === 1 ? `/c/${section}/${niche}` : `/c/${section}/${niche}?page=${i}`}
+            aria-current={i === page ? 'true' : 'false'}
+          >
+            <b>{i}</b>
+          </a>
+        ))}
+      </nav>
+    )}
+
+    {siblings.length > 0 && (
+      <div class="section-block">
+        <p class="kicker">Also in {sec.title}</p>
+        <div class="chips">
+          {siblings.map((s) => (
+            <a class="chip" href={`/c/${section}/${s.niche}`}>
+              <b>{s.niche_title}</b><i>{s.n}</i>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</Base>

@@ -1,0 +1,74 @@
+---
+// The about page, which says plainly that the artwork is machine generated.
+//
+// That sentence is the single most important one on the site. The shop is
+// selling computer-generated pictures, in volume, on a new domain - and if
+// a reviewer works that out from the catalogue rather than from the page,
+// the shop looks like it was hiding it. Saying it first, clearly, turns the
+// biggest liability into an ordinary product description. It is also simply
+// true, and "offers that represent you or your products in a way that isn't
+// accurate" is the rule being avoided.
+import Base from '../layouts/Base.astro';
+import { B } from '../lib/shop';
+---
+
+<Base
+  title={`About ${B.brand}`}
+  description={`${B.brand} makes framed art prints to order in the United Kingdom. The artwork is digitally created, the printing and framing are done here, and nothing is sold as a painting or an original.`}
+>
+  <div class="wrap page narrow">
+    <h1>About {B.brand}</h1>
+
+    <p class="prose" style="font-size:1.05rem">
+      We make framed art prints in the United Kingdom, one order at a time.
+      No warehouse, no stock sitting in boxes — your print is made after you
+      buy it and posted in a few days.
+    </p>
+
+    <h2>Where the artwork comes from</h2>
+    <p class="prose">
+      Our designs are <strong>digitally created</strong>. They are generated
+      with image software rather than painted by hand, then reviewed,
+      colour-corrected and cropped by us before anything reaches the shop.
+      We say so on every product page as well as here, because it is the
+      sort of thing a customer is entitled to know before they spend money.
+    </p>
+    <p class="prose">
+      So, to be unambiguous: nothing we sell is a painting, an original, a
+      limited edition or a signed work, and we never describe it as one. It
+      is a good print of a picture, framed properly, at a price that makes
+      sense for what it is.
+    </p>
+
+    <h2>What we do add</h2>
+    <ul class="prose">
+      <li><strong>Editing.</strong> Designs are checked individually. Ones
+        with the wrong details, muddy tone or spoiled composition are
+        thrown out rather than listed.</li>
+      <li><strong>Subjects worth having.</strong> Named British places,
+        species by their proper names, specific objects. Not generic
+        wallpaper.</li>
+      <li><strong>The printing and framing.</strong> Heavyweight matte art
+        paper, wood moulding, glazing, hanging fixture fitted, packed in
+        protective board.</li>
+    </ul>
+
+    <h2>What we will not sell</h2>
+    <ul class="prose">
+      <li>Anything using someone else's characters, logos, film or music
+        artwork, or other protected property.</li>
+      <li>Anything presented as hand-made, original or artist-signed.</li>
+      <li>Fake reviews, invented star ratings or pretend scarcity. We have
+        been trading a short time and we are not going to dress that up.</li>
+    </ul>
+
+    <h2>Who you are buying from</h2>
+    <p class="prose">
+      {B.legal_name}, a company registered in England and Wales, company
+      number {B.company_number}, VAT number {B.vat_number}. Our registered
+      office and full contact details are on the
+      {' '}<a href="/contact">contact page</a>, and a real person answers
+      {' '}<a href={`mailto:${B.email}`}>{B.email}</a>.
+    </p>
+  </div>
+</Base>

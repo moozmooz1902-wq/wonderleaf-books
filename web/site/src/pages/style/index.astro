@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import { TAX } from '../../lib/shop';
+import { getDb } from '../../lib/db';
+
+const db = getDb(Astro.locals);
+const { results } = await db
+  .prepare('SELECT style, style_title, COUNT(*) n FROM products GROUP BY style ORDER BY n DESC')
+  .all<{ style: string; style_title: string; n: number }>();
+const blurb = (slug: string) => TAX.styles.find((s) => s.slug === slug)?.blurb ?? '';
+---
+
+<Base
+  title="Shop by Style - Charcoal, Linocut, Watercolour & More"
+  description="Every print we make, grouped by how it was drawn: charcoal, pencil sketch, ink wash, linocut, screen print, watercolour, cyanotype and more."
+>
+  <section class="hero">
+    <div class="wrap">
+      <nav class="crumbs"><a href="/">Home</a> / Styles</nav>
+      <h1>Shop by style</h1>
+      <p class="lede">
+        The same subjects look like different things depending on how they
+        are drawn. Start here if you know the look you are after.
+      </p>
+    </div>
+  </section>
+  <div class="wrap sections">
+    {results.map((s) => (
+      <div class="section-block">
+        <h2>
+          <a href={`/style/${s.style}`} style="text-decoration:none">{s.style_title}</a>
+          <i style="font-style:normal;color:var(--ink-3);font-size:0.8rem"> &nbsp;{s.n} designs</i>
+        </h2>
+        <p class="prose" style="max-width:62ch;margin:0">{blurb(s.style)}</p>
+      </div>
+    ))}
+  </div>
+</Base>

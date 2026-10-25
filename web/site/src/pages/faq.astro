@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import { B, money, deliveryLine } from '../lib/shop';
+const d = B.fulfilment.delivery[0];
+
+const qs = [
+  ['What exactly am I buying?',
+   'A printed reproduction of digitally created artwork, on heavyweight matte art paper, in a wooden frame with glazing and a hanging fixture already fitted. It is not a painting, an original or a signed work, and we do not describe it as one.'],
+  ['What sizes are there?',
+   'A4 (21 x 29.7 cm), A3 (29.7 x 42 cm) and A2 (42 x 59.4 cm). The size quoted is the framed print including the frame.'],
+  ['What are the frames like?',
+   'A slim wooden moulding in black, white or natural oak, glazed at the front, with the hanging fixture fitted before we pack it. Nothing to assemble.'],
+  ['Is the glazing glass or acrylic?',
+   'Acrylic on A2, glass on A4 and A3. Acrylic on the largest size because glass that big breaks in transit more often than it survives, and a broken one is no use to either of us.'],
+  ['How long will it take?',
+   `Up to ${B.fulfilment.dispatch_working_days} working days to print and frame, then ${d.min_days}-${d.max_days} working days in the post. So ${d.min_days + B.fulfilment.dispatch_working_days}-${d.max_days + B.fulfilment.dispatch_working_days} working days from order to doorstep.`],
+  ['What does delivery cost?',
+   d.price === 0 ? 'Nothing. UK delivery is free.' : `${money(d.price)} per order, including VAT, anywhere in the UK.`],
+  ['Do you deliver outside the UK?',
+   'Not yet. Framed glazing is difficult and expensive to send abroad and we would rather not promise a date we cannot keep. Email us and we will tell you honestly if we can help.'],
+  ['Can I return it?',
+   `Yes - ${B.returns.window_days} days from the day it arrives, for any reason, no explanation needed. Full details on the returns page.`],
+  ['Do the prices include VAT?',
+   `Yes. Every price shown includes VAT at the UK standard rate. Our VAT number is ${B.vat_number}.`],
+  ['Will the colours look like they do on screen?',
+   'Close, but not identical. Screens emit light and paper reflects it, so a print is always a little softer than a monitor. If the difference bothers you when it arrives, send it back.'],
+  ['Can I get a design in a different size or frame?',
+   'Email us. If we can do it we will quote you properly rather than guess.'],
+  ['Who pays if it arrives damaged?',
+   'We do. Send a photograph and we remake and resend at our cost. You do not need to post the damaged one back.'],
+];
+---
+
+<Base
+  title="Frequently asked questions"
+  description="Sizes, frames, glazing, delivery times, VAT and returns - answered plainly."
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: qs.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  }}
+>
+  <div class="wrap page narrow">
+    <h1>Frequently asked questions</h1>
+    <p class="notice">{deliveryLine()}</p>
+    {qs.map(([q, a]) => (
+      <>
+        <h2>{q}</h2>
+        <p class="prose">{a}</p>
+      </>
+    ))}
+    <p class="prose">
+      Anything else: <a href={`mailto:${B.email}`}>{B.email}</a>.
+    </p>
+  </div>
+</Base>

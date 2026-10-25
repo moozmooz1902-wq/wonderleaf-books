@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import { B } from '../lib/shop';
+---
+
+<Base
+  title="How it is made"
+  description={`How a ${B.brand} print is made: the artwork is digitally created and edited, then printed on heavyweight matte art paper and framed by hand in ${B.fulfilment.made_in} after you order.`}
+>
+  <div class="wrap page narrow">
+    <h1>How it is made</h1>
+
+    <h2>1. The artwork</h2>
+    <p class="prose">
+      Each design starts as a digitally created image — generated with image
+      software, not painted. We then do the part that decides whether it is
+      worth selling: check the subject is actually what it claims to be,
+      correct the tone and colour, crop it square to the frame, and discard
+      the ones that did not come out. A large share never make it to the
+      shop.
+    </p>
+    <p class="prose">
+      We also check what is <em>in</em> the picture. No recognisable people.
+      No characters, logos, badges or artwork belonging to anyone else. No
+      invented signatures — if the software scrawls something that looks
+      like one, that design is cropped or dropped.
+    </p>
+
+    <h2>2. The print</h2>
+    <p class="prose">
+      Printed to order in {B.fulfilment.made_in} on heavyweight matte art
+      paper. Matte rather than gloss because a framed print behind glazing
+      picks up every reflection, and gloss paper doubles them.
+    </p>
+
+    <h2>3. The frame</h2>
+    <p class="prose">
+      A slim wooden moulding in black, white or natural oak, glazed at the
+      front. The hanging fixture is fitted before it is packed, so there is
+      nothing to assemble and nothing to buy separately.
+    </p>
+
+    <h2>4. The packing</h2>
+    <p class="prose">
+      Corner-protected and sandwiched in rigid board. If it still arrives
+      damaged, send a photograph and we remake it at our cost — see
+      {' '}<a href="/returns">returns</a>.
+    </p>
+
+    <h2>Why made to order</h2>
+    <p class="prose">
+      Because the alternative is guessing which thousand designs to keep in
+      a warehouse, and being wrong. Making each one after it sells costs you
+      a few days and means we can offer a far wider range than a shop
+      holding stock. It also means nothing is ever "out of stock" — if it is
+      in the shop, we will make it.
+    </p>
+  </div>
+</Base>

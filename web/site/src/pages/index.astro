@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import Grid from '../components/Grid.astro';
+import { B, TAX, money } from '../lib/shop';
+import { getDb, nicheCounts, byStyle, bySection } from '../lib/db';
+
+const db = getDb(Astro.locals);
+const { results: counts } = await nicheCounts(db);
+// Charcoal leads the home page because it leads the measured data: on the
+// seller's own eBay watchers it ran at 5.96% against a 1.05% base rate,
+// z=+5.9, the strongest single signal in the project.
+const { results: lead } = await byStyle(db, 'charcoal-drawings', 12);
+const { results: coast } = await bySection(db, 'landscapes', 8);
+
+const bySec = TAX.sections.map((s) => ({
+  ...s,
+  niches: counts.filter((c) => c.section === s.slug),
+  total: counts.filter((c) => c.section === s.slug).reduce((a, c) => a + c.n, 0),
+}));
+const total = counts.reduce((a, c) => a + c.n, 0);
+---
+
+<Base
+  title={`${B.brand} - Framed Wall Art Prints, Made in the UK`}
+  description={`Framed art prints in ${total} designs across ${counts.length} ranges - British coast, wildlife, botanical, night sky. Printed and framed to order in the United Kingdom.`}
+>
+  <section class="hero">
+    <div class="wrap">
+      <p class="kicker">Printed and framed in the United Kingdom</p>
+      <h1>Framed art prints, made one at a time</h1>
+      <p class="lede">
+        {total} designs across {counts.length} ranges — the British coast,
+        wildlife and birds, botanical studies, the night sky. Choose a black,
+        white or oak frame in A4, A3 or A2. We print and frame your order
+        after you place it, so nothing sits in a warehouse.
+      </p>
+      <div class="chips">
+        <a class="chip" href="/style/charcoal-drawings"><b>Charcoal drawings</b></a>
+        <a class="chip" href="/c/landscapes/british-coast"><b>British coast</b></a>
+        <a class="chip" href="/c/night-sky/the-moon"><b>The moon</b></a>
+        <a class="chip" href="/colour/black-and-white"><b>Black &amp; white</b></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="section-block">
+      <p class="kicker">The charcoal range</p>
+      <h2>Worked in black on paper</h2>
+      <p class="prose" style="max-width:62ch">
+        Soft charcoal, smudged and reworked, with nothing but tone doing the
+        work. It is the quietest thing we make and the easiest to hang.
+      </p>
+      <Grid items={lead} />
+      <a class="opt" href="/style/charcoal-drawings">See all charcoal drawings</a>
+    </div>
+
+    <div class="section-block">
+      <p class="kicker">Browse</p>
+      <h2>Find your range</h2>
+      <div class="sections">
+        {bySec.map((s) => (
+          <div style="padding:16px 0">
+            <h3>
+              <a href={`/c/${s.slug}`} style="text-decoration:none">{s.title}</a>
+              <i style="font-style:normal;color:var(--ink-3);font-size:0.8rem;font-weight:400"> &nbsp;{s.total} designs</i>
+            </h3>
+            <div class="chips">
+              {s.niches.map((n) => (
+                <a class="chip" href={`/c/${s.slug}/${n.niche}`}>
+                  <b>{n.niche_title}</b><i>{n.n}</i>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="section-block">
+      <p class="kicker">Landscapes</p>
+      <h2>Named places, drawn by hand</h2>
+      <Grid items={coast} />
+      <a class="opt" href="/c/landscapes">See all landscapes</a>
+    </div>
+
+    <div class="section-block">
+      <h2>How it works</h2>
+      <ul class="facts" style="max-width:70ch">
+        <li>Choose a design, a frame colour and a size. Prices from {money(24.99)} including VAT.</li>
+        <li>We print it on heavyweight matte art paper and frame it behind glazing, with the hanging fixture fitted.</li>
+        <li>Dispatched within {B.fulfilment.dispatch_working_days} working days, then {B.fulfilment.delivery[0].min_days}–{B.fulfilment.delivery[0].max_days} working days in the post.</li>
+        <li>{B.returns.window_days} days to send it back from the day it arrives, for any reason.</li>
+        <li>Every design is digitally created artwork, printed to order. Not a painting, not an original, not signed.</li>
+      </ul>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,73 @@
+---
+// Contact details in full, on their own page, as text rather than an image
+// or a form-only page.
+//
+// Google's misrepresentation policy opens with "present a false identity,
+// business name, or contact information", and a contact page with only a
+// web form and no address is the commonest way a legitimate shop looks
+// like an illegitimate one. The address, the company number and a real
+// telephone number are all here, in crawlable text.
+import Base from '../layouts/Base.astro';
+import { B } from '../lib/shop';
+const addr = B.registered_address ?? [];
+const trading = B.trading_address_same ? addr : (B.trading_address ?? addr);
+---
+
+<Base
+  title="Contact us"
+  description={`Email ${B.email} or call ${B.phone}. ${B.legal_name}, company number ${B.company_number}.`}
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: B.legal_name,
+    alternateName: B.brand,
+    url: `https://${B.domain}`,
+    email: B.email,
+    telephone: B.phone,
+    vatID: B.vat_number,
+    identifier: B.company_number,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: addr.slice(0, -2).join(', '),
+      addressLocality: addr[addr.length - 2] ?? '',
+      postalCode: addr[addr.length - 1] ?? '',
+      addressCountry: 'GB',
+    },
+  }}
+>
+  <div class="wrap page narrow">
+    <h1>Contact us</h1>
+
+    <p class="prose">
+      A person reads every email. We answer most of them the same working
+      day, and all of them within one.
+    </p>
+
+    <table class="plain">
+      <tr><th>Email</th><td><a href={`mailto:${B.email}`}>{B.email}</a></td></tr>
+      <tr><th>Telephone</th><td><a href={`tel:${(B.phone || '').replace(/\s/g, '')}`}>{B.phone}</a></td></tr>
+      <tr><th>Hours</th><td>{B.support_hours}</td></tr>
+    </table>
+
+    <h2>Company details</h2>
+    <table class="plain">
+      <tr><th>Registered name</th><td>{B.legal_name}</td></tr>
+      <tr><th>Trading as</th><td>{B.brand}</td></tr>
+      <tr><th>Company number</th><td>{B.company_number} (England and Wales)</td></tr>
+      <tr><th>VAT number</th><td>{B.vat_number}</td></tr>
+      <tr><th>Registered office</th><td>{addr.map((l) => <>{l}<br /></>)}</td></tr>
+      {!B.trading_address_same && (
+        <tr><th>Dispatched from</th><td>{trading.map((l) => <>{l}<br /></>)}</td></tr>
+      )}
+    </table>
+
+    <h2>Before you email</h2>
+    <p class="prose">
+      <a href="/delivery">Delivery times</a> and
+      {' '}<a href="/returns">returns</a> are set out in full on their own
+      pages, and the <a href="/faq">FAQ</a> covers sizes, frames and paper.
+      If your question is about an order, quote the order number from your
+      confirmation email and we can answer it in one reply.
+    </p>
+  </div>
+</Base>
