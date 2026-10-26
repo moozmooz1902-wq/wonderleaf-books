@@ -136,8 +136,9 @@ not a truncation. `.microsoft` is Microsoft's own top-level domain and
 GoDaddy-provisioned 365 tenants use it. Copy them exactly, character for
 character, and do not "finish" them.
 
-Now press Continue. Cloudflare shows you two nameservers like
-`xxx.ns.cloudflare.com`. Copy both.
+Now press Continue. Cloudflare shows you two nameservers. **For this zone
+they are `maxim.ns.cloudflare.com` and `val.ns.cloudflare.com`** - read
+from the zone over the API on 26 Oct, so there is no need to go looking.
 
 ---
 
@@ -213,18 +214,19 @@ and loading the database) are behind us.
 **Skip `wrangler d1 create`** - the database exists and running it again
 would make a second, empty one.
 
-**But DO run the seed.** This changed on 26 Oct: the schema gained a
-`facet_counts` table, which the navigation reads on every page. The seed is
-written to clear and reload, so running it twice is safe; *not* running it
-means every page returns 500.
+**The seed is DONE.** It was applied over the Cloudflare API on 26 Oct
+after the schema gained a `facet_counts` table that the navigation reads on
+every page; the remote database did not have it and a deploy would have
+returned 500 everywhere. Verified after: 240 products, 2,160 variants, 38
+facet rows. It clears and reloads, so running it again is harmless, just
+unnecessary.
 
-### Option A — four commands, on your machine
+### Option A — three commands, on your machine
 
 ```bash
 cd web/site
 npm install
 npx wrangler login            # opens a browser, one time
-npm run db:seed:remote        # required - schema changed 26 Oct
 npm run deploy
 echo "sk_live_YOURKEY" | npx wrangler secret put STRIPE_SECRET_KEY
 ```

@@ -18,6 +18,18 @@ will answer for the domain using only the records its scan imported. A
 missed MX record kills `sales@walryvo.com` silently — the contact address
 on every page of the shop and in Merchant Center.
 
+**The two Cloudflare nameservers for walryvo.com are
+`maxim.ns.cloudflare.com` and `val.ns.cloudflare.com`** - read from the
+zone over the API on 26 Oct, so they do not need hunting for in the
+dashboard. The zone reads `status: pending`, which means Cloudflare has the
+records and is waiting for the delegation.
+
+The registry still shows GoDaddy and has recorded no change since
+registration at 04:40 on 26 Oct. The domain carries
+`clientUpdateProhibited`, which is GoDaddy's default lock on a new
+registration and the likeliest reason a nameserver save did not take. No
+confirmation email arrived, so it was not merely pending.
+
 `web/SETUP_WALKTHROUGH.md` Part 1 has the full live record set — all 12
 records, read off your DNS at 15:14 on 26 Oct and stored in
 `web/dns_snapshot.json`. Compare Cloudflare's import against that table
@@ -31,20 +43,21 @@ record went missing. Then re-test the mailbox from an outside address.
 
 ### A2. Deploy — three commands
 
-The database is already created. **Do not run `wrangler d1 create` again** -
-that would make a second, empty one.
+The database is created AND reseeded. **Do not run `wrangler d1 create` or
+the seed again** - create would make a second empty database, and the seed
+is already applied.
 
-**The seed DOES need running once more.** It did not on 25 Oct, but the
-schema gained a `facet_counts` table on 26 Oct and the site reads it on
-every page. Deploy without reseeding and every page returns 500.
+Reseeded over the Cloudflare API at 16:4x on 26 Oct, because the schema
+gained a `facet_counts` table that day and the remote copy did not have it;
+a deploy against the old copy would have returned 500 on every page.
+Verified afterwards: 240 products, 2,160 variants, 38 facet rows, prices
+24.99 / 29.99 / 34.99.
+
+So the deploy is now two commands:
 
 ```bash
-cd web/site
-npm install
-npx wrangler login
-npm run db:seed:remote        # required - the schema changed on 26 Oct
-npm run deploy
-echo "sk_live_YOURKEY" | npx wrangler secret put STRIPE_SECRET_KEY
+cd web/site && npm install && npx wrangler login && npm run deploy
+npx wrangler secret put STRIPE_SECRET_KEY      # paste at the prompt
 ```
 
 Or allow `npm run deploy`, `npx wrangler deploy`, `npx wrangler secret put`
