@@ -26,7 +26,25 @@
  * letter-spaced, so they became black-on-white on their own.
  */
 
+/* ONE LOOK, AND IT IS THE LIGHT ONE.
+ *
+ * This had a full dark theme. It is gone on purpose, not by neglect.
+ *
+ * Every photograph in the shop is a framed print on flat cream,
+ * rgb(237,234,227), baked into the image - it cannot be removed without
+ * re-rendering a quarter of a million mockups. On a dark page every product
+ * is therefore a bright rectangle on a black wall. That can be made to look
+ * deliberate, and it was, but it is a different shop from the one the seller
+ * wants, and a visitor whose phone happens to be in dark mode was being shown
+ * it without ever choosing it. The seller saw the dark version twice and both
+ * times read it as a fault.
+ *
+ * So the palette is pinned: white page, black type, black logo, whatever the
+ * device prefers. color-scheme: light is set explicitly so form controls and
+ * scrollbars follow rather than rendering dark against a white page.
+ */
 :root {
+  color-scheme: light;
   --paper: #ffffff;
   --paper-2: #f5f4f2;
   --card: #ffffff;
@@ -50,32 +68,6 @@
   --wrap: 1240px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --paper: #101010;
-    --paper-2: #171717;
-    --card: #1a1a1a;
-    --ink: #f5f5f3;
-    --ink-2: #c0c0bd;
-    --ink-3: #8e8e8b;
-    --rule: #2e2e2e;
-    --accent: #f5f5f3;
-    --accent-ink: #ffffff;
-    --plate-wall: #17171a;
-  }
-}
-:root[data-theme='dark'] {
-  --paper: #101010;
-  --paper-2: #171717;
-  --card: #1a1a1a;
-  --ink: #f5f5f3;
-  --ink-2: #c0c0bd;
-  --ink-3: #8e8e8b;
-  --rule: #2e2e2e;
-  --accent: #f5f5f3;
-  --accent-ink: #ffffff;
-  --plate-wall: #17171a;
-}
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -535,3 +527,9 @@ table.plain th { color: var(--ink-3); font-weight: 500; }
   padding-left: 11px; border-left: 2px solid var(--ink);
 }
 .promo-line strong { color: var(--ink); }
+
+/* The gift-deadline band, when there is a real deadline to state. Reversed
+ * out of the offer bar's colours so two bands never read as one stripe. */
+.promo-bar.deadline { background: var(--paper-2); }
+.promo-bar.deadline a { color: var(--ink); }
+.promo-bar.deadline span { opacity: 0.68; }

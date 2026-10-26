@@ -148,3 +148,38 @@ export const sizeFeel: Record<string, string> = {
   a3: 'about two sheets of printer paper side by side',
   a2: 'about four sheets of printer paper',
 };
+
+/**
+ * "Order by <date>" for a gift deadline, worked back from when it must
+ * arrive — never forward from a date somebody liked the look of.
+ *
+ * Returns null unless a real arrive-by date is configured and there is
+ * still time to meet it, so the banner disappears on its own rather than
+ * telling people to order for a Christmas that has gone.
+ */
+export const orderBy = () => {
+  const g = (B as any).gift_deadline;
+  if (!g?.active || !g.arrive_by) return null;
+  const arrive = new Date(g.arrive_by + 'T12:00:00Z');
+  if (isNaN(+arrive)) return null;
+  const d = B.fulfilment.delivery[0];
+  // Work backwards: the slow end of transit, then dispatch. Both in working
+  // days, because that is how both are promised everywhere else on the site.
+  let left = d.max_days + B.fulfilment.dispatch_working_days;
+  const by = new Date(arrive);
+  while (left > 0) {
+    by.setUTCDate(by.getUTCDate() - 1);
+    const wd = by.getUTCDay();
+    if (wd !== 0 && wd !== 6) left--;
+  }
+  const now = new Date();
+  if (by < now) return null;
+  return {
+    occasion: g.occasion as string,
+    by,
+    label: by.toLocaleDateString('en-GB', {
+      weekday: 'long', day: 'numeric', month: 'long',
+    }),
+    daysLeft: Math.ceil((+by - +now) / 864e5),
+  };
+};

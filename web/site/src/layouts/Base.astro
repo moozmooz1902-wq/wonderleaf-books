@@ -11,7 +11,7 @@
 // being asked.
 import { PROMO } from '../lib/promo';
 import '../styles/global.css';
-import { B, TAX, deliveryLine, returnsLine, money } from '../lib/shop';
+import { B, TAX, deliveryLine, returnsLine, money, orderBy } from '../lib/shop';
 import Logo from '../components/Logo.astro';
 
 interface Props {
@@ -90,6 +90,7 @@ if (crumbs?.length)
   });
 if (jsonLd) graph.push(jsonLd);
 const ld = { '@context': 'https://schema.org', '@graph': graph };
+const gift = orderBy();
 ---
 
 <!doctype html>
@@ -120,6 +121,18 @@ const ld = { '@context': 'https://schema.org', '@graph': graph };
     {/* The offer goes above everything, on every page. A promotion a
         shopper only discovers in the basket does not change what they put
         in it. */}
+    {/* A real deadline, computed backwards from when it has to arrive, and
+        it removes itself once the date has passed. The only honest urgency
+        a print shop has - and a strong one, because prints are bought as
+        gifts and the date is somebody else's, not ours. */}
+    {gift && (
+      <div class="promo-bar deadline">
+        <a href="/delivery">
+          <strong>Order by {gift.label}</strong>
+          <span>for {gift.occasion} delivery</span>
+        </a>
+      </div>
+    )}
     {PROMO.active && (
       <div class="promo-bar">
         <a href="/delivery#offer">
