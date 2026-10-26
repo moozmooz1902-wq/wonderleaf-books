@@ -4,9 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node -e \"require('fs').writeFileSync('dist/.assetsignore','_worker.js\\n_routes.json\\n')\"",
     "preview": "wrangler dev",
-    "deploy": "astro build && wrangler deploy",
+    "deploy": "npm run build && wrangler deploy",
     "db:seed:local": "wrangler d1 execute wallart --local --file=../catalogue/seed.sql",
     "db:seed:remote": "wrangler d1 execute wallart --remote --file=../catalogue/seed.sql"
   },
