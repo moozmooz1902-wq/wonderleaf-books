@@ -15,7 +15,16 @@ noStore(Astro.response);
   <div class="wrap page narrow">
     <h1>Your basket</h1>
     <div id="lines"></div>
-    <div id="totals"></div>
+    <!-- Delivery price and currency are handed to the script as data
+         attributes rather than through Astro's define:vars. define:vars
+         serialises values straight into the script body, and the advisory
+         GHSA on Astro's incomplete </script> sanitisation makes that an XSS
+         sink whenever an injected value can contain markup. Neither of
+         these two can today - both come from business.config.json, not from
+         a customer or the database - but a data attribute is escaped by the
+         HTML serialiser, costs nothing, and removes the sink rather than
+         relying on every future edit keeping it safe. -->
+    <div id="totals" data-delivery={String(d.price)} data-currency={B.currency}></div>
     <p class="notice">{deliveryLine()}</p>
     <button class="btn" id="pay" disabled>Continue to payment</button>
     <p class="meta" style="font-size:0.82rem;color:var(--ink-3);margin-top:14px">
@@ -26,7 +35,10 @@ noStore(Astro.response);
     <p id="err" class="notice" style="display:none;border-color:#a33"></p>
   </div>
 
-  <script is:inline define:vars={{ delivery: d.price, currency: B.currency }}>
+  <script is:inline>
+    const totalsEl = document.getElementById('totals');
+    const delivery = Number(totalsEl.dataset.delivery);
+    const currency = totalsEl.dataset.currency;
     const fmt = (n) =>
       new Intl.NumberFormat('en-GB', { style: 'currency', currency }).format(n);
     const read = () => {
