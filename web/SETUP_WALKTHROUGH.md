@@ -82,11 +82,34 @@ mail arriving, rows 2, 3, 5, 6 and 7 stop your outgoing mail being trusted,
 so it lands in spam. Rows 8–11 are Teams/Skype lookups and row 12 is
 GoDaddy webmail; losing those is an annoyance, not a disaster.
 
-**"DNS only" means the cloud icon must be GREY, not orange.** An orange
-cloud on a mail record breaks mail delivery. Click the cloud to toggle it.
+### The orange-cloud trap — this is what actually goes wrong
+
+**Cloudflare's importer marks every A and CNAME it finds as Proxied.** On
+26 Oct the scan brought in 18 records and set all eleven A/CNAME rows
+orange, unasked. Nothing was missing; the values were all correct. The
+import was still wrong in the one way that breaks mail.
+
+A proxied CNAME does not answer with the target you typed. It answers with
+Cloudflare's own anycast IP addresses. So a lookup of
+`selector1._domainkey.walryvo.com` returns an IP instead of a pointer to
+Microsoft's DKIM key, DKIM verification fails, and `_dmarc` is set to
+`p=quarantine` — which instructs every receiving server to put mail that
+fails those checks in the spam folder. Outgoing mail would send with no
+bounce and no error, and quietly stop arriving.
+
+So: **every row in this zone must read "DNS only".** Click the blue switch
+in the Proxy status column; it greys and the label changes. It saves on
+click, there is no Save button. Nothing here should be proxied — the Worker
+adds its own record later and that is the only orange one that belongs.
+
+Cloudflare flags most of them itself with a small orange triangle. The two
+DKIM rows get a blue ⓘ instead, and those are the two that matter most.
 
 Add by hand anything the scan missed. Tick each row off as you check it —
 twelve rows, two minutes.
+
+After the three deletions below the table should be 15 rows, every one of
+them grey.
 
 ### 1b. Delete these three
 
