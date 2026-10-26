@@ -50,7 +50,17 @@ noStore(Astro.response);
     };
     const write = (c) => localStorage.setItem('cart', JSON.stringify(c));
 
-    function render() {
+    // THE BASKET DOES NOT ADD UP ITS OWN PRICES.
+    //
+    // It sends ids and quantities to /api/basket and renders whatever comes
+    // back. That endpoint reads the prices from the catalogue and applies the
+    // promotion with the same function /api/checkout uses, so the total shown
+    // here and the total Stripe charges are the same number worked out once.
+    // The old version summed localStorage, which was already trusting a
+    // value a browser can edit, and with a promotion it would also have been
+    // a second implementation of the discount - the two things that produce
+    // "the price at checkout does not match the price advertised".
+    async function render() {
       const cart = read();
       const lines = document.getElementById('lines');
       const totals = document.getElementById('totals');
@@ -62,26 +72,68 @@ noStore(Astro.response);
         pay.disabled = true;
         return;
       }
-      lines.innerHTML = cart
+
+      let p = null;
+      try {
+        const res = await fetch('/api/basket', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            items: cart.map((l) => ({ id: l.id, qty: l.qty })),
+          }),
+        });
+        if (res.ok) p = await res.json();
+      } catch (_) {}
+
+      if (!p) {
+        lines.innerHTML =
+          '<p class="empty">We could not price your basket just now. ' +
+          'Reload the page, or <a href="/contact">get in touch</a>.</p>';
+        totals.innerHTML = '';
+        pay.disabled = true;
+        return;
+      }
+
+      if (p.gone && p.gone.length) {
+        write(cart.filter((l) => !p.gone.includes(l.id)));
+      }
+
+      lines.innerHTML = p.lines
         .map(
           (l, i) => `
         <div class="cart-line">
-          <img src="${l.img}" alt="" width="72" height="72">
+          <img src="${l.image_path.startsWith('unframed/') ? '/' + l.image_path : '/img/' + l.image_path}" alt="" width="72" height="72">
           <div class="grow">
             <div>${l.title}</div>
-            <div class="meta" style="font-size:0.8rem;color:var(--ink-3)">${l.id}</div>
+            <div class="meta" style="font-size:0.8rem;color:var(--ink-3)">
+              ${l.size_label} &middot; ${l.frame === 'none' ? 'unframed' : l.frame_label + ' frame'}
+              ${l.free ? ` &middot; <strong>${l.free} free</strong>` : ''}
+            </div>
           </div>
           <div>${fmt(l.price)} &times; ${l.qty}</div>
           <button class="opt" data-rm="${i}" aria-label="Remove">Remove</button>
         </div>`
         )
         .join('');
-      const goods = cart.reduce((a, l) => a + l.price * l.qty, 0);
+
+      const nudge =
+        p.promo && p.toNextFree > 0
+          ? `<p class="notice">Add ${p.toNextFree} more print${
+              p.toNextFree === 1 ? '' : 's'
+            } and the cheapest of three is free.</p>`
+          : '';
+
       totals.innerHTML = `
+        ${nudge}
         <table class="plain" style="margin:18px 0">
-          <tr><th>Items</th><td>${fmt(goods)}</td></tr>
-          <tr><th>UK delivery</th><td>${delivery === 0 ? 'Free' : fmt(delivery)}</td></tr>
-          <tr><th>Total including VAT</th><td><strong>${fmt(goods + delivery)}</strong></td></tr>
+          <tr><th>Items</th><td>${fmt(p.subtotal)}</td></tr>
+          ${
+            p.discount > 0
+              ? `<tr><th>${p.promo ? p.promo.title : 'Discount'}</th><td>&minus;${fmt(p.discount)}</td></tr>`
+              : ''
+          }
+          <tr><th>UK delivery</th><td>${p.delivery === 0 ? 'Free' : fmt(p.delivery)}</td></tr>
+          <tr><th>Total including VAT</th><td><strong>${fmt(p.grand)}</strong></td></tr>
         </table>`;
       pay.disabled = false;
       lines.querySelectorAll('[data-rm]').forEach((b) =>
@@ -90,6 +142,10 @@ noStore(Astro.response);
           c.splice(Number(b.dataset.rm), 1);
           write(c);
           render();
+        })
+      );
+    }
+    render();
         })
       );
     }

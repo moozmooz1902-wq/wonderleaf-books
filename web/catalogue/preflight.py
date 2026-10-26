@@ -354,6 +354,7 @@ def check_catalogue(cat, cfg):
     # The files are checked on disk too. They ship as static assets, so a
     # missing one is a 404 on a live product page rather than a build error.
     import os as _os
+    import re as _re2
     assets = _os.path.join(_os.path.dirname(HERE), "site", "public", "unframed")
     bad, missing = [], set()
     for p_ in cat["products"]:
@@ -368,6 +369,31 @@ def check_catalogue(cat, cfg):
             else:
                 if "/listing/" not in ip or not ip.endswith(f'-{v["frame"]}.jpg'):
                     bad.append(f'{v["id"]}: {v["frame"]} variant shows {ip}')
+    # THE TITLE HAS TO AGREE WITH THE TIER TOO.
+    #
+    # Every title template contains the word "Framed", because until the
+    # unframed tier existed every product was framed. An unframed variant
+    # inheriting that produces "... Framed Charcoal Print - Unframed Print,
+    # A4" - a title that contradicts itself, which is a disapproval without
+    # anyone even looking at the photograph.
+    wrong_title = [
+        v["id"] for p_ in cat["products"] for v in p_["variants"]
+        if v["frame"] == "none" and _re2.search(r"\bframed\b", v["title"], _re2.I)
+        and not _re2.search(r"\bunframed\b", v["title"].replace("Unframed", "U"), _re2.I)
+    ]
+    wrong_title = [
+        v["id"] for p_ in cat["products"] for v in p_["variants"]
+        if v["frame"] == "none"
+        and _re2.search(r"(?<!un)\bframed\b", v["title"], _re2.I)
+    ]
+    if wrong_title:
+        fail("no unframed product is called framed",
+             f"{len(wrong_title)} title(s) contradict themselves, e.g. "
+             + next(v["title"] for p_ in cat["products"] for v in p_["variants"]
+                    if v["id"] == wrong_title[0]))
+    else:
+        ok("no unframed product is called framed")
+
     if bad:
         fail("every variant's photograph shows that variant",
              f"{len(bad)} mismatch(es): " + "; ".join(bad[:4]))

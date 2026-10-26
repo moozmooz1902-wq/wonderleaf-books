@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+<channel>
+<title>Walryvo promotions</title>
+<link>https://walryvo.com/</link>
+<description>Promotions for Walryvo</description>
+<item>
+<g:promotion_id>WALRYVO-3FOR2</g:promotion_id>
+<g:product_applicability>all_products</g:product_applicability>
+<g:offer_type>no_code</g:offer_type>
+<g:long_title>Buy 2, get 1 free on all prints</g:long_title>
+<g:promotion_effective_dates>2026-10-26T20:26:33+00:00/2027-01-24T20:26:33+00:00</g:promotion_effective_dates>
+<g:redemption_channel>online</g:redemption_channel>
+</item>
+</channel>
+</rss>

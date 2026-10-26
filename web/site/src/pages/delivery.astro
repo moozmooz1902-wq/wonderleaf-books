@@ -4,6 +4,7 @@
 // disagree, which is the point: "misrepresenting shipping locations",
 // "hiding processing delays behind a stated delivery time" and failing to
 // disclose delivery cost are three separate named violations.
+import { PROMO } from '../lib/promo';
 import Base from '../layouts/Base.astro';
 import { B, money } from '../lib/shop';
 import { edge, TTL_STATIC } from '../lib/cache';
@@ -66,4 +67,40 @@ edge(Astro.response, TTL_STATIC);
       Orders placed at a weekend start on the next working day.
     </p>
   </div>
+
+  {PROMO.active && (
+    <section class="wrap page narrow" id="offer">
+      <h2>{PROMO.title}</h2>
+      <p>
+        Add any three prints to your basket and the cheapest of the three
+        costs nothing. It applies across the whole range — framed and
+        unframed, any sizes, mixed however you like.
+      </p>
+      <ul class="facts">
+        <li>
+          The discount is applied automatically in your basket. There is no
+          code to enter.
+        </li>
+        <li>
+          In every group of three, the cheapest item is free. Six prints
+          means the two cheapest are free, nine means the three cheapest,
+          and so on.
+        </li>
+        <li>
+          Nothing is marked up for the offer. Every print is sold at its
+          normal price, listed on its own page, and the free item is a
+          genuine reduction against that price.
+        </li>
+        <li>
+          It applies to the goods only. Delivery is free to the United
+          Kingdom in any case, and we do not deliver anywhere else.
+        </li>
+        <li>
+          Your statutory rights are unaffected. If you return part of an
+          order and that takes it below three prints, we refund what you
+          paid for the items you keep at their normal price.
+        </li>
+      </ul>
+    </section>
+  )}
 </Base>

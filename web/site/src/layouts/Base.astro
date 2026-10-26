@@ -9,6 +9,7 @@
 // policy leads with "present a false identity, business name, or contact
 // information" - so the cure is to present a true one, everywhere, without
 // being asked.
+import { PROMO } from '../lib/promo';
 import '../styles/global.css';
 import { B, TAX, deliveryLine, returnsLine, money } from '../lib/shop';
 import Logo from '../components/Logo.astro';
@@ -116,6 +117,17 @@ const ld = { '@context': 'https://schema.org', '@graph': graph };
     <script type="application/ld+json" set:html={JSON.stringify(ld)} />
   </head>
   <body>
+    {/* The offer goes above everything, on every page. A promotion a
+        shopper only discovers in the basket does not change what they put
+        in it. */}
+    {PROMO.active && (
+      <div class="promo-bar">
+        <a href="/delivery#offer">
+          <strong>{PROMO.title}</strong>
+          <span>Add any three prints — the cheapest one is free.</span>
+        </a>
+      </div>
+    )}
     <div class="head-note">{deliveryLine()} {returnsLine()}</div>
     <header class="site-head">
       <div class="wrap head-row">

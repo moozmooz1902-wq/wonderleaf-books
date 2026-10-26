@@ -509,3 +509,29 @@ table.plain th { color: var(--ink-3); font-weight: 500; }
  * Google on a category page has no other way of learning. */
 .craft-band { border-top: 1px solid var(--rule); background: var(--paper-2); }
 .craft-band .wrap { padding-block: 6px; }
+
+/* ---------- the offer bar ----------
+ * Above the delivery note and above the header, on every page, because a
+ * promotion a shopper first meets in the basket has already failed to do
+ * the one thing it is for - changing what goes in the basket.
+ * Inverted so it reads as a statement rather than another line of small
+ * print, and it is the only inverted band on the site. */
+.promo-bar { background: var(--ink); }
+.promo-bar a {
+  display: flex; flex-wrap: wrap; gap: 4px 12px;
+  align-items: baseline; justify-content: center;
+  max-width: var(--wrap); margin: 0 auto;
+  padding: 9px max(16px, env(safe-area-inset-left, 0px));
+  color: var(--paper); text-decoration: none;
+  font-size: 0.78rem; letter-spacing: 0.06em; text-align: center;
+}
+.promo-bar strong { text-transform: uppercase; letter-spacing: 0.12em; }
+.promo-bar span { opacity: 0.78; }
+.promo-bar a:hover span { opacity: 1; }
+
+/* On a product page, next to the price, where the decision is made. */
+.promo-line {
+  margin: 0 0 14px; font-size: 0.86rem; color: var(--ink-2);
+  padding-left: 11px; border-left: 2px solid var(--ink);
+}
+.promo-line strong { color: var(--ink); }

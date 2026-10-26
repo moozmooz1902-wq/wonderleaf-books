@@ -17,6 +17,7 @@ import Base from '../../layouts/Base.astro';
 import Grid from '../../components/Grid.astro';
 import { B, money, img, abs, dispatchBy, sizeFeel } from '../../lib/shop';
 import Craft from '../../components/Craft.astro';
+import { PROMO } from '../../lib/promo';
 import { getDb, product, variantOf, alsoIn } from '../../lib/db';
 import { edge, TTL_CATALOGUE } from '../../lib/cache';
 
@@ -195,6 +196,13 @@ const jsonLd = {
             ))}
           </div>
         </fieldset>
+
+        {PROMO.active && (
+          <p class="promo-line">
+            <strong>{PROMO.title}.</strong> Add any three prints and the
+            cheapest is free — mix framed and unframed, any sizes.
+          </p>
+        )}
 
         {/* The two things a shopper is actually deciding between, priced.
             Unframed is a third of the framed price and that is invisible

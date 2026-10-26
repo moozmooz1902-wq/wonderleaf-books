@@ -196,8 +196,19 @@ def group_title(design):
 def variant_title(design, frame, size):
     """Feed [title] for one variant. Says exactly what the buyer gets, which
     is the point: an accurate title is the cheapest compliance there is."""
-    tier = "Unframed Print" if not frame["framed"] else f"{frame['label']} Frame"
-    return f"{group_title(design)} - {tier}, {size['label']}"[:150]
+    base = group_title(design)
+    if not frame["framed"]:
+        # THE GROUP TITLE SAYS "FRAMED". THE UNFRAMED ONE MUST NOT.
+        #
+        # Every TITLE_TEMPLATE contains the word Framed, because until this
+        # tier existed every product was. Left alone, an unframed variant
+        # came out as "St Abbs - Framed Charcoal Print - Unframed Print, A4",
+        # which contradicts itself inside one line and is a disapproval on
+        # the title alone, never mind what the picture shows.
+        base = re.sub(r"\bFramed\s+", "", base)
+        base = re.sub(r"\s+-\s+-\s+", " - ", base).strip(" -")
+        return f"{base} - Unframed Print, {size['label']}"[:150]
+    return f"{base} - {frame['label']} Frame, {size['label']}"[:150]
 
 
 def _make_lines(cfg, framed=True):

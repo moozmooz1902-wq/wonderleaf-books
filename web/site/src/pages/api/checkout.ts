@@ -18,6 +18,7 @@
 import type { APIRoute } from 'astro';
 import Stripe from 'stripe';
 import { getDb, variantById } from '../../lib/db';
+import { priceBasket, PROMO } from '../../lib/promo';
 import { B, siteUrl } from '../../lib/shop';
 
 export const prerender = false;
@@ -46,28 +47,65 @@ export const POST: APIRoute = async ({ request, locals }) => {
   if (items.length > 40) return json({ error: 'Too many items' }, 400);
 
   const db = getDb(locals);
-  const line_items = [];
-  const record: any[] = [];
+
+  // Prices come from D1, never from the request. The browser sends ids and
+  // quantities and nothing else; anything it claims about money is ignored.
+  const found = [];
   for (const l of items) {
     const v = await variantById(db, l.id);
     if (!v) return json({ error: `We no longer sell ${l.id}` }, 409);
-    const qty = Math.min(l.qty, 10);
-    line_items.push({
-      quantity: qty,
-      price_data: {
-        currency: B.currency.toLowerCase(),
-        // Pence. The catalogue stores pounds, so round rather than
-        // truncate: Math.trunc(29.99 * 100) is 2998 in floating point.
-        unit_amount: Math.round(v.price * 100),
-        tax_behavior: 'inclusive' as const,
-        product_data: {
-          name: v.title,
-          description: `${v.size_label} (${v.size_cm}), ${v.frame_label} frame`,
-          metadata: { variant_id: v.id, slug: v.slug },
-        },
-      },
+    found.push({ v, qty: Math.min(l.qty, 10) });
+  }
+
+  // The SAME function the basket page was priced with. If this ever stopped
+  // being the same function, the shop would advertise one total and charge
+  // another, which is the failure Google names outright.
+  const priced = priceBasket(
+    found.map(({ v, qty }) => ({ id: v.id, title: v.title, qty, price: v.price }))
+  );
+
+  const line_items = [];
+  const record: any[] = [];
+  for (const { v, qty } of found) {
+    const free = priced.lines.find((p) => p.id === v.id)?.free ?? 0;
+    const paid = qty - free;
+    const desc = v.frame === 'none'
+      ? `${v.size_label} (${v.size_cm}), unframed print`
+      : `${v.size_label} (${v.size_cm}), ${v.frame_label} frame`;
+    const money = (n: number) => ({
+      currency: B.currency.toLowerCase(),
+      // Pence. The catalogue stores pounds, so round rather than truncate:
+      // Math.trunc(29.99 * 100) is 2998 in floating point.
+      unit_amount: Math.round(n * 100),
+      tax_behavior: 'inclusive' as const,
     });
-    record.push({ id: v.id, title: v.title, qty, price: v.price });
+    if (paid > 0)
+      line_items.push({
+        quantity: paid,
+        price_data: {
+          ...money(v.price),
+          product_data: {
+            name: v.title,
+            description: desc,
+            metadata: { variant_id: v.id, slug: v.slug },
+          },
+        },
+      });
+    // The free ones are their own zero-priced line rather than a coupon, so
+    // the Stripe page and the receipt both say which print was free and why.
+    if (free > 0)
+      line_items.push({
+        quantity: free,
+        price_data: {
+          ...money(0),
+          product_data: {
+            name: `${v.title} — free`,
+            description: `${desc} · ${PROMO.title}`,
+            metadata: { variant_id: v.id, slug: v.slug, promo: PROMO.code },
+          },
+        },
+      });
+    record.push({ id: v.id, title: v.title, qty, price: v.price, free });
   }
 
   const base = siteUrl(env);
