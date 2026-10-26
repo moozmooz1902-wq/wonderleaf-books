@@ -1,0 +1,44 @@
+{
+ "brand": "Walryvo",
+ "domain": "walryvo.com",
+ "legal_name": "NORYMUS LIMITED",
+ "company_number": "17020866",
+ "vat_number": "GB513541030",
+ "registered_address": [
+  "28 Bedford Square",
+  "Leigh",
+  "WN7 2AA"
+ ],
+ "trading_address_same": true,
+ "trading_address": null,
+ "email": "sales@walryvo.com",
+ "phone": "07397 937226",
+ "support_hours": "Monday to Friday, 9am to 5pm UK time",
+ "fulfilment": {
+  "made_in": "the United Kingdom",
+  "dispatch_working_days": 3,
+  "delivery": [
+   {
+    "name": "UK standard delivery",
+    "price": 0.0,
+    "min_days": 2,
+    "max_days": 4,
+    "region": "GB"
+   }
+  ],
+  "ships_to": [
+   "GB"
+  ]
+ },
+ "returns": {
+  "window_days": 30,
+  "who_pays_return_postage": "customer",
+  "restocking_fee": 0
+ },
+ "prices_include_vat": true,
+ "currency": "GBP",
+ "social_proof": {
+  "reviews": "none-yet"
+ },
+ "order_confirmation_email": true
+}

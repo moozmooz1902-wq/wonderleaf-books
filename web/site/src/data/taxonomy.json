@@ -1,0 +1,245 @@
+{
+ "sections": [
+  {
+   "slug": "animals",
+   "title": "Animals & Wildlife"
+  },
+  {
+   "slug": "botanical",
+   "title": "Flowers & Botanical"
+  },
+  {
+   "slug": "landscapes",
+   "title": "Landscapes & Places"
+  },
+  {
+   "slug": "night-sky",
+   "title": "Space & Night Sky"
+  }
+ ],
+ "niches": {
+  "british-wildlife": {
+   "slug": "british-wildlife",
+   "title": "British Wildlife",
+   "section": "animals",
+   "blurb": "Foxes, badgers, otters, deer and hares - the mammals of these islands, drawn as studies rather than as cartoons.",
+   "groups": [
+    "creatures.BRITISH_MAMMALS"
+   ]
+  },
+  "british-birds": {
+   "slug": "british-birds",
+   "title": "British Birds",
+   "section": "animals",
+   "blurb": "Robins, wrens, kingfishers, owls and waders, taken from the British list and drawn one species at a time.",
+   "groups": [
+    "creatures.BRITISH_BIRDS"
+   ]
+  },
+  "dogs": {
+   "slug": "dogs",
+   "title": "Dogs",
+   "section": "animals",
+   "blurb": "Breed studies, from working terriers to gundogs and hounds. Generic breed names only - no named dogs, no mascots.",
+   "groups": [
+    "creatures.DOGS",
+    "creatures.DOGS_MORE"
+   ]
+  },
+  "garden-flowers": {
+   "slug": "garden-flowers",
+   "title": "Garden Flowers",
+   "section": "botanical",
+   "blurb": "Roses, peonies, dahlias, tulips and the rest of the border, drawn as single specimens and small arrangements.",
+   "groups": [
+    "botanical.GARDEN_FLOWERS",
+    "botanical.PERENNIALS_MORE"
+   ]
+  },
+  "wildflowers": {
+   "slug": "wildflowers",
+   "title": "Wildflowers",
+   "section": "botanical",
+   "blurb": "Meadow and hedgerow flowers - poppies, cow parsley, foxgloves, harebells - named by common name.",
+   "groups": [
+    "botanical.WILDFLOWERS"
+   ]
+  },
+  "trees": {
+   "slug": "trees",
+   "title": "Trees & Shrubs",
+   "section": "botanical",
+   "blurb": "Whole trees and shrubs by species, from English oak to monkey puzzle.",
+   "groups": [
+    "botanical.TREES_SHRUBS_MORE"
+   ]
+  },
+  "british-coast": {
+   "slug": "british-coast",
+   "title": "British Coast",
+   "section": "landscapes",
+   "blurb": "Bays, coves, harbours and headlands of the British coastline, named place by named place.",
+   "groups": [
+    "places_uk.COAST"
+   ]
+  },
+  "mountains-hills": {
+   "slug": "mountains-hills",
+   "title": "Mountains & Hills",
+   "section": "landscapes",
+   "blurb": "Munros, Welsh peaks, Lakeland fells and the ridges in between.",
+   "groups": [
+    "places_uk.MOUNTAINS_HILLS"
+   ]
+  },
+  "national-parks": {
+   "slug": "national-parks",
+   "title": "National Parks",
+   "section": "landscapes",
+   "blurb": "The fifteen national parks of Great Britain, drawn as landscapes rather than maps.",
+   "groups": [
+    "places_uk.NATIONAL_PARKS"
+   ]
+  },
+  "lakes-rivers": {
+   "slug": "lakes-rivers",
+   "title": "Lochs, Lakes & Rivers",
+   "section": "landscapes",
+   "blurb": "Still water and running water, from Highland lochs to chalk streams.",
+   "groups": [
+    "places_uk.LOCHS_LAKES_RIVERS"
+   ]
+  },
+  "the-moon": {
+   "slug": "the-moon",
+   "title": "The Moon",
+   "section": "night-sky",
+   "blurb": "Phases, supermoons and the named full moons of the year. The strongest single subject in this whole range.",
+   "groups": [
+    "celestial.MOON"
+   ]
+  },
+  "constellations": {
+   "slug": "constellations",
+   "title": "Constellations",
+   "section": "night-sky",
+   "blurb": "The twenty-four shapes a buyer can actually name, drawn as star maps.",
+   "groups": [
+    "celestial.CONSTELLATIONS"
+   ]
+  }
+ },
+ "styles": [
+  {
+   "slug": "charcoal-drawings",
+   "title": "Charcoal Drawings",
+   "blurb": "Soft black charcoal on paper - smudged, worked, unmistakably hand made."
+  },
+  {
+   "slug": "pencil-sketches",
+   "title": "Pencil Sketches",
+   "blurb": "Graphite line and hatching, left as a drawing rather than finished flat."
+  },
+  {
+   "slug": "ink-wash",
+   "title": "Ink Wash",
+   "blurb": "Diluted black ink in washes - the monochrome end of painting."
+  },
+  {
+   "slug": "linocut-prints",
+   "title": "Linocut Prints",
+   "blurb": "Cut-block printing: bold shapes, visible carve marks, limited colour."
+  },
+  {
+   "slug": "screen-prints",
+   "title": "Screen Prints",
+   "blurb": "Flat printed colour in layers, in the poster tradition."
+  },
+  {
+   "slug": "watercolours",
+   "title": "Watercolours",
+   "blurb": "Wet-on-wet washes, soft bleeds and pigment pooling at the edges."
+  },
+  {
+   "slug": "gouache",
+   "title": "Gouache",
+   "blurb": "Opaque matte paint - flat, chalky and saturated."
+  },
+  {
+   "slug": "pastel",
+   "title": "Pastel",
+   "blurb": "Dry pigment, grainy and soft-edged on toothed paper."
+  },
+  {
+   "slug": "monotype",
+   "title": "Monotype",
+   "blurb": "One-off press prints: inky, textured, never quite repeatable."
+  },
+  {
+   "slug": "cyanotype",
+   "title": "Cyanotype",
+   "blurb": "The Prussian-blue photographic process - white silhouettes on deep blue."
+  },
+  {
+   "slug": "collage",
+   "title": "Collage",
+   "blurb": "Torn and cut paper, assembled in layers."
+  },
+  {
+   "slug": "riso-prints",
+   "title": "Riso Prints",
+   "blurb": "Duplicator printing - grainy, slightly misregistered, bright flat inks."
+  },
+  {
+   "slug": "impasto",
+   "title": "Impasto",
+   "blurb": "Thick raised paint, built up so the surface holds the light."
+  },
+  {
+   "slug": "palette-knife",
+   "title": "Palette Knife",
+   "blurb": "Paint laid in flat blades rather than brushed."
+  }
+ ],
+ "colours": [
+  {
+   "slug": "black-and-white",
+   "title": "Black & White",
+   "blurb": "One colour and its tones. The quietest option and the easiest to hang."
+  },
+  {
+   "slug": "neutral-and-beige",
+   "title": "Neutral & Beige",
+   "blurb": "Cream, bone, oatmeal and stone, with at most one small warm accent."
+  },
+  {
+   "slug": "two-tone",
+   "title": "Two Tone",
+   "blurb": "Two colours doing all the work - graphic and calm at once."
+  },
+  {
+   "slug": "bold-colour",
+   "title": "Bold Colour",
+   "blurb": "Opposed colours at full strength, for a wall that needs an anchor."
+  },
+  {
+   "slug": "colourful",
+   "title": "Colourful",
+   "blurb": "The full range, used across the whole picture."
+  }
+ ],
+ "rooms": [
+  {
+   "slug": "living-room",
+   "title": "Living Room"
+  },
+  {
+   "slug": "bedroom",
+   "title": "Bedroom"
+  },
+  {
+   "slug": "nursery",
+   "title": "Nursery & Child's Room"
+  }
+ ]
+}
