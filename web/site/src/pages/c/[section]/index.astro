@@ -1,4 +1,5 @@
 ---
+import Craft from '../../../components/Craft.astro';
 import Base from '../../../layouts/Base.astro';
 import Grid from '../../../components/Grid.astro';
 import { TAX, sectionTitle } from '../../../lib/shop';
@@ -43,6 +44,8 @@ edge(Astro.response, TTL_CATALOGUE);
       </div>
     </div>
   </section>
+
+  <div class="craft-band"><div class="wrap"><Craft /></div></div>
   <div class="wrap">
     <Grid items={items} />
   </div>

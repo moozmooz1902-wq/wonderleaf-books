@@ -7,6 +7,7 @@
 // photos is the thin-content pattern that stops a new domain being indexed,
 // and an un-indexed category page sends no free traffic. One paragraph of
 // genuine description per page is the cheapest fix there is.
+import Craft from '../../../components/Craft.astro';
 import Base from '../../../layouts/Base.astro';
 import Grid from '../../../components/Grid.astro';
 import { TAX, niche as getNiche } from '../../../lib/shop';
@@ -52,6 +53,8 @@ edge(Astro.response, TTL_CATALOGUE);
       </p>
     </div>
   </section>
+
+  <div class="craft-band"><div class="wrap"><Craft /></div></div>
 
   <div class="wrap">
     <Grid items={items} />

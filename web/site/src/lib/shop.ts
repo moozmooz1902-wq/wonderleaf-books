@@ -83,7 +83,17 @@ export const money = (n: number) =>
   new Intl.NumberFormat('en-GB', { style: 'currency', currency: B.currency }).format(n);
 
 /** The shop's own image URL. Never an r2.dev one - see wrangler.toml. */
-export const img = (path: string) => `/img/${path}`;
+/**
+ * Where a variant's photograph is served from.
+ *
+ * Framed mockups live in R2 and go through /img/, which reads them via the
+ * Worker's bucket bindings. The unframed photographs are rendered by
+ * catalogue/unframed.py and ship with the site as static assets, so they are
+ * served from their own path. The distinction is in the stored path rather
+ * than in each template, so nothing that renders an image has to know.
+ */
+export const img = (path: string) =>
+  path.startsWith('unframed/') ? `/${path}` : `/img/${path}`;
 
 export const siteUrl = (env?: { SITE_URL?: string }) =>
   (env?.SITE_URL || `https://${B.domain}`).replace(/\/$/, '');
@@ -104,3 +114,37 @@ export const returnsLine = () =>
 export const niche = (slug: string) => TAX.niches[slug];
 export const sectionTitle = (slug: string) =>
   TAX.sections.find((s) => s.slug === slug)?.title ?? slug;
+
+/**
+ * The working day an order placed now would be dispatched by.
+ *
+ * "Dispatched within 3 working days" is accurate and means nothing to a
+ * shopper standing at a checkout; a date does. Counts forward by whole
+ * working days from today, skipping Saturday and Sunday, and deliberately
+ * does NOT skip bank holidays - over-promising a date is worse than a date
+ * a day early, and "hiding processing delays behind a stated delivery time"
+ * is named in Google's dishonest-transaction rules.
+ *
+ * Rendered on the server, so it is right for the shop rather than for the
+ * visitor's clock, and the page cache is five minutes, which cannot move it
+ * across a day boundary in any way that matters.
+ */
+export const dispatchBy = (days = B.fulfilment.dispatch_working_days) => {
+  const d = new Date();
+  let left = days;
+  while (left > 0) {
+    d.setDate(d.getDate() + 1);
+    const wd = d.getDay();
+    if (wd !== 0 && wd !== 6) left--;
+  }
+  return d.toLocaleDateString('en-GB', {
+    weekday: 'long', day: 'numeric', month: 'long',
+  });
+};
+
+/** What a size is, in terms somebody can picture without a tape measure. */
+export const sizeFeel: Record<string, string> = {
+  a4: 'about a sheet of printer paper',
+  a3: 'about two sheets of printer paper side by side',
+  a2: 'about four sheets of printer paper',
+};

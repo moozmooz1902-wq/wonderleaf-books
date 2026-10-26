@@ -306,7 +306,14 @@ def check_catalogue(cat, cfg):
     for p in cat["products"]:
         for v in p["variants"]:
             b = v["image_path"].split("/", 1)[0]
-            if b not in ALLOWED_BUCKETS:
+            # "unframed" is not a bucket. It is the shop's own static asset
+            # directory, where catalogue/unframed.py writes the unframed
+            # photographs - they are rendered here rather than by the GPU
+            # run, so they ship with the site instead of living in R2. The
+            # allow-list still applies to everything served out of a bucket;
+            # the check above has already proved each unframed path points
+            # at a file that exists.
+            if b != "unframed" and b not in ALLOWED_BUCKETS:
                 bad.append(f"{v['id']}: image bucket {b!r} not allowed")
     for r in rows:
         m = re.search(r"/art/([^?]+)\?frame=([a-z]+)&size=([a-z0-9]+)$",
@@ -334,15 +341,45 @@ def check_catalogue(cat, cfg):
     else:
         ok("every feed row matches a real catalogue variant")
 
-    # Unframed must not have crept back in without photographs. See the long
-    # note in select.py.
-    if not cat.get("framed_only", True):
-        fail("no unframed products without unframed photographs",
-             "framed_only is false. An unframed print submitted with a "
-             "photograph of a framed one is the clearest image/offer "
-             "mismatch there is.")
+    # EVERY TIER MUST USE ITS OWN PHOTOGRAPH.
+    #
+    # This used to assert "framed only", because no unframed photograph
+    # existed and an unframed print sold against a picture of a framed one is
+    # the clearest image/offer mismatch there is. Unframed now has its own
+    # photographs (catalogue/unframed.py), so the check is no longer "do not
+    # sell unframed" but the thing that rule was protecting: a variant's
+    # picture has to show the variant. That also catches the failure the old
+    # check could not - a framed variant pointed at an unframed picture.
+    #
+    # The files are checked on disk too. They ship as static assets, so a
+    # missing one is a 404 on a live product page rather than a build error.
+    import os as _os
+    assets = _os.path.join(_os.path.dirname(HERE), "site", "public", "unframed")
+    bad, missing = [], set()
+    for p_ in cat["products"]:
+        for v in p_["variants"]:
+            ip = v["image_path"]
+            if v["frame"] == "none":
+                if not ip.startswith("unframed/"):
+                    bad.append(f'{v["id"]}: unframed variant shows {ip}')
+                elif not _os.path.exists(_os.path.join(assets,
+                                                       _os.path.basename(ip))):
+                    missing.add(_os.path.basename(ip))
+            else:
+                if "/listing/" not in ip or not ip.endswith(f'-{v["frame"]}.jpg'):
+                    bad.append(f'{v["id"]}: {v["frame"]} variant shows {ip}')
+    if bad:
+        fail("every variant's photograph shows that variant",
+             f"{len(bad)} mismatch(es): " + "; ".join(bad[:4]))
+    elif missing:
+        fail("every unframed photograph exists",
+             f"{len(missing)} missing from site/public/unframed/, which is a "
+             f"404 on a live product page: " + ", ".join(sorted(missing)[:4]))
     else:
-        ok("framed only - every photograph shows what is sold")
+        n_un = sum(1 for p_ in cat["products"] for v in p_["variants"]
+                   if v["frame"] == "none")
+        ok("every variant's photograph shows that variant",
+           f"{n_un:,} unframed, rest framed")
 
     # Restricted products. A print of a negroni is not a negroni, but
     # Shopping's restricted-product screening is automated and reads the

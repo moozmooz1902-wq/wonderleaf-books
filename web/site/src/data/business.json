@@ -28,7 +28,9 @@
   ],
   "ships_to": [
    "GB"
-  ]
+  ],
+  "paper": "premium satin art paper",
+  "inks": "pigment inks"
  },
  "returns": {
   "window_days": 30,

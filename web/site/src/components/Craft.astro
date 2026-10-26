@@ -1,0 +1,40 @@
+---
+/**
+ * What the thing is actually made of, said in four short facts.
+ *
+ * It goes on the product page and in the empty band at the top of every
+ * category page. Every line reads from business.config.json, so it says the
+ * same words as the feed descriptions and the FAQ - the point of having one
+ * source for the paper and the inks is that nobody can quietly improve the
+ * wording in one place and leave the feed behind.
+ *
+ * Nothing here is a claim nobody can check. No gsm, no "archival", no
+ * "museum quality", no awards and no star ratings: the preflight refuses
+ * unearned social proof, and an unsupported material claim is the cheapest
+ * misrepresentation finding there is.
+ */
+import { B } from '../lib/shop';
+const { compact = false } = Astro.props;
+// Defensive, and not paranoia: these come from business.config.json via
+// build_db.py, and a build that runs BEFORE that regeneration ships a bundle
+// without them. The first attempt did exactly that - `paper[0]` threw and
+// took the whole product page body with it, leaving a header and nothing
+// else on the live site. A missing value should cost a line, not a page.
+const paper = B.fulfilment?.paper ?? '';
+const inks = B.fulfilment?.inks ?? '';
+const cap = (t: string) => (t ? t[0].toUpperCase() + t.slice(1) : '');
+const items = [
+  inks && ['Pigment inks', `Printed with ${inks}, not dye.`],
+  paper && ['Satin art paper', `${cap(paper)}, heavy enough to lie flat.`],
+  ['Made to order', `Printed and finished in ${B.fulfilment.made_in} after you order.`],
+  ['Ready to hang', 'Framed behind glazing with the hanging fixture fitted.'],
+].filter(Boolean) as [string, string][];
+---
+<div class={compact ? 'craft craft-compact' : 'craft'}>
+  {items.map(([h, p]) => (
+    <div class="craft-item">
+      <strong>{h}</strong>
+      <span>{p}</span>
+    </div>
+  ))}
+</div>

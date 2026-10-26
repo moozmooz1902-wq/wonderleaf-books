@@ -139,7 +139,14 @@ img { max-width: 100%; height: auto; display: block; }
   background: var(--paper-2);
 }
 
-/* ---------- the hero and the feature blocks ----------
+/* ---------- the home page hero and the feature blocks ----------
+ *
+ * NAMED .hero-split, NOT .hero. There is already a .hero further down this
+ * file - the small page header that every category, style and room page
+ * uses - and calling this one .hero too silently turned all seven of those
+ * into a two-column 78vh grid with an empty right half. The screenshot of
+ * Animals & Wildlife with a screen of nothing above the products was that,
+ * not a content gap.
  *
  * The shape is taken from Moooi, at the seller's request: a flat colour
  * field carrying the type, a full-bleed image panel beside it, type allowed
@@ -155,15 +162,15 @@ img { max-width: 100%; height: auto; display: block; }
  * print hung large inside it, `contain` not `cover`. Same drama, and it
  * reads as a wall, which is what the shop sells.
  */
-.hero {
+.hero-split {
   display: grid;
   grid-template-columns: 1fr;
   border-bottom: 1px solid var(--rule);
 }
 @media (min-width: 900px) {
-  .hero { grid-template-columns: 1fr 1fr; min-height: min(78vh, 760px); }
+  .hero-split { grid-template-columns: 1fr 1fr; min-height: min(78vh, 760px); }
 }
-.hero-copy {
+.hero-split-copy {
   display: flex; flex-direction: column; justify-content: center;
   padding: clamp(44px, 7vw, 104px) clamp(20px, 5vw, 76px);
   padding-left: max(clamp(20px, 5vw, 76px), env(safe-area-inset-left, 0px));
@@ -172,7 +179,7 @@ img { max-width: 100%; height: auto; display: block; }
   font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.22em;
   color: var(--ink-3); margin: 0 0 clamp(16px, 2vw, 26px);
 }
-.hero-copy h1 {
+.hero-split-copy h1 {
   font-family: var(--serif);
   font-weight: 400;
   font-size: clamp(2.5rem, 1.1rem + 5.4vw, 5rem);
@@ -181,7 +188,7 @@ img { max-width: 100%; height: auto; display: block; }
   margin: 0 0 clamp(18px, 2.4vw, 30px);
   text-wrap: balance;
 }
-.hero-copy .lede {
+.hero-split-copy .lede {
   font-size: clamp(0.98rem, 0.94rem + 0.25vw, 1.08rem);
   color: var(--ink-2); max-width: 44ch; margin: 0 0 clamp(26px, 3vw, 40px);
 }
@@ -194,21 +201,21 @@ img { max-width: 100%; height: auto; display: block; }
   transition: opacity 180ms ease;
 }
 .link-lux:hover { opacity: 0.55; }
-.hero-meta {
+.hero-split-meta {
   display: flex; flex-wrap: wrap; gap: 10px 24px;
   margin-top: clamp(30px, 4vw, 52px); padding-top: 18px;
   border-top: 1px solid var(--rule);
   font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--ink-3);
 }
-.hero-art {
+.hero-split-art {
   background: var(--plate-wall);
   display: flex; align-items: center; justify-content: center;
   padding: clamp(34px, 5vw, 74px);
   min-height: 56vw;
 }
-@media (min-width: 900px) { .hero-art { min-height: 0; } }
-.hero-art img {
+@media (min-width: 900px) { .hero-split-art { min-height: 0; } }
+.hero-split-art img {
   width: 100%; height: 100%; max-height: 600px;
   object-fit: contain; display: block;
 }
@@ -452,3 +459,53 @@ table.plain th { color: var(--ink-3); font-weight: 500; }
   position: absolute; width: 1px; height: 1px; overflow: hidden;
   clip: rect(0 0 0 0); white-space: nowrap;
 }
+
+/* ---------- product page: the things that answer an objection ----------
+ *
+ * Each of these exists because a shopper stops at a specific question.
+ * "How big is that really" is answered in the size options, in sheets of
+ * paper rather than millimetres. "When would it come" is answered with a
+ * date instead of a lead time. "What actually turns up" is listed, and it
+ * differs for an unframed print, which is the single most likely thing for
+ * a buyer to get wrong. None of it is urgency, scarcity or a star rating:
+ * the preflight refuses unearned social proof and so does the law.
+ */
+.swap {
+  margin: 0 0 14px; font-size: 0.88rem; color: var(--ink-2);
+}
+.swap a { color: var(--ink); text-underline-offset: 3px; }
+.reassure {
+  margin: 14px 0 0; font-size: 0.86rem; color: var(--ink-2);
+  line-height: 1.55;
+}
+.reassure strong { color: var(--ink); }
+.inbox {
+  margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--rule);
+}
+.inbox h2 {
+  font-family: var(--sans); font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3);
+  margin: 0 0 10px;
+}
+.inbox ul { margin: 0; padding-left: 18px; }
+.inbox li { font-size: 0.88rem; color: var(--ink-2); margin-bottom: 5px; }
+
+.craft {
+  display: grid; gap: 18px 26px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  padding: 26px 0;
+}
+.craft-compact { padding: 22px 0 0; margin-top: 22px;
+  border-top: 1px solid var(--rule); gap: 14px 22px; }
+.craft-item strong {
+  display: block; font-size: 0.78rem; letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 4px;
+}
+.craft-item span { font-size: 0.85rem; color: var(--ink-3); line-height: 1.5; }
+
+/* The band at the top of a category page. It used to be a screen of nothing
+ * because .hero collided with the home page's split hero; it is now where
+ * the craft facts go, which is the first thing a visitor landing from
+ * Google on a category page has no other way of learning. */
+.craft-band { border-top: 1px solid var(--rule); background: var(--paper-2); }
+.craft-band .wrap { padding-block: 6px; }

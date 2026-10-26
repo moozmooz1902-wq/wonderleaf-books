@@ -55,12 +55,42 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
 
   const res = await next();
   const cc = res.headers.get('cache-control') || '';
+  // A PAGE THAT THREW HALFWAY THROUGH IS STILL A 200.
+  //
+  // Astro streams the response, so an error raised while rendering the body
+  // ends the stream after whatever had already been written - header, then
+  // nothing - and the status line went out as 200 long before. Caching that
+  // serves the broken page to everyone for the rest of the TTL. It happened
+  // on the live shop: a deploy shipped a bundle whose config was one build
+  // behind, the product page threw on a missing value, and the truncated
+  // render was cached and served until it expired.
+  //
+  // So a response is only storable if it finished. Checking for the closing
+  // tag costs one read of a body that was about to be cloned anyway.
+  const html = (res.headers.get('content-type') || '').includes('text/html');
+  let body: string | null = null;
+  let complete = true;
+  if (html) {
+    body = await res.clone().text();
+    complete = body.trimEnd().endsWith('</html>');
+  }
+
   const storable =
     res.status === 200 &&
+    complete &&
     !res.headers.has('set-cookie') &&
     cc.includes('s-maxage') &&
     !cc.includes('no-store');
 
+  if (html && body !== null) {
+    res.headers.set('x-cache', storable ? 'MISS'
+                                        : complete ? 'BYPASS' : 'INCOMPLETE');
+    // The body has been read, so re-serve it rather than the consumed
+    // stream, and give the cache its own copy.
+    const out = new Response(body, { status: res.status, headers: res.headers });
+    if (storable) ctx.locals.runtime?.ctx?.waitUntil?.(store.put(key, out.clone()));
+    return out;
+  }
   if (storable) {
     res.headers.set('x-cache', 'MISS');
     ctx.locals.runtime?.ctx?.waitUntil?.(store.put(key, res.clone()));

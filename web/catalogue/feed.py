@@ -82,7 +82,20 @@ def items(cat, cfg):
                 # server and answers with THIS variant's price.
                 "link": f'{base}/art/{p["slug"]}?frame={v["frame"]}&size={v["size"]}',
                 # Our own image host, not r2.dev - see wrangler.toml.
-                "image_link": f'{base}/img/{v["image_path"]}',
+                # ONE RULE FOR WHERE A PICTURE LIVES, NOT TWO.
+                #
+                # Framed mockups sit in R2 and are served through /img/,
+                # which resolves the first path segment as a bucket. The
+                # unframed photographs are rendered by unframed.py and ship
+                # as static assets, so their path is already the URL path
+                # and prefixing /img/ sends the feed at /img/unframed/...,
+                # which 404s. That shipped: every unframed row in the feed
+                # pointed at a missing image until the image check caught
+                # it. The site's img() in shop.ts makes the same
+                # distinction; this is its one other caller.
+                "image_link": (f'{base}/{v["image_path"]}'
+                               if v["image_path"].startswith("unframed/")
+                               else f'{base}/img/{v["image_path"]}'),
                 "availability": v["availability"],
                 "price": f'{v["price"]:.2f} {cur}',
                 "brand": p["brand"],

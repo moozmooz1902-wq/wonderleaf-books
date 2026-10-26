@@ -15,7 +15,8 @@
 // price from the URL it was given. The two jobs do not conflict.
 import Base from '../../layouts/Base.astro';
 import Grid from '../../components/Grid.astro';
-import { B, money, img, abs } from '../../lib/shop';
+import { B, money, img, abs, dispatchBy, sizeFeel } from '../../lib/shop';
+import Craft from '../../components/Craft.astro';
 import { getDb, product, variantOf, alsoIn } from '../../lib/db';
 import { edge, TTL_CATALOGUE } from '../../lib/cache';
 
@@ -37,6 +38,12 @@ const frames = [...new Map(p.variants.map((x) => [x.frame, x])).values()];
 const sizes = [...new Map(p.variants.map((x) => [x.size, x])).values()].sort(
   (a, b) => a.price - b.price
 );
+// The same size in the other tier, if it exists. null rather than a guess:
+// never print a price that was not read off the catalogue.
+const at = (f: string) =>
+  p.variants.find((x) => x.frame === f && x.size === v.size)?.price ?? null;
+const unframedAt = at('none');
+const framedAt = at('black');
 const priceFor = (f: string, s: string) =>
   p.variants.find((x) => x.frame === f && x.size === s)!.price;
 
@@ -55,7 +62,9 @@ const jsonLd = {
   brand: { '@type': 'Brand', name: p.brand },
   image: [abs(img(v.image_path), env)],
   category: p.product_type,
-  material: 'Wood frame, matte art paper',
+  material: v.frame === 'none'
+    ? `${B.fulfilment.paper}, unframed`
+    : `Wood frame, ${B.fulfilment.paper}`,
   color: v.frame_label,
   size: `${v.size_label} (${v.size_cm})`,
   offers: {
@@ -131,7 +140,9 @@ const jsonLd = {
       <div class="shot">
         <img
           src={img(v.image_path)}
-          alt={`${p.title} in a ${v.frame_label.toLowerCase()} frame`}
+          alt={v.frame === 'none'
+            ? `${p.title}, unframed print`
+            : `${p.title} in a ${v.frame_label.toLowerCase()} frame`}
           width="1200"
           height="1200"
           fetchpriority="high"
@@ -144,11 +155,13 @@ const jsonLd = {
         <div class="price-now">{money(v.price)}</div>
         <p class="vat-note">
           Includes VAT. {d.price === 0 ? 'Free UK delivery' : `${money(d.price)} UK delivery`}.
-          {' '}{v.size_label} — {v.size_cm}, {v.frame_label.toLowerCase()} frame.
+          {' '}{v.size_label} — {v.size_cm},
+          {v.frame === 'none' ? ' unframed print, no frame or mount.'
+                              : ` ${v.frame_label.toLowerCase()} frame.`}
         </p>
 
         <fieldset>
-          <legend>Frame</legend>
+          <legend>Framing</legend>
           <div class="opts">
             {frames.map((f) => (
               <a
@@ -176,11 +189,32 @@ const jsonLd = {
               >
                 {s.size_label}
                 <span class="mm">{s.size_cm}</span>
+                <span class="mm">{sizeFeel[s.size]}</span>
                 <span class="mm">{money(priceFor(v.frame, s.size))}</span>
               </a>
             ))}
           </div>
         </fieldset>
+
+        {/* The two things a shopper is actually deciding between, priced.
+            Unframed is a third of the framed price and that is invisible
+            until you click it, so it is said here in words. */}
+        {v.frame !== 'none' && unframedAt != null && (
+          <p class="swap">
+            Want it without the frame? The unframed print is
+            {' '}<a href={`/art/${p.slug}?frame=none&size=${v.size}`} rel="nofollow">
+              {money(unframedAt)}
+            </a>.
+          </p>
+        )}
+        {v.frame === 'none' && framedAt != null && (
+          <p class="swap">
+            Framed in black, glazed and ready to hang, this size is
+            {' '}<a href={`/art/${p.slug}?frame=black&size=${v.size}`} rel="nofollow">
+              {money(framedAt)}
+            </a>.
+          </p>
+        )}
 
         <button
           class="btn"
@@ -193,9 +227,38 @@ const jsonLd = {
           Add to basket — {money(v.price)}
         </button>
 
+        <p class="reassure">
+          Order today and it is dispatched by <strong>{dispatchBy()}</strong>,
+          then {d.min_days}–{d.max_days} working days in the post.
+          {' '}{B.returns.window_days} days to send it back, for any reason.
+        </p>
+
+        <div class="inbox">
+          <h2>What arrives</h2>
+          <ul>
+            {v.frame === 'none' ? (
+              <>
+                <li>One {v.size_label} print, {v.size_cm}, unframed.</li>
+                <li>No frame and no mount — the sheet on its own.</li>
+                <li>Posted flat in a board-backed envelope, not rolled.</li>
+              </>
+            ) : (
+              <>
+                <li>One {v.size_label} print, {v.size_cm}, in a {v.frame_label.toLowerCase()} wooden frame.</li>
+                <li>Glazed, with the hanging fixture already fitted.</li>
+                <li>Corner-protected and boxed.</li>
+              </>
+            )}
+          </ul>
+        </div>
+
+        <Craft compact={true} />
+
         <ul class="facts">
-          <li>Printed to order in {B.fulfilment.made_in} on heavyweight matte art paper.</li>
-          <li>Framed behind glazing in {v.frame_label.toLowerCase()} wood, hanging fixture fitted.</li>
+          <li>Printed to order in {B.fulfilment.made_in} on {B.fulfilment.paper}.</li>
+          {v.frame === 'none'
+            ? <li>Unframed: the print on its own, posted flat. No frame, no mount, no glazing.</li>
+            : <li>Framed behind glazing in {v.frame_label.toLowerCase()} wood, hanging fixture fitted.</li>}
           <li>Dispatched within {B.fulfilment.dispatch_working_days} working days, then {d.min_days}–{d.max_days} working days in the post.</li>
           <li>
             {B.returns.window_days}-day returns from the day it arrives.

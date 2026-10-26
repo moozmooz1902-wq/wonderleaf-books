@@ -40,18 +40,46 @@ WALLART = os.environ.get(
 sys.path.insert(0, HERE)
 import taxonomy as T
 
-# The seller's go-to prices, 22 Oct 2026, VAT inclusive. Framed only on the
-# website - see select.py FRAMES_ONLY for why there is no unframed tier here.
+# The seller's go-to prices, 22 Oct 2026, VAT inclusive, and the same two
+# ladders their eBay listings use.
 SIZES = [
-    {"code": "a4", "label": "A4", "cm": "21 x 29.7 cm", "price": 24.99},
-    {"code": "a3", "label": "A3", "cm": "29.7 x 42 cm", "price": 29.99},
-    {"code": "a2", "label": "A2", "cm": "42 x 59.4 cm", "price": 34.99},
+    {"code": "a4", "label": "A4", "cm": "21 x 29.7 cm"},
+    {"code": "a3", "label": "A3", "cm": "29.7 x 42 cm"},
+    {"code": "a2", "label": "A2", "cm": "42 x 59.4 cm"},
 ]
+FRAMED_PRICE = {"a4": 24.99, "a3": 29.99, "a2": 34.99}
+UNFRAMED_PRICE = {"a4": 8.99, "a3": 12.99, "a2": 18.99}
+
+# UNFRAMED IS A REAL TIER NOW, AND ONLY BECAUSE IT HAS ITS OWN PHOTOGRAPH.
+#
+# It was left out at first for a specific reason, not an oversight: every
+# picture in the buckets is a framed mockup. build_ebay.py puts it plainly -
+# "no unframed photograph was ever rendered" - and on eBay the unframed rows
+# carry no PicURL, so eBay falls back to the main image. That is fine on
+# eBay. In a Merchant Center feed every variant carries its own image, and
+# selling an unframed print against a photograph of a framed one is an
+# image/product mismatch: a disapproval on its own, and a misrepresentation
+# pattern when it is every ninth row.
+#
+# catalogue/unframed.py removes that objection. It takes the generated panel
+# that sits beside the mockups in R2, crops the same 11% off the bottom that
+# render_worker.py crops (the fake-signature fix - the site states in writing
+# that nothing is signed), and lays it on the cream wall with a paper shadow.
+# So the unframed tier now shows an unframed print. Do not re-add it on top
+# of the framed photographs if those files ever go missing; rebuild them.
 FRAMES = [
-    {"code": "black", "label": "Black", "wood": "black-painted wood"},
-    {"code": "white", "label": "White", "wood": "white-painted wood"},
-    {"code": "oak",   "label": "Oak",   "wood": "natural oak"},
+    {"code": "black", "label": "Black", "wood": "black-painted wood",
+     "framed": True},
+    {"code": "white", "label": "White", "wood": "white-painted wood",
+     "framed": True},
+    {"code": "oak",   "label": "Oak",   "wood": "natural oak",
+     "framed": True},
+    {"code": "none",  "label": "Unframed", "wood": None, "framed": False},
 ]
+
+
+def price_of(frame, size):
+    return (FRAMED_PRICE if frame["framed"] else UNFRAMED_PRICE)[size["code"]]
 COLOURWAY = 0   # one colourway per design in the opening range
 
 _STORES = {s["bucket"]: s for s in json.load(
@@ -77,9 +105,14 @@ def slug(design):
     return f"{_slugify(design['subject'])}-{_slugify(style)}-{tail}"
 
 
-def image(design, frame_code):
-    """The framed mockup in R2. The only photographs that exist for these
-    designs, which is why the range is framed only."""
+def image(design, frame_code, base=""):
+    """The photograph for one variant, absolute, for the feed.
+
+    Framed variants come from the mockups in R2. The unframed one comes from
+    catalogue/unframed.py and is served off the shop's own domain as a static
+    asset, because it is rendered here rather than by the GPU run."""
+    if frame_code == "none":
+        return f'{base}/unframed/{design["sku"]}.jpg'
     st = _STORES[design["bucket"]]
     return (f'{st["pic_base"].rstrip("/")}/'
             f'{st["key_prefix"].strip("/")}/listing/'
@@ -89,6 +122,8 @@ def image(design, frame_code):
 def image_path(design, frame_code):
     """The same object's key, for serving through the shop's own image
     domain instead of the rate-limited r2.dev hostname."""
+    if frame_code == "none":
+        return f'unframed/{design["sku"]}.jpg'
     st = _STORES[design["bucket"]]
     return (f'{st["bucket"]}/{st["key_prefix"].strip("/")}/listing/'
             f'{design["sku"]}-{COLOURWAY}-{frame_code}.jpg')
@@ -161,10 +196,42 @@ def group_title(design):
 def variant_title(design, frame, size):
     """Feed [title] for one variant. Says exactly what the buyer gets, which
     is the point: an accurate title is the cheapest compliance there is."""
-    return f"{group_title(design)} - {frame['label']} Frame, {size['label']}"[:150]
+    tier = "Unframed Print" if not frame["framed"] else f"{frame['label']} Frame"
+    return f"{group_title(design)} - {tier}, {size['label']}"[:150]
 
 
-def description(design, frame=None, size=None):
+def _make_lines(cfg, framed=True):
+    """How the print is made, said three ways so 2,508 feed rows are not
+    2,508 copies of one sentence - and read from business.config.json rather
+    than typed here, because the paper and the inks are also stated on the
+    FAQ, the how-its-made page and the product page. Twelve hardcoded copies
+    of 'heavyweight matte art paper' is how a feed and a page come to
+    disagree, which is the whole failure this build exists to avoid."""
+    f = cfg["fulfilment"]
+    paper, inks, where = f["paper"], f["inks"], f["made_in"]
+    if framed:
+        return [
+            f"Each print is made to order in {where}, printed with {inks} "
+            f"on {paper}, then framed behind glazing with the hanging "
+            f"fixture already fitted, so it arrives ready for the wall.",
+            f"We print to order in {where} with {inks} on {paper}, and "
+            f"frame it behind glazing with the hanging fixture fitted "
+            f"before it is packed.",
+            f"Printed to order in {where} with {inks} on {paper}, framed "
+            f"behind glazing and fitted with its hanging fixture, so there "
+            f"is nothing to assemble.",
+        ]
+    return [
+        f"Each print is made to order in {where}, printed with {inks} on "
+        f"{paper} and posted flat, so you can frame it yourself.",
+        f"We print to order in {where} with {inks} on {paper}. The unframed "
+        f"option is the sheet on its own, posted flat and board-backed.",
+        f"Printed to order in {where} with {inks} on {paper}, unframed and "
+        f"posted flat in a board-backed envelope.",
+    ]
+
+
+def description(design, frame=None, size=None, cfg=None):
     """Honest prose, generated per design so no two pages read alike.
 
     Every clause here is either a fact about the product or a statement of
@@ -228,23 +295,18 @@ def description(design, frame=None, size=None):
         style[2],
         colour[2],
         "",
-        _pick([
-            "Each print is made to order in the United Kingdom on "
-            "heavyweight matte art paper, then framed behind glazing with "
-            "the hanging fixture already fitted, so it arrives ready for "
-            "the wall.",
-            "We print to order in the United Kingdom on heavyweight matte "
-            "art paper and frame it behind glazing, with the hanging "
-            "fixture fitted before it is packed.",
-            "Printed to order in the United Kingdom on heavyweight matte "
-            "art paper, framed behind glazing and fitted with its hanging "
-            "fixture, so there is nothing to assemble.",
-        ], design, "make"),
+        _pick(_make_lines(cfg or config(),
+                          framed=(frame is None or frame["framed"])),
+              design, "make"),
     ]
     if frame and size:
         bits.append(
             f"This option is the {size['label']} size ({size['cm']}) in a "
-            f"{frame['wood']} frame.")
+            f"{frame['wood']} frame."
+            if frame["framed"] else
+            f"This option is the {size['label']} size ({size['cm']}) as an "
+            f"unframed print - the sheet on its own, with no frame or mount, "
+            f"posted flat in a board-backed envelope.")
     bits += [
         "",
         # Said on every product on purpose. These three sentences are the
@@ -276,17 +338,19 @@ def build(design, cfg=None):
                 "size": size["code"],
                 "size_label": size["label"],
                 "size_cm": size["cm"],
-                "price": size["price"],
-                "price_feed": f"{size['price']:.2f} {cfg['currency']}",
+                "price": price_of(frame, size),
+                "price_feed": f"{price_of(frame, size):.2f} {cfg['currency']}",
                 "title": variant_title(design, frame, size),
-                "description": description(design, frame, size),
+                "description": description(design, frame, size, cfg),
                 "link": f"{base}/art/{sl}?frame={frame['code']}&size={size['code']}",
-                "image": image(design, frame["code"]),
+                "image": image(design, frame["code"], base),
                 "image_path": image_path(design, frame["code"]),
                 "availability": "in_stock",
                 "condition": "new",
                 "colour": frame["label"],
-                "material": "Wood frame, matte art paper",
+                "material": (f'Wood frame, {cfg["fulfilment"]["paper"]}'
+                             if frame["framed"] else
+                             f'{cfg["fulfilment"]["paper"]}, unframed'),
             })
     return {
         "sku": design["sku"],
@@ -295,7 +359,7 @@ def build(design, cfg=None):
         "url": f"{base}/art/{sl}",
         "item_group_id": f"{design['sku']}-{COLOURWAY}",
         "title": group_title(design),
-        "description": description(design),
+        "description": description(design, cfg=cfg),
         "section": section,
         "section_title": next(t for s, t, _ in T.SECTIONS if s == section),
         "niche": niche,
@@ -317,7 +381,7 @@ def build(design, cfg=None):
         "bucket": design["bucket"],
         "default_frame": "black",
         "default_size": "a3",
-        "price_from": min(s["price"] for s in SIZES),
+        "price_from": min(v["price"] for v in variants),
         "variants": variants,
     }
 

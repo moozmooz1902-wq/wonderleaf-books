@@ -37,6 +37,12 @@ const bySec = TAX.sections.map((s) => ({
   total: counts.filter((c) => c.section === s.slug).reduce((a, c) => a + c.n, 0),
 }));
 const total = counts.reduce((a, c) => a + c.n, 0);
+// Read off the catalogue rather than written into the copy. A price typed
+// into a sentence is a price that goes stale silently, and a page that
+// quotes a different number from the feed is the mismatch this whole build
+// exists to avoid.
+const minUnframed = TAX.prices?.unframed_from ?? 8.99;
+const minFramed = TAX.prices?.framed_from ?? 24.99;
 edge(Astro.response, TTL_CATALOGUE);
 ---
 
@@ -47,24 +53,24 @@ edge(Astro.response, TTL_CATALOGUE);
   {/* THE HERO. A flat field of type beside a full-bleed panel with one
       print hung large in it. The print is a real product; clicking either
       half goes to it. */}
-  <section class="hero">
-    <div class="hero-copy">
+  <section class="hero-split">
+    <div class="hero-split-copy">
       <p class="eyebrow">Printed &amp; framed in Britain</p>
       <h1>Quiet art for considered walls</h1>
       <p class="lede">
         {total} designs across {counts.length} collections — the British
         coast, wildlife and birds, botanical studies and the night sky. Each
-        one printed on heavyweight art paper and framed by hand after you
+        one printed on {B.fulfilment.paper} and framed by hand after you
         order it.
       </p>
       <a class="link-lux" href="/c/landscapes">Discover the collections</a>
-      <div class="hero-meta">
+      <div class="hero-split-meta">
         <span>Free UK delivery</span>
         <span>{B.returns.window_days}-day returns</span>
         <span>A4 · A3 · A2</span>
       </div>
     </div>
-    <a class="hero-art" href={`/art/${heroArt.slug}`} aria-label={heroArt.title}>
+    <a class="hero-split-art" href={`/art/${heroArt.slug}`} aria-label={heroArt.title}>
       <img src={img(heroArt.image_path)} alt={heroArt.title} width="1000"
            height="1000" fetchpriority="high" decoding="async" />
     </a>
@@ -160,8 +166,12 @@ edge(Astro.response, TTL_CATALOGUE);
     <div class="section-block">
       <h2>How it works</h2>
       <ul class="facts" style="max-width:70ch">
-        <li>Choose a design, a frame colour and a size. Prices from {money(24.99)} including VAT.</li>
-        <li>We print it on heavyweight matte art paper and frame it behind glazing, with the hanging fixture fitted.</li>
+        <li>
+          Choose a design, a size, and a frame or no frame at all. Unframed
+          prints from {money(minUnframed)}; framed from {money(minFramed)}.
+          All prices include VAT.
+        </li>
+        <li>We print it on {B.fulfilment.paper} and frame it behind glazing, with the hanging fixture fitted.</li>
         <li>Dispatched within {B.fulfilment.dispatch_working_days} working days, then {B.fulfilment.delivery[0].min_days}–{B.fulfilment.delivery[0].max_days} working days in the post.</li>
         <li>{B.returns.window_days} days to send it back from the day it arrives, for any reason.</li>
         <li>Every design is digitally created artwork, printed to order. Not a painting, not an original, not signed.</li>
