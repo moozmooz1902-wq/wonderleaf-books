@@ -410,10 +410,25 @@ def check_catalogue(cat, cfg):
 # --------------------------------------------------------------------------
 # 4. The deployed site
 # --------------------------------------------------------------------------
-def check_live(cat, cfg, sample):
-    base = f"https://{cfg['domain']}"
+def check_live(cat, cfg, sample, base_override=None):
+    base = (base_override or f"https://{cfg['domain']}").rstrip("/")
     import random
     random.seed(4)
+
+    def onbase(u):
+        """Re-point a feed URL at the host actually under test.
+
+        The feed carries absolute https://walryvo.com/... links, because that
+        is what Merchant Center will be given. When these checks run against a
+        staging deploy the custom domain is not attached yet, so fetching the
+        feed's own URL tests nothing - it just fails to resolve. Same path,
+        same query (?frame= and ?size= are the whole point of the price
+        check), different host."""
+        if not base_override:
+            return u
+        from urllib.parse import urlsplit, urlunsplit
+        a, b = urlsplit(u), urlsplit(base)
+        return urlunsplit((b.scheme, b.netloc, a.path, a.query, a.fragment))
 
     # 4a. Policy pages must load, without JavaScript, and carry the identity.
     must_contain = {
@@ -462,8 +477,16 @@ def check_live(cat, cfg, sample):
     try:
         _s, _h, body = get(base + "/robots.txt")
         t = body.decode("utf-8", "replace")
-        if "Disallow: /\n" in t or re.search(r"Disallow:\s*/\s*$", t,
-                                             re.M):
+        blocked = ("Disallow: /\n" in t
+                   or re.search(r"Disallow:\s*/\s*$", t, re.M))
+        if blocked and base_override:
+            # Correct, and deliberate: robots.txt serves a blanket Disallow on
+            # any host that is not the canonical domain, so a staging deploy
+            # cannot be indexed as a second copy of the shop. Assert that it
+            # IS blocked here rather than letting the real check pass by
+            # accident on a host where allowing would be the bug.
+            ok("staging host is closed to crawlers", base)
+        elif blocked:
             fail("robots.txt does not block the shop",
                  "a bare 'Disallow: /' blocks everything, including the "
                  "landing pages Merchant Center must fetch.")
@@ -498,7 +521,7 @@ def check_live(cat, cfg, sample):
 
     def check_one(r):
         try:
-            status, _h, body = get(r["link"])
+            status, _h, body = get(onbase(r["link"]))
             text = body.decode("utf-8", "replace")
             if status != 200:
                 return f"{r['id']}: HTTP {status} at {r['link']}"
@@ -535,7 +558,7 @@ def check_live(cat, cfg, sample):
     # 4d. Images: reachable, an image, and big enough.
     def check_img(r):
         try:
-            status, h, body = get(r["image_link"])
+            status, h, body = get(onbase(r["image_link"]))
             if status != 200:
                 return f"{r['id']}: image HTTP {status}"
             ct = h.get("content-type", "")
@@ -694,6 +717,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--live", action="store_true",
                     help="also fetch the deployed site over https")
+    ap.add_argument("--base", default=None,
+                    help="check this origin instead of https://<domain>. "
+                         "For running the live checks against a workers.dev "
+                         "deploy before the custom domain is attached - the "
+                         "price-match check is worth running early, since it "
+                         "is the one that catches what suspended the last "
+                         "shop, and waiting for DNS to test it is backwards.")
     ap.add_argument("-n", "--sample", type=int, default=30,
                     help="how many variant URLs to fetch with --live")
     a = ap.parse_args()
@@ -725,7 +755,7 @@ def main():
                  "cannot run: the business identity is incomplete, so there "
                  "is no verified domain to fetch.")
         else:
-            check_live(cat, cfg, a.sample)
+            check_live(cat, cfg, a.sample, a.base)
     width = max(len(n) for _p, n, _d in results) + 2
     print()
     for passed, name, detail in results:
