@@ -70,6 +70,12 @@ The build is finished and **blocked** on these. `preflight.py` refuses to
 produce a feed until they are filled in, deliberately: a feed with blanks in
 the business identity misrepresents who is selling.
 
+**Four of the five are now in** (26 Oct): brand **Walryvo**, domain
+**walryvo.com**, email **sales@walryvo.com**, phone **07397 937226**.
+Outstanding: the **VAT number**, plus switching on Stripe receipts and
+setting `order_confirmation_email: true`. `preflight.py` is at 17 passed /
+3 failed and those three are the only things left.
+
 1. **Brand / trading name** — the name on the site and in Merchant Center.
    Must match across the domain, the site, the account and Stripe.
 
@@ -125,23 +131,45 @@ which is what Google uses for reporting and bidding.
 
 ---
 
-## Step 3 — Domain
+## Step 3 — Domain — DONE, 26 Oct
 
-Buy it anywhere (Cloudflare Registrar sells at cost, about £8–11/yr, and
-keeps everything in one account).
+The shop is **walryvo.com**, the brand is **Walryvo**, and
+**walryvo.co.uk** is held by the same owner. Both are already wired into
+`business.config.json` and `SITE_URL` in `wrangler.toml`.
 
-- `.co.uk` reads correctly for a UK company. `.com` is fine too.
-- Short, pronounceable, not a hyphen salad. Not a near-copy of a known
-  brand — that is a different policy violation.
-- **Never** a free subdomain, and never the old Shopify domain.
-- Buy it and point DNS at Cloudflare **before** you touch Merchant Center.
-  A domain registered yesterday with no site on it is a weak signal; the
-  same domain with a working shop on it is not.
+Checked before wiring it in: nothing on Google for "walryvo", nothing at
+Companies House. The name returns only you, which was the point.
 
-Then set it in two places: `brand`/`domain` in
-`web/business.config.json`, and `SITE_URL` in `web/site/wrangler.toml`
-(it still says `REPLACE_WITH_YOUR_DOMAIN`, and preflight will keep failing
-until it does not).
+### The .com is the shop; the .co.uk forwards to it
+
+**Serve the shop on walryvo.com only.** Point `walryvo.co.uk` at a **301
+redirect** to it rather than running a second copy.
+
+Two domains serving identical content split whatever ranking you earn
+between them, and Google has to pick one as canonical regardless. A second
+domain carrying the same shop also has the shape of a doorway site, which
+is its own policy problem. Holding the .co.uk is still worth the £10 — it
+stops anyone else trading on the name — it just must not be a second
+storefront.
+
+In Cloudflare, once both domains are on the account: **Rules → Redirect
+Rules → Create rule**. Match `hostname equals walryvo.co.uk`, action
+*Dynamic*, expression
+`concat("https://walryvo.com", http.request.uri.path)`, status **301**,
+preserve query string. Add a second rule doing the same for
+`www.walryvo.com`.
+
+Merchant Center and Search Console get **walryvo.com** and nothing else.
+Verifying both would give Google two sites claiming the same products.
+
+### Still to do on the domain
+
+- Point the nameservers at Cloudflare and add the Worker's custom domain
+  (Step 4). Right now walryvo.com answers 403 from the registrar's parking
+  IP, which is normal and must be fixed before Merchant Center sees it.
+- Make `sales@walryvo.com` actually receive mail, and send one test to it
+  from outside. A contact address that bounces is false contact
+  information under the misrepresentation policy.
 
 ---
 

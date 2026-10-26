@@ -1,8 +1,8 @@
 {
   "_README": "THE SINGLE SOURCE OF TRUTH FOR WHO THIS BUSINESS IS. Every page footer, every policy page, the Merchant Center account, the Stripe account and the feed all read from here. They have to agree: Google's verification cross-checks the legal name, address and country across the website, the Merchant Center registration and the payments profile, and a mismatch between them is the most common reason a new account fails. Any field whose value is still null BLOCKS the build - preflight.py refuses, and that refusal is deliberate. Placeholder text on a live shop is itself a documented misrepresentation trigger, so an unfinished field must stop a deploy rather than ship as 'Your Company Here'.",
-  "brand": null,
+  "brand": "Walryvo",
   "_brand": "The shop's trading name, e.g. 'Wonderleaf'. Used as the feed's [brand]. Allowed to be your own brand because you make the product (Google permits own-brand for private label/manufactured goods). Must be the same word used in the site logo, the domain and the Merchant Center business name.",
-  "domain": null,
+  "domain": "walryvo.com",
   "_domain": "e.g. 'wonderleaf.co.uk'. USE A NEW DOMAIN, not the one that was on Shopify when the misrepresentation suspension happened - enforcement attaches to the website as well as the account, so the old domain carries the history. A .co.uk reads correctly for a UK business. Never a free subdomain.",
   "legal_name": "NORYMUS LIMITED",
   "_legal_name": "The exact registered company name at Companies House, including 'Limited' or 'Ltd' exactly as registered.",
@@ -19,9 +19,9 @@
   "trading_address_same": true,
   "_trading_address_same": "Set false and fill trading_address if goods are dispatched from somewhere other than the registered office. Google prohibits 'hiding where products ship from'.",
   "trading_address": null,
-  "email": null,
+  "email": "sales@walryvo.com",
   "_email": "A real monitored mailbox ON THE DOMAIN, e.g. 'hello@wonderleaf.co.uk'. Not gmail, not hotmail - a free mailbox on a shop claiming to be a registered company is a trust signal failure and several suspension guides name it directly.",
-  "phone": null,
+  "phone": "07397 937226",
   "_phone": "A working UK telephone number that a person answers or that has voicemail. Google's 'present a false identity, business name, or contact information' rule covers a dead number.",
   "support_hours": "Monday to Friday, 9am to 5pm UK time",
   "fulfilment": {

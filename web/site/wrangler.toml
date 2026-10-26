@@ -57,4 +57,4 @@ bucket_name = "mercury-usm"
 #   STRIPE_SECRET_KEY
 #   STRIPE_WEBHOOK_SECRET
 [vars]
-SITE_URL = "https://REPLACE_WITH_YOUR_DOMAIN"
+SITE_URL = "https://walryvo.com"
