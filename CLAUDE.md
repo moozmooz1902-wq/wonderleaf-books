@@ -48,6 +48,15 @@ It is a different product line from eBay and must not be confused with it:
   an unframed variation inherits the framed photo and that is fine; in a
   Merchant Center feed every variant carries its own image, so it would be
   submitting an unframed print with a photograph of a framed one.
+- **`web/SCALE.md` answers "can we put millions on it".** Short answer: the
+  hosting is not the constraint and will not be - a new Merchant Center
+  account is capped at **150,000 products**, raised by Google on its own
+  only for accounts that near the cap while performing cleanly. D1 holds
+  ~1.5M products in one database (measured: 5,086 bytes each) and shards by
+  section past that. The sitemap, not the database, is the first thing that
+  breaks - `allSlugs()` is unpaged and the standard caps a file at 50,000
+  URLs. Facet counts are precomputed and HTML is edge-cached as of 26 Oct;
+  both are explained there.
 - **`web/catalogue/preflight.py` is the gate.** 20 offline checks, 13 more
   against a deployed site, each naming the Google policy or UK law behind
   it. `feed.py` refuses to build while the business identity is incomplete.

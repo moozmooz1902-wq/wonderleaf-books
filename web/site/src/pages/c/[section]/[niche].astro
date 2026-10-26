@@ -11,6 +11,7 @@ import Base from '../../../layouts/Base.astro';
 import Grid from '../../../components/Grid.astro';
 import { TAX, niche as getNiche } from '../../../lib/shop';
 import { getDb, byNiche, nicheCounts } from '../../../lib/db';
+import { edge, TTL_CATALOGUE } from '../../../lib/cache';
 
 const { section, niche } = Astro.params;
 const n = getNiche(niche!);
@@ -26,6 +27,7 @@ const { results: counts } = await nicheCounts(db);
 const total = counts.find((c) => c.niche === niche)?.n ?? items.length;
 const pages = Math.ceil(total / per);
 const siblings = counts.filter((c) => c.section === section && c.niche !== niche);
+edge(Astro.response, TTL_CATALOGUE);
 ---
 
 <Base

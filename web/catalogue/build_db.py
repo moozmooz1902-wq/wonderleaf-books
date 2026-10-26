@@ -17,7 +17,7 @@ Everything written here comes from product.build_all(). This file computes no
 titles, no prices and no URLs of its own - if it did, there would be two
 answers to what a product costs, and that is the whole failure mode.
 """
-import json, os, sqlite3, sys
+import collections, json, os, sqlite3, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -72,6 +72,30 @@ CREATE TABLE IF NOT EXISTS variants (
   availability TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_variants_slug ON variants(slug);
+
+-- PRECOMPUTED FACET COUNTS.
+--
+-- The navigation shows a count beside every niche, section, style and
+-- colour, on the home page and on every category page. Computed live that
+-- is "SELECT niche, COUNT(*) FROM products GROUP BY niche", which reads
+-- EVERY row in the table on EVERY page view. At 240 products that is
+-- nothing. At a million it is a full scan per request, and D1 bills rows
+-- read, so it would be simultaneously the slowest query on the site and the
+-- largest line on the bill - for a number that only changes when the
+-- catalogue is rebuilt.
+--
+-- So it is written here at build time instead. One row per facet value,
+-- read by primary key. ~70 rows today, and it does not grow with the
+-- catalogue: a million products still have 53 niches.
+CREATE TABLE IF NOT EXISTS facet_counts (
+  kind TEXT NOT NULL,          -- niche | section | style | colour | room
+  key TEXT NOT NULL,
+  title TEXT NOT NULL,
+  parent TEXT,                 -- section slug, for niches
+  parent_title TEXT,
+  n INTEGER NOT NULL,
+  PRIMARY KEY (kind, key)
+);
 
 CREATE TABLE IF NOT EXISTS product_rooms (
   slug TEXT NOT NULL, room TEXT NOT NULL,
@@ -173,8 +197,8 @@ def main():
           f"{len(live_colours)} colours, {len(live_rooms)} rooms")
 
     rows = [SCHEMA]
-    rows.append("DELETE FROM product_rooms; DELETE FROM variants; "
-                "DELETE FROM products;")
+    rows.append("DELETE FROM facet_counts; DELETE FROM product_rooms; "
+                "DELETE FROM variants; DELETE FROM products;")
     for rank, p in enumerate(products):
         rows.append(
             "INSERT INTO products (slug,sku,item_group_id,title,description,"
@@ -201,6 +225,30 @@ def main():
         for room in p["rooms"]:
             rows.append("INSERT INTO product_rooms (slug,room) VALUES ("
                         + _q(p["slug"]) + "," + _q(room) + ");")
+    # The facet counts, computed once here rather than per request.
+    room_title = {s: t for s, t, _ in T.ROOMS}
+    facets = []
+    for kind, keyf, titlef in (
+            ("niche", "niche", "niche_title"),
+            ("section", "section", "section_title"),
+            ("style", "style", "style_title"),
+            ("colour", "colour", "colour_title")):
+        c = collections.Counter(p[keyf] for p in products)
+        seen = {}
+        for p in products:
+            seen.setdefault(p[keyf], p)
+        for k, n in c.items():
+            par = (seen[k]["section"], seen[k]["section_title"]) \
+                if kind == "niche" else (None, None)
+            facets.append((kind, k, seen[k][titlef], par[0], par[1], n))
+    rc = collections.Counter(r for p in products for r in p["rooms"])
+    for k, n in rc.items():
+        facets.append(("room", k, room_title.get(k, k), None, None, n))
+    for f in facets:
+        rows.append("INSERT INTO facet_counts (kind,key,title,parent,"
+                    "parent_title,n) VALUES ("
+                    + ",".join(_q(x) for x in f) + ");")
+
     sql = "\n".join(rows)
     open(OUT_SQL, "w").write(sql)
 
@@ -219,7 +267,8 @@ def main():
         "ORDER BY c DESC").fetchall()
     con.close()
 
-    print(f"products {n_p:,}   variants {n_v:,}   room links {n_r:,}")
+    print(f"products {n_p:,}   variants {n_v:,}   room links {n_r:,}   "
+          f"facet counts {len(facets):,}")
     print(f"niches with stock: {len(niches)}  "
           f"(smallest {min(c for _, c in niches)}, "
           f"largest {max(c for _, c in niches)})")

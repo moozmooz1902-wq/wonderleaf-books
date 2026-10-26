@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { B, money, deliveryLine } from '../lib/shop';
+import { edge, TTL_STATIC } from '../lib/cache';
 const d = B.fulfilment.delivery[0];
 
 const qs = [
@@ -29,6 +30,7 @@ const qs = [
   ['Who pays if it arrives damaged?',
    'We do. Send a photograph and we remake and resend at our cost. You do not need to post the damaged one back.'],
 ];
+edge(Astro.response, TTL_STATIC);
 ---
 
 <Base

@@ -3,6 +3,7 @@ import Base from '../../../layouts/Base.astro';
 import Grid from '../../../components/Grid.astro';
 import { TAX, sectionTitle } from '../../../lib/shop';
 import { getDb, bySection, nicheCounts } from '../../../lib/db';
+import { edge, TTL_CATALOGUE } from '../../../lib/cache';
 
 const { section } = Astro.params;
 const sec = TAX.sections.find((s) => s.slug === section);
@@ -14,6 +15,7 @@ const { results: counts } = await nicheCounts(db);
 const niches = counts.filter((c) => c.section === section);
 const { results: items } = await bySection(db, section!, 24);
 const total = niches.reduce((a, n) => a + n.n, 0);
+edge(Astro.response, TTL_CATALOGUE);
 ---
 
 <Base

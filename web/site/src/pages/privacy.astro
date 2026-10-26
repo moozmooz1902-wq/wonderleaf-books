@@ -7,7 +7,9 @@
 // this shop does not run.
 import Base from '../layouts/Base.astro';
 import { B } from '../lib/shop';
+import { edge, TTL_STATIC } from '../lib/cache';
 const addr = (B.registered_address ?? []).join(', ');
+edge(Astro.response, TTL_STATIC);
 ---
 
 <Base

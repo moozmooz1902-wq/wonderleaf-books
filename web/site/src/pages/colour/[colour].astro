@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Grid from '../../components/Grid.astro';
 import { TAX } from '../../lib/shop';
 import { getDb, byColour, countWhere } from '../../lib/db';
+import { edge, TTL_CATALOGUE } from '../../lib/cache';
 
 const { colour } = Astro.params;
 const c = TAX.colours.find((x) => x.slug === colour);
@@ -15,6 +16,7 @@ const per = 48;
 const { results: items } = await byColour(db, colour!, per, (page - 1) * per);
 const total = await countWhere(db, 'colour', colour!);
 const pages = Math.ceil(total / per);
+edge(Astro.response, TTL_CATALOGUE);
 ---
 
 <Base

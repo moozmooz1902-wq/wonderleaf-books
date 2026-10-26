@@ -17,12 +17,16 @@ import Base from '../../layouts/Base.astro';
 import Grid from '../../components/Grid.astro';
 import { B, money, img, abs } from '../../lib/shop';
 import { getDb, product, variantOf, alsoIn } from '../../lib/db';
+import { edge, TTL_CATALOGUE } from '../../lib/cache';
 
 const { slug } = Astro.params;
 const db = getDb(Astro.locals);
 const p = await product(db, slug!);
 if (!p)
   return Astro.rewrite('/404');
+// Set only once the product is known to exist. The cache key includes
+// ?frame= and ?size=, so each variant URL caches as its own price.
+edge(Astro.response, TTL_CATALOGUE);
 
 const frame = Astro.url.searchParams.get('frame');
 const size = Astro.url.searchParams.get('size');

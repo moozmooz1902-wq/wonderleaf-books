@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Grid from '../../components/Grid.astro';
 import { TAX } from '../../lib/shop';
 import { getDb, byStyle, countWhere } from '../../lib/db';
+import { edge, TTL_CATALOGUE } from '../../lib/cache';
 
 const { style } = Astro.params;
 const s = TAX.styles.find((x) => x.slug === style);
@@ -15,6 +16,7 @@ const per = 48;
 const { results: items } = await byStyle(db, style!, per, (page - 1) * per);
 const total = await countWhere(db, 'style', style!);
 const pages = Math.ceil(total / per);
+edge(Astro.response, TTL_CATALOGUE);
 ---
 
 <Base

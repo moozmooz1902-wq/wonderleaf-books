@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Grid from '../components/Grid.astro';
 import { B, TAX, money, img } from '../lib/shop';
 import { getDb, nicheCounts, byStyle, bySection, byNiche } from '../lib/db';
+import { edge, TTL_CATALOGUE } from '../lib/cache';
 
 const db = getDb(Astro.locals);
 const { results: counts } = await nicheCounts(db);
@@ -25,6 +26,7 @@ const bySec = TAX.sections.map((s) => ({
   total: counts.filter((c) => c.section === s.slug).reduce((a, c) => a + c.n, 0),
 }));
 const total = counts.reduce((a, c) => a + c.n, 0);
+edge(Astro.response, TTL_CATALOGUE);
 ---
 
 <Base

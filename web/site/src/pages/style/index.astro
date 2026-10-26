@@ -2,12 +2,14 @@
 import Base from '../../layouts/Base.astro';
 import { TAX } from '../../lib/shop';
 import { getDb } from '../../lib/db';
+import { edge, TTL_CATALOGUE } from '../../lib/cache';
 
 const db = getDb(Astro.locals);
 const { results } = await db
   .prepare('SELECT style, style_title, COUNT(*) n FROM products GROUP BY style ORDER BY n DESC')
   .all<{ style: string; style_title: string; n: number }>();
 const blurb = (slug: string) => TAX.styles.find((s) => s.slug === slug)?.blurb ?? '';
+edge(Astro.response, TTL_CATALOGUE);
 ---
 
 <Base

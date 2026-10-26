@@ -130,10 +130,30 @@ export const byRoom = (db: DB, room: string, limit = 60, offset = 0) =>
     .bind(room, limit, offset)
     .all<Card>();
 
+/**
+ * Facet counts come from the precomputed `facet_counts` table, never from a
+ * COUNT(*) over `products`. The live version read every row in the table on
+ * every page view - fine at 240 products, a full scan per request at a
+ * million, and D1 bills rows read. The table is written by build_db.py and
+ * has one row per facet value, so it does not grow with the catalogue.
+ *
+ * It also removes the interpolated column name the old version had, which
+ * was safe only because every caller was internal.
+ */
+const FACET: Record<string, string> = {
+  niche: 'niche',
+  section: 'section',
+  style: 'style',
+  colour: 'colour',
+  room: 'room',
+};
+
 export const countWhere = async (db: DB, col: string, val: string) => {
+  const kind = FACET[col];
+  if (!kind) throw new Error(`countWhere: no facet for column "${col}"`);
   const r = await db
-    .prepare(`SELECT COUNT(*) n FROM products WHERE ${col} = ?`)
-    .bind(val)
+    .prepare('SELECT n FROM facet_counts WHERE kind = ? AND key = ?')
+    .bind(kind, val)
     .first<{ n: number }>();
   return r?.n ?? 0;
 };
@@ -151,8 +171,9 @@ export const alsoIn = (db: DB, n: string, notSlug: string, limit = 8) =>
 export const nicheCounts = (db: DB) =>
   db
     .prepare(
-      'SELECT niche, niche_title, section, section_title, COUNT(*) n ' +
-        'FROM products GROUP BY niche ORDER BY section, niche_title'
+      'SELECT key AS niche, title AS niche_title, parent AS section, ' +
+        'parent_title AS section_title, n FROM facet_counts ' +
+        "WHERE kind = 'niche' ORDER BY parent, title"
     )
     .all<{
       niche: string;

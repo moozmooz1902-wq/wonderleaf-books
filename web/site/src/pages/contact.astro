@@ -9,8 +9,10 @@
 // telephone number are all here, in crawlable text.
 import Base from '../layouts/Base.astro';
 import { B } from '../lib/shop';
+import { edge, TTL_STATIC } from '../lib/cache';
 const addr = B.registered_address ?? [];
 const trading = B.trading_address_same ? addr : (B.trading_address ?? addr);
+edge(Astro.response, TTL_STATIC);
 ---
 
 <Base

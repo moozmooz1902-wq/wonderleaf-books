@@ -1,8 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
 import { B, money, deliveryLine } from '../lib/shop';
+import { noStore } from '../lib/cache';
 
 const d = B.fulfilment.delivery[0];
+noStore(Astro.response);
 ---
 
 <Base

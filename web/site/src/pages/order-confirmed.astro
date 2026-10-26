@@ -4,8 +4,10 @@
 // payment, and this page only says what it can honestly say.
 import Base from '../layouts/Base.astro';
 import { B } from '../lib/shop';
+import { noStore } from '../lib/cache';
 const d = B.fulfilment.delivery[0];
 const session = Astro.url.searchParams.get('session');
+noStore(Astro.response);
 ---
 
 <Base title="Thank you - your order is in" description="Your order has been received." noindex={true}>

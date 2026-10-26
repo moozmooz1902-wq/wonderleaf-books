@@ -149,8 +149,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 };
 
+// no-store, belt and braces. The middleware already refuses to cache
+// anything under /api, but this response carries a Stripe Checkout URL
+// bound to one basket and one customer: serving a stored copy to the next
+// visitor would put them into somebody else's payment session.
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
     status,
-    headers: { 'content-type': 'application/json' },
+    headers: {
+      'content-type': 'application/json',
+      'cache-control': 'no-store',
+    },
   });

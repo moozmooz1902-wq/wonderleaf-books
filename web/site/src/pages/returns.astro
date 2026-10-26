@@ -14,7 +14,9 @@
 // generous enough to honour without argument is cheaper than an appeal.
 import Base from '../layouts/Base.astro';
 import { B, money } from '../lib/shop';
+import { edge, TTL_STATIC } from '../lib/cache';
 const customerPays = B.returns.who_pays_return_postage === 'customer';
+edge(Astro.response, TTL_STATIC);
 ---
 
 <Base

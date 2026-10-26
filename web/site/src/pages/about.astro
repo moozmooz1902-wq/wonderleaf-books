@@ -10,6 +10,8 @@
 // accurate" is the rule being avoided.
 import Base from '../layouts/Base.astro';
 import { B } from '../lib/shop';
+import { edge, TTL_STATIC } from '../lib/cache';
+edge(Astro.response, TTL_STATIC);
 ---
 
 <Base

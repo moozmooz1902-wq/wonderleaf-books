@@ -1,8 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
 import { B, money } from '../lib/shop';
+import { edge, TTL_STATIC } from '../lib/cache';
 const d = B.fulfilment.delivery[0];
 const addr = (B.registered_address ?? []).join(', ');
+edge(Astro.response, TTL_STATIC);
 ---
 
 <Base
