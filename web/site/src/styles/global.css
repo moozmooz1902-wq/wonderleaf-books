@@ -37,6 +37,12 @@
   --accent: #121212;
   --accent-ink: #000000;
   --ok: #1f6b3a;
+  /* The exact flat cream every mockup is photographed on, rgb(237,234,227).
+   * Used ONLY as the background of the large image panels, so the
+   * photograph's own ground and the panel become one surface and the frame
+   * appears to hang on a wall. Anywhere else it would just make the shop
+   * beige. This is the cream theme's one good trick, kept and confined. */
+  --plate-wall: #edeae3;
   --serif: ui-serif, 'Iowan Old Style', 'Palatino Linotype', Palatino,
     Georgia, 'Times New Roman', serif;
   --sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
@@ -55,6 +61,7 @@
     --rule: #2e2e2e;
     --accent: #f5f5f3;
     --accent-ink: #ffffff;
+    --plate-wall: #17171a;
   }
 }
 :root[data-theme='dark'] {
@@ -67,6 +74,7 @@
   --rule: #2e2e2e;
   --accent: #f5f5f3;
   --accent-ink: #ffffff;
+  --plate-wall: #17171a;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -131,51 +139,122 @@ img { max-width: 100%; height: auto; display: block; }
   background: var(--paper-2);
 }
 
-/* ---------- the banner ----------
+/* ---------- the hero and the feature blocks ----------
  *
- * What makes this read as expensive is restraint, not decoration: a lot of
- * air, one accent, hairline rules, and type that is allowed to be large.
- * There is no gradient, no shadow stack and no animation on load - those
- * are the things that make a shop look like a template.
+ * The shape is taken from Moooi, at the seller's request: a flat colour
+ * field carrying the type, a full-bleed image panel beside it, type allowed
+ * to be very large and very light, a small letter-spaced eyebrow above it,
+ * and an underlined text link instead of a button. What makes it read as
+ * expensive is the restraint and the air, not decoration - no gradient, no
+ * shadow stack, no animation on load.
  *
- * The three plates overlap slightly and sit at different heights, which is
- * how a gallery hangs a group. Equal, evenly spaced boxes read as a
- * product grid; this reads as a wall.
+ * ONE DELIBERATE DEPARTURE. Moooi's image half is interior photography that
+ * can be cropped to any shape. Ours is a square photograph of a framed
+ * print, and cropping it cuts the frame off - which looks like a mistake
+ * rather than a crop. So the image half is a full-bleed tone panel with the
+ * print hung large inside it, `contain` not `cover`. Same drama, and it
+ * reads as a wall, which is what the shop sells.
  */
-.banner {
-  border-bottom: 1px solid var(--rule);
-  padding: clamp(40px, 6vw, 86px) 0 clamp(36px, 5vw, 72px);
-  overflow: hidden;
-}
-.banner-grid {
+.hero {
   display: grid;
-  gap: clamp(32px, 5vw, 64px);
-  align-items: center;
+  grid-template-columns: 1fr;
+  border-bottom: 1px solid var(--rule);
 }
 @media (min-width: 900px) {
-  .banner-grid { grid-template-columns: 1fr 1.02fr; }
+  .hero { grid-template-columns: 1fr 1fr; min-height: min(78vh, 760px); }
 }
-.banner-copy h1 {
-  font-size: clamp(2.1rem, 1.3rem + 3.4vw, 3.9rem);
-  line-height: 1.04;
-  letter-spacing: -0.022em;
-  margin: 0 0 0.42em;
+.hero-copy {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(44px, 7vw, 104px) clamp(20px, 5vw, 76px);
+  padding-left: max(clamp(20px, 5vw, 76px), env(safe-area-inset-left, 0px));
 }
-.banner-copy .lede {
-  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.12rem);
-  color: var(--ink-2);
-  max-width: 46ch;
-  margin: 0 0 30px;
+.eyebrow {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.22em;
+  color: var(--ink-3); margin: 0 0 clamp(16px, 2vw, 26px);
 }
-.banner-cta {
-  display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 30px;
+.hero-copy h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 1.1rem + 5.4vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  margin: 0 0 clamp(18px, 2.4vw, 30px);
+  text-wrap: balance;
 }
+.hero-copy .lede {
+  font-size: clamp(0.98rem, 0.94rem + 0.25vw, 1.08rem);
+  color: var(--ink-2); max-width: 44ch; margin: 0 0 clamp(26px, 3vw, 40px);
+}
+/* Moooi's call to action is an underlined word, not a button. It is the
+ * single most recognisable thing about the page and it costs nothing. */
+.link-lux {
+  align-self: start;
+  font-size: 0.95rem; color: var(--ink); text-decoration: none;
+  border-bottom: 1px solid var(--ink); padding-bottom: 3px;
+  transition: opacity 180ms ease;
+}
+.link-lux:hover { opacity: 0.55; }
+.hero-meta {
+  display: flex; flex-wrap: wrap; gap: 10px 24px;
+  margin-top: clamp(30px, 4vw, 52px); padding-top: 18px;
+  border-top: 1px solid var(--rule);
+  font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+.hero-art {
+  background: var(--plate-wall);
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(34px, 5vw, 74px);
+  min-height: 56vw;
+}
+@media (min-width: 900px) { .hero-art { min-height: 0; } }
+.hero-art img {
+  width: 100%; height: 100%; max-height: 600px;
+  object-fit: contain; display: block;
+}
+
+/* The same device, repeated down the page, sides alternating. */
+.feature {
+  display: grid; grid-template-columns: 1fr;
+  border-bottom: 1px solid var(--rule);
+}
+@media (min-width: 900px) {
+  .feature { grid-template-columns: 1fr 1fr; min-height: min(62vh, 620px); }
+  .feature.flip .feature-art { order: -1; }
+}
+.feature-copy {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(40px, 6vw, 86px) clamp(20px, 5vw, 76px);
+}
+.feature-copy h2 {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(1.9rem, 1.1rem + 2.6vw, 3.1rem);
+  line-height: 1.02; letter-spacing: -0.025em;
+  margin: 0 0 clamp(14px, 1.8vw, 22px); text-wrap: balance;
+}
+.feature-copy p {
+  font-size: 0.98rem; color: var(--ink-2); max-width: 46ch;
+  margin: 0 0 clamp(22px, 2.6vw, 32px);
+}
+.feature-art {
+  background: var(--plate-wall);
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(30px, 4.4vw, 64px);
+  min-height: 52vw;
+}
+@media (min-width: 900px) { .feature-art { min-height: 0; } }
+.feature-art img {
+  width: 100%; height: 100%; max-height: 500px;
+  object-fit: contain; display: block;
+}
+
 .btn-lux {
   display: inline-flex; align-items: center; justify-content: center;
-  padding: 14px 26px;
+  align-self: start;
+  padding: 15px 30px;
   background: var(--ink); color: var(--paper);
-  text-decoration: none; font-size: 0.92rem;
-  letter-spacing: 0.05em; text-transform: uppercase;
+  text-decoration: none; font-size: 0.82rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
   border: 1px solid var(--ink);
   transition: background 200ms ease, color 200ms ease;
 }
@@ -185,43 +264,6 @@ img { max-width: 100%; height: auto; display: block; }
   border-color: color-mix(in srgb, var(--ink) 28%, transparent);
 }
 .btn-lux.ghost:hover { border-color: var(--ink); }
-.banner-meta {
-  display: flex; flex-wrap: wrap; gap: 10px 22px;
-  padding-top: 20px; border-top: 1px solid var(--rule);
-  font-size: 0.76rem; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--ink-3);
-}
-
-.banner-art {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  align-items: end;
-  gap: clamp(8px, 1.6vw, 18px);
-}
-/* No border and no background on purpose. The mockups are already
- * photographed on flat cream - the same value as the page - so a box
- * around them reads as a second empty frame drawn around the real one.
- * Letting them sit directly on the page is what makes the group look hung
- * rather than tiled. `contain` rather than `cover` because cropping a
- * photograph of a frame cuts the frame off. */
-.banner-plate {
-  margin: 0;
-  background: transparent;
-  border: 0;
-}
-.banner-plate img {
-  width: 100%; height: 100%;
-  object-fit: contain; display: block;
-}
-/* staggered heights - a hang, not a grid */
-.plate-1 { aspect-ratio: 3 / 4; transform: translateY(-14px); }
-.plate-2 { aspect-ratio: 3 / 4.4; }
-.plate-3 { aspect-ratio: 3 / 3.7; transform: translateY(10px); }
-@media (max-width: 560px) {
-  .plate-1, .plate-3 { transform: none; }
-  .banner-art { gap: 8px; }
-}
 
 /* ---------- assurance strip ---------- */
 .assurance {

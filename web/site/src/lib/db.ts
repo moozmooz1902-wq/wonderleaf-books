@@ -194,3 +194,27 @@ export const variantById = (db: DB, id: string) =>
     )
     .bind(id)
     .first<Variant & { product_title: string; product_slug: string }>();
+
+/**
+ * Products in a niche restricted to particular palettes.
+ *
+ * The home page shows three designs at a size where the whole page turns on
+ * them, and a charcoal drawing on a white wall at that scale reads as an
+ * empty rectangle. This lets the page ask for the colourful end of a niche
+ * and fall back to whatever that niche has if it holds none - which keeps
+ * the home page working whatever the catalogue is rebuilt to contain.
+ */
+export const byNicheColour = (
+  db: DB,
+  niche: string,
+  colours: string[],
+  limit = 1
+) =>
+  db
+    .prepare(
+      `${LIST} WHERE p.niche = ? AND p.colour IN (` +
+        colours.map(() => '?').join(',') +
+        ') ORDER BY p.rank LIMIT ?'
+    )
+    .bind(niche, ...colours, limit)
+    .all<Card>();

@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Grid from '../components/Grid.astro';
 import { B, TAX, money, img } from '../lib/shop';
-import { getDb, nicheCounts, byStyle, bySection, byNiche } from '../lib/db';
+import { getDb, nicheCounts, byStyle, bySection, byNiche, byNicheColour } from '../lib/db';
 import { edge, TTL_CATALOGUE } from '../lib/cache';
 
 const db = getDb(Astro.locals);
@@ -12,13 +12,24 @@ const { results: counts } = await nicheCounts(db);
 // z=+5.9, the strongest single signal in the project.
 const { results: lead } = await byStyle(db, 'charcoal-drawings', 12);
 const { results: coast } = await bySection(db, 'landscapes', 8);
-// The banner's three plates. Drawn from the catalogue so the first thing a
-// visitor sees is buyable, and pulled from three different niches so the
-// trio does not read as three versions of one picture.
-const { results: heroA } = await byNiche(db, 'british-coast', 1);
-const { results: heroB } = await byNiche(db, 'the-moon', 1);
-const { results: heroC } = await byNiche(db, 'british-birds', 1);
-const hero = [...heroA, ...heroB, ...heroC];
+// THE LARGE IMAGES, DRAWN FROM THE CATALOGUE.
+//
+// Each one is a real product the visitor can buy, not marketing imagery -
+// so there is no second set of photographs to keep in step with the range,
+// and nothing on the home page can advertise something that is not for
+// sale. Picked from three different sections so the page does not read as
+// three versions of one picture, and from the colourful end of the range
+// because these are shown very large and the charcoals disappear at that
+// size against a white page.
+const big = async (niche: string) => {
+  const { results } = await byNicheColour(db, niche, ['colourful', 'bold-colour'], 1);
+  if (results?.length) return results[0];
+  const { results: any } = await byNiche(db, niche, 1);
+  return any[0];
+};
+const heroArt = await big('british-coast');
+const featA = await big('the-moon');
+const featB = await big('british-wildlife');
 
 const bySec = TAX.sections.map((s) => ({
   ...s,
@@ -33,49 +44,63 @@ edge(Astro.response, TTL_CATALOGUE);
   title={`${B.brand} - Framed Wall Art Prints, Made in the UK`}
   description={`Framed art prints in ${total} designs across ${counts.length} ranges - British coast, wildlife, botanical, night sky. Printed and framed to order in the United Kingdom.`}
 >
-  {/* THE BANNER. Two columns on a desktop, stacked on a phone, with the
-      hero image taken straight from the catalogue rather than a stock
-      photograph - so what a visitor sees first is a thing they can
-      actually buy, and there is no second set of marketing imagery to keep
-      in step with the products. */}
-  <section class="banner">
-    <div class="wrap banner-grid">
-      <div class="banner-copy">
-        <p class="kicker">Printed &amp; framed in Britain</p>
-        <h1>Quiet art<br />for considered walls</h1>
-        <p class="lede">
-          {total} designs across {counts.length} collections — the
-          British coast, wildlife and birds, botanical studies and the night
-          sky. Each one printed on heavyweight art paper and framed by hand
-          after you order it.
-        </p>
-        <div class="banner-cta">
-          <a class="btn-lux" href="/style/charcoal-drawings">Explore the charcoal collection</a>
-          <a class="btn-lux ghost" href="/c/landscapes">Browse landscapes</a>
-        </div>
-        <div class="banner-meta">
-          <span>Free UK delivery</span>
-          <span>{B.returns.window_days}-day returns</span>
-          <span>A4 · A3 · A2</span>
-        </div>
-      </div>
-
-      <div class="banner-art" aria-hidden="true">
-        {hero.slice(0, 3).map((p, i) => (
-          <figure class={`banner-plate plate-${i + 1}`}>
-            <img
-              src={img(p.image_path)}
-              alt=""
-              width="900"
-              height="900"
-              loading={i === 0 ? 'eager' : 'lazy'}
-              fetchpriority={i === 0 ? 'high' : 'auto'}
-              decoding="async"
-            />
-          </figure>
-        ))}
+  {/* THE HERO. A flat field of type beside a full-bleed panel with one
+      print hung large in it. The print is a real product; clicking either
+      half goes to it. */}
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Printed &amp; framed in Britain</p>
+      <h1>Quiet art for considered walls</h1>
+      <p class="lede">
+        {total} designs across {counts.length} collections — the British
+        coast, wildlife and birds, botanical studies and the night sky. Each
+        one printed on heavyweight art paper and framed by hand after you
+        order it.
+      </p>
+      <a class="link-lux" href="/c/landscapes">Discover the collections</a>
+      <div class="hero-meta">
+        <span>Free UK delivery</span>
+        <span>{B.returns.window_days}-day returns</span>
+        <span>A4 · A3 · A2</span>
       </div>
     </div>
+    <a class="hero-art" href={`/art/${heroArt.slug}`} aria-label={heroArt.title}>
+      <img src={img(heroArt.image_path)} alt={heroArt.title} width="1000"
+           height="1000" fetchpriority="high" decoding="async" />
+    </a>
+  </section>
+
+  <section class="feature">
+    <div class="feature-copy">
+      <p class="eyebrow">The night sky</p>
+      <h2>{featA.subject}</h2>
+      <p>
+        Moons, constellations and the small hours, drawn rather than
+        photographed. The quietest range we make and the one people hang in
+        bedrooms.
+      </p>
+      <a class="btn-lux" href="/c/night-sky">Shop the night sky</a>
+    </div>
+    <a class="feature-art" href={`/art/${featA.slug}`} aria-label={featA.title}>
+      <img src={img(featA.image_path)} alt={featA.title} width="900"
+           height="900" loading="lazy" decoding="async" />
+    </a>
+  </section>
+
+  <section class="feature flip">
+    <div class="feature-copy">
+      <p class="eyebrow">Animals &amp; wildlife</p>
+      <h2>{featB.subject}</h2>
+      <p>
+        British birds, mammals and breed studies. Generic breed names only —
+        no named animals and no mascots.
+      </p>
+      <a class="btn-lux" href="/c/animals">Shop animals &amp; wildlife</a>
+    </div>
+    <a class="feature-art" href={`/art/${featB.slug}`} aria-label={featB.title}>
+      <img src={img(featB.image_path)} alt={featB.title} width="900"
+           height="900" loading="lazy" decoding="async" />
+    </a>
   </section>
 
   {/* The reassurance strip. Every line is a fact stated elsewhere on the
