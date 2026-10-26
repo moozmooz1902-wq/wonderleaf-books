@@ -1,5 +1,9 @@
 # Where the work lives
 
+**What is waiting on the seller is in `SELLER_TODO.md`.** Read it before
+asking them anything: four of the items there have been open for days and
+re-asking is how a list gets ignored.
+
 One chat per product line was getting confusing, so this is the map. Read
 it first in any new session.
 
