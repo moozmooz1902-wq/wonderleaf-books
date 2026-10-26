@@ -17,7 +17,7 @@ enabled = true
 [[d1_databases]]
 binding = "DB"
 database_name = "wallart"
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "e1e39887-2c7d-4066-9dc1-15f598af5b6e"
 
 # THE FOUR PICTURE BUCKETS, BOUND DIRECTLY.
 #
