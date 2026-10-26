@@ -1,0 +1,77 @@
+---
+// The Walryvo mark and wordmark.
+//
+// INLINE SVG, NOT AN IMAGE FILE. Three reasons, and the last is the one
+// that matters commercially: it needs no extra request so the header paints
+// in the first round trip; it inherits currentColor so it works on the
+// cream page and in dark mode without a second asset; and it stays sharp on
+// a phone, a 5K monitor and a printed invoice alike.
+//
+// The mark is a portrait frame containing a horizon and a moon - the two
+// things the range is actually built on (British landscapes and the night
+// sky) reduced until they still read at 16px as a favicon. It is drawn on a
+// 24x24 grid so every stroke lands on a whole pixel at common sizes.
+interface Props {
+  size?: number;
+  wordmark?: boolean;
+  class?: string;
+}
+const { size = 30, wordmark = true, class: cls = '' } = Astro.props;
+---
+
+<span class={`logo-lockup ${cls}`}>
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden="true"
+    focusable="false"
+    class="logo-mark"
+  >
+    <!-- the frame -->
+    <rect
+      x="4.25" y="2.25" width="15.5" height="19.5" rx="0.75"
+      stroke="currentColor" stroke-width="1.3"
+    />
+    <!-- the mount line -->
+    <rect
+      x="7" y="5" width="10" height="14" rx="0.4"
+      stroke="currentColor" stroke-width="0.7" opacity="0.4"
+    />
+    <!-- the moon -->
+    <circle cx="14.4" cy="9.1" r="2.05" fill="var(--accent)" />
+    <!-- the horizon -->
+    <path
+      d="M7 15.4c1.9 0 2.5-2.1 4.3-2.1s2.2 1.5 3.4 1.5c1 0 1.4-.6 2.3-.6"
+      stroke="currentColor" stroke-width="1.15"
+      stroke-linecap="round" stroke-linejoin="round"
+    />
+  </svg>
+  {wordmark && <span class="logo-word">Walryvo</span>}
+</span>
+
+<style>
+  .logo-lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+    color: var(--ink);
+    text-decoration: none;
+    line-height: 1;
+  }
+  .logo-mark {
+    flex: none;
+    display: block;
+  }
+  .logo-word {
+    font-family: var(--serif);
+    font-size: 1.32rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    font-weight: 400;
+    /* Optical correction: letter-spacing adds a trailing gap after the
+       last letter, which makes a centred lockup sit left of centre. */
+    margin-right: -0.11em;
+  }
+</style>

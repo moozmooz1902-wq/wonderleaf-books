@@ -104,10 +104,10 @@ img { max-width: 100%; height: auto; display: block; }
   min-height: 62px; flex-wrap: wrap;
 }
 .logo {
-  font-family: var(--serif); font-size: 1.3rem; letter-spacing: 0.01em;
   text-decoration: none; margin-right: auto; white-space: nowrap;
+  display: inline-flex; align-items: center;
 }
-.logo span { color: var(--accent); }
+.foot-logo { display: inline-flex; margin-bottom: 18px; }
 .nav { display: flex; gap: 16px; flex-wrap: wrap; }
 .nav a {
   font-size: 0.86rem; text-transform: uppercase; letter-spacing: 0.07em;
@@ -121,7 +121,118 @@ img { max-width: 100%; height: auto; display: block; }
   background: var(--paper-2);
 }
 
-/* ---------- hero ---------- */
+/* ---------- the banner ----------
+ *
+ * What makes this read as expensive is restraint, not decoration: a lot of
+ * air, one accent, hairline rules, and type that is allowed to be large.
+ * There is no gradient, no shadow stack and no animation on load - those
+ * are the things that make a shop look like a template.
+ *
+ * The three plates overlap slightly and sit at different heights, which is
+ * how a gallery hangs a group. Equal, evenly spaced boxes read as a
+ * product grid; this reads as a wall.
+ */
+.banner {
+  border-bottom: 1px solid var(--rule);
+  padding: clamp(40px, 6vw, 86px) 0 clamp(36px, 5vw, 72px);
+  overflow: hidden;
+}
+.banner-grid {
+  display: grid;
+  gap: clamp(32px, 5vw, 64px);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .banner-grid { grid-template-columns: 1fr 1.02fr; }
+}
+.banner-copy h1 {
+  font-size: clamp(2.1rem, 1.3rem + 3.4vw, 3.9rem);
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+  margin: 0 0 0.42em;
+}
+.banner-copy .lede {
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.12rem);
+  color: var(--ink-2);
+  max-width: 46ch;
+  margin: 0 0 30px;
+}
+.banner-cta {
+  display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 30px;
+}
+.btn-lux {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 14px 26px;
+  background: var(--ink); color: var(--paper);
+  text-decoration: none; font-size: 0.92rem;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  border: 1px solid var(--ink);
+  transition: background 200ms ease, color 200ms ease;
+}
+.btn-lux:hover { background: transparent; color: var(--ink); }
+.btn-lux.ghost {
+  background: transparent; color: var(--ink);
+  border-color: color-mix(in srgb, var(--ink) 28%, transparent);
+}
+.btn-lux.ghost:hover { border-color: var(--ink); }
+.banner-meta {
+  display: flex; flex-wrap: wrap; gap: 10px 22px;
+  padding-top: 20px; border-top: 1px solid var(--rule);
+  font-size: 0.76rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.banner-art {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: end;
+  gap: clamp(8px, 1.6vw, 18px);
+}
+/* No border and no background on purpose. The mockups are already
+ * photographed on flat cream - the same value as the page - so a box
+ * around them reads as a second empty frame drawn around the real one.
+ * Letting them sit directly on the page is what makes the group look hung
+ * rather than tiled. `contain` rather than `cover` because cropping a
+ * photograph of a frame cuts the frame off. */
+.banner-plate {
+  margin: 0;
+  background: transparent;
+  border: 0;
+}
+.banner-plate img {
+  width: 100%; height: 100%;
+  object-fit: contain; display: block;
+}
+/* staggered heights - a hang, not a grid */
+.plate-1 { aspect-ratio: 3 / 4; transform: translateY(-14px); }
+.plate-2 { aspect-ratio: 3 / 4.4; }
+.plate-3 { aspect-ratio: 3 / 3.7; transform: translateY(10px); }
+@media (max-width: 560px) {
+  .plate-1, .plate-3 { transform: none; }
+  .banner-art { gap: 8px; }
+}
+
+/* ---------- assurance strip ---------- */
+.assurance {
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper-2);
+}
+.assurance-grid {
+  display: grid; gap: 1px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  padding-top: 0; padding-bottom: 0;
+}
+.assurance-grid > div {
+  padding: 20px 4px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.assurance-grid strong {
+  font-family: var(--serif); font-size: 1rem; font-weight: 500;
+}
+.assurance-grid span { font-size: 0.83rem; color: var(--ink-3); }
+
+/* ---------- hero (inner pages) ---------- */
 .hero { padding: 54px 0 34px; border-bottom: 1px solid var(--rule); }
 .hero p.lede {
   font-size: 1.07rem; color: var(--ink-2); max-width: 62ch; margin: 0 0 20px;

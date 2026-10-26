@@ -173,6 +173,51 @@ Verifying both would give Google two sites claiming the same products.
 
 ---
 
+## Step 4a — Moving the nameservers WITHOUT breaking your email
+
+As of 26 Oct, `walryvo.com` is on **GoDaddy** nameservers
+(`ns15/ns16.domaincontrol.com`) and the mailbox runs on **Microsoft 365**
+through GoDaddy. The mailbox is live and tested.
+
+**Switching nameservers to Cloudflare deletes none of your records at
+GoDaddy, but Cloudflare starts answering for the domain with only the
+records it has imported.** Anything its scan misses stops existing the
+moment the switch propagates — and the things most often missed are the
+mail records. Your email would stop, silently, and `sales@walryvo.com` is
+the contact address on every page of the shop and in Merchant Center.
+
+So: after adding the domain to Cloudflare, **check the imported list
+against this** before changing the nameservers at GoDaddy. Captured live
+from DNS on 26 Oct:
+
+| Type | Name | Value |
+|---|---|---|
+| MX (pri 0) | `walryvo.com` | `walryvo-com.mail.protection.outlook.com` |
+| TXT | `walryvo.com` | `v=spf1 include:secureserver.net -all` |
+| TXT | `walryvo.com` | `NETORGFT21256617.onmicrosoft.com` |
+| CNAME | `autodiscover` | `autodiscover.outlook.com` |
+| CNAME | `selector1._domainkey` | `selector1-walryvo-com._domainkey.netorgft21256617.r-v1.dkim.mail.microsoft` |
+| CNAME | `selector2._domainkey` | `selector2-walryvo-com._domainkey.netorgft21256617.r-v1.dkim.mail.microsoft` |
+| TXT | `_dmarc` | `v=DMARC1; p=quarantine; adkim=r; aspf=r; rua=mailto:dmarc_rua@onsecureserver.net;` |
+| SRV | `_sip._tls` | `100 1 443 sipdir.online.lync.com` |
+
+The two `A` records (`15.197.148.33`, `3.33.130.190`) and the `www` CNAME
+are the registrar's parking page — **delete those**; the Worker's custom
+domain replaces them.
+
+Set every mail record to **DNS only** (grey cloud), not proxied. Proxying
+an MX record breaks mail delivery.
+
+The SPF chain was verified on 26 Oct: `secureserver.net` resolves through
+to `spf.protection.outlook.com`, so Microsoft 365 outbound is authorised.
+Do not "tidy" that SPF record — it looks wrong and is right.
+
+**After the switch, send a test email to `sales@walryvo.com` from an
+outside address again.** It took one minute to confirm the first time and
+it is the difference between a working shop and false contact details.
+
+---
+
 ## Step 4 — Put the site up
 
 In `web/site`:

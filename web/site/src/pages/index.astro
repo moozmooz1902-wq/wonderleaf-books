@@ -1,8 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import Grid from '../components/Grid.astro';
-import { B, TAX, money } from '../lib/shop';
-import { getDb, nicheCounts, byStyle, bySection } from '../lib/db';
+import { B, TAX, money, img } from '../lib/shop';
+import { getDb, nicheCounts, byStyle, bySection, byNiche } from '../lib/db';
 
 const db = getDb(Astro.locals);
 const { results: counts } = await nicheCounts(db);
@@ -11,6 +11,13 @@ const { results: counts } = await nicheCounts(db);
 // z=+5.9, the strongest single signal in the project.
 const { results: lead } = await byStyle(db, 'charcoal-drawings', 12);
 const { results: coast } = await bySection(db, 'landscapes', 8);
+// The banner's three plates. Drawn from the catalogue so the first thing a
+// visitor sees is buyable, and pulled from three different niches so the
+// trio does not read as three versions of one picture.
+const { results: heroA } = await byNiche(db, 'british-coast', 1);
+const { results: heroB } = await byNiche(db, 'the-moon', 1);
+const { results: heroC } = await byNiche(db, 'british-birds', 1);
+const hero = [...heroA, ...heroB, ...heroC];
 
 const bySec = TAX.sections.map((s) => ({
   ...s,
@@ -24,22 +31,61 @@ const total = counts.reduce((a, c) => a + c.n, 0);
   title={`${B.brand} - Framed Wall Art Prints, Made in the UK`}
   description={`Framed art prints in ${total} designs across ${counts.length} ranges - British coast, wildlife, botanical, night sky. Printed and framed to order in the United Kingdom.`}
 >
-  <section class="hero">
-    <div class="wrap">
-      <p class="kicker">Printed and framed in the United Kingdom</p>
-      <h1>Framed art prints, made one at a time</h1>
-      <p class="lede">
-        {total} designs across {counts.length} ranges — the British coast,
-        wildlife and birds, botanical studies, the night sky. Choose a black,
-        white or oak frame in A4, A3 or A2. We print and frame your order
-        after you place it, so nothing sits in a warehouse.
-      </p>
-      <div class="chips">
-        <a class="chip" href="/style/charcoal-drawings"><b>Charcoal drawings</b></a>
-        <a class="chip" href="/c/landscapes/british-coast"><b>British coast</b></a>
-        <a class="chip" href="/c/night-sky/the-moon"><b>The moon</b></a>
-        <a class="chip" href="/colour/black-and-white"><b>Black &amp; white</b></a>
+  {/* THE BANNER. Two columns on a desktop, stacked on a phone, with the
+      hero image taken straight from the catalogue rather than a stock
+      photograph - so what a visitor sees first is a thing they can
+      actually buy, and there is no second set of marketing imagery to keep
+      in step with the products. */}
+  <section class="banner">
+    <div class="wrap banner-grid">
+      <div class="banner-copy">
+        <p class="kicker">Printed &amp; framed in Britain</p>
+        <h1>Quiet art<br />for considered walls</h1>
+        <p class="lede">
+          {total} designs across {counts.length} collections — the
+          British coast, wildlife and birds, botanical studies and the night
+          sky. Each one printed on heavyweight art paper and framed by hand
+          after you order it.
+        </p>
+        <div class="banner-cta">
+          <a class="btn-lux" href="/style/charcoal-drawings">Explore the charcoal collection</a>
+          <a class="btn-lux ghost" href="/c/landscapes">Browse landscapes</a>
+        </div>
+        <div class="banner-meta">
+          <span>Free UK delivery</span>
+          <span>{B.returns.window_days}-day returns</span>
+          <span>A4 · A3 · A2</span>
+        </div>
       </div>
+
+      <div class="banner-art" aria-hidden="true">
+        {hero.slice(0, 3).map((p, i) => (
+          <figure class={`banner-plate plate-${i + 1}`}>
+            <img
+              src={img(p.image_path)}
+              alt=""
+              width="900"
+              height="900"
+              loading={i === 0 ? 'eager' : 'lazy'}
+              fetchpriority={i === 0 ? 'high' : 'auto'}
+              decoding="async"
+            />
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* The reassurance strip. Every line is a fact stated elsewhere on the
+      site and in the feed - made in Britain, the real dispatch time, the
+      returns window, VAT included. Nothing aspirational, nothing that
+      needs a reviewer to take our word for it. */}
+  <section class="assurance">
+    <div class="wrap assurance-grid">
+      <div><strong>Made to order</strong><span>Printed &amp; framed in {B.fulfilment.made_in}</span></div>
+      <div><strong>Free UK delivery</strong><span>Dispatched in {B.fulfilment.dispatch_working_days} working days</span></div>
+      <div><strong>{B.returns.window_days}-day returns</strong><span>From the day it arrives, any reason</span></div>
+      <div><strong>Prices include VAT</strong><span>No surprises at checkout</span></div>
     </div>
   </section>
 
