@@ -41,38 +41,60 @@ The records that matter most are the mail ones: miss them and
 `sales@walryvo.com` dies silently, which is the contact address on every
 page of the shop and in Merchant Center.
 
-Captured live from your DNS on 26 Oct. Every one of these must be present:
+This is the complete live record set, read back off your DNS at
+**15:14 UTC on 26 Oct** and stored in `web/dns_snapshot.json`. Every one of
+these must be present in Cloudflare before you move the nameservers:
 
-| Type | Name | Value | Proxy |
-|---|---|---|---|
-| MX | `walryvo.com` | `walryvo-com.mail.protection.outlook.com` (priority 0) | DNS only |
-| TXT | `walryvo.com` | `v=spf1 include:secureserver.net -all` | n/a |
-| TXT | `walryvo.com` | `NETORGFT21256617.onmicrosoft.com` | n/a |
-| CNAME | `autodiscover` | `autodiscover.outlook.com` | **DNS only** |
-| CNAME | `selector1._domainkey` | `selector1-walryvo-com._domainkey.netorgft21256617.r-v1.dkim.mail.microsoft` | **DNS only** |
-| CNAME | `selector2._domainkey` | `selector2-walryvo-com._domainkey.netorgft21256617.r-v1.dkim.mail.microsoft` | **DNS only** |
-| TXT | `_dmarc` | `v=DMARC1; p=quarantine; adkim=r; aspf=r; rua=mailto:dmarc_rua@onsecureserver.net;` | n/a |
-| SRV | `_sip._tls` | `100 1 443 sipdir.online.lync.com` | n/a |
+| # | Type | Name | Value | Proxy |
+|---|---|---|---|---|
+| 1 | MX | `walryvo.com` | `walryvo-com.mail.protection.outlook.com` — priority **0** | **DNS only** |
+| 2 | TXT | `walryvo.com` | `v=spf1 include:secureserver.net -all` | n/a |
+| 3 | TXT | `walryvo.com` | `NETORGFT21256617.onmicrosoft.com` | n/a |
+| 4 | CNAME | `autodiscover` | `autodiscover.outlook.com` | **DNS only** |
+| 5 | CNAME | `selector1._domainkey` | `selector1-walryvo-com._domainkey.netorgft21256617.r-v1.dkim.mail.microsoft` | **DNS only** |
+| 6 | CNAME | `selector2._domainkey` | `selector2-walryvo-com._domainkey.netorgft21256617.r-v1.dkim.mail.microsoft` | **DNS only** |
+| 7 | TXT | `_dmarc` | `v=DMARC1; p=quarantine; adkim=r; aspf=r; rua=mailto:dmarc_rua@onsecureserver.net;` | n/a |
+| 8 | SRV | `_sip._tls` | priority 100, weight 1, port 443, target `sipdir.online.lync.com` | n/a |
+| 9 | SRV | `_sipfederationtls._tcp` | priority 100, weight 1, port 5061, target `sipfed.online.lync.com` | n/a |
+| 10 | CNAME | `lyncdiscover` | `webdir.online.lync.com` | **DNS only** |
+| 11 | CNAME | `msoid` | `clientconfig.microsoftonline-p.net` | **DNS only** |
+| 12 | CNAME | `email` | `email.secureserver.net` | **DNS only** |
+
+Rows 1–7 are mail. Lose one and `sales@walryvo.com` breaks — row 1 stops
+mail arriving, rows 2, 3, 5, 6 and 7 stop your outgoing mail being trusted,
+so it lands in spam. Rows 8–11 are Teams/Skype lookups and row 12 is
+GoDaddy webmail; losing those is an annoyance, not a disaster.
 
 **"DNS only" means the cloud icon must be GREY, not orange.** An orange
 cloud on a mail record breaks mail delivery. Click the cloud to toggle it.
 
-Add by hand anything the scan missed.
+Add by hand anything the scan missed. Tick each row off as you check it —
+twelve rows, two minutes.
 
 ### 1b. Delete these three
 
 They are the registrar's parking page. The Worker replaces them in Part 4.
 
-- `A` → `15.197.148.33`
-- `A` → `3.33.130.190`
+- `A` `walryvo.com` → `15.197.148.33`
+- `A` `walryvo.com` → `3.33.130.190`
 - `CNAME` `www` → `walryvo.com`
 
-### 1c. Do not "fix" the SPF record
+(`www` also resolves to those same two parking addresses through that
+CNAME. Deleting the CNAME is enough — there is no separate `www` A record
+to find.)
 
-`v=spf1 include:secureserver.net -all` looks wrong for a Microsoft mailbox.
-It is right. I traced the chain on 26 Oct: `secureserver.net` →
-`spf-0.secureserver.net` → includes `spf.protection.outlook.com`. Changing
-it to something that looks more sensible will break your outgoing mail.
+### 1c. Two records that look wrong and are right
+
+**The SPF record.** `v=spf1 include:secureserver.net -all` looks wrong for
+a Microsoft mailbox. It is right. I traced the chain on 26 Oct:
+`secureserver.net` → `spf-0.secureserver.net` → includes
+`spf.protection.outlook.com`. Changing it to something that looks more
+sensible will break your outgoing mail.
+
+**The two DKIM records end in `.microsoft`, not `.microsoft.com`.** That is
+not a truncation. `.microsoft` is Microsoft's own top-level domain and
+GoDaddy-provisioned 365 tenants use it. Copy them exactly, character for
+character, and do not "finish" them.
 
 Now press Continue. Cloudflare shows you two nameservers like
 `xxx.ns.cloudflare.com`. Copy both.
@@ -97,12 +119,34 @@ the domain is active.
 
 ## PART 3 — Prove your email still works
 
-**Do not skip this.** From a different address (phone, Gmail, anything not
-on walryvo.com), send a message to `sales@walryvo.com`. Confirm it arrives.
-Then reply from it and confirm the reply lands.
+Two checks. Do both.
 
-If mail has stopped: go back to Part 1a and compare the records again. The
-old records are still at GoDaddy and can be read from the DNS zone there.
+**First, tell me the nameservers have moved.** I run:
+
+```bash
+python3 web/dns_check.py
+```
+
+It re-reads all 19 records off a public resolver and compares them against
+the snapshot taken at 15:14 on 26 Oct, before anything was touched. It
+compares the record *values*, so a record that moved from GoDaddy to
+Cloudflare still counts as present. If any of the seven mail records has
+vanished it says **MAIL IS BROKEN OR ABOUT TO BE** and prints the exact
+records to paste back in. The two parking A records and the `www` CNAME are
+expected to be gone and are reported as a non-fatal difference.
+
+This catches a missing record in seconds, from the outside, without either
+of us having to read the Cloudflare table again.
+
+**Second, and do not skip it:** from a different address (phone, Gmail,
+anything not on walryvo.com), send a message to `sales@walryvo.com` and
+confirm it arrives. Then reply from it and confirm the reply lands. The
+script proves the records exist; only a real message proves Microsoft still
+accepts mail for the domain.
+
+If mail has stopped: the old zone is still readable at GoDaddy (Domains →
+walryvo.com → DNS), and every record is also in the table at Part 1a and in
+`web/dns_snapshot.json`. Nothing is lost — it just needs pasting back.
 
 ---
 

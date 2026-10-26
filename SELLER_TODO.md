@@ -18,12 +18,16 @@ will answer for the domain using only the records its scan imported. A
 missed MX record kills `sales@walryvo.com` silently — the contact address
 on every page of the shop and in Merchant Center.
 
-`web/SETUP_WALKTHROUGH.md` Part 1 has the full live record set captured on
-26 Oct. Compare Cloudflare's import against that table **before** switching
-anything at GoDaddy. Mail records must be grey-cloud (DNS only), and the
-SPF record looks wrong and is right — do not tidy it.
+`web/SETUP_WALKTHROUGH.md` Part 1 has the full live record set — all 12
+records, read off your DNS at 15:14 on 26 Oct and stored in
+`web/dns_snapshot.json`. Compare Cloudflare's import against that table
+**before** switching anything at GoDaddy. Mail records must be grey-cloud
+(DNS only); the SPF record looks wrong and is right, and the DKIM records
+really do end in `.microsoft` — do not tidy either.
 
-Then re-test the mailbox from an outside address.
+Afterwards, tell me and I run `python3 web/dns_check.py`, which compares
+what the world now sees against that snapshot and fails loudly if any mail
+record went missing. Then re-test the mailbox from an outside address.
 
 ### A2. Deploy — three commands
 

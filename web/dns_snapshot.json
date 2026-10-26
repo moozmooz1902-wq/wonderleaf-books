@@ -1,0 +1,55 @@
+{
+ "captured": "2026-10-26 15:14:28 UTC",
+ "domain": "walryvo.com",
+ "records": {
+  "|NS": [
+   "ns15.domaincontrol.com",
+   "ns16.domaincontrol.com"
+  ],
+  "|A": [
+   "15.197.148.33",
+   "3.33.130.190"
+  ],
+  "|MX": [
+   "0 walryvo-com.mail.protection.outlook.com"
+  ],
+  "|TXT": [
+   "NETORGFT21256617.onmicrosoft.com",
+   "v=spf1 include:secureserver.net -all"
+  ],
+  "www|CNAME": [
+   "walryvo.com"
+  ],
+  "www|A": [
+   "15.197.148.33",
+   "3.33.130.190"
+  ],
+  "autodiscover|CNAME": [
+   "autodiscover.outlook.com"
+  ],
+  "selector1._domainkey|CNAME": [
+   "selector1-walryvo-com._domainkey.netorgft21256617.r-v1.dkim.mail.microsoft"
+  ],
+  "selector2._domainkey|CNAME": [
+   "selector2-walryvo-com._domainkey.netorgft21256617.r-v1.dkim.mail.microsoft"
+  ],
+  "_dmarc|TXT": [
+   "v=DMARC1; p=quarantine; adkim=r; aspf=r; rua=mailto:dmarc_rua@onsecureserver.net;"
+  ],
+  "_sip._tls|SRV": [
+   "100 1 443 sipdir.online.lync.com"
+  ],
+  "_sipfederationtls._tcp|SRV": [
+   "100 1 5061 sipfed.online.lync.com"
+  ],
+  "lyncdiscover|CNAME": [
+   "webdir.online.lync.com"
+  ],
+  "msoid|CNAME": [
+   "clientconfig.microsoftonline-p.net"
+  ],
+  "email|CNAME": [
+   "email.secureserver.net"
+  ]
+ }
+}
