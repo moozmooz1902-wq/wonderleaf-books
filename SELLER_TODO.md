@@ -76,8 +76,9 @@ Domains & Routes → Add → `walryvo.com`. And a Redirect Rule so
 - **Check the VAT name.** Confirm GB513541030 is registered to NORYMUS
   LIMITED at <https://www.gov.uk/check-uk-vat-number>. Google compares the
   VAT record against the site. Thirty seconds.
-- **Set the Stripe statement descriptor to `WALRYVO`.** Settings → Business
-  → Public details. Confirmed 26 Oct that the checkout code sets no
+- **Statement descriptor — seller says it is already set to `WALRYVO`**
+  ("i think"), so this is a confirmation rather than a task. Settings →
+  Business → Public details. Confirmed 26 Oct that the checkout code sets no
   descriptor, so Checkout falls back to the account default — likely
   NORYMUS. A buyer who sees an unrecognised name on their card statement
   three days later disputes the charge with their bank rather than emailing
