@@ -8,77 +8,44 @@ Ordered by what unblocks the most.
 
 ---
 
-## A. To get walryvo.com live — three steps, about 40 minutes
+## A. walryvo.com is LIVE — done 26 Oct
 
-### A1. Move the nameservers to Cloudflare
+Nothing in this section is outstanding. Kept as a record of what was done
+and by whom, because several of these were the seller's logins and will be
+again if anything needs redoing.
 
-**This is the only step in the whole project that can break something that
-already works.** The mailbox is Microsoft 365 via GoDaddy, and Cloudflare
-will answer for the domain using only the records its scan imported. A
-missed MX record kills `sales@walryvo.com` silently — the contact address
-on every page of the shop and in Merchant Center.
+| | |
+|---|---|
+| Nameservers moved to Cloudflare | seller, 17:05 |
+| Zone active, all 12 records intact, mail verified | 17:20 |
+| Deployed from the seller's Mac | seller, 18:06 |
+| walryvo.com + www attached to the Worker | over the API, 18:26 |
+| `STRIPE_SECRET_KEY` set, checkout proven live | 18:26 |
+| `STRIPE_WEBHOOK_SECRET` set, endpoint enabled | 18:36 |
+| Bright black-and-white theme deployed | 18:31 |
 
-**The two Cloudflare nameservers for walryvo.com are
-`maxim.ns.cloudflare.com` and `val.ns.cloudflare.com`** - read from the
-zone over the API on 26 Oct, so they do not need hunting for in the
-dashboard. The zone reads `status: pending`, which means Cloudflare has the
-records and is waiting for the delegation.
+Checkout was tested end to end rather than assumed: a real Stripe Checkout
+session (`cs_live_...`) was created from a real variant id, HTTP 200. The
+key is a RESTRICTED key (`rk_live_`), which is the safer choice and does
+carry the scope.
 
-The registry still shows GoDaddy and has recorded no change since
-registration at 04:40 on 26 Oct. The domain carries
-`clientUpdateProhibited`, which is GoDaddy's default lock on a new
-registration and the likeliest reason a nameserver save did not take. No
-confirmation email arrived, so it was not merely pending.
+**Three bugs only a real deploy could have found**, all fixed:
 
-`web/SETUP_WALKTHROUGH.md` Part 1 has the full live record set — all 12
-records, read off your DNS at 15:14 on 26 Oct and stored in
-`web/dns_snapshot.json`. Compare Cloudflare's import against that table
-**before** switching anything at GoDaddy. Mail records must be grey-cloud
-(DNS only); the SPF record looks wrong and is right, and the DKIM records
-really do end in `.microsoft` — do not tidy either.
+1. `site/src/data/*.json` were gitignored, so a fresh checkout would not
+   build at all.
+2. `cart.astro` used Astro's `define:vars`, the one critical CVE of the
+   eleven npm reports that was actually in the shipped site. Replaced with
+   data attributes; the other ten are build tooling and do not ship.
+3. `wrangler.toml` points `[assets]` at `./dist`, and the adapter does not
+   emit a `.assetsignore`, so the compiled server — including the Stripe
+   route — would have been published as downloadable files. The build now
+   writes that file itself.
 
-Afterwards, tell me and I run `python3 web/dns_check.py`, which compares
-what the world now sees against that snapshot and fails loudly if any mail
-record went missing. Then re-test the mailbox from an outside address.
-
-### A2. Deploy — three commands
-
-The database is created AND reseeded. **Do not run `wrangler d1 create` or
-the seed again** - create would make a second empty database, and the seed
-is already applied.
-
-Reseeded over the Cloudflare API at 16:4x on 26 Oct, because the schema
-gained a `facet_counts` table that day and the remote copy did not have it;
-a deploy against the old copy would have returned 500 on every page.
-Verified afterwards: 240 products, 2,160 variants, 38 facet rows, prices
-24.99 / 29.99 / 34.99.
-
-So the deploy is now two commands:
-
-```bash
-cd web/site && npm install && npx wrangler login && npm run deploy
-npx wrangler secret put STRIPE_SECRET_KEY      # paste at the prompt
-```
-
-Or allow `npm run deploy`, `npx wrangler deploy`, `npx wrangler secret put`
-and `npx wrangler d1 execute` for Bash in Claude Code settings, and a new
-session can finish it. The overnight attempt was refused at exactly that
-point, and self-granting the permission was refused too — correctly.
-
-Then attach the custom domain: Workers & Pages → wallart-shop → Settings →
-Domains & Routes → Add → `walryvo.com`. And a Redirect Rule so
-`walryvo.co.uk` 301s to it.
-
-### A3. Stripe, two things
-
-- **Webhook**: Developers → Webhooks → `https://walryvo.com/api/stripe-webhook`,
-  event `checkout.session.completed`. Needs the site live first. Then
-  `npx wrangler secret put STRIPE_WEBHOOK_SECRET`.
-- **Settings → Customer emails → Successful payments: ON.** Until this is
-  on, the order-confirmed page promises an email that never arrives. It is
-  the last failing preflight check — say the word and it gets flipped.
-
----
+And one found by looking at the live site rather than the deploy output:
+the first theme deploy rendered walryvo.com as **unstyled HTML**, because
+the edge cache held the previous build's page, which names a hashed
+stylesheet the deploy had just deleted. The cache key now carries a build
+id, so it cannot recur.
 
 ## B. Quick, and worth doing before Merchant Center sees you
 
