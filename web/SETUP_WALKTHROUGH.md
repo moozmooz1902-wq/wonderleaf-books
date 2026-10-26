@@ -27,11 +27,28 @@ posterleaf-store1, lunar-kms, mercury-usm). The shop reads images straight
 out of those buckets, and that only works if the Worker and the buckets are
 in one account.
 
+**The button has been renamed.** Cloudflare's docs now call it *Onboard a
+domain*, under a **Domains** entry in the left sidebar. Older guides
+(including the first draft of this one) say *Add a site* or *Add a domain*,
+and some accounts still show those. It is all the same screen.
+
 1. Sign in at **dash.cloudflare.com**.
-2. Top of the page: **Add a domain** (older accounts say *Add site*).
-3. Type `walryvo.com`. Choose **Free**. Continue.
+2. Fastest route, skips the hunting — paste this straight into the address
+   bar once you are signed in:
+
+   <https://dash.cloudflare.com/?to=/:account/add-site>
+
+   Cloudflare fills in `:account` itself. It lands on the right screen
+   whatever the button is called this month.
+
+   If you would rather click: **Domains** in the left sidebar → **Onboard a
+   domain**. If your account has no *Domains* entry, look for **Websites**
+   in the sidebar, or a **+ Add** button at the top right next to the
+   account name.
+3. Type `walryvo.com`. Pick the **Free** plan — it is at the bottom of the
+   plan list and is easy to miss. Continue.
 4. Cloudflare scans your existing DNS and shows what it found. **Do not
-   press Continue yet.**
+   press Continue yet.** The next section is the whole point of this part.
 
 ### 1a. Check the scan against this — the important bit
 
