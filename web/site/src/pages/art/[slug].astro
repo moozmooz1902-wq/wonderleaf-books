@@ -18,7 +18,7 @@ import Grid from '../../components/Grid.astro';
 import { B, money, img, abs, dispatchBy, sizeFeel } from '../../lib/shop';
 import Craft from '../../components/Craft.astro';
 import { PROMO } from '../../lib/promo';
-import { getDb, product, variantOf, alsoIn } from '../../lib/db';
+import { getDb, product, variantOf, alsoIn, trio, variantsFor } from '../../lib/db';
 import { edge, TTL_CATALOGUE } from '../../lib/cache';
 
 const { slug } = Astro.params;
@@ -49,6 +49,26 @@ const priceFor = (f: string, s: string) =>
   p.variants.find((x) => x.frame === f && x.size === s)!.price;
 
 const { results: more } = await alsoIn(db, p.niche, p.slug, 8);
+
+// THE SET. Two more from the same range AND the same palette, priced as a
+// group of three so the buy-two-get-one-free is a number rather than a
+// slogan. This is the whole reason the offer exists: a print shop's money
+// is in people buying three, and three only read as a set if they share a
+// colour family.
+const { results: mates } = await trio(db, p.niche, p.colour, p.slug);
+let setRows: any[] = [];
+let setTotal = 0;
+let setSave = 0;
+if (mates.length === 2) {
+  const { results } = await variantsFor(
+    db, [p.slug, ...mates.map((m) => m.slug)], v.frame, v.size);
+  if (results.length === 3) {
+    setRows = results;
+    const prices = results.map((r) => r.price).sort((a, b) => a - b);
+    setSave = prices[0];
+    setTotal = Math.round((prices.reduce((a, b) => a + b, 0) - setSave) * 100) / 100;
+  }
+}
 const d = B.fulfilment.delivery[0];
 
 // Built from the same numbers the feed carries. Generated here rather than
@@ -287,6 +307,39 @@ const jsonLd = {
       </div>
     </div>
 
+    {setRows.length === 3 && (
+      <div class="section-block setblock">
+        <p class="kicker">Make it a set</p>
+        <h2>Three that hang together</h2>
+        <p class="prose" style="max-width:58ch">
+          Same range, same palette, same {v.size_label} size and
+          {v.frame === 'none' ? ' unframed' : ` ${v.frame_label.toLowerCase()} frame`}.
+          Buy two, get one free — so the cheapest of the three costs nothing.
+        </p>
+        <div class="setgrid">
+          {setRows.map((r) => (
+            <figure>
+              <img src={img(r.image_path)} alt={r.title} width="500" height="500"
+                   loading="lazy" decoding="async" />
+              <figcaption>{money(r.price)}</figcaption>
+            </figure>
+          ))}
+        </div>
+        <p class="setprice">
+          <span class="was">{money(Math.round((setTotal + setSave) * 100) / 100)}</span>
+          <strong>{money(setTotal)}</strong>
+          <em>you save {money(setSave)}</em>
+        </p>
+        <button class="btn" id="addset"
+          data-set={JSON.stringify(setRows.map((r) => ({
+            id: r.id, title: r.title, price: r.price,
+            img: img(r.image_path),
+          })))}>
+          Add all three — {money(setTotal)}
+        </button>
+      </div>
+    )}
+
     {more.length > 0 && (
       <div class="section-block">
         <p class="kicker">More from this range</p>
@@ -317,6 +370,25 @@ const jsonLd = {
           img: b.dataset.img,
           qty: 1,
         });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      location.href = '/cart';
+    });
+
+    // Add all three at once. The prices written here are only for the
+    // basket's own display; /api/basket re-reads every one of them from the
+    // catalogue and /api/checkout prices the Stripe session from the same
+    // place, so nothing a browser puts in localStorage can change what is
+    // charged.
+    document.getElementById('addset')?.addEventListener('click', (e) => {
+      let set = [];
+      try { set = JSON.parse(e.currentTarget.dataset.set || '[]'); } catch (_) {}
+      let cart = [];
+      try { cart = JSON.parse(localStorage.getItem('cart') || '[]'); } catch (_) {}
+      for (const it of set) {
+        const line = cart.find((l) => l.id === it.id);
+        if (line) line.qty += 1;
+        else cart.push({ ...it, qty: 1 });
+      }
       localStorage.setItem('cart', JSON.stringify(cart));
       location.href = '/cart';
     });

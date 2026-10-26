@@ -218,3 +218,38 @@ export const byNicheColour = (
     )
     .bind(niche, ...colours, limit)
     .all<Card>();
+
+/**
+ * Two more prints that hang with this one: same range, same palette.
+ *
+ * Not "related products" in the usual sense - the point is a SET. A poster
+ * shop's money is in people buying three, which is why "buy two get one
+ * free" exists at all, and three prints only look like a set if they share
+ * a colour family. Matching on niche alone gives a charcoal coastline next
+ * to a neon one, which is a worse suggestion than none.
+ */
+export const trio = (db: DB, niche: string, colour: string, notSlug: string) =>
+  db
+    .prepare(
+      `${LIST} WHERE p.niche = ? AND p.colour = ? AND p.slug != ? ` +
+        'ORDER BY p.rank LIMIT 2'
+    )
+    .bind(niche, colour, notSlug)
+    .all<Card>();
+
+/** The same frame and size of several designs, for adding a set in one go. */
+export const variantsFor = (
+  db: DB,
+  slugs: string[],
+  frame: string,
+  size: string
+) =>
+  db
+    .prepare(
+      'SELECT v.*, p.slug AS product_slug FROM variants v ' +
+        'JOIN products p ON p.slug = v.slug WHERE v.slug IN (' +
+        slugs.map(() => '?').join(',') +
+        ') AND v.frame = ? AND v.size = ?'
+    )
+    .bind(...slugs, frame, size)
+    .all<Variant & { product_slug: string }>();

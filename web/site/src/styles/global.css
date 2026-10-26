@@ -533,3 +533,31 @@ table.plain th { color: var(--ink-3); font-weight: 500; }
 .promo-bar.deadline { background: var(--paper-2); }
 .promo-bar.deadline a { color: var(--ink); }
 .promo-bar.deadline span { opacity: 0.68; }
+
+/* ---------- the set of three ----------
+ * The offer written as a picture and a number. "Buy two get one free" in a
+ * banner is a slogan; three prints that actually go together, with the real
+ * total under them, is a decision. The struck-through figure is the genuine
+ * sum of the three listed prices - the only kind of "was" this shop will
+ * ever show, because it is a price it really charges for those items. */
+.setblock { border-top: 1px solid var(--rule); }
+.setgrid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(8px, 1.5vw, 18px); margin: 20px 0 18px;
+}
+.setgrid figure { margin: 0; }
+.setgrid img {
+  width: 100%; height: auto; display: block;
+  border: 1px solid var(--rule); background: var(--card);
+}
+.setgrid figcaption {
+  font-size: 0.78rem; color: var(--ink-3); margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.setprice {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 14px;
+  margin: 0 0 18px; font-variant-numeric: tabular-nums;
+}
+.setprice .was { color: var(--ink-3); text-decoration: line-through; }
+.setprice strong { font-size: 1.35rem; letter-spacing: -0.01em; }
+.setprice em { font-style: normal; font-size: 0.82rem; color: var(--ok); }
