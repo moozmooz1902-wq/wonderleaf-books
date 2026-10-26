@@ -578,6 +578,91 @@ def check_live(cat, cfg, sample, base_override=None):
     except Exception as e:
         fail("sitemap.xml loads", repr(e))
 
+    # 4b-ii. THE SERVED FEED IS THE FEED.
+    #
+    # Merchant Center is pointed at /feed.xml as a scheduled fetch, so from
+    # here on the only feed that matters is the one the deploy is serving -
+    # not the one sitting in this checkout. If a rebuild regenerated the
+    # catalogue and the deploy did not carry the new feed.xml, Google would
+    # go on reading last week's prices against this week's pages, which is
+    # the price mismatch these checks exist to prevent, arriving by the one
+    # route that leaves no trace on any page.
+    #
+    # So compare the bytes Google would fetch against the feed this
+    # catalogue produces, item for item.
+    try:
+        want_xml = F.to_xml(F.items(cat, cfg), cfg, f"{cfg['brand']} products")
+        s_feed, h_feed, body = get(base + "/feed.xml")
+        if s_feed != 200:
+            fail("served /feed.xml loads", f"HTTP {s_feed}")
+        else:
+            got = body.decode("utf-8", "replace")
+            n_got, n_want = got.count("<item>"), want_xml.count("<item>")
+            ctype = (h_feed.get("content-type") or "").lower()
+            if n_got != n_want:
+                fail("served feed matches the catalogue",
+                     f"the deploy serves {n_got:,} items, this catalogue "
+                     f"builds {n_want:,}. Rebuild the feed and redeploy - "
+                     f"a scheduled fetch would read the stale one.")
+            elif "xml" not in ctype:
+                fail("served feed is sent as XML",
+                     f"content-type {ctype!r}. Merchant Center sniffs the "
+                     f"type and rejects a feed served as text/html.")
+            elif got.strip() != want_xml.strip():
+                # Same count, different bytes: a price, title or link moved.
+                import difflib
+                d = [l for l in difflib.unified_diff(
+                        want_xml.splitlines(), got.splitlines(),
+                        "catalogue", "served", n=0, lineterm="")
+                     if l[:1] in "+-" and l[:3] not in ("+++", "---")]
+                fail("served feed matches the catalogue",
+                     f"{len(d)} lines differ. First: "
+                     + " | ".join(d[:4]))
+            else:
+                ok("served feed is byte-identical to this catalogue",
+                   f"{n_got:,} items, auto-fetchable at {base}/feed.xml")
+    except Exception as e:
+        fail("served /feed.xml loads", repr(e))
+
+    # The promotions feed, fetched on the same schedule, must still be live
+    # and must still be inside its own validity window.
+    try:
+        s_p, _h, body = get(base + "/promotions.xml")
+        t = body.decode("utf-8", "replace")
+        if s_p != 200:
+            fail("served /promotions.xml loads", f"HTTP {s_p}")
+        elif "promotion_id" not in t:
+            # Google's promotions feed is RSS: one <item> per promotion
+            # carrying g:promotion_id, not a <promotion> element.
+            fail("promotions feed carries a promotion", t[:160])
+        elif "product_applicability" not in t:
+            fail("promotion says which products it applies to",
+                 "product_applicability is required. all_products is what "
+                 "lets one offer cover the catalogue without naming 2,508 "
+                 "ids in the product feed.")
+        else:
+            import datetime as _dt
+            m = re.search(r"<(?:g:)?promotion_effective_dates>([^<]+)<", t)
+            if not m:
+                fail("promotion states its effective dates",
+                     "without them Google applies no end date and the offer "
+                     "cannot be withdrawn cleanly.")
+            else:
+                a_s, b_s = m.group(1).split("/")
+                start = _dt.datetime.fromisoformat(a_s)
+                end = _dt.datetime.fromisoformat(b_s)
+                now = _dt.datetime.now(start.tzinfo)
+                if not (start <= now <= end):
+                    fail("promotion window includes today",
+                         f"{a_s} .. {b_s}. A promotion outside its window is "
+                         f"disapproved, and the site would still be showing "
+                         f"the offer.")
+                else:
+                    ok("promotions feed is live and inside its window",
+                       f"ends {end.date()}, rolls forward on every fetch")
+    except Exception as e:
+        fail("served /promotions.xml loads", repr(e))
+
     # 4c. THE BIG ONE. Does each variant URL quote the feed's price?
     rows = F.items(cat, cfg)
     picks = random.sample(rows, min(sample, len(rows)))

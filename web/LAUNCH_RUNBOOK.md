@@ -390,9 +390,18 @@ spends a review you cannot get back.
    thing as `/delivery` and `/returns`. Free UK delivery, dispatch within
    3 working days, 30-day returns from delivery. A difference between the
    account settings and the site is a misrepresentation finding by itself.
-6. **Submit the feed.** `web/feed/feed.xml`, as a scheduled fetch from a
-   URL you host or a manual upload. Opt in to **free listings** (that is
-   the free traffic you are after) before paid Shopping ads.
+6. **Submit the feed as a scheduled fetch.** Data sources → Add product
+   source → **Scheduled fetch**, URL `https://walryvo.com/feed.xml`, daily.
+   Do not upload a file: a fetch re-reads the feed on its own for ever, so
+   the feed can never fall behind the site. Nothing is hosted separately -
+   the feed is a file in the deploy, written by `catalogue/feed.py` and
+   served by the same Worker that serves the pages it describes.
+   Then add a second source, **Promotions** → scheduled fetch,
+   `https://walryvo.com/promotions.xml`, daily. That is the buy-2-get-1-free
+   offer; it carries its own rolling validity window and renews itself on
+   every fetch.
+   Opt in to **free listings** (that is the free traffic you are after)
+   before paid Shopping ads.
 7. **Wait.** New accounts are reviewed, typically a few days. Do not
    resubmit, do not edit in circles, do not request reviews you do not
    need — review attempts are limited and running out of them is how

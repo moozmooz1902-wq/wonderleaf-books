@@ -34,7 +34,25 @@ against Google's published product data specification, 25 Oct 2026:
 WHAT IS DELIBERATELY ABSENT: [sale_price], any promotion, and anything
 resembling a strikethrough "was" price. A reference price the product was
 never actually sold at is the clearest possible misrepresentation finding,
-and a new shop has no price history to refer back to.
+and a new shop has no price history to refer back to. The buy-2-get-1-free
+offer reaches Google through the separate promotions feed at
+/promotions.xml, which is the mechanism Google provides for exactly this
+and which leaves [price] alone.
+
+AUTO-FETCH. This writes to web/site/public/feed.xml by default, which the
+deploy serves at https://<domain>/feed.xml. Merchant Center is then pointed
+at that URL as a SCHEDULED FETCH and re-reads it on its own - nobody
+uploads a 5 MB file by hand, ever, and the feed cannot drift behind the
+site because both come out of the same deploy.
+
+The file is committed. It is generated, and generated files normally do not
+belong in a repository, but the same argument that applies to
+site/src/data/*.json applies here and the reason is written out in
+web/.gitignore: a checkout has to be able to build and deploy a working
+shop. A deploy that ships a stale or missing feed is a deploy that
+misrepresents prices, so the feed travels with the code that serves it.
+preflight.py's "served feed matches the catalogue" check is what makes that
+guarantee real rather than hoped for.
 """
 import argparse, json, os, re, sys, xml.sax.saxutils as SAX
 
@@ -244,8 +262,14 @@ def to_tsv(rows):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--out", default=os.path.join(WEB, "feed"))
+    ap.add_argument("--out", default=os.path.join(WEB, "site", "public"),
+                    help="where feed.xml is written. The default is the "
+                         "website's static-asset directory, so the deploy "
+                         "serves it - see the note at AUTO-FETCH below.")
     ap.add_argument("--tsv", action="store_true")
+    ap.add_argument("--tsv-out", default=os.path.join(WEB, "feed"),
+                    help="the TSV is for inspection, not for serving, so it "
+                         "stays out of the public directory.")
     ap.add_argument("--allow-incomplete", action="store_true",
                     help="build anyway with the identity fields unset. For "
                          "inspecting the shape of the feed only - the result "
@@ -296,7 +320,8 @@ def main():
                    + (f" ({n} of {len(shards)})" if len(shards) > 1 else "")))
         written.append((path, len(shard)))
     if a.tsv:
-        path = os.path.join(a.out, "feed.tsv")
+        os.makedirs(a.tsv_out, exist_ok=True)
+        path = os.path.join(a.tsv_out, "feed.tsv")
         open(path, "w").write(to_tsv(rows))
         written.append((path, len(rows)))
 

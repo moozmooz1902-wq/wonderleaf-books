@@ -7,6 +7,9 @@ catalogue/catalogue.db
 catalogue/seed.sql
 catalogue/sheets/
 catalogue/taxonomy.json
+# The TSV inspection copy only. feed.xml itself is tracked, at
+# site/public/feed.xml - see the AUTO-FETCH note at the top of
+# catalogue/feed.py for why a generated file belongs in the repo here.
 feed/
 
 # site/src/data/*.json ARE tracked, deliberately.
