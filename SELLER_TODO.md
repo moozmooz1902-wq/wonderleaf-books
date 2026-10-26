@@ -1,6 +1,6 @@
 # What is waiting on the seller
 
-Updated 26 Oct 2026. Everything here needs a login, a payment, a judgement
+Updated 26 Oct 2026, late evening. Everything here needs a login, a payment, a judgement
 call or a document that Claude does not and should not have. Nothing on
 this list is blocked on code.
 
@@ -53,9 +53,9 @@ One word. `web/business.config.json`, the `"theme"` field:
 
 | Name | What it is |
 |---|---|
-| `ink-black` | black page, white type — **current** |
+| `ink-black` | black page, white type |
 | `paper-white` | white page, black type |
-| `gallery-cream` | the exact cream the mockups are photographed on, so prints have no visible edge |
+| `gallery-cream` | the exact cream the mockups are photographed on, so prints have no visible edge — **current** |
 | `plaster-pink` | warm gallery pink, claret accent |
 
 Change it, then `python3 web/catalogue/build_db.py` and deploy. Nothing else
@@ -101,6 +101,76 @@ colour and the print reads as a lit panel on a dark wall.
 
 ---
 
+## B2. Merchant Center — what you do, and the one thing I need
+
+The feed is already live and already automatic. Nothing gets uploaded by
+hand, now or ever:
+
+| | |
+|---|---|
+| Products | <https://walryvo.com/feed.xml> — 2,508 items |
+| Promotions | <https://walryvo.com/promotions.xml> — buy 2 get 1 free |
+
+Both are served by the same Worker that serves the shop, out of the same
+deploy. Google re-reads them daily on its own, so they cannot drift behind
+the site, and `preflight.py --live` compares the served feed byte for byte
+against the catalogue so a deploy can never quietly ship a stale one.
+
+### Your five steps
+
+1. **Sign up** at <https://merchants.google.com> with
+   moozmooz1902@gmail.com.
+2. **Business name: NORYMUS LIMITED**, not Walryvo. Google checks the name
+   against Companies House and the VAT record. Display name Walryvo.
+   Address 28 Bedford Square, Leigh, WN7 2AA. Customer service
+   sales@walryvo.com and 07397 937226 — the same pair that is on the site.
+3. **Claim walryvo.com.** Google will show you a verification token. Copy
+   the whole line and send it to me — either the
+   `<meta name="google-site-verification" content="...">` tag or the DNS
+   TXT value. I have Cloudflare DNS edit, so I will add whichever you send
+   and tell you when it has propagated; you then press Verify.
+4. **Add the two data sources.** Data sources → Add product source →
+   **Scheduled fetch** → paste the feed URL → daily. Then the same again
+   for the promotions URL under Promotions. Do not pick "upload a file".
+5. **Identity verification.** Photo ID, proof of address, company
+   documents. Every name and address must match exactly. An unverified
+   identity blocks the review of everything else, so do this early rather
+   than last.
+
+### Two choices only you can make
+
+**1. Free listings only at launch, or paid Shopping ads as well?**
+
+My recommendation: **free listings only**, and add ads once the account has
+been clean for a few weeks. Free listings are the traffic you said you were
+after and they cost nothing. Ads put the account under the advertising
+policies as well as the Shopping ones, which means a second review surface
+on a brand-new domain, and money spent while approval is still pending. The
+switch to ads later costs nothing and loses nothing.
+
+**2. Submit the opening 209, or wait for your eye-approval pass?**
+
+My recommendation: **do your pass on the contact sheets first**, then
+submit. About 4% of the range has a visible defect (see section B) and the
+detector cannot find them. A disapproval for "image quality" on a new
+account is cheap to avoid now and expensive to argue later, and the pass is
+a morning's work. If you would rather go now, say so and I will submit the
+209 as they stand — nothing is broken, it is a question of how good a first
+impression the account makes.
+
+Either way **I will not submit anything to Google without you saying so.**
+
+### After submission
+
+Do not resubmit, do not edit in circles, and do not request reviews you do
+not need. Review attempts are limited and running out of them is how
+accounts get permanently blocked. New accounts are capped at **150,000
+products**; Google raises it on its own for accounts that approach the cap
+while performing cleanly. `web/SCALE.md` has the ladder from 209 to
+millions, and the order the steps have to happen in.
+
+---
+
 ## C. Decisions asked for and never answered
 
 These have been open a while. None is urgent; all of them block something.
@@ -135,7 +205,9 @@ These have been open a while. None is urgent; all of them block something.
 
 ## Not on this list, because it is done
 
-The website, all 240 products and 12 categories, the logo and banner, every
-policy page, the Merchant Center feed (2,160 items, 0 spec problems), the
-preflight gate at 19 of 20, the eBay repricing files, and the D1 database
-created and seeded. See `CLAUDE.md` for the map.
+The website, 209 products and 12 categories, the logo and banner, every
+policy page, the unframed tier from £8.99, the buy-2-get-1-free offer
+priced end to end through Stripe, the Merchant Center feed (2,508 items,
+auto-fetched at <https://walryvo.com/feed.xml>), the promotions feed, the
+preflight gate at **42 live checks, 0 failing**, the eBay repricing files,
+and the D1 database created and seeded. See `CLAUDE.md` for the map.
