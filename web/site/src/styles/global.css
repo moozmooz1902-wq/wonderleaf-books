@@ -9,58 +9,26 @@
  * matters because "policy pages that 404 or need JS" is a named cause of
  * misrepresentation suspensions.
  *
- * WHITE WALLS, BLACK TYPE. The seller asked for the Desenio look - bright
- * rather than the warm cream this started as, and black and white rather
- * than the oak accent.
+ * THE PALETTE IS NOT IN THIS FILE. themes.json holds the named presets,
+ * business.config.json picks one, build_db.py writes theme.css, and this
+ * imports it. The seller changes the shop's colours often, so they are data
+ * rather than a stylesheet edit and a hunt for literals that escaped the
+ * tokens. Every rule below takes its colour from a token; there is no hex
+ * value anywhere else in this file, and that is what makes a swap one word.
  *
- * The thing that made cream work is still true: every framed photograph in
- * the buckets sits on flat cream, measured at rgb(237,234,227), so on a
- * cream page a product had no visible edge. On white it does. That is
- * handled rather than ignored - `.card .shot` carries a hairline rule and a
- * white fill, so the cream inside it reads as the mount of a mounted print
- * rather than as a photograph that does not match its page. It is how a
- * print shop frames a product shot anyway.
- *
- * Nothing else in this file needed changing. Every colour is taken from the
- * tokens below, and the buttons were already --ink on --paper, uppercase and
- * letter-spaced, so they became black-on-white on their own.
+ * The one thing a palette must still get right: every mockup is a framed
+ * print photographed on flat cream, rgb(237,234,227), baked into the image.
+ * --plate-wall is the background of the large image panels and nothing else.
+ * On a light theme set it to that exact cream and a photograph has no edge;
+ * on a dark one set it near the page colour and the print reads as a lit
+ * panel on a dark wall, which is how a gallery hangs work anyway.
  */
 
-/* ONE LOOK, AND IT IS THE LIGHT ONE.
- *
- * This had a full dark theme. It is gone on purpose, not by neglect.
- *
- * Every photograph in the shop is a framed print on flat cream,
- * rgb(237,234,227), baked into the image - it cannot be removed without
- * re-rendering a quarter of a million mockups. On a dark page every product
- * is therefore a bright rectangle on a black wall. That can be made to look
- * deliberate, and it was, but it is a different shop from the one the seller
- * wants, and a visitor whose phone happens to be in dark mode was being shown
- * it without ever choosing it. The seller saw the dark version twice and both
- * times read it as a fault.
- *
- * So the palette is pinned: white page, black type, black logo, whatever the
- * device prefers. color-scheme: light is set explicitly so form controls and
- * scrollbars follow rather than rendering dark against a white page.
- */
+/* The palette is generated - see themes.json and build_db.py. Type and
+ * measure are not a colour choice, so they stay here. */
+@import "./theme.css";
+
 :root {
-  color-scheme: light;
-  --paper: #ffffff;
-  --paper-2: #f5f4f2;
-  --card: #ffffff;
-  --ink: #121212;
-  --ink-2: #4a4a4a;
-  --ink-3: #787878;
-  --rule: #e4e2dd;
-  --accent: #121212;
-  --accent-ink: #000000;
-  --ok: #1f6b3a;
-  /* The exact flat cream every mockup is photographed on, rgb(237,234,227).
-   * Used ONLY as the background of the large image panels, so the
-   * photograph's own ground and the panel become one surface and the frame
-   * appears to hang on a wall. Anywhere else it would just make the shop
-   * beige. This is the cream theme's one good trick, kept and confined. */
-  --plate-wall: #edeae3;
   --serif: ui-serif, 'Iowan Old Style', 'Palatino Linotype', Palatino,
     Georgia, 'Times New Roman', serif;
   --sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,

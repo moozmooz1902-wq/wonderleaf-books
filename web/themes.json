@@ -1,0 +1,69 @@
+{
+  "_": "THE SHOP'S PALETTES, AS DATA. The seller changes these often, so they are not spelled out in the stylesheet any more - build_db.py writes the chosen one into site/src/styles/theme.css and global.css imports it. Changing the whole shop is one word in business.config.json: \"theme\". Add a preset by copying a block; every preset must define every token, because there is no fallback and a missing one is an invisible colour.",
+  "_plate_wall": "The background of the large image panels ONLY. Every mockup is photographed on flat cream, rgb(237,234,227). Set it to that exact value on a light theme and the photograph has no edge; on a dark theme set it near the page colour so the print reads as a lit panel on a dark wall, which is how a gallery actually hangs work.",
+  "_scheme": "light or dark. It sets color-scheme, so native form controls and scrollbars follow the palette instead of fighting it.",
+
+  "ink-black": {
+    "label": "Ink black - black page, white type",
+    "scheme": "dark",
+    "paper": "#0e0e10",
+    "paper-2": "#17171a",
+    "card": "#1b1b1f",
+    "ink": "#f4f3f0",
+    "ink-2": "#c2bfb9",
+    "ink-3": "#8d8a85",
+    "rule": "#2c2c31",
+    "accent": "#f4f3f0",
+    "accent-ink": "#ffffff",
+    "ok": "#7fb48a",
+    "plate-wall": "#17171a"
+  },
+
+  "paper-white": {
+    "label": "Paper white - white page, black type",
+    "scheme": "light",
+    "paper": "#ffffff",
+    "paper-2": "#f5f4f2",
+    "card": "#ffffff",
+    "ink": "#121212",
+    "ink-2": "#4a4a4a",
+    "ink-3": "#787878",
+    "rule": "#e4e2dd",
+    "accent": "#121212",
+    "accent-ink": "#000000",
+    "ok": "#1f6b3a",
+    "plate-wall": "#edeae3"
+  },
+
+  "gallery-cream": {
+    "label": "Gallery cream - the mockups' own background, no seam",
+    "scheme": "light",
+    "paper": "#edeae3",
+    "paper-2": "#e4e0d7",
+    "card": "#f6f4ef",
+    "ink": "#1b1a18",
+    "ink-2": "#4a473f",
+    "ink-3": "#7a766c",
+    "rule": "#d6d1c5",
+    "accent": "#6b5b3e",
+    "accent-ink": "#3d3324",
+    "ok": "#2f5d3a",
+    "plate-wall": "#edeae3"
+  },
+
+  "plaster-pink": {
+    "label": "Plaster pink - warm gallery pink, claret accent",
+    "scheme": "light",
+    "paper": "#f0e2dd",
+    "paper-2": "#e8d6d0",
+    "card": "#f9efec",
+    "ink": "#231b1a",
+    "ink-2": "#4e403d",
+    "ink-3": "#83716d",
+    "rule": "#dcc7c1",
+    "accent": "#8c4a52",
+    "accent-ink": "#5e2f35",
+    "ok": "#2f5d3a",
+    "plate-wall": "#edeae3"
+  }
+}

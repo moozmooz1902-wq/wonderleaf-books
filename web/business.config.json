@@ -69,5 +69,7 @@
   "_arrive_by": "The last date an order must ARRIVE by, as YYYY-MM-DD. The order-by date shown to shoppers is worked back from this using dispatch_working_days and the delivery estimate, so it is never a date the shop cannot actually meet. Leave blank and the banner stays off.",
   "_why": "This is the only honest urgency a print shop has, and it is a strong one: prints are bought as gifts and the deadline is real. A countdown on the buy-two-get-one-free offer would not be - that offer renews every time Google reads the feed, so a clock saying it ends tonight would be a lie told by a clock. Falsely stating that something is available for a very limited time is a banned practice in its own right, not a grey area, and this account cannot afford another one.",
   "_set_it": "Get the courier's last posting date for the service you use, subtract nothing - the maths here already subtracts dispatch and transit - and put that arrival date in arrive_by, then set active true and redeploy."
- }
+ },
+ "theme": "ink-black",
+ "_theme": "Which palette in themes.json the shop wears. Change this one word, run build_db.py, deploy. Nothing else needs touching - every colour in the stylesheet comes from the tokens this writes. The seller changes this often; that is the point."
 }

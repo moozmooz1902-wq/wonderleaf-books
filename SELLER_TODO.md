@@ -47,6 +47,32 @@ the edge cache held the previous build's page, which names a hashed
 stylesheet the deploy had just deleted. The cache key now carries a build
 id, so it cannot recur.
 
+## Changing the shop's colours
+
+One word. `web/business.config.json`, the `"theme"` field:
+
+| Name | What it is |
+|---|---|
+| `ink-black` | black page, white type — **current** |
+| `paper-white` | white page, black type |
+| `gallery-cream` | the exact cream the mockups are photographed on, so prints have no visible edge |
+| `plaster-pink` | warm gallery pink, claret accent |
+
+Change it, then `python3 web/catalogue/build_db.py` and deploy. Nothing else
+needs touching: `themes.json` holds the palettes, build_db.py writes
+`theme.css`, and every rule in the stylesheet takes its colour from those
+tokens. There is no hex value anywhere else.
+
+To add a shade, copy a block in `web/themes.json` and give it a name. Every
+preset must define every token — there is no fallback, and a missing one is
+an invisible colour rather than an error.
+
+The one token that is not a taste decision is `plate-wall`, the background
+behind the big images. Every mockup is a framed print on flat cream,
+rgb(237,234,227), baked into the photograph. On a light theme set it to that
+exact value and the picture has no edge; on a dark one set it near the page
+colour and the print reads as a lit panel on a dark wall.
+
 ## B. Quick, and worth doing before Merchant Center sees you
 
 - **Change the SIC code.** Companies House has NORYMUS LIMITED as 96090
