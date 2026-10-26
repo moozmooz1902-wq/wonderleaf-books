@@ -2,15 +2,27 @@
 import Base from '../layouts/Base.astro';
 import Grid from '../components/Grid.astro';
 import { B, TAX, money, img } from '../lib/shop';
-import { getDb, nicheCounts, byStyle, bySection, byNiche, byNicheColour } from '../lib/db';
+import { getDb, nicheCounts, bySection, byNiche, byNicheColour, bySectionColour } from '../lib/db';
 import { edge, TTL_CATALOGUE } from '../lib/cache';
 
 const db = getDb(Astro.locals);
 const { results: counts } = await nicheCounts(db);
-// Charcoal leads the home page because it leads the measured data: on the
-// seller's own eBay watchers it ran at 5.96% against a 1.05% base rate,
-// z=+5.9, the strongest single signal in the project.
-const { results: lead } = await byStyle(db, 'charcoal-drawings', 12);
+// THE LEAD BLOCK IS ANIMALS IN COLOUR, NOT CHARCOAL.
+//
+// Charcoal leads the measured data - 5.96% against a 1.05% base rate on the
+// seller's own eBay watchers, z=+5.9, the strongest single signal in the
+// project - and it led this block for that reason. It is still the largest
+// technique in the range and it still has its own page at
+// /style/charcoal-drawings.
+//
+// It is not what the home page opens with any more. A grid of twelve
+// black-and-white drawings on a cream page reads as dull at a glance, and a
+// home page is judged at a glance; the demand signal says what people buy
+// once they are looking at prints, not what makes them look. So the lead is
+// the colourful end of the animals section, which is the most immediately
+// legible thing in the catalogue.
+const { results: lead } = await bySectionColour(
+  db, 'animals', ['colourful', 'bold-colour', 'two-tone'], 12);
 const { results: coast } = await bySection(db, 'landscapes', 8);
 // THE LARGE IMAGES, DRAWN FROM THE CATALOGUE.
 //
@@ -124,14 +136,15 @@ edge(Astro.response, TTL_CATALOGUE);
 
   <section class="wrap">
     <div class="section-block">
-      <p class="kicker">The charcoal range</p>
-      <h2>Worked in black on paper</h2>
+      <p class="kicker">Animals &amp; wildlife</p>
+      <h2>Birds, beasts and breed studies</h2>
       <p class="prose" style="max-width:62ch">
-        Soft charcoal, smudged and reworked, with nothing but tone doing the
-        work. It is the quietest thing we make and the easiest to hang.
+        British birds and mammals, and breed studies for the dogs people
+        actually keep. Generic breed names only — no named animals, no
+        mascots.
       </p>
       <Grid items={lead} />
-      <a class="opt" href="/style/charcoal-drawings">See all charcoal drawings</a>
+      <a class="opt" href="/c/animals">See all animals &amp; wildlife</a>
     </div>
 
     <div class="section-block">

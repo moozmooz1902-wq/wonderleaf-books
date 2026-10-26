@@ -253,3 +253,19 @@ export const variantsFor = (
     )
     .bind(...slugs, frame, size)
     .all<Variant & { product_slug: string }>();
+
+/** A section's products, restricted to particular palettes. */
+export const bySectionColour = (
+  db: DB,
+  section: string,
+  colours: string[],
+  limit = 12
+) =>
+  db
+    .prepare(
+      `${LIST} WHERE p.section = ? AND p.colour IN (` +
+        colours.map(() => '?').join(',') +
+        ') ORDER BY p.rank LIMIT ?'
+    )
+    .bind(section, ...colours, limit)
+    .all<Card>();

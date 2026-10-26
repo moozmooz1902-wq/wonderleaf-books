@@ -31,7 +31,19 @@
  * Policy pages hold longer because nothing in them is priced; checkout,
  * cart and order pages are never cached at all.
  */
-export const TTL_CATALOGUE = 300; // 5 minutes
+// 60s, not 300. The build id in middleware.ts namespaces OUR cache, but
+// Cloudflare's own edge cache keys on the request URL, so after a deploy the
+// plain /art/... URL can still serve the previous build's HTML - which names
+// a hashed stylesheet that the same deploy has just deleted. That is the
+// "unstyled shop" failure, and it is bounded by this number. A minute is
+// still most of the benefit; five minutes of a broken-looking shop is not a
+// trade worth making while the catalogue is changing several times a day.
+//
+// The real fix is purging the zone on deploy. The API token in this
+// environment has no cache-purge permission, so this is the mitigation that
+// does not need one. Add Zone -> Cache Purge to the token and this can go
+// back up.
+export const TTL_CATALOGUE = 60;
 export const TTL_STATIC = 3600; // 1 hour - policy and information pages
 export const TTL_FEED = 900; // 15 minutes - feed.xml, sitemap
 
