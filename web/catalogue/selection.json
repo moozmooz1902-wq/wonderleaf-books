@@ -1,5 +1,5 @@
 {
- "generated": 240,
+ "generated": 209,
  "framed_only": true,
  "min_distance": 48,
  "designs": [
@@ -233,18 +233,6 @@
   },
   {
    "kind": "celestial",
-   "subject": "the full moon low over a rooftop",
-   "tech": "sketch",
-   "gram": "C4_overland",
-   "pal": "neutral",
-   "prompt": "loose pencil sketch, visible construction lines, soft graphite shading of the full moon low over a rooftop, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, above a simplified dark landscape silhouette along the lower third, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-02787900e2afa6d7",
-   "bucket": "posterleaf-store1",
-   "_score": 1.1858,
-   "_niche": "the-moon"
-  },
-  {
-   "kind": "celestial",
    "subject": "a corn moon in September",
    "tech": "sketch",
    "gram": "C4_overland",
@@ -365,18 +353,6 @@
   },
   {
    "kind": "place",
-   "subject": "Stanage Edge",
-   "tech": "sketch",
-   "gram": "G2_terrain",
-   "pal": "neutral",
-   "prompt": "loose pencil sketch, visible construction lines, soft graphite shading of Stanage Edge, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen across open land, the horizon pushed to the top of the picture, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-00466c0baff4d768",
-   "bucket": "luxvia-art",
-   "_score": 1.1093,
-   "_niche": "mountains-hills"
-  },
-  {
-   "kind": "place",
    "subject": "Ben Lomond",
    "tech": "sketch",
    "gram": "G9_naive",
@@ -384,18 +360,6 @@
    "prompt": "loose pencil sketch, visible construction lines, soft graphite shading of Ben Lomond, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
    "sku": "WA-0530ecca7b380359",
    "bucket": "lunar-kms",
-   "_score": 1.1093,
-   "_niche": "mountains-hills"
-  },
-  {
-   "kind": "place",
-   "subject": "Catbells",
-   "tech": "sketch",
-   "gram": "G2_terrain",
-   "pal": "neutral",
-   "prompt": "loose pencil sketch, visible construction lines, soft graphite shading of Catbells, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen across open land, the horizon pushed to the top of the picture, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-067e56692e0b1b08",
-   "bucket": "luxvia-art",
    "_score": 1.1093,
    "_niche": "mountains-hills"
   },
@@ -473,18 +437,6 @@
   },
   {
    "kind": "place",
-   "subject": "Dartmoor",
-   "tech": "charcoal",
-   "gram": "G2_terrain",
-   "pal": "monochrome",
-   "prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of Dartmoor, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen across open land, the horizon pushed to the top of the picture, no colour at all, warm charcoal black on cream paper, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-16a1e9fecc344d1f",
-   "bucket": "posterleaf-store1",
-   "_score": 1.45,
-   "_niche": "national-parks"
-  },
-  {
-   "kind": "place",
    "subject": "the Pembrokeshire Coast",
    "tech": "charcoal",
    "gram": "G2_terrain",
@@ -505,18 +457,6 @@
    "sku": "WA-2edbbfb3df9e447a",
    "bucket": "mercury-usm",
    "_score": 1.45,
-   "_niche": "national-parks"
-  },
-  {
-   "kind": "place",
-   "subject": "the South Downs",
-   "tech": "sketch",
-   "gram": "G2_terrain",
-   "pal": "neutral",
-   "prompt": "loose pencil sketch, visible construction lines, soft graphite shading of the South Downs, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen across open land, the horizon pushed to the top of the picture, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-0520390e5cb8018a",
-   "bucket": "luxvia-art",
-   "_score": 1.1093,
    "_niche": "national-parks"
   },
   {
@@ -551,18 +491,6 @@
    "pal": "neutral",
    "prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of the Lake District, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
    "sku": "WA-064350411e4afdcb",
-   "bucket": "luxvia-art",
-   "_score": 0.6779,
-   "_niche": "national-parks"
-  },
-  {
-   "kind": "place",
-   "subject": "the Peak District",
-   "tech": "ink_wash",
-   "gram": "G2_terrain",
-   "pal": "neutral",
-   "prompt": "black ink wash painting, hard dry edges, deliberate splatter dots of the Peak District, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, seen across open land, the horizon pushed to the top of the picture, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-0a28e73260749113",
    "bucket": "luxvia-art",
    "_score": 0.6779,
    "_niche": "national-parks"
@@ -636,18 +564,6 @@
    "prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of Windermere, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, no colour at all, warm charcoal black on cream paper, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
    "sku": "WA-0a60b4f3a7b5327f",
    "bucket": "mercury-usm",
-   "_score": 1.35,
-   "_niche": "lakes-rivers"
-  },
-  {
-   "kind": "place",
-   "subject": "Haweswater",
-   "tech": "charcoal",
-   "gram": "G9_naive",
-   "pal": "monochrome",
-   "prompt": "charcoal and graphite drawing, visible paper grain, loose open hatching of Haweswater, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, no colour at all, warm charcoal black on cream paper, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-0a626640066668d7",
-   "bucket": "luxvia-art",
    "_score": 1.35,
    "_niche": "lakes-rivers"
   },
@@ -821,36 +737,12 @@
   },
   {
    "kind": "celestial",
-   "subject": "the Plough asterism",
-   "tech": "monotype",
-   "gram": "C4_overland",
-   "pal": "neutral",
-   "prompt": "monotype print pulled from an inked plate, the plate wiped back, soft blurred edges and plate tone of the Plough asterism, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, above a simplified dark landscape silhouette along the lower third, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-01e0b8e700323a48",
-   "bucket": "luxvia-art",
-   "_score": 0.51,
-   "_niche": "constellations"
-  },
-  {
-   "kind": "celestial",
    "subject": "the constellation Ursa Major",
    "tech": "monotype",
    "gram": "C1_vast",
    "pal": "neutral",
    "prompt": "monotype print pulled from an inked plate, the plate wiped back, soft blurred edges and plate tone of the constellation Ursa Major, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, a vast empty night sky filling the sheet, the land a thin dark band at the foot, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
    "sku": "WA-06f55626da401bb8",
-   "bucket": "luxvia-art",
-   "_score": 0.51,
-   "_niche": "constellations"
-  },
-  {
-   "kind": "celestial",
-   "subject": "the constellation Sagittarius",
-   "tech": "monotype",
-   "gram": "C3_row",
-   "pal": "neutral",
-   "prompt": "monotype print pulled from an inked plate, the plate wiped back, soft blurred edges and plate tone of the constellation Sagittarius, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a row of three simplified studies across the middle of the sheet, cream, bone and oatmeal with one small rust accent, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-0869ea8a7013e4f0",
    "bucket": "luxvia-art",
    "_score": 0.51,
    "_niche": "constellations"
@@ -953,18 +845,6 @@
   },
   {
    "kind": "creature",
-   "subject": "reed warbler",
-   "tech": "monotype",
-   "gram": "G7_chart",
-   "pal": "duotone",
-   "prompt": "monotype print pulled from an inked plate, the plate wiped back, soft blurred edges and plate tone of a reed warbler, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a specimen chart of nine simplified studies on one flat warm ground, two adjacent colours only, exactly two eyes, both eyes clear and correctly placed, clean simple eyes, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no human figures, no hands, animal only",
-   "sku": "WA-009bfba48522214b",
-   "bucket": "lunar-kms",
-   "_score": 0.36,
-   "_niche": "british-birds"
-  },
-  {
-   "kind": "creature",
    "subject": "puffin",
    "tech": "cyanotype",
    "gram": "G3_habitat",
@@ -977,36 +857,12 @@
   },
   {
    "kind": "creature",
-   "subject": "twite",
-   "tech": "cyanotype",
-   "gram": "G4_portrait",
-   "pal": "duotone",
-   "prompt": "cyanotype photogram, Prussian blue ground with white silhouettes, uneven brushed edges of a twite, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, exactly two eyes, both eyes clear and correctly placed, clean simple eyes, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no human figures, no hands, animal only",
-   "sku": "WA-029868ceba094386",
-   "bucket": "luxvia-art",
-   "_score": 0.3024,
-   "_niche": "british-birds"
-  },
-  {
-   "kind": "creature",
    "subject": "mute swan",
    "tech": "cyanotype",
    "gram": "G4_portrait",
    "pal": "duotone",
    "prompt": "cyanotype photogram, Prussian blue ground with white silhouettes, uneven brushed edges of a mute swan, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, exactly two eyes, both eyes clear and correctly placed, clean simple eyes, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no human figures, no hands, animal only",
    "sku": "WA-02a566e0bd1fe681",
-   "bucket": "luxvia-art",
-   "_score": 0.3024,
-   "_niche": "british-birds"
-  },
-  {
-   "kind": "creature",
-   "subject": "reed bunting",
-   "tech": "cyanotype",
-   "gram": "G4_portrait",
-   "pal": "duotone",
-   "prompt": "cyanotype photogram, Prussian blue ground with white silhouettes, uneven brushed edges of a reed bunting, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, exactly two eyes, both eyes clear and correctly placed, clean simple eyes, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no human figures, no hands, animal only",
-   "sku": "WA-02f1e559819b9e32",
    "bucket": "luxvia-art",
    "_score": 0.3024,
    "_niche": "british-birds"
@@ -1032,18 +888,6 @@
    "prompt": "monotype print pulled from an inked plate, the plate wiped back, soft blurred edges and plate tone of wild poppies, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, a single stem laid flat and centred like a pressed herbarium specimen, on plain paper, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
    "sku": "WA-0039ea048234d978",
    "bucket": "lunar-kms",
-   "_score": 0.36,
-   "_niche": "wildflowers"
-  },
-  {
-   "kind": "botanical",
-   "subject": "red clover",
-   "tech": "monotype",
-   "gram": "B3_scatter",
-   "pal": "duotone",
-   "prompt": "monotype print pulled from an inked plate, the plate wiped back, soft blurred edges and plate tone of red clover, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, several cuttings scattered evenly across the sheet with space between them, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-00dc802b8594e505",
-   "bucket": "luxvia-art",
    "_score": 0.36,
    "_niche": "wildflowers"
   },
@@ -1139,18 +983,6 @@
    "pal": "complementary",
    "prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of oxlip, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, a single stem laid flat and centred like a pressed herbarium specimen, on plain paper, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
    "sku": "WA-03466fb64e87e6dc",
-   "bucket": "lunar-kms",
-   "_score": 0.18,
-   "_niche": "wildflowers"
-  },
-  {
-   "kind": "botanical",
-   "subject": "marsh marigold",
-   "tech": "linocut",
-   "gram": "B3_scatter",
-   "pal": "complementary",
-   "prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of marsh marigold, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, several cuttings scattered evenly across the sheet with space between them, burnt orange against petrol blue, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-03eb89a095aa1a7c",
    "bucket": "lunar-kms",
    "_score": 0.18,
    "_niche": "wildflowers"
@@ -1337,30 +1169,6 @@
   },
   {
    "kind": "creature",
-   "subject": "rough collie",
-   "tech": "linocut",
-   "gram": "G7_chart",
-   "pal": "duotone",
-   "prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a rough collie, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a specimen chart of nine simplified studies on one flat warm ground, two adjacent colours only, exactly two eyes, both eyes clear and correctly placed, clean simple eyes, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no human figures, no hands, animal only",
-   "sku": "WA-0174c8ab865858f3",
-   "bucket": "luxvia-art",
-   "_score": 0.288,
-   "_niche": "dogs"
-  },
-  {
-   "kind": "creature",
-   "subject": "saint bernard",
-   "tech": "linocut",
-   "gram": "G7_chart",
-   "pal": "duotone",
-   "prompt": "two-tone linocut print, white gouge marks cutting through flat ink, chatter and speckle of a saint bernard, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a specimen chart of nine simplified studies on one flat warm ground, two adjacent colours only, exactly two eyes, both eyes clear and correctly placed, clean simple eyes, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no human figures, no hands, animal only",
-   "sku": "WA-0231efad8dcd6c7f",
-   "bucket": "luxvia-art",
-   "_score": 0.288,
-   "_niche": "dogs"
-  },
-  {
-   "kind": "creature",
    "subject": "boston terrier",
    "tech": "linocut",
    "gram": "G3_habitat",
@@ -1451,18 +1259,6 @@
    "pal": "duotone",
    "prompt": "flat screen-printed artwork, hand-pulled ink, simplified geometric shapes, bold flat colour of tree peony, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, growing in a dense band across the lower half, stems running off both edges, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
    "sku": "WA-00b01ac85cd4f1ad",
-   "bucket": "luxvia-art",
-   "_score": 0.2448,
-   "_niche": "garden-flowers"
-  },
-  {
-   "kind": "botanical",
-   "subject": "bupleurum",
-   "tech": "screenprint",
-   "gram": "B3_scatter",
-   "pal": "duotone",
-   "prompt": "flat screen-printed artwork, hand-pulled ink, simplified geometric shapes, bold flat colour of bupleurum, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, several cuttings scattered evenly across the sheet with space between them, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-00e1e9d9738da35a",
    "bucket": "luxvia-art",
    "_score": 0.2448,
    "_niche": "garden-flowers"
@@ -1601,18 +1397,6 @@
   },
   {
    "kind": "creature",
-   "subject": "red deer hind",
-   "tech": "screenprint",
-   "gram": "G4_portrait",
-   "pal": "duotone",
-   "prompt": "flat screen-printed artwork, hand-pulled ink, simplified geometric shapes, bold flat colour of a red deer hind, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, exactly two eyes, both eyes clear and correctly placed, clean simple eyes, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no human figures, no hands, animal only",
-   "sku": "WA-02f444c98d5f93d3",
-   "bucket": "luxvia-art",
-   "_score": 0.2448,
-   "_niche": "british-wildlife"
-  },
-  {
-   "kind": "creature",
    "subject": "tamworth pig",
    "tech": "screenprint",
    "gram": "G4_portrait",
@@ -1632,18 +1416,6 @@
    "prompt": "flat screen-printed artwork, hand-pulled ink, simplified geometric shapes, bold flat colour of a llama, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, two adjacent colours only, exactly two eyes, both eyes clear and correctly placed, clean simple eyes, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no human figures, no hands, animal only",
    "sku": "WA-04141ed08c35602b",
    "bucket": "mercury-usm",
-   "_score": 0.2448,
-   "_niche": "british-wildlife"
-  },
-  {
-   "kind": "creature",
-   "subject": "polecat",
-   "tech": "screenprint",
-   "gram": "G3_habitat",
-   "pal": "duotone",
-   "prompt": "flat screen-printed artwork, hand-pulled ink, simplified geometric shapes, bold flat colour of a polecat, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, set among a dense foreground of seedheads and flowers running off every edge, two adjacent colours only, exactly two eyes, both eyes clear and correctly placed, clean simple eyes, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no human figures, no hands, animal only",
-   "sku": "WA-0510377ffa0563f3",
-   "bucket": "luxvia-art",
    "_score": 0.2448,
    "_niche": "british-wildlife"
   },
@@ -1896,18 +1668,6 @@
    "prompt": "flat gouache illustration, every shape outlined with a dark contour line of Whernside, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
    "sku": "WA-00621a2dcfd3ccbe",
    "bucket": "lunar-kms",
-   "_score": 0.2923,
-   "_niche": "mountains-hills"
-  },
-  {
-   "kind": "place",
-   "subject": "Brown Willy",
-   "tech": "gouache",
-   "gram": "G9_naive",
-   "pal": "duotone",
-   "prompt": "flat gouache illustration, every shape outlined with a dark contour line of Brown Willy, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, two adjacent colours only, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-0085434fbcb8bfab",
-   "bucket": "luxvia-art",
    "_score": 0.2923,
    "_niche": "mountains-hills"
   },
@@ -2333,18 +2093,6 @@
   },
   {
    "kind": "celestial",
-   "subject": "the constellation Centaurus",
-   "tech": "risograph",
-   "gram": "C1_vast",
-   "pal": "spectrum",
-   "prompt": "two-colour risograph print, layers slightly misregistered, coarse halftone dot grain, flat ink of the constellation Centaurus, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, a vast empty night sky filling the sheet, the land a thin dark band at the foot, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-0080b62d3df239ad",
-   "bucket": "mercury-usm",
-   "_score": 0.1037,
-   "_niche": "constellations"
-  },
-  {
-   "kind": "celestial",
    "subject": "the Summer Triangle",
    "tech": "collage",
    "gram": "C1_vast",
@@ -2363,18 +2111,6 @@
    "pal": "spectrum",
    "prompt": "cut paper collage, flat torn-edge shapes layered in planes of the constellation Scorpius, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, a vast empty night sky filling the sheet, the land a thin dark band at the foot, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
    "sku": "WA-04ac328da7c25eb7",
-   "bucket": "luxvia-art",
-   "_score": 0.1037,
-   "_niche": "constellations"
-  },
-  {
-   "kind": "celestial",
-   "subject": "the constellation Ursa Minor",
-   "tech": "risograph",
-   "gram": "C3_row",
-   "pal": "spectrum",
-   "prompt": "two-colour risograph print, layers slightly misregistered, coarse halftone dot grain, flat ink of the constellation Ursa Minor, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a row of three simplified studies across the middle of the sheet, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-068d107875dcdfcb",
    "bucket": "luxvia-art",
    "_score": 0.1037,
    "_niche": "constellations"
@@ -2524,18 +2260,6 @@
    "_niche": "garden-flowers"
   },
   {
-   "kind": "botanical",
-   "subject": "turkey oak",
-   "tech": "risograph",
-   "gram": "B3_scatter",
-   "pal": "spectrum",
-   "prompt": "two-colour risograph print, layers slightly misregistered, coarse halftone dot grain, flat ink of turkey oak, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, several cuttings scattered evenly across the sheet with space between them, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-009a86caae00122a",
-   "bucket": "luxvia-art",
-   "_score": 0.0864,
-   "_niche": "trees"
-  },
-  {
    "kind": "creature",
    "subject": "turnstone",
    "tech": "risograph",
@@ -2644,18 +2368,6 @@
    "_niche": "trees"
   },
   {
-   "kind": "botanical",
-   "subject": "cerinthe",
-   "tech": "oil_impasto",
-   "gram": "B3_scatter",
-   "pal": "spectrum",
-   "prompt": "thick oil painting, visible impasto ridges and brush drag of cerinthe, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, several cuttings scattered evenly across the sheet with space between them, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-000311d611f26ab6",
-   "bucket": "lunar-kms",
-   "_score": 0.0792,
-   "_niche": "garden-flowers"
-  },
-  {
    "kind": "creature",
    "subject": "yellow wagtail",
    "tech": "palette_knife",
@@ -2678,42 +2390,6 @@
    "bucket": "luxvia-art",
    "_score": 0.0792,
    "_niche": "dogs"
-  },
-  {
-   "kind": "botanical",
-   "subject": "red campion",
-   "tech": "oil_impasto",
-   "gram": "B3_scatter",
-   "pal": "spectrum",
-   "prompt": "thick oil painting, visible impasto ridges and brush drag of red campion, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, several cuttings scattered evenly across the sheet with space between them, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-0063d3c6ea6f85e7",
-   "bucket": "luxvia-art",
-   "_score": 0.0792,
-   "_niche": "wildflowers"
-  },
-  {
-   "kind": "creature",
-   "subject": "bracco italiano",
-   "tech": "palette_knife",
-   "gram": "G4_portrait",
-   "pal": "spectrum",
-   "prompt": "palette knife painting, angular facets with hard straight edges, no outlines of a bracco italiano, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, a full spectrum of saturated colour, many hues at once, exactly two eyes, both eyes clear and correctly placed, clean simple eyes, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no human figures, no hands, animal only",
-   "sku": "WA-00dea34345c38ad5",
-   "bucket": "luxvia-art",
-   "_score": 0.0792,
-   "_niche": "dogs"
-  },
-  {
-   "kind": "botanical",
-   "subject": "broom",
-   "tech": "palette_knife",
-   "gram": "B3_scatter",
-   "pal": "spectrum",
-   "prompt": "palette knife painting, angular facets with hard straight edges, no outlines of broom, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, several cuttings scattered evenly across the sheet with space between them, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
-   "sku": "WA-00e41b7e4bfd57c8",
-   "bucket": "luxvia-art",
-   "_score": 0.0792,
-   "_niche": "wildflowers"
   },
   {
    "kind": "creature",
@@ -2765,18 +2441,6 @@
   },
   {
    "kind": "creature",
-   "subject": "wildcat",
-   "tech": "palette_knife",
-   "gram": "G4_portrait",
-   "pal": "spectrum",
-   "prompt": "palette knife painting, angular facets with hard straight edges, no outlines of a wildcat, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, a full spectrum of saturated colour, many hues at once, exactly two eyes, both eyes clear and correctly placed, clean simple eyes, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no human figures, no hands, animal only",
-   "sku": "WA-0188eee333d116b3",
-   "bucket": "luxvia-art",
-   "_score": 0.0792,
-   "_niche": "british-wildlife"
-  },
-  {
-   "kind": "creature",
    "subject": "badger",
    "tech": "oil_impasto",
    "gram": "G4_portrait",
@@ -2798,18 +2462,6 @@
    "bucket": "lunar-kms",
    "_score": 0.0792,
    "_niche": "british-birds"
-  },
-  {
-   "kind": "creature",
-   "subject": "shrew",
-   "tech": "palette_knife",
-   "gram": "G4_portrait",
-   "pal": "spectrum",
-   "prompt": "palette knife painting, angular facets with hard straight edges, no outlines of a shrew, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, head and shoulders, centred, cropped by the lower edge, direct gaze, on one flat ground, a full spectrum of saturated colour, many hues at once, exactly two eyes, both eyes clear and correctly placed, clean simple eyes, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no human figures, no hands, animal only",
-   "sku": "WA-01d8f5a30a1f05e0",
-   "bucket": "luxvia-art",
-   "_score": 0.0792,
-   "_niche": "british-wildlife"
   },
   {
    "kind": "creature",
@@ -2858,30 +2510,163 @@
    "bucket": "luxvia-art",
    "_score": 0.1267,
    "_niche": "british-coast"
+  }
+ ],
+ "dropped_by_eye": [
+  {
+   "sku": "WA-02787900e2afa6d7",
+   "subject": "the full moon low over a rooftop",
+   "gram": "C4_overland"
   },
   {
-   "kind": "place",
-   "subject": "Shanklin Chine",
-   "tech": "oil_impasto",
-   "gram": "G9_naive",
-   "pal": "spectrum",
-   "prompt": "thick oil painting, visible impasto ridges and brush drag of Shanklin Chine, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
+   "sku": "WA-00466c0baff4d768",
+   "subject": "Stanage Edge",
+   "gram": "G2_terrain"
+  },
+  {
+   "sku": "WA-067e56692e0b1b08",
+   "subject": "Catbells",
+   "gram": "G2_terrain"
+  },
+  {
+   "sku": "WA-16a1e9fecc344d1f",
+   "subject": "Dartmoor",
+   "gram": "G2_terrain"
+  },
+  {
+   "sku": "WA-0520390e5cb8018a",
+   "subject": "the South Downs",
+   "gram": "G2_terrain"
+  },
+  {
+   "sku": "WA-0a28e73260749113",
+   "subject": "the Peak District",
+   "gram": "G2_terrain"
+  },
+  {
+   "sku": "WA-0a626640066668d7",
+   "subject": "Haweswater",
+   "gram": "G9_naive"
+  },
+  {
+   "sku": "WA-01e0b8e700323a48",
+   "subject": "the Plough asterism",
+   "gram": "C4_overland"
+  },
+  {
+   "sku": "WA-0869ea8a7013e4f0",
+   "subject": "the constellation Sagittarius",
+   "gram": "C3_row"
+  },
+  {
+   "sku": "WA-009bfba48522214b",
+   "subject": "reed warbler",
+   "gram": "G7_chart"
+  },
+  {
+   "sku": "WA-029868ceba094386",
+   "subject": "twite",
+   "gram": "G4_portrait"
+  },
+  {
+   "sku": "WA-02f1e559819b9e32",
+   "subject": "reed bunting",
+   "gram": "G4_portrait"
+  },
+  {
+   "sku": "WA-00dc802b8594e505",
+   "subject": "red clover",
+   "gram": "B3_scatter"
+  },
+  {
+   "sku": "WA-03eb89a095aa1a7c",
+   "subject": "marsh marigold",
+   "gram": "B3_scatter"
+  },
+  {
+   "sku": "WA-0174c8ab865858f3",
+   "subject": "rough collie",
+   "gram": "G7_chart"
+  },
+  {
+   "sku": "WA-0231efad8dcd6c7f",
+   "subject": "saint bernard",
+   "gram": "G7_chart"
+  },
+  {
+   "sku": "WA-00e1e9d9738da35a",
+   "subject": "bupleurum",
+   "gram": "B3_scatter"
+  },
+  {
+   "sku": "WA-02f444c98d5f93d3",
+   "subject": "red deer hind",
+   "gram": "G4_portrait"
+  },
+  {
+   "sku": "WA-0510377ffa0563f3",
+   "subject": "polecat",
+   "gram": "G3_habitat"
+  },
+  {
+   "sku": "WA-0085434fbcb8bfab",
+   "subject": "Brown Willy",
+   "gram": "G9_naive"
+  },
+  {
+   "sku": "WA-0080b62d3df239ad",
+   "subject": "the constellation Centaurus",
+   "gram": "C1_vast"
+  },
+  {
+   "sku": "WA-068d107875dcdfcb",
+   "subject": "the constellation Ursa Minor",
+   "gram": "C3_row"
+  },
+  {
+   "sku": "WA-009a86caae00122a",
+   "subject": "turkey oak",
+   "gram": "B3_scatter"
+  },
+  {
+   "sku": "WA-000311d611f26ab6",
+   "subject": "cerinthe",
+   "gram": "B3_scatter"
+  },
+  {
+   "sku": "WA-0063d3c6ea6f85e7",
+   "subject": "red campion",
+   "gram": "B3_scatter"
+  },
+  {
+   "sku": "WA-00dea34345c38ad5",
+   "subject": "bracco italiano",
+   "gram": "G4_portrait"
+  },
+  {
+   "sku": "WA-00e41b7e4bfd57c8",
+   "subject": "broom",
+   "gram": "B3_scatter"
+  },
+  {
+   "sku": "WA-0188eee333d116b3",
+   "subject": "wildcat",
+   "gram": "G4_portrait"
+  },
+  {
+   "sku": "WA-01d8f5a30a1f05e0",
+   "subject": "shrew",
+   "gram": "G4_portrait"
+  },
+  {
    "sku": "WA-00c00f85057f3812",
-   "bucket": "luxvia-art",
-   "_score": 0.1267,
-   "_niche": "british-coast"
+   "subject": "Shanklin Chine",
+   "gram": "G9_naive"
   },
   {
-   "kind": "place",
-   "subject": "Perranporth",
-   "tech": "palette_knife",
-   "gram": "G9_naive",
-   "pal": "spectrum",
-   "prompt": "palette knife painting, angular facets with hard straight edges, no outlines of Perranporth, no text, no lettering, no words, no letters, no numbers, no signature, no handwriting, no monogram, no watermark, unsigned, clean empty corners, as a naive flattened townscape in horizontal bands with no vanishing point, a full spectrum of saturated colour, many hues at once, flat fill, no gradient, no airbrushing, the subject sharp and the surroundings flat, no people, no person, no human figures, no faces, no crowds, deserted and empty of people",
    "sku": "WA-00c595cfc2647f26",
-   "bucket": "luxvia-art",
-   "_score": 0.1267,
-   "_niche": "british-coast"
+   "subject": "Perranporth",
+   "gram": "G9_naive"
   }
  ]
 }

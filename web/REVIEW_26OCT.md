@@ -93,3 +93,86 @@ designs it is cosmetic, at scale it is the whole problem.
 The risograph and collage work (#216-#239) is the most distinctive: strong
 colour, no defects found, and nothing that repeats. If the range is ever
 cut further, cut toward those.
+
+---
+
+# Round two, same day: the colour fix and a second eye-review
+
+The seller looked at the range and said it needed more colour and more
+variety, and that a shopper scrolling a category should not see the same
+look twice. Both were right, and the second one turned out to be a bug
+rather than a matter of taste.
+
+## What was wrong
+
+Every category page was a single colour. Measured: british-birds 100%
+neutral, british-wildlife 100% complementary, dogs 100% duotone,
+garden-flowers 100% complementary, trees 100% duotone, nine of twelve
+niches at 78% or more. The overall mix read 30/25/19/15/11 and hid it
+completely.
+
+Panels are generated in batches that share a palette, so a niche's highest
+scorers are siblings and a quota applied across the whole range cannot see
+it. Fixed by capping palette and technique **per niche** at 30%, and by
+rebalancing the mix toward colour.
+
+Checked the pool first, since the other explanation was that the artwork
+is simply drab. It is not: across 952,439 panels the palettes run duotone
+22.6%, complementary 21.1%, monochrome 21.0%, neutral 19.3%, spectrum
+16.0%. The skew was entirely in the selection code.
+
+| | Before | After |
+|---|---|---|
+| Worst single-palette niche | 100% (five of them) | **43%** |
+| Palettes per niche | 1-2 | **3-5** |
+| Colour vs mono/neutral | 45 / 55 | **67 / 33** |
+
+## Ordering on the page
+
+Fixing the mix was not enough. A category page is `ORDER BY rank`, rank is
+selection order, selection order is score order, and score order clusters -
+so a niche could hold five palettes and still open with six charcoals.
+
+Products are now dealt out round-robin across palettes within each niche
+before rank is assigned, with the lane order reshuffled every cycle, seeded
+from the niche name. A strict rotation would have replaced clustering with
+a metronome, which is just as visible. A second pass separates neighbours
+sharing a technique.
+
+Result across all 209: **6 same-technique neighbours, 5 same-colour
+neighbours.** Seeded, so the order is identical on every build - a
+catalogue that reshuffles itself cannot be checked against yesterday's.
+
+## Second eye-review: 31 more dropped
+
+A fresh selection is a different 240, so the first review did not carry
+over. All 240 looked at again; 31 removed, **209 kept**.
+
+- **9 human figures or probable ones** - Dartmoor (a figure on the
+  clifftop), the Peak District, Stanage Edge, Shanklin Chine, Perranporth,
+  and "turkey oak", which is an American desert roadside with a figure
+  walking across it.
+- **5 fake signatures** - Catbells, the South Downs, reed warbler, rough
+  collie (a monogram stamp), Ben Lomond.
+- **6 animal eyes wrong** - the shrew worst of all, huge and cartoonish on
+  an animal with famously tiny eyes.
+- **6 failed renders** - the constellation Centaurus is an empty
+  rectangle; the Plough is two dots where seven stars should be;
+  bupleurum is a gradient with five dots on it.
+- **5 wrong subject** - "bracco italiano" is a dog breed and the picture is
+  an abstract bird; "wildcat" is a spotted African cat rather than a
+  Scottish one; "a red deer hind" has antlers, which a hind does not.
+- **1 stray object** - a wine glass floating in Haweswater.
+
+`catalogue/rejected.json` now holds **61 SKUs** with reasons, and
+`select.py` drops them before scoring, so no future re-selection can bring
+them back.
+
+## Pattern worth knowing
+
+**oil_impasto and palette_knife do not work for botanical subjects.** Four
+of the five "abstract texture that does not read as the plant" rejects came
+from those two techniques on flowers - cerinthe, red campion, broom. They
+are fine on animals and landscapes. If the share of those techniques is
+raised later, exclude them from the botanical niches rather than
+discovering it one contact sheet at a time.

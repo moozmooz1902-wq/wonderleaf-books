@@ -17,7 +17,7 @@ Everything written here comes from product.build_all(). This file computes no
 titles, no prices and no URLs of its own - if it did, there would be two
 answers to what a product costs, and that is the whole failure mode.
 """
-import collections, json, os, sqlite3, sys
+import collections, json, os, random, sqlite3, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -195,6 +195,80 @@ def main():
     print(f"live taxonomy: {len(live_sections)} sections, "
           f"{len(live_niches)} niches, {len(live_styles)} styles, "
           f"{len(live_colours)} colours, {len(live_rooms)} rooms")
+
+    # INTERLEAVE THE PALETTES WITHIN EACH NICHE.
+    #
+    # A category page is `WHERE niche = ? ORDER BY rank`, and rank is just
+    # the order products come out of selection - which is score order, and
+    # score order clusters, because panels that share a palette were
+    # generated together and score alike. So a niche could hold five
+    # palettes and still open with six charcoal drawings in a row, which
+    # looks exactly like the single-palette problem it was meant to fix.
+    #
+    # So within each niche the products are dealt out round-robin across
+    # palettes before rank is assigned: first the best of each palette, then
+    # the second best of each, and so on. Score order survives inside each
+    # palette, the niches keep their relative order, and the top of every
+    # category page is as varied as the niche itself.
+    seen, order_of_niche = {}, []
+    for pr in products:
+        if pr["niche"] not in seen:
+            seen[pr["niche"]] = True
+            order_of_niche.append(pr["niche"])
+    bucket = collections.defaultdict(lambda: collections.defaultdict(list))
+    for pr in products:
+        bucket[pr["niche"]][pr["colour"]].append(pr)
+    # The lane order is reshuffled every cycle. A strict round robin fixes
+    # the clustering and replaces it with a metronome - two-tone, bold,
+    # colourful, two-tone, bold, colourful - which is just as obviously a
+    # pattern to anyone scrolling. Seeded from the niche name so the order
+    # is varied but identical on every build; a catalogue that reshuffles
+    # itself each time it is built cannot be checked against yesterday's.
+    woven = []
+    for niche in order_of_niche:
+        lanes = [l for l in bucket[niche].values() if l]
+        rng = random.Random(f"walryvo:{niche}")
+        last = None
+        while lanes:
+            cycle = lanes[:]
+            rng.shuffle(cycle)
+            # A shuffle can end one cycle and start the next on the same
+            # lane, which puts two of a colour together and undoes the point.
+            if len(cycle) > 1 and cycle[0] is last:
+                cycle[0], cycle[1] = cycle[1], cycle[0]
+            for lane in cycle:
+                if lane:
+                    woven.append(lane.pop(0))
+                    last = lane
+            lanes = [l for l in lanes if l]
+    # Then a second pass on technique. Rotating the palette stops two black
+    # and white drawings sitting together, but not two charcoals in
+    # different colourways, and the seller's point was about the eye: a
+    # shopper scrolling should never see the same look twice in a row. So
+    # any product whose technique matches the one before it is swapped with
+    # the next one along that does not, as long as the swap does not break
+    # the palette rotation. Nothing is dropped and nothing leaves its niche;
+    # this only reorders within a niche.
+    for a in range(1, len(woven)):
+        if woven[a]["niche"] != woven[a - 1]["niche"]:
+            continue
+        if woven[a]["style"] != woven[a - 1]["style"]:
+            continue
+        for b in range(a + 1, len(woven)):
+            if woven[b]["niche"] != woven[a]["niche"]:
+                break
+            if (woven[b]["style"] != woven[a - 1]["style"]
+                    and woven[b]["colour"] == woven[a]["colour"]):
+                woven[a], woven[b] = woven[b], woven[a]
+                break
+
+    assert len(woven) == len(products), (len(woven), len(products))
+    products = woven
+
+    runs = sum(1 for i in range(1, len(products))
+               if products[i]["niche"] == products[i - 1]["niche"]
+               and products[i]["style"] == products[i - 1]["style"])
+    print(f"same-technique neighbours on a category page: {runs}")
 
     rows = [SCHEMA]
     rows.append("DELETE FROM facet_counts; DELETE FROM product_rooms; "
