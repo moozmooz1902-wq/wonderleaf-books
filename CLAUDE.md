@@ -25,6 +25,63 @@ buckets. The two are not duplicated; read that one on that branch. If you
 are looking for generated IMAGES, you are in the right place here; if you
 are looking for the 2.3M typography catalogue, you are not.
 
+**The OWN-WEBSITE line is `web/`, added 25-26 Oct 2026.** This is the shop
+at **walryvo.com**, built to be synced to Google Merchant Center without
+the misrepresentation suspension that killed the previous Shopify attempt.
+Start with `web/README.md`, then `web/LAUNCH_RUNBOOK.md` (what to do and
+why, mapped line by line to Google's actual policy pages) and
+`web/SETUP_WALKTHROUGH.md` (the click-by-click for domain, DNS and deploy,
+and where the deploy got to).
+
+It is a different product line from eBay and must not be confused with it:
+
+- **240 designs, 12 niches, 2,160 feed items.** Deliberately tiny. A new
+  domain carrying millions of near-identical pages is the shape of a feed
+  farm; a small coherent shop is the application for permission to submit
+  the rest. `web/catalogue/select.py scale_plan()` has the staged ladder.
+- **Framed only, one colourway per design.** Both are decisions, not
+  oversights, and both have long notes in `select.py` saying why. On eBay
+  an unframed variation inherits the framed photo and that is fine; in a
+  Merchant Center feed every variant carries its own image, so it would be
+  submitting an unframed print with a photograph of a framed one.
+- **`web/catalogue/preflight.py` is the gate.** 20 offline checks, 13 more
+  against a deployed site, each naming the Google policy or UK law behind
+  it. `feed.py` refuses to build while the business identity is incomplete.
+  Do not weaken either to make a build pass.
+- **One function builds a product** (`product.build_all`) and both the page
+  and the feed render from its output. That is the whole anti-mismatch
+  design - read the note at the top of `product.py` before changing
+  anything there.
+
+**`ebay_reprice/`** is the repricing tool for live eBay listings, used
+26 Oct to move 502,443 listings to the go-to prices. Its README records
+four things in the export that break a naive find-and-replace.
+
+## Walryvo, the business, in one place
+
+Everything below is also in `web/business.config.json`, which is the single
+source the site, the feed and the policy pages all read.
+
+    brand        Walryvo
+    domain       walryvo.com   (walryvo.co.uk is held too and must 301 to it)
+    legal        NORYMUS LIMITED, company 17020866, England and Wales
+    registered   28 Bedford Square, Leigh, WN7 2AA
+    VAT          GB513541030
+    contact      sales@walryvo.com (Microsoft 365), 07397 937226
+    prices       framed A4/A3/A2 24.99/29.99/34.99, free UK delivery, VAT inc
+    returns      30 days from delivery
+    D1 database  wallart, e1e39887-2c7d-4066-9dc1-15f598af5b6e, already seeded
+
+**Known and NOT fixed, flagged to the seller 25 Oct:** reviewing 48 of the
+240 designs by eye found about 4% clear defects - one titled "teasels"
+whose picture is a street full of people, one carrying a fake cursive
+signature on a page that states the work is not signed, two with possible
+small figures. `declutter.py`'s detector is tuned for the bottom 22% of a
+panel and does NOT discriminate run full-frame (0.0128 on the known case
+against 0.0191 on a clean one), so it is deliberately not shipped as a
+check. `web/catalogue/sheet.py` builds numbered contact sheets so the range
+can be approved by eye; `--drop` removes what is rejected.
+
 ## Why it is split this way
 
 Different product lines, different buckets, different eBay categories
@@ -70,3 +127,15 @@ RunPod and Cloudflare R2 are both connected and verified from the
 environment "poster and t shirt data research". No terminal work is needed
 from the seller. See `tshirt/ACCESS.md` for how each one is wired, what
 does not work and why, so the failed routes are not retried.
+
+**For the website there is NO Cloudflare API token in this environment** -
+`tshirt/ACCESS.md` says so explicitly, and the RunPod template carries R2
+*storage* keys (R2_ACCESS_KEY_ID etc), which sign S3 requests to buckets
+and cannot deploy a Worker, create a D1 database or edit DNS. A deploy
+needs `CLOUDFLARE_API_TOKEN` added to the environment's settings panel by
+the seller, and a NEW session to pick it up. Checked 26 Oct: that token
+authenticates and carries a working Account->D1->Edit, but
+`wrangler deploy` is refused by the permission classifier, and adding an
+allow-rule for it is refused as self-modification. So the final deploy is
+the seller's to run. `web/SETUP_WALKTHROUGH.md` Part 4 has the three
+commands.
