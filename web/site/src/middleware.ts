@@ -24,6 +24,8 @@
  */
 import { defineMiddleware } from 'astro:middleware';
 
+declare const __BUILD_ID__: string;
+
 const NEVER = /^\/(api|cart|order-confirmed)(\/|$)/;
 
 export const onRequest = defineMiddleware(async (ctx, next) => {
@@ -37,7 +39,13 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
   const usable = store && req.method === 'GET' && !NEVER.test(url.pathname);
   if (!usable) return next();
 
-  const key = new Request(url.toString(), { method: 'GET' });
+  // The build id namespaces the cache. See astro.config.mjs: without it a
+  // page cached before a deploy keeps naming the previous build's hashed
+  // stylesheet, which the deploy has already deleted, and the shop renders
+  // with no styling at all.
+  const keyUrl = new URL(url.toString());
+  keyUrl.searchParams.set('__b', __BUILD_ID__);
+  const key = new Request(keyUrl.toString(), { method: 'GET' });
   const hit = await store.match(key);
   if (hit) {
     const res = new Response(hit.body, hit);

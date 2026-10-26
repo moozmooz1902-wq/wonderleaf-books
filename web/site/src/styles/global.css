@@ -9,24 +9,34 @@
  * matters because "policy pages that 404 or need JS" is a named cause of
  * misrepresentation suspensions.
  *
- * THE BACKGROUND IS THE MOCKUPS' BACKGROUND. Every framed photograph in the
- * buckets sits on flat cream, measured at rgb(237,234,227). The page uses
- * the same value, so a product photograph has no visible edge against the
- * page and the grid reads as a wall rather than as a set of tiles. That one
- * number does more for how the shop looks than anything else in this file.
+ * WHITE WALLS, BLACK TYPE. The seller asked for the Desenio look - bright
+ * rather than the warm cream this started as, and black and white rather
+ * than the oak accent.
+ *
+ * The thing that made cream work is still true: every framed photograph in
+ * the buckets sits on flat cream, measured at rgb(237,234,227), so on a
+ * cream page a product had no visible edge. On white it does. That is
+ * handled rather than ignored - `.card .shot` carries a hairline rule and a
+ * white fill, so the cream inside it reads as the mount of a mounted print
+ * rather than as a photograph that does not match its page. It is how a
+ * print shop frames a product shot anyway.
+ *
+ * Nothing else in this file needed changing. Every colour is taken from the
+ * tokens below, and the buttons were already --ink on --paper, uppercase and
+ * letter-spaced, so they became black-on-white on their own.
  */
 
 :root {
-  --paper: #edeae3;          /* measured from the mockups */
-  --paper-2: #e4e0d7;
-  --card: #f6f4ef;
-  --ink: #1b1a18;
-  --ink-2: #4a473f;
-  --ink-3: #7a766c;
-  --rule: #d6d1c5;
-  --accent: #6b5b3e;         /* oak, the one warm note */
-  --accent-ink: #3d3324;
-  --ok: #2f5d3a;
+  --paper: #ffffff;
+  --paper-2: #f5f4f2;
+  --card: #ffffff;
+  --ink: #121212;
+  --ink-2: #4a4a4a;
+  --ink-3: #787878;
+  --rule: #e4e2dd;
+  --accent: #121212;
+  --accent-ink: #000000;
+  --ok: #1f6b3a;
   --serif: ui-serif, 'Iowan Old Style', 'Palatino Linotype', Palatino,
     Georgia, 'Times New Roman', serif;
   --sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
@@ -36,27 +46,27 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --paper: #16151a;
-    --paper-2: #1d1c22;
-    --card: #201f26;
-    --ink: #f0eee9;
-    --ink-2: #c3bfb6;
-    --ink-3: #908b81;
-    --rule: #333139;
-    --accent: #c9ab77;
-    --accent-ink: #e8d6b4;
+    --paper: #101010;
+    --paper-2: #171717;
+    --card: #1a1a1a;
+    --ink: #f5f5f3;
+    --ink-2: #c0c0bd;
+    --ink-3: #8e8e8b;
+    --rule: #2e2e2e;
+    --accent: #f5f5f3;
+    --accent-ink: #ffffff;
   }
 }
 :root[data-theme='dark'] {
-  --paper: #16151a;
-  --paper-2: #1d1c22;
-  --card: #201f26;
-  --ink: #f0eee9;
-  --ink-2: #c3bfb6;
-  --ink-3: #908b81;
-  --rule: #333139;
-  --accent: #c9ab77;
-  --accent-ink: #e8d6b4;
+  --paper: #101010;
+  --paper-2: #171717;
+  --card: #1a1a1a;
+  --ink: #f5f5f3;
+  --ink-2: #c0c0bd;
+  --ink-3: #8e8e8b;
+  --rule: #2e2e2e;
+  --accent: #f5f5f3;
+  --accent-ink: #ffffff;
 }
 
 *, *::before, *::after { box-sizing: border-box; }

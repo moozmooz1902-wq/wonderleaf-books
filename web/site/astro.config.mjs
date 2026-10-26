@@ -19,7 +19,24 @@ import cloudflare from '@astrojs/cloudflare';
 // Category and policy pages are prerendered individually (see `prerender`
 // in each page), so only the pages that genuinely need a request are
 // rendered on one.
+// EVERY BUILD GETS ITS OWN CACHE NAMESPACE.
+//
+// The edge cache in src/middleware.ts stores rendered HTML, and that HTML
+// names a hashed stylesheet - /_astro/about.<hash>.css. A deploy changes the
+// hash and deletes the old file. So a cached page served after a deploy asks
+// for a stylesheet that no longer exists, and the shop renders as unstyled
+// HTML: black Times on white, every link blue and underlined. That happened
+// on the first theme change, on the live domain.
+//
+// Purging after each deploy is the usual answer and it is not good enough -
+// it is a manual step, and the API token here cannot purge anyway. Instead
+// the cache key carries this value, so a new build simply cannot read the
+// previous build's entries. Date.now() is evaluated when the config is
+// loaded, which is once per build.
+const BUILD_ID = Date.now().toString(36);
+
 export default defineConfig({
+  vite: { define: { __BUILD_ID__: JSON.stringify(BUILD_ID) } },
   output: 'server',
   adapter: cloudflare({
     platformProxy: { enabled: true },
