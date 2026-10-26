@@ -8,7 +8,7 @@
   "_legal_name": "The exact registered company name at Companies House, including 'Limited' or 'Ltd' exactly as registered.",
   "company_number": "17020866",
   "_company_number": "The 8-character Companies House number. Required on the website by the Companies Act 2006 and the E-Commerce Regulations 2002 - this is a legal duty, not only a Google one.",
-  "vat_number": null,
+  "vat_number": "GB513541030",
   "_vat_number": "e.g. 'GB123456789'. You said you are VAT registered, so this must appear on the site and all displayed prices must INCLUDE VAT. Google requires VAT-inclusive prices for the UK.",
   "registered_address": [
     "28 Bedford Square",
