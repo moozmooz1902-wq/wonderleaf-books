@@ -1,0 +1,122 @@
+{
+ "WA-00166fb9e578116d": {
+  "subject": "gomphrena",
+  "why": "failed render"
+ },
+ "WA-007fb7539c67d0ed": {
+  "subject": "Bamburgh beach",
+  "why": "unresolvable mark, possibly a figure"
+ },
+ "WA-012f1bbc51ae810c": {
+  "subject": "corn marigold",
+  "why": "human figures - page covered in them"
+ },
+ "WA-0139d1cf726c14ea": {
+  "subject": "raspberry cane",
+  "why": "malformed - reads as candy canes"
+ },
+ "WA-016d9b71528a3d5e": {
+  "subject": "wood sage",
+  "why": "human figures - page covered in them"
+ },
+ "WA-01addc14114d1020": {
+  "subject": "Formby beach",
+  "why": "human figures"
+ },
+ "WA-01cf999da01cc93e": {
+  "subject": "lilac panicle",
+  "why": "failed render - near blank"
+ },
+ "WA-023790c72469e5cc": {
+  "subject": "great willowherb",
+  "why": "failed render - near blank"
+ },
+ "WA-025b53345eb9b2e7": {
+  "subject": "texel sheep",
+  "why": "animal eyes wrong, plus disembodied heads"
+ },
+ "WA-037594c50f96f4bd": {
+  "subject": "xoloitzcuintli",
+  "why": "animal eyes wrong"
+ },
+ "WA-0376282a893e6231": {
+  "subject": "hobby",
+  "why": "wrong subject - a dog, filed as a bird"
+ },
+ "WA-05a693b4319c0c27": {
+  "subject": "Durdle Door",
+  "why": "human figures"
+ },
+ "WA-061d52623787c3a2": {
+  "subject": "old english sheepdog",
+  "why": "fake signature"
+ },
+ "WA-06f23a87bc0be6bc": {
+  "subject": "hemp agrimony",
+  "why": "human figures - page covered in them"
+ },
+ "WA-073d6515af44da63": {
+  "subject": "whinchat",
+  "why": "wrong subject - cats, filed as a bird"
+ },
+ "WA-07584421028e66ae": {
+  "subject": "Haystacks",
+  "why": "wrong subject - literal haystacks, not the fell"
+ },
+ "WA-07c510c069780a56": {
+  "subject": "sorbus cashmiriana",
+  "why": "wrong subject - a dead stick, not a rowan"
+ },
+ "WA-07f097b101f0d82d": {
+  "subject": "Fistral beach",
+  "why": "human figures"
+ },
+ "WA-083ed898c416f55d": {
+  "subject": "gaura",
+  "why": "does not read as the subject"
+ },
+ "WA-0849373bb2f5ef5b": {
+  "subject": "the constellation Leo",
+  "why": "human figures"
+ },
+ "WA-0e70782d164fb7fb": {
+  "subject": "Ben Lomond",
+  "why": "fake signature"
+ },
+ "WA-0f19565488ee45bc": {
+  "subject": "the River Tweed",
+  "why": "fake signature"
+ },
+ "WA-140ca8f0a79d6311": {
+  "subject": "Wastwater",
+  "why": "human figures"
+ },
+ "WA-186d0ab6d226e741": {
+  "subject": "grey squirrel",
+  "why": "animal eyes wrong"
+ },
+ "WA-1d7ebbbf0ed6d649": {
+  "subject": "a strawberry moon in June",
+  "why": "human figures"
+ },
+ "WA-2099ae611ce1756f": {
+  "subject": "a crescent moon and the evening star",
+  "why": "failed element at the foot"
+ },
+ "WA-26c0c542f8600a0e": {
+  "subject": "Loch Broom",
+  "why": "fake signature"
+ },
+ "WA-284d613fdc77ed5c": {
+  "subject": "the River Avon at Bath",
+  "why": "human figures"
+ },
+ "WA-41345d12ab7eaa9d": {
+  "subject": "the Peak District",
+  "why": "human figures"
+ },
+ "WA-49c7b2f95e9d949f": {
+  "subject": "Bannau Brycheiniog",
+  "why": "human figures"
+ }
+}

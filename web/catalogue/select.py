@@ -113,6 +113,23 @@ GRAM_PENALTY = {"G8_minimal": 0.35, "G10_abstract": 0.30, "C2_disc": 0.45,
 # sheet.py. Not a substitute for the sweep, and not pretending to be.
 FIGURE_RISK = {"A2_street": 0.45, "A4_wide": 0.70, "G1_window": 0.85}
 
+# NO CATEGORY PAGE MAY BE ONE COLOUR.
+#
+# The overall palette mix was being met and the shop still looked wrong,
+# because the mix was satisfied ACROSS niches rather than within them.
+# Measured on the 26 Oct range: british-birds 100% neutral, dogs 100%
+# duotone, garden-flowers 100% complementary, trees 100% duotone, and nine
+# of twelve niches at 78% or more of a single palette. Every category page
+# was one colour. The overall figures looked fine - 30/25/19/15/11 - and
+# hid it completely.
+#
+# It happens because panels are generated in batches that share a palette,
+# so a niche's highest scorers are all siblings. The global quota cannot
+# see that. So the cap is also applied per niche: no palette and no
+# technique may take more than this share of one category.
+NICHE_PAL_SHARE = 0.30
+NICHE_TECH_SHARE = 0.30
+
 MIN_DISTANCE = 48       # of 256 bits. The eBay audit calls <=24 "near".
 PER_NICHE_MIN = 12      # every category page must be worth opening
 PER_NICHE_MAX = 28      # and none may dominate the range
@@ -181,16 +198,13 @@ RESTRICTED = (
 # sketch together are 37% of the range against 14% of the grid, a 2.7x tilt -
 # and everything else is present in enough volume to be judged. These are
 # shares of the range, normalised; they are not probabilities.
-TECH_MIX = {
-    "charcoal": 22, "sketch": 15,              # measured winners, 37% total
-    "ink_wash": 10, "monotype": 8,             # rest of the monochrome family
-    "linocut": 8, "cyanotype": 5,
-    "watercolour": 8, "screenprint": 6,        # unproven, present to test
-    "gouache": 4, "pastel": 4, "collage": 3,
-    "risograph": 3, "oil_impasto": 2, "palette_knife": 2,
-}
-PAL_MIX = {"monochrome": 30, "neutral": 25, "duotone": 20,
-           "complementary": 15, "spectrum": 10}
+TECH_MIX = {"charcoal": 14, "sketch": 9, "ink_wash": 8, "monotype": 7,
+            "linocut": 8, "cyanotype": 4, "watercolour": 9,
+            "screenprint": 9, "gouache": 8, "pastel": 7,
+            "collage": 8, "risograph": 8, "oil_impasto": 5,
+            "palette_knife": 5}
+PAL_MIX = {"monochrome": 16, "neutral": 17, "duotone": 22,
+           "complementary": 22, "spectrum": 23}
 
 
 def load_panels():
@@ -254,6 +268,25 @@ def score(p, allow=None):
     return s, niche
 
 
+REJECTED = os.path.join(HERE, "rejected.json")
+
+
+def rejected_skus():
+    """SKUs rejected by eye, never to be chosen again.
+
+    A re-run of this script picks a different 240, so a design thrown out
+    on 26 Oct for carrying people or a fake signature would simply come
+    back on the next run. The judgement was expensive - it needed a person
+    looking at twenty contact sheets - and it has to outlive the selection
+    it was made against. catalogue/rejected.json holds the SKU and the
+    reason; add to it, never edit it down.
+    """
+    try:
+        return set(json.load(open(REJECTED)))
+    except FileNotFoundError:
+        return set()
+
+
 def pick(panels, want, min_distance=MIN_DISTANCE,
          per_min=PER_NICHE_MIN, per_max=PER_NICHE_MAX, allow=None):
     """Highest-scoring designs, spread across niches, no two visually close.
@@ -263,8 +296,11 @@ def pick(panels, want, min_distance=MIN_DISTANCE,
     passes enforce the distance rule, which is what stops the top of the
     score list being forty charcoal coastlines that look alike.
     """
+    bad = rejected_skus()
     scored = []
     for p in panels:
+        if p["sku"] in bad:
+            continue
         s, niche = score(p, allow)
         if s > 0:
             scored.append((s, niche, p))
@@ -278,10 +314,20 @@ def pick(panels, want, min_distance=MIN_DISTANCE,
     pal_cap = {k: max(1, round(want * v / sum(PAL_MIX.values())))
                for k, v in PAL_MIX.items()}
 
+    # Per-niche ceilings, computed from the TARGET niche size rather than
+    # the pass's ceiling - otherwise pass 2's generous ceiling would undo
+    # what pass 1 enforced.
+    n_live = len(allow) if allow else max(1, len({n for _, n, _ in scored}))
+    target = max(per_min, want / n_live)
+    niche_pal_cap = max(3, round(target * NICHE_PAL_SHARE))
+    niche_tech_cap = max(3, round(target * NICHE_TECH_SHARE))
+
     chosen, chosen_h = [], []
     n_niche = collections.Counter()
     n_tech = collections.Counter()
     n_pal = collections.Counter()
+    n_niche_pal = collections.Counter()
+    n_niche_tech = collections.Counter()
     taken = set()
     rejected_close = rejected_quota = 0
 
@@ -300,12 +346,16 @@ def pick(panels, want, min_distance=MIN_DISTANCE,
         n_niche[niche] += 1
         n_tech[p["tech"]] += 1
         n_pal[p["pal"]] += 1
+        n_niche_pal[(niche, p["pal"])] += 1
+        n_niche_tech[(niche, p["tech"])] += 1
 
-    def room(niche, p, niche_ceiling):
+    def room(niche, p, niche_ceiling, relax=1):
         nonlocal rejected_quota
         if (n_niche[niche] >= niche_ceiling
                 or n_tech[p["tech"]] >= tech_cap.get(p["tech"], 0)
-                or n_pal[p["pal"]] >= pal_cap.get(p["pal"], 0)):
+                or n_pal[p["pal"]] >= pal_cap.get(p["pal"], 0)
+                or n_niche_pal[(niche, p["pal"])] >= niche_pal_cap * relax
+                or n_niche_tech[(niche, p["tech"])] >= niche_tech_cap * relax):
             rejected_quota += 1
             return False
         return True
@@ -364,7 +414,7 @@ def pick(panels, want, min_distance=MIN_DISTANCE,
         for s, niche, p in scored:
             if len(chosen) >= want:
                 break
-            if p["sku"] in taken or not room(niche, p, per_max * 3):
+            if p["sku"] in taken or not room(niche, p, per_max * 3, relax=3):
                 continue
             if far_enough(p["h"]):
                 take(s, niche, p)
