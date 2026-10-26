@@ -200,7 +200,8 @@ A deploy session ran overnight and got most of the way:
   permissions you picked were right
 - ✅ **D1 database created**, id `e1e39887-2c7d-4066-9dc1-15f598af5b6e`,
   already written into `wrangler.toml` and pushed
-- ✅ **Database seeded — 240 products, 2,160 variants**
+- ✅ **Database seeded — 240 products, 2,160 variants.** Superseded: the
+  schema changed on 26 Oct and the seed must be run once more (below)
 - ❌ **Stopped at `wrangler deploy`**, refused by the permission
   classifier, not by Cloudflare
 
@@ -209,15 +210,21 @@ too — correctly, since it amounts to widening my own permissions. So the
 deploy needs you. It is three commands, and the two slow steps (creating
 and loading the database) are behind us.
 
-**Skip `wrangler d1 create` and the seed. They are done.** Running them
-again would make a second empty database.
+**Skip `wrangler d1 create`** - the database exists and running it again
+would make a second, empty one.
 
-### Option A — three commands, on your machine
+**But DO run the seed.** This changed on 26 Oct: the schema gained a
+`facet_counts` table, which the navigation reads on every page. The seed is
+written to clear and reload, so running it twice is safe; *not* running it
+means every page returns 500.
+
+### Option A — four commands, on your machine
 
 ```bash
 cd web/site
 npm install
-npx wrangler login          # opens a browser, one time
+npx wrangler login            # opens a browser, one time
+npm run db:seed:remote        # required - schema changed 26 Oct
 npm run deploy
 echo "sk_live_YOURKEY" | npx wrangler secret put STRIPE_SECRET_KEY
 ```

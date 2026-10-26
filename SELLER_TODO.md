@@ -31,13 +31,18 @@ record went missing. Then re-test the mailbox from an outside address.
 
 ### A2. Deploy — three commands
 
-The database is already created and seeded (240 products, 2,160 variants).
-**Do not run `wrangler d1 create` or the seed again.**
+The database is already created. **Do not run `wrangler d1 create` again** -
+that would make a second, empty one.
+
+**The seed DOES need running once more.** It did not on 25 Oct, but the
+schema gained a `facet_counts` table on 26 Oct and the site reads it on
+every page. Deploy without reseeding and every page returns 500.
 
 ```bash
 cd web/site
 npm install
 npx wrangler login
+npm run db:seed:remote        # required - the schema changed on 26 Oct
 npm run deploy
 echo "sk_live_YOURKEY" | npx wrangler secret put STRIPE_SECRET_KEY
 ```
