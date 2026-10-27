@@ -145,6 +145,33 @@ product page. Worth weighing against nine times the range.
 
 ---
 
+## 3b. WHAT $500 ACTUALLY BUYS — the answer to "is this too high"
+
+The sticker shock comes from multiplying by nine, not from GS1's prices.
+At **one variant per design**, the same money buys this:
+
+| Spend | GS1 block | Products live on OnBuy |
+|---|---|---|
+| ~£120 (~$160) | 1,000 | **1,000** |
+| ~£250 (~$330) | 10,000 | **10,000** |
+| ~£425 (~$565) | 100,000 | **100,000** |
+
+**A 10,000-product OnBuy shop costs about $330 of barcodes.** A
+100,000-product shop costs about $565. Both are inside or beside the $500
+budget, and both are an order of magnitude more than the 11,000 the
+nine-variant structure allows for the same £425.
+
+So the honest answer to "is this too high" is: **no, not if we stop
+spending nine barcodes on one design.** £425 was only ever expensive
+relative to 11,111 products. Against 100,000 it is half a penny each.
+
+The caveat is still section 2b — if the allocation clause bites, the
+100,000 block carries a £4,250 membership and the 10,000 block (£250) is
+the one that stays cheap. That is another reason the GS1 call comes first:
+it decides which row of this table is real.
+
+---
+
 ## 4. The question behind the question: how big should OnBuy be?
 
 Worth stating plainly, because it is the actual decision.
