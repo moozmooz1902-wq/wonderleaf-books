@@ -54,6 +54,34 @@ Two other things:
 
 ---
 
+## Which ticket category to file it under
+
+**"Product Creation Support (Feeds)"** — the first option in the Seller
+Control Panel's "How can we help?" dropdown, seen 27 Oct.
+
+Both requests belong there: the barcode is a product-creation requirement,
+and enabling live product creation is the same team. There is no "barcode
+exemption" option in that list, which is itself the answer - the exemption
+is handled as product-creation support rather than as a thing of its own.
+
+NOT "Channel Integration API Queries". That is for debugging an API
+connection you already have, not for being granted permission to create
+products in the first place.
+
+Worth noting for whoever reads this later: that option is named
+"(Feeds)" and is the FIRST in the list, and the Integrations screen offers
+feed imports. OnBuy's mainstream product-creation path is a feed now, not
+the spreadsheet - which is why build_onbuy_feed.py exists and why the
+ticket's closing paragraph offers the Google Shopping XML.
+
+The full dropdown, for reference: Product Creation Support (Feeds),
+Product Data Change Requests, One-Time Stock & Price Updates, Product
+Listing Queries, Order Queries or Issues, Channel Integration API Queries,
+Refund fail, VAT Queries or Issues, Subscription or Invoice Queries, Bank
+Detail Approval Queries, Regional Delivery Pricing Request (UK only).
+
+---
+
 ## The ticket
 
 **Subject:** Barcode (EAN) exemption request — brand Walryvo — made-to-order
