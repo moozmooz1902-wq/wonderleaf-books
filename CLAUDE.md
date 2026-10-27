@@ -102,21 +102,32 @@ source the site, the feed and the policy pages all read.
     returns      30 days from delivery
     D1 database  wallart, e1e39887-2c7d-4066-9dc1-15f598af5b6e, already seeded
 
-**Which name is used where, confirmed by the seller 27 Oct.** They are not
-the same and must not be made the same by accident:
+**ONE NAME PER CHANNEL, AND IT IS DELIBERATE.** The seller's reason,
+27 Oct: *"I don't want my competitor to see that we're selling on OnBuy
+also."* Channel separation, not sloppiness. Do not tidy these into one
+name, and do not cross-reference one channel's name on another channel's
+listings.
 
-| | |
-|---|---|
-| **Walryvo** | the brand. walryvo.com, the Merchant Center feed, and the OnBuy files. Backed by NORYMUS LIMITED. |
-| **artnoire** | the eBay store, at <https://www.ebay.co.uk/str/artnoire>. The seller calls it "just a username" rather than a brand. |
-| **Unbranded** | what the eBay upload files actually put in C:Brand. Unchanged. |
+| Channel | Name | |
+|---|---|---|
+| Own website | **Walryvo** | walryvo.com, the Merchant Center feed, the policy pages. Backed by NORYMUS LIMITED. |
+| eBay | **artnoire** | <https://www.ebay.co.uk/str/artnoire>. A store handle; the upload files put `Unbranded` in C:Brand. |
+| OnBuy | **The Art Vault** | <https://www.onbuy.com/gb/shop/the-art-vault/>. The shop name. |
 
-So a design can carry two different names on two marketplaces, on purpose.
-The OnBuy barcode exemption was requested for **Walryvo**, and
-`onbuy_plan.json` sets `brand` to Walryvo, so those two agree - which is
-what matters. If OnBuy is ever to list under a different name, the
-exemption would be for the wrong brand and both would have to move
-together.
+The legal entity behind all three is the same - NORYMUS LIMITED,
+17020866 - and that is unavoidable: VAT number and company number are
+published by law on the website and given to every marketplace. The
+separation is of BRAND, not of ownership, and anyone determined enough to
+cross-reference Companies House will join them up anyway.
+
+**The OnBuy PRODUCT BRAND is a separate question from the shop name**, and
+is currently `Unbranded` in `onbuy_plan.json` - the seller's call on
+27 Oct, made before they gave the shop name. `_brand_note` in that file
+records what it costs: Unbranded cannot be trademarked, so it cannot carry
+OnBuy's barcode exemption, and the exemption ticket already submitted names
+*Walryvo*. **The Art Vault is the better candidate** - it is OnBuy-only so
+it preserves the separation, and unlike Unbranded it is a real name that
+could hold a trademark. Open decision, waiting on OnBuy's reply.
 
 **Known and NOT fixed, flagged to the seller 25 Oct:** reviewing 48 of the
 240 designs by eye found about 4% clear defects - one titled "teasels"

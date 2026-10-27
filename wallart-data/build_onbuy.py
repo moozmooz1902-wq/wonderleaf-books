@@ -581,7 +581,24 @@ def check(out_dir):
             # to prevent it; this is the assertion that it worked.
             note("variants whose product row is in another file",
                  len(orphan))
+    # ADVISORY, NOT A BLOCK. The brand is the seller's call and a check has
+    # no business refusing their decision - but a brand that cannot carry a
+    # barcode exemption, while the barcode is still the one thing blocking
+    # the upload, is worth saying out loud every single time the file is
+    # built rather than leaving in a commit message nobody reads.
+    brands = {r.get(cols["brand"], "") for fn in files
+              for r in csv.DictReader(
+                  open(os.path.join(out_dir, fn), encoding="utf-8-sig"))}
+    brands.discard("")
+    unexemptable = {b for b in brands
+                    if b.strip().lower() in ("unbranded", "no brand",
+                                             "generic", "n/a", "none")}
     print(f"checked {len(files)} file(s)")
+    if unexemptable:
+        print(f"  [NOTE] brand is {sorted(unexemptable)}, which cannot hold "
+              f"a trademark and so cannot carry OnBuy's barcode exemption. "
+              f"The exemption ticket submitted 27 Oct names 'Walryvo'. "
+              f"These disagree - see onbuy_plan.json _brand_note.")
     for k in sorted(bad):
         print(f"  [BLOCK] {k}: {bad[k]:,}")
     if not bad:

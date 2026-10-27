@@ -242,3 +242,60 @@ The fallback order, cheapest first:
    effort into walryvo.com and Merchant Center instead, where the GTIN
    question has already been answered: `web/catalogue/feed.py` omits it
    entirely and Google accepts brand plus MPN for goods with no barcode.
+
+---
+
+## On "generating your own barcodes cheaply" — read before spending money
+
+Raised by the seller 27 Oct: a friend generates his own barcodes and they
+are very cheap. Two different things go by that description and both have
+problems, but the one that decides it here is arithmetic rather than ethics.
+
+**What "cheap barcodes" usually means**
+
+1. **Resold GS1 numbers.** Blocks issued before 1998, split up and resold
+   by third parties. The numbers are real, but the GS1 licence is not
+   transferable - GS1 say so explicitly - and Amazon rejects them on
+   lookup. A catalogue marketplace that verifies prefixes is likely to as
+   well.
+2. **Numbers generated to a valid check digit.** EAN-13's check digit is
+   one line of arithmetic, so producing numbers that *validate* is
+   trivial. Validating is not the same as being yours. The leading digits
+   are a GS1 company prefix belonging to a specific company, so a
+   fabricated number either lands inside someone else's prefix - the print
+   then claims to be their product - or inside an unallocated range, where
+   any lookup fails.
+
+**Why it is worse on OnBuy than on eBay.** eBay listings stand alone, so a
+bad identifier mostly just sits there. OnBuy is a CATALOGUE: products are
+matched BY BARCODE. A collision does not fail quietly, it attaches our art
+print to somebody else's product page, with their title, their photographs
+and their reviews - or attaches theirs to ours. That is not a listing
+error to fix later; it is the kind of thing that ends an account.
+
+**The number that settles it: 90,000.** Cheap-barcode tricks are a
+fifty-SKU solution. No reseller sells ninety thousand, and at even a penny
+each that is nine hundred pounds for numbers that may be rejected on
+upload.
+
+**So if barcodes are going to be bought at all, cut the variant count
+first.** That is the lever with real leverage:
+
+| Structure | Barcodes needed |
+|---|---|
+| 10,000 designs x 9 variants (today) | **90,000** |
+| 10,000 designs, one size and one frame | **10,000** |
+| 1,000 designs, one size and one frame | **1,000** |
+| 500 designs, one size and one frame | **500** |
+
+The last two are in the range where legitimately licensed GTINs are
+actually affordable - GS1 UK sell small blocks - and a 500-design opening
+range on a brand-new marketplace is a perfectly sensible start that can
+grow once the account has a record. Dropping to one variant is worse for
+buyers, but it is the only change that moves the number by an order of
+magnitude.
+
+**Wait for the ticket.** Question 2 asks OnBuy directly whether a route
+exists for made-to-order goods where a per-variant GTIN is not meaningful.
+If the answer is yes, none of this is needed. Spending money before that
+reply arrives is spending it blind.
