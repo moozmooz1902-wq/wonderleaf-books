@@ -92,7 +92,7 @@ four things in the export that break a naive find-and-replace.
 Everything below is also in `web/business.config.json`, which is the single
 source the site, the feed and the policy pages all read.
 
-    brand        Walryvo
+    brand        Walryvo  -- THE WEBSITE'S BRAND, and OnBuy's. NOT eBay's.
     domain       walryvo.com   (walryvo.co.uk is held too and must 301 to it)
     legal        NORYMUS LIMITED, company 17020866, England and Wales
     registered   28 Bedford Square, Leigh, WN7 2AA
@@ -101,6 +101,22 @@ source the site, the feed and the policy pages all read.
     prices       framed A4/A3/A2 24.99/29.99/34.99, free UK delivery, VAT inc
     returns      30 days from delivery
     D1 database  wallart, e1e39887-2c7d-4066-9dc1-15f598af5b6e, already seeded
+
+**Which name is used where, confirmed by the seller 27 Oct.** They are not
+the same and must not be made the same by accident:
+
+| | |
+|---|---|
+| **Walryvo** | the brand. walryvo.com, the Merchant Center feed, and the OnBuy files. Backed by NORYMUS LIMITED. |
+| **artnoire** | the eBay store, at <https://www.ebay.co.uk/str/artnoire>. The seller calls it "just a username" rather than a brand. |
+| **Unbranded** | what the eBay upload files actually put in C:Brand. Unchanged. |
+
+So a design can carry two different names on two marketplaces, on purpose.
+The OnBuy barcode exemption was requested for **Walryvo**, and
+`onbuy_plan.json` sets `brand` to Walryvo, so those two agree - which is
+what matters. If OnBuy is ever to list under a different name, the
+exemption would be for the wrong brand and both would have to move
+together.
 
 **Known and NOT fixed, flagged to the seller 25 Oct:** reviewing 48 of the
 240 designs by eye found about 4% clear defects - one titled "teasels"

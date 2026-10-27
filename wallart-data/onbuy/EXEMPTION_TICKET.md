@@ -19,6 +19,14 @@ That question is the point of the ticket as much as the request is.
 If you **do** hold a trademark or have already applied, tell me the number
 and I will rewrite it around that, which makes it much stronger.
 
+**SUBMITTED 27 Oct**, under Product Creation Support (Feeds), with
+"brand Walryvo" in the subject. The seller confirmed afterwards that
+Walryvo is the WEBSITE's brand and that artnoire is a username rather than
+a second brand. That does not break anything: the ticket never claimed the
+eBay store was branded Walryvo, and `onbuy_plan.json` already sets the
+OnBuy brand to Walryvo, so the exemption and the 10,000 files name the same
+brand. The note below is kept as the record of why it was worded that way.
+
 **Your eBay store trades as "artnoire", not Walryvo.** The link resolves to
 `ebay.co.uk/str/artnoire`. That is not a problem, but it would look like
 one if the ticket implied the eBay store were branded Walryvo and they
