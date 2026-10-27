@@ -180,6 +180,11 @@ OnBuy is a **catalogue** marketplace, not a listing one. That makes it
 structurally different from eBay and produces one blocker that may decide
 whether OnBuy is viable at all:
 
+0. **The ticket is written** — `wallart-data/onbuy/EXEMPTION_TICKET.md`.
+   Paste and send. It does NOT claim a trademark you do not hold; it says
+   so plainly and asks whether a pending application would do, which is the
+   question that decides the route. It also asks OnBuy to enable live
+   product creation, which a new account needs anyway.
 1. **Barcode exemption — raise this ticket first.** A new OnBuy product
    normally needs a real GS1 EAN. 10,000 designs is 10,000 products;
    buying that many GTINs is a four-figure annual licence and the full
@@ -189,15 +194,18 @@ whether OnBuy is viable at all:
    `Unbranded` — "Unbranded" can be neither trademarked nor exempted.
    NORYMUS LIMITED does not appear to hold that trademark yet (£170 at the
    IPO, ~4 months). **Ask OnBuy whether an application satisfies them
-   before paying for one.**
-2. **The category ID.** It lives in the Category Sheet inside OnBuy's
-   Product Create Template, or behind `GET /v2/categories` with your API
-   keys — neither reachable from here. Send me the wall-art row and it is
-   a one-line change.
+   before paying for one** — the ticket asks exactly that.
+   **The template makes this worse than first thought:** EAN is Required
+   and every worked example gives each VARIANT its own barcode, so it is
+   90,000 for the opening 10,000 designs, not 10,000. The fallback ladder
+   if they refuse is at the end of the ticket file.
+2. ~~The category ID.~~ **RESOLVED 27 Oct** from the template the seller
+   sent: **9376**, "Home & Garden > Furniture, Furnishings & Decor >
+   Artwork > Artwork Prints".
 
-Every product row reads `NEEDS-CATEGORY-ID` and
-`NEEDS-BARCODE-EXEMPTION` until those are settled, and the checker refuses
-the file. Deliberate: rejected loudly beats filed wrongly.
+The barcode is now the ONLY thing blocking the file. Every variant row
+reads `NEEDS-BARCODE-EXEMPTION` until it is settled and the checker refuses
+the upload. Deliberate: rejected loudly beats filed wrongly.
 
 **What to send me — the API keys are the valuable one.** OnBuy's own sell
 page lists "Access to API & integrations" on the **Standard £25 plan**, not
