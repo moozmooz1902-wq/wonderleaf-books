@@ -15,3 +15,18 @@ __pycache__/
 # in R2, which are the real record, so committing it buys nothing and would
 # push individual files toward GitHub's limit.
 wallart-data/hashes/
+
+# OnBuy build output. The three upload CSVs are 34 MB loose and the
+# canonical rows.jsonl is 79 MB; both rebuild in 23 seconds from
+# build_onbuy.py, onbuy_plan.json, gen/subjects.json and the hash files.
+# What IS committed is wallart-data/out/onbuy/luxvia-art_onbuy_10k.zip -
+# the same three CSVs at 1.6 MB, because the descriptions compress - and
+# the small test files, which are what actually gets uploaded first.
+wallart-data/out/onbuy/*.csv
+wallart-data/out/onbuy/*_rows.jsonl
+wallart-data/out/onbuy/tests/*_rows.jsonl
+
+# The rebuilt job grid: 136 MB, and grid.expand() over gen/subjects.json
+# reproduces it exactly in 22 seconds. build_onbuy.py says so if it is
+# missing.
+wallart-data/pool_jobs.json

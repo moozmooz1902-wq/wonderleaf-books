@@ -66,6 +66,23 @@ It is a different product line from eBay and must not be confused with it:
   design - read the note at the top of `product.py` before changing
   anything there.
 
+**`wallart-data/build_onbuy.py` + `onbuy_plan.json` is the OnBuy line**,
+added 27 Oct 2026. 10,000 listings from `luxvia-art`, framed only, nine
+variants. Start with `wallart-data/README_ONBUY.md`. Two things about it are
+unlike every other marketplace here and are easy to get wrong:
+
+- **OnBuy is a catalogue marketplace.** You create a PRODUCT and then put an
+  offer against it, and a new product normally needs a real GS1 EAN. There
+  are 10,000 of them, so the only route is the exemption OnBuy grants on a
+  UK/EU trademark for the brand - which is why these files carry brand
+  **Walryvo** and not `Unbranded`.
+- **The format is NOT copied from an accepted file**, unlike `build_ebay.py`.
+  Nothing has been uploaded to OnBuy yet and the column names live in a
+  spreadsheet behind the seller's login. So the builder writes the DATA to
+  `rows.jsonl` with its own field names AND a CSV rendering of it, with the
+  column names in `onbuy_plan.json["columns"]`. Correcting them is editing
+  that one block. Do not treat the current column names as known-good.
+
 **`ebay_reprice/`** is the repricing tool for live eBay listings, used
 26 Oct to move 502,443 listings to the go-to prices. Its README records
 four things in the export that break a naive find-and-replace.

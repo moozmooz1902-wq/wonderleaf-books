@@ -171,6 +171,65 @@ millions, and the order the steps have to happen in.
 
 ---
 
+## B3. OnBuy — files are built, TWO THINGS BLOCK THEM
+
+Added 27 Oct. 10,000 listings from `luxvia-art`, built and checked.
+`wallart-data/README_ONBUY.md` is the full briefing; this is the short list.
+
+OnBuy is a **catalogue** marketplace, not a listing one. That makes it
+structurally different from eBay and produces one blocker that may decide
+whether OnBuy is viable at all:
+
+1. **Barcode exemption — raise this ticket first.** A new OnBuy product
+   normally needs a real GS1 EAN. 10,000 designs is 10,000 products;
+   buying that many GTINs is a four-figure annual licence and the full
+   3.77M is not purchasable at all. Inventing them loses the account.
+   OnBuy grants an exemption to sellers holding a **UK or EU trademark for
+   their brand**, which is why these files carry brand **Walryvo** and not
+   `Unbranded` — "Unbranded" can be neither trademarked nor exempted.
+   NORYMUS LIMITED does not appear to hold that trademark yet (£170 at the
+   IPO, ~4 months). **Ask OnBuy whether an application satisfies them
+   before paying for one.**
+2. **The category ID.** It lives in the Category Sheet inside OnBuy's
+   Product Create Template, or behind `GET /v2/categories` with your API
+   keys — neither reachable from here. Send me the wall-art row and it is
+   a one-line change.
+
+Every product row reads `NEEDS-CATEGORY-ID` and
+`NEEDS-BARCODE-EXEMPTION` until those are settled, and the checker refuses
+the file. Deliberate: rejected loudly beats filed wrongly.
+
+**What to send me:** the Product Create Template spreadsheet (Listing →
+Add Listing → "Click Here to Find Out More"), the category ID, and
+**three weights** — one framed print of each size, A4/A3/A2, in its
+packaging. The weights in the file are estimates and they are the only
+number in it that was never measured; OnBuy prices delivery off them, so
+one that is too low is paid for on every order.
+
+**Upload the 5-listing test file first.** OnBuy's bulk route is a support
+ticket reviewed by a person, reportedly around five days, so a format
+mistake in a 10,000-row file costs five days and a rejection on a new
+account. Same two-step that caught the variation-picture problem on eBay.
+
+Measured in the 10,000: themes within a point of the whole catalogue
+(animals 34% / flowers 28% / landscapes 25%), 4,410 distinct subjects, 14
+techniques, all four colourways evenly used, **11 near-duplicates in
+10,000 — 0.11%**, against the 89% the wall-art branch blames for 424k eBay
+listings not selling. 79 listings were dropped as restricted subjects
+(alcohol/tobacco in the title) and all 150 sampled picture URLs came back
+as live JPEGs.
+
+**Framed only, nine variants, no unframed option** — the one deliberate
+difference from the eBay files. On eBay the unframed row carries no
+picture and eBay shows the black frame instead, which you approved. On a
+marketplace that shows a picture per variant that becomes a framed
+photograph on an unframed product. No unframed photo exists in
+`luxvia-art` and none can be made: the stored R2 token cannot write to
+that bucket. It costs the £8.99 entry price, and README_ONBUY.md says
+exactly what would unlock it.
+
+---
+
 ## C. Decisions asked for and never answered
 
 These have been open a while. None is urgent; all of them block something.

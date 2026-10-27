@@ -1,0 +1,71 @@
+{
+  "_note": "OnBuy settings for the image-based wall-art catalogue. UNLIKE ebay_plan.json, NOTHING HERE IS COPIED FROM A FILE ONBUY HAS ACCEPTED - there is no such file yet. Every column name below is the best reading of OnBuy's public documentation and is marked for confirmation against the Explanation tab of the Product Create Template, which only the seller's dashboard can hand over. build_onbuy.py writes the row DATA to rows.jsonl as well as to CSV, so remapping onto the real template is a column rename and not a rebuild.",
+  "bucket": "luxvia-art",
+  "_bucket_note": "The largest rendered pool - 480,367 panels - so 10,000 listings drawn from it carry the widest spread of subjects. Three frame colours, and no store_price_adjust, so prices match ebay_plan.json's base. lunar-kms was avoided because the seller was mid-upload with it on eBay and because it carries only the black frame.",
+  "brand": "Walryvo",
+  "_brand_note": "NOT 'Unbranded', which is what the eBay files use. OnBuy runs a CATALOGUE: a new product needs the real manufacturer brand, and the barcode exemption is granted on a UK or EU trademark FOR THAT BRAND. 'Unbranded' can be neither trademarked nor exempted. Walryvo is the seller's own brand, held by NORYMUS LIMITED, and is the only name here that can carry the exemption. SELLER DECISION - see README_ONBUY.md.",
+  "condition": "New",
+  "handling_days": 3,
+  "quantity": 1,
+  "currency": "GBP",
+  "location": "United Kingdom",
+  "category_id": null,
+  "category_path": "Home, Furniture & DIY > Home Decor > Wall Art, Prints & Posters",
+  "_category_note": "category_id IS DELIBERATELY NULL. OnBuy's ids come from the Category Sheet inside the Product Create Template, or from GET /v2/categories with the seller's API keys - and NEITHER is reachable from here. category_path is the shape the tree is expected to take and is a label for finding the right row, NOT an id to submit. While category_id is null every row is written with the sentinel NEEDS-CATEGORY-ID, which OnBuy will reject loudly rather than filing 10,000 listings under the wrong department. check() fails while any sentinel remains.",
+  "frames": [
+    "Black",
+    "White",
+    "Oak"
+  ],
+  "_unframed_note": "NO UNFRAMED VARIANT, and this is the one place the OnBuy file deliberately differs from the eBay one. On eBay the unframed row carries no picture and eBay falls back to the listing's main image - the black frame - which the seller approved for their own account. That does not transfer: a marketplace that shows a picture per variant would be showing a framed photograph for a product with no frame, which is the exact misrepresentation web/catalogue/product.py was restructured to prevent. No unframed photograph exists in this bucket and none can be made: the stored R2 token cannot write to luxvia-art, and the raw panel at <prefix>/gen/<SKU>.jpg is NOT a substitute - it is one image per design rather than one per colourway, and it still carries the uncropped bottom strip where FLUX scrawls a fake signature. So OnBuy launches framed-only, nine variants, every one with its own photograph. Add unframed when a rendered unframed photo exists in this bucket, not before.",
+  "sizes": [
+    {
+      "label": "A4",
+      "dims": "21 x 29.7 cm",
+      "framed": 24.99,
+      "weight_kg": 0.8
+    },
+    {
+      "label": "A3",
+      "dims": "29.7 x 42 cm",
+      "framed": 29.99,
+      "weight_kg": 1.3
+    },
+    {
+      "label": "A2",
+      "dims": "42 x 59.4 cm",
+      "framed": 34.99,
+      "weight_kg": 2.0
+    }
+  ],
+  "_price_note": "The same base prices as ebay_plan.json, so one design does not cost two different amounts on two marketplaces. OnBuy's commission differs from eBay's final value fee; if the margin does not work the seller should move these, and moving them here moves nothing on eBay.",
+  "_weight_note": "weight_kg is an ESTIMATE for a packaged framed print and is the one number in this file that was not measured. OnBuy prices delivery off it, so an estimate that is too low is paid for on every order. Weigh one of each size and correct these three numbers before a real upload.",
+  "max_rows_per_file": 50000,
+  "one_colourway_per_design": true,
+  "_colourway_note": "A design exists in four palettes. eBay lists all four, which is right for a 1.9M catalogue. For a FIRST 10,000 on a new marketplace, one colourway per design means 10,000 distinct designs instead of 2,500 designs four times over - the widest mix for the same row count, and the lowest near-duplicate reading. The other three colourways are untouched and available for later batches. Which colourway is picked is decided by a hash, so it is spread across all four and a rebuild reproduces it.",
+  "near_duplicate_bits": 24,
+  "_dup_note": "The same threshold as dup_audit.py, on the same 256-bit gradient hash of the CROPPED ARTWORK, so the number is comparable with every audit before it. luxvia-art is the one bucket with no drop list - the near-duplicate audit was never run on it - so this selection is deduplicated against itself here.",
+  "max_per_subject": 4,
+  "columns": {
+    "_note": "CANONICAL FIELD -> COLUMN NAME IN THE UPLOAD FILE. Every name on the right is UNCONFIRMED and comes from OnBuy's public API field names and integrator documentation, not from the template. Correct them here, re-run, and the CSV changes; nothing else needs touching.",
+    "sku": "SKU",
+    "group_sku": "Group SKU",
+    "product_name": "Product Name",
+    "description": "Description",
+    "category_id": "Category",
+    "brand": "Brand",
+    "barcode": "Product Code (EAN)",
+    "condition": "Condition",
+    "price": "Price",
+    "stock": "Stock",
+    "handling_time": "Handling Time",
+    "delivery_weight": "Delivery Weight (kg)",
+    "image_1": "Main Image",
+    "image_2": "Image 2",
+    "image_3": "Image 3",
+    "variant_colour": "Colour",
+    "variant_size": "Size"
+  },
+  "_variant_axis_note": "OnBuy maps every variant onto one of eight standard names - Colour, Size, Material, Capacity, Style, Pack Quantity, Length, Width - and advises an exact match. Frame colour goes on Colour and print size on Size, which is the same two axes the seller's live eBay listings already use, so nothing about the variation shape is new to them.",
+  "_rows_note": "50,000 rows a file, not 100,000: a file that has to be read and approved by a person at OnBuy should open in a spreadsheet. Sharding splits on whole listings, so a product row and its nine variants are never in different files."
+}
