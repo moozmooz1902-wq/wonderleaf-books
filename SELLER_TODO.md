@@ -224,9 +224,14 @@ plan**, so the £25/month subscription costs the same whether you list
 10,000 or all 3.77M. Commission is by category and wall art lands at
 **15%**, charged on the delivered total **including postage** — so adding a
 delivery charge does not dodge it, and free delivery with an inclusive
-price stays the right call. That is £21.24 net on an A4 at £24.99, about
-two points worse per sale than eBay's final value fee, and breakeven on the
-subscription is roughly one and a half A4 sales a month.
+price stays the right call. On the reduced OnBuy prices set
+27 Oct — **£5 under eBay on every framed size, so £19.99 / £24.99 /
+£29.99** — that is £16.99 net on an A4, and breakeven on the subscription is
+roughly 1.8 A4 sales a month. **Whether £16.99 still clears your print and
+frame cost is the one number only you have**; the files are built either
+way and changing the price is one line in `onbuy_plan.json`. The £2-off
+unframed prices (£6.99 / £10.99 / £16.99) are recorded in the same file but
+unused, because the OnBuy file is framed only.
 
 **Upload the 5-listing test file first.** OnBuy's bulk route is a support
 ticket reviewed by a person, reportedly around five days, so a format

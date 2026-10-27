@@ -22,23 +22,26 @@
     {
       "label": "A4",
       "dims": "21 x 29.7 cm",
-      "framed": 24.99,
-      "weight_kg": 0.8
+      "framed": 19.99,
+      "weight_kg": 0.8,
+      "unframed_when_available": 6.99
     },
     {
       "label": "A3",
       "dims": "29.7 x 42 cm",
-      "framed": 29.99,
-      "weight_kg": 1.3
+      "framed": 24.99,
+      "weight_kg": 1.3,
+      "unframed_when_available": 10.99
     },
     {
       "label": "A2",
       "dims": "42 x 59.4 cm",
-      "framed": 34.99,
-      "weight_kg": 2.0
+      "framed": 29.99,
+      "weight_kg": 2.0,
+      "unframed_when_available": 16.99
     }
   ],
-  "_price_note": "The same base prices as ebay_plan.json, so one design does not cost two different amounts on two marketplaces. OnBuy's commission differs from eBay's final value fee; if the margin does not work the seller should move these, and moving them here moves nothing on eBay.",
+  "_price_note": "ONBUY IS GBP 5 UNDER EBAY ON EVERY FRAMED SIZE, and that is the seller's instruction of 27 Oct, not a derived number: eBay's framed 24.99/29.99/34.99 becomes 19.99/24.99/29.99 here. Deliberately different from the eBay and website prices rather than an accident - one design now costs less on OnBuy than on eBay, which is the seller's call on a marketplace they are entering cold. These prices are read ONLY by build_onbuy.py; ebay_plan.json and web/business.config.json are untouched, so changing them here moves nothing on eBay and nothing on walryvo.com.",
   "_weight_note": "weight_kg is an ESTIMATE for a packaged framed print and is the one number in this file that was not measured. OnBuy prices delivery off it, so an estimate that is too low is paid for on every order. Weigh one of each size and correct these three numbers before a real upload.",
   "max_rows_per_file": 50000,
   "one_colourway_per_design": true,
@@ -67,5 +70,7 @@
     "variant_size": "Size"
   },
   "_variant_axis_note": "OnBuy maps every variant onto one of eight standard names - Colour, Size, Material, Capacity, Style, Pack Quantity, Length, Width - and advises an exact match. Frame colour goes on Colour and print size on Size, which is the same two axes the seller's live eBay listings already use, so nothing about the variation shape is new to them.",
-  "_rows_note": "50,000 rows a file, not 100,000: a file that has to be read and approved by a person at OnBuy should open in a spreadsheet. Sharding splits on whole listings, so a product row and its nine variants are never in different files."
+  "_rows_note": "50,000 rows a file, not 100,000: a file that has to be read and approved by a person at OnBuy should open in a spreadsheet. Sharding splits on whole listings, so a product row and its nine variants are never in different files.",
+  "_unframed_price_note": "unframed_when_available is GBP 2 under eBay's print prices - the seller's instruction of 27 Oct, 8.99/12.99/18.99 becoming 6.99/10.99/16.99. IT IS NOT USED BY ANYTHING YET, and the field name says so. The OnBuy file is framed only because no unframed photograph exists in this bucket and none can be made from here - see _unframed_note - so there is no row for this price to go on. It is recorded rather than discarded so that whoever adds the unframed variant does not have to ask again. build_onbuy.py asserts it stays unused while frames carry no unframed entry.",
+  "_margin_note": "At OnBuy's 15% commission on the delivered total, the new framed prices net 16.99 / 21.24 / 25.49 for A4 / A3 / A2, against 21.24 / 25.49 / 29.74 before the reduction. Nobody here knows the print-and-frame cost, so whether 16.99 on an A4 still clears is the seller's number to check, not an assumption this file should make."
 }

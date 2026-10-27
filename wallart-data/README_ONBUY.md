@@ -227,15 +227,48 @@ instead of 2,500 designs four times over — the widest mix for the same row
 count and the lowest near-duplicate reading. The other three colourways are
 untouched and available for the next batch.
 
-### Prices match eBay exactly
+### Prices are £5 under eBay on every framed size — your instruction, 27 Oct
 
-£24.99 / £29.99 / £34.99 framed for A4 / A3 / A2, the same base as
-`ebay_plan.json`, so one design does not cost two different amounts on two
-marketplaces. `luxvia-art` has no store adjustment.
+| | eBay | **OnBuy** |
+|---|---|---|
+| A4 framed | £24.99 | **£19.99** |
+| A3 framed | £29.99 | **£24.99** |
+| A2 framed | £34.99 | **£29.99** |
 
-**OnBuy's commission is not eBay's final value fee.** If the margin does not
-work, move the three numbers in `onbuy_plan.json` — moving them there moves
-nothing on eBay.
+So one design now costs less on OnBuy than on eBay. That is deliberate, and
+it is your call on a marketplace you are entering cold.
+
+These prices are read **only** by `build_onbuy.py`. `ebay_plan.json` and
+`web/business.config.json` are untouched, so this moved nothing on eBay and
+nothing on walryvo.com.
+
+**What it does to the margin.** At OnBuy's 15% commission:
+
+| | Price | Commission | Net | was |
+|---|---|---|---|---|
+| A4 | £19.99 | £3.00 | **£16.99** | £21.24 |
+| A3 | £24.99 | £3.75 | **£21.24** | £25.49 |
+| A2 | £29.99 | £4.50 | **£25.49** | £29.74 |
+
+Nobody here knows your print-and-frame cost, so **whether £16.99 on an A4
+still clears is your number to check** — I am not going to assume it does.
+Breakeven on the £25 + VAT subscription moves from about 1.5 A4 sales a
+month to about 1.8, which is not the thing to worry about.
+
+### Unframed: £6.99 / £10.99 / £16.99, recorded but not used
+
+You also asked for £2 off the unframed prices — eBay's £8.99 / £12.99 /
+£18.99 becoming £6.99 / £10.99 / £16.99.
+
+**The OnBuy file has no unframed variant**, for the reason in the section
+above: no unframed photograph exists in `luxvia-art` and none can be made
+from here. So there is no row for those prices to go on yet.
+
+They are stored anyway, as `unframed_when_available` in
+`onbuy_plan.json["sizes"]`, so whoever adds the unframed variant does not
+have to ask you again. `--check` asserts that none of those three numbers
+appears in a framed-only file, so they cannot leak onto a framed row by
+accident.
 
 ### The delivery weights are estimates, and they are the one number here that was never measured
 
@@ -286,18 +319,18 @@ Volume is free; only sales cost anything.
 ### Margin at the current prices
 
 At 15% commission, free UK delivery (so the commission base is just the
-price):
+price), on the **reduced OnBuy prices** set on 27 Oct:
 
 | | Price | Commission | Net |
 |---|---|---|---|
-| A4 framed | £24.99 | £3.75 | **£21.24** |
-| A3 framed | £29.99 | £4.50 | **£25.49** |
-| A2 framed | £34.99 | £5.25 | **£29.74** |
+| A4 framed | £19.99 | £3.00 | **£16.99** |
+| A3 framed | £24.99 | £3.75 | **£21.24** |
+| A2 framed | £29.99 | £4.50 | **£25.49** |
 
 Before print and frame cost, packaging and postage.
 
-**Breakeven on the subscription is about 1.5 A4 sales a month** (£25 + VAT
-= £30 against £21.24 net). That is a low enough bar that the subscription
+**Breakeven on the subscription is about 1.8 A4 sales a month** (£25 + VAT
+= £30 against £16.99 net). That is a low enough bar that the subscription
 is not the thing to worry about.
 
 **Do not add a delivery charge to dodge commission — it does not work.**

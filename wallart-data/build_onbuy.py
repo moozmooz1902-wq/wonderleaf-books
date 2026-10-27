@@ -492,6 +492,21 @@ def check(out_dir):
                     note("variants whose main image is another frame")
                 if not g["price"] or float(g["price"]) <= 0:
                     note("non-positive prices")
+                # EVERY PRICE IN THE FILE MUST BE ONE OF THE FRAMED PRICES
+                # FOR ITS SIZE. This catches two different mistakes with one
+                # assertion: a file left over from before a price change
+                # (the prices moved on 27 Oct and a stale CSV would still
+                # read 24.99), and an unframed price leaking onto a framed
+                # row. onbuy_plan.json carries unframed_when_available for
+                # the day the unframed variant can be added, and until then
+                # it must appear nowhere.
+                want = {f'{z["framed"]:.2f}' for z in P["sizes"]
+                        if g["variant_size"].startswith(z["label"])}
+                if want and g["price"] not in want:
+                    note("prices that are not this size's framed price")
+                if g["price"] in {f'{z.get("unframed_when_available", -1):.2f}'
+                                  for z in P["sizes"]}:
+                    note("unframed prices on a framed-only file")
                 if float(g["delivery_weight"] or 0) <= 0:
                     note("variants with no delivery weight")
         wrong = sum(1 for v in groups.values()
