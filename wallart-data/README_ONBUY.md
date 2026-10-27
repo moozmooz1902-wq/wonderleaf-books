@@ -75,11 +75,10 @@ and the placeholder is gone. One line.
 
 | | |
 |---|---|
-| 1 | The **Product Create Template** spreadsheet. Listing → Add Listing → "Click Here to Find Out More" → Product Create Template URL. Send me the file. |
-| 2 | The **category ID** for wall art / art prints, from that file's Category Sheet. |
-| 3 | Raise the **barcode exemption** ticket for brand Walryvo. |
+| 1 | Your OnBuy **API keys** — consumer key and secret key. Included on the £25 Standard plan. **This is the one that matters most**; see section 6. |
+| 2 | Raise the **barcode exemption** ticket for brand Walryvo. The API does not solve this one. |
+| 3 | If there are no API keys: the **Product Create Template** spreadsheet (Listing → Add Listing → "Click Here to Find Out More" → Product Create Template URL) and the **category ID** from its Category Sheet. |
 | 4 | **Weigh one framed print of each size** (A4, A3, A2) in its packaging. See section 5. |
-| 5 | Optional but it removes all guesswork: your OnBuy **API keys**, read-only if they offer that. Then I can pull the real category tree and the real field list myself. |
 
 Item 1 is the big one. **Every column name in the CSV right now is my best
 reading of OnBuy's public documentation, not a copy of their template.**
@@ -261,7 +260,86 @@ to be true. The website says "framed behind glazing", and so does this.
 
 ---
 
-## 6. One thing to watch after it goes live
+## 6. What it costs — no per-listing fee, no SKU cap
+
+Checked 27 Oct 2026. **Everything in this section is from third-party
+sources and OnBuy's public pages, and the commission table was read from
+OnBuy's API on 2 August 2026. Your own seller panel is the authority** — it
+shows the real rate against each listing, and promotional subscription
+prices change.
+
+### The shape of it is good for this catalogue
+
+| | |
+|---|---|
+| Per-listing fee | **None.** No insertion fee, no matter how many products. |
+| Listing / SKU cap | **None found on any plan.** ChannelEngine's integration guide records "minimum number of SKUs: none", and the Standard plan is described as unlimited listings. |
+| Subscription | **Standard £25/month**, Partner £69 (promotional, £129 from Jan 2027), Professional £249. Quoted before VAT. 30-day rolling. |
+| Commission | **By category, and wall art lands at 15%** — "Arts, Crafts & Sewing" is 15%, "Furniture" is 15%, "Everything else" is 15%. Minimum £0.25 a sale. |
+| Commission base | **The delivered total the buyer pays, INCLUDING postage.** |
+
+This is the opposite of eBay's shape, and it is the right shape for us:
+there are no insertion fees to run out of and no selling limits to raise.
+**The subscription costs the same whether you list 10,000 or all 3.77M.**
+Volume is free; only sales cost anything.
+
+### Margin at the current prices
+
+At 15% commission, free UK delivery (so the commission base is just the
+price):
+
+| | Price | Commission | Net |
+|---|---|---|---|
+| A4 framed | £24.99 | £3.75 | **£21.24** |
+| A3 framed | £29.99 | £4.50 | **£25.49** |
+| A2 framed | £34.99 | £5.25 | **£29.74** |
+
+Before print and frame cost, packaging and postage.
+
+**Breakeven on the subscription is about 1.5 A4 sales a month** (£25 + VAT
+= £30 against £21.24 net). That is a low enough bar that the subscription
+is not the thing to worry about.
+
+**Do not add a delivery charge to dodge commission — it does not work.**
+Commission is charged on the delivered total including postage, so £24.99 +
+£4.95 delivery is charged at 15% of £29.94, not of £24.99. Keep delivery
+free and the price inclusive, which is the same call
+`web/business.config.json` already makes for the website and for the
+Merchant Center feed.
+
+For comparison, eBay UK's final value fee on art is around 12.8% plus 30p
+an order, so OnBuy is roughly two points worse per sale. Not decisive, and
+the absence of insertion fees and selling limits more than covers it at
+this catalogue size.
+
+### THE API IS INCLUDED ON THE £25 PLAN, AND THAT CHANGES THE PLAN
+
+OnBuy's own sell page lists "Access to API & integrations" on **Standard**,
+not only on the higher tiers. That matters more than any of the fees above,
+because the API makes all three of this file's problems go away:
+
+1. `GET /v2/categories` returns the real category tree, so
+   `NEEDS-CATEGORY-ID` is answered without waiting for the template.
+2. The create-product call rejects a request naming its missing required
+   fields, so the field list stops being guesswork — and
+   `onbuy_plan.json["columns"]` can be replaced with the real thing.
+3. Listings go up programmatically instead of through a spreadsheet
+   reviewed by a person over roughly five days. For 10,000 listings that is
+   the difference between one afternoon and several weeks, and for 3.77M it
+   is the difference between possible and not.
+
+The barcode question does NOT go away — that is OnBuy policy, not a
+transport problem, and the exemption in section 1 is still the route.
+
+**So the useful thing to send me is the API credentials**, not the
+spreadsheet. Two values from the seller panel: the consumer key and the
+secret key. They are account credentials, so treat them as such; put them
+in the environment's settings panel rather than in a chat message if that
+is available, and a new session will pick them up.
+
+---
+
+## 7. One thing to watch after it goes live
 
 Pictures are served from `pub-6004b56e...r2.dev`, Cloudflare's managed R2
 URL. `stores.json` records it answering **Cloudflare error 1015 for 7,142 of
@@ -277,7 +355,7 @@ crawler is a different shape of load.
 
 ---
 
-## 7. How the files are checked
+## 8. How the files are checked
 
 `build_onbuy.py --check` refuses the upload while anything in it is a
 placeholder, and asserts the things that would quietly break it:

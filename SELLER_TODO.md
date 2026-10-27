@@ -199,12 +199,34 @@ Every product row reads `NEEDS-CATEGORY-ID` and
 `NEEDS-BARCODE-EXEMPTION` until those are settled, and the checker refuses
 the file. Deliberate: rejected loudly beats filed wrongly.
 
-**What to send me:** the Product Create Template spreadsheet (Listing →
-Add Listing → "Click Here to Find Out More"), the category ID, and
-**three weights** — one framed print of each size, A4/A3/A2, in its
-packaging. The weights in the file are estimates and they are the only
-number in it that was never measured; OnBuy prices delivery off them, so
-one that is too low is paid for on every order.
+**What to send me — the API keys are the valuable one.** OnBuy's own sell
+page lists "Access to API & integrations" on the **Standard £25 plan**, not
+just the higher tiers. With the consumer key and secret key I can pull the
+real category tree myself, have the create call tell me the real required
+fields instead of guessing them, and push listings programmatically instead
+of through a spreadsheet a person reviews over about five days. For 10,000
+that is an afternoon rather than weeks; for 3.77M it is the difference
+between possible and not. They are account credentials — put them in the
+environment's settings panel rather than a chat message if you can, and a
+new session picks them up.
+
+Failing that: the Product Create Template spreadsheet (Listing → Add
+Listing → "Click Here to Find Out More") and the category ID.
+
+Either way, **three weights** — one framed print of each size, A4/A3/A2,
+in its packaging. The weights in the file are estimates and they are the
+only number in it that was never measured; OnBuy prices delivery off them,
+so one that is too low is paid for on every order.
+
+**The fees are a good shape for this catalogue** (checked 27 Oct, and your
+seller panel is the authority): **no per-listing fee and no SKU cap on any
+plan**, so the £25/month subscription costs the same whether you list
+10,000 or all 3.77M. Commission is by category and wall art lands at
+**15%**, charged on the delivered total **including postage** — so adding a
+delivery charge does not dodge it, and free delivery with an inclusive
+price stays the right call. That is £21.24 net on an A4 at £24.99, about
+two points worse per sale than eBay's final value fee, and breakeven on the
+subscription is roughly one and a half A4 sales a month.
 
 **Upload the 5-listing test file first.** OnBuy's bulk route is a support
 ticket reviewed by a person, reportedly around five days, so a format
