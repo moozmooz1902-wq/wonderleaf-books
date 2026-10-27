@@ -68,20 +68,31 @@ It is a different product line from eBay and must not be confused with it:
 
 **`wallart-data/build_onbuy.py` + `onbuy_plan.json` is the OnBuy line**,
 added 27 Oct 2026. 10,000 listings from `luxvia-art`, framed only, nine
-variants. Start with `wallart-data/README_ONBUY.md`. Two things about it are
-unlike every other marketplace here and are easy to get wrong:
+variants, plus `build_onbuy_feed.py` for the Google-Shopping-XML import
+OnBuy offers on its Integrations screen. Start with
+`wallart-data/README_ONBUY.md`, then `onbuy/EXEMPTION_TICKET.md`.
 
-- **OnBuy is a catalogue marketplace.** You create a PRODUCT and then put an
-  offer against it, and a new product normally needs a real GS1 EAN. There
-  are 10,000 of them, so the only route is the exemption OnBuy grants on a
-  UK/EU trademark for the brand - which is why these files carry brand
-  **Walryvo** and not `Unbranded`.
-- **The format is NOT copied from an accepted file**, unlike `build_ebay.py`.
-  Nothing has been uploaded to OnBuy yet and the column names live in a
-  spreadsheet behind the seller's login. So the builder writes the DATA to
-  `rows.jsonl` with its own field names AND a CSV rendering of it, with the
-  column names in `onbuy_plan.json["columns"]`. Correcting them is editing
-  that one block. Do not treat the current column names as known-good.
+- **THE FORMAT IS NOW COPIED, NOT GUESSED.** The seller downloaded the real
+  OnCommerce Product Create Template and it is committed at
+  `wallart-data/onbuy/`, with its 83 columns, its required flags and its
+  6,659 categories extracted to `template_spec.json`. Category resolved:
+  **9376**, Artwork Prints. Variant rows REPEAT the product fields and the
+  parent is the row with an empty `Parent_Group` - both taken from its
+  worked examples, both wrong in the guessed version.
+- **OnBuy is a catalogue marketplace**, so you create a PRODUCT and then
+  put an offer against it. `EAN / UPC` is marked Required and every worked
+  example gives each VARIANT its own barcode, so the opening 10,000 designs
+  need **90,000**, not 10,000. That is the one thing still blocking the
+  upload; an exemption ticket went in 27 Oct.
+- **The product brand is `Unbranded`** - the seller's call, against advice,
+  with the cost written out in `onbuy_plan.json["_brand_note"]`: Unbranded
+  cannot be trademarked, so OnBuy's published route to an exemption is
+  closed. Do not silently change it back. `--check` prints a `[NOTE]` about
+  it on every build.
+- **Do not point OnBuy at `walryvo.com/feed.xml`.** That is the WEBSITE's
+  feed - 209 designs, website prices, links to our own shop. The OnBuy feed
+  is a separate file and `build_onbuy_feed.py --check` refuses one carrying
+  website prices or images.
 
 **`ebay_reprice/`** is the repricing tool for live eBay listings, used
 26 Oct to move 502,443 listings to the go-to prices. Its README records
@@ -92,7 +103,7 @@ four things in the export that break a naive find-and-replace.
 Everything below is also in `web/business.config.json`, which is the single
 source the site, the feed and the policy pages all read.
 
-    brand        Walryvo  -- THE WEBSITE'S BRAND, and OnBuy's. NOT eBay's.
+    brand        Walryvo  -- THE WEBSITE'S BRAND ONLY. See the table below.
     domain       walryvo.com   (walryvo.co.uk is held too and must 301 to it)
     legal        NORYMUS LIMITED, company 17020866, England and Wales
     registered   28 Bedford Square, Leigh, WN7 2AA
