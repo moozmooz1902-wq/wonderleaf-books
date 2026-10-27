@@ -82,13 +82,20 @@ OnBuy offers on its Integrations screen. Start with
 - **OnBuy is a catalogue marketplace**, so you create a PRODUCT and then
   put an offer against it. `EAN / UPC` is marked Required and every worked
   example gives each VARIANT its own barcode, so the opening 10,000 designs
-  need **90,000**, not 10,000. That is the one thing still blocking the
-  upload; an exemption ticket went in 27 Oct.
-- **The product brand is `Unbranded`** - the seller's call, against advice,
-  with the cost written out in `onbuy_plan.json["_brand_note"]`: Unbranded
-  cannot be trademarked, so OnBuy's published route to an exemption is
-  closed. Do not silently change it back. `--check` prints a `[NOTE]` about
-  it on every build.
+  need **90,000**, not 10,000. **The exemption was REFUSED on 27 Oct** -
+  "no exception can be given for any reason" - so GS1 numbers must be
+  bought. That is cheap and was badly over-estimated by everyone: GS1 UK
+  licence 100,000 numbers for about **£425** a year plus membership, so
+  the whole catalogue's barcodes cost roughly £500-600. Do NOT generate or
+  buy resold barcodes: OnBuy's wording is "GS1 **registered**", they look
+  the number up, and a prefix belongs to whoever GS1 issued it to - a
+  fabricated number either resolves to another company or to nothing. See
+  `onbuy/EXEMPTION_TICKET.md`.
+- **The product brand is `Unbranded`** - the seller's call, 27 Oct, with
+  the reasoning in `onbuy_plan.json["_brand_note"]`. The objection to it
+  was that Unbranded cannot carry a trademark and so cannot carry an
+  exemption; **that objection died with the refusal** - no brand gets one.
+  Brand is now a free choice. Do not change it without being asked.
 - **Do not point OnBuy at `walryvo.com/feed.xml`.** That is the WEBSITE's
   feed - 209 designs, website prices, links to our own shop. The OnBuy feed
   is a separate file and `build_onbuy_feed.py --check` refuses one carrying

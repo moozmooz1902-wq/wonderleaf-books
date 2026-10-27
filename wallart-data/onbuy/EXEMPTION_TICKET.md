@@ -299,3 +299,94 @@ magnitude.
 exists for made-to-order goods where a per-variant GTIN is not meaningful.
 If the answer is yes, none of this is needed. Spending money before that
 reply arrives is spending it blind.
+
+
+---
+
+# OUTCOME: REFUSED, 27 Oct 2026 — and it does not matter
+
+OnBuy's reply, in full substance:
+
+> We are unable to offer you or your brand an EAN exemption. A valid GS1
+> registered GTIN EAN Barcode is mandatory for product creation in our
+> catalogue. Without these you will not be able to list your products on
+> site. **No exception can be given for any reason.**
+
+So the exemption route is closed, permanently, and the brand question
+(Walryvo vs The Art Vault vs Unbranded) no longer decides anything — no
+brand gets an exemption.
+
+## The real answer: GS1 numbers in bulk are almost free
+
+Both of us had assumed 90,000 barcodes meant a four-figure bill. **It does
+not.** GS1 UK's own additional-prefix pricing, effective 10 May 2026, ex
+VAT:
+
+| Numbers | Price |
+|---|---|
+| 10 | £25 |
+| 100 | £50 |
+| 1,000 | £120 |
+| 10,000 | £250 |
+| **100,000** | **£425** |
+
+These are prefix licences on top of GS1 UK membership, which is banded on
+turnover and runs roughly £50–£130/year at this size.
+
+**So all 90,000 variant barcodes cost about £425, plus membership. Call it
+£500–£600 a year, legitimately registered.**
+
+That is **£0.0047 per barcode** — cheaper than any reseller, cheaper than
+any "cheap barcode" scheme, and the only version that actually passes the
+check OnBuy just said they run. At £16.99 net on an A4, about **33 sales a
+year** pays for the entire licence.
+
+NOT VERIFIED AT SOURCE: gs1uk.org returns 403 to this environment and its
+pricing pages are JavaScript-rendered, so these figures come from two
+independent reads of GS1 UK's own page rather than from the page itself.
+**Confirm with GS1 UK before paying.** The direction of the answer is not
+in doubt — bulk GTINs are cheap — but the exact tier should be checked.
+
+## Why generating barcodes cannot work here, regardless of cost
+
+Asked again on 27 Oct, on the grounds that "it's our own products as well,
+so it'll be fine". It is not, and the reason is mechanical rather than
+moral:
+
+**A barcode does not identify the product. It identifies WHO LICENSED THE
+NUMBER.** The leading digits of an EAN-13 are a GS1 company prefix issued
+to one specific company. The check digit at the end is one line of
+arithmetic, so generating numbers that *validate* is trivial — but
+validating is not the same as being registered, and OnBuy's refusal uses
+the words **"GS1 registered"** precisely because they look the number up.
+
+A generated number therefore does one of two things:
+
+1. lands inside a prefix GS1 issued to another company, so GS1's database
+   answers with THEIR name and our print claims to be their product; or
+2. lands in an unallocated range, so the lookup returns nothing and the
+   product is rejected.
+
+Owning the artwork changes neither outcome. And on a CATALOGUE marketplace
+the first case is the dangerous one: a collision does not fail quietly, it
+attaches our print to someone else's product page.
+
+Since a legitimate licence for the whole catalogue costs about £425, there
+is nothing to gain by it anyway.
+
+## What to do, in order
+
+1. **Join GS1 UK and buy a 100,000-number prefix.** ~£425 + membership.
+   Covers the opening 10,000 designs at nine variants each, with 10,000
+   spare.
+2. **Assign the barcodes deterministically**, so a rebuild never
+   reassigns one. A GTIN, like a SKU, must be stable for ever — see
+   RESUME.md on why SKUs are hashes of content and not positions. The
+   assignment belongs in a committed file mapping variant SKU → GTIN, not
+   in a formula over row order.
+3. **Cheaper first step if 10,000 designs is too big a bet:** 1,000
+   designs x 9 variants is 9,000 numbers, which fits the £250 tier. Or
+   1,000 designs at one size and one frame is 1,000 numbers, £120.
+4. **Then rebuild.** `build_onbuy.py` already carries
+   `NEEDS-BARCODE-EXEMPTION` in every variant row; swapping that for a
+   real GTIN is one column.
