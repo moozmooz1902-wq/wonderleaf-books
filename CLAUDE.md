@@ -84,9 +84,17 @@ OnBuy offers on its Integrations screen. Start with
   example gives each VARIANT its own barcode, so the opening 10,000 designs
   need **90,000**, not 10,000. **The exemption was REFUSED on 27 Oct** -
   "no exception can be given for any reason" - so GS1 numbers must be
-  bought. That is cheap and was badly over-estimated by everyone: GS1 UK
-  licence 100,000 numbers for about **£425** a year plus membership, so
-  the whole catalogue's barcodes cost roughly £500-600. Do NOT generate or
+  bought. **What they cost is NOT yet known and the published pages
+  contradict each other**: additional numbers list at £425/yr for 100,000,
+  but membership is banded on turnover OR GTIN allocation whichever is
+  higher, and the 100,000-GTIN band is £4,250/yr. So this is somewhere
+  between £525 and £4,250 a year until GS1 UK say which - see
+  `onbuy/BARCODE_COSTING.md` and send `onbuy/GS1_ENQUIRY.md` first. **Buy
+  nothing before that answer**: GTINs are assigned permanently, so the
+  wrong block size is the one expensive mistake available. The lever that
+  matters most is VARIANTS - OnBuy wants an EAN per variant, so nine
+  variants per design burns nine barcodes, and dropping to one turns
+  11,000 designs into 100,000 for the same spend. Do NOT generate or
   buy resold barcodes: OnBuy's wording is "GS1 **registered**", they look
   the number up, and a prefix belongs to whoever GS1 issued it to - a
   fabricated number either resolves to another company or to nothing. See
