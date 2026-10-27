@@ -61,7 +61,7 @@ WHAT IS DIFFERENT FROM THE EBAY FILE, deliberately:
          build_onbuy.py --limit 500 --tag first
          build_onbuy.py --check out/onbuy
 """
-import argparse, csv, hashlib, json, os, sys, collections
+import argparse, collections, csv, hashlib, json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -71,7 +71,37 @@ P = json.load(open(os.path.join(HERE, "onbuy_plan.json")))
 STORES = {s["bucket"]: s for s in
           json.load(open(os.path.join(HERE, "stores.json")))["stores"]}
 
+# RRP IS READ FROM ebay_plan.json, NOT COPIED INTO onbuy_plan.json.
+#
+# The template says OnBuy "will display any savings between the RRP and the
+# seller's price", so the RRP has to be a price the product is genuinely
+# sold at or the saving is fiction. It is: the identical SKU, with the
+# identical photograph, sells at eBay's framed prices today. Reading them
+# from the eBay plan at build time rather than writing them down here means
+# a change to eBay's prices cannot leave a stale saving on OnBuy - the
+# number has one home.
+_EB = json.load(open(os.path.join(HERE, "ebay_plan.json")))
+_EBAY_FRAMED = {z["label"].split()[0]: z["framed"] for z in _EB["sizes"]}
+if P.get("rrp_from_ebay"):
+    for _z in P["sizes"]:
+        _z["rrp"] = _EBAY_FRAMED.get(_z["label"])
+        if _z["rrp"] is not None and _z["rrp"] <= _z["framed"]:
+            # An RRP at or below the price is not a saving, it is a
+            # confusing duplicate, and OnBuy would be right to query it.
+            _z["rrp"] = None
+
 ROWS_PER_LISTING = 1 + len(P["frames"]) * len(P["sizes"])   # parent + 9
+
+# The eight the template allows. Anything else is silently remapped, or
+# turns the whole file into single products.
+ALLOWED_VARIANT_NAMES = {"Colour", "Length", "Material", "Pack Quantity",
+                         "Size", "Style", "Width"}
+
+# "Warranty or shipping information and costs should not be detailed in the
+# product description" - the Explanation tab, verbatim.
+SHIPPING_WORDS = re.compile(
+    r"\b(dispatch|despatch|delivery|delivered|shipping|postage|posted|"
+    r"courier|warranty|guarantee|returns?)\b", re.I)
 
 NO_CATEGORY = "NEEDS-CATEGORY-ID"
 NO_BARCODE = "NEEDS-BARCODE-EXEMPTION"
@@ -79,7 +109,6 @@ NO_BARCODE = "NEEDS-BARCODE-EXEMPTION"
 # Same guards as build_ebay.py: a row may only ever reference this run's own
 # generated work. The buckets also hold the seller's EXISTING catalogue,
 # already listed elsewhere, and nothing in it has this shape.
-import re
 SKU_RE = re.compile(r"^WA-[0-9a-f]{16}-[0-3]$")
 PIC_RE = re.compile(r"^https://[^/]+/[^/]+/gen/listing/WA-[0-9a-f]{16}-[0-3]-"
                     r"(black|white|oak)\.jpg$")
@@ -124,68 +153,70 @@ def article(word):
     return "an" if word[:1].lower() in "aeiou" else "a"
 
 
+def summary_points(job):
+    """Five neutral bullets. The template allows 500 characters each and
+    says they must stay impartial and carry no shipping or warranty
+    detail, so none of them mentions dispatch, delivery or returns."""
+    tech = LT.TECH.get(job["tech"], job["tech"])
+    pal = LT.PAL.get(job["pal"], "")
+    gram = LT.GRAM.get(job["gram"], "")
+    out = [f'{tech} style artwork of {LT._sub(job["subject"])}.',
+           "Printed on premium satin art paper with pigment inks.",
+           "Supplied framed, behind glazing, with the hanging fixture "
+           "fitted."]
+    if gram:
+        out.append(f'Composition: {gram}.')
+    if pal:
+        out.append(f'Palette: {pal}.')
+    out.append("Digitally created artwork, printed to order. Not a "
+               "hand-painted original and not signed.")
+    return (out + ["", "", "", "", ""])[:5]
+
+
 def describe(job, title):
-    """Plain HTML, framed only, and NOT ONE CLAIM THE SHOP CANNOT STAND
-    BEHIND.
+    """BASIC HTML ONLY, AND NOT ONE WORD ABOUT SHIPPING.
 
-    Every material statement here is copied from web/business.config.json
-    and web/site/src/components/Craft.astro, which are the single source the
-    website, the Merchant Center feed and the policy pages all read. That is
-    deliberate: the same product must not be described one way on OnBuy and
-    another way on walryvo.com. In particular, and all four learnt the hard
-    way somewhere else in this repo -
+    Both rules come from the template's own Explanation tab, and both broke
+    the first version of this function:
 
-      * no gsm and no 'archival': the seller stated the paper and the ink,
-        not a weight or a fade rating, and an unsupported material claim is
-        the cheapest misrepresentation finding there is;
-      * no naming of the glazing material. The first draft of this function
-        said 'shatterproof acrylic rather than glass', which nobody here
-        knows to be true. The website says 'framed behind glazing', and so
-        does this;
-      * nothing hand-painted, original or signed, which is a legal control
-        and not a quality one - see wallart-data/ip_check.py;
-      * dispatch is the real 3 working days, never shortened to look
-        better.
+      * "Basic HTML is accepted, however complex HTML and inline styles
+        will be automatically removed by our system." The first draft
+        opened with <div style="font-family:Arial..."> copied from the eBay
+        description. OnBuy would have stripped it, so it was decoration
+        that survived nowhere and risked taking its contents with it. Only
+        <p>, <ul>, <li> and <b> are used now.
+      * "Warranty or shipping information and costs should not be detailed
+        in the product description." The first draft said "Dispatch is
+        within 3 working days" and described how it arrives packaged. That
+        is shipping information in the product description, against an
+        explicit instruction, on 10,000 products. It is gone - the dispatch
+        time is submitted properly, in the Handling_Time column.
+      * "Self-referencing product descriptions are not permitted." So the
+        copy describes the PRODUCT and never the listing or the shop: no
+        "choose at checkout", no "our prints", no frame menu.
 
-    THE COMPOSITION AND PALETTE GO IN A SPEC LIST, NOT INTO PROSE. The
-    grammar codes read as English in isolation but not inside a sentence:
-    'composed as In A Vase' and 'in a Impasto Style style' are both things
-    an earlier version of this copy wrote across millions of listings. A
-    list has no articles to get wrong.
+    Everything it does claim is still only what web/business.config.json
+    claims: premium satin art paper, pigment inks, framed behind glazing,
+    not hand-painted, not signed. No gsm, no "archival", no glazing
+    material.
     """
     kind = LT.KIND.get(job["kind"], "").lower()
     tech = LT.TECH.get(job["tech"], job["tech"])
     pal = LT.PAL.get(job["pal"], "")
     gram = LT.GRAM.get(job["gram"], "")
-    sizes = ", ".join(f'{s["label"]} ({s["dims"]})' for s in P["sizes"])
-    frames = ", ".join(P["frames"][:-1]).lower() + \
-        " or " + P["frames"][-1].lower()
     spec = [("Theme", THEME.get(job["kind"], "Abstract")),
             ("Style", tech), ("Composition", gram), ("Palette", pal),
-            ("Finish", "Framed, ready to hang"),
             ("Paper", "Premium satin art paper"),
-            ("Inks", "Pigment inks")]
-    bits = [
-        f'<h2>{title}</h2>',
+            ("Inks", "Pigment inks"),
+            ("Finish", "Framed behind glazing, hanging fixture fitted")]
+    return (
         f'<p>{article(kind).capitalize()} {kind} wall art print, framed '
-        f'and ready to hang. Printed to order on premium satin art paper with pigment '
-        f'inks. Choose the frame in {frames}, and the size in '
-        f'{sizes}.</p>',
-        '<h3>Details</h3>',
-        '<ul>' + "".join(f'<li><b>{k}:</b> {v}</li>'
-                         for k, v in spec if v) + '</ul>',
-        '<h3>Made to order</h3>',
-        f'<p>Each print is made after you order it, in the '
-        f'{P["location"]}, which is why the choice is this wide. Dispatch '
-        f'is within {P["handling_days"]} working days. It arrives framed '
-        f'behind glazing with the hanging fixture already fitted.</p>',
-        '<h3>Please note</h3>',
-        '<p>This is a digitally created design, printed and framed to '
-        'order. It is not a hand-painted original and it is not signed. '
-        'The photographs show the print in each frame colour.</p>',
-    ]
-    return ('<div style="font-family:Arial,Helvetica,sans-serif;'
-            'max-width:720px">' + "".join(bits) + '</div>')
+        f'and ready to hang. Printed on premium satin art paper with '
+        f'pigment inks.</p>'
+        + '<ul>' + "".join(f'<li><b>{k}:</b> {v}</li>'
+                           for k, v in spec if v) + '</ul>'
+        + '<p>A digitally created design, printed and framed to order. It '
+          'is not a hand-painted original and it is not signed.</p>')
 
 
 def load_pool():
@@ -291,70 +322,77 @@ def select(pool, hashes, want, near_bits, max_per_subject):
 
 
 def rows_for(sku_ci, title, job, store):
-    """One PARENT row for the design, then nine VARIANT rows: three frames
-    x three sizes.
+    """One PARENT row, then nine VARIANT rows, in the template's own shape.
 
-    THE PARENT/VARIANT SPLIT IS NOT COSMETIC, and it is not only about
-    matching the shape OnBuy's template asks for. The first version of this
-    function wrote the product name, the category, the brand and the whole
-    description HTML onto all nine variant rows. Identical bytes, nine
-    times, ten thousand times over: the CSV came out at 146 MB, which is not
-    a file anyone opens in a spreadsheet and not a file anyone attaches to a
-    support ticket. The parent carries what belongs to the PRODUCT and the
-    variant rows carry only what differs - sku, the two axes, price, stock,
-    handling and weight. Same information, a fifth of the bytes.
+    THE VARIANT ROWS REPEAT THE PRODUCT FIELDS. That is not duplication for
+    its own sake - it is what all four worked examples in
+    onbuy/OnCommerce_Product_Create_Template.xlsx do. The sofa's four
+    colour rows and the t-shirt's fifteen size/colour rows each carry the
+    Product_Name, Description, Default_Image, Brand, Category and Condition
+    again, and only then add their own EAN, price, stock and variant
+    values. An earlier version of this function left those blank on the
+    variant rows, on the reasoning that the parent already had them. The
+    same assumption is what eBay rejects as error 21919053, which
+    tshirt/PUSH.md records: variation children must repeat Category,
+    ConditionID and Title.
 
-    EVERY VARIANT STILL LEADS WITH ITS OWN FRAME. The parent carries the
-    three photographs with black first, because black is the main image the
-    seller asked for; each variant row then carries the photograph of the
-    frame IT sells. A variant showing a different frame's photograph is the
-    kind of mismatch that gets an account looked at, and check() asserts it
-    on every row.
+    THE PARENT ROW CARRIES NO EAN, NO PRICE AND NO STOCK. Also copied: in
+    every example the parent is a shell and the sellable detail is on the
+    variants.
     """
-    desc = describe(job, title)
     pics = {c: pic(store, sku_ci, c) for c in P["frames"]}
     if not SKU_RE.match(sku_ci) or not all(PIC_RE.match(u)
                                            for u in pics.values()):
         return None, f"not this run's work: {sku_ci}"
+    desc = describe(job, title)
+    sums = summary_points(job)
+    cat = (P["category_id"] if P.get("category_submit") == "id"
+           else P["category_path"])
     blank = {k: "" for k in P["columns"] if not k.startswith("_")}
-    meta = {
-        # Carried in rows.jsonl for the record, never written to the CSV:
-        # these are what the item-specific columns get filled from once the
-        # template names them.
-        "_theme": THEME.get(job["kind"], "Abstract"),
-        "_room": ROOM.get(job["kind"], "Living Room"),
-        "_subject": LT._sub(job["subject"]),
-        "_kind": job["kind"], "_tech": job["tech"],
-        "_gram": job["gram"], "_pal": job["pal"],
-    }
-    parent = {**blank, **meta,
-              "_row": "product",
-              "sku": sku_ci,
-              "group_sku": sku_ci,
-              "product_name": title,
-              "description": desc,
-              "category_id": P["category_id"] or NO_CATEGORY,
-              "brand": P["brand"],
-              "barcode": NO_BARCODE,
+    meta = {"_theme": THEME.get(job["kind"], "Abstract"),
+            "_room": ROOM.get(job["kind"], "Living Room"),
+            "_subject": LT._sub(job["subject"]),
+            "_kind": job["kind"], "_tech": job["tech"],
+            "_gram": job["gram"], "_pal": job["pal"]}
+    common = {"product_name": title, "description": desc,
+              "brand": P["brand"], "category": cat,
               "condition": P["condition"],
-              "image_1": pics[P["frames"][0]],
-              "image_2": pics[P["frames"][1]],
-              "image_3": pics[P["frames"][2]]}
-    out = [parent]
+              "summary_1": sums[0], "summary_2": sums[1],
+              "summary_3": sums[2], "summary_4": sums[3],
+              "summary_5": sums[4]}
+    others = [pics[c] for c in P["frames"][1:]]
+    out = [{**blank, **meta, **common, "_row": "product",
+            "sku": sku_ci,
+            "image_1": pics[P["frames"][0]],
+            "image_2": others[0], "image_3": others[1]}]
     for c in P["frames"]:
-        for s in P["sizes"]:
-            out.append({**blank, **meta,
-                        "_row": "variant",
-                        "sku": f'{sku_ci}-{c[:1].upper()}{s["label"]}',
-                        "group_sku": sku_ci,
-                        "condition": P["condition"],
-                        "price": f'{s["framed"]:.2f}',
-                        "stock": str(P["quantity"]),
-                        "handling_time": str(P["handling_days"]),
-                        "delivery_weight": f'{s["weight_kg"]:.2f}',
-                        "image_1": pics[c],
-                        "variant_colour": c,
-                        "variant_size": f'{s["label"]} ({s["dims"]})'})
+        rest = [pics[o] for o in P["frames"] if o != c]
+        for z in P["sizes"]:
+            out.append({
+                **blank, **meta, **common, "_row": "variant",
+                "sku": f'{sku_ci}-{c[:1].upper()}{z["label"]}',
+                # The variant's own name, as the worked t-shirt example
+                # does: "... Cobalt Blue XS". 150 characters are allowed
+                # and the base title is built to eBay's 80.
+                "product_name": f'{title} - {c} Frame, {z["label"]}',
+                "group_sku": sku_ci,
+                "barcode": NO_BARCODE,
+                "price": f'{z["framed"]:.2f}',
+                "rrp": f'{z["rrp"]:.2f}' if z.get("rrp") else "",
+                "stock": str(P["quantity"]),
+                "handling_time": str(P["handling_days"]),
+                "delivery_weight": f'{z["weight_kg"]:.2f}',
+                "image_1": pics[c], "image_2": rest[0], "image_3": rest[1],
+                "variant_one_name": "Colour", "variant_one_value": c,
+                "variant_two_name": "Size", "variant_two_value": z["label"],
+                "colour": P["colour_feature"].get(c, c),
+                "data_1_name": "Print size", "data_1_value": z["dims"],
+                "data_2_name": "Frame colour", "data_2_value": c,
+                "data_3_name": "Orientation", "data_3_value": "Portrait",
+                "data_4_name": "Material", "data_4_value": "Paper",
+                "data_1_group": "Dimensions", "data_2_group": "Frame",
+                "data_3_group": "Dimensions",
+            })
     return out, None
 
 
@@ -413,7 +451,7 @@ def write(rows, out_dir, bucket, tag):
 def report(rows):
     """What the mix actually came out as. The seller asked for a mix; this is
     the number, not the intention."""
-    lis = {r["group_sku"]: r for r in rows if r["_row"] == "product"}
+    lis = {r["sku"]: r for r in rows if r["_row"] == "product"}
     nvar = sum(1 for r in rows if r["_row"] == "variant")
     print(f"\nlistings {len(lis):,}   variant rows {nvar:,}   "
           f"rows in file {len(rows):,}")
@@ -453,42 +491,64 @@ def check(out_dir):
         skus = set()
         for r in rows:
             g = {inv[k]: v for k, v in r.items() if k in inv}
-            # A PARENT ROW IS THE ONE WHOSE SKU IS ITS OWN GROUP. The CSV
-            # carries no _row column - that is bookkeeping, and a column
-            # OnBuy did not ask for is a column that could confuse an
-            # importer - so the distinction is re-derived here from the
-            # data itself. That is on purpose: it means these checks read
-            # the file the way OnBuy will, not the way the builder meant it.
-            parent = g["sku"] == g["group_sku"]
-            if not SKU_RE.match(g["group_sku"]):
+            # A PARENT ROW IS THE ONE WITH NO Parent_Group. That is the
+            # template's own rule - in all four worked examples the parent
+            # leaves Parent_Group empty and each variant names it. The CSV
+            # carries no _row column of its own, because a column OnBuy did
+            # not ask for is a column that could confuse an importer, so
+            # the distinction is re-derived here from the data. On purpose:
+            # these checks then read the file the way OnBuy will rather
+            # than the way the builder meant it.
+            parent = not g["group_sku"]
+            if not SKU_RE.match(g["group_sku"] or g["sku"]):
                 note("rows that are not this run's work")
             if g["sku"] in skus:
                 note("duplicate SKUs")
             skus.add(g["sku"])
             if parent:
-                if g["category_id"] == NO_CATEGORY:
-                    note("products with no category id")
-                if g["barcode"] == NO_BARCODE:
-                    note("products with no barcode or exemption")
+                if not g["category"]:
+                    note("products with no category")
+                if g["barcode"]:
+                    # Every worked example leaves the parent's EAN empty.
+                    note("product rows carrying an EAN")
                 if not g["product_name"] or not g["description"]:
                     note("products missing a name or description")
-                if len(g["product_name"]) > LT.MAX_TITLE:
-                    note("titles over the limit")
+                # Both of these are explicit instructions on the
+                # Explanation tab, and both were broken by the first draft.
+                if SHIPPING_WORDS.search(g["description"]):
+                    note("shipping information in a product description")
+                if "style=" in g["description"] or "<div" in g["description"]:
+                    note("inline styles OnBuy strips out")
+                if len(g["product_name"]) > P["max_title"]:
+                    note("titles over the template's 150-character limit")
                 if RESTRICTED.search(g["product_name"]):
                     note("titles naming a restricted subject")
-                if g["variant_colour"] or g["variant_size"]:
+                if g["variant_one_value"] or g["variant_two_value"]:
                     note("product rows carrying variant axes")
+                if g["price"] or g["stock"]:
+                    note("product rows carrying a price or stock")
                 for n in ("image_1", "image_2", "image_3"):
                     if not PIC_RE.match(g[n]):
                         note("bad picture urls")
             else:
                 groups[g["group_sku"]] += 1
-                if not (g["variant_colour"] and g["variant_size"]):
+                if g["barcode"] == NO_BARCODE:
+                    note("variants with no barcode or exemption")
+                if not (g["variant_one_value"] and g["variant_two_value"]):
                     note("variant rows missing an axis")
+                # The template warns that a variant name outside its list
+                # of eight is remapped, or the products are created as
+                # SINGLE products - which would turn 10,000 listings into
+                # 90,000 unrelated ones without any error.
+                if g["variant_one_name"] not in ALLOWED_VARIANT_NAMES or \
+                        g["variant_two_name"] not in ALLOWED_VARIANT_NAMES:
+                    note("variant axis names outside the template's list")
+                if g["rrp"] and float(g["rrp"]) <= float(g["price"] or 0):
+                    note("an RRP that is not above the price")
                 if not PIC_RE.match(g["image_1"]):
                     note("bad picture urls")
                 # the variant must lead with the frame IT sells
-                if f'-{g["variant_colour"].lower()}.jpg' not in g["image_1"]:
+                if f'-{g["variant_one_value"].lower()}.jpg' not in g["image_1"]:
                     note("variants whose main image is another frame")
                 if not g["price"] or float(g["price"]) <= 0:
                     note("non-positive prices")
@@ -501,7 +561,7 @@ def check(out_dir):
                 # the day the unframed variant can be added, and until then
                 # it must appear nowhere.
                 want = {f'{z["framed"]:.2f}' for z in P["sizes"]
-                        if g["variant_size"].startswith(z["label"])}
+                        if g["variant_two_value"] == z["label"]}
                 if want and g["price"] not in want:
                     note("prices that are not this size's framed price")
                 if g["price"] in {f'{z.get("unframed_when_available", -1):.2f}'
@@ -514,7 +574,7 @@ def check(out_dir):
         if wrong:
             note("listings without exactly nine variants", wrong)
         orphan = set(groups) - {r[cols["sku"]] for r in rows
-                                if r[cols["sku"]] == r[cols["group_sku"]]}
+                                if not r[cols["group_sku"]]}
         if orphan:
             # A variant whose parent is in ANOTHER file is a variant OnBuy
             # cannot attach to anything. Sharding splits on whole listings

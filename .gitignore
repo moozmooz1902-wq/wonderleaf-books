@@ -30,3 +30,4 @@ wallart-data/out/onbuy/tests/*_rows.jsonl
 # reproduces it exactly in 22 seconds. build_onbuy.py says so if it is
 # missing.
 wallart-data/pool_jobs.json
+wallart-data/out/onbuy/feed*/
