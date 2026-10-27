@@ -56,29 +56,57 @@ Two other things:
 
 ## Which ticket category to file it under
 
-**"Product Creation Support (Feeds)"** — the first option in the Seller
-Control Panel's "How can we help?" dropdown, seen 27 Oct.
+**"Product Creation Support (Feeds)"**, and it is a judgement call rather
+than an obvious one. The full dropdown, seen 27 Oct, has two plausible
+homes for this ticket:
 
-Both requests belong there: the barcode is a product-creation requirement,
-and enabling live product creation is the same team. There is no "barcode
-exemption" option in that list, which is itself the answer - the exemption
-is handled as product-creation support rather than as a thing of its own.
+- **Product Creation Support (Feeds)** - the first option.
+- **Brand Ownership** - further down, and arguably more precise, since
+  OnBuy grants the barcode exemption on the strength of owning the brand.
 
-NOT "Channel Integration API Queries". That is for debugging an API
-connection you already have, not for being granted permission to create
-products in the first place.
+Product Creation Support wins on two grounds. The ticket's actual question
+is "we cannot create products at volume because of the EAN requirement,
+what is the route for made-to-order goods" - that is a product-creation
+problem that happens to be solved by a brand exemption, not a brand dispute.
+And we do NOT hold a trademark: a Brand Ownership queue is likely staffed
+to check registration numbers, so filing there leads with our weakest card
+and invites a one-line "no trademark, denied" instead of the conversation
+the three questions are trying to start. It also covers Request 2, which
+Brand Ownership would not.
 
-Worth noting for whoever reads this later: that option is named
-"(Feeds)" and is the FIRST in the list, and the Integrations screen offers
-feed imports. OnBuy's mainstream product-creation path is a feed now, not
-the spreadsheet - which is why build_onbuy_feed.py exists and why the
-ticket's closing paragraph offers the Google Shopping XML.
+The ticket now says explicitly that we are happy to be re-routed, so a
+wrong guess costs a hop rather than a rejection. If it does come back
+declined on the trademark point alone, re-file under **Brand Ownership**
+with whatever they asked for.
 
-The full dropdown, for reference: Product Creation Support (Feeds),
-Product Data Change Requests, One-Time Stock & Price Updates, Product
-Listing Queries, Order Queries or Issues, Channel Integration API Queries,
-Refund fail, VAT Queries or Issues, Subscription or Invoice Queries, Bank
-Detail Approval Queries, Regional Delivery Pricing Request (UK only).
+NOT "Protected Brand Approval or Listing Permissions" - that is for being
+allowed to list someone ELSE's gated brand. NOT "Channel Integration API
+Queries" - debugging a connection you already have, not being granted
+permission to create products.
+
+Worth noting for whoever reads this later: the product-creation option is
+named "(Feeds)" and comes FIRST, and the Integrations screen offers feed
+imports. OnBuy's mainstream product-creation path is a feed now, not the
+spreadsheet - which is why build_onbuy_feed.py exists and why the ticket's
+closing paragraph offers the Google Shopping XML.
+
+**GPSR is in that dropdown twice** (GPSR Imports, GPSR Queries), so OnBuy
+takes the General Product Safety Regulation seriously. It is probably not
+ours: GPSR bites on goods placed on the EU or NORTHERN IRELAND market, and
+web/business.config.json sets ships_to to GB, which excludes NI. If OnBuy
+sells to NI buyers, or if the shop ever ships to the EU, this needs
+checking properly rather than assuming - it carries a named responsible
+person and labelling duties.
+
+The full dropdown: Product Creation Support (Feeds), Product Data Change
+Requests, One-Time Stock & Price Updates, Product Listing Queries, Order
+Queries or Issues, Channel Integration API Queries, Refund fail, VAT
+Queries or Issues, Subscription or Invoice Queries, Bank Detail Approval
+Queries, Regional Delivery Pricing Request (UK only), GPSR Imports, GPSR
+Queries, Bug Report, Brand Ownership, Performance Restrictions
+(Suspensions and Withdrawal Holds), Account Verification, Request to
+Reactivate Your Account, Business Details Change Requests, Protected Brand
+Approval or Listing Permissions.
 
 ---
 
@@ -174,6 +202,10 @@ Our product data is already prepared against your Product Create Template,
 with the category taken from your Categories tab, and we also have it
 available as a Google Shopping XML feed if a scheduled feed import would
 suit you better.
+
+If this sits with another team - the brand or catalogue team, for
+instance - please pass it on and let us know; we would rather it reached
+the right people than be answered quickly.
 
 Thank you,
 
