@@ -98,6 +98,71 @@ So when the template arrives, correcting the names is editing one block of
 
 ---
 
+## 2b. Where in OnBuy this gets uploaded — and why the CSV is not what goes in
+
+**There is no section you can drop the CSV I built into.** That is worth
+stating plainly before the click-path below, because the path leads
+somewhere that wants a different file.
+
+OnBuy's bulk route takes **OnBuy's own Product Create Template**, a
+spreadsheet with an Explanation tab, a Template tab and a Category Sheet.
+My CSV is the same data under my own column names. So the file in
+`out/onbuy/` is not the thing that gets uploaded — it is the data that gets
+poured into their template once we have it, which is why the template is
+item 3 on the list above.
+
+### The click path
+
+From the **Seller Control Panel**:
+
+1. **Listings → Add Listing → "Click Here to Find Out More"**
+2. That page carries the **Product Create Template URL**. Download it.
+3. Fill in the Template tab. Read the **Explanation** tab first — it is the
+   authoritative field list. Use the **Category Sheet** to find the wall-art
+   row.
+4. Submit it as a **support ticket** through the **Support Centre in the
+   Seller Control Panel**, attaching the file with a short message saying
+   what it is.
+5. Track it under **My Ticket**. Reportedly around **five days**.
+
+It is not a self-serve upload with a progress bar. A person reads it. That
+is the whole reason for sending TEST_5 first.
+
+If the Support Centre is down, OnBuy's Seller Terms name
+`sellersupport@onbuy.com` as the fallback.
+
+### HOW MUCH TO TRUST THAT PATH
+
+**The menu names are from a third-party guide roughly two and a half years
+old, and OnBuy has since rebranded to OnCommerce** — `onbuy.com/gb/sell`
+now redirects to `oncommerce.com`. The buttons have probably moved. The
+same thing happened on Cloudflare during the website setup, where "Add a
+site" had become "Onboard a domain" and the walkthrough had to be corrected
+mid-task.
+
+OnBuy's own knowledge base has the current version, as article
+`product-create-template` on `seller.onbuy.com`. **That is behind your
+login — it 404s from here.** If you can open it, a screenshot of that page
+answers this question properly and I will correct this section.
+
+### TWO THINGS FOUND WHILE CHECKING, both of which matter
+
+**1. The Seller Control Panel may already show you the category ID.**
+OnCommerce's own seller page says the Control Panel "shows each product's
+category ID and fee before it goes live". If that is visible anywhere in
+the listing flow, `NEEDS-CATEGORY-ID` can be answered without the template
+at all. Worth a look while you are in there.
+
+**2. API product creation has to be switched on for your account first.**
+OnBuy's API documentation says products created through the API appear
+under **Approve Products** in the Control Panel, and that **live product
+creation must be enabled on the account** before the create call works.
+So if we go the API route — which section 6 argues we should — that switch
+is part of the same request as the barcode exemption, not a separate
+discovery later.
+
+---
+
 ## 3. The files
 
 In `wallart-data/out/onbuy/`:
