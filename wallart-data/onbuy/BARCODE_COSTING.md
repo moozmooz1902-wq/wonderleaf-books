@@ -202,6 +202,38 @@ Unpublished tiers are common and the call is free.
 
 ---
 
+## 4b. Can an Amazon ASIN be used on OnBuy? No — and the template proves it
+
+Asked 27 Oct. Amazon hands out three identifiers and none of them is a
+GTIN, because **nobody issues GTINs except GS1**:
+
+| Amazon gives you | What it is | Usable on OnBuy? |
+|---|---|---|
+| **ASIN** | Amazon's internal catalogue id | **No** — see below |
+| **FNSKU** (X00…) | an FBA warehouse label | **No** — Amazon-internal, not a GTIN |
+| **GTIN exemption** | permission to list *without* one | **No** — it waives a number, it does not create one |
+
+The ASIN answer does not need research, because OnBuy's own Product Create
+Template settles it. Extracted into `template_spec.json`:
+
+    EAN / UPC        -> Required either EAN or UPC.
+    ASIN             -> Preferred
+
+They are **two separate columns with two different requirement levels**.
+OnBuy is happy to receive an ASIN and will use it, but it sits alongside
+the EAN rather than instead of it. Filling the ASIN column leaves the EAN
+column empty, and the EAN column is the one marked Required.
+
+The same goes for MPN, also "Preferred". We already generate an MPN; it has
+never been the problem.
+
+**The useful half of this:** Amazon's exemption is real and OnBuy's is not,
+which means **Amazon can carry volume at zero barcode cost** where OnBuy
+cannot. If the strategy is "list everything", that asymmetry is worth more
+than any barcode discount — see section 5.
+
+---
+
 ## 5. If another volume marketplace is wanted
 
 Worth knowing: **Amazon does grant GTIN exemptions**, where OnBuy does not.
