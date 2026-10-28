@@ -52,8 +52,8 @@
   "returns": {
     "window_days": 30,
     "_window_days": "30 days from DELIVERY, not from order. Google flags 'starting international return windows at purchase date instead of delivery date'. 30 beats the statutory 14 and is worth the goodwill. Whatever is promised here must actually be honoured - 'denying return and refund for a product despite having a clear refund or return policy' is an egregious violation with no warning.",
-    "who_pays_return_postage": "customer",
-    "_who_pays_return_postage": "'customer' or 'us'. Must be stated plainly on the returns page either way - undisclosed return shipping cost is listed under dishonest pricing.",
+    "who_pays_return_postage": "us",
+    "_who_pays_return_postage": "'us' or 'customer'. Changed to 'us' on 28 Oct: the seller sends a Royal Mail label as standard, which came out while filling in Merchant Center's return-method screen. The site had said the opposite since it was built - 'Paid by you, unless the item is faulty' - so every page was understating what the shop actually offers.\n\nSIX PLACES read this one value: the returns page, the footer on every page, two spots on the product page, the Merchant Center feed via product.py, and the Stripe checkout consent line. That is why it is a config flag and not prose - flipping it moves all six together, and this is the second time today a hardcoded version of a policy had to be chased down after the policy changed.",
     "restocking_fee": 0,
     "exchanges": true,
     "_exchanges": "Whether a buyer can swap for a different design, size or frame instead of taking the money back. Seller confirmed yes on 28 Oct, while filling in Merchant Center's returns screen - which asks the question outright and warns that the policy URL is read during verification.\n\nIt had to go on the page BEFORE the box was ticked. The returns page did not mention exchanges at all, so answering yes would have advertised something the published policy was silent on - the same shape of gap as the 'free delivery' text that survived the price change. Set this false and the page stops offering them."

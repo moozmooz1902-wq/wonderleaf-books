@@ -38,9 +38,17 @@ edge(Astro.response, TTL_STATIC);
     <ol class="prose">
       <li>Email <a href={`mailto:${B.email}`}>{B.email}</a> with your order
         number and say what you are sending back.</li>
-      <li>We reply with the return address, usually the same working day.</li>
-      <li>Post it back in packaging that will protect the glazing. The
-        board it arrived in is ideal.</li>
+      {/* These two steps follow who_pays_return_postage like the costs
+          table does. They used not to, and the page said "we reply with
+          the return address" in the steps while the table two inches
+          below said "we will send you a prepaid label" - one page giving
+          two accounts of the same process. */}
+      <li>{customerPays
+        ? 'We reply with the return address, usually the same working day.'
+        : 'We reply with a prepaid Royal Mail label to print, usually the same working day.'}</li>
+      <li>{customerPays
+        ? 'Post it back in packaging that will protect the glazing. The board it arrived in is ideal.'
+        : 'Stick the label on and drop it off at any Post Office. Use packaging that will protect the glazing — the board it arrived in is ideal.'}</li>
       <li>We refund within 5 working days of the parcel reaching us.</li>
     </ol>
 
