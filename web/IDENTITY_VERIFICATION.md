@@ -114,6 +114,36 @@ something you could have checked in thirty seconds.
 
 ---
 
+## KNOWN MISMATCH, 28 Oct: the VAT record carries an old address
+
+The seller checked and **the address on the VAT registration is not
+28 Bedford Square** - it is an outdated one. Their accountant has been
+asked to update it. HMRC address changes are not instant, so this will
+be out of step for a while.
+
+**What that means in practice:**
+
+- **Use the Certificate of Incorporation as the organisation document,
+  not the VAT certificate.** Companies House carries 28 Bedford Square,
+  which is what the site, the feed and the Merchant Center profile all
+  say. A VAT certificate showing a different address is an argument you
+  do not need to have, with an attempt limit behind it.
+- **Do the identity verification as late as Google lets you**, and if the
+  accountant has updated the VAT record by then, better still. Everything
+  else - creating the account, the business information, claiming the
+  domain, the data sources - can be done now and none of it touches the
+  VAT address.
+- **Do not change the address on the site to match the old VAT record.**
+  28 Bedford Square is the registered office at Companies House and that
+  is the one that is right. The VAT record is the one that is stale.
+
+The seller's view, 28 Oct: *"they're not going to dig that much"*. That
+may well be true - but it is worth knowing which way the risk runs, which
+is that a rejection here costs an attempt and the end of the attempts is
+full suspension.
+
+---
+
 ## Do this first, it takes a minute
 
 **Confirm the VAT record matches** at <https://www.gov.uk/check-uk-vat-number>
