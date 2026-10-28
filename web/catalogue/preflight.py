@@ -686,8 +686,19 @@ def check_live(cat, cfg, sample, base_override=None):
             txt = body.decode("utf-8", "replace")
             m = re.search(r"(\d+)\s*[-–]\s*(\d+)\s*business days", txt)
             if not m:
-                ok("checkout session is created",
-                   "delivery window not readable from the hosted page")
+                # NOT A PASS. Stripe's hosted page is JavaScript-rendered,
+                # so urllib sees a shell with no window in it, and the
+                # first version of this check reported PASS on that -
+                # a check whose strongest statement is about text it never
+                # saw, which is the same vacuous-pass bug the feed checker
+                # had. Say plainly that it was not verified.
+                fail("checkout quotes the same delivery window as the feed",
+                     "NOT VERIFIED - Stripe's hosted page is rendered in "
+                     "JavaScript and this check reads raw HTML. The session "
+                     "was created, so the endpoint works, but the window "
+                     "was not read. Check it by hand with a headless "
+                     "browser, or read shipping_options back from the "
+                     "Stripe API with the secret key.")
             elif (int(m.group(1)), int(m.group(2))) != (want_min, want_max):
                 fail("checkout quotes the same delivery window as the feed",
                      f"Stripe says {m.group(1)}-{m.group(2)} business days, "
