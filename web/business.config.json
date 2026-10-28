@@ -71,5 +71,7 @@
     "_set_it": "Get the courier's last posting date for the service you use, subtract nothing - the maths here already subtracts dispatch and transit - and put that arrival date in arrive_by, then set active true and redeploy."
   },
   "theme": "ink-black",
-  "_theme": "Which palette in themes.json the shop wears. Change this one word, run build_db.py, deploy. Nothing else needs touching - every colour in the stylesheet comes from the tokens this writes. The seller changes this often; that is the point."
+  "_theme": "Which palette in themes.json the shop wears. Change this one word, run build_db.py, deploy. Nothing else needs touching - every colour in the stylesheet comes from the tokens this writes. The seller changes this often; that is the point.",
+  "google_site_verification": "",
+  "_google_site_verification": "The content=\"...\" value from Google's HTML-tag verification method, for Search Console and the Merchant Center website claim. Paste JUST the token, not the whole <meta> tag - Base.astro builds the tag around it. Empty means no tag is rendered at all, which is why it is safe to ship empty.\n\nWHY THE TAG AND NOT DNS. Google offers an automated Cloudflare flow that writes the TXT record itself; it was tried on 28 Oct and wrote nothing, because the Cloudflare account that owns walryvo.com is not the Google account being verified. And Claude cannot add the record by hand - this environment's Cloudflare token READS DNS but the write is refused by the permission sandbox, which was tested rather than assumed. The meta tag needs neither: it ships in the page Claude already deploys."
 }

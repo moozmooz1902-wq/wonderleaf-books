@@ -114,6 +114,13 @@ const gift = orderBy();
         of the shop "looking completely different on a phone". */}
     <meta name="theme-color" content={B.theme_color ?? '#0e0e10'} />
     <meta name="color-scheme" content={B.theme_scheme ?? 'dark'} />
+    {/* Google's site verification, for Search Console and the Merchant
+        Center website claim. Rendered only when the token is set, so an
+        empty config ships no empty tag. Set
+        "google_site_verification" in business.config.json and rebuild. */}
+    {B.google_site_verification && (
+      <meta name="google-site-verification" content={B.google_site_verification} />
+    )}
     {/* The same mark as the header logo, reduced until it still reads at
         16px: the frame, the moon, the horizon. Inline so there is no
         favicon request and no 404 in the server log. */}
