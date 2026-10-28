@@ -614,6 +614,43 @@ def check_live(cat, cfg, sample, base_override=None):
     except Exception as e:
         fail("delivery price on the pages matches the config", repr(e))
 
+    # 4a-iii. GOOGLE'S OWNERSHIP FILE MUST STAY SERVED.
+    #
+    # Search Console verified walryvo.com on 28 Oct by fetching
+    # /google<token>.html, and its own dialog says: "To stay verified,
+    # don't remove the verification file." Lose it and the site quietly
+    # becomes unverified, which takes the Merchant Center website claim
+    # with it - and nothing on the site would look broken.
+    #
+    # The danger is not malice, it is tidying. site/public/google*.html is
+    # one line of text with a meaningless name; it reads like debris. So
+    # the check globs for whatever ownership files exist and asserts each
+    # one is still served as a 200 at its exact path - which also covers
+    # the Workers Assets html_handling setting silently reverting to the
+    # default that 307s /foo.html to /foo.
+    import glob as _glob
+    pub = os.path.join(WEB, "site", "public")
+    owners = sorted(_glob.glob(os.path.join(pub, "google*.html")))
+    if not owners:
+        ok("no Google ownership file to serve", "none in site/public")
+    else:
+        for f in owners:
+            name = os.path.basename(f)
+            try:
+                st, _h, body = get(f"{base}/{name}")
+                text = body.decode("utf-8", "replace").strip()
+                if st != 200:
+                    fail(f"Google ownership file {name} is served",
+                         f"HTTP {st} - Search Console verification will "
+                         f"lapse and the Merchant Center claim with it")
+                elif "google-site-verification" not in text:
+                    fail(f"Google ownership file {name} has the right body",
+                         f"got {text[:60]!r}")
+                else:
+                    ok(f"Google ownership file {name} is served", "200")
+            except Exception as e:
+                fail(f"Google ownership file {name} is served", repr(e))
+
     # 4b-ii. THE SERVED FEED IS THE FEED.
     #
     # Merchant Center is pointed at /feed.xml as a scheduled fetch, so from

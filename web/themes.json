@@ -3,17 +3,17 @@
   "_plate_wall": "The background of the image panels and product tiles ONLY. It must be the EXACT cream the mockups are photographed on, rgb(237,234,227) / #edeae3, on EVERY theme - light or dark.\n\nCORRECTED 28 Oct, and the previous advice here was wrong. It used to say: match the cream on a light theme, but on a dark theme set it near the page colour so the print reads as a lit panel on a dark wall. That cannot work. The cream is baked into the photograph - it is the wall the print was shot against - so a dark panel does not darken the picture, it just puts a hard cream rectangle inside a dark box with a visible edge. The seller spotted it within an hour of the black theme going live: 'around product image is creamy colour, it looked nicer before'. It had looked right before because gallery-cream's panel was #f6f4ef, near enough the photograph to hide the seam.\n\nSo: cream panels on a black page, which is what a gallery does anyway. The only way to make this token dark is to re-shoot every mockup on a dark wall.",
   "_scheme": "light or dark. It sets color-scheme, so native form controls and scrollbars follow the palette instead of fighting it.",
   "ink-black": {
-    "label": "Ink black - black page, white type",
+    "label": "Ink black - black page, pure white type, no warm tint",
     "scheme": "dark",
-    "paper": "#0e0e10",
-    "paper-2": "#17171a",
-    "card": "#1b1b1f",
-    "ink": "#f4f3f0",
-    "ink-2": "#c2bfb9",
-    "ink-3": "#8d8a85",
-    "rule": "#2c2c31",
-    "accent": "#f4f3f0",
-    "accent-ink": "#ffffff",
+    "paper": "#000000",
+    "paper-2": "#101010",
+    "card": "#161616",
+    "ink": "#ffffff",
+    "ink-2": "#d0d0d0",
+    "ink-3": "#949494",
+    "rule": "#2a2a2a",
+    "accent": "#ffffff",
+    "accent-ink": "#000000",
     "ok": "#7fb48a",
     "plate-wall": "#edeae3"
   },
@@ -61,5 +61,6 @@
     "accent-ink": "#5e2f35",
     "ok": "#2f5d3a",
     "plate-wall": "#edeae3"
-  }
+  },
+  "_ink_black_note": "NEUTRAL GREYS ONLY IN THIS PRESET. Every ink was warm - #f4f3f0 for type, #c2bfb9 and #8d8a85 for the quieter greys - and the papers carried a faint violet tint. Individually invisible; across a whole page it reads as cream, which is what the seller saw and asked to be white. Corrected 28 Oct to pure #ffffff type on #000000 with grey steps that have equal R, G and B.\n\nTHE ONE TOKEN THAT STAYS WARM IS plate-wall, #edeae3, and it must. That is not a design choice, it is the colour the mockups were photographed against - see _plate_wall. Neutralising it brings back the visible seam around every product image."
 }
