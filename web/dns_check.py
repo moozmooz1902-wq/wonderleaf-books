@@ -163,3 +163,30 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
+
+# MAIL AUTHENTICATION, CHECKED 28 Oct 2026 - IT IS HEALTHY. Do not "fix" it.
+#
+# The first-level records look wrong and are not:
+#
+#   MX    walryvo-com.mail.protection.outlook.com   -> mail is Microsoft 365
+#   SPF   v=spf1 include:secureserver.net -all      -> authorises GODADDY
+#   DMARC v=DMARC1; p=quarantine                    -> failures get binned
+#
+# Reading only the first line, M365 is not authorised to send and every
+# order confirmation goes to spam. That is wrong, and the chain is why:
+#
+#   secureserver.net -> spf-0.secureserver.net -> spf.protection.outlook.com
+#
+# GoDaddy's record ends with the Outlook include, so M365 IS authorised.
+# DKIM is also correct - selector1 and selector2 both CNAME to
+# netorgft21256617.r-v1.dkim.mail.microsoft - which matters more, because
+# DMARC here is relaxed (adkim=r) and passes on DKIM alone.
+#
+# Recorded so the next session does not raise the same false alarm, and
+# does not "correct" the SPF to point at Outlook directly - that would
+# drop GoDaddy's own relays, which is a change nobody has asked for.
+#
+# The one thing worth watching: SPF allows 10 DNS lookups and this chain
+# spends three before Outlook's own includes. Adding more senders could
+# tip it into permerror, which fails SPF for everything.
