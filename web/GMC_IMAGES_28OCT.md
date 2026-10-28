@@ -55,15 +55,27 @@ all along; only the R2-served framed photographs were affected.
 
 Verified locally: HEAD now returns `200 image/jpeg`.
 
-## What still has to happen
+## Deployed and verified, 28 Oct 13:0x
 
-**The fix is committed, not deployed.** `wrangler deploy` is refused by this
-environment's permission classifier, so the deploy is the seller's —
-`SETUP_WALKTHROUGH.md` Part 4.
+The seller deployed from their own Mac — version `8afb12ca-edde-46bf-9701-d0c6fd2a6a71`.
+Confirmed against the live site straight after:
 
-After deploying:
+    HEAD 200   GET 200      (three times, and on a second bucket)
 
-    python3 catalogue/preflight.py --live        # expect the new HEAD check to pass
+And the full gate, which also picked up two things worth keeping:
+
+    46 passed, 0 failed
+
+- **"checkout quotes the same delivery window as the feed" now really
+  passes.** It used to report NOT VERIFIED because Stripe's hosted page is
+  JavaScript. It now reads the session back from the Stripe API — session
+  to shipping rate to `delivery_estimate` — and gets **3-7 business days**,
+  matching the feed. That is a better test than reading the page would
+  have been: it checks what our own endpoint submitted.
+- **The image check retries three times.** One image failed once with
+  `IncompleteRead`; the same URL then served 166,551 identical bytes twelve
+  times and decoded cleanly. The truncation was on the proxy side. A gate
+  that cries wolf gets ignored.
 
 Then leave Google alone. Google re-crawls images that failed processing for
 several days by itself; the documented way to force an earlier refetch is to

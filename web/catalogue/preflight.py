@@ -75,6 +75,53 @@ def get(url, timeout=25):
         return r.status, r.headers, r.read()
 
 
+def _stripe_api(path):
+    key = os.environ.get("STRIPE_SECRET_KEY")
+    if not key:
+        return None
+    req = urllib.request.Request(
+        "https://api.stripe.com/v1/" + path,
+        headers={"Authorization": "Bearer " + key, "User-Agent": UA})
+    with urllib.request.urlopen(
+            req, timeout=30, context=ssl.create_default_context()) as r:
+        return json.loads(r.read())
+
+
+def _stripe_window(session_url):
+    """The delivery estimate Stripe is holding for a session we just made.
+
+    Returns (min, max) in business days, None if there is no key to ask
+    with, or a string explaining why it could not be read. The session id
+    is in the hosted URL, the session names a shipping rate, and the rate
+    carries the estimate - two hops, no expand syntax to get wrong.
+    """
+    m = re.search(r"cs_[A-Za-z0-9_]+", session_url or "")
+    if not m:
+        return "no session id in the checkout URL"
+    try:
+        sess = _stripe_api(f"checkout/sessions/{m.group(0)}")
+        if sess is None:
+            return None
+        opts = sess.get("shipping_options") or []
+        if not opts:
+            return ("the session carries no shipping option at all, so the "
+                    "buyer is never quoted a delivery window")
+        rate_id = opts[0].get("shipping_rate")
+        rate = (rate_id if isinstance(rate_id, dict)
+                else _stripe_api(f"shipping_rates/{rate_id}"))
+        est = (rate or {}).get("delivery_estimate") or {}
+        lo, hi = est.get("minimum") or {}, est.get("maximum") or {}
+        if not lo or not hi:
+            return "the shipping rate carries no delivery_estimate"
+        if lo.get("unit") != "business_day" or hi.get("unit") != "business_day":
+            return (f"the estimate is in {lo.get('unit')}/{hi.get('unit')}, "
+                    f"not business days, so it cannot be compared with the "
+                    f"feed")
+        return int(lo["value"]), int(hi["value"])
+    except Exception as e:
+        return f"could not read the session back from Stripe: {e!r}"
+
+
 # --------------------------------------------------------------------------
 # 1. Who the business is
 # --------------------------------------------------------------------------
@@ -686,19 +733,39 @@ def check_live(cat, cfg, sample, base_override=None):
             txt = body.decode("utf-8", "replace")
             m = re.search(r"(\d+)\s*[-–]\s*(\d+)\s*business days", txt)
             if not m:
-                # NOT A PASS. Stripe's hosted page is JavaScript-rendered,
-                # so urllib sees a shell with no window in it, and the
-                # first version of this check reported PASS on that -
-                # a check whose strongest statement is about text it never
-                # saw, which is the same vacuous-pass bug the feed checker
-                # had. Say plainly that it was not verified.
-                fail("checkout quotes the same delivery window as the feed",
-                     "NOT VERIFIED - Stripe's hosted page is rendered in "
-                     "JavaScript and this check reads raw HTML. The session "
-                     "was created, so the endpoint works, but the window "
-                     "was not read. Check it by hand with a headless "
-                     "browser, or read shipping_options back from the "
-                     "Stripe API with the secret key.")
+                # Stripe's hosted page is JavaScript-rendered, so urllib
+                # sees a shell with no window in it. The first version of
+                # this check reported PASS on that - a check whose
+                # strongest statement was about text it never saw, the same
+                # vacuous-pass bug the feed checker had.
+                #
+                # The page is not the only copy of the number. The session
+                # carries the shipping rate we sent, so ask Stripe for it
+                # directly. That is the real end-to-end test anyway: it
+                # reads back what OUR endpoint actually submitted, rather
+                # than what Stripe chose to render.
+                got = _stripe_window(sess["url"])
+                if got is None:
+                    fail("checkout quotes the same delivery window as the "
+                         "feed",
+                         "NOT VERIFIED - the hosted page is JavaScript and "
+                         "STRIPE_SECRET_KEY is not set, so the window could "
+                         "not be read from the API either. Set that key, or "
+                         "check it by hand in a browser.")
+                elif isinstance(got, str):
+                    fail("checkout quotes the same delivery window as the "
+                         "feed", got)
+                elif got != (want_min, want_max):
+                    fail("checkout quotes the same delivery window as the "
+                         "feed",
+                         f"Stripe holds {got[0]}-{got[1]} business days, the "
+                         f"feed says {want_min}-{want_max}. The number a "
+                         f"buyer sees when they pay must not be faster than "
+                         f"the one submitted to Google.")
+                else:
+                    ok("checkout quotes the same delivery window as the feed",
+                       f"{want_min}-{want_max} business days, read back from "
+                       f"the Stripe API")
             elif (int(m.group(1)), int(m.group(2))) != (want_min, want_max):
                 fail("checkout quotes the same delivery window as the feed",
                      f"Stripe says {m.group(1)}-{m.group(2)} business days, "
@@ -838,8 +905,26 @@ def check_live(cat, cfg, sample, base_override=None):
 
     # 4d. Images: reachable, an image, and big enough.
     def check_img(r):
+        # THREE TRIES, THEN BELIEVE IT. On 28 Oct this check failed one
+        # image out of 24 with IncompleteRead; the same URL then served
+        # 166,551 identical bytes twelve times in a row and decoded
+        # cleanly. The truncation was on this side of the proxy, not in
+        # the image. A gate that cries wolf gets ignored, and this one
+        # stands between the catalogue and a Google review - so retry the
+        # transport, and keep failing on anything that survives it.
+        u = onbase(r["image_link"])
+        status = h = body = None
+        last = None
+        for _ in range(3):
+            try:
+                status, h, body = get(u)
+                last = None
+                break
+            except Exception as e:
+                last = e
+        if last is not None:
+            return f"{r['id']}: image {last!r} (3 attempts)"
         try:
-            status, h, body = get(onbase(r["image_link"]))
             if status != 200:
                 return f"{r['id']}: image HTTP {status}"
             ct = h.get("content-type", "")
