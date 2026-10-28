@@ -116,6 +116,34 @@ deploy. Google re-reads them daily on its own, so they cannot drift behind
 the site, and `preflight.py --live` compares the served feed byte for byte
 against the catalogue so a deploy can never quietly ship a stale one.
 
+### NO BARCODES. Not one. This is the whole point of this channel.
+
+Asked twice on 28 Oct, so it is written down here rather than only in
+`web/catalogue/feed.py`. **Google does not require a GTIN for goods that
+have never had one** — made-to-order, custom and own-brand products are
+exactly the case it provides for. You supply **brand + MPN** instead, and
+the feed has done that from the day it was built. Measured on the live
+feed just now:
+
+| | |
+|---|---|
+| `g:gtin` tags | **0** |
+| `g:brand` | 2,508 |
+| `g:mpn` | 2,508 |
+| `identifier_exists` | 0 — deliberately absent |
+
+That last row is the subtle one. With brand and MPN present you must **not**
+set `identifier_exists` to `no`; omitting it lets Google's default apply.
+Setting it to `no` on a product that does have a GTIN is a policy violation,
+so the safe construction is the one already in place.
+
+**This is the asymmetry that decides the whole strategy.** OnBuy demands a
+GS1-registered EAN per variant and refuses all exemptions, so volume there
+costs real money. Google accepts brand + MPN, so **walryvo.com can carry
+the entire catalogue at zero barcode cost.** If the plan is "list
+everything", this is the channel it belongs on — see
+`wallart-data/onbuy/BARCODE_COSTING.md` §4.
+
 ### Your five steps
 
 1. **Sign up** at <https://merchants.google.com> with
@@ -136,6 +164,27 @@ against the catalogue so a deploy can never quietly ship a stale one.
    documents. Every name and address must match exactly. An unverified
    identity blocks the review of everything else, so do this early rather
    than last.
+
+### Do NOT bother with the Merchant Center API
+
+Offered 28 Oct and declined, for a reason worth keeping: the API exists to
+**submit products**, and that is the one part already solved better. The
+scheduled fetch pulls the feed daily with no credentials to hold, nothing
+to expire and nothing to re-run. Everything still outstanding — creating
+the account, verifying identity, claiming the domain — needs a human in a
+browser and no API can do it. So there is nothing to hand over.
+
+### A note on preflight's failures, 28 Oct
+
+Three consecutive `--live` runs failed 4, then 2, then 6 checks, a
+different set each time, and **every failure was a network error** —
+`TimeoutError`, `IncompleteRead`, `RemoteDisconnected`. Each one was then
+spot-checked by hand and the site answered correctly: `/`, `/terms` and
+`/c/landscapes/british-coast` all HTTP 200, and both "failing" images came
+back as real JPEGs of 141 KB and 188 KB. **The site is fine; this
+environment's proxy is flaky.** If a future run shows the same shape —
+network exceptions rather than content mismatches, and a different set
+each run — re-run before believing it, and check a couple by hand.
 
 ### Two choices only you can make
 
