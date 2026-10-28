@@ -233,7 +233,7 @@ echo "sk_live_YOURKEY" | npx wrangler secret put STRIPE_SECRET_KEY
 
 Then check it: the deploy prints a `*.workers.dev` URL. Open it. You should
 get the shop. Add `/art/` plus any product slug and `?frame=oak&size=a2` and
-you should see £34.99.
+you should see £24.99.
 
 ### Option B — let me finish it
 

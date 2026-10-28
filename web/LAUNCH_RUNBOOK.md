@@ -100,11 +100,15 @@ Already done and verified for you: legal name, company number (checked
 against the public register), registered office, delivery terms, returns
 window, and the whole catalogue.
 
-**Decision I made for you, change it if you disagree:** UK delivery is set
-to **free**. On a £24.99–£34.99 framed print it converts better than a
-£4.95 line, it makes the feed's shipping attribute trivially correct, and
-it removes the undisclosed-delivery-cost risk completely. One number in
-`business.config.json` changes it everywhere.
+**Delivery: £2.99 flat, UK, on everything.** Set by the seller on 27 Oct,
+replacing the free-delivery default this runbook originally recommended.
+One number in `business.config.json` drives it everywhere — the product
+pages, the delivery and FAQ pages, the Stripe checkout and the feed's
+shipping attribute — and `preflight.py` fails the build if any surface
+still says "free delivery" while a price is being charged. That check
+exists because the homepage did exactly that for a few hours on 27 Oct,
+which is an undisclosed-delivery-cost problem and the precise shape of a
+misrepresentation suspension.
 
 ---
 
@@ -387,7 +391,7 @@ spends a review you cannot get back.
    merchants and that an unverified identity blocks the substantive review
    of anything else, so do not skip or delay it.
 5. **Shipping and returns settings in Merchant Center** must say the same
-   thing as `/delivery` and `/returns`. Free UK delivery, dispatch within
+   thing as `/delivery` and `/returns`. GBP 2.99 UK delivery, dispatch within
    3 working days, 30-day returns from delivery. A difference between the
    account settings and the site is a misrepresentation finding by itself.
 6. **Submit the feed as a scheduled fetch.** Data sources → Add product
@@ -473,7 +477,7 @@ is handled.
 | "Using a false or virtual address as headquarters" | Real registered office. Preflight rejects an address with fewer than two lines. |
 | "Hiding where products ship from" | `/delivery` states printed, framed and posted in the United Kingdom. |
 | "Hiding processing delays behind a stated delivery time" | Dispatch time and transit time are shown **separately**, and both go in the feed as handling/transit times. |
-| "Not showing the total price, including taxes, fees" | All prices VAT-inclusive, free delivery, total shown before payment. The server looks up prices; the browser cannot propose one. |
+| "Not showing the total price, including taxes, fees" | All prices VAT-inclusive, delivery stated as GBP 2.99 on every surface, total shown before payment. The server looks up prices; the browser cannot propose one. |
 | Price mismatch between feed and landing page | Pages are server-rendered from the same build as the feed; `preflight --live` samples variant URLs and compares HTML and JSON-LD against the feed. |
 | "Denying return and refund despite having a clear policy" | 30 days from delivery, no reason needed; orders recorded by the Stripe webhook so they can be honoured. |
 | "Offers that represent your products in a way that isn't accurate" | Framed only, because the only photographs that exist are of framed prints. Every page states the artwork is digitally created and not a painting, original or signed work. |

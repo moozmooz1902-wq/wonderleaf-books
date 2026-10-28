@@ -124,7 +124,8 @@ source the site, the feed and the policy pages all read.
     registered   28 Bedford Square, Leigh, WN7 2AA
     VAT          GB513541030
     contact      sales@walryvo.com (Microsoft 365), 07397 937226
-    prices       framed A4/A3/A2 24.99/29.99/34.99, free UK delivery, VAT inc
+    prices       framed A4/A3/A2 14.99/19.99/24.99, unframed 6.99/8.99/9.99
+    delivery     GBP 2.99 flat, UK, on everything. VAT inc throughout.
     returns      30 days from delivery
     D1 database  wallart, e1e39887-2c7d-4066-9dc1-15f598af5b6e, already seeded
 

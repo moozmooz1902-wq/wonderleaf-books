@@ -59,7 +59,8 @@ Built and verified:
   duplicate audit calls 24 or fewer "near".
 - Astro build clean. Every route returns 200. Variant URLs verified to
   serve their own price server-side in both the visible HTML and the
-  JSON-LD (`?size=a4` → £24.99, `a3` → £29.99, `a2` → £34.99).
+  JSON-LD (framed `?size=a4` → £14.99, `a3` → £19.99, `a2` → £24.99;
+  unframed £6.99 / £8.99 / £9.99).
 - Feed passes 20 of Google's own spec rules locally, 0 problems on 9,000
   items.
 
