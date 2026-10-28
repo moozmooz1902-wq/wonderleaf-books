@@ -880,6 +880,41 @@ def check_live(cat, cfg, sample, base_override=None):
         ok("sampled images load from our own domain at a usable size",
            f"{min(24, len(picks))} sampled")
 
+    # 4d-bis. The same images, asked for with HEAD.
+    #
+    # WHY THIS EXISTS. On 28 Oct Merchant Center disapproved 192 items with
+    # "Image not processed" while every image downloaded perfectly here. GET
+    # was 200 and HEAD was 500: /img/[...path].ts exported GET and nothing
+    # else, so Astro answered HEAD with a server error. Crawlers check an
+    # image with HEAD before or instead of fetching it, so the route looked
+    # broken to Google and healthy to us. A check that only ever sends GET
+    # cannot see that, which is the whole point of this one.
+    def head_img(r):
+        u = onbase(r["image_link"])
+        try:
+            req = urllib.request.Request(u, method="HEAD",
+                                         headers={"User-Agent": UA})
+            with urllib.request.urlopen(
+                    req, timeout=25,
+                    context=ssl.create_default_context()) as resp:
+                if resp.status != 200:
+                    return f"{r['id']}: HEAD {resp.status}"
+                ct = resp.headers.get("content-type", "")
+                if not ct.startswith("image/"):
+                    return f"{r['id']}: HEAD content-type {ct!r}"
+            return None
+        except Exception as e:
+            return f"{r['id']}: HEAD {e!r}"
+
+    heads = picks[:min(24, len(picks))]
+    with cf.ThreadPoolExecutor(max_workers=8) as ex:
+        probs = [p for p in ex.map(head_img, heads) if p]
+    if probs:
+        fail("images answer HEAD, not just GET",
+             f"{len(probs)} of {len(heads)} failed: " + "; ".join(probs[:4]))
+    else:
+        ok("images answer HEAD, not just GET", f"{len(heads)} sampled")
+
     # 4e. A dead end that looks fine until someone tries to buy.
     try:
         req = urllib.request.Request(

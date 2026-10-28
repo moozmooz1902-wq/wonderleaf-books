@@ -57,7 +57,13 @@ export const GET: APIRoute = async ({ params, locals, request }) => {
   // photograph fails to load.
   const cache =
     typeof caches !== 'undefined' ? (caches as any).default : undefined;
-  const cacheKey = new Request(new URL(request.url).toString(), request);
+  // ALWAYS a GET request, whatever method we were called with. The Cache API
+  // only accepts GET keys - handing it the HEAD request this route is also
+  // reachable by makes cache.put throw, and a throw here is a 500 on an image
+  // the crawler is checking.
+  const cacheKey = new Request(new URL(request.url).toString(), {
+    method: 'GET',
+  });
   if (cache) {
     const hit = await cache.match(cacheKey);
     if (hit) return hit;
@@ -99,4 +105,19 @@ export const GET: APIRoute = async ({ params, locals, request }) => {
   const res = new Response(obj.body, { headers });
   if (cache) await cache.put(cacheKey, res.clone());
   return res;
+};
+
+// HEAD MUST BE ANSWERED, AND IT WAS NOT. With only GET exported, Astro
+// answered HEAD on this route with a 500 while GET returned the image
+// perfectly - verified against the live site on 28 Oct, the same day
+// Merchant Center reported "Image not processed" on 192 items. Crawlers
+// check an image with HEAD before or instead of downloading it, so a route
+// that 500s on HEAD looks broken to them and fine to us. The static
+// /unframed/ assets already answered HEAD correctly, which is why only the
+// R2-served framed photographs were affected.
+//
+// Same response, same headers, no body - that is all HEAD is.
+export const HEAD: APIRoute = async (ctx) => {
+  const res = await (GET as any)(ctx);
+  return new Response(null, { status: res.status, headers: res.headers });
 };

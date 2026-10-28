@@ -57,7 +57,7 @@ It is a different product line from eBay and must not be confused with it:
   breaks - `allSlugs()` is unpaged and the standard caps a file at 50,000
   URLs. Facet counts are precomputed and HTML is edge-cached as of 26 Oct;
   both are explained there.
-- **`web/catalogue/preflight.py` is the gate.** 20 offline checks, 13 more
+- **`web/catalogue/preflight.py` is the gate.** 20 offline checks, 14 more
   against a deployed site, each naming the Google policy or UK law behind
   it. `feed.py` refuses to build while the business identity is incomplete.
   Do not weaken either to make a build pass.
