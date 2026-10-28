@@ -48,6 +48,11 @@ It is a different product line from eBay and must not be confused with it:
   an unframed variation inherits the framed photo and that is fine; in a
   Merchant Center feed every variant carries its own image, so it would be
   submitting an unframed print with a photograph of a framed one.
+- **`web/SCALE_SCHEDULE.md` is the dated ladder** from the opening 209 to
+  500,000 - the conditions, the earliest dates and the weekly checks.
+  Written 28 Oct. Every date is "not before"; the real gate is 14 clean
+  days, then 30. `select.py scale_plan()` holds the sizes, that file holds
+  the timing.
 - **`web/SCALE.md` answers "can we put millions on it".** Short answer: the
   hosting is not the constraint and will not be - a new Merchant Center
   account is capped at **150,000 products**, raised by Google on its own

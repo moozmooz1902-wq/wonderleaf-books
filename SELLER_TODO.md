@@ -231,7 +231,14 @@ impression the account makes.
 
 Either way **I will not submit anything to Google without you saying so.**
 
-### After submission
+### After submission — the schedule is written down
+
+**`web/SCALE_SCHEDULE.md`** has the dated ladder from 209 designs to
+500,000: what must be true before each stage, the earliest date for each,
+the commands, and what to watch weekly. Written 28 Oct. In short: 1,000
+not before ~18 Nov, 5,000 not before ~16 Dec, 25,000 not before ~20 Jan,
+100,000 around March — and every one of those is "not before", never "on".
+The gate is **14 clean days, then 30**, not the calendar.
 
 Do not resubmit, do not edit in circles, and do not request reviews you do
 not need. Review attempts are limited and running out of them is how
