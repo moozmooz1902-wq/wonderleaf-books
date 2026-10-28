@@ -578,6 +578,42 @@ def check_live(cat, cfg, sample, base_override=None):
     except Exception as e:
         fail("sitemap.xml loads", repr(e))
 
+    # 4a-ii. NO PAGE MAY CLAIM A DELIVERY PRICE THE CONFIG DOES NOT SET.
+    #
+    # Found on 28 Oct by looking at a phone screenshot, not by any check.
+    # Delivery moved from free to GBP 2.99 in business.config.json, the
+    # footer and the feed followed it because they read the value, and the
+    # HOME PAGE went on saying "Free UK delivery" twice in hardcoded text -
+    # once in the hero and once in the assurance strip. A shop advertising
+    # free delivery and charging 2.99 at the checkout is the plainest
+    # misrepresentation there is, and it would have been live to Google.
+    #
+    # So the words are checked against the number on every page that has
+    # them. This is the same discipline as the feed/page price check below;
+    # it was simply never applied to the delivery line.
+    try:
+        free = cfg["fulfilment"]["delivery"][0]["price"] == 0
+        liars = []
+        for path in ("/", "/delivery", "/returns", "/faq", "/terms"):
+            try:
+                _s, _h, body = get(base + path)
+                text = body.decode("utf-8", "replace").lower()
+            except Exception:
+                continue
+            says_free = "free uk delivery" in text or "free delivery" in text
+            if says_free and not free:
+                liars.append(path)
+        if liars:
+            fail("no page promises free delivery while we charge for it",
+                 f"{liars} say 'free delivery' but delivery costs "
+                 f"{cfg['fulfilment']['delivery'][0]['price']}")
+        else:
+            ok("delivery price on the pages matches the config",
+               "free" if free else
+               f"{cfg['fulfilment']['delivery'][0]['price']:.2f}")
+    except Exception as e:
+        fail("delivery price on the pages matches the config", repr(e))
+
     # 4b-ii. THE SERVED FEED IS THE FEED.
     #
     # Merchant Center is pointed at /feed.xml as a scheduled fetch, so from

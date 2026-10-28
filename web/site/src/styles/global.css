@@ -98,6 +98,53 @@ img { max-width: 100%; height: auto; display: block; }
   padding: 7px 16px; border-bottom: 1px solid var(--rule);
   background: var(--paper-2);
 }
+.note-short { display: none; }
+
+/* THE TOP OF A PHONE SCREEN IS THE SCARCEST SPACE IN THE SHOP.
+ *
+ * Above the logo sat an offer bar with a line of explanation under it and
+ * a delivery-and-returns sentence of about 160 characters - four wrapped
+ * lines of small grey type before a shopper saw a single print. Nothing is
+ * removed here, because the offer and the delivery terms are two of the
+ * things most worth saying: the long forms are swapped for short ones and
+ * the offer's second line is left to the page it links to. */
+@media (max-width: 720px) {
+  /* THE HEADER WAS 230px TALL ON A 390px PHONE - a third of the screen
+   * gone before a single print. Six category links plus Styles, Rooms and
+   * Basket were wrapping onto four rows of upper-case type.
+   *
+   * Now: logo and Basket share the top row, and the categories become one
+   * horizontally scrollable strip under it. Nothing is hidden behind a
+   * menu button - a shopper can still see the collections exist, which is
+   * the point of having them in the header at all - and it costs about
+   * ninety pixels instead of two hundred and thirty. No JavaScript, so
+   * there is nothing to hydrate and nothing to flash. */
+  .head-row { flex-wrap: wrap; row-gap: 2px; }
+  .head-row > .logo { flex: 0 0 auto; }
+  .head-row > a.nav { margin-left: auto; flex: 0 0 auto; }
+  .head-row > nav.nav {
+    order: 3; flex: 1 0 100%;
+    /* flex-wrap: nowrap IS THE WHOLE FIX. .nav sets flex-wrap: wrap a few
+     * rules up, this one only re-declared `display: flex`, and so the
+     * links went on wrapping onto three rows inside a box that was told to
+     * scroll. The header came out at 173px instead of the ~90px intended,
+     * and it looked like the override had not applied at all. */
+    display: flex; flex-wrap: nowrap;
+    gap: 18px; overflow-x: auto; scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px; margin-top: 2px;
+  }
+  .head-row > nav.nav::-webkit-scrollbar { display: none; }
+  .head-row > nav.nav a { white-space: nowrap; font-size: 0.74rem; }
+
+  .lede-more { display: none; }
+  .note-long { display: none; }
+  .note-short { display: inline; }
+  .head-note { padding: 6px 16px; font-size: 0.74rem; }
+  .promo-why { display: none; }
+  .promo-bar a { padding: 8px 16px; }
+  .promo-bar strong { letter-spacing: 0.08em; }
+}
 
 /* ---------- the home page hero and the feature blocks ----------
  *

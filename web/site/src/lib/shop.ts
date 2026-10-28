@@ -111,6 +111,19 @@ export const deliveryLine = () => {
 export const returnsLine = () =>
   `${B.returns.window_days}-day returns from the day it arrives.`;
 
+// THE SAME FACTS IN FIVE WORDS, for the top bar on a phone.
+//
+// The full pair runs to about 160 characters, which on a 390px screen is
+// four wrapped lines of small grey type above the logo - the seller's
+// "too much words". They are not dropped on mobile, because the delivery
+// cost and the returns window are exactly what Google wants visible and
+// what a shopper wants before they scroll; they are just said shorter.
+export const deliveryShort = () => {
+  const d = B.fulfilment.delivery[0];
+  return d.price === 0 ? 'Free UK delivery' : `${money(d.price)} UK delivery`;
+};
+export const returnsShort = () => `${B.returns.window_days}-day returns`;
+
 export const niche = (slug: string) => TAX.niches[slug];
 export const sectionTitle = (slug: string) =>
   TAX.sections.find((s) => s.slug === slug)?.title ?? slug;

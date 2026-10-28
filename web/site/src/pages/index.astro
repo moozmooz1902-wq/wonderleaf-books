@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Grid from '../components/Grid.astro';
-import { B, TAX, money, img } from '../lib/shop';
+import { B, deliveryShort, TAX, money, img } from '../lib/shop';
 import { getDb, nicheCounts, bySection, byNiche, byNicheColour, bySectionColour } from '../lib/db';
 import { edge, TTL_CATALOGUE } from '../lib/cache';
 
@@ -69,15 +69,24 @@ edge(Astro.response, TTL_CATALOGUE);
     <div class="hero-split-copy">
       <p class="eyebrow">Printed &amp; framed in Britain</p>
       <h1>Quiet art for considered walls</h1>
+      {/* TWO SENTENCES, NOT ONE LONG ONE. The original ran to five wrapped
+          lines on a phone, which is the seller's "too much words": it
+          listed four collections by name AND the paper AND the framing
+          before the eye reached a picture. The second sentence is dropped
+          on a phone, where the same facts sit in the strip below and in
+          the Craft block further down. Nothing is lost, it is said once
+          instead of twice. */}
       <p class="lede">
         {total} designs across {counts.length} collections — the British
-        coast, wildlife and birds, botanical studies and the night sky. Each
-        one printed on {B.fulfilment.paper} and framed by hand after you
-        order it.
+        coast, wildlife and birds, botanical studies and the night sky.
+        <span class="lede-more">
+          {' '}Each one printed on {B.fulfilment.paper} and framed by hand
+          after you order it.
+        </span>
       </p>
       <a class="link-lux" href="/c/landscapes">Discover the collections</a>
       <div class="hero-split-meta">
-        <span>Free UK delivery</span>
+        <span>{deliveryShort()}</span>
         <span>{B.returns.window_days}-day returns</span>
         <span>A4 · A3 · A2</span>
       </div>
@@ -128,7 +137,7 @@ edge(Astro.response, TTL_CATALOGUE);
   <section class="assurance">
     <div class="wrap assurance-grid">
       <div><strong>Made to order</strong><span>Printed &amp; framed in {B.fulfilment.made_in}</span></div>
-      <div><strong>Free UK delivery</strong><span>Dispatched in {B.fulfilment.dispatch_working_days} working days</span></div>
+      <div><strong>{deliveryShort()}</strong><span>Dispatched in {B.fulfilment.dispatch_working_days} working days</span></div>
       <div><strong>{B.returns.window_days}-day returns</strong><span>From the day it arrives, any reason</span></div>
       <div><strong>Prices include VAT</strong><span>No surprises at checkout</span></div>
     </div>

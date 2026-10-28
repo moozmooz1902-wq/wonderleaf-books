@@ -195,7 +195,22 @@ def main():
     css += ["}", ""]
     open(os.path.join(os.path.dirname(HERE), "site", "src", "styles",
                       "theme.css"), "w").write("\n".join(css))
-    print(f"theme: {want} ({th['scheme']})")
+    # THE BROWSER NEEDS TO BE TOLD, NOT JUST THE STYLESHEET.
+    #
+    # The seller reported the shop's colours looking "completely different
+    # on a phone". It was not our CSS - there is no prefers-color-scheme
+    # rule anywhere in this site. It is that Chrome on Android AUTO-DARKENS
+    # pages, and the one thing that stops it is the page declaring the
+    # scheme it was designed in. theme.css already sets color-scheme on
+    # :root; these two carry the same fact into the <head>, where the
+    # browser reads it before any stylesheet has loaded.
+    #
+    # theme-color was ALSO hardcoded to #edeae3, the cream, so the phone's
+    # browser bar stayed cream whatever theme the shop was wearing. It is
+    # the theme's own page colour now, so it cannot fall out of step again.
+    cfg["theme_scheme"] = th["scheme"]
+    cfg["theme_color"] = th["paper"]
+    print(f"theme: {want} ({th['scheme']}, {th['paper']})")
 
     # THE SITE'S TAXONOMY IS WHAT ACTUALLY HAS STOCK, not the whole tree.
     #

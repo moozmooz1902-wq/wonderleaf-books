@@ -47,8 +47,18 @@ SIZES = [
     {"code": "a3", "label": "A3", "cm": "29.7 x 42 cm"},
     {"code": "a2", "label": "A2", "cm": "42 x 59.4 cm"},
 ]
-FRAMED_PRICE = {"a4": 24.99, "a3": 29.99, "a2": 34.99}
-UNFRAMED_PRICE = {"a4": 8.99, "a3": 12.99, "a2": 18.99}
+# THE WEBSITE'S OWN PRICES, set by the seller 28 Oct, and deliberately
+# BELOW eBay's. eBay sells the same designs framed at 24.99/29.99/34.99 and
+# unframed at 8.99/12.99/18.99; walryvo.com now undercuts both. That is a
+# commercial decision, not a drift to reconcile - the shop keeps the margin
+# a marketplace takes in fees, so it can afford to.
+#
+# These are read NOWHERE ELSE. wallart-data/ebay_plan.json still holds
+# eBay's and wallart-data/onbuy_plan.json still holds OnBuy's, so changing
+# a price here moves the website and the Merchant Center feed together and
+# touches no marketplace.
+FRAMED_PRICE = {"a4": 14.99, "a3": 19.99, "a2": 24.99}
+UNFRAMED_PRICE = {"a4": 6.99, "a3": 8.99, "a2": 9.99}
 
 # UNFRAMED IS A REAL TIER NOW, AND ONLY BECAUSE IT HAS ITS OWN PHOTOGRAPH.
 #
