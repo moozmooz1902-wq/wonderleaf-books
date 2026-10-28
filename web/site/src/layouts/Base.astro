@@ -11,8 +11,7 @@
 // being asked.
 import { PROMO } from '../lib/promo';
 import '../styles/global.css';
-import { B, TAX, deliveryLine, returnsLine, deliveryShort, returnsShort,
-         money, orderBy } from '../lib/shop';
+import { B, TAX, money, orderBy } from '../lib/shop';
 import Logo from '../components/Logo.astro';
 
 interface Props {
@@ -148,13 +147,16 @@ const gift = orderBy();
         </a>
       </div>
     )}
-    {/* Short on a phone, full on a desktop - same facts either way. Both
-        are rendered and CSS picks; swapping them in JS would flash the
-        wrong one first. */}
-    <div class="head-note">
-      <span class="note-long">{deliveryLine()} {returnsLine()}</span>
-      <span class="note-short">{deliveryShort()} &middot; {returnsShort()}</span>
-    </div>
+    {/* THE DELIVERY STRIP IS GONE FROM THE HEADER, seller's call 28 Oct.
+        It was a third bar of grey type above the logo and it said what is
+        already said in three better places: the FOOTER carries the full
+        delivery and returns terms on every page, which is where Google
+        looks for them to be consistent, and the basket and the FAQ each
+        state the cost again at the moment it matters. Removing it costs
+        nothing in policy terms and gives the art the top of the screen.
+
+        preflight --live still checks that no page claims free delivery
+        while we charge for it, so the words cannot drift back. */}
     <header class="site-head">
       <div class="wrap head-row">
         <a class="logo" href="/" aria-label={`${B.brand} home`}><Logo size={30} /></a>

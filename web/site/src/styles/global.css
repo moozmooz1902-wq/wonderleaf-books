@@ -93,12 +93,6 @@ img { max-width: 100%; height: auto; display: block; }
   border-bottom: 1px solid transparent;
 }
 .nav a:hover, .nav a[aria-current] { color: var(--ink); border-bottom-color: var(--accent); }
-.head-note {
-  font-size: 0.78rem; color: var(--ink-3); text-align: center;
-  padding: 7px 16px; border-bottom: 1px solid var(--rule);
-  background: var(--paper-2);
-}
-.note-short { display: none; }
 
 /* THE TOP OF A PHONE SCREEN IS THE SCARCEST SPACE IN THE SHOP.
  *
@@ -138,9 +132,6 @@ img { max-width: 100%; height: auto; display: block; }
   .head-row > nav.nav a { white-space: nowrap; font-size: 0.74rem; }
 
   .lede-more { display: none; }
-  .note-long { display: none; }
-  .note-short { display: inline; }
-  .head-note { padding: 6px 16px; font-size: 0.74rem; }
   .promo-why { display: none; }
   .promo-bar a { padding: 8px 16px; }
   .promo-bar strong { letter-spacing: 0.08em; }
