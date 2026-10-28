@@ -1,8 +1,7 @@
 {
   "_": "THE SHOP'S PALETTES, AS DATA. The seller changes these often, so they are not spelled out in the stylesheet any more - build_db.py writes the chosen one into site/src/styles/theme.css and global.css imports it. Changing the whole shop is one word in business.config.json: \"theme\". Add a preset by copying a block; every preset must define every token, because there is no fallback and a missing one is an invisible colour.",
-  "_plate_wall": "The background of the large image panels ONLY. Every mockup is photographed on flat cream, rgb(237,234,227). Set it to that exact value on a light theme and the photograph has no edge; on a dark theme set it near the page colour so the print reads as a lit panel on a dark wall, which is how a gallery actually hangs work.",
+  "_plate_wall": "The background of the image panels and product tiles ONLY. It must be the EXACT cream the mockups are photographed on, rgb(237,234,227) / #edeae3, on EVERY theme - light or dark.\n\nCORRECTED 28 Oct, and the previous advice here was wrong. It used to say: match the cream on a light theme, but on a dark theme set it near the page colour so the print reads as a lit panel on a dark wall. That cannot work. The cream is baked into the photograph - it is the wall the print was shot against - so a dark panel does not darken the picture, it just puts a hard cream rectangle inside a dark box with a visible edge. The seller spotted it within an hour of the black theme going live: 'around product image is creamy colour, it looked nicer before'. It had looked right before because gallery-cream's panel was #f6f4ef, near enough the photograph to hide the seam.\n\nSo: cream panels on a black page, which is what a gallery does anyway. The only way to make this token dark is to re-shoot every mockup on a dark wall.",
   "_scheme": "light or dark. It sets color-scheme, so native form controls and scrollbars follow the palette instead of fighting it.",
-
   "ink-black": {
     "label": "Ink black - black page, white type",
     "scheme": "dark",
@@ -16,9 +15,8 @@
     "accent": "#f4f3f0",
     "accent-ink": "#ffffff",
     "ok": "#7fb48a",
-    "plate-wall": "#17171a"
+    "plate-wall": "#edeae3"
   },
-
   "paper-white": {
     "label": "Paper white - white page, black type",
     "scheme": "light",
@@ -34,7 +32,6 @@
     "ok": "#1f6b3a",
     "plate-wall": "#edeae3"
   },
-
   "gallery-cream": {
     "label": "Gallery cream - the mockups' own background, no seam",
     "scheme": "light",
@@ -50,7 +47,6 @@
     "ok": "#2f5d3a",
     "plate-wall": "#edeae3"
   },
-
   "plaster-pink": {
     "label": "Plaster pink - warm gallery pink, claret accent",
     "scheme": "light",

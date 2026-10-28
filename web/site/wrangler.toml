@@ -7,6 +7,19 @@ compatibility_flags = ["nodejs_compat"]
 [assets]
 directory = "./dist"
 binding = "ASSETS"
+# SERVE ASSETS AT THEIR EXACT PATH, with no .html rewriting.
+#
+# Workers Assets defaults to "auto-trailing-slash", which 307s /foo.html to
+# /foo. That is pleasant for a static site and wrong for us: Google's
+# ownership check fetches /google<token>.html EXACTLY and a redirect is not
+# a 200. The content was being served correctly all along, just one hop
+# away from where Google looks.
+#
+# Safe here because this site is SSR - every page comes from the Worker,
+# not from a static .html asset - so nothing else depends on the rewrite.
+# The only assets in dist/ are the feed, the unframed photographs, the
+# hashed _astro bundles and this verification file.
+html_handling = "none"
 
 [observability]
 enabled = true

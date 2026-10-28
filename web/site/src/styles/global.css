@@ -306,7 +306,11 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .card { display: flex; flex-direction: column; text-decoration: none; }
 .card .shot {
-  background: var(--card); border: 1px solid var(--rule);
+  /* --plate-wall, NOT --card. The tile holds a photograph shot on cream,
+   * so the panel behind it has to be that same cream or the seam shows.
+   * --card is for cards made of type and whitespace, which follow the
+   * theme; this one follows the photograph. */
+  background: var(--plate-wall); border: 1px solid var(--rule);
   aspect-ratio: 1 / 1; overflow: hidden;
   display: flex; align-items: center; justify-content: center;
 }
@@ -340,7 +344,7 @@ img { max-width: 100%; height: auto; display: block; }
 .pdp { display: grid; gap: 40px; padding: 30px 0 56px; }
 @media (min-width: 900px) { .pdp { grid-template-columns: 1.15fr 1fr; gap: 56px; } }
 .pdp .shot {
-  background: var(--card); border: 1px solid var(--rule);
+  background: var(--plate-wall); border: 1px solid var(--rule);
   display: flex; align-items: center; justify-content: center;
   /* The mockups are square, but the grid row is as tall as the details
    * column, so a stretched .shot left deep empty bands above and below the
