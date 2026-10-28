@@ -36,7 +36,8 @@
  "returns": {
   "window_days": 30,
   "who_pays_return_postage": "customer",
-  "restocking_fee": 0
+  "restocking_fee": 0,
+  "exchanges": true
  },
  "prices_include_vat": true,
  "currency": "GBP",

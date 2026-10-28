@@ -1,4 +1,5 @@
 ---
+import { Fragment } from 'astro/jsx-runtime';
 // The returns policy, and a deliberate decision inside it.
 //
 // Made-to-order goods can be exempt from the 14-day cancellation right in
@@ -57,6 +58,32 @@ edge(Astro.response, TTL_STATIC);
       <tr><th>Original delivery charge</th><td>Refunded in full if you return the whole order.</td></tr>
       <tr><th>Refund method</th><td>Back to the card or account you paid with. We cannot refund to anything else.</td></tr>
     </table>
+
+    {/* EXCHANGES, stated because we offer them and Merchant Center asks.
+        The order matters: the box in Merchant Center is only honest once
+        the published policy says this, and the policy URL is what Google
+        reads during verification. */}
+    {B.returns.exchanges && (
+      <Fragment>
+        <h2>Exchanges</h2>
+        <p class="prose">
+          If you would rather swap than get your money back, say so when
+          you email us and we will arrange it. Any design, any size, any
+          frame colour — the whole range is open to you, not just the one
+          you ordered. If the new one costs more you pay the difference;
+          if it costs less we refund it.
+        </p>
+        <p class="prose">
+          Everything is made to order, so an exchange is a fresh print
+          rather than something taken off a shelf: expect the same
+          {' '}{B.fulfilment.min_handling_days}&ndash;{B.fulfilment.dispatch_working_days}
+          {' '}working days to make it and {B.fulfilment.delivery[0].min_days}&ndash;{B.fulfilment.delivery[0].max_days}
+          {' '}in the post, counted from when your return reaches us. You
+          have the same {B.returns.window_days} days to ask for an exchange
+          as you do for a refund.
+        </p>
+      </Fragment>
+    )}
 
     <h2>Damaged, faulty or wrong</h2>
     <p class="prose">
