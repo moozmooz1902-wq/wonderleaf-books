@@ -170,8 +170,11 @@ everything", this is the channel it belongs on — see
    then Merchant Center — all three on the same account. Doing Search
    Console on one account and Merchant Center on another means verifying
    the domain twice.
-2. **Business name: NORYMUS LIMITED**, not Walryvo. Google checks the name
-   against Companies House and the VAT record. Display name Walryvo.
+2. **Legal name: NORYMUS LIMITED. Display name: Walryvo.** These are two
+   different fields and the distinction decides whether identity
+   verification passes - the payments-profile legal name must match the
+   company document exactly, while the shop name shoppers see is Walryvo.
+   `web/IDENTITY_VERIFICATION.md` has the whole thing.
    Address 28 Bedford Square, Leigh, WN7 2AA. Customer service
    sales@walryvo.com and 07397 937226 — the same pair that is on the site.
 3. **Claim walryvo.com.** Google will show you a verification token. Copy
@@ -182,10 +185,12 @@ everything", this is the channel it belongs on — see
 4. **Add the two data sources.** Data sources → Add product source →
    **Scheduled fetch** → paste the feed URL → daily. Then the same again
    for the promotions URL under Promotions. Do not pick "upload a file".
-5. **Identity verification.** Photo ID, proof of address, company
-   documents. Every name and address must match exactly. An unverified
-   identity blocks the review of everything else, so do this early rather
-   than last.
+5. **Identity verification.** **Read `web/IDENTITY_VERIFICATION.md`
+   before starting it** - attempts are limited and the end of them is full
+   suspension, the person who starts must finish, and the payments-profile
+   name has to be corrected BEFORE submitting rather than after. An
+   unverified identity blocks the review of everything else, so do it
+   early rather than last.
 
 ### Do NOT bother with the Merchant Center API
 
