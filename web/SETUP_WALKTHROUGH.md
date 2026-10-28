@@ -235,6 +235,46 @@ Then check it: the deploy prints a `*.workers.dev` URL. Open it. You should
 get the shop. Add `/art/` plus any product slug and `?frame=oak&size=a2` and
 you should see £24.99.
 
+### Redeploying later, after a code change
+
+The shop is already live, so most deploys from here are three commands. The
+one that catches people is the branch: all of this work lives on
+`claude/dreamy-hopper-cgp4p4`, not on `main`, so a plain `git pull` on the
+wrong branch pulls nothing and the deploy ships the old code.
+
+```bash
+cd <wherever you cloned it>/wonderleaf-books
+git checkout claude/dreamy-hopper-cgp4p4
+git pull
+cd web/site
+npm install          # only after a pull that changed package.json, but harmless
+npm run deploy
+```
+
+`npm run deploy` is `astro build` followed by `wrangler deploy` — it builds
+first, so there is no separate build step. It ends with a line like
+`Current Version ID: ...` and the workers.dev URL.
+
+**Then verify the thing you actually changed**, not just that the deploy
+finished. For the 28 Oct HEAD fix that means:
+
+```bash
+curl -I https://walryvo.com/img/luxvia-art/luxvia/gen/listing/WA-0beeb38bcbf5c20a-0-black.jpg
+```
+
+`HTTP/2 200` is right. `HTTP/2 500` means the deploy did not take — check
+you were on the right branch.
+
+And the full gate, which covers that check and 33 others:
+
+```bash
+cd ..            # back to web/
+python3 catalogue/preflight.py --live
+```
+
+**If `wrangler` asks you to log in**, run `npx wrangler login` once; it
+opens a browser. The token lives on your machine afterwards.
+
 ### Option B — let me finish it
 
 In Claude Code settings, allow these four for Bash:
