@@ -128,7 +128,9 @@ def items(cat, cfg):
                 "shipping_country": "GB",
                 "shipping_service": d["name"],
                 "shipping_price": f'{d["price"]:.2f} {cur}',
-                "min_handling_time": 1,
+                # from config, not a literal, so the Stripe checkout and
+                # this feed cannot disagree about the fast end again
+                "min_handling_time": cfg["fulfilment"]["min_handling_days"],
                 "max_handling_time": cfg["fulfilment"]["dispatch_working_days"],
                 "min_transit_time": d["min_days"],
                 "max_transit_time": d["max_days"],

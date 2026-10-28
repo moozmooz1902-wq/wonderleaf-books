@@ -130,11 +130,21 @@ export const POST: APIRoute = async ({ request, locals }) => {
               currency: B.currency.toLowerCase(),
             },
             tax_behavior: 'inclusive',
+            // HANDLING + TRANSIT AT BOTH ENDS. The maximum always added
+            // dispatch to transit; the minimum did not, so Stripe told
+            // buyers "2-7 business days" when nothing can arrive before
+            // 1 day to print plus 2 in the post. The feed had it right all
+            // along - it declares handling and transit separately and lets
+            // Google add them - so checkout was the odd one out, and it is
+            // the number shown at the moment someone pays.
             delivery_estimate: {
-              minimum: { unit: 'business_day', value: d.min_days },
+              minimum: {
+                unit: 'business_day',
+                value: B.fulfilment.min_handling_days + d.min_days,
+              },
               maximum: {
                 unit: 'business_day',
-                value: d.max_days + B.fulfilment.dispatch_working_days,
+                value: B.fulfilment.dispatch_working_days + d.max_days,
               },
             },
           },

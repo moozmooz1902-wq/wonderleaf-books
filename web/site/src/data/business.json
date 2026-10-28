@@ -30,7 +30,8 @@
    "GB"
   ],
   "paper": "premium satin art paper",
-  "inks": "pigment inks"
+  "inks": "pigment inks",
+  "min_handling_days": 1
  },
  "returns": {
   "window_days": 30,

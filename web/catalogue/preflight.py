@@ -651,6 +651,55 @@ def check_live(cat, cfg, sample, base_override=None):
             except Exception as e:
                 fail(f"Google ownership file {name} is served", repr(e))
 
+    # 4a-iv. STRIPE'S DELIVERY PROMISE MUST MATCH THE FEED'S.
+    #
+    # Found 28 Oct by opening a real checkout session and reading it:
+    # Stripe said "2-7 business days" while the feed said 3 to 7. The
+    # maximum had always added handling to transit; the minimum used
+    # transit alone, so checkout promised a print could arrive in two days
+    # when it takes at least one to make. Google names "hiding processing
+    # delays behind a stated delivery time" as misrepresentation, and the
+    # number at the moment of payment is the one that counts.
+    #
+    # Nothing short of creating a session catches this - the feed was
+    # right, the pages were right, and only Stripe disagreed. So this
+    # creates one. It is a session, not a charge, and nobody is billed.
+    try:
+        f = cfg["fulfilment"]
+        want_min = f["min_handling_days"] + f["delivery"][0]["min_days"]
+        want_max = f["dispatch_working_days"] + f["delivery"][0]["max_days"]
+        row = F.items(cat, cfg)[0]
+        import urllib.request as _u
+        req = _u.Request(base + "/api/checkout",
+                         data=json.dumps({"items": [{"id": row["id"],
+                                                     "qty": 1}]}).encode(),
+                         headers={"Content-Type": "application/json",
+                                  "User-Agent": UA})
+        with urllib.request.urlopen(req, timeout=40, context=ssl.create_default_context()) as r:
+            sess = json.loads(r.read())
+        if not sess.get("url"):
+            fail("checkout quotes the same delivery window as the feed",
+                 f"no session: {str(sess)[:120]}")
+        else:
+            # The estimate is on the session, not the page; read it back.
+            _s2, _h2, body = get(sess["url"])
+            txt = body.decode("utf-8", "replace")
+            m = re.search(r"(\d+)\s*[-–]\s*(\d+)\s*business days", txt)
+            if not m:
+                ok("checkout session is created",
+                   "delivery window not readable from the hosted page")
+            elif (int(m.group(1)), int(m.group(2))) != (want_min, want_max):
+                fail("checkout quotes the same delivery window as the feed",
+                     f"Stripe says {m.group(1)}-{m.group(2)} business days, "
+                     f"the feed says {want_min}-{want_max}. The number a "
+                     f"buyer sees when they pay must not be faster than "
+                     f"the one submitted to Google.")
+            else:
+                ok("checkout quotes the same delivery window as the feed",
+                   f"{want_min}-{want_max} business days")
+    except Exception as e:
+        fail("checkout quotes the same delivery window as the feed", repr(e))
+
     # 4b-ii. THE SERVED FEED IS THE FEED.
     #
     # Merchant Center is pointed at /feed.xml as a scheduled fetch, so from
