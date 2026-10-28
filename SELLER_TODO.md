@@ -146,8 +146,30 @@ everything", this is the channel it belongs on — see
 
 ### Your five steps
 
-1. **Sign up** at <https://merchants.google.com> with
-   moozmooz1902@gmail.com.
+1. **Sign up** at <https://merchants.google.com> — **use
+   sales@walryvo.com, not the Gmail.** A Google Account does not need a
+   @gmail.com address; create one on the Microsoft 365 mailbox at
+   <https://accounts.google.com/signup> → "Use my current email address
+   instead". Decided 28 Oct, and it is free to decide now because nothing
+   is tied to the Gmail yet: Search Console is not set up and there is no
+   verification tag on the site.
+
+   **Why the professional one.** It matches the domain being claimed, it
+   is a business asset rather than a personal one if anyone else ever runs
+   the shop, and the site, the feed and every policy page already publish
+   sales@walryvo.com as the contact — an identity review is exactly the
+   place where those lining up matters.
+
+   **The one real risk, and its fix.** Password recovery runs through that
+   mailbox, so losing the M365 account loses the Google one. So: set
+   moozmooz1902@gmail.com as the **recovery address** on the new Google
+   Account, and once Merchant Center exists, add the Gmail as a second
+   **admin** user. Two ways back in, neither of them a single mailbox.
+
+   **Order matters.** Create the Google Account first, then Search Console,
+   then Merchant Center — all three on the same account. Doing Search
+   Console on one account and Merchant Center on another means verifying
+   the domain twice.
 2. **Business name: NORYMUS LIMITED**, not Walryvo. Google checks the name
    against Companies House and the VAT record. Display name Walryvo.
    Address 28 Bedford Square, Leigh, WN7 2AA. Customer service
