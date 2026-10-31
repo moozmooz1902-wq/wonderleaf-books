@@ -110,11 +110,37 @@ would stop part-way and leave a contiguous block at the end; these are
 scattered, so eBay read the whole file and 2.1% of the rows individually
 did not take.
 
-`EBAY_END_REMAINING_2218.csv` is exactly those 2,218, 65 KB. Upload it
-and read the result file: if they fail again it will name the reason per
-listing, which the fresh download cannot. Ones that have sold, have a
-bid, or are in an active dispute cannot be ended, and that is the sort of
-thing a 2% scattered residue usually turns out to be.
+`EBAY_END_REMAINING_2218.csv` is exactly those 2,218, 65 KB.
+
+### …and the answer was that they were already ended. 21:57
+
+**All 2,218 came back `1047 - The auction has already been closed`.**
+Every single one. Not one real failure among them.
+
+So the 20:55 download was STALE. eBay's active-listings download lags
+behind the account by an hour or more after a large End run, and the
+2,218 were already gone while it was still listing them as live. The
+seller watching the Active count fall in the browser was seeing the truth;
+the download was not.
+
+The upload report settles it:
+
+| upload | result |
+|---|---|
+| `EBAY_END_ALL.csv` (107,600) | **107,588 completed, 12 failed** |
+| `EBAY_END_REMAINING_2218.csv` | 0 completed, 2,218 already closed |
+
+So the first account is done bar **12 listings**, not 2,218.
+
+**I had this wrong and the wrong answer is worth keeping here.** The
+scatter analysis above is sound - the survivors genuinely were spread
+through every block of the file rather than sitting in a tail - but I
+read "not truncated" as "2.1% individually refused" and guessed at sold,
+bid or disputed. The actual explanation was that they had not refused at
+all and the evidence I was reading was out of date. **A fresh download is
+not a source of truth right after a bulk End; the upload's own result
+file is.** It reports per row, at the moment of the attempt, and it is
+the only thing that does.
 
 ## Why 107,600 rows and not 506,463
 
