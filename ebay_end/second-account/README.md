@@ -4,10 +4,24 @@ Built 31 Oct 2026 from `items.csv.gz`, the shrunk form of a 380 MB
 active-listings download. 591,673 listings.
 
 **This is a DIFFERENT ACCOUNT from the files one level up.** Its item
-numbers begin `358…`; the other account's begin `137…`, and the two sets
-have **zero overlap**. They cannot be mixed up by accident, and they must
-not be merged: a File Exchange upload goes to the account you are signed
-in as.
+numbers begin `358…` (451,401) or `820…` (140,272); the other account's
+all begin `137…`, and the two sets have **zero overlap**. They cannot be
+mixed up by accident, and they must not be merged: a File Exchange upload
+goes to the account you are signed in as.
+
+*(An earlier version of this file said the account's numbers all begin
+358. They do not - two prefixes, and the 820 block is 24% of it. The
+check that produced that line read the lowest item number rather than all
+of them.)*
+
+## The 20-row test passed, 31 Oct 20:21
+
+**20 of 20 Success. No errors, no warnings.** Sampled evenly across the
+whole 591,673 - 13 art prints, 7 t-shirts, both prefixes represented -
+so unlike the other account's first test this one says something about
+the set as a whole. Those 20 are ended, and they are inside
+`BIG_01_of_02.csv`; running it will attempt them again and get 1047
+"already closed", which is expected and harmless.
 
 | file | rows | size |
 |---|---|---|
