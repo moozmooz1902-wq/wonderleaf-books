@@ -37,6 +37,44 @@ more than half its item numbers no longer exist, and uploading it would
 produce 131,849 errors for listings that are already gone. Git holds the
 old version if it is ever needed; the file in this folder is today's.
 
+## The test upload, 31 Oct 19:19 — format proven, and one surprise
+
+eBay accepted the file and processed every row. No format error, no
+warning. That is the question the test existed to answer and the answer is
+yes.
+
+    137650398239  Success                              Art Prints
+    137650449676  Success                              Art Prints
+    137650459828  Success                              Art Prints
+    137679792460  Failure 1047 already been closed     T-Shirts
+    137679795972  Failure 1047 already been closed     T-Shirts
+
+**1047 is not a defect in the file.** It is eBay saying those two listings
+were already ended before the upload — the download shows them as active
+and they are not. A download is a snapshot; anything that ended after it
+was generated still appears in it.
+
+**The sample was worse than it looked, and that is worth recording.** The
+test file took the first five rows, and the first three turn out to be the
+only three listings in all 107,600 with **no variation rows at all**:
+
+| | listings | variation rows each |
+|---|---|---|
+| Art Prints | **3** | **0** ← the three that were tested |
+| Art Prints | 46,374 | 2 |
+| T-Shirts | 61,223 | 5 |
+
+So "three art prints ended cleanly" says nothing about the 46,374 ordinary
+art prints — it says the three oddities ended cleanly. Taking the first N
+rows of a sorted file is not a sample, and here it picked the only
+structurally unusual rows in the account.
+
+`EBAY_END_TEST_20.csv` is the replacement: 15 t-shirts spread evenly across
+the tee file plus 5 art prints, **all twenty ordinary multi-variation
+listings**, none overlapping the first test. It answers the real question —
+whether the 61,223 t-shirts are already closed, which would make the
+46,377 art prints the only real work.
+
 ## Why 107,600 rows and not 506,463
 
 Only PARENT rows in the download carry an item number; the other 398,863
