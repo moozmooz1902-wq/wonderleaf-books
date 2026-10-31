@@ -117,6 +117,50 @@ CREATE TABLE IF NOT EXISTS orders (
   items TEXT NOT NULL,
   shipping TEXT
 );
+
+-- THE THREE ANALYTICS TABLES. Written by site/src/lib/analytics.ts and read
+-- only by /admin. None of them is in the DELETE list below, because a
+-- catalogue rebuild must not erase the record of who visited - the
+-- catalogue changes weekly and the traffic history is the one thing that
+-- cannot be regenerated.
+--
+-- `hits` is one row per human page view. `crawls` is a daily counter per
+-- bot, never a row each, because Googlebot fetching every product and
+-- photograph is tens of thousands of requests. See the long note at the
+-- top of analytics.ts for why the two are shaped differently.
+CREATE TABLE IF NOT EXISTS hits (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  ts INTEGER NOT NULL,
+  day TEXT NOT NULL,
+  visitor TEXT NOT NULL,   -- salted daily hash. No IP is stored anywhere.
+  path TEXT NOT NULL,
+  ref TEXT,
+  src TEXT,                -- google-shopping | google-search | direct | host
+  country TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_hits_ts ON hits(ts);
+CREATE INDEX IF NOT EXISTS idx_hits_day ON hits(day);
+
+CREATE TABLE IF NOT EXISTS crawls (
+  day TEXT NOT NULL,
+  bot TEXT NOT NULL,
+  kind TEXT NOT NULL,
+  n INTEGER NOT NULL,
+  PRIMARY KEY (day, bot, kind)
+);
+
+-- One row each time a basket reaches Stripe. Orders divided by checkouts is
+-- the conversion rate, and a checkout with no matching order is an
+-- abandoned basket - the number that says whether the problem is traffic or
+-- the shop.
+CREATE TABLE IF NOT EXISTS checkouts (
+  id TEXT PRIMARY KEY,
+  ts INTEGER NOT NULL,
+  day TEXT NOT NULL,
+  total REAL NOT NULL,
+  items INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_checkouts_ts ON checkouts(ts);
 """
 
 

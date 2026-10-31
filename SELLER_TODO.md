@@ -101,6 +101,33 @@ colour and the print reads as a lit panel on a dark wall.
 
 ---
 
+## B1. The back office — three commands, then you can see everything
+
+Added 31 Oct. `walryvo.com/admin` shows live visitors, orders, revenue,
+conversion, where traffic came from and which search engines have crawled
+the shop. Until this is deployed **there is no way to know whether anyone
+is visiting at all** — Cloudflare's analytics need a permission our token
+does not have and Merchant Center has no engagement API.
+
+From `web/site`, after `git pull`:
+
+```bash
+npx wrangler d1 execute wallart --remote --file=../catalogue/migrate_analytics.sql
+npx wrangler secret put ADMIN_KEY     # type a long password when prompted
+npm run deploy
+```
+
+Then open <https://walryvo.com/admin>. `web/DASHBOARD.md` explains every
+number — the one to watch is **Google Shopping**, which counts clicks
+arriving with Google's own `srsltid` marker and is therefore direct proof
+the Merchant Center feed earned a visit.
+
+**As of 31 Oct the shop has had 0 orders.** Nine Stripe checkout sessions
+exist and all nine are ours, created by preflight's own tests. There is no
+customer data to read yet, from anywhere.
+
+---
+
 ## B2. Merchant Center — what you do, and the one thing I need
 
 The feed is already live and already automatic. Nothing gets uploaded by

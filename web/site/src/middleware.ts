@@ -23,14 +23,24 @@
  * two must never share a cached copy: they are different prices.
  */
 import { defineMiddleware } from 'astro:middleware';
+import { record } from './lib/analytics';
 
 declare const __BUILD_ID__: string;
 
-const NEVER = /^\/(api|cart|order-confirmed)(\/|$)/;
+const NEVER = /^\/(api|cart|order-confirmed|admin)(\/|$)/;
 
 export const onRequest = defineMiddleware(async (ctx, next) => {
   const req = ctx.request;
   const url = new URL(req.url);
+
+  // COUNT IT BEFORE THE CACHE, or the numbers are wrong in the one
+  // direction nobody would notice. A page served from the edge cache never
+  // reaches the route that rendered it, so anything counted further down
+  // would miss every repeat visitor and every crawl of a popular page -
+  // and would quietly under-report exactly the traffic we are hoping for.
+  // This middleware runs on every request, hit or miss, so it is the only
+  // honest place to do it.
+  record(ctx, req, url);
 
   // `caches` exists in the Workers runtime but not in Astro's dev server.
   // Feature-detect: the cache is an optimisation and must never be the

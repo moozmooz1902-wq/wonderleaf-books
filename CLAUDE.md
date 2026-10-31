@@ -62,7 +62,16 @@ It is a different product line from eBay and must not be confused with it:
   breaks - `allSlugs()` is unpaged and the standard caps a file at 50,000
   URLs. Facet counts are precomputed and HTML is edge-cached as of 26 Oct;
   both are explained there.
-- **`web/catalogue/preflight.py` is the gate.** 21 offline checks, 25 more
+- **`web/DASHBOARD.md` — the shop has a back office at `/admin`**, added
+  31 Oct: live visitors, orders, revenue, conversion, traffic sources and
+  which crawlers have been. First-party, out of our own D1 - Cloudflare's
+  analytics need a permission our token lacks and Merchant Center has no
+  engagement API, so there was no other way to see anything. It needs
+  `migrate_analytics.sql` applied and `ADMIN_KEY` set, and **the privacy
+  page was rewritten in the same commit** because it used to say "no
+  analytics". The `srsltid` column is what proves a Google free listing
+  sent a visit.
+- **`web/catalogue/preflight.py` is the gate.** 21 offline checks, 27 more
   against a deployed site, each naming the Google policy or UK law behind
   it. `feed.py` refuses to build while the business identity is incomplete.
   Do not weaken either to make a build pass.

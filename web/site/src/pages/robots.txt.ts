@@ -5,8 +5,13 @@
 // able to fetch the landing page AND the image, and a disallowed image is
 // recorded as unavailable, which disapproves the product.
 //
-// /cart and /api are disallowed because they are not content. /img is NOT
-// disallowed - that would hide every product photograph.
+// /cart and /api are disallowed because they are not content, and /admin
+// because it is the back office. /img is NOT disallowed - that would hide
+// every product photograph.
+//
+// robots.txt is the politeness layer, never the lock: /admin is also behind
+// a key and sends X-Robots-Tag: noindex. A crawler that ignored this file
+// would reach a login form, not the order history.
 import type { APIRoute } from 'astro';
 import { siteUrl } from '../lib/shop';
 
@@ -40,6 +45,7 @@ Allow: /
 Disallow: /api/
 Disallow: /cart
 Disallow: /checkout
+Disallow: /admin
 
 User-agent: Googlebot
 Allow: /

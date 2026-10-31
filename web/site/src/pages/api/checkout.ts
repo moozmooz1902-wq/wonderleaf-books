@@ -191,6 +191,31 @@ export const POST: APIRoute = async ({ request, locals }) => {
       // and returns copy has to change with it.
       automatic_tax: { enabled: false },
     });
+
+    // A BASKET THAT REACHED STRIPE, recorded for the back office. Orders
+    // divided by checkouts is the conversion rate, and a checkout with no
+    // order behind it is an abandoned basket - which is how you tell
+    // "nobody is visiting" apart from "they visit and do not buy". Written
+    // after the session exists so a Stripe failure is never counted as an
+    // attempt, and wrapped because a dashboard row is worth nothing next to
+    // a customer's payment.
+    try {
+      const nowS = Math.floor(Date.now() / 1000);
+      await db
+        .prepare(
+          'INSERT OR IGNORE INTO checkouts (id,ts,day,total,items) ' +
+            'VALUES (?,?,?,?,?)'
+        )
+        .bind(
+          session.id,
+          nowS,
+          new Date().toISOString().slice(0, 10),
+          priced.total,
+          found.reduce((a, f) => a + f.qty, 0)
+        )
+        .run();
+    } catch { /* never fail a checkout over analytics */ }
+
     return json({ url: session.url });
   } catch (e: any) {
     return json({ error: e?.message || 'Payment provider error' }, 502);

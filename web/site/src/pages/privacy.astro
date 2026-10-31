@@ -1,10 +1,18 @@
 ---
 // A privacy policy that is short because the site genuinely does very
-// little. No analytics, no advertising pixels, no social embeds, no
-// third-party fonts. That is a design decision with a privacy policy as its
-// receipt - and a policy that can be read in two minutes and is actually
-// true is worth more than four pages of boilerplate describing trackers
-// this shop does not run.
+// little. No advertising pixels, no social embeds, no third-party fonts.
+// That is a design decision with a privacy policy as its receipt - and a
+// policy that can be read in two minutes and is actually true is worth more
+// than four pages of boilerplate describing trackers this shop does not run.
+//
+// 31 OCT: THIS PAGE USED TO SAY "NO ANALYTICS" AND THAT STOPPED BEING TRUE.
+// The shop now counts its own page views, because there was no other way to
+// know whether anyone was visiting. The moment that shipped, this page had
+// to change - a policy that describes a shop which no longer exists is the
+// same misrepresentation as a price that does not match the feed, and it is
+// the one kind nobody notices because nobody rereads their own policy. The
+// section below says exactly what is counted and what is not stored. If the
+// counting ever changes, this page changes in the same commit.
 import Base from '../layouts/Base.astro';
 import { B } from '../lib/shop';
 import { edge, TTL_STATIC } from '../lib/cache';
@@ -14,7 +22,7 @@ edge(Astro.response, TTL_STATIC);
 
 <Base
   title="Privacy and cookies"
-  description={`How ${B.legal_name} handles your data. No analytics, no advertising trackers, no third-party fonts. One cookie-free basket stored in your own browser.`}
+  description={`How ${B.legal_name} handles your data. No advertising trackers, no third-party analytics, no third-party fonts. One cookie-free basket stored in your own browser.`}
 >
   <div class="wrap page narrow">
     <h1>Privacy and cookies</h1>
@@ -37,9 +45,23 @@ edge(Astro.response, TTL_STATIC);
       required to keep, legal obligation.
     </p>
 
+    <h2>How we count visits</h2>
+    <p class="prose">
+      We keep a simple count of how many pages are viewed, so we can tell
+      whether anyone is finding the shop. It runs on our own server — no
+      Google Analytics, no third party, and nothing is shared with anyone.
+    </p>
+    <table class="plain">
+      <tr><th>What is recorded</th><td>The page viewed, the time, the website that linked you here if any, and the country your connection is in.</td></tr>
+      <tr><th>What is not recorded</th><td><strong>Your IP address is never stored.</strong> It is turned into a short scrambled code, together with your browser type and a secret that changes every midnight, so that two visits on the same day can be told apart — and nothing more. The code cannot be turned back into you, and tomorrow's code for the same person is different.</td></tr>
+      <tr><th>How long</th><td>90 days, then deleted automatically.</td></tr>
+      <tr><th>Lawful basis</th><td>Legitimate interest — knowing whether a shop is being visited. No cookie is set for this, so you have not been asked to accept one.</td></tr>
+    </table>
+
     <h2>What we do not do</h2>
     <ul class="prose">
-      <li>No Google Analytics or any other analytics.</li>
+      <li>No Google Analytics, and no analytics company of any kind. The
+        counting above is ours, on our own server.</li>
       <li>No advertising or remarketing pixels. Nothing follows you around.</li>
       <li>No third-party fonts, icon services or social embeds — this page
         loads from one server, ours.</li>
@@ -51,8 +73,12 @@ edge(Astro.response, TTL_STATIC);
     <h2>Cookies</h2>
     <p class="prose">
       This site sets <strong>no tracking cookies</strong>, which is why you
-      have not been asked to accept any. Your basket is stored in your own
-      browser using local storage and never reaches us until you check out.
+      have not been asked to accept any — not for the visit counting above,
+      which works without one, and not for anything else. Your basket is
+      stored in your own browser using local storage and never reaches us
+      until you check out. (One cookie exists on this domain: the one that
+      keeps the shop's owner signed in to their own private admin page. It
+      is never set for a customer.)
       Stripe sets its own cookies on its payment page to prevent fraud; that
       happens on Stripe's page, under
       {' '}<a href="https://stripe.com/gb/privacy" rel="noopener nofollow">Stripe's privacy policy</a>.

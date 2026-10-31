@@ -31,3 +31,6 @@ wallart-data/out/onbuy/tests/*_rows.jsonl
 # missing.
 wallart-data/pool_jobs.json
 wallart-data/out/onbuy/feed*/
+
+# Local-only secrets for `astro dev` / `wrangler dev`. Never committed.
+.dev.vars

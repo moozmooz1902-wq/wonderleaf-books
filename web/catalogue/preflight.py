@@ -285,7 +285,16 @@ def check_source():
             if s.startswith(("//", "*", "/*", "#", "<!--")):
                 continue
             for ph in PLACEHOLDERS:
-                if ph in line:
+                at = line.find(ph)
+                # `placeholder="Admin key"` is an HTML attribute telling a
+                # browser what to grey out in an empty input. It is not
+                # placeholder copy, and reporting it trains people to read
+                # this check's failures as noise - which is the only way a
+                # real one gets ignored.
+                if at >= 0 and ph == "placeholder" and \
+                        line[at + len(ph):at + len(ph) + 1] == "=":
+                    at = line.find(ph, at + 1)
+                if at >= 0:
                     hits.append(f"{os.path.relpath(p, WEB)}:{line_n} {ph!r}")
     if hits:
         fail("no placeholder text in the site source",
@@ -315,6 +324,18 @@ def check_source():
                 at = flat.find(c, at + 1)
                 if at < 0:
                     break
+                # "#1" MEANS "#1 BEST SELLER", NOT "#1a1a1f".
+                #
+                # Stylesheets were excluded from this scan because hex
+                # colours matched four times in global.css. That worked
+                # until a page carried its own <style> block - the admin
+                # dashboard - and the same false positive came straight
+                # back. Excluding another file would have been the third
+                # patch on the same hole, so fix the pattern instead: a
+                # rank claim is never followed by a hex digit.
+                if c == "#1" and len(flat) > at + 2 and \
+                        flat[at + 2] in "0123456789abcdef":
+                    continue
                 if _negated(flat, at):
                     continue
                 line_n = text[:at].count("\n") + 1
@@ -697,6 +718,79 @@ def check_live(cat, cfg, sample, base_override=None):
                     ok(f"Google ownership file {name} is served", "200")
             except Exception as e:
                 fail(f"Google ownership file {name} is served", repr(e))
+
+    # 4a-iii-b. THE BACK OFFICE MUST BE SHUT.
+    #
+    # /admin shows every order, every customer email and every visitor's
+    # movements. It is behind a key, but a key is only as good as the day
+    # nobody disabled it, and this is the one page on the site where being
+    # wrong is a data breach rather than a disapproval. So: prove from
+    # outside, with no credentials at all, that an anonymous request gets
+    # nothing - and that robots is told to stay away as well, because an
+    # indexed admin URL is an invitation even when it is locked.
+    try:
+        # urlopen raises on 4xx, and 401/403/404 are all expected answers
+        # here, so take the status off the exception rather than treating
+        # "the lock worked" as a transport failure.
+        try:
+            st, h, body = get(base + "/admin")
+        except urllib.error.HTTPError as e:
+            st, h, body = e.code, e.headers, e.read()
+        txt = body.decode("utf-8", "replace")
+        leaked = [w for w in ("Happening now", "All-time revenue",
+                              "No orders yet", "wa_admin=")
+                  if w in txt]
+        robots_txt = get(base + "/robots.txt")[2].decode("utf-8", "replace")
+        if st == 404:
+            # Nothing deployed at /admin is also a safe state - there is no
+            # dashboard to leak. Said plainly rather than passed silently,
+            # because "the back office is missing" and "the back office is
+            # locked" are different facts and only one of them is expected.
+            ok("the admin page is not deployed yet",
+               "HTTP 404 - run the three commands in DASHBOARD.md")
+        elif leaked:
+            fail("the admin page is not readable without the key",
+                 "an anonymous request got " + ", ".join(leaked) +
+                 " - the dashboard is OPEN. Check ADMIN_KEY is set and that "
+                 "authed() is still called.")
+        elif st not in (200, 401, 403, 503):
+            fail("the admin page answers sensibly without a key",
+                 f"HTTP {st}")
+        elif "noindex" not in (h.get("x-robots-tag") or "").lower():
+            fail("the admin page is marked noindex",
+                 f"x-robots-tag is {h.get('x-robots-tag')!r}")
+        elif "Disallow: /admin" not in robots_txt:
+            fail("robots.txt disallows /admin", "it does not")
+        else:
+            ok("the admin page is shut to anonymous visitors",
+               f"HTTP {st}, noindex, disallowed in robots.txt")
+    except Exception as e:
+        fail("the admin page is shut to anonymous visitors", repr(e))
+
+    # And its data endpoint, which is the one that would actually hand over
+    # the orders. A login form leaking nothing is no comfort if the JSON
+    # behind it answers everyone.
+    try:
+        try:
+            st, _h, body = get(base + "/api/admin")
+            txt = body.decode("utf-8", "replace")
+            if '"orders"' in txt or '"liveList"' in txt:
+                fail("the admin data endpoint requires the key",
+                     "it returned the dashboard payload to an anonymous "
+                     "request")
+            else:
+                fail("the admin data endpoint requires the key",
+                     f"HTTP {st} with an unexpected body: {txt[:120]}")
+        except urllib.error.HTTPError as e:
+            if e.code == 404:
+                ok("the admin data endpoint is not deployed yet", "HTTP 404")
+            elif e.code in (401, 403, 503):
+                ok("the admin data endpoint requires the key", f"HTTP {e.code}")
+            else:
+                fail("the admin data endpoint requires the key",
+                     f"HTTP {e.code}")
+    except Exception as e:
+        fail("the admin data endpoint requires the key", repr(e))
 
     # 4a-iv. STRIPE'S DELIVERY PROMISE MUST MATCH THE FEED'S.
     #
