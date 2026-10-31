@@ -75,6 +75,47 @@ listings**, none overlapping the first test. It answers the real question —
 whether the 61,223 t-shirts are already closed, which would make the
 46,377 art prints the only real work.
 
+## After the upload — 2,218 left, 31 Oct 20:55
+
+The seller uploaded `EBAY_END_ALL.csv` and then pulled a fresh download
+to check. 11,379 rows, 9,161 of them variation children:
+
+| | |
+|---|---|
+| in the end file | 107,600 |
+| ended | **105,382 (97.9%)** |
+| **still active** | **2,218** — 1,575 t-shirts, 643 art prints |
+
+All 2,218 were in the end file, and every one is a `137…` number, so
+this is the first account only; none of the second account's 591,673 is
+involved.
+
+**They are NOT a truncated tail.** The survivors sit at rows 4 to 107,171
+and are spread through every 10,000-row block of the file:
+
+    rows       1- 10,000:    119
+    rows  10,001- 20,000:    155
+    rows  20,001- 30,000:     85
+    rows  30,001- 40,000:    177
+    rows  40,001- 50,000:    206
+    rows  50,001- 60,000:    265
+    rows  60,001- 70,000:    276
+    rows  70,001- 80,000:    331
+    rows  80,001- 90,000:    223
+    rows  90,001-100,000:    192
+    rows 100,001-110,000:    189
+
+That rules out the obvious explanation. A daily action limit or a row cap
+would stop part-way and leave a contiguous block at the end; these are
+scattered, so eBay read the whole file and 2.1% of the rows individually
+did not take.
+
+`EBAY_END_REMAINING_2218.csv` is exactly those 2,218, 65 KB. Upload it
+and read the result file: if they fail again it will name the reason per
+listing, which the fresh download cannot. Ones that have sold, have a
+bid, or are in an active dispute cannot be ended, and that is the sort of
+thing a 2% scattered residue usually turns out to be.
+
 ## Why 107,600 rows and not 506,463
 
 Only PARENT rows in the download carry an item number; the other 398,863
