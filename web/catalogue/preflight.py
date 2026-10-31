@@ -767,30 +767,35 @@ def check_live(cat, cfg, sample, base_override=None):
     except Exception as e:
         fail("the admin page is shut to anonymous visitors", repr(e))
 
-    # And its data endpoint, which is the one that would actually hand over
-    # the orders. A login form leaking nothing is no comfort if the JSON
-    # behind it answers everyone.
-    try:
+    # And the endpoints behind it, which are the ones that would actually
+    # hand over the orders and the customer correspondence. A login form
+    # leaking nothing is no comfort if the JSON behind it answers everyone.
+    #
+    # /api/mail is the one that matters most: it reads and SENDS from the
+    # business mailbox, so an unauthenticated POST there is not a leak, it
+    # is a stranger emailing customers as Walryvo.
+    bad = []
+    missing = []
+    for ep in ("/api/admin", "/api/mail", "/api/push", "/api/notify"):
         try:
-            st, _h, body = get(base + "/api/admin")
+            st, _h, body = get(base + ep)
             txt = body.decode("utf-8", "replace")
-            if '"orders"' in txt or '"liveList"' in txt:
-                fail("the admin data endpoint requires the key",
-                     "it returned the dashboard payload to an anonymous "
-                     "request")
-            else:
-                fail("the admin data endpoint requires the key",
-                     f"HTTP {st} with an unexpected body: {txt[:120]}")
+            bad.append(f"{ep}: HTTP {st} {txt[:80]}")
         except urllib.error.HTTPError as e:
             if e.code == 404:
-                ok("the admin data endpoint is not deployed yet", "HTTP 404")
-            elif e.code in (401, 403, 503):
-                ok("the admin data endpoint requires the key", f"HTTP {e.code}")
-            else:
-                fail("the admin data endpoint requires the key",
-                     f"HTTP {e.code}")
-    except Exception as e:
-        fail("the admin data endpoint requires the key", repr(e))
+                missing.append(ep)
+            elif e.code not in (401, 403, 503):
+                bad.append(f"{ep}: HTTP {e.code}")
+        except Exception as e:
+            bad.append(f"{ep}: {e!r}")
+    if bad:
+        fail("every back-office endpoint requires the key",
+             "; ".join(bad))
+    elif len(missing) == 4:
+        ok("the back office is not deployed yet", "all four endpoints 404")
+    else:
+        ok("every back-office endpoint requires the key",
+           f"{4 - len(missing)} checked, all refused anonymously")
 
     # 4a-iv. STRIPE'S DELIVERY PROMISE MUST MATCH THE FEED'S.
     #

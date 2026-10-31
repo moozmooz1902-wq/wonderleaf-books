@@ -68,6 +68,15 @@ if (ok && url.searchParams.get('key')) {
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#0b0b0c" />
     <title>Walryvo — back office</title>
+    {/* ADD TO HOME SCREEN, and then it can be pushed to. iOS only allows
+        web notifications from an installed app, so the manifest is not a
+        nicety here - it is the whole mechanism. */}
+    <link rel="manifest" href="/admin.webmanifest" />
+    <link rel="apple-touch-icon" href="/admin-icon-192.png" />
+    <link rel="icon" href="/admin-icon-192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Walryvo" />
     <style is:inline>
       :root {
         --bg: #0b0b0c; --panel: #141417; --line: #26262b;
@@ -170,6 +179,58 @@ if (ok && url.searchParams.get('key')) {
       .note {
         font-size: 12.5px; color: var(--faint); margin: 8px 2px 0; line-height: 1.5;
       }
+      .btn {
+        display: inline-flex; align-items: center; gap: 7px;
+        border: 1px solid var(--line); background: #17171b; color: var(--ink);
+        border-radius: 8px; padding: 7px 12px; font-size: 13px;
+        cursor: pointer; width: auto; margin: 0; font-weight: 500;
+      }
+      .btn:hover { border-color: #3a3a42; }
+      .btn.go { background: var(--ink); color: #000; border-color: var(--ink); }
+      .mailwrap { display: grid; grid-template-columns: 320px 1fr; min-height: 260px; }
+      @media (max-width: 860px) { .mailwrap { grid-template-columns: 1fr; } }
+      .maillist { border-right: 1px solid var(--line); max-height: 460px; overflow-y: auto; }
+      @media (max-width: 860px) {
+        .maillist { border-right: 0; border-bottom: 1px solid var(--line); max-height: 240px; }
+      }
+      .mi {
+        display: block; width: 100%; text-align: left; background: none;
+        border: 0; border-bottom: 1px solid #1c1c20; border-radius: 0;
+        padding: 11px 14px; cursor: pointer; color: var(--ink); margin: 0;
+        font-size: 14px; font-weight: 400;
+      }
+      .mi:hover { background: #18181c; }
+      .mi.sel { background: #1d1d23; box-shadow: inset 3px 0 0 var(--accent); }
+      .mi .who { display: flex; justify-content: space-between; gap: 8px; }
+      .mi .nm { font-weight: 600; font-size: 13.5px; }
+      .mi.unread .nm::before {
+        content: ''; display: inline-block; width: 7px; height: 7px;
+        border-radius: 50%; background: var(--accent); margin-right: 7px;
+        vertical-align: middle;
+      }
+      .mi .when { color: var(--faint); font-size: 11.5px; white-space: nowrap; }
+      .mi .sub {
+        font-size: 13px; color: var(--dim); margin-top: 3px;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      }
+      .mi .pv {
+        font-size: 12.5px; color: var(--faint); margin-top: 2px;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      }
+      .mailbody { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+      .mailbody h3 { margin: 0; font-size: 16px; }
+      .mailbody .meta { font-size: 12.5px; color: var(--faint); }
+      .mailbody pre {
+        margin: 0; white-space: pre-wrap; word-break: break-word;
+        font: inherit; color: var(--dim); max-height: 230px; overflow-y: auto;
+      }
+      textarea {
+        width: 100%; min-height: 110px; resize: vertical; padding: 11px 12px;
+        border-radius: 9px; background: #0e0e10; border: 1px solid var(--line);
+        color: var(--ink); font: inherit;
+      }
+      .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+      .ok { color: var(--good); font-size: 13px; }
       .err {
         background: #2a1416; border: 1px solid #562226; color: #fca5a5;
         border-radius: 10px; padding: 12px 14px; font-size: 14px; margin-bottom: 16px;
@@ -251,6 +312,20 @@ if (ok && url.searchParams.get('key')) {
               <div class="panel" id="pages"></div>
             </section>
           </div>
+
+          <section>
+            <h2>Customer inbox</h2>
+            <div class="panel" id="mail"></div>
+            <p class="note" id="mailnote"></p>
+          </section>
+
+          <section>
+            <h2>This phone</h2>
+            <div class="panel" style="padding:14px 16px">
+              <div class="row" id="pushrow"><span class="muted">checking…</span></div>
+              <p class="note" id="pushnote" style="margin-top:10px"></p>
+            </div>
+          </section>
 
           <section>
             <h2>Orders</h2>
@@ -373,6 +448,250 @@ if (ok && url.searchParams.get('key')) {
               'No crawler has visited since this started recording.');
           }
 
+          // ---------------------------------------------------------------
+          // The customer inbox.
+          // ---------------------------------------------------------------
+          let mail = [];
+          let selected = null;
+          let openMsg = null;
+
+          async function loadMail() {
+            try {
+              const r = await fetch('/api/mail', { cache: 'no-store' });
+              const d = await r.json();
+              if (d.configured === false) {
+                $('mail').innerHTML =
+                  '<div class="empty">The inbox is not connected yet.</div>';
+                $('mailnote').textContent =
+                  'Connecting it takes one app registration in Microsoft ' +
+                  'Entra and three secrets — web/INBOX.md has the ' +
+                  'click-by-click. Until then, customer email arrives in ' +
+                  'Outlook as usual; nothing is lost.';
+                return;
+              }
+              if (d.error) throw new Error(d.error);
+              mail = d.messages || [];
+              $('mailnote').textContent =
+                'Live from sales@walryvo.com. Reading a message here marks ' +
+                'it read in Outlook too, and a reply goes out in the same ' +
+                'thread from the same address.';
+              drawMail();
+            } catch (e) {
+              $('mail').innerHTML =
+                '<div class="empty">Inbox unavailable: ' + esc(e.message) + '</div>';
+            }
+          }
+
+          function drawMail() {
+            if (!mail.length) {
+              $('mail').innerHTML = '<div class="empty">No messages.</div>';
+              return;
+            }
+            const list = mail.map((m, i) =>
+              '<button class="mi' + (m.read ? '' : ' unread') +
+              (i === selected ? ' sel' : '') + '" data-i="' + i + '">' +
+              '<span class="who"><span class="nm">' + esc(m.fromName) +
+              '</span><span class="when">' +
+              new Date(m.received).toLocaleDateString('en-GB', {
+                day: 'numeric', month: 'short' }) + '</span></span>' +
+              '<div class="sub">' + esc(m.subject) + '</div>' +
+              '<div class="pv">' + esc(m.preview.slice(0, 90)) + '</div>' +
+              '</button>').join('');
+
+            let body = '<div class="mailbody"><div class="empty">' +
+              'Pick a message.</div></div>';
+            if (openMsg) {
+              body =
+                '<div class="mailbody">' +
+                '<h3>' + esc(openMsg.subject) + '</h3>' +
+                '<div class="meta">' + esc(openMsg.fromName) + ' &lt;' +
+                esc(openMsg.from) + '&gt; · ' +
+                esc(new Date(openMsg.received).toLocaleString('en-GB')) +
+                (openMsg.hasAttachments
+                  ? ' · has attachments (open in Outlook to download)' : '') +
+                '</div>' +
+                '<pre>' + esc(openMsg.text) + '</pre>' +
+                '<textarea id="reply" placeholder="Write a reply…"></textarea>' +
+                '<div class="row">' +
+                '<button class="btn go" id="send">Send reply</button>' +
+                '<span id="sendmsg" class="muted"></span></div></div>';
+            }
+            $('mail').innerHTML =
+              '<div class="mailwrap"><div class="maillist">' + list +
+              '</div>' + body + '</div>';
+
+            $('mail').querySelectorAll('.mi').forEach((b) =>
+              b.addEventListener('click', () => openMail(Number(b.dataset.i))));
+            const send = $('send');
+            if (send) send.addEventListener('click', sendReply);
+          }
+
+          async function openMail(i) {
+            selected = i;
+            openMsg = null;
+            drawMail();
+            try {
+              const r = await fetch('/api/mail?id=' + encodeURIComponent(mail[i].id),
+                                    { cache: 'no-store' });
+              const d = await r.json();
+              if (d.error) throw new Error(d.error);
+              openMsg = d.message;
+              mail[i].read = true;
+              drawMail();
+            } catch (e) {
+              $('mail').innerHTML =
+                '<div class="empty">Could not open it: ' + esc(e.message) + '</div>';
+            }
+          }
+
+          async function sendReply() {
+            const ta = $('reply');
+            const btn = $('send');
+            const msg = $('sendmsg');
+            if (!ta || !ta.value.trim() || !openMsg) return;
+            btn.disabled = true;
+            msg.textContent = 'Sending…';
+            msg.className = 'muted';
+            try {
+              const r = await fetch('/api/mail', {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify({ id: openMsg.id, text: ta.value }),
+              });
+              const d = await r.json();
+              if (!r.ok || d.error) throw new Error(d.error || ('HTTP ' + r.status));
+              ta.value = '';
+              msg.textContent = 'Sent, in the same thread.';
+              msg.className = 'ok';
+            } catch (e) {
+              msg.textContent = e.message;
+              msg.className = 'err';
+              msg.style.cssText = 'color:#fca5a5;font-size:13px';
+            }
+            btn.disabled = false;
+          }
+
+          // ---------------------------------------------------------------
+          // Notifications on this device.
+          // ---------------------------------------------------------------
+          const standalone =
+            window.matchMedia('(display-mode: standalone)').matches ||
+            window.navigator.standalone === true;
+
+          function urlB64ToU8(s) {
+            const pad = (s + '='.repeat((4 - (s.length % 4)) % 4))
+              .replace(/-/g, '+').replace(/_/g, '/');
+            const raw = atob(pad);
+            const out = new Uint8Array(raw.length);
+            for (let i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i);
+            return out;
+          }
+
+          async function pushState() {
+            const row = $('pushrow');
+            const note = $('pushnote');
+            let cfg;
+            try {
+              cfg = await (await fetch('/api/push', { cache: 'no-store' })).json();
+            } catch {
+              row.innerHTML = '<span class="muted">Could not check.</span>';
+              return;
+            }
+            if (!cfg.configured) {
+              row.innerHTML = '<span class="muted">Notifications are switched off.</span>';
+              note.textContent =
+                'Run `node web/tools/vapid-keys.mjs` and set the two secrets ' +
+                'it prints, then deploy. No app store, no account, nothing ' +
+                'to pay for.';
+              return;
+            }
+            const supported = 'serviceWorker' in navigator && 'PushManager' in window;
+            // iOS is the reason this check exists: Safari has Push, but
+            // ONLY once the site has been added to the Home Screen. Asking
+            // in a browser tab silently fails and looks like a bug.
+            const iOS = /iP(hone|ad|od)/.test(navigator.userAgent);
+            if (!supported || (iOS && !standalone)) {
+              row.innerHTML = '<span class="muted">Add to Home Screen first.</span>';
+              note.textContent = iOS
+                ? 'On iPhone: tap Share, then "Add to Home Screen", then open ' +
+                  'Walryvo from the new icon and come back here. iOS only ' +
+                  'allows notifications from an installed app.'
+                : 'This browser does not support web notifications.';
+              return;
+            }
+
+            const reg = await navigator.serviceWorker.register('/admin-sw.js')
+              .catch(() => null);
+            if (!reg) {
+              row.innerHTML = '<span class="muted">Service worker blocked.</span>';
+              return;
+            }
+            const sub = await reg.pushManager.getSubscription();
+            const count = cfg.count || 0;
+
+            if (sub && Notification.permission === 'granted') {
+              row.innerHTML =
+                '<span class="ok">Notifications are on for this device.</span>' +
+                '<button class="btn" id="ptest">Send a test</button>' +
+                '<button class="btn" id="poff">Turn off</button>';
+              note.textContent =
+                count + ' device' + (count === 1 ? '' : 's') +
+                ' will be told when an order comes in.';
+              $('ptest').onclick = async () => {
+                const d = await (await fetch('/api/push', {
+                  method: 'POST',
+                  headers: { 'content-type': 'application/json' },
+                  body: JSON.stringify({ test: true }),
+                })).json();
+                note.textContent = d.note || d.error || 'Sent.';
+              };
+              $('poff').onclick = async () => {
+                await fetch('/api/push', {
+                  method: 'POST',
+                  headers: { 'content-type': 'application/json' },
+                  body: JSON.stringify({ unsubscribe: sub.endpoint }),
+                });
+                await sub.unsubscribe().catch(() => {});
+                pushState();
+              };
+              return;
+            }
+
+            row.innerHTML =
+              '<button class="btn go" id="pon">Turn on notifications</button>';
+            note.textContent =
+              'You will be told when an order comes in. Nothing about the ' +
+              'order passes through Apple or Google — they are only told to ' +
+              'wake this app up, and it then asks the shop what happened.';
+            $('pon').onclick = async () => {
+              // Must be inside the click: iOS refuses a permission prompt
+              // that is not the direct result of a tap.
+              const perm = await Notification.requestPermission();
+              if (perm !== 'granted') {
+                note.textContent =
+                  'Permission was refused. iOS will not ask again unless ' +
+                  'you turn it back on in Settings → Notifications → Walryvo.';
+                return;
+              }
+              try {
+                const s = await reg.pushManager.subscribe({
+                  userVisibleOnly: true,
+                  applicationServerKey: urlB64ToU8(cfg.publicKey),
+                });
+                const r = await fetch('/api/push', {
+                  method: 'POST',
+                  headers: { 'content-type': 'application/json' },
+                  body: JSON.stringify({ subscription: s.toJSON() }),
+                });
+                const d = await r.json();
+                if (!r.ok || d.error) throw new Error(d.error || ('HTTP ' + r.status));
+                pushState();
+              } catch (e) {
+                note.textContent = 'Could not subscribe: ' + e.message;
+              }
+            };
+          }
+
           let failures = 0;
           async function tick() {
             try {
@@ -393,8 +712,13 @@ if (ok && url.searchParams.get('key')) {
             setTimeout(tick, failures > 3 ? 60000 : 10000);
           }
           tick();
+          loadMail();
+          pushState();
+          // The inbox is a round trip to Microsoft; a minute is plenty, and
+          // polling it as hard as the numbers would be rude to both of us.
+          setInterval(loadMail, 60000);
           document.addEventListener('visibilitychange', () => {
-            if (!document.hidden) tick();
+            if (!document.hidden) { tick(); loadMail(); }
           });
         </script>
       </>

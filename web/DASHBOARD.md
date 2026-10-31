@@ -8,6 +8,14 @@ which pages, orders, revenue, conversion, and which search engines are
 crawling the shop. All of it out of our own database — no Google Analytics,
 no third-party script, no tracking cookie, no data leaving the Worker.
 
+Since 31 Oct it also carries **the customer inbox** and **notifications on
+your phone**. Both are optional and both are off until you switch them on:
+
+| | Set up with | Needs |
+|---|---|---|
+| **Customer inbox** — read and reply to sales@walryvo.com from /admin | `INBOX.md` | an app registration in Microsoft Entra and four secrets |
+| **Phone notifications** — an app icon on the Home Screen that buzzes on a new order | below | `node web/tools/vapid-keys.mjs` and two secrets |
+
 ---
 
 ## Why it had to be built rather than switched on
@@ -61,7 +69,47 @@ guesses a URL.
 | **Visitors / page views** | A visitor is one person for one day. Views are pages loaded. |
 | **Google Shopping** | **The number that answers "is the Merchant Center feed working".** A click from a Google free listing arrives carrying `srsltid` in the URL — that is Google Shopping's own click marker and nothing else sets it. A number above zero here is proof the feed earned a visit, without needing anyone's dashboard but ours. |
 | **Checkouts / conversion** | Baskets that reached Stripe, and orders divided by those. This is how you tell "nobody is visiting" apart from "they visit and do not buy" — two problems with completely different fixes. |
+| **Customer inbox** | Live from Microsoft 365. Reading a message here marks it read in Outlook too, and a reply goes out in the same thread from the same address. Nothing is copied into our database. |
 | **Crawlers** | Counted per day and batched, so a **lower bound**, not a total. Googlebot-Image fetching photographs is the signal the feed is being processed; it is exactly what the 192 "image not processed" rejections were about. |
+
+---
+
+## Notifications on an iPhone
+
+No App Store, no Pushover, no Firebase, nothing to pay for. iOS 16.4 and
+later support the Web Push standard — but **only for a site that has been
+added to the Home Screen**, which is why that step is not optional.
+
+On your Mac:
+
+```bash
+node web/tools/vapid-keys.mjs
+```
+
+It prints two `wrangler secret put` commands. Run them from `web/site`,
+then `npm run deploy`.
+
+On the iPhone:
+
+1. Open **walryvo.com/admin** in Safari and sign in.
+2. **Share → Add to Home Screen.**
+3. Open Walryvo from the **new icon**, not from Safari.
+4. Scroll to **This phone** and tap **Turn on notifications**.
+5. Tap **Send a test** to prove it.
+
+You get a notification the moment Stripe confirms an order, with the total
+and the day's running count.
+
+**The push carries no payload, deliberately.** Apple and Google are told
+only that this app should wake up; the phone then asks the shop what
+happened, over our own connection. So no order detail ever passes through
+anybody's push service — and it removes several hundred lines of payload
+encryption that would have been wrong until it was exactly right.
+
+If notifications stop arriving: a VAPID key pair is not an account, so
+losing one costs nothing. Generate another pair, set the secrets, deploy,
+and turn it on again on the phone — the dead subscription is dropped
+automatically the first time the push service rejects it.
 
 ---
 

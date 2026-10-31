@@ -70,7 +70,13 @@ It is a different product line from eBay and must not be confused with it:
   `migrate_analytics.sql` applied and `ADMIN_KEY` set, and **the privacy
   page was rewritten in the same commit** because it used to say "no
   analytics". The `srsltid` column is what proves a Google free listing
-  sent a visit.
+  sent a visit. It also carries, both optional and both off until switched
+  on: **the customer inbox** (`web/INBOX.md` - reads and replies to
+  sales@walryvo.com through Microsoft Graph, deliberately NOT a mailbox of
+  our own, because moving the MX record risks the live business mail and a
+  reply from elsewhere does not thread), and **iPhone notifications**
+  (`vapid-keys.mjs`, Add to Home Screen, bodyless web push - Apple and
+  Google are told only to wake the app, never what was ordered).
 - **`web/catalogue/preflight.py` is the gate.** 21 offline checks, 27 more
   against a deployed site, each naming the Google policy or UK law behind
   it. `feed.py` refuses to build while the business identity is incomplete.

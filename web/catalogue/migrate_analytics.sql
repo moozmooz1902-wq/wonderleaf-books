@@ -1,13 +1,13 @@
--- Adds the three analytics tables to a database that already has the
--- catalogue in it, without touching the catalogue.
+-- Adds the back-office tables to a database that already has the catalogue
+-- in it, without touching the catalogue.
 --
--- Apply once:
+-- Apply once (and again after any change here - every statement is
+-- IF NOT EXISTS, so running it twice is harmless):
 --   cd web/site
 --   npx wrangler d1 execute wallart --remote --file=../catalogue/migrate_analytics.sql
 --
--- Every statement is IF NOT EXISTS, so running it twice is harmless. The
--- same tables are in seed.sql for a fresh database; this file exists so an
--- existing one does not have to be reseeded to gain them.
+-- The same tables are in seed.sql for a fresh database; this file exists so
+-- an existing one does not have to be reseeded to gain them.
 
 CREATE TABLE IF NOT EXISTS hits (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -42,3 +42,23 @@ CREATE TABLE IF NOT EXISTS checkouts (
   items INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_checkouts_ts ON checkouts(ts);
+
+-- PHONES THAT HAVE ASKED TO BE TOLD ABOUT ORDERS.
+--
+-- One row per installed copy of the back office. `endpoint` is the push
+-- service's URL for that device and is the primary key, because that is
+-- what identifies a subscription - reinstalling the app produces a new one
+-- and the old row is deleted the first time the push service rejects it.
+--
+-- No payload is ever encrypted into a push: the notification is empty and
+-- the phone fetches the detail itself. That is why p256dh and auth are
+-- stored but unused today - they are what a payload WOULD be encrypted
+-- with, and a subscription without them cannot be upgraded later.
+CREATE TABLE IF NOT EXISTS push_subs (
+  endpoint TEXT PRIMARY KEY,
+  p256dh TEXT,
+  auth TEXT,
+  created TEXT NOT NULL,
+  last_ok TEXT,
+  fails INTEGER NOT NULL DEFAULT 0
+);

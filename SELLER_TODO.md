@@ -117,8 +117,23 @@ npx wrangler secret put ADMIN_KEY     # type a long password when prompted
 npm run deploy
 ```
 
-Then open <https://walryvo.com/admin>. `web/DASHBOARD.md` explains every
-number — the one to watch is **Google Shopping**, which counts clicks
+Then open <https://walryvo.com/admin>.
+
+**Two optional extras, both off until you switch them on:**
+
+- **Notifications on your iPhone.** `node web/tools/vapid-keys.mjs` prints
+  two secrets; set them, deploy, then on the phone open /admin → Share →
+  **Add to Home Screen** → open it from the new icon → **Turn on
+  notifications**. iOS only allows this from an installed app, which is why
+  the Home Screen step is not optional. You get a buzz the moment Stripe
+  confirms an order.
+- **The customer inbox** — read and answer sales@walryvo.com from /admin,
+  replies threading properly from the same address. Needs one app
+  registration in Microsoft Entra: `web/INBOX.md` is the click-by-click.
+  **Do not skip its step 4**, which narrows the app to that one mailbox
+  instead of every mailbox in the tenant.
+
+`web/DASHBOARD.md` explains every number — the one to watch is **Google Shopping**, which counts clicks
 arriving with Google's own `srsltid` marker and is therefore direct proof
 the Merchant Center feed earned a visit.
 

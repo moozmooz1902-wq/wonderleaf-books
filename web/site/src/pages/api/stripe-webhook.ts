@@ -12,6 +12,8 @@
 import type { APIRoute } from 'astro';
 import Stripe from 'stripe';
 import { getDb } from '../../lib/db';
+import { vapid, pushAll } from '../../lib/push';
+import { B } from '../../lib/shop';
 
 export const prerender = false;
 
@@ -63,6 +65,23 @@ export const POST: APIRoute = async ({ request, locals }) => {
       // actually costs a customer their print.
       return new Response('Could not record order', { status: 500 });
     }
+
+    // THEN TELL THE PHONE. After the row is written, never before: a
+    // notification about an order that failed to save would send somebody
+    // to a dashboard that does not show it.
+    //
+    // Deliberately outside the try above. A push that fails must NOT make
+    // this handler return 500, because Stripe would then retry the whole
+    // webhook and the shop would record the order again to fix a
+    // notification - exactly the wrong trade.
+    try {
+      const v = vapid(env, B.email);
+      if (v) {
+        const p = pushAll(db, v);
+        const wait = (locals as any)?.runtime?.ctx?.waitUntil;
+        wait ? wait.call((locals as any).runtime.ctx, p) : await p;
+      }
+    } catch { /* an order is worth more than a notification */ }
   }
 
   return new Response('ok', { status: 200 });

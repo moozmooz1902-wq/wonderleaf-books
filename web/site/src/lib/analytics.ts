@@ -72,6 +72,11 @@ export function botName(ua: string): string | null {
 
 /** page | image | feed | api | asset — what was asked for, not who asked. */
 export function kindOf(path: string): string {
+  // Scripts, styles, manifests and the service worker are plumbing. They
+  // are also mostly served straight from Workers Assets without the Worker
+  // running at all, so counting them would be arbitrary as well as noisy.
+  if (/\.(js|css|map|json|webmanifest|ico|svg|woff2?)$/i.test(path))
+    return 'asset';
   if (path.startsWith('/img/') || path.startsWith('/unframed/')) return 'image';
   if (path === '/feed.xml' || path === '/promotions.xml') return 'feed';
   if (path === '/sitemap.xml' || path === '/robots.txt') return 'feed';
