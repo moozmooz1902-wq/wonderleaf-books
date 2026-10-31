@@ -20,7 +20,29 @@ in as.
 
 Breakdown: Art Prints (360) 371,274 · T-Shirts (15687) 220,399.
 
-## Why 3.39 MB and not 100 MB
+## Two shapes of the same 591,673 listings. Use one set, not both.
+
+| set | files | rows each | size each |
+|---|---|---|---|
+| `BIG_01..02_of_02.csv` | 2 | 295,837 | 8.46 MB |
+| `END_01..05_of_05.csv` | 5 | 118,335 | 3.39 MB |
+
+Both cover all 591,673 with nothing missing and nothing duplicated.
+**Uploading both would try to end every listing twice** - harmless, since
+the second attempt returns 1047 "already closed", but it doubles the work
+and fills the report with errors that are not errors.
+
+The BIG pair is the seller's call, 31 Oct: their account takes **50 MB and
+500,000 rows**, which is larger than the published File Exchange limit and
+is their own direct experience of their own account. Two files rather than
+one because 591,673 is over the 500,000 row cap; the whole catalogue is
+only 17 MB, so rows bind long before bytes either way.
+
+The five-file set stays as the fallback. If a BIG file is rejected on
+upload, the limit is lower than expected and `END_01_of_05.csv` onwards
+will go through - nothing needs rebuilding.
+
+## Why the five-file set is 3.39 MB and not 100 MB
 
 The seller asked for files up to 100 MB. **eBay will not take one.**
 File Exchange — and Seller Hub Reports, which replaces it — caps an
